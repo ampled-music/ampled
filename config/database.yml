@@ -1,0 +1,26 @@
+# PostgreSQL: versions 9.1 and up are supported.
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV["DB_POOL"].presence || ENV["RAILS_MAX_THREADS"].presence || 5 %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: ampled_web_development
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: ampled_web_test
+
+acceptance:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
+
+production:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>

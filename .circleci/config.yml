@@ -1,0 +1,71 @@
+version: 2
+jobs:
+  build:
+    parallelism: 1
+    working_directory: ~/ampled-web
+    docker:
+      - image: circleci/ruby:2.5.3-node-browsers
+        environment:
+          PGHOST: 127.0.0.1
+          PGUSER: postgres
+          RAILS_ENV: test
+      - image: circleci/postgres:10.4-alpine
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: ampled_web_test
+          POSTGRES_PASSWORD: ""
+    steps:
+      - checkout
+
+      # Restore bundle cache, with fallbacks to increase the likeliness of a cache hit
+      - restore_cache:
+          keys:
+            - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - gem-cache-{{ arch }}-{{ .Branch }}
+            - gem-cache
+
+      # Bundle install dependencies and remove any unused gems
+      - run: bundle install --path ./vendor/bundle --jobs=4 && bundle clean --force
+
+      # Store bundle cache
+      - save_cache:
+          key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - ./vendor/bundle
+
+      # Rubocop compliance
+      - run: bundle exec rubocop
+
+      # Using structure.sql? Install postgresql-client for loading structure.
+      #- run: sudo apt-get install postgresql-client
+
+      # Database setup (note: db:setup creates development and test dbs, applies seeds to development)
+      - run: bundle exec rake db:setup
+
+      # Ensure sample_data runs without issues (note: data is loaded into the development database)
+      - run: bundle exec rake db:sample_data
+
+      # Run RSpec in parallel, when parallelism > 1
+      - run: |
+          circleci tests glob "spec/**/*_spec.rb" > /tmp/rspec_files
+
+          TEST_FILES=$(circleci tests split --split-by=timings --timings-type=filename < /tmp/rspec_files)
+
+          echo -e "Testing" $(echo $TEST_FILES | wc -w) "of" $(cat /tmp/rspec_files | wc -w) "files on this container.\n"
+
+          bundle exec rspec --format RspecJunitFormatter \
+                            --out ./test-results/rspec/results.xml -- \
+                            $TEST_FILES
+
+      # Save test results, so the the timings can be used in future parallel runs
+      - store_test_results:
+          path: ./test-results
+
+      # Save the test logs for debugging
+      - store_artifacts:
+          path: ./log/test.log
+          destination: test.log
+
+      # Save screenshots for debugging
+      - store_artifacts:
+          path: ./tmp/screenshots

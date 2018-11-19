@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+const shell = require("shelljs");
+
+shell.config.silent = true;
+shell.exec("yarn check --integrity");
+if (shell.error()) {
+  console.log(`
+  ERROR: Dependencies are not met. Please run \`yarn install\`.
+`);
+  process.exit(1);
+}

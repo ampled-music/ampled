@@ -2,7 +2,7 @@
   "name": "app-prototype",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:3000",
+  // "proxy":"http://localhost:3000",
   "dependencies": {
     "classnames": "^2.2.6",
     "enzyme": "^3.7.0",

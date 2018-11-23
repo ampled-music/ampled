@@ -4,14 +4,6 @@ import "./App.scss";
 import Counter from "./components/Counter";
 
 class App extends Component {
-  constructor(){
-    this.state = {
-      signedIn: null
-    };
-  }
-  componentWillMount(){
-
-  }
 
   render() {
     return (

@@ -11,6 +11,10 @@ module AmpledWeb
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
+    config.to_prepare do
+      DeviseController.respond_to :html, :json
+    end
+
     # Enable/disable generators.
     config.generators do |g|
       # Core Rails

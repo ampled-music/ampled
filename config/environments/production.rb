@@ -72,6 +72,8 @@ Rails.application.configure do
   # Set the host so that we can generate full URLs outside the context of a request
   # (e.g. sending email).
   config.action_mailer.default_url_options = { host: ENV.fetch("HOSTNAME", "ampled-web.herokuapp.com") }
+  config.action_mailer.delivery_method = :postmark
+  config.action_mailer.postmark_settings = { :api_token => ENV['POSTMARK_API_KEY'] }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

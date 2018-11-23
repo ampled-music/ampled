@@ -10,6 +10,9 @@ gem "pg"
 gem "puma"
 gem "rack-canonical-host"
 gem "rails", "~> 5.2.1"
+gem "devise"
+gem "administrate"
+gem 'postmark-rails'
 
 # Front-endy
 gem "autoprefixer-rails"

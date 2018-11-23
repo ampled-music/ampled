@@ -4,6 +4,21 @@ import "./App.scss";
 import Counter from "./components/Counter";
 
 class App extends Component {
+  constructor(){
+    this.state = {
+      signedIn: null
+    };
+  }
+  componentWillMount(){
+    $.ajax({
+      method: "GET",
+      url: "auth/is_signed_in.json"
+    }).done((data) => {
+      this.setState({signedIn: data.signed_in});
+    })
+  }
+
+  getInitialState()
   render() {
     return (
       <div className="App">

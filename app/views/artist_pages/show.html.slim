@@ -1,0 +1,13 @@
+.page-header
+  h1 Artist_page
+
+dl
+
+/- if policy(artist_page).edit?
+=> link_to "Edit", edit_artist_page_path(@artist_page), class: "btn btn-primary"
+
+= link_to "Back", artist_pages_path, class: "btn btn-secondary"
+
+/- if policy(artist_page).destroy?
+=< link_to "Destroy", artist_page_path(@artist_page),
+          method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger"

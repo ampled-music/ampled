@@ -1,0 +1,52 @@
+class ArtistPagesController < ApplicationController
+  before_action :set_artist_page, only: %i[show edit update destroy]
+
+  def index
+    @artist_pages = ArtistPage.all
+  end
+
+  def show
+  end
+
+  def new
+    @artist_page = ArtistPage.new
+  end
+
+  def edit
+  end
+
+  def create
+    @artist_page = ArtistPage.new(artist_page_params)
+
+    if @artist_page.save
+      redirect_to @artist_page, notice: "Artist page was successfully created."
+    else
+      render :new
+    end
+  end
+
+  def update
+    if @artist_page.update(artist_page_params)
+      redirect_to @artist_page, notice: "Artist page was successfully updated."
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @artist_page.destroy
+    redirect_to artist_pages_url, notice: "Artist page was successfully destroyed."
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_artist_page
+    @artist_page = ArtistPage.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def artist_page_params
+    params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :banner_image_url)
+  end
+end

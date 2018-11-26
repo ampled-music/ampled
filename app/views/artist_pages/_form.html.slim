@@ -1,0 +1,44 @@
+javascript:
+  setTimeout(() => {
+    if ($('#artist_page_banner_image_url').val()){
+      $(".preview-img").attr('src', $('#artist_page_banner_image_url').val())
+    }
+    $('.cloudinary-fileupload').bind('cloudinarydone', function(e, data) {
+        console.log("done!")
+        console.log(data)
+        $('.preview').html(
+          $.cloudinary.image(data.result.public_id,
+            { format: data.result.format, version: data.result.version, cloud_name: "ampled-web",
+              crop: 'fill', width: 150, height: 100 })
+        );
+        $('#artist_page_banner_image_url').val(data.result.secure_url);
+        return true;
+      });
+
+
+  }, 2000)
+
+= simple_form_for(artist_page) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :bio
+    = f.input :twitter_handle
+    = f.input :instagram_handle
+    = f.input :banner_image_url
+    div.preview
+    img.preview-img
+    br
+    = cl_image_upload_tag(:image_id, {:api_key => "744875614849321",
+                                       :api_secret => "vkrV4k_iOlct_pt0Ue-DukQCIXQ",
+                                       :cloud_name => "ampled-web",
+                                       :tags => "directly_uploaded",
+                                       :crop => :limit, :width => 1000, :height => 1000,
+                                       :eager => [{ :crop => :fill, :width => 150, :height => 100 }],
+                                       :html => { :style => "margin-top: 30px" } } )
+
+  => button_tag type: "submit", class: "btn btn-primary" do
+    = "#{btn_action_prefix} Artist page"
+
+  = link_to "Back", :back, class: "btn btn-secondary"

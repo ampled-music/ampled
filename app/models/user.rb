@@ -30,4 +30,10 @@ class User < ApplicationRecord
          :confirmable
 
   validates_presence_of :name
+
+  has_many :page_ownerships
+  has_many :owned_pages, through: :page_ownerships, source: :artist_page
+
+  # TODO - better naming
+  # has_many :supportees, through: :supportings, source: :artist_page
 end

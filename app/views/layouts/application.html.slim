@@ -1,17 +1,25 @@
 doctype 5
 html
   head
-    title Ampled Web
+    title Ampled
     = stylesheet_link_tag    "application", media: "all"
     = javascript_include_tag "application"
+    = cloudinary_js_config
     = csrf_meta_tag
+    javascript:
+      $(function() {
+        if($.fn.cloudinary_fileupload !== undefined) {
+          $("input.cloudinary-fileupload[type=file]").cloudinary_fileupload();
+        }
+      });
+
     meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
 
   body id=(controller.controller_name) class=(controller.action_name)
     header
       nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
         .container
-          a.navbar-brand href="/" Ampled Web
+          a.navbar-brand href="/" Ampled
           button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
             span.navbar-toggler-icon
 

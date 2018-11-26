@@ -1,0 +1,24 @@
+div.page-header
+  h1 Artist_pages
+
+table.table.table-striped.table-hover
+  thead
+    tr
+      th ID
+      th Actions
+
+  tbody
+    - @artist_pages.each do |artist_page|
+      tr
+        /td= link_to_if policy(artist_page).show?, artist_page.id, artist_page_path(artist_page)
+        td= link_to artist_page.id, artist_page_path(artist_page)
+        td
+          /- if policy(artist_page).edit?
+          = link_to "Edit", edit_artist_page_path(artist_page), class: "btn btn-primary btn-xs"
+          '
+          /- if policy(artist_page).destroy?
+          = link_to "Destroy", artist_page_path(artist_page),
+                  method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-xs"
+
+/- if policy(ArtistPage).create?
+= link_to "New Artist page", new_artist_page_path, class: "btn btn-primary"

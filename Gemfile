@@ -13,6 +13,7 @@ gem "rails", "~> 5.2.1"
 gem "devise"
 gem "administrate"
 gem 'postmark-rails'
+gem 'cloudinary'
 
 # Front-endy
 gem "autoprefixer-rails"

@@ -5,13 +5,20 @@
     .jumbotron
       h2 Your artist pages
       - current_user.owned_pages.each do |page|
-        = link_to page.name, edit_artist_page_path(page)
+        li
+          = link_to page.name, edit_artist_page_path(page)
 
   - if false
     .jumbotron
       h2 Artists you support
       - current_user.supported_artists.each do |artist|
         = artist.name
+  .jumbotron
+    h1 Artists to support
+    - ArtistPage.all.each do |page|
+      li
+        = link_to page.name, artist_page_path(page)
+    .
 - else
   .jumbotron
     h1 Support for artists

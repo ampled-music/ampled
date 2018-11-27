@@ -1,7 +1,10 @@
 .page-header
-  h1 Artist_page
+  h1 #{@artist_page.name}
 
 dl
+= image_tag "#{@artist_page.banner_image_url}"
+p "#{@artist_page.bio}"
+
 
 /- if policy(artist_page).edit?
 => link_to "Edit", edit_artist_page_path(@artist_page), class: "btn btn-primary"

@@ -2,8 +2,14 @@
   h1 #{@artist_page.name}
 
 dl
-= image_tag "#{@artist_page.banner_image_url}"
-p "#{@artist_page.bio}"
+= image_tag "#{@artist_page.banner_image_url}", height: 200
+p #{@artist_page.bio}
+
+br
+br
+br
+
+pre #{@artist_page.to_json.gsub(",",",\n")}
 
 
 /- if policy(artist_page).edit?

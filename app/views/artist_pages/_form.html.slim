@@ -6,6 +6,7 @@ javascript:
     $('.cloudinary-fileupload').bind('cloudinarydone', function(e, data) {
         console.log("done!")
         console.log(data)
+        $(".preview-img").attr('src', '')
         $('.preview').html(
           $.cloudinary.image(data.result.public_id,
             { format: data.result.format, version: data.result.version, cloud_name: "ampled-web",

@@ -16,6 +16,11 @@
 
 class ArtistPage < ApplicationRecord
 
-    has_many :page_ownerships
+    has_many :page_ownerships, dependent: :destroy
     has_many :owners, through: :page_ownerships, source: :user
+
+    has_many :posts, dependent: :destroy
+
+    has_many :subscriptions, dependent: :destroy
+    has_many :subscribers, through: :subscriptions, source: :user
 end

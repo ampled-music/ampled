@@ -1,22 +1,66 @@
+css:
+  .blurred {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+  }
+
 .page-header
   h1 #{@artist_page.name}
 
+- if current_user.subscribed?(@artist_page)
+  b Subscribed!
+- else
+  = form_tag(subscriptions_path, method: :post) do
+    = hidden_field_tag('subscription[artist_page_id]', @artist_page.id)
+    = submit_tag("Subscribe", class: "btn btn-primary")
+
 dl
-= image_tag "#{@artist_page.banner_image_url}", height: 200
+= image_tag "#{@artist_page.banner_image_url}", height: 200, style: "border: 2px solid #{@artist_page.accent_color}"
 p #{@artist_page.bio}
 
 br
 br
 br
 
-pre #{@artist_page.to_json.gsub(",",",\n")}
 
+- @artist_page.posts.each do |post|
+  br
+  br
+  .jumbotron
+    - if !current_user.subscribed?(@artist_page)
+      p Subscribe to see post!
+    div class=(current_user.subscribed?(@artist_page) ? '' : 'blurred')
+      small Posted #{time_ago_in_words(post.created_at)} ago
+      br
+      b by #{post.author}
+      h4 #{post.title}
+      p #{post.body.gsub("\n","<br />").html_safe}
+      - post.comments.each do |comment|
+        hr
+        small #{time_ago_in_words(comment.created_at)}
+        br
+        b #{comment.user.name}
+        p #{comment.text}
+        br
+      = form_for :comment, url: comments_path, method: :post do |f|
+       = f.hidden_field(:post_id, value: post.id)
+       = f.text_area(:text)
+       br
+       = f.submit("Comment")
+
+
+br
+br
+/ pre #{@artist_page.to_json.gsub(",",",\n")}
 
 /- if policy(artist_page).edit?
-=> link_to "Edit", edit_artist_page_path(@artist_page), class: "btn btn-primary"
+/ => link_to "Edit", edit_artist_page_path(@artist_page), class: "btn btn-primary"
 
-= link_to "Back", artist_pages_path, class: "btn btn-secondary"
+/ = link_to "Back", artist_pages_path, class: "btn btn-secondary"
 
 /- if policy(artist_page).destroy?
-=< link_to "Destroy", artist_page_path(@artist_page),
+/ =< link_to "Destroy", artist_page_path(@artist_page),
           method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger"

@@ -1,26 +1,17 @@
 require "administrate/base_dashboard"
 
-class ArtistPageDashboard < Administrate::BaseDashboard
+class CommentDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
   # Each different type represents an Administrate::Field object,
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
-  def display_resource(artist_page)
-    "#{artist_page.name} - #{artist_page.id}"
-  end
   ATTRIBUTE_TYPES = {
-    owners: Field::HasMany.with_options(class_name: "User", show: %i[email], searchable: true,
-      searchable_field: 'email'),
+    post: Field::BelongsTo,
+    user: Field::BelongsTo,
     id: Field::Number,
-    name: Field::String,
-    location: Field::String,
-    bio: Field::String,
-    accent_color: Field::String,
-    banner_image_url: Field::String,
-    twitter_handle: Field::String,
-    instagram_handle: Field::String,
+    text: Field::Text,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -31,23 +22,19 @@ class ArtistPageDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :name,
+    :post,
+    :user,
     :id,
-    :owners,
+    :text,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :name,
+    :post,
+    :user,
     :id,
-    :owners,
-    :location,
-    :bio,
-    :accent_color,
-    :banner_image_url,
-    :twitter_handle,
-    :instagram_handle,
+    :text,
     :created_at,
     :updated_at,
   ].freeze
@@ -56,20 +43,15 @@ class ArtistPageDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :owners,
-    :name,
-    :location,
-    :bio,
-    :accent_color,
-    :banner_image_url,
-    :twitter_handle,
-    :instagram_handle,
+    :post,
+    :user,
+    :text,
   ].freeze
 
-  # Overwrite this method to customize how artist pages are displayed
+  # Overwrite this method to customize how comments are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(artist_page)
-  #   "ArtistPage ##{artist_page.id}"
+  # def display_resource(comment)
+  #   "Comment ##{comment.id}"
   # end
 end

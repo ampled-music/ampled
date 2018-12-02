@@ -8,11 +8,12 @@
         li
           = link_to page.name, edit_artist_page_path(page)
 
-  - if false
+  - if current_user.supported_artists.present?
     .jumbotron
       h2 Artists you support
       - current_user.supported_artists.each do |artist|
-        = artist.name
+        = link_to artist.name, artist
+        br
   .jumbotron
     h1 Artists to support
     - ArtistPage.all.each do |page|

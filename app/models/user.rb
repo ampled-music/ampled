@@ -31,9 +31,18 @@ class User < ApplicationRecord
 
   validates_presence_of :name
 
-  has_many :page_ownerships
+  has_many :page_ownerships, dependent: :destroy
   has_many :owned_pages, through: :page_ownerships, source: :artist_page
 
+  has_many :subscriptions, dependent: :destroy
+  has_many :supported_artists, through: :subscriptions, source: :artist_page
+
+  has_many :posts, dependent: :destroy
+
+
+  def subscribed?(artist_page)
+    supported_artists.include?(artist_page)
+  end
   # TODO - better naming
   # has_many :supportees, through: :supportings, source: :artist_page
 end

@@ -3,12 +3,18 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
     resources :artist_pages
-    # resources :page_ownerships
+    resources :posts
+    resources :subscriptions
+    resources :comments
 
     root to: "users#index"
   end
+
+  resources :comments, only: [:create]
+  resources :subscriptions
 
   devise_for :users, controllers: { confirmations: 'confirmations' }
 
   root to: "pages#root"
 end
+

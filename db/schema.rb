@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_24_170328) do
+ActiveRecord::Schema.define(version: 2018_12_02_160721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,16 @@ ActiveRecord::Schema.define(version: 2018_11_24_170328) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.bigint "post_id"
+    t.bigint "user_id"
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "page_ownerships", force: :cascade do |t|
     t.integer "user_id"
     t.integer "artist_page_id"
@@ -34,6 +44,25 @@ ActiveRecord::Schema.define(version: 2018_11_24_170328) do
     t.datetime "updated_at", null: false
     t.index ["artist_page_id", "user_id"], name: "index_page_ownerships_on_artist_page_id_and_user_id"
     t.index ["user_id", "artist_page_id"], name: "index_page_ownerships_on_user_id_and_artist_page_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.bigint "artist_page_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "body"
+    t.string "image_url"
+    t.index ["artist_page_id"], name: "index_posts_on_artist_page_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "artist_page_id"
+    t.bigint "user_id"
+    t.index ["artist_page_id"], name: "index_subscriptions_on_artist_page_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,4 +82,10 @@ ActiveRecord::Schema.define(version: 2018_11_24_170328) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
+  add_foreign_key "posts", "artist_pages"
+  add_foreign_key "posts", "users"
+  add_foreign_key "subscriptions", "artist_pages"
+  add_foreign_key "subscriptions", "users"
 end

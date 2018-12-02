@@ -1,3 +1,7 @@
+
+script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"
+
+
 javascript:
   setTimeout(() => {
     if ($('#artist_page_banner_image_url').val()){
@@ -31,6 +35,10 @@ javascript:
     div.preview
     img.preview-img
     br
+
+
+  a id="upload_widget_opener" href="#"
+
     = cl_image_upload_tag(:image_id, {:api_key => "744875614849321",
                                        :api_secret => "vkrV4k_iOlct_pt0Ue-DukQCIXQ",
                                        :cloud_name => "ampled-web",
@@ -43,3 +51,7 @@ javascript:
     = "#{btn_action_prefix} Artist page"
 
   = link_to "Back", :back, class: "btn btn-secondary"
+javascript:
+  cloudinary.applyUploadWidget('#upload_widget_opener',{
+    cloudName: 'ampled-web', uploadPreset: 'preset1', theme: 'minimal', sources: ['local'],
+     folder: 'widgetdocs' }, (error, result) => { });

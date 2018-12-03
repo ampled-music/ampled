@@ -15,6 +15,7 @@ gem "administrate"
 gem 'postmark-rails'
 gem 'cloudinary'
 gem 'faker'
+gem 'skylight'
 
 # Front-endy
 gem "autoprefixer-rails"

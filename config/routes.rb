@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     root to: "users#index"
   end
 
-  resources :comments, only: [:create]
+  resources :comments, only: [:create, :destroy]
   resources :subscriptions
 
   devise_for :users, controllers: { confirmations: 'confirmations' }

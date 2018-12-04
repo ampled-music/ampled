@@ -44,6 +44,7 @@ br
         br
         b #{comment.user.name}
         p #{comment.text}
+        = link_to "delete", comment, method: :delete
         br
       = form_for :comment, url: comments_path, method: :post do |f|
        = f.hidden_field(:post_id, value: post.id)

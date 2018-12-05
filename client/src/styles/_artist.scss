@@ -1,0 +1,153 @@
+.artist-header {
+
+    &__title {
+        font-size: 3rem;
+        margin: 2rem 0;
+        text-transform: uppercase;
+        font-weight: bolder;
+    }
+
+    &__members {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        align-content: flex-start;
+        flex-wrap: wrap;
+        padding-top: 20px;
+        
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            z-index: 0;
+            top: 0px;
+            background-color: $blue;
+            width: 2px;
+            height: 100%;
+        }
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            z-index: 0;
+            top: 0px;
+            right: 0px;
+            border-top: 2px solid $blue;
+            border-bottom: 2px solid $blue;
+            width: 50%;
+            height: 100%;
+        }
+    }
+    &__member {
+        width: 100%;
+        max-width: 90px;
+        max-height: 90px;
+        position: relative;
+        z-index: 10;
+        margin: 10px 0px;
+        border-radius: 100px;
+        border: 1px solid $blue;
+        &_name {
+            font-size: .9rem;
+        }
+        &_quote {
+            font-size: .8rem;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    }
+
+    &__photos {
+        height: 570px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        align-content: flex-start;
+        border-right: 2px solid $blue;
+        border-top: 2px solid $blue;
+        border-bottom: 2px solid $blue;
+    }
+    &__photo {
+        position: absolute;
+        display: block;
+        z-index: -1;
+        width: 550px;
+        left: 50%;
+        top: 50%;
+        transition: all $speed;
+
+        &:nth-child(1) {
+            transform: translate(-50%, -50%) rotate(7deg);
+        }
+        &:nth-child(2) {
+            transform: translate(-50%, -50%) rotate(-6deg);
+        }
+        &:nth-child(3) {
+            transform: translate(-50%, -50%) rotate(2deg);
+        }
+        &:nth-child(4) {
+            transform: translate(-50%, -50%) rotate(-2deg);
+        }
+
+        &:hover {
+            z-index: 5;
+            width: 600px;
+            transform: translate(-50%, -50%) rotate(0deg);
+            transition: all $speed;
+        }
+    }
+
+
+    &__message {
+        font-size: 1.5rem;
+        margin: 2rem 0;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    &__message-container {
+        width: 90%;
+        margin: 2rem auto;
+        border: 2px solid $blue;
+        padding: 10px 0px;
+    }
+    &__message-image {
+        width: 110%;
+        transform: rotate(-2deg);
+        position: relative;
+        left: -5%;
+        z-index: -1;
+    }
+
+    &__supporters {
+        
+    }
+    &__supporter-title {
+        font-size: 1.2rem;
+        margin: 1rem 0;
+        text-transform: uppercase;
+    }
+}
+
+.artist-info {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    border-top: 2px solid $black;
+    border-bottom: 2px solid $black;
+    margin: 2rem auto;
+    padding: 1rem 0;
+
+    &__location {
+        margin: 0 1rem;
+    }
+
+    &__social {
+        display: flex;
+        justify-content: flex-end;
+
+        &_twitter {
+            margin: 0 1rem;
+        }
+        &_instagram {
+            margin: 0 1rem;
+        }
+    }
+}

@@ -18,13 +18,9 @@ export default class ArtistHeader extends React.Component {
   }
 
   componentDidMount(){
-    fetch(`/artist_pages/${this.props.id}`, {headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    }})
+    fetch(`/artist_pages/${this.props.id}.json`)
       .then(res => res.json())
       .then(data => {
-        console.log("HI", data)
         this.setState({artistName: data.name})
       })
   }

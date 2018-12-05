@@ -32,13 +32,9 @@ class Home extends Component {
     }
   }
   componentDidMount(){
-    fetch(`/artist_pages/`, {headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    }})
+    fetch(`/artist_pages.json`)
       .then(res => res.json())
       .then(data => {
-        console.log("HI", data)
         this.setState({artistPages: data})
       })
   }

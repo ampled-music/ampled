@@ -3,9 +3,17 @@ class ArtistPagesController < ApplicationController
 
   def index
     @artist_pages = ArtistPage.all
+    respond_to do |format|
+      format.html
+      format.json { render json: @artist_pages }
+    end
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @artist_page }
+    end
   end
 
   def new

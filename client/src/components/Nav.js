@@ -1,5 +1,5 @@
 import React from "react";
-import logo from './ampled_logo.svg';
+import logo from '../ampled_logo.svg';
 
 export default class Nav extends React.Component {
   render() {

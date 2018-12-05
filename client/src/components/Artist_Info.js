@@ -3,7 +3,7 @@ import React from "react";
 export default class ArtistInfo extends React.Component {
   render() {
     return (
-        <div className="artist-info container"> {/* Info Section */}
+        <div className="artist-info container">
           <div className="row justify-content-between">
             <div className="col-md-4">
               <div className="artist-info__location">
@@ -17,7 +17,7 @@ export default class ArtistInfo extends React.Component {
               </div>
             </div>
           </div>
-        </div>{/* Close Info Section */}
+        </div>
     );
   }
 }

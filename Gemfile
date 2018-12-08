@@ -16,6 +16,8 @@ gem 'postmark-rails'
 gem 'cloudinary'
 gem 'faker'
 gem 'skylight'
+gem 'jbuilder'
+gem 'pundit'
 
 # Front-endy
 gem "autoprefixer-rails"

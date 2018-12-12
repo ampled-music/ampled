@@ -40,10 +40,7 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
 
-
   def subscribed?(artist_page)
     supported_artists.include?(artist_page)
   end
-  # TODO - better naming
-  # has_many :supportees, through: :supportings, source: :artist_page
 end

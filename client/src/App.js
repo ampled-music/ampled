@@ -1,31 +1,23 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.scss";
-import Counter from "./components/Counter";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import "./App.css";
+import Home from './Home'
+import Artist from './Artist'
+import Upload from './components/Upload'
+
 
 class App extends Component {
-
-  render() {
+  render () {
     return (
-      <div className="App">
-        <header className="App__header">
-          <Counter />
-          <img src={logo} className="App__logo" alt="logo" />
-          <p>
-            Edit <code className="App__code">src/App.js</code> and save to
-            reload.
-          </p>
-          <a
-            className="App__link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+      <Router>
+        <div>
+          <Route exact path="/" component={Home} />
+          <Route path="/artists/:id" component={Artist} />
+          <Route path="/upload" component={Upload} />
+        </div>
+      </Router>
+    )
   }
 }
 

@@ -18,6 +18,8 @@ gem 'faker'
 gem 'skylight'
 gem 'jbuilder'
 gem 'pundit'
+gem "paperclip", "~> 6.0.0"
+gem 'aws-sdk', '~> 3'
 
 # Front-endy
 gem "autoprefixer-rails"
@@ -32,6 +34,7 @@ gem "uglifier"
 
 # Tools
 gem "awesome_print"
+gem 'pry'
 
 # Env specific dependencies...
 
@@ -50,7 +53,7 @@ group :development do
   gem "annotate"
   gem "better_errors"
   gem "binding_of_caller"
-  gem "dotenv-rails"
+  gem "dotenv-rails", require: 'dotenv/rails-now'
   gem "launchy"
   gem "listen"
   gem "spring"

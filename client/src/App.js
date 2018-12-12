@@ -1,22 +1,23 @@
 import React, { Component } from "react";
-import "./App.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Counter      from "./components/Counter";
-import Nav          from "./components/Nav";
-import ArtistHeader from "./components/Artist_Header";
-import ArtistInfo   from "./components/Artist_Info";
+import "./App.css";
+import Home from './Home'
+import Artist from './Artist'
+import Upload from './components/Upload'
 
 
 class App extends Component {
-
-  render() {
+  render () {
     return (
-      <div className="App">
-          <Nav />
-          <ArtistHeader />
-          <ArtistInfo />
-      </div>
-    );
+      <Router>
+        <div>
+          <Route exact path="/" component={Home} />
+          <Route path="/artists/:id" component={Artist} />
+          <Route path="/upload" component={Upload} />
+        </div>
+      </Router>
+    )
   }
 }
 

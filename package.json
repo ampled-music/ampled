@@ -5,7 +5,7 @@
   "scripts": {
     "start": "concurrently -k -r npm:start:client npm:start:server",
     "start:client": "cd client && npm-run-all start",
-    "start:server": "heroku local",
+    "start:server": "rails s",
     "postinstall": "cd client && yarn install"
   },
   "devDependencies": {

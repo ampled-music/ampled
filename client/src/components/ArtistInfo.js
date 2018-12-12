@@ -3,11 +3,11 @@ import React from "react";
 export default class ArtistInfo extends React.Component {
   render() {
     return (
-        <div className="artist-info container"> {/* Info Section */}
+        <div className="artist-info container">
           <div className="row justify-content-between">
             <div className="col-md-4">
               <div className="artist-info__location">
-                <i className="fas fa-map-marker-alt"></i> Cleveland, Ohio
+                <i className="fas fa-map-marker-alt"></i> {this.props.location}
               </div>
             </div>
             <div className="col-md-5">
@@ -17,7 +17,7 @@ export default class ArtistInfo extends React.Component {
               </div>
             </div>
           </div>
-        </div>{/* Close Info Section */}
+        </div>
     );
   }
 }

@@ -12,6 +12,9 @@ Rails.application.routes.draw do
 
   resources :comments, only: [:create, :destroy]
   resources :subscriptions
+  resources :artist_pages, only: [] do
+    resources :posts, only: [:create, :index]
+  end
 
   get 'uploads/sign', to: 'uploads#sign_file'
   get 'uploads/playable_url', to: 'uploads#playable_url'

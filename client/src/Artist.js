@@ -1,35 +1,42 @@
 import React, { Component } from "react";
 
-import Nav          from "./components/Nav";
+import Nav from "./components/Nav";
 import ArtistHeader from "./components/ArtistHeader";
-import ArtistInfo   from "./components/ArtistInfo";
-import PostsContainer from './components/PostsContainer';
+import ArtistInfo from "./components/ArtistInfo";
+import PostsContainer from "./components/PostsContainer";
 
 class Artist extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       id: this.props.match.params.id,
-      data: {name: '', posts: []},
-    }
+      data: { name: "", posts: [] }
+    };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     fetch(`/artist_pages/${this.state.id}.json`)
       .then(res => res.json())
       .then(data => {
-        console.log("setting state!")
-        this.setState({data: data})
-      })
+        console.log("setting state!");
+        this.setState({ data: data });
+      });
   }
 
   render() {
     return (
       <div className="App">
         <Nav />
-        <ArtistHeader name={this.state.data.name} accentColor={this.state.data.accent_color} />
+        <ArtistHeader
+          name={this.state.data.name}
+          id={this.state.id}
+          accentColor={this.state.data.accent_color}
+        />
         <ArtistInfo location={this.state.data.location} />
-        <PostsContainer posts={this.state.data.posts} accentColor={this.state.data.accent_color} />
+        <PostsContainer
+          posts={this.state.data.posts}
+          accentColor={this.state.data.accent_color}
+        />
       </div>
     );
   }

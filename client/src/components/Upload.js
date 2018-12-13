@@ -4,6 +4,8 @@ import axios from "axios";
 class ProgressBar extends React.Component {
   constructor(props) {
     super(props);
+
+    this.onComplete = props.onComplete;
   }
 
   render() {
@@ -48,7 +50,10 @@ export default class Upload extends React.Component {
         method: "PUT",
         data: file
       };
-      axios.request(putUrl, options).then(this.fetchPlayableUrl.bind(this));
+      axios.request(putUrl, options).then(_ => {
+        this.onComplete(putUrl);
+        this.fetchPlayableUrl.bind(this);
+      });
     });
   }
 

@@ -5,6 +5,7 @@ import "./App.css";
 import Home from './Home'
 import Artist from './Artist'
 import Upload from './components/Upload'
+import PostForm from './components/PostForm'
 
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
           <Route exact path="/" component={Home} />
           <Route path="/artists/:id" component={Artist} />
           <Route path="/upload" component={Upload} />
+          <Route path="/create_post/:id" component={PostForm} />
         </div>
       </Router>
     )

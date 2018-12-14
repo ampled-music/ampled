@@ -899,6 +899,7 @@ GEM
     rack-canonical-host (0.2.3)
       addressable (> 0, < 3)
       rack (>= 1.0.0, < 3)
+    rack-cors (1.0.2)
     rack-protection (2.0.4)
       rack
     rack-test (1.1.0)
@@ -1089,6 +1090,7 @@ DEPENDENCIES
   puma
   pundit
   rack-canonical-host
+  rack-cors
   rack-timeout
   rails (~> 5.2.1)
   rspec-rails
@@ -1112,4 +1114,4 @@ RUBY VERSION
    ruby 2.5.3p105
 
 BUNDLED WITH
-   1.17.1
+   1.17.2

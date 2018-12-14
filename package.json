@@ -1,5 +1,5 @@
 {
-  "name": "my-project",
+  "name": "ampled",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -17,5 +17,8 @@
     "node": "10.13.0",
     "yarn": ">=1.12.1"
   },
-  "cacheDirectories": ["node_modules", "client/node_modules"]
+  "cacheDirectories": [
+    "node_modules",
+    "client/node_modules"
+  ]
 }

@@ -22,6 +22,7 @@ gem "paperclip", "~> 6.0.0"
 gem 'aws-sdk', '~> 3'
 gem 'sidekiq'
 gem 'zencoder'
+gem 'rack-cors', require: 'rack/cors'
 
 # Front-endy
 gem "autoprefixer-rails"

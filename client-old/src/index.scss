@@ -1,0 +1,18 @@
+// index.scss is for CSS declarations that aren't specific to a component.
+// In practice, that means this file is used for two things:
+//
+//   1. Setting the style of the <body> element
+//   2. Loading webfonts
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+// Example webfont declaration
+// @font-face {
+//   font-family: Lato;
+//   src: url("./theme/lato-regular-webfont.woff2") format("woff2"),
+//     url("./theme/lato-regular-webfont.woff") format("woff");
+//   font-display: swap;
+// }

@@ -1,0 +1,14 @@
+// Bootstrap 4
+@import 'bootstrap/scss/bootstrap.scss';
+// Font Awesome
+@import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+
+// Ampled Variables
+@import 'styles/_variables.scss';
+
+// Component Styles
+@import 'styles/_global.scss';
+@import 'styles/_header.scss';
+
+// Artist Page
+@import 'styles/_artist.scss';

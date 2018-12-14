@@ -2,10 +2,24 @@ import axios from 'axios';
 import * as React from 'react';
 import { ProgressBar } from './ProgressBar';
 
-class Upload extends React.Component<any, any> {
+interface UploadState {
+  progress: number;
+  complete: boolean;
+  completedUrl: string;
+  key: string;
+}
+
+interface UploadProps {
+  onComplete: (string) => null
+}
+
+class Upload extends React.Component<UploadProps, UploadState> {
+  private onComplete : (s: string) => null;
+
   constructor(props) {
     super(props);
     this.state = { progress: 0, complete: false, completedUrl: '', key: '' };
+    this.onComplete = props.onComplete || console.log
   }
 
   updateProgress(e) {
@@ -16,9 +30,10 @@ class Upload extends React.Component<any, any> {
   processFile(e) {
     const file = e.target.files[0];
     this.signFile(file).then((response) => {
-      // const putUrl = response.data.signedUrl;
+      const putUrl = response.data.signedUrl;
       this.setState({ key: response.data.key });
       const options = {
+        url: putUrl,
         headers: {
           'Content-Type': file.type,
         },
@@ -27,13 +42,13 @@ class Upload extends React.Component<any, any> {
         data: file,
       };
       axios.request(options).then((_) => {
-        // this.onComplete(putUrl);
-        this.fetchPlayableUrl.bind(this);
+        this.fetchPlayableUrl.bind(this)();
+        this.onComplete(putUrl);
       });
     });
   }
 
-  fetchPlayableUrl(_) {
+  fetchPlayableUrl() {
     axios.get(`uploads/playable_url?key=${this.state.key}`).then((response) => {
       this.setState({ completedUrl: response.data.signedUrl, complete: true });
     });
@@ -45,7 +60,6 @@ class Upload extends React.Component<any, any> {
 
   render() {
     const { completedUrl, progress } = this.state;
-
     return (
       <div style={{ width: '400px' }}>
         <ProgressBar now={progress} />

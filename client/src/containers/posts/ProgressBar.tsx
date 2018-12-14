@@ -1,10 +1,12 @@
 import * as React from 'react';
 
-class ProgressBar extends React.Component<any, any> {
+interface ProgressBarProps {
+  now: number;
+}
+
+class ProgressBar extends React.Component<ProgressBarProps, any> {
   constructor(props) {
     super(props);
-
-    // this.onComplete = props.onComplete;
   }
 
   render() {

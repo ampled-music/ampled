@@ -3,8 +3,8 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import * as store from 'store';
 
 import { config } from '../config';
-import Artist from './artist/Artist';
-import Home from './home/Home';
+import { Artist } from './artist/Artist';
+import { Home } from './home/Home';
 import { PostForm } from './posts/PostForm';
 import { Upload } from './posts/Upload';
 import { routePaths } from './route-paths';

@@ -1,18 +1,18 @@
-import React from 'react'
+import * as React from 'react';
 
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-import nine_inch_nails_1 from '../../test/nine_inch_nails_1.jpg'
-import nine_inch_nails_2 from '../../test/nine_inch_nails_2.jpg'
-import nine_inch_nails_3 from '../../test/nine_inch_nails_3.jpg'
-import nine_inch_nails_4 from '../../test/nine_inch_nails_4.jpg'
-import trent_reznor from '../../test/trent_reznor.jpg'
-import atticus_ross from '../../test/atticus_ross.jpg'
-import nin_video from '../../test/nin_video.jpg'
+import atticus_ross from '../../test/atticus_ross.jpg';
+import nin_video from '../../test/nin_video.jpg';
+import nine_inch_nails_1 from '../../test/nine_inch_nails_1.jpg';
+import nine_inch_nails_2 from '../../test/nine_inch_nails_2.jpg';
+import nine_inch_nails_3 from '../../test/nine_inch_nails_3.jpg';
+import nine_inch_nails_4 from '../../test/nine_inch_nails_4.jpg';
+import trent_reznor from '../../test/trent_reznor.jpg';
 
-export default class ArtistHeader extends React.Component {
+class ArtistHeader extends React.Component<any, any> {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -92,6 +92,8 @@ export default class ArtistHeader extends React.Component {
           {/* Close Right Side */}
         </div>
       </div>
-    )
+    );
   }
 }
+
+export { ArtistHeader };

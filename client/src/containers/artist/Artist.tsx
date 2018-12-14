@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 
-import Nav from '../nav/Nav';
-import ArtistHeader from './ArtistHeader';
-import ArtistInfo from './ArtistInfo';
-import PostsContainer from '../posts/PostsContainer';
 import axios from 'axios';
+import { Nav } from '../nav/Nav';
+import { PostsContainer } from '../posts/PostsContainer';
+import { ArtistHeader } from './ArtistHeader';
+import { ArtistInfo } from './ArtistInfo';
 
-class Artist extends Component {
+class Artist extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +17,6 @@ class Artist extends Component {
 
   componentDidMount() {
     axios.get(`/artist_pages/${this.state.id}.json`).then((res) => {
-      console.log('setting state!');
       this.setState({ data: res.data });
     });
   }
@@ -34,4 +33,4 @@ class Artist extends Component {
   }
 }
 
-export default Artist;
+export { Artist };

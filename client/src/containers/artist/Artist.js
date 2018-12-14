@@ -1,25 +1,25 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import Nav from '../nav/Nav'
-import ArtistHeader from './ArtistHeader'
-import ArtistInfo from './ArtistInfo'
-import PostsContainer from '../posts/PostsContainer'
-import axios from 'axios'
+import Nav from '../nav/Nav';
+import ArtistHeader from './ArtistHeader';
+import ArtistInfo from './ArtistInfo';
+import PostsContainer from '../posts/PostsContainer';
+import axios from 'axios';
 
 class Artist extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       id: this.props.match.params.id,
       data: { name: '', posts: [] },
-    }
+    };
   }
 
   componentDidMount() {
     axios.get(`/artist_pages/${this.state.id}.json`).then((res) => {
-      console.log('setting state!')
-      this.setState({ data: res.data })
-    })
+      console.log('setting state!');
+      this.setState({ data: res.data });
+    });
   }
 
   render() {
@@ -30,8 +30,8 @@ class Artist extends Component {
         <ArtistInfo location={this.state.data.location} />
         <PostsContainer posts={this.state.data.posts} accentColor={this.state.data.accent_color} />
       </div>
-    )
+    );
   }
 }
 
-export default Artist
+export default Artist;

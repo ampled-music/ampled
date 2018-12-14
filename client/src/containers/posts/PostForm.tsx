@@ -1,33 +1,32 @@
-import React from 'react'
-import axios from 'axios'
-import Upload from './Upload'
+import * as React from 'react';
+import { Upload } from './Upload';
 
-export default class PostForm extends React.Component {
+class PostForm extends React.Component<any, any> {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       title: '',
       caption: '',
       audioUrl: '',
       artist_page_id: this.props.match.params.id,
-    }
+    };
 
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ value: event.target.value })
+    this.setState({ value: event.target.value });
   }
 
   handleSubmit(event) {
-    alert('Form submitted: ' + this.state)
-    event.preventDefault()
+    alert(`Form submitted: ${this.state}`);
+    event.preventDefault();
   }
 
   addAudioUrl(audioUrl) {
-    this.setState({ audioUrl: audioUrl })
+    this.setState({ audioUrl });
   }
 
   render() {
@@ -45,6 +44,8 @@ export default class PostForm extends React.Component {
         <Upload onComplete={this.addAudioUrl.bind(this)} />
         <input type="submit" value="Submit" />
       </form>
-    )
+    );
   }
 }
+
+export { PostForm };

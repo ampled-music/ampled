@@ -1,5 +1,5 @@
 import * as React from 'react';
-import logo from '../../ampled_logo.svg';
+import logo from '../../images/ampled_logo.svg';
 
 import { Link } from 'react-router-dom';
 

@@ -2,8 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { App } from './containers/app/App';
 import registerServiceWorker from './registerServiceWorker';
-import './styles/App.css';
-import './styles/index.css';
 
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';

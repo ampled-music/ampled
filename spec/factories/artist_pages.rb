@@ -16,6 +16,5 @@
 
 FactoryBot.define do
   factory :artist_page do
-    
   end
 end

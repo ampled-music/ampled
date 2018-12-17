@@ -4,11 +4,13 @@ import thunk from 'redux-thunk';
 
 import { authentication } from './ducks/authenticate';
 import { artist } from './ducks/get-artist';
+import { pages } from './ducks/get-artists-pages';
 import { me } from './ducks/get-me';
 
 const ducks = combineReducers({
   authentication,
   artist,
+  pages,
   me,
 });
 

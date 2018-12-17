@@ -6,7 +6,5 @@ export const getArtist = async (artistId) => {
     url: `/artist_pages/${artistId}.json`,
   });
 
-  console.log(data);
-
   return { artist: data };
 };

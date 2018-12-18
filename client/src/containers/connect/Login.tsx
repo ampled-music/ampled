@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { config } from 'src/config';
-import { authenticate } from 'src/redux/ducks/authenticate';
 import * as store from 'store';
+import { config } from '../../config';
+import { authenticate } from '../../redux/ducks/authenticate';
 import { routePaths } from '../route-paths';
 
 class LoginComponent extends React.Component<any, any> {

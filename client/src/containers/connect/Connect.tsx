@@ -15,7 +15,7 @@ export class ConnectComponent extends React.Component<any, any> {
   componentDidMount() {
     const token = this.getToken();
 
-    if (!token) {
+    if (!token.length) {
       return;
     }
 

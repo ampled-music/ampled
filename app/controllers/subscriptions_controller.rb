@@ -16,7 +16,6 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
@@ -27,16 +26,16 @@ class SubscriptionsController < ApplicationController
   end
 
   def update
-    #if @subscription.update(subscription_params)
+    # if @subscription.update(subscription_params)
     #  redirect_to @artist_page, notice: "Artist page was successfully updated."
-    #else
+    # else
     #  render :edit
-    #end
+    # end
   end
 
   def destroy
-    #@.destroy
-    #redirect_to artist_pages_url, notice: "Artist page was successfully destroyed."
+    # @.destroy
+    # redirect_to artist_pages_url, notice: "Artist page was successfully destroyed."
   end
 
   private

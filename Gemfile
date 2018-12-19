@@ -5,24 +5,25 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "2.5.3"
 
 # Back-endy
-gem "bootsnap", require: false
-gem "pg"
-gem "puma"
-gem "rack-canonical-host"
-gem "rails", "~> 5.2.1"
-gem "devise"
 gem "administrate"
-gem 'postmark-rails'
-gem 'cloudinary'
-gem 'faker'
-gem 'skylight'
-gem 'jbuilder'
-gem 'pundit'
+gem "aws-sdk", "~> 3"
+gem "bootsnap", require: false
+gem "cloudinary"
+gem "devise"
+gem "devise-jwt", "~> 0.5.8"
+gem "faker"
+gem "jbuilder"
 gem "paperclip", "~> 6.0.0"
-gem 'aws-sdk', '~> 3'
-gem 'sidekiq'
-gem 'zencoder'
-gem 'rack-cors', require: 'rack/cors'
+gem "pg"
+gem "postmark-rails"
+gem "puma"
+gem "pundit"
+gem "rack-canonical-host"
+gem "rack-cors", require: "rack/cors"
+gem "rails", "~> 5.2.1"
+gem "sidekiq"
+gem "skylight"
+gem "zencoder"
 
 # Front-endy
 gem "autoprefixer-rails"
@@ -37,7 +38,7 @@ gem "uglifier"
 
 # Tools
 gem "awesome_print"
-gem 'pry'
+gem "pry"
 
 # Env specific dependencies...
 
@@ -56,7 +57,7 @@ group :development do
   gem "annotate"
   gem "better_errors"
   gem "binding_of_caller"
-  gem "dotenv-rails", require: 'dotenv/rails-now'
+  gem "dotenv-rails", require: "dotenv/rails-now"
   gem "launchy"
   gem "listen"
   gem "spring"

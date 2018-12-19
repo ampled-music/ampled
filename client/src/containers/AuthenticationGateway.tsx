@@ -17,7 +17,7 @@ const AuthenticationGateway = ({ component: Component, path }: { component: any;
       return <Component exact path={path} />;
     }
 
-    return <Redirect to={{ pathname: routePaths.login }} />;
+    return <Redirect to={{ pathname: routePaths.home }} />;
   };
 
   return (

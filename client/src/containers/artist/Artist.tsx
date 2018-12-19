@@ -1,36 +1,58 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import axios from 'axios';
 import { Nav } from '../nav/Nav';
 import { PostsContainer } from '../posts/PostsContainer';
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
 
-class Artist extends React.Component<any, any> {
+import { getArtistData } from '../../redux/ducks/get-artist';
+
+class ArtistComponent extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
       id: this.props.match.params.id,
-      data: { name: '', posts: [] },
     };
   }
 
   componentDidMount() {
-    axios.get(`/artist_pages/${this.state.id}.json`).then((res) => {
-      this.setState({ data: res.data });
-    });
+    this.props.getArtist(this.state.id);
   }
 
   render() {
-    return (
+    const artist = this.props.artist.artist;
+    const loading = this.props.artist.loading;
+
+    return loading ? (
+      <span>Loading...</span>
+    ) : (
       <div className="App">
         <Nav />
-        <ArtistHeader name={this.state.data.name} id={this.state.id} accentColor={this.state.data.accent_color} />
-        <ArtistInfo location={this.state.data.location} />
-        <PostsContainer posts={this.state.data.posts} accentColor={this.state.data.accent_color} />
+        <ArtistHeader name={artist.name} id={artist.id} accentColor={artist.accent_color} />
+        <ArtistInfo location={artist.location} />
+        <PostsContainer posts={artist.posts} accentColor={artist.accent_color} />
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    artist: state.artist,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getArtist: bindActionCreators(getArtistData, dispatch),
+  };
+};
+
+const Artist = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ArtistComponent);
 
 export { Artist };

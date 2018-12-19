@@ -1,9 +1,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # In the development environment your application's code is reloaded on
+  # In the development environment your application"s code is reloaded on
   # every request. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
+  # since you don"t have to restart the web server when you make code changes.
   config.cache_classes = false
 
   # Do not eager load code on boot.
@@ -29,7 +29,7 @@ Rails.application.configure do
 
   # An opinionated ActionMailer config for development:
   #   - If mailcatcher is running when the app boots, use it.
-  #   - If not, use Rails' built-in :test delivery-method.
+  #   - If not, use Rails" built-in :test delivery-method.
   #   - In either case, always raise delivery errors.
   #   - Other configuration here follows standard Rails conventions.
   begin
@@ -72,10 +72,10 @@ Rails.application.configure do
   config.paperclip_defaults = {
     :storage => :s3,
     :s3_credentials => {
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-      :s3_region => 'us-east-1',
+      :access_key_id => ENV["AWS_ACCESS_KEY_ID"],
+      :secret_access_key => ENV["AWS_SECRET_ACCESS_KEY"],
+      :s3_region => "us-east-1",
     },
-    :bucket => ENV['S3_BUCKET']
+    :bucket => ENV["S3_BUCKET"]
   }
 end

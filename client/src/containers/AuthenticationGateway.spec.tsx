@@ -1,43 +1,16 @@
-import { configure, mount, shallow } from 'enzyme'
-import * as Adapter from 'enzyme-adapter-react-16'
-import * as React from 'react'
-import { MemoryRouter } from 'react-router-dom'
+import { configure, shallow } from 'enzyme';
+import * as Adapter from 'enzyme-adapter-react-16';
+import * as React from 'react';
 
-import { AuthenticationGateway } from './AuthenticationGateway'
+import { AuthenticationGateway } from './AuthenticationGateway';
 
-configure({ adapter: new Adapter() })
-jest.mock('store')
+configure({ adapter: new Adapter() });
+jest.mock('store');
 
 describe(`<AuthenticationGateway />`, () => {
   it('renders', () => {
-    const authenticationGateway = shallow(<AuthenticationGateway component={() => <div />} path="/test" />)
+    const authenticationGateway = shallow(<AuthenticationGateway component={() => <div />} path="/test" />);
 
-    expect(authenticationGateway.exists()).toBeTruthy()
-  })
-
-  it('without token returns login component', () => {
-    require('store').setReturnedValue(false)
-
-    const authenticationGateway = mount(
-      <MemoryRouter>
-        <AuthenticationGateway component={() => <div />} path="/test" />
-      </MemoryRouter>,
-    )
-
-    expect(authenticationGateway.text()).toContain('Sign in with')
-  })
-
-  it('with token returns passed component', () => {
-    require('store').setReturnedValue(true)
-
-    const expectedText = 'Logged User'
-
-    const authenticationGateway = mount(
-      <MemoryRouter>
-        <AuthenticationGateway component={() => <div>{expectedText}</div>} path="/test" />
-      </MemoryRouter>,
-    )
-
-    expect(authenticationGateway.text()).toEqual(expectedText)
-  })
-})
+    expect(authenticationGateway.exists()).toBeTruthy();
+  });
+});

@@ -11,7 +11,6 @@ class PostsController < ApplicationController
     end
   end
 
-
   def destroy
     artist_page_id = @post.artist_page.id
     @post.destroy

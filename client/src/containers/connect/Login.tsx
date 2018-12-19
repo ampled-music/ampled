@@ -4,7 +4,7 @@ import { Redirect } from 'react-router';
 import { userLogin } from 'src/redux/ducks/login';
 import * as store from 'store';
 import { config } from '../../config';
-// import { authenticate } from '../../redux/ducks/authenticate';
+import { authenticate } from '../../redux/ducks/authenticate';
 import { routePaths } from '../route-paths';
 
 class LoginComponent extends React.Component<any, any> {
@@ -17,14 +17,13 @@ class LoginComponent extends React.Component<any, any> {
   componentDidMount() {
     const token = store.get(config.localStorageKeys.token);
     if (token) {
-      // this.props.dispatch(authenticate(token));
+      this.props.dispatch(authenticate(token));
     }
   }
 
   handleSubmit = async (e) => {
     e.preventDefault();
     await this.props.dispatch(userLogin(this.state.username, this.state.password));
-    console.log('Login', this.props.login);
     if (this.props.login.error) {
       alert(this.props.login.error);
     } else {

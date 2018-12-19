@@ -1,4 +1,3 @@
-import * as queryString from 'query-string';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -10,13 +9,11 @@ import { routePaths } from '../route-paths';
 
 export class ConnectComponent extends React.Component<any, any> {
   getToken = () => {
-    const { token: queryToken } = queryString.parse(this.props.location.search);
-
-    return Array.isArray(queryToken) ? queryToken[0] : queryToken;
+    return this.props.login.token;
   };
 
   componentDidMount() {
-    const token = 'token.test'; //this.getToken();
+    const token = this.getToken();
 
     if (!token) {
       return;
@@ -28,10 +25,16 @@ export class ConnectComponent extends React.Component<any, any> {
   }
 
   render() {
-    return <Redirect to={routePaths.root} />;
+    return <Redirect to={routePaths.login} />;
   }
 }
 
-const Connect = connect()(ConnectComponent);
+const mapStaTeToProps = (state) => {
+  return {
+    login: state.loginReducer,
+  };
+};
+
+const Connect = connect(mapStaTeToProps)(ConnectComponent);
 
 export { Connect };

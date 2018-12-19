@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { userLogin } from 'src/redux/ducks/login';
 import * as store from 'store';
 import { config } from '../../config';
-import { authenticate } from '../../redux/ducks/authenticate';
+// import { authenticate } from '../../redux/ducks/authenticate';
 import { routePaths } from '../route-paths';
 
 class LoginComponent extends React.Component<any, any> {
@@ -16,19 +17,25 @@ class LoginComponent extends React.Component<any, any> {
   componentDidMount() {
     const token = store.get(config.localStorageKeys.token);
     if (token) {
-      this.props.dispatch(authenticate(token));
+      // this.props.dispatch(authenticate(token));
     }
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-    this.setState({ submitted: true });
+    await this.props.dispatch(userLogin(this.state.username, this.state.password));
+    console.log('Login', this.props.login);
+    if (this.props.login.error) {
+      alert(this.props.login.error);
+    } else {
+      this.setState({ submitted: true });
+    }
   };
 
-  handleChange(e) {
+  handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-  }
+  };
 
   render() {
     if (this.state.submitted) {
@@ -43,8 +50,8 @@ class LoginComponent extends React.Component<any, any> {
       <div className="login">
         <h1>Login</h1>
         <form name="login" onSubmit={this.handleSubmit}>
-          <input type="text" placeholder="email" name="username" onChange={() => this.handleChange} required />
-          <input type="password" placeholder="password" name="password" onChange={() => this.handleChange} required />
+          <input type="text" placeholder="email" name="username" onChange={this.handleChange} required />
+          <input type="password" placeholder="password" name="password" onChange={this.handleChange} required />
           <button type="submit">Login</button>
         </form>
       </div>
@@ -54,6 +61,7 @@ class LoginComponent extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => ({
   authentication: state.authentication,
+  login: state.loginReducer,
 });
 
 const Login = connect(mapStateToProps)(LoginComponent);

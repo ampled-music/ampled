@@ -7,8 +7,8 @@ import { config } from '../../config';
 import { authenticate } from '../../redux/ducks/authenticate';
 import { routePaths } from '../route-paths';
 
-import './login.scss';
 import { Nav } from '../nav/Nav';
+import './login.scss';
 
 class LoginComponent extends React.Component<any, any> {
   state = {

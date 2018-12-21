@@ -7,7 +7,12 @@ import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import * as store from 'store';
+import { config } from '../../config';
 import menu from '../../images/menu.svg';
+import { routePaths } from '../route-paths';
 
 import './menu.scss';
 
@@ -35,12 +40,18 @@ class MenuListComposition extends React.Component<any, State> {
     this.setState((state) => ({ open: !state.open }));
   };
 
-  handleClose = (event) => {
+  handleClose = (event: { target: any }) => {
     if (this.state.anchorEl.contains(event.target)) {
       return;
     }
 
     this.setState({ open: false });
+  };
+
+  logout = (event: any) => {
+    store.remove(config.localStorageKeys.token);
+    this.handleClose(event);
+    window.location.href = routePaths.root;
   };
 
   componentDidMount() {
@@ -49,6 +60,7 @@ class MenuListComposition extends React.Component<any, State> {
 
   render() {
     const { open, anchorEl } = this.state;
+    const { authentication } = this.props;
 
     return (
       <div className="menu">
@@ -63,9 +75,15 @@ class MenuListComposition extends React.Component<any, State> {
               <Paper className="menu-list">
                 <ClickAwayListener onClickAway={this.handleClose}>
                   <MenuList>
-                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                    <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                    {authentication.authenticated ? (
+                      <MenuItem onClick={this.logout}>Logout</MenuItem>
+                    ) : (
+                      <MenuItem>
+                        <Link to={routePaths.login}>
+                          <b>Login</b> or <b>Sign Up</b>
+                        </Link>
+                      </MenuItem>
+                    )}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -77,6 +95,11 @@ class MenuListComposition extends React.Component<any, State> {
   }
 }
 
-const Menu = withStyles(styles)(MenuListComposition);
+const mapStateToProps = (state: any) => ({
+  authentication: state.authentication,
+});
+
+const MenuComponent = withStyles(styles)(MenuListComposition);
+const Menu = connect(mapStateToProps)(MenuComponent);
 
 export { Menu };

@@ -1,0 +1,38 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #c5e4e4;
+  height: calc(100vh - 50px);
+
+  h2 {
+    margin-top: 70px;
+    margin-bottom: 50px;
+  }
+
+  .form-container {
+    display: flex;
+    max-width: 450px;
+    padding: 45px 20px;
+    height: auto;
+
+    // background: url();
+
+    .input-group-text {
+      text-align: left;
+      background-color: #ffffff;
+      border: none;
+      border-bottom: 2px solid #b4b4b4;
+      border-radius: 0;
+      margin-bottom: 45px;
+      outline: none;
+    }
+
+    .btn {
+      background-color: #000000;
+      color: #ffffff;
+      height: 52px;
+      border-radius: 0;
+    }
+  }
+}

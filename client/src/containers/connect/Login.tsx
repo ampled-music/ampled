@@ -7,6 +7,9 @@ import { config } from '../../config';
 import { authenticate } from '../../redux/ducks/authenticate';
 import { routePaths } from '../route-paths';
 
+import './login.scss';
+import { Nav } from '../nav/Nav';
+
 class LoginComponent extends React.Component<any, any> {
   state = {
     username: '',
@@ -46,13 +49,32 @@ class LoginComponent extends React.Component<any, any> {
     }
 
     return (
-      <div className="login">
-        <h1>Login</h1>
-        <form name="login" onSubmit={this.handleSubmit}>
-          <input type="text" placeholder="email" name="username" onChange={this.handleChange} required />
-          <input type="password" placeholder="password" name="password" onChange={this.handleChange} required />
-          <button type="submit">Login</button>
-        </form>
+      <div>
+        <Nav />
+        <div className="login">
+          <h2>LOGIN</h2>
+          <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
+            <input
+              className="input-group-text"
+              type="text"
+              placeholder="Email"
+              name="username"
+              onChange={this.handleChange}
+              required
+            />
+            <input
+              className="input-group-text"
+              type="password"
+              placeholder="Password"
+              name="password"
+              onChange={this.handleChange}
+              required
+            />
+            <button className="btn" type="submit">
+              LOGIN
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

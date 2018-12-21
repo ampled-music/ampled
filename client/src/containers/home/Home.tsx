@@ -2,8 +2,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+import * as store from 'store';
+import { config } from '../../config';
+import { authenticate } from '../../redux/ducks/authenticate';
 
 import { artistsPages } from '../../redux/ducks/get-artists-pages';
+import { Nav } from '../nav/Nav';
 
 class HomeComponent extends React.Component<any, any> {
   constructor(props) {
@@ -15,6 +19,10 @@ class HomeComponent extends React.Component<any, any> {
 
   componentDidMount() {
     this.props.getArtistsPages();
+    const token = store.get(config.localStorageKeys.token);
+    if (token) {
+      this.props.authenticate(token);
+    }
   }
 
   render() {
@@ -25,6 +33,15 @@ class HomeComponent extends React.Component<any, any> {
       return <span>Loading...</span>;
     }
 
+    return (
+      <div>
+        <Nav />
+        {this.getArtistsList(artistsPages)}
+      </div>
+    );
+  }
+
+  private getArtistsList(artistsPages: any) {
     return artistsPages.map((page) => {
       return (
         <div key={page.id}>
@@ -44,6 +61,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getArtistsPages: bindActionCreators(artistsPages, dispatch),
+    authenticate: bindActionCreators(authenticate, dispatch),
   };
 };
 

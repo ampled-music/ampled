@@ -7,16 +7,20 @@
 
   h2 {
     margin-top: 70px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
   }
 
   .form-container {
     display: flex;
     max-width: 450px;
-    padding: 45px 20px;
+    padding: 85px 20px 50px 20px;
     height: auto;
+    border: none;
+    border-radius: 0;
 
-    // background: url();
+    background: url(../../images/background_login.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
 
     .input-group-text {
       text-align: left;

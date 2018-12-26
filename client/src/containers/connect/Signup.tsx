@@ -14,6 +14,9 @@ class SignupComponent extends React.Component<any, any> {
   state = {
     username: '',
     password: '',
+    name: '',
+    confirmPassword: '',
+    terms: false,
     submitted: false,
   };
 
@@ -37,6 +40,10 @@ class SignupComponent extends React.Component<any, any> {
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+  };
+
+  toggle = (e) => {
+    this.setState({ terms: !this.state.terms });
   };
 
   render() {
@@ -87,7 +94,7 @@ class SignupComponent extends React.Component<any, any> {
               required
             />
             <div className="terms">
-              <input type="checkbox" name="terms" onChange={this.handleChange} required />
+              <input type="checkbox" name="terms" onChange={this.toggle} required />
               <label>
                 You agree to our{' '}
                 <a href="">

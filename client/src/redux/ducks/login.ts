@@ -2,6 +2,7 @@ import { handleActions } from 'redux-actions';
 import { createActionThunk } from 'redux-thunk-actions';
 
 import { login } from '../../api/login/login';
+import { signUp } from '../../api/login/sign-up';
 import { checkEmail } from '../../api/sign-up/check-email';
 
 export const initialState = {
@@ -10,24 +11,50 @@ export const initialState = {
   error: null,
 };
 
-export const userLogin = createActionThunk('LOGIN', (username, password) => login(username, password));
+export const userLoginAction = createActionThunk('LOGIN', (username, password) => login(username, password));
+export const userSignUpAction = createActionThunk('SIGN_UP', (username, password, name) =>
+  signUp(username, password, name),
+);
 
-export const loginReducer = handleActions(
+export const userLogin = handleActions(
   {
-    [userLogin.START]: (state) => ({
+    [userLoginAction.START]: (state) => ({
       ...state,
       loading: true,
     }),
-    [userLogin.SUCCEEDED]: (state, action) => ({
+    [userLoginAction.SUCCEEDED]: (state, action) => ({
       ...state,
       token: action.payload.token,
     }),
-    [userLogin.FAILED]: (state, action) => ({
+    [userLoginAction.FAILED]: (state, action) => ({
       ...state,
       loading: false,
       error: action.payload.error,
     }),
-    [userLogin.ENDED]: (state) => ({
+    [userLoginAction.ENDED]: (state) => ({
+      ...state,
+      loading: false,
+    }),
+  },
+  initialState,
+);
+
+export const userSignUp = handleActions(
+  {
+    [userSignUpAction.START]: (state) => ({
+      ...state,
+      loading: true,
+    }),
+    [userSignUpAction.SUCCEEDED]: (state, action) => ({
+      ...state,
+      token: action.payload.token,
+    }),
+    [userSignUpAction.FAILED]: (state, action) => ({
+      ...state,
+      loading: false,
+      error: action.payload.error,
+    }),
+    [userSignUpAction.ENDED]: (state) => ({
       ...state,
       loading: false,
     }),

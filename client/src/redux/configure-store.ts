@@ -6,14 +6,15 @@ import { authentication } from './ducks/authenticate';
 import { artist } from './ducks/get-artist';
 import { pages } from './ducks/get-artists-pages';
 import { me } from './ducks/get-me';
-import { loginReducer } from './ducks/login';
+import { userLogin, userSignUp } from './ducks/login';
 
 const ducks = combineReducers({
   authentication,
   artist,
   pages,
   me,
-  loginReducer,
+  userLogin,
+  userSignUp,
 });
 
 const configureStore = () => createStore(ducks, composeWithDevTools(applyMiddleware(thunk)));

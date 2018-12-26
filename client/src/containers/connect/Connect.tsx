@@ -31,7 +31,7 @@ export class ConnectComponent extends React.Component<any, any> {
 
 const mapStaTeToProps = (state) => {
   return {
-    login: state.loginReducer,
+    login: state.userLogin,
   };
 };
 

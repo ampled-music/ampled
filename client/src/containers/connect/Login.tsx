@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { userLogin } from 'src/redux/ducks/login';
+import { bindActionCreators } from 'redux';
+import { userLoginAction } from 'src/redux/ducks/login';
 import * as store from 'store';
 import { config } from '../../config';
 import { authenticate } from '../../redux/ducks/authenticate';
+import { Nav } from '../nav/Nav';
 import { routePaths } from '../route-paths';
 
-import { Nav } from '../nav/Nav';
 import './login.scss';
 
 class LoginComponent extends React.Component<any, any> {
@@ -20,17 +21,20 @@ class LoginComponent extends React.Component<any, any> {
   componentDidMount() {
     const token = store.get(config.localStorageKeys.token);
     if (token) {
-      this.props.dispatch(authenticate(token));
+      this.props.authenticate(token);
     }
   }
 
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    await this.props.dispatch(userLogin(this.state.email, this.state.password));
+    const { login } = this.props;
+    const { email, password } = this.state;
 
-    if (this.props.login.error) {
-      alert(this.props.login.error);
+    await this.props.userLogin(email, password);
+
+    if (login.error) {
+      alert(login.error);
     } else {
       this.setState({ submitted: true });
     }
@@ -91,9 +95,17 @@ class LoginComponent extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => ({
   authentication: state.authentication,
-  login: state.loginReducer,
+  login: state.userLogin,
 });
 
-const Login = connect(mapStateToProps)(LoginComponent);
+const mapPropsToDispatch = (dispatch) => ({
+  userLogin: bindActionCreators(userLoginAction, dispatch),
+  authenticate: bindActionCreators(authenticate, dispatch),
+});
+
+const Login = connect(
+  mapStateToProps,
+  mapPropsToDispatch,
+)(LoginComponent);
 
 export { Login };

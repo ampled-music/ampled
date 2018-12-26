@@ -22,6 +22,14 @@
     margin-top: 10px;
   }
 
+  .error-message {
+    font-family: Courier, 'Courier New', monospace;
+    font-size: 12px;
+    color: red;
+    min-height: 18px;
+    margin-bottom: 10px;
+  }
+
   .form-container {
     display: flex;
     max-width: 450px;
@@ -44,15 +52,18 @@
       outline: none;
     }
 
-    .terms {
-      margin-bottom: 45px;
+    .input-group-text:last-of-type {
+      margin-bottom: 20px;
+    }
 
-      label {
-        font-size: 14px;
-        font-weight: bold;
-        margin-left: 15px;
-        margin-top: 0;
-      }
+    input[type='checkbox'] {
+      margin-right: 10px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 0;
     }
 
     .btn {
@@ -60,6 +71,7 @@
       color: #ffffff;
       height: 52px;
       border-radius: 0;
+      margin-top: 40px;
     }
   }
 }

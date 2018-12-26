@@ -16,6 +16,7 @@ class SignupComponent extends React.Component<any, any> {
     password: '',
     name: '',
     confirmPassword: '',
+    matchPasswordError: false,
     terms: false,
     submitted: false,
   };
@@ -27,8 +28,19 @@ class SignupComponent extends React.Component<any, any> {
     }
   }
 
+  checkPassword(): any {
+    const { password, confirmPassword } = this.state;
+
+    return password === confirmPassword;
+  }
+
   handleSubmit = async (e) => {
     e.preventDefault();
+    if (!this.checkPassword()) {
+      this.setState({ matchPasswordError: true });
+
+      return;
+    }
     await this.props.dispatch(userLogin(this.state.username, this.state.password));
     if (this.props.login.error) {
       alert(this.props.login.error);
@@ -39,7 +51,7 @@ class SignupComponent extends React.Component<any, any> {
 
   handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, matchPasswordError: false });
   };
 
   toggle = (e) => {
@@ -47,13 +59,17 @@ class SignupComponent extends React.Component<any, any> {
   };
 
   render() {
-    if (this.state.submitted) {
+    const { submitted, matchPasswordError } = this.state;
+
+    if (submitted) {
       return <Redirect to={routePaths.connect} />;
     }
 
     if (this.props.authentication.authenticated) {
       return <Redirect to={routePaths.root} />;
     }
+
+    const passwordErrorMessage = 'Passwords do not match';
 
     return (
       <div>
@@ -93,16 +109,16 @@ class SignupComponent extends React.Component<any, any> {
               onChange={this.handleChange}
               required
             />
-            <div className="terms">
+            <span className="error-message">{matchPasswordError && passwordErrorMessage}</span>
+
+            <label className="terms">
               <input type="checkbox" name="terms" onChange={this.toggle} required />
-              <label>
-                You agree to our{' '}
-                <a href="">
-                  <u>Terms of Service</u>
-                </a>
-                .
-              </label>
-            </div>
+              You agree to our{' '}
+              <a href="">
+                <u>Terms of Service</u>
+              </a>
+              .
+            </label>
             <button className="btn" type="submit">
               LOGIN
             </button>

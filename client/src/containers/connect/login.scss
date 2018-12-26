@@ -10,6 +10,18 @@
     margin-bottom: 30px;
   }
 
+  a {
+    color: #000000;
+  }
+
+  label {
+    font-family: Courier, 'Courier New', monospace;
+    font-size: 18px;
+    letter-spacing: 0.7px;
+    color: #000000;
+    margin-top: 10px;
+  }
+
   .form-container {
     display: flex;
     max-width: 450px;
@@ -17,19 +29,30 @@
     height: auto;
     border: none;
     border-radius: 0;
-
     background: url(../../images/background_login.svg);
     background-repeat: no-repeat;
-    background-size: cover;
 
     .input-group-text {
       text-align: left;
       background-color: #ffffff;
+      color: #9b9b9b;
+      font-size: 16px;
       border: none;
-      border-bottom: 2px solid #b4b4b4;
+      border-bottom: 1.2px solid #9b9b9b;
       border-radius: 0;
       margin-bottom: 45px;
       outline: none;
+    }
+
+    .terms {
+      margin-bottom: 45px;
+
+      label {
+        font-size: 14px;
+        font-weight: bold;
+        margin-left: 15px;
+        margin-top: 0;
+      }
     }
 
     .btn {

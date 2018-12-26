@@ -79,7 +79,7 @@ class MenuListComposition extends React.Component<any, State> {
                       <MenuItem onClick={this.logout}>Logout</MenuItem>
                     ) : (
                       <MenuItem>
-                        <Link to={routePaths.login}>
+                        <Link to={routePaths.signup}>
                           <b>Login</b> or <b>Sign Up</b>
                         </Link>
                       </MenuItem>

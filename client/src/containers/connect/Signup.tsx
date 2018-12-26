@@ -10,7 +10,7 @@ import { routePaths } from '../route-paths';
 import { Nav } from '../nav/Nav';
 import './login.scss';
 
-class LoginComponent extends React.Component<any, any> {
+class SignupComponent extends React.Component<any, any> {
   state = {
     username: '',
     password: '',
@@ -52,8 +52,16 @@ class LoginComponent extends React.Component<any, any> {
       <div>
         <Nav />
         <div className="login">
-          <h2>LOGIN</h2>
+          <h2>SIGN UP</h2>
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
+            <input
+              className="input-group-text"
+              type="text"
+              placeholder="Full Name"
+              name="name"
+              onChange={this.handleChange}
+              required
+            />
             <input
               className="input-group-text"
               type="text"
@@ -70,14 +78,32 @@ class LoginComponent extends React.Component<any, any> {
               onChange={this.handleChange}
               required
             />
+            <input
+              className="input-group-text"
+              type="password"
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              onChange={this.handleChange}
+              required
+            />
+            <div className="terms">
+              <input type="checkbox" name="terms" onChange={this.handleChange} required />
+              <label>
+                You agree to our{' '}
+                <a href="">
+                  <u>Terms of Service</u>
+                </a>
+                .
+              </label>
+            </div>
             <button className="btn" type="submit">
               LOGIN
             </button>
           </form>
           <label>
-            Forgot your password?{' '}
-            <a href="">
-              <u>click here</u>
+            Already have an account?{' '}
+            <a href="/login">
+              <u>Sign in</u>
             </a>
             .
           </label>
@@ -92,6 +118,6 @@ const mapStateToProps = (state: any) => ({
   login: state.loginReducer,
 });
 
-const Login = connect(mapStateToProps)(LoginComponent);
+const Signup = connect(mapStateToProps)(SignupComponent);
 
-export { Login };
+export { Signup };

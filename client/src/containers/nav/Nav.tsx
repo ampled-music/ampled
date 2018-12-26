@@ -1,3 +1,5 @@
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -29,13 +31,13 @@ class NavComponent extends React.Component<any, any> {
         <div className="menus">
           <div className="loginLink">
             {authentication.authenticated ? (
-              'User Logged in'
+              <FontAwesomeIcon className="user-image" icon={faUserCircle} />
             ) : (
               <div>
                 <Link to={routePaths.login}>
                   <b>Login</b>
-                </Link>
-                or
+                </Link>{' '}
+                or{' '}
                 <Link to={routePaths.signup}>
                   <b>Sign Up</b>
                 </Link>

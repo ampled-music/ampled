@@ -2,6 +2,7 @@ import { handleActions } from 'redux-actions';
 import { createActionThunk } from 'redux-thunk-actions';
 
 import { login } from '../../api/login/login';
+import { checkEmail } from '../../api/sign-up/check-email';
 
 export const initialState = {
   token: {},
@@ -33,3 +34,7 @@ export const loginReducer = handleActions(
   },
   initialState,
 );
+
+export const checkEmailAvailability = async (email) => {
+  return await checkEmail(email);
+};

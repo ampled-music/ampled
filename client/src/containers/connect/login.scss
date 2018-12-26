@@ -27,7 +27,6 @@
     font-size: 12px;
     color: red;
     min-height: 18px;
-    margin-bottom: 10px;
   }
 
   .form-container {
@@ -48,12 +47,13 @@
       border: none;
       border-bottom: 1.2px solid #9b9b9b;
       border-radius: 0;
-      margin-bottom: 45px;
+      margin-top: 15px;
       outline: none;
     }
 
-    .input-group-text:last-of-type {
-      margin-bottom: 20px;
+    .input-group-text:first-of-type {
+      margin-top: 0px;
+      margin-bottom: 17px;
     }
 
     input[type='checkbox'] {
@@ -63,7 +63,7 @@
     label {
       font-size: 14px;
       font-weight: bold;
-      margin-top: 0;
+      margin-top: 20px;
     }
 
     .btn {

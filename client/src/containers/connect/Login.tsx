@@ -12,7 +12,7 @@ import './login.scss';
 
 class LoginComponent extends React.Component<any, any> {
   state = {
-    username: '',
+    email: '',
     password: '',
     submitted: false,
   };
@@ -26,7 +26,9 @@ class LoginComponent extends React.Component<any, any> {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    await this.props.dispatch(userLogin(this.state.username, this.state.password));
+
+    await this.props.dispatch(userLogin(this.state.email, this.state.password));
+
     if (this.props.login.error) {
       alert(this.props.login.error);
     } else {
@@ -58,7 +60,7 @@ class LoginComponent extends React.Component<any, any> {
               className="input-group-text"
               type="text"
               placeholder="Email"
-              name="username"
+              name="email"
               onChange={this.handleChange}
               required
             />

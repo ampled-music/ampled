@@ -9,7 +9,9 @@ import { routePaths } from '../route-paths';
 
 export class ConnectComponent extends React.Component<any, any> {
   getToken = () => {
-    return this.props.login.token;
+    const { login, signUp } = this.props;
+
+    return login.token.length > 0 ? login.token : signUp.token;
   };
 
   componentDidMount() {
@@ -32,6 +34,7 @@ export class ConnectComponent extends React.Component<any, any> {
 const mapStaTeToProps = (state) => {
   return {
     login: state.userLogin,
+    signUp: state.userSignUp,
   };
 };
 

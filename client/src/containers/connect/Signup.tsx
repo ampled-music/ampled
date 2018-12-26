@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
-import { checkEmailAvailability, userLogin } from 'src/redux/ducks/login';
+import { checkEmailAvailability, userSignUpAction } from 'src/redux/ducks/login';
 import * as store from 'store';
 import { config } from '../../config';
 import { authenticate } from '../../redux/ducks/authenticate';
@@ -26,7 +26,7 @@ class SignupComponent extends React.Component<any, any> {
   componentDidMount() {
     const token = store.get(config.localStorageKeys.token);
     if (token) {
-      this.props.dispatch(authenticate(token));
+      this.props.authenticate(token);
     }
   }
 
@@ -61,7 +61,8 @@ class SignupComponent extends React.Component<any, any> {
       return;
     }
 
-    await this.props.userLogin(this.state.email, this.state.password);
+    await this.props.userSignUp(this.state.email, this.state.password, this.state.name);
+
     if (this.props.login.error) {
       alert(this.props.login.error);
     } else {
@@ -146,7 +147,7 @@ class SignupComponent extends React.Component<any, any> {
               .
             </label>
             <button className="btn" type="submit">
-              LOGIN
+              SIGN UP
             </button>
           </form>
           <label>
@@ -164,11 +165,12 @@ class SignupComponent extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => ({
   authentication: state.authentication,
-  login: state.loginReducer,
+  login: state.userSignUp,
 });
 
 const mapPropsToDispatch = (dispatch) => ({
-  userLogin: bindActionCreators(userLogin, dispatch),
+  userSignUp: bindActionCreators(userSignUpAction, dispatch),
+  authenticate: bindActionCreators(authenticate, dispatch),
 });
 
 const Signup = connect(

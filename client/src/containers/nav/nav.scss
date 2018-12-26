@@ -1,0 +1,16 @@
+.menus {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .loginLink {
+    margin-right: 40px;
+  }
+
+  a {
+    color: #000000;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+}

@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { userLoginAction } from 'src/redux/ducks/login';
-import * as store from 'store';
-import { config } from '../../config';
-import { authenticate } from '../../redux/ducks/authenticate';
 import { Nav } from '../nav/Nav';
 import { routePaths } from '../route-paths';
 
@@ -17,13 +14,6 @@ class LoginComponent extends React.Component<any, any> {
     password: '',
     submitted: false,
   };
-
-  componentDidMount() {
-    const token = store.get(config.localStorageKeys.token);
-    if (token) {
-      this.props.authenticate(token);
-    }
-  }
 
   handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,7 +90,6 @@ const mapStateToProps = (state: any) => ({
 
 const mapPropsToDispatch = (dispatch) => ({
   userLogin: bindActionCreators(userLoginAction, dispatch),
-  authenticate: bindActionCreators(authenticate, dispatch),
 });
 
 const Login = connect(

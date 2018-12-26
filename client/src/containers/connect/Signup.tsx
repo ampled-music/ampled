@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { checkEmailAvailability, userSignUpAction } from 'src/redux/ducks/login';
-import * as store from 'store';
-import { config } from '../../config';
-import { authenticate } from '../../redux/ducks/authenticate';
 import { Nav } from '../nav/Nav';
 import { routePaths } from '../route-paths';
 
@@ -22,13 +19,6 @@ class SignupComponent extends React.Component<any, any> {
     acceptTerms: false,
     submitted: false,
   };
-
-  componentDidMount() {
-    const token = store.get(config.localStorageKeys.token);
-    if (token) {
-      this.props.authenticate(token);
-    }
-  }
 
   passwordsMatch(): boolean {
     const { password, confirmPassword } = this.state;
@@ -170,7 +160,6 @@ const mapStateToProps = (state: any) => ({
 
 const mapPropsToDispatch = (dispatch) => ({
   userSignUp: bindActionCreators(userSignUpAction, dispatch),
-  authenticate: bindActionCreators(authenticate, dispatch),
 });
 
 const Signup = connect(

@@ -15,6 +15,14 @@ const theme = createMuiTheme({
       elevation24: {
         boxShadow: 'none',
       },
+      rounded: {
+        borderRadius: '0px',
+      },
+    },
+    MuiDialog: {
+      paperWidthSm: {
+        maxWidth: '670px',
+      },
     },
   },
   typography: { useNextVariants: true },

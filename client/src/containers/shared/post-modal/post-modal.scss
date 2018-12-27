@@ -1,0 +1,14 @@
+.tabs {
+  margin-left: 15px;
+
+  .selected {
+    border-bottom: 3px solid #2557a7;
+    border-radius: 0px;
+  }
+
+  .disabled {
+    border-bottom: 3px solid #ffffff;
+    border-radius: 0px;
+    color: #9b9b9b;
+  }
+}

@@ -1,7 +1,9 @@
-import { Button, Dialog, DialogActions } from '@material-ui/core';
+import { Button, Dialog, DialogActions, Divider } from '@material-ui/core';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import * as React from 'react';
 import background from '../../../images/background_post.svg';
+
+import './post-modal.scss';
 
 const theme = createMuiTheme({
   overrides: {
@@ -25,7 +27,9 @@ const theme = createMuiTheme({
       },
     },
   },
-  typography: { useNextVariants: true },
+  typography: {
+    fontFamily: 'Courier, Courier New, monospace',
+  },
 });
 
 class PostModalComponent extends React.Component<any, any> {
@@ -33,6 +37,11 @@ class PostModalComponent extends React.Component<any, any> {
     return (
       <MuiThemeProvider theme={theme}>
         <Dialog open={this.props.open} onClose={this.props.close} aria-labelledby="form-dialog-title">
+          <div className="tabs">
+            <Button className="selected">NEW POST</Button>
+            <Button className="disabled">YOUR POSTS</Button>
+          </div>
+          <Divider />
           {this.props.children}
           <DialogActions>
             <Button onClick={this.props.close} color="primary">

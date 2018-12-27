@@ -7,7 +7,16 @@
   .menu-list {
     border-radius: 0;
     margin-right: 15px;
-    width: 250px;
+    width: 300px;
+
+    li {
+      font-family: Courier, 'Courier New', monospace !important;
+    }
+
+    li:first-of-type {
+      margin-top: 20px;
+      font-size: 17px;
+    }
   }
 
   a {
@@ -16,5 +25,12 @@
 
   a:hover {
     text-decoration: none;
+  }
+
+  .divider {
+    border-bottom: 7px solid #000000;
+    margin: 25px auto 15px auto;
+    width: 90%;
+    text-align: center;
   }
 }

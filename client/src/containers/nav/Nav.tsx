@@ -13,7 +13,14 @@ import { routePaths } from '../route-paths';
 
 import './nav.scss';
 
-class NavComponent extends React.Component<any, any> {
+interface Props {
+  authentication: {
+    authenticated: boolean;
+  };
+  authenticate: Function;
+}
+
+class NavComponent extends React.Component<Props, any> {
   componentDidMount() {
     const token = store.get(config.localStorageKeys.token);
     if (token) {

@@ -8,7 +8,17 @@ import { routePaths } from '../route-paths';
 
 import './login.scss';
 
-class LoginComponent extends React.Component<any, any> {
+interface Props {
+  login: {
+    error: string;
+  };
+  userLogin: Function;
+  authentication: {
+    authenticated: boolean;
+  };
+}
+
+class LoginComponent extends React.Component<Props, any> {
   state = {
     email: '',
     password: '',

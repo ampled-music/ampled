@@ -10,13 +10,15 @@ class ProgressBar extends React.Component<ProgressBarProps, any> {
   }
 
   render() {
+    const { now } = this.props;
+
     return (
       <div className={'progress'}>
         <div
           className={'progress-bar progress-bar-striped'}
           role="progressbar"
-          style={{ width: `${this.props.now}%` }}
-          aria-valuenow={this.props.now}
+          style={{ width: `${now}%` }}
+          aria-valuenow={now}
           aria-valuemin={0}
           aria-valuemax={100}
         />

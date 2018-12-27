@@ -7,7 +7,20 @@ import { config } from '../../config';
 import { authenticate } from '../../redux/ducks/authenticate';
 import { routePaths } from '../route-paths';
 
-export class ConnectComponent extends React.Component<any, any> {
+interface Props {
+  login?: {
+    token: string;
+  };
+  signUp?: {
+    token: string;
+  };
+  dispatch?: Function;
+  location?: {
+    search: string;
+  };
+}
+
+export class ConnectComponent extends React.Component<Props, any> {
   getToken = () => {
     const { login, signUp } = this.props;
 

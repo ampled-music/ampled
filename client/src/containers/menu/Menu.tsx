@@ -32,7 +32,13 @@ interface State {
   anchorEl: any;
 }
 
-class MenuListComposition extends React.Component<any, State> {
+interface Props {
+  authentication: {
+    authenticated: boolean;
+  };
+}
+
+class MenuListComposition extends React.Component<Props, State> {
   state = {
     open: false,
     anchorEl: undefined,

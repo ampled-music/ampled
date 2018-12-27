@@ -11,19 +11,17 @@ class PostForm extends React.Component<any, any> {
       audioUrl: '',
       artist_page_id: this.props.match.params.id,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
 
-  handleSubmit(event) {
-    alert(`Form submitted: ${this.state}`);
+  handleSubmit = (event) => {
     event.preventDefault();
-  }
+    alert(`Form submitted: ${this.state}`);
+  };
 
   addAudioUrl(audioUrl) {
     this.setState({ audioUrl });

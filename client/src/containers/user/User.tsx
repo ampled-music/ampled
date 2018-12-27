@@ -1,23 +1,38 @@
-import * as React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getMe } from '../../redux/ducks/get-me';
 
-import './user.scss'
+import './user.scss';
 
-import { getMe } from '../../redux/ducks/get-me'
+interface Props {
+  getMe: Function;
+  history: {
+    goBack: Function;
+  };
+  me: {
+    loading: boolean;
 
-export class UserComponent extends React.Component<any, any> {
+    me: {
+      first_name: string;
+      last_name: string;
+      email: string;
+    };
+  };
+}
+
+export class UserComponent extends React.Component<Props, any> {
   componentDidMount() {
-    this.props.getMe()
+    this.props.getMe();
   }
 
   handleGoBackClick = () => {
-    this.props.history.goBack()
-  }
+    this.props.history.goBack();
+  };
 
   render() {
-    const loading = this.props.me.loading
-    const me = this.props.me.me
+    const loading = this.props.me.loading;
+    const me = this.props.me.me;
 
     return loading ? (
       <span>Loading...</span>
@@ -30,25 +45,25 @@ export class UserComponent extends React.Component<any, any> {
         <br />
         <button onClick={this.handleGoBackClick}>Go back</button>
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     me: state.me,
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getMe: bindActionCreators(getMe, dispatch),
-  }
-}
+  };
+};
 
 const User = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(UserComponent)
+)(UserComponent);
 
-export { User }
+export { User };

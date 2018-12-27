@@ -9,7 +9,26 @@ import { ArtistInfo } from './ArtistInfo';
 
 import { getArtistData } from '../../redux/ducks/get-artist';
 
-class ArtistComponent extends React.Component<any, any> {
+interface Props {
+  match: {
+    params: {
+      id: string;
+    };
+  };
+  getArtist: Function;
+  artist: {
+    loading: boolean;
+    artist: {
+      name: string;
+      id: number;
+      location: string;
+      posts: [];
+      accent_color: string;
+    };
+  };
+}
+
+class ArtistComponent extends React.Component<Props, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,17 +41,18 @@ class ArtistComponent extends React.Component<any, any> {
   }
 
   render() {
-    const artist = this.props.artist.artist;
-    const loading = this.props.artist.loading;
+    const { artist } = this.props;
+    const artistData = artist.artist;
+    const loading = artist.loading;
 
     return loading ? (
       <span>Loading...</span>
     ) : (
       <div className="App">
         <Nav />
-        <ArtistHeader name={artist.name} id={artist.id} accentColor={artist.accent_color} />
-        <ArtistInfo location={artist.location} />
-        <PostsContainer posts={artist.posts} accentColor={artist.accent_color} />
+        <ArtistHeader name={artistData.name} id={artistData.id} accentColor={artistData.accent_color} />
+        <ArtistInfo location={artistData.location} />
+        <PostsContainer posts={artistData.posts} accentColor={artistData.accent_color} />
       </div>
     );
   }

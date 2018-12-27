@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-export const signUp = async (username, password, name) => {
+export const login = async (username: string, password: string) => {
   const { data } = await axios({
     method: 'post',
-    url: '/users/sign_up.json',
+    url: '/users/sign_in.json',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: { username, password, name },
+    data: { username, password },
   });
 
   return { token: data };

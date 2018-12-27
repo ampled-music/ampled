@@ -11,8 +11,11 @@ export const initialState = {
   error: null,
 };
 
-export const userLoginAction = createActionThunk('LOGIN', (username, password) => login(username, password));
-export const userSignUpAction = createActionThunk('SIGN_UP', (username, password, name) =>
+export const userLoginAction = createActionThunk('LOGIN', (username: string, password: string) =>
+  login(username, password),
+);
+
+export const userSignUpAction = createActionThunk('SIGN_UP', (username: string, password: string, name: string) =>
   signUp(username, password, name),
 );
 
@@ -62,6 +65,6 @@ export const userSignUp = handleActions(
   initialState,
 );
 
-export const checkEmailAvailability = async (email) => {
+export const checkEmailAvailability = async (email: string) => {
   return await checkEmail(email);
 };

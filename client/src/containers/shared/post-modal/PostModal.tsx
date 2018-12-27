@@ -1,26 +1,16 @@
 import { Button, Dialog, DialogActions } from '@material-ui/core';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import * as React from 'react';
-
-// import './post-modal.scss';
-
-// const styles = {
-//   dialogContainer: {
-//     backgroundImage: 'url(../../../images/background_post.svg)',
-//     backgroundRepeat: 'no-repeat',
-//     paddingTop: '93px',
-//   },
-// };
+import background from '../../../images/background_post.svg';
 
 const theme = createMuiTheme({
   overrides: {
-    // Name of the component ⚛️ / style sheet
     MuiPaper: {
-      // Name of the rule
       root: {
-        // Some CSS
-        background: "url('../../../images/background_post.svg')",
+        background: `url(${background})`,
         backgroundRepeat: 'no-repeat',
+        paddingTop: '93px',
+        backgroundColor: 'initial',
       },
       elevation24: {
         boxShadow: 'none',

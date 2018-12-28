@@ -1,6 +1,6 @@
+import LinearProgress from '@material-ui/core/LinearProgress';
 import axios from 'axios';
 import * as React from 'react';
-import { ProgressBar } from './ProgressBar';
 
 interface UploadState {
   progress: number;
@@ -62,8 +62,8 @@ class Upload extends React.Component<UploadProps, UploadState> {
     const { progress } = this.state;
 
     return (
-      <div style={{ width: '400px' }}>
-        <ProgressBar now={progress} />
+      <div>
+        <LinearProgress variant="determinate" value={progress} style={{ height: 25 }} />
         <input type="file" onChange={this.processFile.bind(this)} />
         {/* <audio ref="audio_tag" src={completedUrl} controls autoPlay={this.state.complete} /> */}
       </div>

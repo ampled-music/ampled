@@ -32,6 +32,14 @@ export const theme = createMuiTheme({
         color: '#2557a7 !important',
       },
     },
+    MuiLinearProgress: {
+      colorPrimary: {
+        backgroundColor: '#eeeeee',
+      },
+      barColorPrimary: {
+        backgroundColor: '#2557a7',
+      },
+    },
   },
 
   typography: {

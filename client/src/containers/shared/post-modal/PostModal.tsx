@@ -1,45 +1,51 @@
 import { Button, Dialog, DialogActions, Divider } from '@material-ui/core';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import classnames from 'classnames';
 import * as React from 'react';
-import background from '../../../images/background_post.svg';
 
 import './post-modal.scss';
-
-const theme = createMuiTheme({
-  overrides: {
-    MuiPaper: {
-      root: {
-        background: `url(${background})`,
-        backgroundRepeat: 'no-repeat',
-        paddingTop: '93px',
-        backgroundColor: 'initial',
-      },
-      elevation24: {
-        boxShadow: 'none',
-      },
-      rounded: {
-        borderRadius: '0px',
-      },
-    },
-    MuiDialog: {
-      paperWidthSm: {
-        maxWidth: '670px',
-      },
-    },
-  },
-  typography: {
-    fontFamily: 'Courier, Courier New, monospace',
-  },
-});
+import { theme } from './theme';
 
 class PostModalComponent extends React.Component<any, any> {
+  tabs = {
+    newPost: 'newPost',
+    yourPosts: 'yourPosts',
+  };
+
+  state = {
+    selectedTab: this.tabs.newPost,
+  };
+
+  selectTab = (name) => {
+    this.setState({ selectedTab: name });
+  };
+
   render() {
+    const { newPost, yourPosts } = this.tabs;
+    const { selectedTab } = this.state;
+
     return (
       <MuiThemeProvider theme={theme}>
         <Dialog open={this.props.open} onClose={this.props.close} aria-labelledby="form-dialog-title">
           <div className="tabs">
-            <Button className="selected">NEW POST</Button>
-            <Button className="disabled">YOUR POSTS</Button>
+            <Button
+              className={classnames({
+                selected: selectedTab === newPost,
+                disabled: selectedTab !== newPost,
+              })}
+              onClick={() => this.selectTab(newPost)}
+            >
+              NEW POST
+            </Button>
+            <Button
+              className={classnames({
+                selected: selectedTab === yourPosts,
+                disabled: selectedTab !== yourPosts,
+              })}
+              onClick={() => this.selectTab(yourPosts)}
+            >
+              YOUR POSTS
+            </Button>
           </div>
           <Divider />
           {this.props.children}

@@ -1,6 +1,10 @@
 .tabs {
   margin-left: 15px;
 
+  button {
+    outline: none;
+  }
+
   .selected {
     border-bottom: 3px solid #2557a7;
     border-radius: 0px;

@@ -43,10 +43,13 @@ class PostForm extends React.Component<Props, any> {
             <Upload onComplete={this.addAudioUrl.bind(this)} />
 
             <div className="instructions">
-              <p>Upload as FLAC, WAV, ALAC or AIFF audio file to provide the best audio quality. Learn more here.</p>
               <p>
-                By uploading, you confirm that your sounds comply with our Terms of Use and you don't infringe anyone
-                else's rights.
+                Upload as FLAC, WAV, ALAC or AIFF audio file to provide the best audio quality. Learn more{' '}
+                <a href="">here</a>.
+              </p>
+              <p>
+                By uploading, you confirm that your sounds comply with our <a href="">Terms of Use</a> and you don't
+                infringe anyone else's rights.
               </p>
             </div>
 

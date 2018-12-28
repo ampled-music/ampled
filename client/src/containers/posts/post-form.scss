@@ -1,6 +1,7 @@
 .post-form {
   display: flex;
   flex-direction: column;
+  text-align: center;
 
   h1 {
     font-size: 1em;
@@ -14,6 +15,26 @@
   .instructions {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    margin: 35px 0;
+    justify-content: space-between;
+    margin: 35px 0;
+    font-family: Courier, 'Courier New', monospace;
+    font-size: 13px;
+    text-align: left;
+
+    a {
+      color: #2557a7;
+      text-decoration: underline;
+    }
+
+    p {
+      max-width: 280px;
+    }
+
+    p:first-of-type {
+      margin-right: 25px;
+    }
   }
 
   .post-info {

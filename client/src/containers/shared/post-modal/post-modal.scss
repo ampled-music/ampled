@@ -1,8 +1,9 @@
 .tabs {
-  margin-left: 15px;
+  margin-left: 25px;
 
   button {
     outline: none;
+    margin-right: 30px;
   }
 
   .selected {
@@ -14,5 +15,24 @@
     border-bottom: 3px solid #ffffff;
     border-radius: 0px;
     color: #9b9b9b;
+  }
+}
+
+.action-buttons {
+  margin-right: 25px !important;
+  margin-bottom: 35px !important;
+
+  .cancel-button {
+    color: #2557a7;
+    text-decoration: underline;
+    letter-spacing: 0.8px;
+  }
+
+  .post-button {
+    background-color: #2557a7;
+    color: #ffffff;
+    border-radius: 0px;
+    width: 100px;
+    margin-left: 25px;
   }
 }

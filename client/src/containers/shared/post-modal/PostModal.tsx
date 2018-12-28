@@ -49,11 +49,11 @@ class PostModalComponent extends React.Component<any, any> {
           </div>
           <Divider />
           {this.props.children}
-          <DialogActions>
-            <Button onClick={this.props.close} color="primary">
+          <DialogActions className="action-buttons">
+            <Button className="cancel-button" onClick={this.props.close}>
               Cancel
             </Button>
-            <Button onClick={this.props.close} color="primary">
+            <Button className="post-button" onClick={this.props.close}>
               Post
             </Button>
           </DialogActions>

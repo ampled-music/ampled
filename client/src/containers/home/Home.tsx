@@ -4,8 +4,21 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
 import { artistsPages } from '../../redux/ducks/get-artists-pages';
+import { Nav } from '../nav/Nav';
 
-class HomeComponent extends React.Component<any, any> {
+interface Props {
+  getArtistsPages: Function;
+  artistsPages: {
+    loading: boolean;
+    pages: [];
+  };
+}
+
+interface State {
+  artistPages: [];
+}
+
+class HomeComponent extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,6 +38,15 @@ class HomeComponent extends React.Component<any, any> {
       return <span>Loading...</span>;
     }
 
+    return (
+      <div>
+        <Nav />
+        {this.getArtistsList(artistsPages)}
+      </div>
+    );
+  }
+
+  private getArtistsList(artistsPages: any) {
     return artistsPages.map((page) => {
       return (
         <div key={page.id}>

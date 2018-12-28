@@ -1,6 +1,10 @@
 import * as React from 'react';
 
-class ArtistInfo extends React.Component<any, any> {
+interface Props {
+  location: string;
+}
+
+class ArtistInfo extends React.Component<Props, any> {
   render() {
     return (
       <div className="artist-info container">

@@ -5,6 +5,7 @@ export const routePaths = {
   home: '/home',
   root: '/',
   login: '/login',
+  signup: '/sign-up',
   upload: '/upload',
   loggedUser: {
     root: '/logged-user',

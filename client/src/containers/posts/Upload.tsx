@@ -10,16 +10,16 @@ interface UploadState {
 }
 
 interface UploadProps {
-  onComplete: (string) => null
+  onComplete: (string) => null;
 }
 
 class Upload extends React.Component<UploadProps, UploadState> {
-  private onComplete : (s: string) => null;
+  private onComplete: (s: string) => null;
 
   constructor(props) {
     super(props);
     this.state = { progress: 0, complete: false, completedUrl: '', key: '' };
-    this.onComplete = props.onComplete || console.log
+    this.onComplete = props.onComplete || console.log;
   }
 
   updateProgress(e) {
@@ -60,6 +60,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
   render() {
     const { completedUrl, progress } = this.state;
+
     return (
       <div style={{ width: '400px' }}>
         <ProgressBar now={progress} />

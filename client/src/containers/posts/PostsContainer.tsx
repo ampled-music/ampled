@@ -1,6 +1,25 @@
 import * as React from 'react';
 
-class PostsContainer extends React.Component<any, any> {
+interface Comment {
+  id: string;
+  author: string;
+  text: string;
+}
+
+interface Post {
+  id: string;
+  author: string;
+  title: string;
+  body: string;
+  comments: Comment[];
+  created_ago: string;
+}
+interface Props {
+  posts: Post[];
+  accentColor: string;
+}
+
+class PostsContainer extends React.Component<Props, any> {
   constructor(props) {
     super(props);
   }

@@ -9,7 +9,7 @@ export const initialState = {
   error: null,
 };
 
-export const getArtistData = createActionThunk('GET_ARTIST', (artistId) => getArtist(artistId));
+export const getArtistData = createActionThunk('GET_ARTIST', (artistId: string) => getArtist(artistId));
 
 export const artist = handleActions(
   {

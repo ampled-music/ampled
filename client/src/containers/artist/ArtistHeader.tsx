@@ -10,12 +10,20 @@ import nine_inch_nails_3 from '../../test/nine_inch_nails_3.jpg';
 import nine_inch_nails_4 from '../../test/nine_inch_nails_4.jpg';
 import trent_reznor from '../../test/trent_reznor.jpg';
 
-class ArtistHeader extends React.Component<any, any> {
+interface Props {
+  name: string;
+  id: number;
+  accentColor: string;
+}
+
+class ArtistHeader extends React.Component<Props, any> {
   constructor(props) {
     super(props);
   }
 
   render() {
+    const { name, accentColor, id } = this.props;
+
     return (
       <div className="artist-header container">
         {' '}
@@ -23,22 +31,14 @@ class ArtistHeader extends React.Component<any, any> {
         <div className="row">
           <div className="col-md-8">
             {/* Left Side */}
-            <div className="artist-header__title">{this.props.name}</div>
-            <Link to={`/create_post/${this.props.id}`}>New Post</Link>
+            <div className="artist-header__title">{name}</div>
+            <Link to={`/create_post/${id}`}>New Post</Link>
             <div className="row">
-              <div className="col-3 artist-header__members" style={{ borderColor: this.props.accentColor }}>
-                <img
-                  className="artist-header__member"
-                  style={{ borderColor: this.props.accentColor }}
-                  src={trent_reznor}
-                />
-                <img
-                  className="artist-header__member"
-                  style={{ borderColor: this.props.accentColor }}
-                  src={atticus_ross}
-                />
+              <div className="col-3 artist-header__members" style={{ borderColor: accentColor }}>
+                <img className="artist-header__member" style={{ borderColor: accentColor }} src={trent_reznor} />
+                <img className="artist-header__member" style={{ borderColor: accentColor }} src={atticus_ross} />
               </div>
-              <div className="col-9 artist-header__photos" style={{ borderColor: this.props.accentColor }}>
+              <div className="col-9 artist-header__photos" style={{ borderColor: accentColor }}>
                 <img className="artist-header__photo" src={nine_inch_nails_4} />
                 <img className="artist-header__photo" src={nine_inch_nails_3} />
                 <img className="artist-header__photo" src={nine_inch_nails_2} />
@@ -51,7 +51,7 @@ class ArtistHeader extends React.Component<any, any> {
           <div className="col-md-4">
             {/* Right Side */}
             <div className="artist-header__message">A Message From The Band</div>
-            <div className="artist-header__message-container" style={{ borderColor: this.props.accentColor }}>
+            <div className="artist-header__message-container" style={{ borderColor: accentColor }}>
               <img className="artist-header__message-image" src={nin_video} />
             </div>
 
@@ -60,11 +60,7 @@ class ArtistHeader extends React.Component<any, any> {
 
               <div className="row align-items-center">
                 <div className="col-3">
-                  <img
-                    className="artist-header__member"
-                    style={{ borderColor: this.props.accentColor }}
-                    src={trent_reznor}
-                  />
+                  <img className="artist-header__member" style={{ borderColor: accentColor }} src={trent_reznor} />
                 </div>
                 <div className="col-9">
                   <div className="artist-header__member_name">Trent R.</div>
@@ -76,11 +72,7 @@ class ArtistHeader extends React.Component<any, any> {
 
               <div className="row align-items-center">
                 <div className="col-3">
-                  <img
-                    className="artist-header__member"
-                    style={{ borderColor: this.props.accentColor }}
-                    src={atticus_ross}
-                  />
+                  <img className="artist-header__member" style={{ borderColor: accentColor }} src={atticus_ross} />
                 </div>
                 <div className="col-9">
                   <div className="artist-header__member_name">Atticus R.</div>

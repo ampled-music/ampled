@@ -52,7 +52,7 @@ class PostForm extends React.Component<Props, any> {
 
             <div className="post-info">
               <div className="post-image">
-                <Button>Update Image</Button>
+                <Button className="image-button">Update Image</Button>
               </div>
               <div className="post-description">
                 <TextField

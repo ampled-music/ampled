@@ -23,10 +23,20 @@
     .post-image {
       display: flex;
       align-items: flex-end;
-      justify-items: center;
       background: url(../../images/post_image.svg) no-repeat;
       width: 190px;
       height: 190px;
+
+      .image-button {
+        background-color: #ffffff;
+        border: 1px solid #000000;
+        border-radius: 0px;
+        text-transform: capitalize;
+        margin: 0 auto 15px auto;
+        width: 80%;
+        padding: 0;
+        outline: none;
+      }
     }
 
     .post-description {

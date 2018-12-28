@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import axios from 'axios';
 import * as React from 'react';
@@ -7,6 +8,7 @@ interface UploadState {
   complete: boolean;
   completedUrl: string;
   key: string;
+  fileName: string;
 }
 
 interface UploadProps {
@@ -18,7 +20,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
   constructor(props) {
     super(props);
-    this.state = { progress: 0, complete: false, completedUrl: '', key: '' };
+    this.state = { progress: 0, complete: false, completedUrl: '', key: '', fileName: '' };
     this.onComplete = props.onComplete || console.log;
   }
 
@@ -29,6 +31,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
   processFile(e) {
     const file = e.target.files[0];
+    this.setState({ fileName: e.target.value });
     this.signFile(file).then((response) => {
       const putUrl = response.data.signedUrl;
       this.setState({ key: response.data.key });
@@ -64,7 +67,19 @@ class Upload extends React.Component<UploadProps, UploadState> {
     return (
       <div>
         <LinearProgress variant="determinate" value={progress} style={{ height: 25 }} />
-        <input type="file" onChange={this.processFile.bind(this)} />
+        <input
+          style={{ display: 'none' }}
+          id="raised-button-file"
+          type="file"
+          onChange={this.processFile.bind(this)}
+          required
+        />
+        <label htmlFor="raised-button-file">
+          <Button variant="contained" component="span">
+            Upload
+          </Button>
+          {this.state.fileName}
+        </label>
         {/* <audio ref="audio_tag" src={completedUrl} controls autoPlay={this.state.complete} /> */}
       </div>
     );

@@ -4,15 +4,13 @@ class UploadsController < ApplicationController
   end
 
   def sign_file
-    # binding.pry
-    puts content_type
-    puts file_extension
+
     key = "#{SecureRandom.uuid}.#{file_extension}"
     # redirect_to status: 404 unless file_extension.present?
     url = signer.presigned_url(:put_object,
-                               bucket: 'ampled-test',
+                               bucket: "ampled-test",
                                key: key,
-                               acl: 'public-read',
+                               acl: "public-read",
                                content_type: content_type)
 
     render json: { signedUrl: url, key: key }
@@ -27,7 +25,7 @@ class UploadsController < ApplicationController
 
   def file_extension
     {
-      "audio/mp3" => 'mp3'
+      "audio/mp3" => "mp3"
     }[content_type]
   end
 

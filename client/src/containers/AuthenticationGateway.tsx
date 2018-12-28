@@ -15,12 +15,12 @@ const AuthenticationGateway = ({ component: Component, path }: { component: any;
       return <Component exact path={path} />;
     }
 
-    return <Redirect to={{ pathname: routePaths.login }} />;
+    return <Redirect to={{ pathname: routePaths.home }} />;
   };
 
   return (
     <Switch>
-      <Route exact path={routePaths.root} component={Home} />
+      <Route exact path={routePaths.home} component={Home} />
       <Route exact path={routePaths.artists} component={Artist} />
       <Route exact path={routePaths.upload} component={Upload} />
       <Route exact path={routePaths.createPost} component={PostForm} />

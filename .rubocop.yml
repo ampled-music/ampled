@@ -1,5 +1,13 @@
 inherit_from:
   - https://raw.githubusercontent.com/carbonfive/c5-conventions/master/rubocop/rubocop.yml
 
+inherit_mode:
+  merge:
+    - Exclude
+
 Rails:
   Enabled: true
+
+AllCops:
+  Exclude:
+    - './app/dashboards/*'

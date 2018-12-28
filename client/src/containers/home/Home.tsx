@@ -1,8 +1,11 @@
-import axios from 'axios';
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 
-class Home extends React.Component<any, any> {
+import { artistsPages } from '../../redux/ducks/get-artists-pages';
+
+class HomeComponent extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,13 +14,18 @@ class Home extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    axios.get('/artist_pages.json').then((res) => {
-      this.setState({ artistPages: res.data });
-    });
+    this.props.getArtistsPages();
   }
 
   render() {
-    return this.state.artistPages.map((page) => {
+    const loading = this.props.artistsPages.loading;
+    const artistsPages = this.props.artistsPages.pages;
+
+    if (loading) {
+      return <span>Loading...</span>;
+    }
+
+    return artistsPages.map((page) => {
       return (
         <div key={page.id}>
           <Link to={`/artists/${page.id}`}>{page.name}</Link>
@@ -26,5 +34,22 @@ class Home extends React.Component<any, any> {
     });
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    artistsPages: state.pages,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getArtistsPages: bindActionCreators(artistsPages, dispatch),
+  };
+};
+
+const Home = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HomeComponent);
 
 export { Home };

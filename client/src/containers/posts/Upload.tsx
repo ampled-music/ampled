@@ -59,13 +59,13 @@ class Upload extends React.Component<UploadProps, UploadState> {
   }
 
   render() {
-    const { completedUrl, progress } = this.state;
+    const { progress } = this.state;
 
     return (
       <div style={{ width: '400px' }}>
         <ProgressBar now={progress} />
         <input type="file" onChange={this.processFile.bind(this)} />
-        <audio ref="audio_tag" src={completedUrl} controls autoPlay={this.state.complete} />
+        {/* <audio ref="audio_tag" src={completedUrl} controls autoPlay={this.state.complete} /> */}
       </div>
     );
   }

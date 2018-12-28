@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import { Link } from 'react-router-dom';
-
 import atticus_ross from '../../test/atticus_ross.jpg';
 import nin_video from '../../test/nin_video.jpg';
 import nine_inch_nails_1 from '../../test/nine_inch_nails_1.jpg';
@@ -9,6 +7,8 @@ import nine_inch_nails_2 from '../../test/nine_inch_nails_2.jpg';
 import nine_inch_nails_3 from '../../test/nine_inch_nails_3.jpg';
 import nine_inch_nails_4 from '../../test/nine_inch_nails_4.jpg';
 import trent_reznor from '../../test/trent_reznor.jpg';
+import { PostForm } from '../posts/PostForm';
+import { PostModal } from '../shared/post-modal/PostModal';
 
 interface Props {
   name: string;
@@ -19,7 +19,19 @@ interface Props {
 class ArtistHeader extends React.Component<Props, any> {
   constructor(props) {
     super(props);
+
+    this.state = {
+      openModal: true,
+    };
   }
+
+  openModal = () => {
+    this.setState({ openModal: true });
+  };
+
+  closeModal = () => {
+    this.setState({ openModal: false });
+  };
 
   render() {
     const { name, accentColor, id } = this.props;
@@ -28,11 +40,14 @@ class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header container">
         {' '}
         {/* Main Section */}
+        <PostModal open={this.state.openModal} close={this.closeModal}>
+          <PostForm artistId={id} />
+        </PostModal>
         <div className="row">
           <div className="col-md-8">
             {/* Left Side */}
             <div className="artist-header__title">{name}</div>
-            <Link to={`/create_post/${id}`}>New Post</Link>
+            <button onClick={this.openModal}>Open Modal</button>
             <div className="row">
               <div className="col-3 artist-header__members" style={{ borderColor: accentColor }}>
                 <img className="artist-header__member" style={{ borderColor: accentColor }} src={trent_reznor} />

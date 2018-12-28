@@ -1,7 +1,14 @@
 import * as React from 'react';
 import { Upload } from './Upload';
 
-class PostForm extends React.Component<any, any> {
+import { Button, DialogContent } from '@material-ui/core';
+import './post-form.scss';
+
+interface Props {
+  artistId: number;
+}
+
+class PostForm extends React.Component<Props, any> {
   constructor(props) {
     super(props);
 
@@ -9,7 +16,7 @@ class PostForm extends React.Component<any, any> {
       title: '',
       caption: '',
       audioUrl: '',
-      artist_page_id: this.props.match.params.id,
+      artist_page_id: this.props.artistId,
     };
   }
 
@@ -29,19 +36,40 @@ class PostForm extends React.Component<any, any> {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Post title:
-          <input name="title" type="text" value={this.state.title} onChange={this.handleChange} />
-        </label>
-        <label>
-          Caption:
-          <textarea name="caption" value={this.state.caption} onChange={this.handleChange} />
-        </label>
-        <input type="hidden" value={this.state.audioUrl} name="audioUrl" />
-        <Upload onComplete={this.addAudioUrl.bind(this)} />
-        <input type="submit" value="Submit" />
-      </form>
+      <div className="post-form">
+        <DialogContent>
+          <h1>AUDIO POST</h1>
+          <form onSubmit={this.handleSubmit}>
+            <Upload onComplete={this.addAudioUrl.bind(this)} />
+
+            <div className="instructions">
+              <p>Upload as FLAC, WAV, ALAC or AIFF audio file to provide the best audio quality. Learn more here.</p>
+              <p>
+                By uploading, you confirm that your sounds comply with our Terms of Use and you don't infringe anyone
+                else's rights.
+              </p>
+            </div>
+
+            <div className="post-info">
+              <div className="post-image">
+                <Button>Update Image</Button>
+              </div>
+              <div className="post-description">
+                <label>
+                  Post title:
+                  <input name="title" type="text" value={this.state.title} onChange={this.handleChange} />
+                </label>
+                <label>
+                  Caption:
+                  <textarea name="caption" value={this.state.caption} onChange={this.handleChange} />
+                </label>
+              </div>
+            </div>
+            <input type="hidden" value={this.state.audioUrl} name="audioUrl" />
+            {/* <input type="submit" value="Submit" /> */}
+          </form>
+        </DialogContent>
+      </div>
     );
   }
 }

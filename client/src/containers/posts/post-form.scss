@@ -1,0 +1,37 @@
+.post-form {
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    font-size: 1em;
+    letter-spacing: 0.7px;
+    align-self: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  .instructions {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .post-info {
+    display: flex;
+    justify-content: space-between;
+
+    .post-image {
+      display: flex;
+      align-items: flex-end;
+      justify-items: center;
+      background: url(../../images/post_image.svg) no-repeat;
+      width: 190px;
+      height: 190px;
+    }
+
+    .post-description {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

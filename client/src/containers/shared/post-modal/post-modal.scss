@@ -4,6 +4,9 @@
   button {
     outline: none;
     margin-right: 30px;
+    font-weight: bold;
+    font-family: inherit;
+    letter-spacing: 0.7px;
   }
 
   .selected {
@@ -26,6 +29,8 @@
     color: #2557a7;
     text-decoration: underline;
     letter-spacing: 0.8px;
+    text-transform: capitalize;
+    font-size: 16px;
   }
 
   .post-button {
@@ -34,5 +39,8 @@
     border-radius: 0px;
     width: 100px;
     margin-left: 25px;
+    letter-spacing: 0.7px;
+    text-transform: capitalize;
+    font-size: 16px;
   }
 }

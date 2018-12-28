@@ -43,6 +43,7 @@ class PostModalComponent extends React.Component<any, any> {
                 disabled: selectedTab !== yourPosts,
               })}
               onClick={() => this.selectTab(yourPosts)}
+              disabled
             >
               YOUR POSTS
             </Button>

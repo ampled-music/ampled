@@ -11,8 +11,8 @@ export const setupAxios = () => {
   axios.defaults.baseURL = config.apiUrl;
 
   axios.interceptors.request.use((axiosConfig) => {
-    // const axiosUrl = config.apiUrl === '/api' ? axiosConfig.url : `${axios.defaults.baseURL}${axiosConfig.url}`;
-    // axiosConfig.url = axiosUrl;
+    //const axiosUrl = config.apiUrl === '/api' ? axiosConfig.url : `${axios.defaults.baseURL}${axiosConfig.url}`;
+    //axiosConfig.url = axiosUrl;
     axiosConfig.timeout = 200000;
     // axiosConfig.headers.authorization = store.get(config.localStorageKeys.token);
     axiosConfig.paramsSerializer = paramsSerializer;

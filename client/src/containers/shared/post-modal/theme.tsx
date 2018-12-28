@@ -22,7 +22,18 @@ export const theme = createMuiTheme({
         maxWidth: '670px',
       },
     },
+    MuiOutlinedInput: {
+      notchedOutline: {
+        borderRadius: '0px',
+      },
+    },
+    MuiFormLabel: {
+      focused: {
+        color: '#2557a7 !important',
+      },
+    },
   },
+
   typography: {
     fontFamily: 'Courier, Courier New, monospace',
   },

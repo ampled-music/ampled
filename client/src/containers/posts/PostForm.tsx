@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Upload } from './Upload';
 
-import { Button, DialogContent } from '@material-ui/core';
+import { Button, DialogContent, TextField } from '@material-ui/core';
 import './post-form.scss';
 
 interface Props {
@@ -55,14 +55,33 @@ class PostForm extends React.Component<Props, any> {
                 <Button>Update Image</Button>
               </div>
               <div className="post-description">
-                <label>
-                  Post title:
-                  <input name="title" type="text" value={this.state.title} onChange={this.handleChange} />
-                </label>
-                <label>
-                  Caption:
-                  <textarea name="caption" value={this.state.caption} onChange={this.handleChange} />
-                </label>
+                <TextField
+                  autoFocus
+                  name="title"
+                  label="Post Title"
+                  type="text"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={this.state.title}
+                  onChange={this.handleChange}
+                />
+                <TextField
+                  name="caption"
+                  label="Caption"
+                  helperText="300 character limit"
+                  fullWidth
+                  multiline
+                  rows="3"
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  style={{ marginTop: 20 }}
+                  value={this.state.caption}
+                  onChange={this.handleChange}
+                />
               </div>
             </div>
             <input type="hidden" value={this.state.audioUrl} name="audioUrl" />

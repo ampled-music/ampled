@@ -32,6 +32,8 @@
     .post-description {
       display: flex;
       flex-direction: column;
+      flex-grow: 2;
+      margin-left: 20px;
     }
   }
 }

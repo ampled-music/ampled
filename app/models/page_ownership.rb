@@ -15,6 +15,6 @@
 #
 
 class PageOwnership < ApplicationRecord
-    belongs_to :user
-    belongs_to :artist_page
+  belongs_to :user
+  belongs_to :artist_page
 end

@@ -1,7 +1,6 @@
 namespace :dummy do
   desc "Generates fake data"
-  task :data => [ :environment ] do
-
+  task :data => [:environment] do
     users = (1..10).map do |_|
       password = Faker::Internet.password
       user = User.create(
@@ -26,7 +25,7 @@ namespace :dummy do
     end
 
     artist_pages.each do |ap|
-      ap.owners << users.sample([1,2].sample)
+      ap.owners << users.sample([1, 2].sample)
     end
 
     posts = artist_pages.map do |ap|
@@ -36,11 +35,10 @@ namespace :dummy do
         Post.create(
           user: author,
           artist_page: ap,
-          body: Faker::Lovecraft.paragraphs([1,2].sample).join("\n"),
+          body: Faker::Lovecraft.paragraphs([1, 2].sample).join("\n"),
           title: Faker::HitchhikersGuideToTheGalaxy.quote,
         )
       end
     end.flatten
-
   end
 end

@@ -11,7 +11,6 @@ class CommentsController < ApplicationController
     end
   end
 
-
   def destroy
     artist_page_id = @comment.post.artist_page.id
     @comment.destroy

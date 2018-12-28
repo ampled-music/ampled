@@ -16,11 +16,10 @@ Rails.application.routes.draw do
     resources :posts, only: [:create, :index]
   end
 
-  get 'uploads/sign', to: 'uploads#sign_file'
-  get 'uploads/playable_url', to: 'uploads#playable_url'
+  get "uploads/sign", to: "uploads#sign_file"
+  get "uploads/playable_url", to: "uploads#playable_url"
 
-  devise_for :users, controllers: { confirmations: 'confirmations' }
+  devise_for :users, controllers: { confirmations: "confirmations" }
 
   root to: "pages#root"
 end
-

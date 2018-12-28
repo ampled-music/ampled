@@ -828,6 +828,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (2.1.0)
+    jwt (2.1.0)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.1.1)
@@ -899,6 +900,7 @@ GEM
     rack-canonical-host (0.2.3)
       addressable (> 0, < 3)
       rack (>= 1.0.0, < 3)
+    rack-cors (1.0.2)
     rack-protection (2.0.4)
       rack
     rack-test (1.1.0)
@@ -1080,6 +1082,7 @@ DEPENDENCIES
   faker
   jbuilder
   jquery-rails
+  jwt
   launchy
   listen
   paperclip (~> 6.0.0)
@@ -1089,6 +1092,7 @@ DEPENDENCIES
   puma
   pundit
   rack-canonical-host
+  rack-cors
   rack-timeout
   rails (~> 5.2.1)
   rspec-rails
@@ -1112,4 +1116,4 @@ RUBY VERSION
    ruby 2.5.3p105
 
 BUNDLED WITH
-   1.17.1
+   1.17.2

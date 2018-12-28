@@ -1,0 +1,77 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #c5e4e4;
+  height: calc(100vh - 55px);
+
+  h2 {
+    margin-top: 70px;
+    margin-bottom: 30px;
+  }
+
+  a {
+    color: #000000;
+  }
+
+  label {
+    font-family: Courier, 'Courier New', monospace;
+    font-size: 18px;
+    letter-spacing: 0.7px;
+    color: #000000;
+    margin-top: 10px;
+  }
+
+  .error-message {
+    font-family: Courier, 'Courier New', monospace;
+    font-size: 12px;
+    color: red;
+    min-height: 18px;
+  }
+
+  .form-container {
+    display: flex;
+    max-width: 450px;
+    padding: 85px 20px 50px 20px;
+    height: auto;
+    border: none;
+    border-radius: 0;
+    background: url(../../images/background_login.svg);
+    background-repeat: no-repeat;
+
+    .input-group-text {
+      text-align: left;
+      background-color: #ffffff;
+      color: #9b9b9b;
+      font-size: 16px;
+      border: none;
+      border-bottom: 1.2px solid #9b9b9b;
+      border-radius: 0;
+      margin-top: 15px;
+      outline: none;
+    }
+
+    .input-group-text:first-of-type {
+      margin-top: 0px;
+      margin-bottom: 17px;
+    }
+
+    input[type='checkbox'] {
+      margin-right: 10px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .btn {
+      background-color: #000000;
+      color: #ffffff;
+      height: 52px;
+      border-radius: 0;
+      margin-top: 40px;
+    }
+  }
+}

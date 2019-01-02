@@ -1,11 +1,13 @@
+import cx from 'classnames';
 import * as React from 'react';
 import { Upload } from './Upload';
 
-import { Button, DialogContent, TextField } from '@material-ui/core';
+import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
 import './post-form.scss';
 
 interface Props {
   artistId: number;
+  close: React.MouseEventHandler;
 }
 
 class PostForm extends React.Component<Props, any> {
@@ -30,9 +32,9 @@ class PostForm extends React.Component<Props, any> {
     alert(`Form submitted: ${this.state}`);
   };
 
-  addAudioUrl(audioUrl) {
+  updateAudioUrl = (audioUrl) => {
     this.setState({ audioUrl });
-  }
+  };
 
   render() {
     return (
@@ -40,7 +42,7 @@ class PostForm extends React.Component<Props, any> {
         <DialogContent>
           <h1>AUDIO POST</h1>
           <form onSubmit={this.handleSubmit}>
-            <Upload onComplete={this.addAudioUrl.bind(this)} />
+            <Upload onComplete={this.updateAudioUrl} />
 
             <div className="instructions">
               <p>
@@ -91,8 +93,19 @@ class PostForm extends React.Component<Props, any> {
                 />
               </div>
             </div>
-            <input type="hidden" value={this.state.audioUrl} name="audioUrl" />
-            {/* <input type="submit" value="Submit" /> */}
+            <DialogActions className="action-buttons">
+              <Button className="cancel-button" onClick={this.props.close}>
+                Cancel
+              </Button>
+              <Button
+                type="Submit"
+                className={cx('post-button', { disabled: this.state.audioUrl.length === 0 })}
+                disabled={this.state.audioUrl.length === 0}
+                onClick={this.props.close}
+              >
+                Post Audio
+              </Button>
+            </DialogActions>
           </form>
         </DialogContent>
       </div>

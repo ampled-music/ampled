@@ -1,6 +1,6 @@
-import { Button, Dialog, DialogActions, Divider } from '@material-ui/core';
+import { Button, Dialog, Divider } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import classnames from 'classnames';
+import cx from 'classnames';
 import * as React from 'react';
 
 import './post-modal.scss';
@@ -29,7 +29,7 @@ class PostModalComponent extends React.Component<any, any> {
         <Dialog open={this.props.open} onClose={this.props.close} aria-labelledby="form-dialog-title">
           <div className="tabs">
             <Button
-              className={classnames({
+              className={cx({
                 selected: selectedTab === newPost,
                 disabled: selectedTab !== newPost,
               })}
@@ -38,7 +38,7 @@ class PostModalComponent extends React.Component<any, any> {
               NEW POST
             </Button>
             <Button
-              className={classnames({
+              className={cx({
                 selected: selectedTab === yourPosts,
                 disabled: selectedTab !== yourPosts,
               })}
@@ -50,14 +50,6 @@ class PostModalComponent extends React.Component<any, any> {
           </div>
           <Divider />
           {this.props.children}
-          <DialogActions className="action-buttons">
-            <Button className="cancel-button" onClick={this.props.close}>
-              Cancel
-            </Button>
-            <Button className="post-button" onClick={this.props.close}>
-              Post
-            </Button>
-          </DialogActions>
         </Dialog>
       </MuiThemeProvider>
     );

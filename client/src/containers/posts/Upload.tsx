@@ -12,24 +12,21 @@ interface UploadState {
 }
 
 interface UploadProps {
-  onComplete: (string) => null;
+  onComplete: Function;
 }
 
 class Upload extends React.Component<UploadProps, UploadState> {
-  private onComplete: (s: string) => null;
-
   constructor(props) {
     super(props);
     this.state = { progress: 0, complete: false, completedUrl: '', key: '', fileName: '' };
-    this.onComplete = props.onComplete || console.log;
   }
 
-  updateProgress(e) {
+  updateProgress = (e) => {
     const percentage = Math.ceil((100 * e.loaded) / e.total);
     this.setState({ progress: percentage });
-  }
+  };
 
-  processFile(e) {
+  processFile = (e) => {
     const file = e.target.files[0];
 
     if (!file) {
@@ -41,21 +38,23 @@ class Upload extends React.Component<UploadProps, UploadState> {
     this.signFile(file).then((response) => {
       const putUrl = response.data.signedUrl;
       this.setState({ key: response.data.key });
+
       const options = {
         url: putUrl,
         headers: {
           'Content-Type': file.type,
         },
-        onUploadProgress: this.updateProgress.bind(this),
+        onUploadProgress: this.updateProgress,
         method: 'PUT',
         data: file,
       };
+
       axios.request(options).then((_) => {
-        this.fetchPlayableUrl.bind(this)();
-        this.onComplete(putUrl);
+        this.fetchPlayableUrl();
+        this.props.onComplete(putUrl);
       });
     });
-  }
+  };
 
   getFileName(e) {
     const filePath = e.target.value;
@@ -64,11 +63,11 @@ class Upload extends React.Component<UploadProps, UploadState> {
     this.setState({ fileName });
   }
 
-  fetchPlayableUrl() {
+  fetchPlayableUrl = () => {
     axios.get(`uploads/playable_url?key=${this.state.key}`).then((response) => {
       this.setState({ completedUrl: response.data.signedUrl, complete: true });
     });
-  }
+  };
 
   signFile(file) {
     return axios.get(`/uploads/sign?contentType=${file.type}`);
@@ -84,13 +83,8 @@ class Upload extends React.Component<UploadProps, UploadState> {
           <span>{this.state.fileName}</span>
           <span>{progress}%</span>
         </div>
-        <input
-          style={{ display: 'none' }}
-          id="raised-button-file"
-          type="file"
-          onChange={this.processFile.bind(this)}
-          required
-        />
+
+        <input style={{ display: 'none' }} id="raised-button-file" type="file" onChange={this.processFile} />
         <label htmlFor="raised-button-file">
           <Button className="upload-button" variant="contained" component="span">
             Upload

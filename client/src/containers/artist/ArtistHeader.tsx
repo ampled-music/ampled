@@ -41,7 +41,7 @@ class ArtistHeader extends React.Component<Props, any> {
         {' '}
         {/* Main Section */}
         <PostModal open={this.state.openModal} close={this.closeModal}>
-          <PostForm artistId={id} />
+          <PostForm artistId={id} close={this.closeModal} />
         </PostModal>
         <div className="row">
           <div className="col-md-8">

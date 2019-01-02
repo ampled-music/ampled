@@ -36,7 +36,8 @@ class Upload extends React.Component<UploadProps, UploadState> {
       return;
     }
 
-    this.setState({ fileName: e.target.value });
+    this.getFileName(e);
+
     this.signFile(file).then((response) => {
       const putUrl = response.data.signedUrl;
       this.setState({ key: response.data.key });
@@ -56,6 +57,13 @@ class Upload extends React.Component<UploadProps, UploadState> {
     });
   }
 
+  getFileName(e) {
+    const filePath = e.target.value;
+    const fileName = filePath.split('\\').pop();
+
+    this.setState({ fileName });
+  }
+
   fetchPlayableUrl() {
     axios.get(`uploads/playable_url?key=${this.state.key}`).then((response) => {
       this.setState({ completedUrl: response.data.signedUrl, complete: true });
@@ -70,8 +78,17 @@ class Upload extends React.Component<UploadProps, UploadState> {
     const { progress } = this.state;
 
     return (
-      <div>
-        <LinearProgress variant="determinate" value={progress} style={{ height: 25 }} />
+      <div className="upload">
+        <LinearProgress
+          variant="determinate"
+          value={progress}
+          style={{ height: 25 }}
+          title={this.state.progress.toString()}
+        />
+        <div className="progress-info">
+          <span>{this.state.fileName}</span>
+          <span>{progress}%</span>
+        </div>
         <input
           style={{ display: 'none' }}
           id="raised-button-file"
@@ -80,10 +97,9 @@ class Upload extends React.Component<UploadProps, UploadState> {
           required
         />
         <label htmlFor="raised-button-file">
-          <Button variant="contained" component="span">
+          <Button className="upload-button" variant="contained" component="span">
             Upload
           </Button>
-          {this.state.fileName}
         </label>
         {/* <audio ref="audio_tag" src={completedUrl} controls autoPlay={this.state.complete} /> */}
       </div>

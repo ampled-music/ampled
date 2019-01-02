@@ -73,11 +73,15 @@ class PostForm extends React.Component<Props, any> {
                 <TextField
                   name="caption"
                   label="Caption"
+                  type="text"
                   helperText="300 character limit"
                   fullWidth
                   multiline
                   rows="3"
                   variant="outlined"
+                  inputProps={{
+                    maxLength: 300,
+                  }}
                   InputLabelProps={{
                     shrink: true,
                   }}

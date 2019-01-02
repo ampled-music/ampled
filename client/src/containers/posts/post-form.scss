@@ -12,13 +12,41 @@
     margin-top: 20px;
   }
 
+  .upload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    label {
+      text-align: left;
+    }
+
+    .progress-info {
+      display: flex;
+      font-family: Courier, 'Courier New', monospace;
+      font-size: 13px;
+      justify-content: space-between;
+    }
+
+    .upload-button {
+      outline: none;
+      background-color: #2557a7;
+      color: #ffffff;
+      border-radius: 0px;
+      width: 100px;
+      letter-spacing: 0.7px;
+      text-transform: capitalize;
+      margin-top: 10px;
+      margin-right: 10px;
+      box-shadow: none;
+    }
+  }
+
   .instructions {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 35px 0;
-    justify-content: space-between;
-    margin: 35px 0;
+    margin: 15px 0;
     font-family: Courier, 'Courier New', monospace;
     font-size: 13px;
     text-align: left;

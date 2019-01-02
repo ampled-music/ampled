@@ -31,6 +31,11 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
   processFile(e) {
     const file = e.target.files[0];
+
+    if (!file) {
+      return;
+    }
+
     this.setState({ fileName: e.target.value });
     this.signFile(file).then((response) => {
       const putUrl = response.data.signedUrl;

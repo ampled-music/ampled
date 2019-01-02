@@ -18,6 +18,7 @@ class PostForm extends React.Component<Props, any> {
       title: '',
       caption: '',
       audioUrl: '',
+      imageUrl: undefined,
       artist_page_id: this.props.artistId,
     };
   }
@@ -35,6 +36,36 @@ class PostForm extends React.Component<Props, any> {
   updateAudioUrl = (audioUrl) => {
     this.setState({ audioUrl });
   };
+
+  processImage = (e) => {
+    console.log('Send image to cloudionary and get the url to render it', e.target.files[0]);
+    this.setState({
+      imageUrl: 'https://www.fairfaxband.org/wp-content/uploads/2018/07/ChristmasInFairfax2-e1542820289569.png',
+    });
+  };
+
+  renderUploader(): React.ReactNode {
+    return <div className="uploader">{this.renderUploadButton()}</div>;
+  }
+
+  renderPreview(): React.ReactNode {
+    return (
+      <div className="post-image">
+        <img className="preview" src={this.state.imageUrl} />
+        {this.renderUploadButton()}
+      </div>
+    );
+  }
+
+  renderUploadButton(): React.ReactNode {
+    return (
+      <label htmlFor="image-file">
+        <Button className="image-button" variant="contained" component="span">
+          Update Image
+        </Button>
+      </label>
+    );
+  }
 
   render() {
     return (
@@ -56,9 +87,10 @@ class PostForm extends React.Component<Props, any> {
             </div>
 
             <div className="post-info">
-              <div className="post-image">
-                <Button className="image-button">Update Image</Button>
-              </div>
+              <input style={{ display: 'none' }} id="image-file" type="file" onChange={this.processImage} />
+
+              {this.state.imageUrl ? this.renderPreview() : this.renderUploader()}
+
               <div className="post-description">
                 <TextField
                   autoFocus

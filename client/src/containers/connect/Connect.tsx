@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as store from 'store';
 
+import { setupAxios } from '../../api/setup-axios';
 import { config } from '../../config';
 import { authenticate } from '../../redux/ducks/authenticate';
 import { routePaths } from '../route-paths';
@@ -35,6 +36,7 @@ export class ConnectComponent extends React.Component<Props, any> {
     }
 
     store.set(config.localStorageKeys.token, token);
+    setupAxios();
 
     this.props.dispatch(authenticate(token));
   }

@@ -26,7 +26,7 @@ class PostModalComponent extends React.Component<any, any> {
 
     return (
       <MuiThemeProvider theme={theme}>
-        <Dialog open={this.props.open} onClose={this.props.close} aria-labelledby="form-dialog-title">
+        <Dialog open={this.props.open} aria-labelledby="form-dialog-title">
           <div className="tabs">
             <Button
               className={cx({

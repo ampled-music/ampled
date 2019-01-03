@@ -90,6 +90,32 @@
         max-height: 190px;
         margin-bottom: 10px;
       }
+
+      .image-actions {
+        display: flex;
+        justify-content: space-between;
+
+        span {
+          display: flex;
+          border: 1px solid #2557a7;
+          cursor: pointer;
+          width: 25px;
+          height: 25px;
+          justify-content: center;
+          align-items: center;
+          z-index: 1;
+        }
+
+        label {
+          cursor: pointer;
+          z-index: 2;
+        }
+
+        .action-icon {
+          width: 15px;
+          height: 15px;
+        }
+      }
     }
 
     .image-button {

@@ -1,7 +1,9 @@
+import { faSync, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
 import * as React from 'react';
 import { Upload } from './Upload';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
 import './post-form.scss';
 
@@ -38,10 +40,20 @@ class PostForm extends React.Component<Props, any> {
   };
 
   processImage = (e) => {
-    console.log('Send image to cloudionary and get the url to render it', e.target.files[0]);
+    //TODO Send image to cloudionary via server and get the url to render it
+
+    if (!e.target.files[0]) {
+      return;
+    }
+
     this.setState({
       imageUrl: 'https://www.fairfaxband.org/wp-content/uploads/2018/07/ChristmasInFairfax2-e1542820289569.png',
     });
+  };
+
+  removeImage = () => {
+    //TODO Remove image from cloudionary via server???
+    this.setState({ imageUrl: undefined });
   };
 
   renderUploader(): React.ReactNode {
@@ -52,7 +64,16 @@ class PostForm extends React.Component<Props, any> {
     return (
       <div className="post-image">
         <img className="preview" src={this.state.imageUrl} />
-        {this.renderUploadButton()}
+        <div className="image-actions">
+          <span title="Remove image" onClick={this.removeImage}>
+            <FontAwesomeIcon className="action-icon" icon={faTrashAlt} />
+          </span>
+          <label htmlFor="image-file">
+            <span title="Change image">
+              <FontAwesomeIcon className="action-icon" icon={faSync} />
+            </span>
+          </label>
+        </div>
       </div>
     );
   }

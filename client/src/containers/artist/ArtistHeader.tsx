@@ -8,6 +8,7 @@ import nine_inch_nails_3 from '../../test/nine_inch_nails_3.jpg';
 import nine_inch_nails_4 from '../../test/nine_inch_nails_4.jpg';
 import trent_reznor from '../../test/trent_reznor.jpg';
 import { PostForm } from '../posts/PostForm';
+import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { PostModal } from '../shared/post-modal/PostModal';
 
 interface Props {
@@ -22,6 +23,7 @@ class ArtistHeader extends React.Component<Props, any> {
 
     this.state = {
       openModal: true,
+      showConfirmationDialog: false,
     };
   }
 
@@ -33,6 +35,19 @@ class ArtistHeader extends React.Component<Props, any> {
     this.setState({ openModal: false });
   };
 
+  getUserConfirmation = () => {
+    this.setState({ showConfirmationDialog: true });
+  };
+
+  closeConfirmationDialog = () => {
+    this.setState({ showConfirmationDialog: false });
+  };
+
+  discardChanges = () => {
+    this.closeConfirmationDialog();
+    this.closeModal();
+  };
+
   render() {
     const { name, accentColor, id } = this.props;
 
@@ -40,9 +55,14 @@ class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header container">
         {' '}
         {/* Main Section */}
-        <PostModal open={this.state.openModal} close={this.closeModal}>
-          <PostForm artistId={id} close={this.closeModal} />
+        <PostModal open={this.state.openModal} close={this.getUserConfirmation}>
+          <PostForm artistId={id} close={this.getUserConfirmation} />
         </PostModal>
+        <ConfirmationDialog
+          open={this.state.showConfirmationDialog}
+          closeConfirmationDialog={this.closeConfirmationDialog}
+          discardChanges={this.discardChanges}
+        />
         <div className="row">
           <div className="col-md-8">
             {/* Left Side */}

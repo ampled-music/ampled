@@ -12,7 +12,7 @@ interface Props {
   name: string;
   id: number;
   accentColor: string;
-  openModal: React.MouseEventHandler;
+  openPostModal: React.MouseEventHandler;
 }
 
 class ArtistHeader extends React.Component<Props, any> {
@@ -54,7 +54,7 @@ class ArtistHeader extends React.Component<Props, any> {
           <div className="col-md-4">
             {/* Right Side */}
             <div className="artist-header__message">A Message From The Band</div>
-            <button onClick={this.props.openModal}>New Post</button>
+            <button onClick={this.props.openPostModal}>New Post</button>
 
             <div className="artist-header__message-container" style={{ borderColor: accentColor }}>
               <img className="artist-header__message-image" src={nin_video} />

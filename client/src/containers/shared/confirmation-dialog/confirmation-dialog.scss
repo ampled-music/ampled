@@ -1,0 +1,22 @@
+.action-buttons {
+  button {
+    text-transform: capitalize;
+    outline: none;
+  }
+
+  .discard-button {
+    color: #2557a7;
+    text-decoration: underline;
+    letter-spacing: 0.8px;
+  }
+
+  .continue-button {
+    background-color: #2557a7;
+    color: #ffffff;
+    border-radius: 0px;
+    padding: 8px 20px;
+    margin-left: 25px;
+    letter-spacing: 0.7px;
+    text-transform: capitalize;
+  }
+}

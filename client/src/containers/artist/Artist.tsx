@@ -79,7 +79,7 @@ class ArtistComponent extends React.Component<Props, any> {
           name={artistData.name}
           id={artistData.id}
           accentColor={artistData.accent_color}
-          openModal={this.openModal}
+          openPostModal={this.openModal}
         />
         <ArtistInfo location={artistData.location} />
         <PostsContainer posts={artistData.posts} accentColor={artistData.accent_color} />

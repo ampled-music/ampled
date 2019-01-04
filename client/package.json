@@ -20,6 +20,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "redux-thunk-actions": "github:wgrisa/redux-thunk-actions",
+    "redux-devtools-extension": "^2.13.7",
     "store": "^2.0.12"
   },
   "scripts": {
@@ -46,7 +47,6 @@
     "enzyme-adapter-react-16": "^1.7.1",
     "prettier": "^1.15.3",
     "redux-actions": "^2.6.4",
-    "redux-devtools-extension": "^2.13.7",
     "redux-mock-store": "^1.5.3",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.17.0",

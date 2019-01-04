@@ -6,6 +6,7 @@ import { Upload } from './Upload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
 import './post-form.scss';
+import { uploadFileToCloudinary } from 'src/api/cloudinary/uploadImage';
 
 interface Props {
   artistId: number;
@@ -39,12 +40,17 @@ class PostForm extends React.Component<Props, any> {
     this.setState({ audioUrl });
   };
 
-  processImage = (e) => {
+  processImage = async (e) => {
     //TODO Send image to cloudionary via server and get the url to render it
 
-    if (!e.target.files[0]) {
+    const imageFile = e.target.files[0];
+
+    if (!imageFile) {
       return;
     }
+
+    const fileUrl = await uploadFileToCloudinary(imageFile);
+    console.log(fileUrl);
 
     this.setState({
       imageUrl: 'https://www.fairfaxband.org/wp-content/uploads/2018/07/ChristmasInFairfax2-e1542820289569.png',

@@ -2,8 +2,8 @@ import { handleActions } from 'redux-actions';
 import { createActionThunk } from 'redux-thunk-actions';
 
 import { login } from '../../api/login/login';
-import { signUp } from '../../api/login/sign-up';
 import { checkEmail } from '../../api/sign-up/check-email';
+import { signUp } from '../../api/sign-up/sign-up';
 
 export const initialState = {
   token: {},

@@ -10,6 +10,7 @@ gem "aws-sdk", "~> 3"
 gem "bootsnap", require: false
 gem "cloudinary"
 gem "devise"
+gem "devise-jwt"
 gem "faker"
 gem "jbuilder"
 gem "jwt"

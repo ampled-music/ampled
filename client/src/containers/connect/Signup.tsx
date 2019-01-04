@@ -58,7 +58,9 @@ class SignupComponent extends React.Component<Props, any> {
       return;
     }
 
-    await this.props.userSignUp(this.state.email, this.state.password, this.state.name);
+    const { email, password, confirmPassword, name } = this.state;
+
+    await this.props.userSignUp(email, password, confirmPassword, name);
 
     if (this.props.login.error) {
       alert(this.props.login.error);

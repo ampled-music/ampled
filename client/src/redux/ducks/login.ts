@@ -14,8 +14,10 @@ export const userLoginAction = createActionThunk('LOGIN', (username: string, pas
   login(username, password),
 );
 
-export const userSignUpAction = createActionThunk('SIGN_UP', (username: string, password: string, name: string) =>
-  signUp(username, password, name),
+export const userSignUpAction = createActionThunk(
+  'SIGN_UP',
+  (username: string, password: string, passwordconfirmation: string, name: string) =>
+    signUp(username, password, passwordconfirmation, name),
 );
 
 export const userLogin = handleActions(

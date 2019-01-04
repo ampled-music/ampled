@@ -34,7 +34,15 @@
     "@types/react-redux": "^6.0.11",
     "@types/react-router-dom": "^4.3.1",
     "@types/store": "^2.0.1",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "coveralls": "^3.0.2",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "prettier": "^1.15.3",
+    "redux-mock-store": "^1.5.3",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-consistent-codestyle": "^1.14.1"
   },
   "scripts": {
     "start": "PORT=5000 react-scripts-ts start",
@@ -44,14 +52,7 @@
     "test-coverage": "npm run test -- --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "devDependencies": {
-    "coveralls": "^3.0.2",
-    "enzyme": "^3.8.0",
-    "enzyme-adapter-react-16": "^1.7.1",
-    "prettier": "^1.15.3",
-    "redux-mock-store": "^1.5.3",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.17.0",
-    "tslint-consistent-codestyle": "^1.14.1"
+
   },
   "jest": {
     "collectCoverageFrom": [

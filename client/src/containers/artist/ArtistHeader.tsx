@@ -59,7 +59,7 @@ class ArtistHeader extends React.Component<Props, any> {
             {/* Right Side */}
             <div className="artist-header__message">A Message From The Band</div>
             <div className="new-post">
-              <button>
+              <button onClick={this.props.openPostModal}>
                 <span>New Post</span>
                 <FontAwesomeIcon icon={faPlus} color="#ffffff" />
               </button>

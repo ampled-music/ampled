@@ -6,10 +6,9 @@
     "start": "concurrently -k -r npm:start:client npm:start:server",
     "start:client": "cd client && npm-run-all start",
     "start:server": "rails s",
-    "postinstall": "cd client && npm install",
-    "build": "cd client && npm run build",
+    "build-client": "cd client && npm i --only=dev && npm i && npm run build",
     "deploy": "cp -a client/build/. public/",
-    "heroku-postbuild": "npm run build && npm run deploy"
+    "heroku-postbuild": "npm run build-client && npm run deploy"
   },
   "devDependencies": {
     "concurrently": "^3.6.1",

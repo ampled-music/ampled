@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
-import { checkEmailAvailability, userSignUpAction } from 'src/redux/ducks/login';
+import { userSignUpAction } from 'src/redux/ducks/login';
 import { Nav } from '../nav/Nav';
 import { routePaths } from '../route-paths';
 
@@ -24,7 +24,7 @@ class SignupComponent extends React.Component<Props, any> {
     password: '',
     name: '',
     confirmPassword: '',
-    emailIsAvailable: true,
+
     matchPasswordsError: false,
     acceptTerms: false,
     submitted: false,
@@ -42,10 +42,7 @@ class SignupComponent extends React.Component<Props, any> {
   async validateFields() {
     const passwordsMatch = this.passwordsMatch();
 
-    const isEmailAvailable = await checkEmailAvailability(this.state.email);
-    this.setState({ emailIsAvailable: isEmailAvailable });
-
-    if (!isEmailAvailable || !passwordsMatch) {
+    if (!passwordsMatch) {
       return false;
     }
 
@@ -80,7 +77,7 @@ class SignupComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { emailIsAvailable, submitted, matchPasswordsError } = this.state;
+    const { submitted, matchPasswordsError } = this.state;
 
     if (submitted) {
       return <Redirect to={routePaths.connect} />;
@@ -91,7 +88,6 @@ class SignupComponent extends React.Component<Props, any> {
     }
 
     const passwordErrorMessage = 'Passwords do not match.';
-    const emailErrorMessage = 'Email already taken.';
 
     return (
       <div>
@@ -116,7 +112,6 @@ class SignupComponent extends React.Component<Props, any> {
               onChange={this.handleChange}
               required
             />
-            <span className="error-message">{!emailIsAvailable && emailErrorMessage}</span>
 
             <input
               className="input-group-text"

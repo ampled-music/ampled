@@ -11,17 +11,19 @@ export const uploadFileToCloudinary = async (file: any) => {
   fd.append('timestamp', timestamp.toString());
   fd.append('signature', signature);
   fd.append('file', file);
+  fd.append('return_delete_token', 'true');
   const reqConfig = {
     headers: { 'X-Requested-With': 'XMLHttpRequest' },
   };
 
+  //TODO get errors and show to user
   const { data } = await axios.post(config.cloudinary.uploadImageUrl, fd, reqConfig);
 
-  return data.secure_url;
+  return data;
 };
 
 const createSignute = (timestamp) => {
-  const hashString = `timestamp=${timestamp}${config.cloudinary.apiSecret}`;
+  const hashString = `return_delete_token=true&timestamp=${timestamp}${config.cloudinary.apiSecret}`;
 
   return sha1(hashString);
 };

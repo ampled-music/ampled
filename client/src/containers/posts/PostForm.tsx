@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
 import { uploadFileToCloudinary } from 'src/api/cloudinary/uploadImage';
 import './post-form.scss';
+import { deleteFileFromCloudinary } from 'src/api/cloudinary/deleteImage';
 
 interface Props {
   artistId: number;
@@ -22,6 +23,7 @@ class PostForm extends React.Component<Props, any> {
       caption: '',
       audioUrl: '',
       imageUrl: undefined,
+      deleteToken: undefined,
       artist_page_id: this.props.artistId,
     };
   }
@@ -47,15 +49,16 @@ class PostForm extends React.Component<Props, any> {
       return;
     }
 
-    const fileUrl = await uploadFileToCloudinary(imageFile);
+    const fileInfo = await uploadFileToCloudinary(imageFile);
 
     this.setState({
-      imageUrl: fileUrl,
+      imageUrl: fileInfo.secure_url,
+      deleteToken: fileInfo.delete_token,
     });
   };
 
   removeImage = () => {
-    //TODO Remove image from cloudionary ???
+    deleteFileFromCloudinary(this.state.deleteToken);
     this.setState({ imageUrl: undefined });
   };
 

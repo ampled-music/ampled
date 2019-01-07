@@ -10,6 +10,7 @@ export const config = {
   },
   cloudinary: {
     uploadImageUrl: 'https://api.cloudinary.com/v1_1/ampled-web/upload',
+    deleteImageUrl: 'https://api.cloudinary.com/v1_1/ampled-web/delete_by_token',
     apiKey: process.env.CLOUDINARY_API_KEY || '744875614849321',
     apiSecret: process.env.CLOUDINARY_API_SECRET || 'vkrV4k_iOlct_pt0Ue-DukQCIXQ',
   },

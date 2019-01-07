@@ -5,8 +5,8 @@ import { Upload } from './Upload';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
-import './post-form.scss';
 import { uploadFileToCloudinary } from 'src/api/cloudinary/uploadImage';
+import './post-form.scss';
 
 interface Props {
   artistId: number;
@@ -41,8 +41,6 @@ class PostForm extends React.Component<Props, any> {
   };
 
   processImage = async (e) => {
-    //TODO Send image to cloudionary via server and get the url to render it
-
     const imageFile = e.target.files[0];
 
     if (!imageFile) {
@@ -50,15 +48,14 @@ class PostForm extends React.Component<Props, any> {
     }
 
     const fileUrl = await uploadFileToCloudinary(imageFile);
-    console.log(fileUrl);
 
     this.setState({
-      imageUrl: 'https://www.fairfaxband.org/wp-content/uploads/2018/07/ChristmasInFairfax2-e1542820289569.png',
+      imageUrl: fileUrl,
     });
   };
 
   removeImage = () => {
-    //TODO Remove image from cloudionary via server???
+    //TODO Remove image from cloudionary ???
     this.setState({ imageUrl: undefined });
   };
 

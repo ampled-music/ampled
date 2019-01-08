@@ -9,8 +9,8 @@ import { routePaths } from '../route-paths';
 import './login.scss';
 
 interface Props {
-  login: {
-    error: string;
+  signup: {
+    errors: {};
   };
   userSignUp: Function;
   authentication: {
@@ -26,6 +26,8 @@ class SignupComponent extends React.Component<Props, any> {
     confirmPassword: '',
 
     matchPasswordsError: false,
+    passwordError: null,
+    emailError: null,
     acceptTerms: false,
     submitted: false,
   };
@@ -62,30 +64,40 @@ class SignupComponent extends React.Component<Props, any> {
 
     await this.props.userSignUp(email, password, confirmPassword, name);
 
-    if (this.props.login.error) {
-      alert(this.props.login.error);
-    } else {
-      this.setState({ submitted: true });
-    }
+    this.setState({ submitted: true });
+
+    this.checkErrors();
   };
 
   handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value, matchPasswordsError: false });
+    this.setState({ [name]: value, matchPasswordsError: false, passwordError: null, emailError: null });
   };
 
   toggle = (e) => {
     this.setState({ acceptTerms: !this.state.acceptTerms });
   };
 
-  render() {
-    const { submitted, matchPasswordsError } = this.state;
+  checkErrors() {
+    const { signup } = this.props;
+    if (!signup.errors) {
+      return;
+    }
 
-    if (submitted) {
+    Object.keys(signup.errors).forEach((err) => {
+      this.setState({ [`${err}Error`]: `${err} ${signup.errors[err]}` });
+    });
+  }
+
+  render() {
+    const { submitted, matchPasswordsError, emailError, passwordError } = this.state;
+    const { signup, authentication } = this.props;
+
+    if (submitted && !signup.errors) {
       return <Redirect to={routePaths.connect} />;
     }
 
-    if (this.props.authentication.authenticated) {
+    if (authentication.authenticated) {
       return <Redirect to={routePaths.root} />;
     }
 
@@ -108,12 +120,13 @@ class SignupComponent extends React.Component<Props, any> {
 
             <input
               className="input-group-text"
-              type="text"
+              type="email"
               placeholder="Email"
               name="email"
               onChange={this.handleChange}
               required
             />
+            <span className="error-message">{emailError}</span>
 
             <input
               className="input-group-text"
@@ -122,8 +135,9 @@ class SignupComponent extends React.Component<Props, any> {
               name="password"
               onChange={this.handleChange}
               required
+              minLength={6}
             />
-            <span className="error-message">{matchPasswordsError && passwordErrorMessage}</span>
+            <span className="error-message">{(matchPasswordsError && passwordErrorMessage) || passwordError}</span>
 
             <input
               className="input-group-text"
@@ -132,8 +146,9 @@ class SignupComponent extends React.Component<Props, any> {
               name="confirmPassword"
               onChange={this.handleChange}
               required
+              minLength={6}
             />
-            <span className="error-message">{matchPasswordsError && passwordErrorMessage}</span>
+            <span className="error-message">{(matchPasswordsError && passwordErrorMessage) || passwordError}</span>
 
             <label className="terms">
               <input type="checkbox" name="terms" onChange={this.toggle} required />
@@ -162,7 +177,7 @@ class SignupComponent extends React.Component<Props, any> {
 
 const mapStateToProps = (state: any) => ({
   authentication: state.authentication,
-  login: state.userSignUp,
+  signup: state.userSignUp,
 });
 
 const mapPropsToDispatch = (dispatch) => ({

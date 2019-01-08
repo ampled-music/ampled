@@ -8,6 +8,7 @@ export const initialState = {
   token: {},
   loading: false,
   error: null,
+  errors: null,
 };
 
 export const userLoginAction = createActionThunk('LOGIN', (username: string, password: string) =>
@@ -53,12 +54,12 @@ export const userSignUp = handleActions(
     [userSignUpAction.SUCCEEDED]: (state, action) => ({
       ...state,
       token: action.payload.token,
-      error: null,
+      errors: null,
     }),
     [userSignUpAction.FAILED]: (state, action) => ({
       ...state,
       loading: false,
-      error: action.payload.error,
+      errors: action.payload.errors[0].detail,
     }),
     [userSignUpAction.ENDED]: (state) => ({
       ...state,

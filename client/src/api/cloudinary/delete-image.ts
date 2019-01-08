@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { config } from '../../config';
 
-export const deleteFileFromCloudinary = async (deleteToken: any) => {
+export const deleteFileFromCloudinary = async (deleteToken: string) => {
   await axios({
     method: 'post',
     url: config.cloudinary.deleteImageUrl,

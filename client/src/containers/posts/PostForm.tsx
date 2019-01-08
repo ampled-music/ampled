@@ -5,9 +5,11 @@ import { Upload } from './Upload';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
-import { uploadFileToCloudinary } from 'src/api/cloudinary/uploadImage';
+import { deleteFileFromCloudinary } from 'src/api/cloudinary/delete-image';
+import { uploadFileToCloudinary } from 'src/api/cloudinary/upload-image';
+import { createPost } from 'src/api/post/create-post';
+
 import './post-form.scss';
-import { deleteFileFromCloudinary } from 'src/api/cloudinary/deleteImage';
 
 interface Props {
   artistId: number;
@@ -20,26 +22,48 @@ class PostForm extends React.Component<Props, any> {
 
     this.state = {
       title: '',
-      caption: '',
+      body: '',
       audioUrl: '',
       imageUrl: undefined,
       deleteToken: undefined,
       artist_page_id: this.props.artistId,
+      hasUnsavedChanges: false,
     };
   }
 
   handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, hasUnsavedChanges: true });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
-    alert(`Form submitted: ${this.state}`);
+    const { title, body, audioUrl, imageUrl, artist_page_id } = this.state;
+    const post = {
+      title,
+      body,
+      audioUrl,
+      imageUrl,
+      artist_page_id,
+    };
+    await createPost(post);
+    alert(`Form submitted: ${post}`);
+    this.clearForm();
   };
+
+  clearForm() {
+    this.setState({
+      title: '',
+      body: '',
+      audioUrl: '',
+      imageUrl: undefined,
+      deleteToken: undefined,
+      hasUnsavedChanges: false,
+    });
+  }
 
   updateAudioUrl = (audioUrl) => {
-    this.setState({ audioUrl });
+    this.setState({ audioUrl, hasUnsavedChanges: true });
   };
 
   processImage = async (e) => {
@@ -58,12 +82,13 @@ class PostForm extends React.Component<Props, any> {
     this.setState({
       imageUrl: fileInfo.secure_url,
       deleteToken: fileInfo.delete_token,
+      hasUnsavedChanges: true,
     });
   };
 
   removeImage = () => {
     deleteFileFromCloudinary(this.state.deleteToken);
-    this.setState({ imageUrl: undefined });
+    this.setState({ imageUrl: undefined, deleteToken: undefined, hasUnsavedChanges: false });
   };
 
   renderUploader(): React.ReactNode {
@@ -99,6 +124,8 @@ class PostForm extends React.Component<Props, any> {
   }
 
   render() {
+    const { hasUnsavedChanges, title, body, imageUrl, audioUrl } = this.state;
+
     return (
       <div className="post-form">
         <DialogContent>
@@ -120,7 +147,7 @@ class PostForm extends React.Component<Props, any> {
             <div className="post-info">
               <input style={{ display: 'none' }} id="image-file" type="file" onChange={this.processImage} />
 
-              {this.state.imageUrl ? this.renderPreview() : this.renderUploader()}
+              {imageUrl ? this.renderPreview() : this.renderUploader()}
 
               <div className="post-description">
                 <TextField
@@ -132,11 +159,11 @@ class PostForm extends React.Component<Props, any> {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  value={this.state.title}
+                  value={title}
                   onChange={this.handleChange}
                 />
                 <TextField
-                  name="caption"
+                  name="body"
                   label="Caption"
                   type="text"
                   helperText="300 character limit"
@@ -151,20 +178,20 @@ class PostForm extends React.Component<Props, any> {
                     shrink: true,
                   }}
                   style={{ marginTop: 20 }}
-                  value={this.state.caption}
+                  value={body}
                   onChange={this.handleChange}
                 />
               </div>
             </div>
             <DialogActions className="action-buttons">
-              <Button className="cancel-button" onClick={this.props.close}>
+              <Button className="cancel-button" onClick={() => this.props.close(hasUnsavedChanges)}>
                 Cancel
               </Button>
               <Button
                 type="Submit"
-                className={cx('post-button', { disabled: this.state.audioUrl.length === 0 })}
-                disabled={this.state.audioUrl.length === 0}
-                onClick={this.props.close}
+                className={cx('post-button', { disabled: audioUrl.length === 0 })}
+                disabled={audioUrl.length === 0}
+                onClick={() => this.props.close(hasUnsavedChanges)}
               >
                 Post Audio
               </Button>

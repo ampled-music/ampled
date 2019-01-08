@@ -44,8 +44,12 @@ class ArtistComponent extends React.Component<Props, any> {
     this.props.getArtist(this.state.id);
   }
 
-  getUserConfirmation = () => {
-    this.setState({ showConfirmationDialog: true });
+  getUserConfirmation = (hasUnsavedChanges) => {
+    if (hasUnsavedChanges) {
+      this.setState({ showConfirmationDialog: true });
+    } else {
+      this.discardChanges();
+    }
   };
 
   closeConfirmationDialog = () => {

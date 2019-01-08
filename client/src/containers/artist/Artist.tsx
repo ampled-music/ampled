@@ -89,7 +89,7 @@ class ArtistComponent extends React.Component<Props, any> {
         <PostsContainer posts={artistData.posts} accentColor={artistData.accent_color} />
 
         <PostModal close={this.getUserConfirmation} open={this.state.openModal}>
-          <PostForm artistId={artistData.id} close={this.getUserConfirmation} />
+          <PostForm artistId={artistData.id} close={this.getUserConfirmation} discardChanges={this.discardChanges} />
         </PostModal>
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}

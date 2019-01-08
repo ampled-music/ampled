@@ -14,6 +14,7 @@ import './post-form.scss';
 interface Props {
   artistId: number;
   close: React.MouseEventHandler;
+  discardChanges: React.MouseEventHandler;
 }
 
 class PostForm extends React.Component<Props, any> {
@@ -161,6 +162,7 @@ class PostForm extends React.Component<Props, any> {
                   }}
                   value={title}
                   onChange={this.handleChange}
+                  required
                 />
                 <TextField
                   name="body"
@@ -191,7 +193,7 @@ class PostForm extends React.Component<Props, any> {
                 type="Submit"
                 className={cx('post-button', { disabled: audioUrl.length === 0 })}
                 disabled={audioUrl.length === 0}
-                onClick={() => this.props.close(hasUnsavedChanges)}
+                onClick={this.props.discardChanges}
               >
                 Post Audio
               </Button>

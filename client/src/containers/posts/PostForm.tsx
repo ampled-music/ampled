@@ -49,6 +49,10 @@ class PostForm extends React.Component<Props, any> {
       return;
     }
 
+    if (this.state.deleteToken) {
+      this.removeImage();
+    }
+
     const fileInfo = await uploadFileToCloudinary(imageFile);
 
     this.setState({

@@ -28,6 +28,7 @@ interface Props {
       accent_color: string;
     };
   };
+  userAuthenticated: boolean;
 }
 
 class ArtistComponent extends React.Component<Props, any> {
@@ -70,7 +71,7 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { artist } = this.props;
+    const { artist, userAuthenticated } = this.props;
     const artistData = artist.artist;
     const loading = artist.loading;
 
@@ -84,10 +85,10 @@ class ArtistComponent extends React.Component<Props, any> {
           id={artistData.id}
           accentColor={artistData.accent_color}
           openPostModal={this.openModal}
+          userAuthenticated={userAuthenticated}
         />
         <ArtistInfo location={artistData.location} />
         <PostsContainer posts={artistData.posts} accentColor={artistData.accent_color} />
-
         <PostModal close={this.getUserConfirmation} open={this.state.openModal}>
           <PostForm artistId={artistData.id} close={this.getUserConfirmation} discardChanges={this.discardChanges} />
         </PostModal>
@@ -96,6 +97,7 @@ class ArtistComponent extends React.Component<Props, any> {
           closeConfirmationDialog={this.closeConfirmationDialog}
           discardChanges={this.discardChanges}
         />
+        )}
       </div>
     );
   }
@@ -104,6 +106,7 @@ class ArtistComponent extends React.Component<Props, any> {
 const mapStateToProps = (state) => {
   return {
     artist: state.artist,
+    userAuthenticated: state.authentication.authenticated,
   };
 };
 

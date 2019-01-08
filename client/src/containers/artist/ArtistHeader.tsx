@@ -17,6 +17,7 @@ interface Props {
   id: number;
   accentColor: string;
   openPostModal: React.MouseEventHandler;
+  userAuthenticated: boolean;
 }
 
 class ArtistHeader extends React.Component<Props, any> {
@@ -29,7 +30,7 @@ class ArtistHeader extends React.Component<Props, any> {
   }
 
   render() {
-    const { name, accentColor } = this.props;
+    const { name, accentColor, userAuthenticated } = this.props;
 
     return (
       <div className="artist-header container">
@@ -58,12 +59,14 @@ class ArtistHeader extends React.Component<Props, any> {
           <div className="col-md-4">
             {/* Right Side */}
             <div className="artist-header__message">A Message From The Band</div>
-            <div className="new-post">
-              <button onClick={this.props.openPostModal}>
-                <span>New Post</span>
-                <FontAwesomeIcon icon={faPlus} color="#ffffff" />
-              </button>
-            </div>
+            {userAuthenticated && (
+              <div className="new-post">
+                <button onClick={this.props.openPostModal}>
+                  <span>New Post</span>
+                  <FontAwesomeIcon icon={faPlus} color="#ffffff" />
+                </button>
+              </div>
+            )}
 
             <div className="artist-header__message-container" style={{ borderColor: accentColor }}>
               <img className="artist-header__message-image" src={nin_video} />

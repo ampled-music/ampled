@@ -29,6 +29,14 @@
     min-height: 18px;
   }
 
+  .confirmation-message {
+    max-width: 70%;
+    color: #00807c;
+    background-color: #ffffff;
+    padding: 20px;
+    text-align: center;
+  }
+
   .form-container {
     display: flex;
     max-width: 450px;

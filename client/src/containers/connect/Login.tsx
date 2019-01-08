@@ -16,6 +16,9 @@ interface Props {
   authentication: {
     authenticated: boolean;
   };
+  location?: {
+    showMessage: boolean;
+  };
 }
 
 class LoginComponent extends React.Component<Props, any> {
@@ -41,7 +44,7 @@ class LoginComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { authentication, login } = this.props;
+    const { authentication, login, location } = this.props;
 
     if (this.state.submitted && !login.error) {
       return <Redirect to={routePaths.connect} />;
@@ -85,6 +88,13 @@ class LoginComponent extends React.Component<Props, any> {
             </a>
             .
           </label>
+
+          {location.showMessage && (
+            <label className="confirmation-message">
+              Thank you for signing up!
+              <br /> Please check your inbox for a confirmation email.
+            </label>
+          )}
         </div>
       </div>
     );

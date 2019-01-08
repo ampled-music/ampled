@@ -94,7 +94,14 @@ class SignupComponent extends React.Component<Props, any> {
     const { signup, authentication } = this.props;
 
     if (submitted && !signup.errors) {
-      return <Redirect to={routePaths.connect} />;
+      return (
+        <Redirect
+          to={{
+            pathname: routePaths.login,
+            showMessage: true,
+          }}
+        />
+      );
     }
 
     if (authentication.authenticated) {

@@ -76,6 +76,12 @@
       align-items: flex-end;
       justify-content: center;
       background: url(../../images/post_image.svg) no-repeat;
+
+      .loading-icon {
+        margin-bottom: 15px;
+        width: 25px;
+        height: 25px;
+      }
     }
 
     .post-image {

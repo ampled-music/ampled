@@ -1,4 +1,4 @@
-import { faSync, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faSync, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
 import * as React from 'react';
 import { Upload } from './Upload';
@@ -29,6 +29,7 @@ class PostForm extends React.Component<Props, any> {
       deleteToken: undefined,
       artist_page_id: this.props.artistId,
       hasUnsavedChanges: false,
+      loadingImage: false,
     };
   }
 
@@ -60,6 +61,7 @@ class PostForm extends React.Component<Props, any> {
       imageUrl: undefined,
       deleteToken: undefined,
       hasUnsavedChanges: false,
+      loadingImage: false,
     });
   }
 
@@ -74,6 +76,8 @@ class PostForm extends React.Component<Props, any> {
       return;
     }
 
+    this.setState({ loadingImage: true });
+
     if (this.state.deleteToken) {
       this.removeImage();
     }
@@ -84,6 +88,7 @@ class PostForm extends React.Component<Props, any> {
       imageUrl: fileInfo.secure_url,
       deleteToken: fileInfo.delete_token,
       hasUnsavedChanges: true,
+      loadingImage: false,
     });
   };
 
@@ -93,7 +98,15 @@ class PostForm extends React.Component<Props, any> {
   };
 
   renderUploader(): React.ReactNode {
-    return <div className="uploader">{this.renderUploadButton()}</div>;
+    return (
+      <div className="uploader">
+        {this.state.loadingImage ? (
+          <FontAwesomeIcon className="loading-icon" icon={faSpinner} spin />
+        ) : (
+          this.renderUploadButton()
+        )}
+      </div>
+    );
   }
 
   renderPreview(): React.ReactNode {
@@ -146,7 +159,13 @@ class PostForm extends React.Component<Props, any> {
             </div>
 
             <div className="post-info">
-              <input style={{ display: 'none' }} id="image-file" type="file" onChange={this.processImage} />
+              <input
+                style={{ display: 'none' }}
+                id="image-file"
+                type="file"
+                accept="image/*"
+                onChange={this.processImage}
+              />
 
               {imageUrl ? this.renderPreview() : this.renderUploader()}
 

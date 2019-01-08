@@ -28,16 +28,11 @@ class LoginComponent extends React.Component<Props, any> {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { login } = this.props;
     const { email, password } = this.state;
 
     await this.props.userLogin(email, password);
 
-    if (login.error) {
-      alert(login.error);
-    } else {
-      this.setState({ submitted: true });
-    }
+    this.setState({ submitted: true });
   };
 
   handleChange = (e) => {
@@ -46,11 +41,13 @@ class LoginComponent extends React.Component<Props, any> {
   };
 
   render() {
-    if (this.state.submitted) {
+    const { authentication, login } = this.props;
+
+    if (this.state.submitted && !login.error) {
       return <Redirect to={routePaths.connect} />;
     }
 
-    if (this.props.authentication.authenticated) {
+    if (authentication.authenticated) {
       return <Redirect to={routePaths.root} />;
     }
 
@@ -62,7 +59,7 @@ class LoginComponent extends React.Component<Props, any> {
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
             <input
               className="input-group-text"
-              type="text"
+              type="email"
               placeholder="Email"
               name="email"
               onChange={this.handleChange}
@@ -79,6 +76,7 @@ class LoginComponent extends React.Component<Props, any> {
             <button className="btn" type="submit">
               LOGIN
             </button>
+            <span className="error-message">{login.error}</span>
           </form>
           <label>
             Forgot your password?{' '}

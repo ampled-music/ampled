@@ -7,7 +7,7 @@ export const login = async (username: string, password: string) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    data: {user: { email: username, password }},
+    data: { user: { email: username, password } },
   });
 
   return { token: headers.authorization };

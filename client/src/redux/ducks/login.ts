@@ -16,8 +16,8 @@ export const userLoginAction = createActionThunk('LOGIN', (username: string, pas
 
 export const userSignUpAction = createActionThunk(
   'SIGN_UP',
-  (username: string, password: string, passwordconfirmation: string, name: string) =>
-    signUp(username, password, passwordconfirmation, name),
+  (username: string, password: string, passwordConfirmation: string, name: string) =>
+    signUp(username, password, passwordConfirmation, name),
 );
 
 export const userLogin = handleActions(
@@ -29,6 +29,7 @@ export const userLogin = handleActions(
     [userLoginAction.SUCCEEDED]: (state, action) => ({
       ...state,
       token: action.payload.token,
+      error: null,
     }),
     [userLoginAction.FAILED]: (state, action) => ({
       ...state,
@@ -52,6 +53,7 @@ export const userSignUp = handleActions(
     [userSignUpAction.SUCCEEDED]: (state, action) => ({
       ...state,
       token: action.payload.token,
+      error: null,
     }),
     [userSignUpAction.FAILED]: (state, action) => ({
       ...state,

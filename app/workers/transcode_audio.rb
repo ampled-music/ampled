@@ -7,4 +7,3 @@ class TranscodeAudio
   #                                        :url => 's3://bucket/key_output.webm' }] })
   # end
 end
-

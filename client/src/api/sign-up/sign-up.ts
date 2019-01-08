@@ -3,7 +3,7 @@ import axios from 'axios';
 export const signUp = async (username: string, password: string, passwordconfirmation: string, name: string) => {
   const { data } = await axios({
     method: 'post',
-    url: '/users',
+    url: '/users.json',
     headers: {
       'Content-Type': 'application/json',
     },

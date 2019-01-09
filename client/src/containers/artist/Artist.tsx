@@ -37,8 +37,12 @@ class ArtistComponent extends React.Component<Props, any> {
   }
 
   componentDidMount() {
-    this.props.getArtist(this.state.id);
+    this.getArtistInfo();
   }
+
+  getArtistInfo = () => {
+    this.props.getArtist(this.state.id);
+  };
 
   render() {
     const { artist } = this.props;
@@ -52,7 +56,11 @@ class ArtistComponent extends React.Component<Props, any> {
         <Nav />
         <ArtistHeader name={artistData.name} id={artistData.id} accentColor={artistData.accent_color} />
         <ArtistInfo location={artistData.location} />
-        <PostsContainer posts={artistData.posts} accentColor={artistData.accent_color} />
+        <PostsContainer
+          posts={artistData.posts}
+          accentColor={artistData.accent_color}
+          updateArtist={this.getArtistInfo}
+        />
       </div>
     );
   }

@@ -25,6 +25,8 @@ interface Props {
   authentication: {
     authenticated: boolean;
   };
+
+  updateArtist: Function;
 }
 
 class PostsContainerComponent extends React.Component<Props, any> {
@@ -34,6 +36,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
 
   handleSubmit = async (comment) => {
     await addComment(comment);
+    this.props.updateArtist();
   };
 
   render() {

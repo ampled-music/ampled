@@ -1,3 +1,5 @@
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 
 const Comment = (commentData) => {
@@ -8,6 +10,7 @@ const Comment = (commentData) => {
       <b>{comment.author}</b>
       <span style={{ float: 'right' }}>{comment.created_ago} ago</span>
       <p>{comment.text}</p>
+      <FontAwesomeIcon icon={faTrashAlt} />
     </div>
   );
 };

@@ -17,10 +17,12 @@ class CommentForm extends React.Component<Props, any> {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
     const comment = {
       postId: this.props.postId,
       text: this.state.comment,
     };
+
     this.props.handleSubmit(comment);
     this.setState({ comment: '' });
   };
@@ -46,6 +48,7 @@ class CommentForm extends React.Component<Props, any> {
           rowsMax={5}
           fullWidth
           placeholder="Write a comment"
+          required
           endAdornment={
             <InputAdornment className="sendCommentIcon" position="end">
               <IconButton type="submit" aria-label="Send comment" title="Send comment">

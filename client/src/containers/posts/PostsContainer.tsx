@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { addComment } from 'src/api/post/add-comment';
+import { deleteComment } from 'src/api/post/delete-comment';
 import { Comment } from './Comment';
 import { CommentForm } from './CommentForm';
 import { Post } from './Post';
@@ -40,6 +41,11 @@ class PostsContainerComponent extends React.Component<Props, any> {
     this.props.updateArtist();
   };
 
+  deleteComment = async (commentId) => {
+    await deleteComment(commentId);
+    this.props.updateArtist();
+  };
+
   render() {
     const { accentColor, authentication, posts } = this.props;
 
@@ -59,7 +65,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
                 <Post post={post} />
 
                 {post.comments.map((comment) => {
-                  return <Comment comment={comment} isLogged={isLogged} />;
+                  return <Comment comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
                 })}
                 {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
               </div>

@@ -1,8 +1,9 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { addComment } from 'src/api/post/add-comment';
 import { Comment } from './Comment';
 import { CommentForm } from './CommentForm';
 import { Post } from './Post';
-import { addComment } from 'src/api/post/add-comment';
 
 interface Comment {
   id: string;
@@ -21,9 +22,12 @@ interface Post {
 interface Props {
   posts: Post[];
   accentColor: string;
+  authentication: {
+    authenticated: boolean;
+  };
 }
 
-class PostsContainer extends React.Component<Props, any> {
+class PostsContainerComponent extends React.Component<Props, any> {
   constructor(props) {
     super(props);
   }
@@ -33,24 +37,25 @@ class PostsContainer extends React.Component<Props, any> {
   };
 
   render() {
+    const { accentColor, authentication, posts } = this.props;
+
     return (
       <div className="container">
         <div className="row">
-          {this.props.posts.map((post) => {
+          {posts.map((post) => {
             return (
               <div
                 key={`post-${post.id}`}
                 id={`post-${post.id}`}
                 className="col-md-4"
-                style={{ border: `2px solid ${this.props.accentColor}` }}
+                style={{ border: `2px solid ${accentColor}` }}
               >
                 <Post post={post} />
 
                 {post.comments.map((comment) => {
                   return <Comment comment={comment} />;
                 })}
-
-                <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />
+                {authentication.authenticated && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
               </div>
             );
           })}
@@ -59,5 +64,11 @@ class PostsContainer extends React.Component<Props, any> {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  authentication: state.authentication,
+});
+
+const PostsContainer = connect(mapStateToProps)(PostsContainerComponent);
 
 export { PostsContainer };

@@ -1,4 +1,9 @@
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconButton, Input, InputAdornment } from '@material-ui/core';
 import * as React from 'react';
+
+import './comment.scss';
 
 interface Props {
   handleSubmit: Function;
@@ -24,7 +29,25 @@ class CommentForm extends React.Component<Props, any> {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <input type="text" name="comment" value={this.state.comment} onChange={this.handleChange} />
+        <Input
+          type="text"
+          name="comment"
+          value={this.state.comment}
+          onChange={this.handleChange}
+          inputProps={{
+            maxLength: 2200,
+          }}
+          multiline
+          rowsMax={5}
+          fullWidth
+          endAdornment={
+            <InputAdornment className="sendCommentIcon" position="end">
+              <IconButton type="submit" aria-label="Send comment" title="Send comment">
+                <FontAwesomeIcon icon={faPaperPlane} size="xs" />
+              </IconButton>
+            </InputAdornment>
+          }
+        />
       </form>
     );
   }

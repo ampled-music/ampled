@@ -5,22 +5,23 @@ import { Comment } from './Comment';
 import { CommentForm } from './CommentForm';
 import { Post } from './Post';
 
-interface Comment {
+interface CommentProps {
   id: string;
   author: string;
   text: string;
+  created_ago: string;
 }
 
-interface Post {
+interface PostProps {
   id: string;
   author: string;
   title: string;
   body: string;
-  comments: Comment[];
+  comments: CommentProps[];
   created_ago: string;
 }
 interface Props {
-  posts: Post[];
+  posts: PostProps[];
   accentColor: string;
   authentication: {
     authenticated: boolean;
@@ -42,6 +43,8 @@ class PostsContainerComponent extends React.Component<Props, any> {
   render() {
     const { accentColor, authentication, posts } = this.props;
 
+    const isLogged = authentication.authenticated;
+
     return (
       <div className="container">
         <div className="row">
@@ -56,9 +59,9 @@ class PostsContainerComponent extends React.Component<Props, any> {
                 <Post post={post} />
 
                 {post.comments.map((comment) => {
-                  return <Comment comment={comment} />;
+                  return <Comment comment={comment} isLogged={isLogged} />;
                 })}
-                {authentication.authenticated && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+                {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
               </div>
             );
           })}

@@ -6,6 +6,8 @@ import { Comment } from './Comment';
 import { CommentForm } from './CommentForm';
 import { Post } from './Post';
 
+import './postContainer.scss';
+
 interface CommentProps {
   id: string;
   author: string;
@@ -56,18 +58,16 @@ class PostsContainerComponent extends React.Component<Props, any> {
         <div className="row">
           {posts.map((post) => {
             return (
-              <div
-                key={`post-${post.id}`}
-                id={`post-${post.id}`}
-                className="col-md-4"
-                style={{ border: `2px solid ${accentColor}` }}
-              >
-                <Post post={post} />
+              <div key={`post-${post.id}`} id={`post-${post.id}`} className="col-md-4">
+                <Post post={post} accentColor={accentColor} />
 
-                {post.comments.map((comment) => {
-                  return <Comment comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
-                })}
-                {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+                <div className="comments-list">
+                  <span>COMMENTS</span>
+                  {post.comments.map((comment) => {
+                    return <Comment comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
+                  })}
+                  {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+                </div>
               </div>
             );
           })}

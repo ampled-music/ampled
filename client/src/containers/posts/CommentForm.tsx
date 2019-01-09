@@ -52,7 +52,7 @@ class CommentForm extends React.Component<Props, any> {
           endAdornment={
             <InputAdornment className="sendCommentIcon" position="end">
               <IconButton type="submit" aria-label="Send comment" title="Send comment">
-                <FontAwesomeIcon icon={faPaperPlane} size="xs" />
+                <FontAwesomeIcon icon={faPaperPlane} />
               </IconButton>
             </InputAdornment>
           }

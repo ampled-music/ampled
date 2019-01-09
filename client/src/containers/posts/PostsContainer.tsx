@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { Comment } from './Comment';
+import { Post } from './Post';
+import { CommentForm } from './CommentForm';
 
 interface Comment {
   id: string;
@@ -24,32 +27,29 @@ class PostsContainer extends React.Component<Props, any> {
     super(props);
   }
 
+  handleSubmit = (comment) => {
+    alert(`Submitted - ${comment}`);
+  };
+
   render() {
     return (
       <div className="container">
         <div className="row">
           {this.props.posts.map((post) => {
             return (
-              <div className="col-md-4" style={{ border: `2px solid ${this.props.accentColor}` }} key={post.id}>
-                <div>
-                  <div>
-                    <span>{post.author}</span>
-                    <span style={{ float: 'right' }}>{post.created_ago} ago</span>
-                  </div>
-                  <h4>{post.title}</h4>
-                </div>
-                <p>{post.body}</p>
-                <div>
-                  {post.comments.map((comment) => {
-                    return (
-                      <div id={comment.id}>
-                        <b>{comment.author}</b>
-                        <span style={{ float: 'right' }}>{post.created_ago} ago</span>
-                        <p>{comment.text}</p>
-                      </div>
-                    );
-                  })}
-                </div>
+              <div
+                key={`post-${post.id}`}
+                id={`post-${post.id}`}
+                className="col-md-4"
+                style={{ border: `2px solid ${this.props.accentColor}` }}
+              >
+                <Post post={post} />
+
+                {post.comments.map((comment) => {
+                  return <Comment comment={comment} />;
+                })}
+
+                <CommentForm handleSubmit={this.handleSubmit} />
               </div>
             );
           })}

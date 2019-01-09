@@ -1,6 +1,6 @@
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconButton, Input, InputAdornment } from '@material-ui/core';
+import { IconButton, InputAdornment, InputBase } from '@material-ui/core';
 import * as React from 'react';
 
 import './comment.scss';
@@ -36,9 +36,10 @@ class CommentForm extends React.Component<Props, any> {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <Input
+        <InputBase
           type="text"
           name="comment"
+          className="comment-input"
           value={this.state.comment}
           onChange={this.handleChange}
           inputProps={{

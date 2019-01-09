@@ -8,4 +8,17 @@
     font-family: Courier, 'Courier New', monospace;
     font-size: 14px;
   }
+
+  .sendCommentIcon {
+    button {
+      outline: none;
+    }
+  }
+
+  .comment-input {
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
 }

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Comment } from './Comment';
-import { Post } from './Post';
 import { CommentForm } from './CommentForm';
+import { Post } from './Post';
+import { addComment } from 'src/api/post/add-comment';
 
 interface Comment {
   id: string;
@@ -27,8 +28,8 @@ class PostsContainer extends React.Component<Props, any> {
     super(props);
   }
 
-  handleSubmit = (comment) => {
-    alert(`Submitted - ${comment}`);
+  handleSubmit = async (comment) => {
+    await addComment(comment);
   };
 
   render() {
@@ -49,7 +50,7 @@ class PostsContainer extends React.Component<Props, any> {
                   return <Comment comment={comment} />;
                 })}
 
-                <CommentForm handleSubmit={this.handleSubmit} />
+                <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />
               </div>
             );
           })}

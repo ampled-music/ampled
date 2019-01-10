@@ -20,6 +20,16 @@ class PostComponent extends React.Component<any, any> {
     this.setState((state) => ({ expanded: !state.expanded }));
   };
 
+  audioPLayer = (audioUrl) => {
+    return (
+      <div>
+        <audio controls>
+          <source src={audioUrl} type="audio/mp3" />
+        </audio>
+      </div>
+    );
+  };
+
   render() {
     const { classes, post, accentColor } = this.props;
 
@@ -35,6 +45,8 @@ class PostComponent extends React.Component<any, any> {
         <Divider />
 
         {post.imageUrl && <CardMedia className={classes.media} image={post.imageUrl} />}
+
+        {post.audioUrl && <CardMedia className={classes.media} component={() => this.audioPLayer(post.audioUrl)} />}
 
         <CardContent>
           <Typography component="p" className={classes.postTitle}>

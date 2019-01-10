@@ -1,25 +1,3 @@
-.post {
-  display: flex;
-  flex-direction: column;
-  max-width: 500px;
-
-  .post-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 20px;
-    height: 70px;
-
-    .post-user {
-      display: flex;
-      align-items: center;
-
-      span {
-        font-size: 18px;
-      }
-    }
-  }
-}
-
 .user-image {
   font-size: 40px;
   margin-right: 10px;
@@ -47,4 +25,8 @@
   span {
     align-self: center;
   }
+}
+
+.icon-button {
+  outline: none;
 }

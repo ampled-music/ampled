@@ -16,7 +16,6 @@ import './post.scss';
 const styles = (theme) => ({
   card: {
     maxWidth: 500,
-    minHeight: 500,
     borderRadius: 0,
     boxShadow: 'none',
   },
@@ -43,6 +42,9 @@ const styles = (theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
+  iconButton: {
+    outline: 'none !important',
+  },
 });
 
 class PostComponent extends React.Component<any, any> {
@@ -66,10 +68,7 @@ class PostComponent extends React.Component<any, any> {
         </CardContent>
         <Divider />
 
-        <CardMedia
-          className={classes.media}
-          image="https://images-na.ssl-images-amazon.com/images/I/C1zpDpEFymS._CR0,0,3840,2880_._SL1000_.jpg"
-        />
+        {post.imageUrl && <CardMedia className={classes.media} image={post.imageUrl} />}
 
         <CardContent>
           <Typography component="p" className="post-title">
@@ -86,22 +85,30 @@ class PostComponent extends React.Component<any, any> {
         </Collapse>
 
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Like" disabled>
-            <FontAwesomeIcon icon={faHeart} />
+          <IconButton className={classes.iconButton} aria-label="Like" disabled>
+            <FontAwesomeIcon icon={faHeart} size="xs" />
           </IconButton>
-          <IconButton aria-label="Share" disabled>
-            <FontAwesomeIcon icon={faShare} />
+
+          <IconButton className={classes.iconButton} aria-label="Share" disabled>
+            <FontAwesomeIcon icon={faShare} size="xs" />
           </IconButton>
-          <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: this.state.expanded,
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={this.state.expanded}
-            aria-label="View more"
-          >
-            <FontAwesomeIcon icon={faArrowDown} title="View more" />
-          </IconButton>
+
+          {post.body && (
+            <IconButton
+              className={classnames(
+                classes.expand,
+                {
+                  [classes.expandOpen]: this.state.expanded,
+                },
+                classes.iconButton,
+              )}
+              onClick={this.handleExpandClick}
+              aria-expanded={this.state.expanded}
+              aria-label="View more"
+            >
+              <FontAwesomeIcon icon={faArrowDown} title="View more" size="xs" />
+            </IconButton>
+          )}
         </CardActions>
       </Card>
     );

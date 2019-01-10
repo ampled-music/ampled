@@ -1,11 +1,14 @@
 .post {
   display: flex;
   flex-direction: column;
+  max-height: 500px;
+  max-width: 500px;
 
   .post-header {
     display: flex;
     justify-content: space-between;
     padding: 12px 20px;
+    height: 70px;
 
     .post-user {
       display: flex;
@@ -27,6 +30,13 @@
       font-size: 12px !important;
       align-self: flex-end;
     }
+  }
+
+  .post-image {
+    object-fit: cover;
+
+    max-width: 500px;
+    max-height: 350px;
   }
 
   .post-body {

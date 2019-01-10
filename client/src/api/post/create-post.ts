@@ -3,13 +3,13 @@ import { apiAxios } from '../setup-axios';
 interface Post {
   title: string;
   body: string;
-  audioUrl: string;
+  audio_file: string;
   imageUrl: string;
   artist_page_id: string;
 }
 
 export const createPost = async (post: Post) => {
-  const { title, body, audioUrl, imageUrl, artist_page_id } = post;
+  const { title, body, audio_file, imageUrl, artist_page_id } = post;
 
   const { data } = await apiAxios({
     method: 'post',
@@ -21,7 +21,7 @@ export const createPost = async (post: Post) => {
       post: {
         title,
         body,
-        audioUrl,
+        audio_file,
         imageUrl,
         artist_page_id,
       },

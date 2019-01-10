@@ -24,7 +24,7 @@ class PostForm extends React.Component<Props, any> {
     this.state = {
       title: '',
       body: '',
-      audioUrl: '',
+      audioFile: '',
       imageUrl: undefined,
       deleteToken: undefined,
       artist_page_id: this.props.artistId,
@@ -40,11 +40,11 @@ class PostForm extends React.Component<Props, any> {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const { title, body, audioUrl, imageUrl, artist_page_id } = this.state;
+    const { title, body, audioFile, imageUrl, artist_page_id } = this.state;
     const post = {
       title,
       body,
-      audioUrl,
+      audio_file: audioFile,
       imageUrl,
       artist_page_id,
     };
@@ -57,7 +57,7 @@ class PostForm extends React.Component<Props, any> {
     this.setState({
       title: '',
       body: '',
-      audioUrl: '',
+      audioFile: '',
       imageUrl: undefined,
       deleteToken: undefined,
       hasUnsavedChanges: false,
@@ -65,8 +65,8 @@ class PostForm extends React.Component<Props, any> {
     });
   }
 
-  updateAudioUrl = (audioUrl) => {
-    this.setState({ audioUrl, hasUnsavedChanges: true });
+  updateAudioFile = (audioFile) => {
+    this.setState({ audioFile, hasUnsavedChanges: true });
   };
 
   processImage = async (e) => {
@@ -138,14 +138,14 @@ class PostForm extends React.Component<Props, any> {
   }
 
   render() {
-    const { hasUnsavedChanges, title, body, imageUrl, audioUrl } = this.state;
+    const { hasUnsavedChanges, title, body, imageUrl, audioFile } = this.state;
 
     return (
       <div className="post-form">
         <DialogContent>
           <h1>AUDIO POST</h1>
           <form onSubmit={this.handleSubmit}>
-            <Upload onComplete={this.updateAudioUrl} />
+            <Upload onComplete={this.updateAudioFile} />
 
             <div className="instructions">
               <p>
@@ -210,8 +210,8 @@ class PostForm extends React.Component<Props, any> {
               </Button>
               <Button
                 type="Submit"
-                className={cx('post-button', { disabled: audioUrl.length === 0 })}
-                disabled={audioUrl.length === 0}
+                className={cx('post-button', { disabled: audioFile.length === 0 })}
+                disabled={audioFile.length === 0}
                 onClick={this.props.discardChanges}
               >
                 Post Audio

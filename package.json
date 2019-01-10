@@ -23,5 +23,8 @@
   "cacheDirectories": [
     "node_modules",
     "client/node_modules"
-  ]
+  ],
+  "dependencies": {
+    "sha1": "1.1.1"
+  }
 }

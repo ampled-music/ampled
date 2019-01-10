@@ -11,41 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import * as React from 'react';
-import './post.scss';
-
-const styles = (theme) => ({
-  card: {
-    maxWidth: 500,
-    borderRadius: 0,
-    boxShadow: 'none',
-  },
-  header: {
-    height: 70,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  media: {
-    height: 340,
-    paddingTop: '56.25%', // 16:9
-  },
-  actions: {
-    display: 'flex',
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  iconButton: {
-    outline: 'none !important',
-  },
-});
+import { styles } from './post-style';
 
 class PostComponent extends React.Component<any, any> {
   state = { expanded: false };
@@ -60,25 +26,25 @@ class PostComponent extends React.Component<any, any> {
     return (
       <Card className={classes.card} style={{ border: `2px solid ${accentColor}` }}>
         <CardContent className={classes.header}>
-          <div className="post-title">
-            <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+          <div className={classes.postTitle}>
+            <FontAwesomeIcon className={classes.userImage} icon={faUserCircle} />
             <span>{post.author}</span>
           </div>
-          <div className="post-date">{post.created_ago} ago</div>
+          <div className={classes.postDate}>{post.created_ago} ago</div>
         </CardContent>
         <Divider />
 
         {post.imageUrl && <CardMedia className={classes.media} image={post.imageUrl} />}
 
         <CardContent>
-          <Typography component="p" className="post-title">
+          <Typography component="p" className={classes.postTitle}>
             {post.title}
           </Typography>
         </CardContent>
 
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph className="post-body">
+            <Typography paragraph className={classes.postBody}>
               {post.body}
             </Typography>
           </CardContent>
@@ -105,8 +71,9 @@ class PostComponent extends React.Component<any, any> {
               onClick={this.handleExpandClick}
               aria-expanded={this.state.expanded}
               aria-label="View more"
+              title="View more"
             >
-              <FontAwesomeIcon icon={faArrowDown} title="View more" size="xs" />
+              <FontAwesomeIcon icon={faArrowDown} size="xs" />
             </IconButton>
           )}
         </CardActions>

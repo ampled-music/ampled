@@ -6,7 +6,7 @@ import { Comment } from './Comment';
 import { CommentForm } from './CommentForm';
 import { Post } from './Post';
 
-import './postContainer.scss';
+import './post-container.scss';
 
 interface CommentProps {
   id: string;

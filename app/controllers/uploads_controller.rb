@@ -4,7 +4,6 @@ class UploadsController < ApplicationController
   end
 
   def sign_file
-
     key = "#{SecureRandom.uuid}.#{file_extension}"
     # redirect_to status: 404 unless file_extension.present?
     url = signer.presigned_url(:put_object,

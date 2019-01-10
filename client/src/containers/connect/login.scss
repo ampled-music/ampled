@@ -29,10 +29,18 @@
     min-height: 18px;
   }
 
+  .confirmation-message {
+    max-width: 70%;
+    color: #00807c;
+    background-color: #ffffff;
+    padding: 20px;
+    text-align: center;
+  }
+
   .form-container {
     display: flex;
     max-width: 450px;
-    padding: 85px 20px 50px 20px;
+    padding: 85px 20px 35px 20px;
     height: auto;
     border: none;
     border-radius: 0;
@@ -72,6 +80,7 @@
       height: 52px;
       border-radius: 0;
       margin-top: 40px;
+      margin-bottom: 15px;
     }
   }
 }

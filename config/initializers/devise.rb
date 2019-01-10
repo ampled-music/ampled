@@ -9,12 +9,12 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = 'afa3d5daa8d0b75e34eaa32ba4fa06b8fc5683066d0e7d4bb31df7236620cdef4d293118c9438032120ab7098498a4579a6855a56cdfe95ee6a5821232e3d608'
-  config.warden do |manager|
-    # Registering your new Strategy
-    manager.strategies.add(:jwt, Devise::Strategies::JsonWebToken)
-    # Adding the new JWT Strategy to the top of Warden's list,
-    # Scoped by what Devise would scope (typically :user)
-    manager.default_strategies(scope: :user).unshift :jwt
+
+  config.jwt do |jwt|
+    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    jwt.request_formats = {
+      user: [:json],
+    }
   end
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -255,7 +255,7 @@ Devise.setup do |config|
   #
   # The "*/*" below is required to match Internet Explorer requests.
   # config.navigational_formats = ['*/*', :html]
-
+  config.navigational_formats = []
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
 

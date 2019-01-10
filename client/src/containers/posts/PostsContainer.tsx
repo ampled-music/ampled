@@ -54,23 +54,25 @@ class PostsContainerComponent extends React.Component<Props, any> {
     const isLogged = authentication.authenticated;
 
     return (
-      <div className="container">
-        <div className="row">
-          {posts.map((post) => {
-            return (
-              <div key={`post-${post.id}`} id={`post-${post.id}`} className="col-md-4">
-                <Post post={post} accentColor={accentColor} />
+      <div className="post-container">
+        <div className="container ">
+          <div className="row">
+            {posts.map((post) => {
+              return (
+                <div key={`post-${post.id}`} id={`post-${post.id}`} className="col-md-4">
+                  <Post post={post} accentColor={accentColor} />
 
-                <div className="comments-list">
-                  <span>COMMENTS</span>
-                  {post.comments.map((comment) => {
-                    return <Comment comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
-                  })}
-                  {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+                  <div className="comments-list">
+                    <span>COMMENTS</span>
+                    {post.comments.map((comment) => {
+                      return <Comment comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
+                    })}
+                    {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     );

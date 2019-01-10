@@ -15,6 +15,7 @@ const Post = ({ post, accentColor } = this.props) => {
         <span className="post-date">{post.created_ago} ago</span>
       </div>
       <Divider />
+      {post.imageUrl && <img className="post-image" src={post.imageUrl} />}
       <div className="post-body">
         <h4>{post.title}</h4>
         <p>{post.body}</p>

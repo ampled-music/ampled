@@ -1,7 +1,6 @@
 .post {
   display: flex;
   flex-direction: column;
-  max-height: 500px;
   max-width: 500px;
 
   .post-header {
@@ -36,7 +35,7 @@
     object-fit: cover;
 
     max-width: 500px;
-    max-height: 350px;
+    min-height: 350px;
   }
 
   .post-body {

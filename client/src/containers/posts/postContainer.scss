@@ -1,24 +1,31 @@
-.comments-list {
-  background-color: #f3f3f3;
-  padding: 20px;
-  margin-bottom: 50px;
-  color: #1e1e1e;
+.post-container {
+  .comments-list {
+    background-color: #f3f3f3;
+    padding: 20px;
+    margin-bottom: 50px;
+    color: #1e1e1e;
+    max-width: 500px;
 
-  span {
-    font-family: Courier, 'Courier New', monospace;
-    font-size: 14px;
-  }
+    span {
+      font-family: Courier, 'Courier New', monospace;
+      font-size: 14px;
+    }
 
-  .sendCommentIcon {
-    button {
-      outline: none;
+    .sendCommentIcon {
+      button {
+        outline: none;
+      }
+    }
+
+    .comment-input {
+      background-color: white;
+      padding: 10px;
+      border-radius: 20px;
+      margin-top: 10px;
     }
   }
 
-  .comment-input {
-    background-color: white;
-    padding: 10px;
-    border-radius: 20px;
-    margin-top: 10px;
+  .col-md-4 {
+    padding: 0 8px 0 8px;
   }
 }

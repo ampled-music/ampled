@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { apiAxios } from '../setup-axios';
 
 export const getArtistsPages = async () => {
-  const { data } = await axios({
+  const { data } = await apiAxios({
     method: 'get',
     url: '/artist_pages.json',
   });

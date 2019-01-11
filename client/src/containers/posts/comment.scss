@@ -1,0 +1,27 @@
+.comment {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  span {
+    color: #aaaaab;
+    font-size: 12px !important;
+    align-self: flex-end;
+  }
+
+  p {
+    font-size: 13px;
+    margin-top: 10px;
+  }
+
+  .delete-icon {
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+}

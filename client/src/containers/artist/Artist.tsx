@@ -110,7 +110,6 @@ class ArtistComponent extends React.Component<Props, any> {
           closeConfirmationDialog={this.closeConfirmationDialog}
           discardChanges={this.discardChanges}
         />
-        )}
       </div>
     );
   }

@@ -13,7 +13,7 @@ export const createPost = async (post: Post) => {
 
   const { data } = await apiAxios({
     method: 'post',
-    url: '/admin/posts.json',
+    url: `/artist_pages/${artist_page_id}/posts.json`,
     headers: {
       'Content-Type': 'application/json',
     },

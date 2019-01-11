@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_comment, only: %i[destroy]
+  before_action :set_post, only: %i[destroy]
 
   def create
     @post = Post.new(post_params)
@@ -23,7 +23,7 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :body, :artist_page_id, :image_url, :audio_file).merge(user_id: current_user.id)
   end
 
-  def set_comment
+  def set_post
     @post = Post.find(params[:id])
   end
 end

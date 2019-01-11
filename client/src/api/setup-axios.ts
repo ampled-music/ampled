@@ -8,12 +8,11 @@ export const setupAxios = () => {
 };
 
 const getApiAxios = () => {
-  const token = store.get(config.localStorageKeys.token);
-
   const axiosApi = axios.create({ baseURL: config.apiUrl });
 
   axiosApi.interceptors.request.use((axiosConfig) => {
     axiosConfig.timeout = 200000;
+    const token = store.get(config.localStorageKeys.token);
     token && (axiosConfig.headers.Authorization = token);
 
     return axiosConfig;

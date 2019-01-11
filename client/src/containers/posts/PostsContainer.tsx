@@ -12,6 +12,7 @@ interface CommentProps {
   id: string;
   author: string;
   text: string;
+  created_at: number;
   created_ago: string;
 }
 
@@ -64,7 +65,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
 
                   <div className="comments-list">
                     <span>COMMENTS</span>
-                    {post.comments.map((comment) => {
+                    {post.comments.sort((a, b) => a.created_at - b.created_at).map((comment) => {
                       return <Comment comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
                     })}
                     {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}

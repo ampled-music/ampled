@@ -1,0 +1,145 @@
+.post-form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  h1 {
+    font-size: 1em;
+    letter-spacing: 0.7px;
+    align-self: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  .upload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    label {
+      text-align: left;
+    }
+
+    .progress-info {
+      display: flex;
+      font-family: Courier, 'Courier New', monospace;
+      font-size: 13px;
+      justify-content: space-between;
+    }
+
+    .upload-button {
+      outline: none;
+      background-color: #2557a7;
+      color: #ffffff;
+      border-radius: 0px;
+      width: 100px;
+      letter-spacing: 0.7px;
+      text-transform: capitalize;
+      margin-top: 10px;
+      margin-right: 10px;
+      box-shadow: none;
+    }
+  }
+
+  .instructions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 15px 0;
+    font-family: Courier, 'Courier New', monospace;
+    font-size: 13px;
+    text-align: left;
+
+    a {
+      color: #2557a7;
+      text-decoration: underline;
+    }
+
+    p {
+      max-width: 280px;
+    }
+
+    p:first-of-type {
+      margin-right: 25px;
+    }
+  }
+
+  .post-info {
+    display: flex;
+    justify-content: space-between;
+
+    .uploader {
+      width: 190px;
+      height: 190px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      background: url(../../images/post_image.svg) no-repeat;
+
+      .loading-icon {
+        margin-bottom: 15px;
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    .post-image {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      max-width: 190px;
+      height: 190px;
+
+      .preview {
+        max-width: 190px;
+        max-height: 190px;
+        margin-bottom: 10px;
+      }
+
+      .image-actions {
+        display: flex;
+        justify-content: space-between;
+
+        span {
+          display: flex;
+          border: 1px solid #2557a7;
+          cursor: pointer;
+          width: 25px;
+          height: 25px;
+          justify-content: center;
+          align-items: center;
+          z-index: 1;
+        }
+
+        label {
+          cursor: pointer;
+          z-index: 2;
+        }
+
+        .action-icon {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+
+    .image-button {
+      background-color: #ffffff;
+      border: 1px solid #000000;
+      border-radius: 0px;
+      text-transform: capitalize;
+      margin: 0 auto 15px auto;
+      padding: 0 15px;
+      outline: none;
+    }
+
+    .post-description {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 2;
+      margin-left: 20px;
+      max-width: 375px;
+    }
+  }
+}

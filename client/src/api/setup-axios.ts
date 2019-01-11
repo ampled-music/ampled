@@ -1,26 +1,25 @@
 import axios from 'axios';
-import * as qs from 'qs';
 import * as store from 'store';
 
 import { config } from '../config';
 
 export const setupAxios = () => {
-  const paramsSerializer = (params: any) => qs.stringify(params, { arrayFormat: 'brackets' });
+  axios.defaults.baseURL = config.apiUrl;
+};
+
+const getApiAxios = () => {
   const token = store.get(config.localStorageKeys.token);
 
-  axios.defaults.baseURL = config.apiUrl;
+  const axiosApi = axios.create({ baseURL: config.apiUrl });
 
-  axios.interceptors.request.use((axiosConfig) => {
-    //const axiosUrl = config.apiUrl === '/api' ? axiosConfig.url : `${axios.defaults.baseURL}${axiosConfig.url}`;
-    //axiosConfig.url = axiosUrl;
+  axiosApi.interceptors.request.use((axiosConfig) => {
     axiosConfig.timeout = 200000;
     token && (axiosConfig.headers.Authorization = token);
-    axiosConfig.paramsSerializer = paramsSerializer;
 
     return axiosConfig;
   });
 
-  axios.interceptors.response.use(
+  axiosApi.interceptors.response.use(
     (response) => {
       return response;
     },
@@ -32,4 +31,8 @@ export const setupAxios = () => {
       return Promise.reject(error);
     },
   );
+
+  return axiosApi;
 };
+
+export const apiAxios = getApiAxios();

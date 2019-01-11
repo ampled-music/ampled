@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import * as React from 'react';
+import { config } from '../../config';
 import { styles } from './post-style';
 
 class PostComponent extends React.Component<any, any> {
@@ -20,11 +21,13 @@ class PostComponent extends React.Component<any, any> {
     this.setState((state) => ({ expanded: !state.expanded }));
   };
 
-  audioPLayer = (audioUrl) => {
+  audioPLayer = (audioFile) => {
+    const playableUrl = `${config.aws.playableBaseUrl}${audioFile}`;
+
     return (
       <div>
         <audio controls>
-          <source src={audioUrl} type="audio/mp3" />
+          <source src={playableUrl} type="audio" />
         </audio>
       </div>
     );
@@ -46,7 +49,13 @@ class PostComponent extends React.Component<any, any> {
 
         {post.image_url && <CardMedia className={classes.media} image={post.image_url} />}
 
-        {post.audioUrl && <CardMedia className={classes.media} component={() => this.audioPLayer(post.audioUrl)} />}
+        {post.audio_file && (
+          <CardMedia
+            className={classes.media}
+            image={post.image_url}
+            component={() => this.audioPLayer(post.audio_file)}
+          />
+        )}
 
         <CardContent>
           <Typography component="p" className={classes.postTitle}>

@@ -9,6 +9,7 @@ json.posts @artist_page.posts do |post|
   json.audio_file post.audio_file
   json.image_url post.image_url
   json.body post.body
+  json.created_at post.created_at.to_i
   json.created_ago time_ago_in_words(post.created_at)
   json.comments post.comments, partial: 'comments/comment', as: :comment
 end

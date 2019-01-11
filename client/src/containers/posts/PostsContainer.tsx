@@ -22,6 +22,7 @@ interface PostProps {
   title: string;
   body: string;
   comments: CommentProps[];
+  created_at: number;
   created_ago: string;
 }
 interface Props {
@@ -49,6 +50,12 @@ class PostsContainerComponent extends React.Component<Props, any> {
     this.props.updateArtist();
   };
 
+  sortItems(items) {
+    console.log(items);
+
+    return items.sort((a, b) => b.created_at - a.created_at);
+  }
+
   render() {
     const { accentColor, authentication, posts } = this.props;
 
@@ -58,18 +65,16 @@ class PostsContainerComponent extends React.Component<Props, any> {
       <div className="post-container">
         <div className="container ">
           <div className="row">
-            {posts.map((post) => {
+            {this.sortItems(posts).map((post) => {
               return (
                 <div key={`post-${post.id}`} id={`post-${post.id}`} className="col-md-4">
                   <Post post={post} accentColor={accentColor} />
 
                   <div className="comments-list">
                     <span>COMMENTS</span>
-                    {post.comments
-                      .sort((a, b) => a.created_at - b.created_at)
-                      .map((comment) => {
-                        return <Comment comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
-                      })}
+                    {this.sortItems(post.comments).map((comment) => {
+                      return <Comment comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
+                    })}
                     {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
                   </div>
                 </div>

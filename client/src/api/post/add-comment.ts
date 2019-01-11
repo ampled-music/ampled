@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { apiAxios } from '../setup-axios';
 
 export const addComment = async (comment) => {
-  const { data } = await axios({
+  const { data } = await apiAxios({
     method: 'post',
     url: '/comments.json',
     headers: {

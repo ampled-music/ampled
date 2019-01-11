@@ -2,18 +2,15 @@
 #
 # Table name: posts
 #
-#  artist_page_id          :bigint(8)
-#  audio_file_content_type :string
-#  audio_file_file_name    :string
-#  audio_file_file_size    :integer
-#  audio_file_updated_at   :datetime
-#  body                    :text
-#  created_at              :datetime         not null
-#  id                      :bigint(8)        not null, primary key
-#  image_url               :string
-#  title                   :string
-#  updated_at              :datetime         not null
-#  user_id                 :bigint(8)
+#  artist_page_id :bigint(8)
+#  audio_file     :string
+#  body           :text
+#  created_at     :datetime         not null
+#  id             :bigint(8)        not null, primary key
+#  image_url      :string
+#  title          :string
+#  updated_at     :datetime         not null
+#  user_id        :bigint(8)
 #
 # Indexes
 #
@@ -32,8 +29,8 @@ class Post < ApplicationRecord
 
   has_many :comments, dependent: :destroy
 
-  has_attached_file :audio_file
-  validates_attachment_content_type :audio_file, content_type: /\Aaudio\/.*\z/
+  # has_attached_file :audio_file
+  # validates_attachment_content_type :audio_file, content_type: /\Aaudio\/.*\z/
 
   def author
     user.name

@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { apiAxios } from '../setup-axios';
 
 export const deleteComment = async (commentId) => {
-  await axios({
+  await apiAxios({
     method: 'delete',
     url: `/comments/${commentId}`,
   });

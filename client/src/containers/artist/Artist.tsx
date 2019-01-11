@@ -2,12 +2,14 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { getArtistData } from '../../redux/ducks/get-artist';
 import { Nav } from '../nav/Nav';
+import { PostForm } from '../posts/PostForm';
 import { PostsContainer } from '../posts/PostsContainer';
+import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
+import { PostModal } from '../shared/post-modal/PostModal';
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
-
-import { getArtistData } from '../../redux/ducks/get-artist';
 
 interface Props {
   match: {
@@ -26,6 +28,7 @@ interface Props {
       accent_color: string;
     };
   };
+  userAuthenticated: boolean;
 }
 
 class ArtistComponent extends React.Component<Props, any> {
@@ -33,6 +36,8 @@ class ArtistComponent extends React.Component<Props, any> {
     super(props);
     this.state = {
       id: this.props.match.params.id,
+      openModal: false,
+      showConfirmationDialog: false,
     };
   }
 
@@ -42,10 +47,35 @@ class ArtistComponent extends React.Component<Props, any> {
 
   getArtistInfo = () => {
     this.props.getArtist(this.state.id);
+  }
+
+  getUserConfirmation = (hasUnsavedChanges) => {
+    if (hasUnsavedChanges) {
+      this.setState({ showConfirmationDialog: true });
+    } else {
+      this.discardChanges();
+    }
+  };
+
+  closeConfirmationDialog = () => {
+    this.setState({ showConfirmationDialog: false });
+  };
+
+  discardChanges = () => {
+    this.closeConfirmationDialog();
+    this.closeModal();
+  };
+
+  openModal = () => {
+    this.setState({ openModal: true });
+  };
+
+  closeModal = () => {
+    this.setState({ openModal: false });
   };
 
   render() {
-    const { artist } = this.props;
+    const { artist, userAuthenticated } = this.props;
     const artistData = artist.artist;
     const loading = artist.loading;
 
@@ -54,13 +84,28 @@ class ArtistComponent extends React.Component<Props, any> {
     ) : (
       <div className="App">
         <Nav />
-        <ArtistHeader name={artistData.name} id={artistData.id} accentColor={artistData.accent_color} />
-        <ArtistInfo location={artistData.location} />
-        <PostsContainer
-          posts={artistData.posts}
+        <ArtistHeader
+          name={artistData.name}
+          id={artistData.id}
           accentColor={artistData.accent_color}
-          updateArtist={this.getArtistInfo}
+          openPostModal={this.openModal}
+          userAuthenticated={userAuthenticated}
         />
+        <ArtistInfo location={artistData.location} />
+
+        <PostsContainer posts={artistData.posts} accentColor={artistData.accent_color} updateArtist={this.getArtistInfo}/>
+
+        <PostModal close={this.getUserConfirmation} open={this.state.openModal}>
+          <PostForm artistId={artistData.id} close={this.getUserConfirmation} discardChanges={this.discardChanges} />
+        </PostModal>
+
+        <ConfirmationDialog
+          open={this.state.showConfirmationDialog}
+          closeConfirmationDialog={this.closeConfirmationDialog}
+          discardChanges={this.discardChanges}
+        />
+        )}
+
       </div>
     );
   }
@@ -69,6 +114,7 @@ class ArtistComponent extends React.Component<Props, any> {
 const mapStateToProps = (state) => {
   return {
     artist: state.artist,
+    userAuthenticated: state.authentication.authenticated,
   };
 };
 

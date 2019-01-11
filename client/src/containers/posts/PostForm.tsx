@@ -15,6 +15,7 @@ interface Props {
   artistId: number;
   close: React.MouseEventHandler;
   discardChanges: React.MouseEventHandler;
+  updateArtist: Function;
 }
 
 class PostForm extends React.Component<Props, any> {
@@ -45,11 +46,11 @@ class PostForm extends React.Component<Props, any> {
       title,
       body,
       audio_file: audioFile,
-      imageUrl,
+      image_url: imageUrl,
       artist_page_id,
     };
     await createPost(post);
-    alert(`Form submitted: ${post}`);
+    this.props.updateArtist();
     this.clearForm();
   };
 

@@ -44,7 +44,7 @@ class PostComponent extends React.Component<any, any> {
         </CardContent>
         <Divider />
 
-        {post.imageUrl && <CardMedia className={classes.media} image={post.imageUrl} />}
+        {post.image_url && <CardMedia className={classes.media} image={post.image_url} />}
 
         {post.audioUrl && <CardMedia className={classes.media} component={() => this.audioPLayer(post.audioUrl)} />}
 

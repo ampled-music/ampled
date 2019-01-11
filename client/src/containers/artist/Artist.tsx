@@ -47,7 +47,7 @@ class ArtistComponent extends React.Component<Props, any> {
 
   getArtistInfo = () => {
     this.props.getArtist(this.state.id);
-  }
+  };
 
   getUserConfirmation = (hasUnsavedChanges) => {
     if (hasUnsavedChanges) {
@@ -92,20 +92,25 @@ class ArtistComponent extends React.Component<Props, any> {
           userAuthenticated={userAuthenticated}
         />
         <ArtistInfo location={artistData.location} />
-
-        <PostsContainer posts={artistData.posts} accentColor={artistData.accent_color} updateArtist={this.getArtistInfo}/>
-
+        <PostsContainer
+          posts={artistData.posts}
+          accentColor={artistData.accent_color}
+          updateArtist={this.getArtistInfo}
+        />
         <PostModal close={this.getUserConfirmation} open={this.state.openModal}>
-          <PostForm artistId={artistData.id} close={this.getUserConfirmation} discardChanges={this.discardChanges} />
+          <PostForm
+            artistId={artistData.id}
+            close={this.getUserConfirmation}
+            discardChanges={this.discardChanges}
+            updateArtist={this.getArtistInfo}
+          />
         </PostModal>
-
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}
           closeConfirmationDialog={this.closeConfirmationDialog}
           discardChanges={this.discardChanges}
         />
         )}
-
       </div>
     );
   }

@@ -27,7 +27,7 @@ class PostComponent extends React.Component<any, any> {
     return (
       <div>
         <audio controls>
-          <source src={playableUrl} type="audio" />
+          <source src={playableUrl} type="audio/mp3" />
         </audio>
       </div>
     );

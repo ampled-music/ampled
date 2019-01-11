@@ -51,8 +51,6 @@ class PostsContainerComponent extends React.Component<Props, any> {
   };
 
   sortItems(items) {
-    console.log(items);
-
     return items.sort((a, b) => b.created_at - a.created_at);
   }
 

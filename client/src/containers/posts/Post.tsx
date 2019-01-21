@@ -1,4 +1,4 @@
-import { faArrowDown, faHeart, faShare, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
@@ -72,13 +72,13 @@ class PostComponent extends React.Component<any, any> {
         </Collapse>
 
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton className={classes.iconButton} aria-label="Like" disabled>
+          {/* <IconButton className={classes.iconButton} aria-label="Like" disabled>
             <FontAwesomeIcon icon={faHeart} size="xs" />
           </IconButton>
 
           <IconButton className={classes.iconButton} aria-label="Share" disabled>
             <FontAwesomeIcon icon={faShare} size="xs" />
-          </IconButton>
+          </IconButton> */}
 
           {post.body && (
             <IconButton

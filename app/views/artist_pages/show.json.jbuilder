@@ -3,6 +3,8 @@ json.name @artist_page.name
 json.location @artist_page.location
 json.accent_color @artist_page.accent_color
 json.banner_image_url @artist_page.banner_image_url
+json.twitter_handle @artist_page.twitter_handle
+json.instagram_handle @artist_page.instagram_handle
 json.posts @artist_page.posts do |post|
   json.id post.id
   json.author post.author

@@ -24,6 +24,8 @@ interface Props {
       name: string;
       id: number;
       location: string;
+      twitter_handle: string;
+      instagram_handle: string;
       posts: [];
       accent_color: string;
       banner_image_url: string;
@@ -93,7 +95,11 @@ class ArtistComponent extends React.Component<Props, any> {
           openPostModal={this.openModal}
           userAuthenticated={userAuthenticated}
         />
-        <ArtistInfo location={artistData.location} />
+        <ArtistInfo
+          location={artistData.location}
+          twitterHandle={artistData.twitter_handle}
+          instagramHandle={artistData.instagram_handle}
+        />
         <PostsContainer
           posts={artistData.posts}
           accentColor={artistData.accent_color}

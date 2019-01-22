@@ -26,6 +26,7 @@ interface Props {
       location: string;
       posts: [];
       accent_color: string;
+      banner_image_url: string;
     };
   };
   userAuthenticated: boolean;
@@ -88,6 +89,7 @@ class ArtistComponent extends React.Component<Props, any> {
           name={artistData.name}
           id={artistData.id}
           accentColor={artistData.accent_color}
+          bannerImageUrl={artistData.banner_image_url}
           openPostModal={this.openModal}
           userAuthenticated={userAuthenticated}
         />

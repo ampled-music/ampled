@@ -6,6 +6,11 @@
     width: 100%;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 700;
+    &:hover {
+        background-color: #1E1E1E;
+        color: white;
+        transition: .25s all ease-in-out;
+    }
 }
 
 .home-header {

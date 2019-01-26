@@ -128,7 +128,9 @@
 
 .new-post {
   text-align: right;
-
+  position: fixed;
+  right: 10px;
+  
   button {
     cursor: pointer;
     background-color: #2557a7;

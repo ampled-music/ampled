@@ -1,164 +1,147 @@
 .artist-header {
 
-  &__title {
-    font-size: 3rem;
-    margin: 2rem 0;
-    text-transform: uppercase;
-    font-weight: bolder;
-  }
-  &__members {
-    display: flex;
-    align-items: flex-start;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    flex-direction: column;
-    padding-top: 20px;
-
-    &:before {
-      content: '';
-      display: block;
-      position: absolute;
-      z-index: 0;
-      top: 0px;
-      right: 50%;
-      background-color: #2557A7;
-      width: 2px;
-      height: 100%;
+    &__title {
+        font-size: 3rem;
+        margin: 2rem 0;
+        text-transform: uppercase;
+        font-weight: bolder;
     }
-    &:after {
-      content: '';
-      display: block;
-      position: absolute;
-      z-index: 0;
-      top: 0px;
-      right: 0px;
-      border-top: 2px solid #2557A7;
-      border-bottom: 2px solid #2557A7;
-      width: 50%;
-      height: 100%;
+
+    &__members {
+        display: flex;
+        align-items: flex-start;
+        align-content: flex-start;
+        flex-wrap: wrap;
+        flex-direction: column;
+        padding-top: 20px;
     }
-  }
 
-  &__member {
-    width: 100%;
-    max-width: 90px;
-    max-height: 90px;
-    position: relative;
-    z-index: 10;
-    margin: 10px auto;
-    border-radius: 100px;
-    border: 1px solid #2557A7;
+    &__member {
+        width: 100%;
+        max-width: 90px;
+        max-height: 90px;
+        position: relative;
+        z-index: 10;
+        margin: 10px auto;
+        border-radius: 100px;
+        border: 1px solid #2557A7;
 
-    &_name {
-      font-size: .9rem;
+        &_name {
+            font-size: .9rem;
+        }
+
+        &_quote {
+            font-size: .8rem;
+            font-family: 'Courier New', Courier, monospace;
+        }
     }
-    &_quote {
-      font-size: .8rem;
-      font-family: 'Courier New', Courier, monospace;
+
+    &__photos {
+        height: 570px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        align-content: flex-start;
+        border-right: 2px solid #2557A7;
+        border-top: 2px solid #2557A7;
+        border-bottom: 2px solid #2557A7;
     }
-  }
 
-  &__photos {
-    height: 570px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    align-content: flex-start;
-    border-right: 2px solid #2557A7;
-    border-top: 2px solid #2557A7;
-    border-bottom: 2px solid #2557A7;
-  }
+    &__photo {
+        position: relative;
+        display: block;
+        z-index: -1;
+        width: 550px;
+    }
 
-  &__photo {
-    position: relative;
-    display: block;
-    z-index: -1;
-    width: 550px;
-  }
+    &__message {
+        font-size: 1.5rem;
+        margin: 2rem 0;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
 
-  &__message {
-    font-size: 1.5rem;
-    margin: 2rem 0;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  &__message-container {
-    width: 90%;
-    margin: 2rem auto;
-    border: 2px solid #2557A7;
-    padding: 10px 0px;
-  }
-  &__message-image {
-    width: 110%;
-    transform: rotate(-2deg);
-    position: relative;
-    left: -5%;
-    z-index: -1;
-  }
-  &__supporter-title {
-    font-size: 1.2rem;
-    margin: 1rem 0;
-    text-transform: uppercase;
-  }
+    &__message-container {
+        width: 90%;
+        margin: 2rem auto;
+        border: 2px solid #2557A7;
+        padding: 10px 0px;
+    }
+
+    &__message-image {
+        width: 110%;
+        transform: rotate(-2deg);
+        position: relative;
+        left: -5%;
+        z-index: -1;
+    }
+
+    &__supporter-title {
+        font-size: 1.2rem;
+        margin: 1rem 0;
+        text-transform: uppercase;
+    }
 }
 
 .artist-info {
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  border-top: 2px solid #000000;
-  border-bottom: 2px solid #000000;
-  margin: 2rem auto;
-  padding: 1rem 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    margin: 2rem auto;
+    padding: 1rem 0;
 
-  &__location {
-    margin: 0 1rem;
-  }
-  &__social {
-    display: flex;
-    justify-content: flex-end;
+    &__location {
+        margin: 0 1rem;
+    }
 
-    &_twitter {
-      margin: 0 1rem;
+    &__social {
+        display: flex;
+        justify-content: flex-end;
+
+        &_twitter {
+            margin: 0 1rem;
+        }
+
+        &_instagram {
+            margin: 0 1rem;
+        }
     }
-    &_instagram {
-      margin: 0 1rem;
-    }
-  }
 }
 
 .new-post {
-  text-align: right;
-  position: fixed;
-  right: 10px;
-  
-  button {
-    cursor: pointer;
-    background-color: #2557a7;
-    border-radius: 20px;
-    z-index: 1;
-    height: 38px;
-    padding: 0 11px;
-    outline: none;
-  }
+    text-align: right;
+    position: fixed;
+    right: 10px;
 
-  span {
-    color: #ffffff;
-    visibility: hidden; 
-  }
+    button {
+        cursor: pointer;
+        background-color: #2557a7;
+        border-radius: 20px;
+        z-index: 1;
+        height: 38px;
+        padding: 0 11px;
+        outline: none;
+    }
 
-  button span {
-    max-width: 0px;
-    transition: max-width 0.3s;
-    display: inline-block;
-    vertical-align: top;
-    white-space: nowrap;
-    overflow: hidden;
-  }
+    span {
+        color: #ffffff;
+        visibility: hidden;
+    }
 
-  button:hover span {
-    visibility: visible;
-    padding-right: 20px;
-    padding-left: 5px;
-    max-width: 150px;
-  }
+    button span {
+        max-width: 0px;
+        transition: max-width 0.3s;
+        display: inline-block;
+        vertical-align: top;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    button:hover span {
+        visibility: visible;
+        padding-right: 20px;
+        padding-left: 5px;
+        max-width: 150px;
+    }
 }

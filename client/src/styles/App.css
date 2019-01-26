@@ -10281,10 +10281,6 @@ readers do not read off random characters that represent icons */
   width: auto; }
 
 body {
-  background: url(../images/background_band.png);
-  background-repeat: no-repeat;
-  background-position-y: 200px;
-  background-size: contain;
   margin-top: 50px; }
 
 .header {

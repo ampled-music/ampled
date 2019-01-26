@@ -38,12 +38,12 @@ class ArtistHeader extends React.Component<Props, any> {
                         {/* Left Side */}
                         <div className="artist-header__title">{name}</div>
 
-                        <div className="row">
-                            <div className="col-3 artist-header__members" style={{ borderColor: accentColor }}>
+                        <div className="artist-header__photo-container" style={{ borderColor: accentColor }} >
+                            <div className="artist-header__members">
                                 <img className="artist-header__member" style={{ borderColor: accentColor }} src={trent_reznor} />
                                 <img className="artist-header__member" style={{ borderColor: accentColor }} src={atticus_ross} />
                             </div>
-                            <div className="col-9 artist-header__photos" style={{ borderColor: accentColor }}>
+                            <div className="artist-header__photos">
                                 <img className="artist-header__photo" src={bannerImageUrl} />
                             </div>
                         </div>

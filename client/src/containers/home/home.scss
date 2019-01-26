@@ -1,0 +1,144 @@
+.btn {
+    border-radius: 0px;
+    border: 2px solid black;
+    background-color: white;
+    color: black;
+    width: 100%;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+}
+
+.home-header {
+    background-color: #e9c7c6;
+    padding-top: 3rem;
+
+    &__support {
+        margin: auto;
+        display: block;
+        position: relative;
+        z-index: 0;
+    }
+    &__info {
+        font-family: 'Courier New', Courier, monospace;
+        border: 2px solid black;
+        padding: 2rem;
+        margin: 4rem auto 2rem;
+    }
+    &__collage {
+        width: 140%;
+        position: relative;
+        left: -100px;
+        margin-top: -40px;
+    }
+}
+
+.home-for {
+    border-top: 10px solid black;
+
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        margin: 2rem auto;
+    }
+
+    &__mission {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 1.2rem;
+        text-align: center;
+        width: 50%;
+        margin: 2rem auto;
+    }
+
+    &__image {
+        margin: auto;
+    }
+    &__sub-title {
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    &__copy {
+        font-family: 'Courier New', Courier, monospace;
+        text-align: center;
+        min-height: 110px;
+    }
+}
+
+.home-how {
+    background-color: #1E1E1E;
+    color: white;
+
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        margin: 2rem auto;
+    }
+
+    &__list {
+        border: 2px solid white;
+        padding: 3rem;
+    }
+
+    &__list-item {
+        margin-bottom: 1rem;
+
+        &:hover {
+            .home-how__list-item_number {
+                background-color: white;
+                color: #1E1E1E;
+                transition: .25s all ease-in-out;
+            }
+        }
+        &_number {
+            background-color: #1E1E1E;
+            color: white;
+            text-align: center;
+            border: 2px solid white;
+            border-radius: 100%;
+            height: 70px;
+            width: 70px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            transition: .25s all ease-in-out;
+
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 70px;
+                width: 2px;
+                height: 80%;
+                background-color: white;
+            }
+            &.no-tail {
+                &:after {
+                    height: 0px;
+                }
+            }
+        }
+        &_title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        &_copy {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+        }
+    }
+}
+.tear {
+    width: 100%;
+    &.tear_1 {
+    }
+    &.tear_2 {
+        background-color: #e9c7c6;
+    }
+}
+
+.home-artists {
+    background-color: #e9c7c6;
+}

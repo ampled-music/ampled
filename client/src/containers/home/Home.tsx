@@ -7,6 +7,8 @@ import { HomeFor } from './HomeFor';
 import { HomeHow } from './HomeHow';
 import { HomeArtists } from './HomeArtists';
 
+import './home.scss';
+
 interface Props {
 }
 

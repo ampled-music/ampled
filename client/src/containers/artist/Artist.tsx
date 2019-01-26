@@ -97,8 +97,9 @@ class ArtistComponent extends React.Component<Props, any> {
         />
         <ArtistInfo
           location={artistData.location}
+          accentColor={artistData.accent_color}
           twitterHandle={artistData.twitter_handle}
-          instagramHandle={artistData.instagram_handle}
+          instagramHandle={artistData.instagram_handle}  
         />
         <PostsContainer
           posts={artistData.posts}

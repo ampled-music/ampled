@@ -10,7 +10,6 @@ import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDi
 import { PostModal } from '../shared/post-modal/PostModal';
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
-import { ArtistStyle } from './ArtistStyle';
 
 interface Props {
   match: {
@@ -88,9 +87,6 @@ class ArtistComponent extends React.Component<Props, any> {
     ) : (
       <div className="App">
         <Nav />
-        <ArtistStyle
-          accentColor={artistData.accent_color}
-        />
         <ArtistHeader
           name={artistData.name}
           accentColor={artistData.accent_color}

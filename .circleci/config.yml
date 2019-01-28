@@ -49,7 +49,7 @@ jobs:
       - run:
           name: Deploy Master to Heroku
           command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git features/ci-pass:master
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git development:master
 
 workflows:
   version: 2
@@ -61,5 +61,5 @@ workflows:
             - build
           filters:
             branches:
-              only: features/ci-pass
+              only: development
 

@@ -46,16 +46,7 @@ jobs:
       - run: bundle exec rake db:sample_data
 
       # Run RSpec in parallel, when parallelism > 1
-      - run: |
-          circleci tests glob "spec/**/*_spec.rb" > /tmp/rspec_files
-
-          TEST_FILES=$(circleci tests split --split-by=timings --timings-type=filename < /tmp/rspec_files)
-
-          echo -e "Testing" $(echo $TEST_FILES | wc -w) "of" $(cat /tmp/rspec_files | wc -w) "files on this container.\n"
-
-          bundle exec rspec --format RspecJunitFormatter \
-                            --out ./test-results/rspec/results.xml -- \
-                            $TEST_FILES
+      - run: bundle exec rspec 
 
       # Save test results, so the the timings can be used in future parallel runs
       - store_test_results:

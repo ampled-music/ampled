@@ -11,3 +11,5 @@ Rails:
 AllCops:
   Exclude:
     - './app/dashboards/*'
+    - './db/migrate/*'
+    - './config/initializers/*'

@@ -31,7 +31,7 @@ class User < ApplicationRecord
          :confirmable, :lockable,
          :jwt_authenticatable, jwt_revocation_strategy: Devise::JWT::RevocationStrategies::Null
 
-  validates_presence_of :name
+  validates :name, presence: true
 
   has_many :page_ownerships, dependent: :destroy
   has_many :owned_pages, through: :page_ownerships, source: :artist_page

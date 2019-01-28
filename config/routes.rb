@@ -10,10 +10,10 @@ Rails.application.routes.draw do
     root to: "users#index"
   end
 
-  resources :comments, only: [:create, :destroy]
+  resources :comments, only: %i[create destroy]
   resources :subscriptions
   resources :artist_pages, only: [] do
-    resources :posts, only: [:create, :index]
+    resources :posts, only: %i[create index]
   end
 
   get "uploads/sign", to: "uploads#sign_file"

@@ -12,6 +12,7 @@
 #  name             :string
 #  twitter_handle   :string
 #  updated_at       :datetime         not null
+#  video_url        :string
 #
 
 FactoryBot.define do

@@ -26,12 +26,10 @@
 FactoryBot.define do
   factory :user do
     email { Faker::Internet.email }
-    password { "password"}
+    password { "password" }
     name { Faker::StarWars.character }
     factory :confirmed_user do
-      confirmed_at { Time.now }
+      confirmed_at { Time.zone.now }
     end
   end
-
-
 end

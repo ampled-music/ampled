@@ -1,4 +1,4 @@
-ENV['DEVISE_JWT_SECRET_KEY']="23f90asd9jfiou2nqmf09uj20ifm-gm102f91jfh1-f"
+ENV["DEVISE_JWT_SECRET_KEY"] = "23f90asd9jfiou2nqmf09uj20ifm-gm102f91jfh1-f"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 

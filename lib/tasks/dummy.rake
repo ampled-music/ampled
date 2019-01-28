@@ -1,7 +1,8 @@
 namespace :dummy do
   desc "Generates fake data"
-  task :users => [:environment] do
-    users = (1..10).map do |_|
+
+  task data: [:environment] do
+    (1..10).map do |_|
       password = Faker::Internet.password
       user = User.create(
         name: Faker::StarWars.character,
@@ -14,7 +15,7 @@ namespace :dummy do
     end
   end
 
-  task :artist_pages => [:environment] do
+  task artist_pages: [:environment] do
     ArtistPage.all.map(&:destroy)
 
     artist_pages = (1..5).map do |_|
@@ -25,7 +26,7 @@ namespace :dummy do
         twitter_handle: Faker::Twitter.screen_name,
         instagram_handle: Faker::Twitter.screen_name,
         banner_image_url: "https://robohash.org/#{ERB::Util.url_encode name}.png?set=set1&size=550x550",
-        #video_url: "https://robohash.org/#{ERB::Util.url_encode name}.png?set=set1&size=550x550",
+        video_url: "https://robohash.org/#{ERB::Util.url_encode name}.png?set=set1&size=550x550",
         bio: Faker::Dune.quote,
         accent_color: Faker::Color.hex_color
       )
@@ -36,9 +37,9 @@ namespace :dummy do
     end
   end
 
-  task :posts => [:environment] do
+  task posts: [:environment] do
     Post.delete_all
-    posts = ArtistPage.all.map do |ap|
+    artist_pages.map do |ap|
       post_count = (0..4).to_a.sample
       (0..post_count).map do |_|
         author = ap.owners.sample
@@ -46,10 +47,9 @@ namespace :dummy do
           user: author,
           artist_page: ap,
           body: Faker::Lovecraft.paragraphs([1, 2].sample).join("\n"),
-          title: Faker::HitchhikersGuideToTheGalaxy.quote,
+          title: Faker::HitchhikersGuideToTheGalaxy.quote
         )
       end
     end
   end
-
 end

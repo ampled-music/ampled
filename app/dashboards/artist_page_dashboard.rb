@@ -19,6 +19,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     bio: Field::String,
     accent_color: Field::String,
     banner_image_url: Field::String,
+    video_url: Field::String,
     twitter_handle: Field::String,
     instagram_handle: Field::String,
     created_at: Field::DateTime,

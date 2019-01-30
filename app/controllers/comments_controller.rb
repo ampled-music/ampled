@@ -12,9 +12,8 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    artist_page_id = @comment.post.artist_page.id
     @comment.destroy
-    redirect_to artist_page_path(artist_page_id), notice: "Comment removed"
+    200
   end
 
   private

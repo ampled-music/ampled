@@ -12,6 +12,7 @@
 #  name             :string
 #  twitter_handle   :string
 #  updated_at       :datetime         not null
+#  video_url        :string
 #
 
 class ArtistPage < ApplicationRecord
@@ -19,6 +20,8 @@ class ArtistPage < ApplicationRecord
   has_many :owners, through: :page_ownerships, source: :user
 
   has_many :posts, dependent: :destroy
+
+  has_many :images, dependent: :destroy
 
   has_many :subscriptions, dependent: :destroy
   has_many :subscribers, through: :subscriptions, source: :user

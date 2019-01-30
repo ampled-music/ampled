@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
     resources :artist_pages
+    resources :images
     resources :posts
     resources :subscriptions
     resources :comments

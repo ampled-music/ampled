@@ -2,6 +2,7 @@ json.id @artist_page.id
 json.name @artist_page.name
 json.location @artist_page.location
 json.accent_color @artist_page.accent_color
+
 json.posts @artist_page.posts do |post|
   json.id post.id
   json.author post.author
@@ -12,4 +13,8 @@ json.posts @artist_page.posts do |post|
   json.created_at post.created_at.to_i
   json.created_ago time_ago_in_words(post.created_at)
   json.comments post.comments, partial: "comments/comment", as: :comment
+end
+
+json.images @artist_page.images do |image|
+  json.url image.url
 end

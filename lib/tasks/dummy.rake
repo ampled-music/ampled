@@ -1,7 +1,7 @@
 namespace :dummy do
   desc "Generates fake data"
 
-  task data: [:environment] do
+  task users: [:environment] do
     (1..10).map do |_|
       password = Faker::Internet.password
       user = User.create(
@@ -39,7 +39,7 @@ namespace :dummy do
 
   task posts: [:environment] do
     Post.delete_all
-    artist_pages.map do |ap|
+    ArtistPage.all.map do |ap|
       post_count = (0..4).to_a.sample
       (0..post_count).map do |_|
         author = ap.owners.sample

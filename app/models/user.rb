@@ -11,6 +11,7 @@
 #  id                     :bigint(8)        not null, primary key
 #  locked_at              :datetime
 #  name                   :string           not null
+#  profile_image_url      :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string

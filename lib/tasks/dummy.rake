@@ -26,7 +26,7 @@ namespace :dummy do
         twitter_handle: Faker::Twitter.screen_name,
         instagram_handle: Faker::Twitter.screen_name,
         banner_image_url: "https://robohash.org/#{ERB::Util.url_encode name}.png?set=set1&size=550x550",
-        video_url: "https://robohash.org/#{ERB::Util.url_encode name}.png?set=set1&size=550x550",
+        video_url: "https://robohash.org/#{ERB::Util.url_encode name}.png?set=set1&size=400x225",
         bio: Faker::Dune.quote,
         accent_color: Faker::Color.hex_color
       )

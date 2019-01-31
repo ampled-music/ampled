@@ -31,6 +31,7 @@ interface Props {
       instagram_handle: string;
       posts: [];
       owners: [];
+      supporters: [];
     };
   };
   userAuthenticated: boolean;
@@ -96,6 +97,7 @@ class ArtistComponent extends React.Component<Props, any> {
           bannerImageUrl={artistData.banner_image_url}
           videoUrl={artistData.video_url}
           owners={artistData.owners}
+          supporters={artistData.supporters}
           openPostModal={this.openModal}
           userAuthenticated={userAuthenticated}
         />

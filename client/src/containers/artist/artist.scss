@@ -13,7 +13,7 @@
         font-weight: bolder;
     }
 
-    &__members {
+    &__persons {
         display: flex;
         align-items: flex-start;
         align-content: flex-start;
@@ -24,17 +24,13 @@
         left: -30px;
     }
 
-    &__member {
+    &__person {
         width: 100%;
         max-width: 90px;
         max-height: 90px;
         position: relative;
         z-index: 10;
         margin: 10px auto;
-
-        &_name {
-            font-size: .9rem;
-        }
 
         &_image {
             width: 100%;
@@ -43,15 +39,22 @@
         }
         &_svg {
             width: 100% !important;
-            height: 90px;
+            height: auto;
             background-color: white;
             border-radius: 100px;
             border: 1px solid #2557A7;
         }
 
+        &_name {
+            font-size: .9rem;
+        }
         &_quote {
             font-size: .8rem;
             font-family: 'Courier New', Courier, monospace;
+        }
+
+        &_small {
+            margin: 4px;
         }
     }
 

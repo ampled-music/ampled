@@ -4,13 +4,16 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import atticus_ross from '../../test/atticus_ross.jpg';
-import trent_reznor from '../../test/trent_reznor.jpg';
 
 import './artist.scss';
 
 
 interface OwnersProps {
+  id: string;
+  name: string;
+  profile_image_url: string;
+}
+interface SupportersProps {
   id: string;
   name: string;
   profile_image_url: string;
@@ -24,6 +27,7 @@ interface Props {
   openPostModal: React.MouseEventHandler;
   userAuthenticated: boolean;
   owners: OwnersProps[];
+  supporters: SupportersProps[];
 }
 
 
@@ -36,12 +40,8 @@ class ArtistHeader extends React.Component<Props, any> {
     };
   }
 
-  getOwnerImage(owner) {
-    return owner.profile_image_url ? owner.profile_image_url : 'poop' ;
-  }
-
   render() {
-    const { name, accentColor, bannerImageUrl, videoUrl, owners, userAuthenticated } = this.props;
+    const { name, accentColor, bannerImageUrl, videoUrl, owners, supporters, userAuthenticated } = this.props;
                 
     console.log(owners);
 
@@ -54,14 +54,14 @@ class ArtistHeader extends React.Component<Props, any> {
             {/* Left Side */}
             <div className="artist-header__title">{name}</div>
             <div className="artist-header__photo-container" style={{ borderColor: accentColor }} >
-              <div className="artist-header__members">
+              <div className="artist-header__persons">
                 {owners.map((owner) => {
                   return (
-                    <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__member">
+                    <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person">
                       {owner.profile_image_url ? (
-                        <img className="artist-header__member_image" src={owner.profile_image_url} alt={owner.name} style={{ borderColor: accentColor }} />
+                        <img className="artist-header__person_image" src={owner.profile_image_url} alt={owner.name} style={{ borderColor: accentColor }} />
                       ) : 
-                        <FontAwesomeIcon className="artist-header__member_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
+                        <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
                       }
                     </div>
                   );
@@ -92,29 +92,45 @@ class ArtistHeader extends React.Component<Props, any> {
             </div>
 
             <div className="artist-header__supporters">
-              <div className="artist-header__supporter-title">2 Supporters</div>
 
-              <div className="row align-items-center">
-                <div className="col-3">
-                  <img className="artist-header__member" style={{ borderColor: accentColor }} src={trent_reznor} />
-                </div>
-                <div className="col-9">
-                  <div className="artist-header__member_name">Trent R.</div>
-                  <div className="artist-header__member_quote">
-                    I think there's something strangely musical about noise.
+              <div className="artist-header__supporter-title">{supporters.length} Supporters</div>
+
+              {supporters.slice(0,2).map((supporter) => {
+                return (
+                  <div className="row align-items-center">
+                    <div className="col-3">
+                      <div key={`supporter-${supporter.id}`} id={`supporter-${supporter.id}`} className="artist-header__person">
+                        {supporter.profile_image_url ? (
+                          <img className="artist-header__person_image" src={supporter.profile_image_url} alt={supporter.name} style={{ borderColor: accentColor }} />
+                        ) : 
+                          <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
+                        }
+                      </div>
+                    </div>
+                    <div className="col-9">
+                      <div className="artist-header__person_name">{supporter.name}</div>
+                      <div className="artist-header__person_quote"></div>
+                    </div>
                   </div>
-                </div>
+                );
+              })}
+
+              <div className="row justify-content-start no-gutters">
+                {supporters.slice(2,24).map((supporter) => {
+                  return (
+                    <div className="col-2">
+                      <div key={`supporter-${supporter.id}`} id={`supporter-${supporter.id}`} className="artist-header__person_small">
+                        {supporter.profile_image_url ? (
+                          <img className="artist-header__person_image" src={supporter.profile_image_url} alt={supporter.name} style={{ borderColor: accentColor }} />
+                        ) : 
+                          <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
+                        }
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
 
-              <div className="row align-items-center">
-                <div className="col-3">
-                  <img className="artist-header__member" style={{ borderColor: accentColor }} src={atticus_ross} />
-                </div>
-                <div className="col-9">
-                  <div className="artist-header__member_name">Atticus R.</div>
-                  <div className="artist-header__member_quote">Sure Trent, whatever.</div>
-                </div>
-              </div>
             </div>
           </div>
           {/* Close Right Side */}

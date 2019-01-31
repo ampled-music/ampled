@@ -35,6 +35,9 @@ class NavComponent extends React.Component<Props, any> {
         <Link className="logo" to="/">
           <img src={logo} alt="logo" height="100%" />
         </Link>
+        <button className="btn btn-support">
+          Support
+        </button>
         <div className="menus">
           <div className="loginLink">
             {authentication.authenticated ? (

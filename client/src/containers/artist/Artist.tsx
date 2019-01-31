@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux';
 
 import { getArtistData } from '../../redux/ducks/get-artist';
 import { Nav } from '../nav/Nav';
-import { PostForm } from '../posts/PostForm';
-import { PostsContainer } from '../posts/PostsContainer';
-import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
-import { PostModal } from '../shared/post-modal/PostModal';
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
+import { PostsContainer } from '../posts/PostsContainer';
+import { PostForm } from '../posts/PostForm';
+import { PostModal } from '../shared/post-modal/PostModal';
+import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 
 interface Props {
   match: {
@@ -23,9 +23,15 @@ interface Props {
     artist: {
       name: string;
       id: number;
-      location: string;
-      posts: [];
       accent_color: string;
+      banner_image_url: string;
+      video_url: string;
+      location: string;
+      twitter_handle: string;
+      instagram_handle: string;
+      posts: [];
+      owners: [];
+      supporters: [];
     };
   };
   userAuthenticated: boolean;
@@ -86,12 +92,21 @@ class ArtistComponent extends React.Component<Props, any> {
         <Nav />
         <ArtistHeader
           name={artistData.name}
-          id={artistData.id}
           accentColor={artistData.accent_color}
+          id={artistData.id}
+          bannerImageUrl={artistData.banner_image_url}
+          videoUrl={artistData.video_url}
+          owners={artistData.owners}
+          supporters={artistData.supporters}
           openPostModal={this.openModal}
           userAuthenticated={userAuthenticated}
         />
-        <ArtistInfo location={artistData.location} />
+        <ArtistInfo
+          location={artistData.location}
+          accentColor={artistData.accent_color}
+          twitterHandle={artistData.twitter_handle}
+          instagramHandle={artistData.instagram_handle}  
+        />
         <PostsContainer
           posts={artistData.posts}
           accentColor={artistData.accent_color}

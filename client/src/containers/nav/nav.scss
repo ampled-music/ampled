@@ -1,21 +1,30 @@
 .menus {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-  .loginLink {
-    margin-right: 40px;
-  }
+    .loginLink {
+        margin-right: 40px;
+    }
 
-  a {
-    color: #000000;
-  }
-  a:hover {
-    text-decoration: none;
-  }
+    a {
+        color: #000000;
+    }
 
-  .user-image {
-    width: 35px;
-    height: 35px;
-  }
+    a:hover {
+        text-decoration: none;
+    }
+
+    .user-image {
+        width: 35px;
+        height: 35px;
+    }
+}
+.btn-support {
+    border-radius: 0px;
+    text-transform: uppercase;
+    background-color: black;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    min-width: 200px;
 }

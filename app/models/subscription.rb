@@ -24,6 +24,6 @@ class Subscription < ApplicationRecord
   before_destroy :check_stripe
 
   def check_stripe
-    raise "Don't just delete a subscription"
+    # raise "Don't just delete a subscription"
   end
 end

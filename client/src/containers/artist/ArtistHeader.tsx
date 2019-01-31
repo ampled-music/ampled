@@ -1,6 +1,8 @@
 import * as React from 'react';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import atticus_ross from '../../test/atticus_ross.jpg';
 import trent_reznor from '../../test/trent_reznor.jpg';
@@ -34,8 +36,14 @@ class ArtistHeader extends React.Component<Props, any> {
     };
   }
 
+  getOwnerImage(owner) {
+    return owner.profile_image_url ? owner.profile_image_url : 'poop' ;
+  }
+
   render() {
-    const { name, accentColor, bannerImageUrl, videoUrl, userAuthenticated } = this.props;
+    const { name, accentColor, bannerImageUrl, videoUrl, owners, userAuthenticated } = this.props;
+                
+    console.log(owners);
 
     return (
       <div className="artist-header container">
@@ -45,11 +53,19 @@ class ArtistHeader extends React.Component<Props, any> {
           <div className="col-md-8">
             {/* Left Side */}
             <div className="artist-header__title">{name}</div>
-
             <div className="artist-header__photo-container" style={{ borderColor: accentColor }} >
               <div className="artist-header__members">
-                <img className="artist-header__member" style={{ borderColor: accentColor }} src={trent_reznor} />
-                <img className="artist-header__member" style={{ borderColor: accentColor }} src={atticus_ross} />
+                {owners.map((owner) => {
+                  return (
+                    <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__member">
+                      {owner.profile_image_url ? (
+                        <img className="artist-header__member_image" src={owner.profile_image_url} alt={owner.name} style={{ borderColor: accentColor }} />
+                      ) : 
+                        <FontAwesomeIcon className="artist-header__member_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
+                      }
+                    </div>
+                  );
+                })}
               </div>
               <div className="artist-header__photos">
                 <img className="artist-header__photo" src={bannerImageUrl} />

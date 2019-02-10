@@ -9,6 +9,7 @@ interface UploadState {
   completedUrl: string;
   key: string;
   fileName: string;
+  uploadError: string;
 }
 
 interface UploadProps {
@@ -18,7 +19,7 @@ interface UploadProps {
 class Upload extends React.Component<UploadProps, UploadState> {
   constructor(props) {
     super(props);
-    this.state = { progress: 0, complete: false, completedUrl: '', key: '', fileName: '' };
+    this.state = { progress: 0, complete: false, completedUrl: '', key: '', fileName: '', uploadError: '' };
   }
 
   updateProgress = (e) => {
@@ -31,6 +32,14 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
     if (!file) {
       return;
+    }
+
+    if ( file.name && file.name.split('.').pop() !== 'mp3' ) {
+      this.setState({ uploadError: "Upload only accepts mp3 files." });
+      return;
+    }
+    else {
+      this.setState({ uploadError: "" });
     }
 
     this.getFileName(e);
@@ -82,6 +91,14 @@ class Upload extends React.Component<UploadProps, UploadState> {
         <div className="progress-info">
           <span>{this.state.fileName}</span>
           <span>{progress}%</span>
+        </div>
+        <div className="upload-error">
+          {
+            this.state.uploadError !== '' &&
+            <h5>
+              {this.state.uploadError}
+            </h5>
+          }
         </div>
 
         <input

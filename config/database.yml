@@ -5,11 +5,12 @@ default: &default
   encoding: unicode
   pool: <%= ENV["DB_POOL"].presence || ENV["RAILS_MAX_THREADS"].presence || 5 %>
   timeout: 5000
+  host: localhost
+
 
 development:
   <<: *default
   database: ampled_web_development
-  host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

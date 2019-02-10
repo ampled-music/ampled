@@ -84,7 +84,13 @@ class Upload extends React.Component<UploadProps, UploadState> {
           <span>{progress}%</span>
         </div>
 
-        <input style={{ display: 'none' }} id="raised-button-file" type="file" onChange={this.processFile} />
+        <input
+          style={{ display: 'none' }}
+          id="raised-button-file"
+          type="file"
+          accept=".mp3"
+          onChange={this.processFile}
+        />
         <label htmlFor="raised-button-file">
           <Button className="upload-button" variant="contained" component="span">
             Upload

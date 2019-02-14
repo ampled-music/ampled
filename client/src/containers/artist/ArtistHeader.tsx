@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -88,6 +89,9 @@ class ArtistHeader extends React.Component<Props, any> {
             )}
 
             <div className="artist-header__message-container" style={{ borderColor: accentColor }}>
+              <div className="artist-header__play">
+                <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: accentColor }} />
+              </div>
               <img className="artist-header__message-image" src={videoUrl} />
             </div>
 

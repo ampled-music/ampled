@@ -32,22 +32,25 @@ class Footer extends React.Component<Props, State> {
             <div className="col-md-2">
               <div className="title">Get Started</div>
               <a href="#">Create An Artist Page</a>
-              <a href="#">Our Mission</a>
-              <a href="#">Who We Are</a>
-              <a href="#">Learn More About Us</a>
+              <a href="https://www.ampled.com/about">About Us</a>
+              <a href="https://www.ampled.com/what-is-ampled">What is Ampled?</a>
+              <a href="https://www.ampled.com/our-mission">Our Mission</a>
+              <a href="https://www.ampled.com/who-we-are">Who We Are</a>
+              <a href="https://www.ampled.com/artist-ownership">Artist Ownership</a>
             </div>
             <div className="col-md-2">
               <div className="title">Get Involved</div>
-              <a href="#">Jobs</a>
-              <a href="#">Press</a>
+              <a href="https://www.ampled.com/jobs">Jobs</a>
+              <a href="https://www.ampled.com/press">Press</a>
             </div>
             <div className="col-md-2">
               <div className="title">Get Informed</div>
-              <a href="#">Transparency Dash</a>
-              <a href="#">Artist Ownership</a>
-              <a href="#">Terms of Use</a>
-              <a href="#">Privacy Policy</a>
-              <a href="#">Contact</a>
+              <a href="https://www.ampled.com/artist-ownership">Transparency Dash</a>
+              <a href="https://www.ampled.com/faq">FAQs</a>
+              <a href="https://www.ampled.com/zine">Blog</a>
+              <a href="https://www.ampled.com/terms-of-use">Terms of Use</a>
+              <a href="https://www.ampled.com/privacy-policy">Privacy Policy</a>
+              <a href="https://www.ampled.com/contact-us">Contact</a>
             </div>
             <div className="col-md-2">
               <Link to="/">

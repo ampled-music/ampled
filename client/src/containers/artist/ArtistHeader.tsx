@@ -22,7 +22,7 @@ interface Props {
   name: string;
   id: number;
   accentColor: string;
-  bannerImageUrl: string;
+  bannerImages: string[];
   videoUrl: string;
   openPostModal: React.MouseEventHandler;
   userAuthenticated: boolean;
@@ -41,9 +41,9 @@ class ArtistHeader extends React.Component<Props, any> {
   }
 
   render() {
-    const { name, accentColor, bannerImageUrl, videoUrl, owners, supporters, userAuthenticated } = this.props;
+    const { name, accentColor, bannerImages, videoUrl, owners, supporters, userAuthenticated } = this.props;
                 
-    console.log(owners);
+    console.log(bannerImages);
 
     return (
       <div className="artist-header container">
@@ -68,7 +68,9 @@ class ArtistHeader extends React.Component<Props, any> {
                 })}
               </div>
               <div className="artist-header__photos">
-                <img className="artist-header__photo" src={bannerImageUrl} />
+                {bannerImages.map((image) => {
+                  return <img className="artist-header__photo" src={image} />
+                })}
               </div>
             </div>
           </div>

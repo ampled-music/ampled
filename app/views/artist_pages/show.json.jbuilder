@@ -31,6 +31,4 @@ json.posts @artist_page.posts do |post|
   json.comments post.comments, partial: "comments/comment", as: :comment
 end
 
-json.images @artist_page.images do |image|
-  json.url image.url
-end
+json.images @artist_page.images.map(&:url)

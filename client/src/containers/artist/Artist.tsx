@@ -24,7 +24,6 @@ interface Props {
       name: string;
       id: number;
       accent_color: string;
-      banner_image_url: string;
       video_url: string;
       location: string;
       twitter_handle: string;
@@ -32,6 +31,7 @@ interface Props {
       posts: [];
       owners: [];
       supporters: [];
+      images: [];
     };
   };
   userAuthenticated: boolean;
@@ -94,7 +94,7 @@ class ArtistComponent extends React.Component<Props, any> {
           name={artistData.name}
           accentColor={artistData.accent_color}
           id={artistData.id}
-          bannerImageUrl={artistData.banner_image_url}
+          bannerImages={artistData.images}
           videoUrl={artistData.video_url}
           owners={artistData.owners}
           supporters={artistData.supporters}

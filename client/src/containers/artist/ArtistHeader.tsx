@@ -25,6 +25,7 @@ interface Props {
   accentColor: string;
   bannerImageUrl: string;
   videoUrl: string;
+  openVideoModal: React.MouseEventHandler;
   openPostModal: React.MouseEventHandler;
   userAuthenticated: boolean;
   owners: OwnersProps[];
@@ -89,9 +90,9 @@ class ArtistHeader extends React.Component<Props, any> {
             )}
 
             <div className="artist-header__message-container" style={{ borderColor: accentColor }}>
-              <div className="artist-header__play">
+              <button onClick={this.props.openPostModal} className="artist-header__play">
                 <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: accentColor }} />
-              </div>
+              </button>
               <img className="artist-header__message-image" src={videoUrl} />
             </div>
 

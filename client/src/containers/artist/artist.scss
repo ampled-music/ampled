@@ -81,6 +81,8 @@
     }
 
     &__message-container {
+        display: flex;
+        align-items: center;
         width: 90%;
         margin: 2rem auto;
         border: 2px solid #2557A7;
@@ -108,11 +110,18 @@
         transform: translate(-50%, 0);
         align-items: center;
         justify-content: center;
-        height: 100px;
-        width: 100px;
-        border-radius: 100px; 
+        height: 75px;
+        width: 75px;
+        border-radius: 100%; 
         background-color: rgba(255, 255, 255, 0.4);
+        transition: all .25s ease-in-out;
         
+        &:hover {
+            height: 85px;
+            width: 85px;
+            background-color: rgba(255, 255, 255, 0.6);
+            transition: all .25s ease-in-out;
+        }
         &_svg {
             color: #2557A7;
         }

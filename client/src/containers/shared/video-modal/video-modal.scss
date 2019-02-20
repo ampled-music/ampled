@@ -1,0 +1,53 @@
+.tabs {
+  margin-left: 25px;
+
+  button {
+    outline: none;
+    margin-right: 30px;
+    font-weight: bold;
+    font-family: inherit;
+    letter-spacing: 0.7px;
+  }
+
+  .selected {
+    border-bottom: 3px solid #2557a7;
+    border-radius: 0px;
+  }
+
+  .disabled {
+    border-bottom: 3px solid #ffffff;
+    border-radius: 0px;
+    color: #9b9b9b;
+  }
+}
+
+.action-buttons {
+  margin-right: 25px !important;
+  margin-bottom: 35px !important;
+
+  button {
+    text-transform: capitalize;
+    outline: none;
+    font-size: 15px;
+  }
+
+  .cancel-button {
+    color: #2557a7;
+    text-decoration: underline;
+    letter-spacing: 0.8px;
+  }
+
+  .post-button {
+    background-color: #2557a7;
+    color: #ffffff;
+    border-radius: 0px;
+    padding: 8px 20px;
+    margin-left: 25px;
+    letter-spacing: 0.7px;
+    text-transform: capitalize;
+  }
+
+  .disabled {
+    background-color: #d8d8d8;
+  }
+}

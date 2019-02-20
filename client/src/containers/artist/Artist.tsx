@@ -9,6 +9,7 @@ import { ArtistInfo } from './ArtistInfo';
 import { PostsContainer } from '../posts/PostsContainer';
 import { PostForm } from '../posts/PostForm';
 import { PostModal } from '../shared/post-modal/PostModal';
+import { VideoModal } from '../shared/video-modal/VideoModal';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 
 interface Props {
@@ -98,6 +99,7 @@ class ArtistComponent extends React.Component<Props, any> {
           videoUrl={artistData.video_url}
           owners={artistData.owners}
           supporters={artistData.supporters}
+          openVideoModal={this.openModal}
           openPostModal={this.openModal}
           userAuthenticated={userAuthenticated}
         />
@@ -120,6 +122,9 @@ class ArtistComponent extends React.Component<Props, any> {
             updateArtist={this.getArtistInfo}
           />
         </PostModal>
+        <VideoModal open={this.state.openModal}
+          videoUrl={artistData.video_url}          
+        />
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}
           closeConfirmationDialog={this.closeConfirmationDialog}

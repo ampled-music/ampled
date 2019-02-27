@@ -44,7 +44,7 @@ class ArtistHeader extends React.Component<Props, any> {
 
   render() {
     const { name, accentColor, bannerImageUrl, videoUrl, owners, supporters, userAuthenticated } = this.props;
-                
+
     console.log(owners);
 
     return (
@@ -62,7 +62,7 @@ class ArtistHeader extends React.Component<Props, any> {
                     <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person">
                       {owner.profile_image_url ? (
                         <img className="artist-header__person_image" src={owner.profile_image_url} alt={owner.name} style={{ borderColor: accentColor }} />
-                      ) : 
+                      ) :
                         <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
                       }
                     </div>
@@ -90,7 +90,7 @@ class ArtistHeader extends React.Component<Props, any> {
             )}
 
             <div className="artist-header__message-container" style={{ borderColor: accentColor }}>
-              <button onClick={this.props.openPostModal} className="artist-header__play">
+              <button onClick={this.props.openVideoModal} className="artist-header__play">
                 <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: accentColor }} />
               </button>
               <img className="artist-header__message-image" src={videoUrl} />
@@ -107,7 +107,7 @@ class ArtistHeader extends React.Component<Props, any> {
                       <div key={`supporter-${supporter.id}`} id={`supporter-${supporter.id}`} className="artist-header__person">
                         {supporter.profile_image_url ? (
                           <img className="artist-header__person_image" src={supporter.profile_image_url} alt={supporter.name} style={{ borderColor: accentColor }} />
-                        ) : 
+                        ) :
                           <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
                         }
                       </div>
@@ -127,7 +127,7 @@ class ArtistHeader extends React.Component<Props, any> {
                       <div key={`supporter-${supporter.id}`} id={`supporter-${supporter.id}`} className="artist-header__person_small">
                         {supporter.profile_image_url ? (
                           <img className="artist-header__person_image" src={supporter.profile_image_url} alt={supporter.name} style={{ borderColor: accentColor }} />
-                        ) : 
+                        ) :
                           <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
                         }
                       </div>

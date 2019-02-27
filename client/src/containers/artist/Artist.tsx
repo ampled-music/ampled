@@ -44,6 +44,7 @@ class ArtistComponent extends React.Component<Props, any> {
     this.state = {
       id: this.props.match.params.id,
       openModal: false,
+      openVideoModal: false,
       showConfirmationDialog: false,
     };
   }
@@ -81,6 +82,14 @@ class ArtistComponent extends React.Component<Props, any> {
     this.setState({ openModal: false });
   };
 
+  openVideoModal = () => {
+    this.setState({ openVideoModal: true });
+  };
+
+  closeVideoModal = () => {
+    this.setState({ openVideoModal: false });
+  };
+
   render() {
     const { artist, userAuthenticated } = this.props;
     const artistData = artist.artist;
@@ -99,7 +108,7 @@ class ArtistComponent extends React.Component<Props, any> {
           videoUrl={artistData.video_url}
           owners={artistData.owners}
           supporters={artistData.supporters}
-          openVideoModal={this.openModal}
+          openVideoModal={this.openVideoModal}
           openPostModal={this.openModal}
           userAuthenticated={userAuthenticated}
         />
@@ -107,7 +116,7 @@ class ArtistComponent extends React.Component<Props, any> {
           location={artistData.location}
           accentColor={artistData.accent_color}
           twitterHandle={artistData.twitter_handle}
-          instagramHandle={artistData.instagram_handle}  
+          instagramHandle={artistData.instagram_handle}
         />
         <PostsContainer
           posts={artistData.posts}
@@ -122,8 +131,8 @@ class ArtistComponent extends React.Component<Props, any> {
             updateArtist={this.getArtistInfo}
           />
         </PostModal>
-        <VideoModal open={this.state.openModal}
-          videoUrl={artistData.video_url}          
+        <VideoModal open={this.state.openVideoModal}
+          videoUrl={artistData.video_url}
         />
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}

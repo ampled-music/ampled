@@ -35,6 +35,15 @@ namespace :dummy do
     artist_pages.each do |ap|
       ap.owners << User.all.sample([1, 2].sample)
     end
+
+    image_url = -> {
+      "https://dummyimage.com/600x600/#{Faker::Color.hex_color[1..-1]}/fff"
+    }
+
+    artist_pages.each do |ap|
+      ap.images << Image.create(url: image_url.call)
+      ap.images << Image.create(url: image_url.call)
+    end
   end
 
   task posts: [:environment] do

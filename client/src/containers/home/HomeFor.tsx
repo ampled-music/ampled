@@ -15,7 +15,7 @@ class HomeFor extends React.Component<Props, any> {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h1 className="home-for__title">
+              <h1 className="home-for__title jagged">
                 Built For Artists
                             </h1>
               <p className="home-for__mission">

@@ -43,7 +43,7 @@ class ArtistComponent extends React.Component<Props, any> {
     super(props);
     this.state = {
       id: this.props.match.params.id,
-      openModal: false,
+      openPostModal: false,
       openVideoModal: false,
       showConfirmationDialog: false,
     };
@@ -71,15 +71,15 @@ class ArtistComponent extends React.Component<Props, any> {
 
   discardChanges = () => {
     this.closeConfirmationDialog();
-    this.closeModal();
+    this.closePostModal();
   };
 
-  openModal = () => {
-    this.setState({ openModal: true });
+  openPostModal = () => {
+    this.setState({ openPostModal: true });
   };
 
-  closeModal = () => {
-    this.setState({ openModal: false });
+  closePostModal = () => {
+    this.setState({ openPostModal: false });
   };
 
   openVideoModal = () => {
@@ -109,7 +109,7 @@ class ArtistComponent extends React.Component<Props, any> {
           owners={artistData.owners}
           supporters={artistData.supporters}
           openVideoModal={this.openVideoModal}
-          openPostModal={this.openModal}
+          openPostModal={this.openPostModal}
           userAuthenticated={userAuthenticated}
         />
         <ArtistInfo
@@ -123,7 +123,7 @@ class ArtistComponent extends React.Component<Props, any> {
           accentColor={artistData.accent_color}
           updateArtist={this.getArtistInfo}
         />
-        <PostModal close={this.getUserConfirmation} open={this.state.openModal}>
+        <PostModal close={this.getUserConfirmation} open={this.state.openPostModal}>
           <PostForm
             artistId={artistData.id}
             close={this.getUserConfirmation}
@@ -131,7 +131,8 @@ class ArtistComponent extends React.Component<Props, any> {
             updateArtist={this.getArtistInfo}
           />
         </PostModal>
-        <VideoModal open={this.state.openVideoModal}
+        <VideoModal
+          open={this.state.openVideoModal}
           videoUrl={artistData.video_url}
         />
         <ConfirmationDialog

@@ -28,6 +28,13 @@
       justify-content: space-between;
     }
 
+    .upload-error {
+      color: #D8000C;
+      h5 {
+        padding-top: 20px;
+      }
+    }
+
     .upload-button {
       outline: none;
       background-color: #2557a7;

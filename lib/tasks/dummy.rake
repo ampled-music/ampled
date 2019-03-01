@@ -63,4 +63,10 @@ namespace :dummy do
       end
     end
   end
+
+  task destroy: [:environment] do
+    User.delete_all
+    ArtistPage.delete_all
+    Post.delete_all
+  end
 end

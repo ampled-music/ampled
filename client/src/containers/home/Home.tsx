@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Nav } from '../nav/Nav';
+import { Footer } from '../footer/Footer';
 
 import { HomeHeader } from './HomeHeader';
 import { HomeFor } from './HomeFor';
@@ -26,6 +27,7 @@ class Home extends React.Component<Props, State> {
         <HomeFor />
         <HomeHow />
         <HomeArtists />
+        <Footer />
       </div>
     );
   }

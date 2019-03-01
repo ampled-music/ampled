@@ -1,0 +1,28 @@
+.footer {
+    border-top: 10px solid black;
+    padding-top: 2rem;
+    background-color: #e9c7c6;
+
+    .title {
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+    a {
+        display: block;
+        font-family: 'Courier New', Courier, monospace;
+        color: black;
+        text-decoration: underline;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    .logo {
+        width: 100%;
+        max-width: 150px;
+    }
+    .copyright {
+        display: block;
+        font-family: 'Courier New', Courier, monospace;
+        color: black;
+    }
+}

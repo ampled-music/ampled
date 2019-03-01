@@ -23,7 +23,7 @@ interface Props {
   id: number;
   accentColor: string;
   bannerImageUrl: string;
-  videoUrl: string;
+  // videoUrl: string;
   openPostModal: React.MouseEventHandler;
   userAuthenticated: boolean;
   owners: OwnersProps[];
@@ -41,7 +41,7 @@ class ArtistHeader extends React.Component<Props, any> {
   }
 
   render() {
-    const { name, accentColor, bannerImageUrl, videoUrl, owners, supporters, userAuthenticated } = this.props;
+    const { name, accentColor, bannerImageUrl, owners, supporters, userAuthenticated } = this.props;
                 
     console.log(owners);
 
@@ -88,7 +88,7 @@ class ArtistHeader extends React.Component<Props, any> {
             )}
 
             <div className="artist-header__message-container" style={{ borderColor: accentColor }}>
-              <img className="artist-header__message-image" src={videoUrl} />
+              <img className="artist-header__message-image" src="" />
             </div>
 
             <div className="artist-header__supporters">

@@ -11,7 +11,7 @@ interface Props {
 class HomeHow extends React.Component<Props, any> {
   render() {
     return (
-      <div className="home-how">
+      <section className="home-how">
         <img className="tear tear_1" src={tear_1} />
         <div className="container">
 
@@ -61,7 +61,7 @@ class HomeHow extends React.Component<Props, any> {
           </div>
         </div>
         <img className="tear tear_2" src={tear_2} />
-      </div>
+      </section>
     );
   }
 }

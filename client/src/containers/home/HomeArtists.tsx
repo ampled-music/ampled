@@ -40,11 +40,11 @@ class HomeArtistsComponent extends React.Component<Props, State> {
     }
 
     return (
-      <div className="home-artists">
+      <section className="home-artists">
         <div className="container">
           {this.getArtistsList(artistsPages)}
         </div>
-      </div>
+      </section>
     );
   }
 

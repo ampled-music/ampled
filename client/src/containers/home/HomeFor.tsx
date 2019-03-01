@@ -6,13 +6,12 @@ import mission from '../../images/home/home_for_mission.png';
 
 
 interface Props {
-  // location: string;
 }
 
 class HomeFor extends React.Component<Props, any> {
   render() {
     return (
-      <div className="home-for">
+      <section className="home-for">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
@@ -64,7 +63,7 @@ class HomeFor extends React.Component<Props, any> {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 }

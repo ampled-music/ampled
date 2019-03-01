@@ -150,7 +150,7 @@ class PostForm extends React.Component<Props, any> {
 
             <div className="instructions">
               <p>
-                Upload as FLAC, WAV, ALAC or AIFF audio file to provide the best audio quality. Learn more{' '}
+                Upload as MP3 audio file to provide the best audio quality. Learn more{' '}
                 <a href="">here</a>.
               </p>
               <p>

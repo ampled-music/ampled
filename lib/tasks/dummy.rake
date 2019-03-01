@@ -7,6 +7,7 @@ namespace :dummy do
       user = User.create(
         name: Faker::StarWars.character,
         email: Faker::Internet.email,
+        profile_image_url: "https://robohash.org/#{ERB::Util.url_encode name}.jpg?set=set1&size=100x100",
         password: password,
         password_confirmation: password
       )
@@ -25,8 +26,8 @@ namespace :dummy do
         location: Faker::GameOfThrones.city,
         twitter_handle: Faker::Twitter.screen_name,
         instagram_handle: Faker::Twitter.screen_name,
-        banner_image_url: "https://robohash.org/#{ERB::Util.url_encode name}.jpg?set=set1&size=550x550",
-        video_url: "https://robohash.org/#{ERB::Util.url_encode name}.jpg?set=set2&size=400x225",
+        video_screenshot_url: "https://dummyimage.com/400x225/#{Faker::Color.hex_color[1..-1]}/fff",
+        video_url: "https://www.youtube.com/watch?v=4nsKDJlpUbA",
         bio: Faker::Dune.quote,
         accent_color: Faker::Color.hex_color
       )
@@ -41,6 +42,7 @@ namespace :dummy do
     }
 
     artist_pages.each do |ap|
+      ap.images << Image.create(url: image_url.call)
       ap.images << Image.create(url: image_url.call)
       ap.images << Image.create(url: image_url.call)
     end

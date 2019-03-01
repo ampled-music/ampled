@@ -24,7 +24,8 @@ interface Props {
       name: string;
       id: number;
       accent_color: string;
-      video_url: string;
+      // video_url: string;
+      video_screenshot_url: string;
       location: string;
       twitter_handle: string;
       instagram_handle: string;
@@ -95,7 +96,7 @@ class ArtistComponent extends React.Component<Props, any> {
           accentColor={artistData.accent_color}
           id={artistData.id}
           bannerImages={artistData.images}
-          videoUrl={artistData.video_url}
+          videoScreenshotUrl={artistData.video_screenshot_url}
           owners={artistData.owners}
           supporters={artistData.supporters}
           openPostModal={this.openModal}

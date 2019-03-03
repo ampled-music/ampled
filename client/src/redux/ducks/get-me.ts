@@ -9,7 +9,10 @@ export const initialState = {
   error: null,
 }
 
-export const getMe = createActionThunk('GET_ME', () => getMeData())
+export const getMe = createActionThunk('GET_ME', () => {
+  console.log("getMe")
+  getMeData()
+})
 
 export const me = handleActions(
   {

@@ -11,6 +11,8 @@ import logo from '../../images/ampled_logo.svg';
 import { Menu } from '../menu/Menu';
 import { routePaths } from '../route-paths';
 
+import { getMe } from '../../redux/ducks/get-me';
+
 import './nav.scss';
 
 interface Props {
@@ -18,6 +20,7 @@ interface Props {
     authenticated: boolean;
   };
   authenticate: Function;
+  supported?: boolean;
 }
 
 class NavComponent extends React.Component<Props, any> {
@@ -26,18 +29,35 @@ class NavComponent extends React.Component<Props, any> {
     if (token) {
       this.props.authenticate(token);
     }
+    getMe();
+    console.log(getMe)
+    console.log("cdm nav")
   }
+
+  handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // const { email, password } = this.state;
+
+    // await this.props.support(artistId, user.id);
+
+    this.setState({ submitted: true });
+  };
+
   render() {
     const { authentication } = this.props;
+    const supported = this.props.supported || false;
 
     return (
       <header className="header">
         <Link className="logo" to="/">
           <img src={logo} alt="logo" height="100%" />
         </Link>
-        <button className="btn btn-support">
-          Support
-        </button>
+        { !supported && 
+          <button className="btn btn-support" onClick={this.handleSubmit}>
+            Support
+          </button> 
+        }
         <div className="menus">
           <div className="loginLink">
             {authentication.authenticated ? (
@@ -63,10 +83,12 @@ class NavComponent extends React.Component<Props, any> {
 
 const mapStateToProps = (state) => ({
   authentication: state.authentication,
+  me: state.me,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   authenticate: bindActionCreators(authenticate, dispatch),
+  getMe: bindActionCreators(getMe, dispatch),
 });
 
 const Nav = connect(

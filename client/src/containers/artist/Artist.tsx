@@ -29,6 +29,7 @@ interface Props {
       location: string;
       twitter_handle: string;
       instagram_handle: string;
+      supported: boolean;
       posts: [];
       owners: [];
       supporters: [];
@@ -89,7 +90,7 @@ class ArtistComponent extends React.Component<Props, any> {
       <span>Loading...</span>
     ) : (
       <div className="App">
-        <Nav />
+        <Nav supported={this.props.artist.artist.supported} />
         <ArtistHeader
           name={artistData.name}
           accentColor={artistData.accent_color}

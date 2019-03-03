@@ -6,6 +6,7 @@ json.video_screenshot_url @artist_page.video_screenshot_url
 json.video_url @artist_page.video_url
 json.twitter_handle @artist_page.twitter_handle
 json.instagram_handle @artist_page.instagram_handle
+json.supported current_user&.subscribed?(@artist_page)
 
 json.owners @artist_page.owners do |owner|
   json.id owner.id

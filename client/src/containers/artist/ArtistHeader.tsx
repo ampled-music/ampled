@@ -42,8 +42,6 @@ class ArtistHeader extends React.Component<Props, any> {
 
   render() {
     const { name, accentColor, bannerImages, videoScreenshotUrl, owners, supporters, userAuthenticated } = this.props;
-                
-    console.log(bannerImages);
 
     return (
       <div className="artist-header container">

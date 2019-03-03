@@ -14,3 +14,4 @@ AllCops:
     - './app/dashboards/*'
     - './db/migrate/*'
     - './config/initializers/*'
+    - './lib/tasks/*'

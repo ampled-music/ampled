@@ -44,7 +44,7 @@ class ArtistHeader extends React.Component<Props, any> {
   }
 
   render() {
-    const { 
+    const {
       name,
       accentColor,
       bannerImages,

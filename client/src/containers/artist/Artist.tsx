@@ -25,7 +25,7 @@ interface Props {
       name: string;
       id: number;
       accent_color: string;
-      // video_url: string;
+      video_url: string;
       video_screenshot_url: string;
       location: string;
       twitter_handle: string;
@@ -102,6 +102,7 @@ class ArtistComponent extends React.Component<Props, any> {
       <div className="App">
         <Nav />
         <ArtistHeader
+          videoUrl={artistData.video_url}
           name={artistData.name}
           accentColor={artistData.accent_color}
           id={artistData.id}
@@ -135,6 +136,8 @@ class ArtistComponent extends React.Component<Props, any> {
         <VideoModal
           open={this.state.openVideoModal}
           videoUrl={artistData.video_url}
+          onClose={this.closeVideoModal}
+
         />
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}

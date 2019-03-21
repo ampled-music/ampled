@@ -23,7 +23,7 @@ Note: I’m using the terminology `visitor` to describe someone who is viewing a
   * Elements of `artist_page.posts` will contain `author_id`
   * The JSON for each element of `artist_page.posts` will include a `public` key, which will be boolean (true/false).
   * Elements of `artist_page.posts` that are not `public` will contain **only** `id` and `public` for Visitors.
-  * Creating a Post will be restricted to Aritst Page Owners.
+  * Creating a Post will be restricted to Artist Page Owners.
   
 **Frontend**
   * Posts will appear as blurred placeholders to Visitors. 

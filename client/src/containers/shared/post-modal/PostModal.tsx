@@ -1,7 +1,8 @@
+import * as React from 'react';
+
 import { Button, Dialog, Divider } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import cx from 'classnames';
-import * as React from 'react';
 
 import './post-modal.scss';
 import { theme } from './theme';

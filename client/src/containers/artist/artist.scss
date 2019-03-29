@@ -109,6 +109,8 @@ $randomNumber5: random(9);
     }
 
     &__message-container {
+        display: flex;
+        align-items: center;
         width: 90%;
         margin: 2rem auto;
         border: 2px solid #2557A7;
@@ -127,6 +129,30 @@ $randomNumber5: random(9);
         font-size: 1.2rem;
         margin: 1rem 0;
         text-transform: uppercase;
+    }
+
+    &__play {
+        display: flex;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        align-items: center;
+        justify-content: center;
+        height: 75px;
+        width: 75px;
+        border-radius: 100%; 
+        background-color: rgba(255, 255, 255, 0.4);
+        transition: all .25s ease-in-out;
+        
+        &:hover {
+            height: 85px;
+            width: 85px;
+            background-color: rgba(255, 255, 255, 0.6);
+            transition: all .25s ease-in-out;
+        }
+        &_svg {
+            color: #2557A7;
+        }
     }
 }
 

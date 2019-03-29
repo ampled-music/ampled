@@ -9,6 +9,7 @@ import { ArtistInfo } from './ArtistInfo';
 import { PostsContainer } from '../posts/PostsContainer';
 import { PostForm } from '../posts/PostForm';
 import { PostModal } from '../shared/post-modal/PostModal';
+import { VideoModal } from '../shared/video-modal/VideoModal';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 
 interface Props {
@@ -24,7 +25,7 @@ interface Props {
       name: string;
       id: number;
       accent_color: string;
-      // video_url: string;
+      video_url: string;
       video_screenshot_url: string;
       location: string;
       twitter_handle: string;
@@ -43,7 +44,8 @@ class ArtistComponent extends React.Component<Props, any> {
     super(props);
     this.state = {
       id: this.props.match.params.id,
-      openModal: false,
+      openPostModal: false,
+      openVideoModal: false,
       showConfirmationDialog: false,
     };
   }
@@ -70,15 +72,23 @@ class ArtistComponent extends React.Component<Props, any> {
 
   discardChanges = () => {
     this.closeConfirmationDialog();
-    this.closeModal();
+    this.closePostModal();
   };
 
-  openModal = () => {
-    this.setState({ openModal: true });
+  openPostModal = () => {
+    this.setState({ openPostModal: true });
   };
 
-  closeModal = () => {
-    this.setState({ openModal: false });
+  closePostModal = () => {
+    this.setState({ openPostModal: false });
+  };
+
+  openVideoModal = () => {
+    this.setState({ openVideoModal: true });
+  };
+
+  closeVideoModal = () => {
+    this.setState({ openVideoModal: false });
   };
 
   render() {
@@ -92,6 +102,7 @@ class ArtistComponent extends React.Component<Props, any> {
       <div className="App">
         <Nav />
         <ArtistHeader
+          videoUrl={artistData.video_url}
           name={artistData.name}
           accentColor={artistData.accent_color}
           id={artistData.id}
@@ -99,21 +110,22 @@ class ArtistComponent extends React.Component<Props, any> {
           videoScreenshotUrl={artistData.video_screenshot_url}
           owners={artistData.owners}
           supporters={artistData.supporters}
-          openPostModal={this.openModal}
+          openVideoModal={this.openVideoModal}
+          openPostModal={this.openPostModal}
           userAuthenticated={userAuthenticated}
         />
         <ArtistInfo
           location={artistData.location}
           accentColor={artistData.accent_color}
           twitterHandle={artistData.twitter_handle}
-          instagramHandle={artistData.instagram_handle}  
+          instagramHandle={artistData.instagram_handle}
         />
         <PostsContainer
           posts={artistData.posts}
           accentColor={artistData.accent_color}
           updateArtist={this.getArtistInfo}
         />
-        <PostModal close={this.getUserConfirmation} open={this.state.openModal}>
+        <PostModal close={this.getUserConfirmation} open={this.state.openPostModal}>
           <PostForm
             artistId={artistData.id}
             close={this.getUserConfirmation}
@@ -121,6 +133,12 @@ class ArtistComponent extends React.Component<Props, any> {
             updateArtist={this.getArtistInfo}
           />
         </PostModal>
+        <VideoModal
+          open={this.state.openVideoModal}
+          videoUrl={artistData.video_url}
+          onClose={this.closeVideoModal}
+
+        />
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}
           closeConfirmationDialog={this.closeConfirmationDialog}

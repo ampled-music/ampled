@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -22,6 +23,8 @@ interface Props {
   name: string;
   id: number;
   accentColor: string;
+  videoUrl: string;
+  openVideoModal: React.MouseEventHandler;
   bannerImages: string[];
   videoScreenshotUrl: string;
   openPostModal: React.MouseEventHandler;
@@ -41,7 +44,15 @@ class ArtistHeader extends React.Component<Props, any> {
   }
 
   render() {
-    const { name, accentColor, bannerImages, videoScreenshotUrl, owners, supporters, userAuthenticated } = this.props;
+    const {
+      name,
+      accentColor,
+      bannerImages,
+      videoUrl,
+      owners,
+      supporters,
+      userAuthenticated
+    } = this.props;
 
     return (
       <div className="artist-header container">
@@ -58,7 +69,7 @@ class ArtistHeader extends React.Component<Props, any> {
                     <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person">
                       {owner.profile_image_url ? (
                         <img className="artist-header__person_image" src={owner.profile_image_url} alt={owner.name} style={{ borderColor: accentColor }} />
-                      ) : 
+                      ) :
                         <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
                       }
                     </div>
@@ -88,7 +99,11 @@ class ArtistHeader extends React.Component<Props, any> {
             )}
 
             <div className="artist-header__message-container" style={{ borderColor: accentColor }}>
-              <img className="artist-header__message-image" src={videoScreenshotUrl} />
+              <button onClick={this.props.openVideoModal} className="artist-header__play">
+                <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: accentColor }} />
+              </button>
+              <img className="artist-header__message-image" src={videoUrl} />
+
             </div>
 
             <div className="artist-header__supporters">
@@ -102,7 +117,7 @@ class ArtistHeader extends React.Component<Props, any> {
                       <div key={`supporter-${supporter.id}`} id={`supporter-${supporter.id}`} className="artist-header__person">
                         {supporter.profile_image_url ? (
                           <img className="artist-header__person_image" src={supporter.profile_image_url} alt={supporter.name} style={{ borderColor: accentColor }} />
-                        ) : 
+                        ) :
                           <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
                         }
                       </div>
@@ -122,7 +137,7 @@ class ArtistHeader extends React.Component<Props, any> {
                       <div key={`supporter-${supporter.id}`} id={`supporter-${supporter.id}`} className="artist-header__person_small">
                         {supporter.profile_image_url ? (
                           <img className="artist-header__person_image" src={supporter.profile_image_url} alt={supporter.name} style={{ borderColor: accentColor }} />
-                        ) : 
+                        ) :
                           <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
                         }
                       </div>

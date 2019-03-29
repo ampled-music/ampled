@@ -24,10 +24,10 @@ class VideoModalComponent extends React.Component<Props, any> {
           open={this.props.open}
           fullWidth={true}
           maxWidth={"md"}
-          aria-labelledby="videoStuff"
+          aria-labelledby="video"
           onClose={(e) => this.props.onClose(e)}
         >
-          <div className="videoStuff">
+          <div className="video">
             <ReactPlayer
               className='react-player'
               url={this.props.videoUrl}

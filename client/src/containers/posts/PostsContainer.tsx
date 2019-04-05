@@ -50,35 +50,44 @@ class PostsContainerComponent extends React.Component<Props, any> {
     this.props.updateArtist();
   };
 
-  sortItems(items) {
+  sortItemsByCreationDate(items) {
     return items.sort((a, b) => b.created_at - a.created_at);
   }
 
+  renderComments = (post) => {
+    const isLogged = this.props.authentication.authenticated;
+
+    return (
+      <div className="comments-list">
+        <span>COMMENTS</span>
+        {this.sortItemsByCreationDate(post.comments).map((comment) => {
+          return <Comment comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
+        })}
+        {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+      </div>
+    );
+  };
+
+  renderPosts = () => {
+    const { posts, accentColor } = this.props;
+
+    if (!posts) {
+      return null;
+    }
+
+    return this.sortItemsByCreationDate(posts).map((post) => (
+      <div key={`post-${post.id}`} id={`post-${post.id}`} className="col-md-4">
+        <Post post={post} accentColor={accentColor} />
+        {this.renderComments(post)}
+      </div>
+    ));
+  };
+
   render() {
-    const { accentColor, authentication, posts } = this.props;
-
-    const isLogged = authentication.authenticated;
-
     return (
       <div className="post-container">
         <div className="container ">
-          <div className="row">
-            {this.sortItems(posts).map((post) => {
-              return (
-                <div key={`post-${post.id}`} id={`post-${post.id}`} className="col-md-4">
-                  <Post post={post} accentColor={accentColor} />
-
-                  <div className="comments-list">
-                    <span>COMMENTS</span>
-                    {this.sortItems(post.comments).map((comment) => {
-                      return <Comment comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
-                    })}
-                    {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <div className="row">{this.renderPosts()}</div>
         </div>
       </div>
     );

@@ -4,14 +4,38 @@ import { bindActionCreators } from 'redux';
 
 import { getArtistData } from '../../redux/ducks/get-artist';
 import { Nav } from '../nav/Nav';
-import { ArtistHeader } from './ArtistHeader';
-import { ArtistInfo } from './ArtistInfo';
 import { PostsContainer } from '../posts/PostsContainer';
-import { PostForm } from '../posts/PostForm';
+import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { PostModal } from '../shared/post-modal/PostModal';
 import { VideoModal } from '../shared/video-modal/VideoModal';
-import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
+import { ArtistHeader } from './ArtistHeader';
+import { ArtistInfo } from './ArtistInfo';
 
+export interface ArtistModel {
+  name: string;
+  id: number;
+  accent_color: string;
+  video_url: string;
+  video_screenshot_url: string;
+  location: string;
+  twitter_handle: string;
+  instagram_handle: string;
+  posts: [];
+  images: [];
+  owners: OwnersProps[];
+  supporters: SupportersProps[];
+}
+
+interface OwnersProps {
+  id: string;
+  name: string;
+  profile_image_url: string;
+}
+interface SupportersProps {
+  id: string;
+  name: string;
+  profile_image_url: string;
+}
 interface Props {
   match: {
     params: {
@@ -19,23 +43,7 @@ interface Props {
     };
   };
   getArtist: Function;
-  artist: {
-    loading: boolean;
-    artist: {
-      name: string;
-      id: number;
-      accent_color: string;
-      video_url: string;
-      video_screenshot_url: string;
-      location: string;
-      twitter_handle: string;
-      instagram_handle: string;
-      posts: [];
-      owners: [];
-      supporters: [];
-      images: [];
-    };
-  };
+  artist: { artist: ArtistModel; loading: boolean };
   userAuthenticated: boolean;
 }
 
@@ -94,22 +102,16 @@ class ArtistComponent extends React.Component<Props, any> {
   render() {
     const { artist, userAuthenticated } = this.props;
     const artistData = artist.artist;
-    const loading = artist.loading;
 
-    return loading ? (
-      <span>Loading...</span>
-    ) : (
+    if (artist.loading) {
+      return <span>Loading...</span>;
+    }
+
+    return (
       <div className="App">
         <Nav />
         <ArtistHeader
-          videoUrl={artistData.video_url}
-          name={artistData.name}
-          accentColor={artistData.accent_color}
-          id={artistData.id}
-          bannerImages={artistData.images}
-          videoScreenshotUrl={artistData.video_screenshot_url}
-          owners={artistData.owners}
-          supporters={artistData.supporters}
+          artist={artistData}
           openVideoModal={this.openVideoModal}
           openPostModal={this.openPostModal}
           userAuthenticated={userAuthenticated}
@@ -125,20 +127,14 @@ class ArtistComponent extends React.Component<Props, any> {
           accentColor={artistData.accent_color}
           updateArtist={this.getArtistInfo}
         />
-        <PostModal close={this.getUserConfirmation} open={this.state.openPostModal}>
-          <PostForm
-            artistId={artistData.id}
-            close={this.getUserConfirmation}
-            discardChanges={this.discardChanges}
-            updateArtist={this.getArtistInfo}
-          />
-        </PostModal>
-        <VideoModal
-          open={this.state.openVideoModal}
-          videoUrl={artistData.video_url}
-          onClose={this.closeVideoModal}
-
+        <PostModal
+          close={this.getUserConfirmation}
+          open={this.state.openPostModal}
+          artistId={artistData.id}
+          discardChanges={this.discardChanges}
+          updateArtist={this.getArtistInfo}
         />
+        <VideoModal open={this.state.openVideoModal} videoUrl={artistData.video_url} onClose={this.closeVideoModal} />
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}
           closeConfirmationDialog={this.closeConfirmationDialog}

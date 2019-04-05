@@ -72,14 +72,6 @@ class PostComponent extends React.Component<any, any> {
         </Collapse>
 
         <CardActions className={classes.actions} disableActionSpacing>
-          {/* <IconButton className={classes.iconButton} aria-label="Like" disabled>
-            <FontAwesomeIcon icon={faHeart} size="xs" />
-          </IconButton>
-
-          <IconButton className={classes.iconButton} aria-label="Share" disabled>
-            <FontAwesomeIcon icon={faShare} size="xs" />
-          </IconButton> */}
-
           {post.body && (
             <IconButton
               className={classnames(

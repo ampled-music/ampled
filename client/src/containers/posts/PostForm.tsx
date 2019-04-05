@@ -13,26 +13,22 @@ import './post-form.scss';
 
 interface Props {
   artistId: number;
-  close: React.MouseEventHandler;
+  close: (hasUnsavedChanges: boolean) => React.MouseEventHandler;
   discardChanges: React.MouseEventHandler;
   updateArtist: Function;
 }
 
-class PostForm extends React.Component<Props, any> {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      title: '',
-      body: '',
-      audioFile: '',
-      imageUrl: undefined,
-      deleteToken: undefined,
-      artist_page_id: this.props.artistId,
-      hasUnsavedChanges: false,
-      loadingImage: false,
-    };
-  }
+export class PostForm extends React.Component<Props, any> {
+  state = {
+    title: '',
+    body: '',
+    audioFile: '',
+    imageUrl: undefined,
+    deleteToken: undefined,
+    artist_page_id: this.props.artistId,
+    hasUnsavedChanges: false,
+    loadingImage: false,
+  };
 
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -48,8 +44,10 @@ class PostForm extends React.Component<Props, any> {
       audio_file: audioFile,
       image_url: imageUrl,
       artist_page_id,
-    };
+    } as any;
+
     await createPost(post);
+
     this.props.updateArtist();
     this.clearForm();
   };
@@ -150,8 +148,7 @@ class PostForm extends React.Component<Props, any> {
 
             <div className="instructions">
               <p>
-                Upload as MP3 audio file to provide the best audio quality. Learn more{' '}
-                <a href="">here</a>.
+                Upload as MP3 audio file to provide the best audio quality. Learn more <a href="">here</a>.
               </p>
               <p>
                 By uploading, you confirm that your sounds comply with our <a href="">Terms of Use</a> and you don't
@@ -224,5 +221,3 @@ class PostForm extends React.Component<Props, any> {
     );
   }
 }
-
-export { PostForm };

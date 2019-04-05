@@ -1,24 +1,32 @@
-import { faSpinner, faSync, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import cx from 'classnames';
-import * as React from 'react';
-import { Upload } from './Upload';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
-import { deleteFileFromCloudinary } from 'src/api/cloudinary/delete-image';
-import { uploadFileToCloudinary } from 'src/api/cloudinary/upload-image';
-import { createPost } from 'src/api/post/create-post';
-
 import './post-form.scss';
 
-interface Props {
+import cx from 'classnames';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { deleteFileFromCloudinary } from 'src/api/cloudinary/delete-image';
+import { uploadFileToCloudinary } from 'src/api/cloudinary/upload-image';
+import { Store } from 'src/redux/configure-store';
+import { createPostAction } from 'src/redux/posts/create';
+
+import { faSpinner, faSync, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
+
+import { initialState as postsInitialState } from '../../redux/posts/initial-state';
+import { Upload } from './Upload';
+import { getArtistAction } from 'src/redux/artists/get-details';
+
+interface PostFormProps {
   artistId: number;
   close: (hasUnsavedChanges: boolean) => React.MouseEventHandler;
-  discardChanges: React.MouseEventHandler;
-  updateArtist: Function;
+  discardChanges: () => void;
 }
 
-export class PostForm extends React.Component<Props, any> {
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+type Props = typeof postsInitialState & Dispatchers & PostFormProps;
+
+class PostFormComponent extends React.Component<Props, any> {
   state = {
     title: '',
     body: '',
@@ -28,6 +36,21 @@ export class PostForm extends React.Component<Props, any> {
     artist_page_id: this.props.artistId,
     hasUnsavedChanges: false,
     loadingImage: false,
+    savingPost: false,
+  };
+
+  componentDidUpdate() {
+    if (!this.props.postCreated && !this.state.savingPost) {
+      return;
+    }
+
+    this.refreshArtist();
+  }
+
+  refreshArtist = () => {
+    this.clearForm();
+    this.props.getArtist(this.props.artistId);
+    this.props.discardChanges();
   };
 
   handleChange = (event) => {
@@ -35,21 +58,21 @@ export class PostForm extends React.Component<Props, any> {
     this.setState({ [name]: value, hasUnsavedChanges: true });
   };
 
-  handleSubmit = async (event) => {
+  handleSubmit = (event) => {
     event.preventDefault();
+
     const { title, body, audioFile, imageUrl, artist_page_id } = this.state;
+
     const post = {
       title,
       body,
       audio_file: audioFile,
       image_url: imageUrl,
       artist_page_id,
-    } as any;
+    };
 
-    await createPost(post);
-
-    this.props.updateArtist();
-    this.clearForm();
+    this.setState({ savingPost: true });
+    this.props.createPost(post);
   };
 
   clearForm() {
@@ -61,6 +84,7 @@ export class PostForm extends React.Component<Props, any> {
       deleteToken: undefined,
       hasUnsavedChanges: false,
       loadingImage: false,
+      savingPost: false,
     });
   }
 
@@ -210,7 +234,6 @@ export class PostForm extends React.Component<Props, any> {
                 type="Submit"
                 className={cx('post-button', { disabled: audioFile.length === 0 })}
                 disabled={audioFile.length === 0}
-                onClick={this.props.discardChanges}
               >
                 Post Audio
               </Button>
@@ -221,3 +244,21 @@ export class PostForm extends React.Component<Props, any> {
     );
   }
 }
+
+const mapStateToProps = (state: Store) => ({
+  ...state.posts,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createPost: bindActionCreators(createPostAction, dispatch),
+    getArtist: bindActionCreators(getArtistAction, dispatch),
+  };
+};
+
+const PostForm = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PostFormComponent);
+
+export { PostForm };

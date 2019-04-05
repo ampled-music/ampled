@@ -18,12 +18,12 @@ interface Props {
 
 export class PostModal extends React.Component<Props, any> {
   render() {
-    const { artistId, close, discardChanges, updateArtist } = this.props;
+    const { artistId, close, discardChanges } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>
         <Dialog open={this.props.open} aria-labelledby="form-dialog-title">
-          <PostForm artistId={artistId} close={close} discardChanges={discardChanges} updateArtist={updateArtist} />
+          <PostForm artistId={artistId} close={close} discardChanges={discardChanges} />
         </Dialog>
       </MuiThemeProvider>
     );

@@ -4,8 +4,7 @@ import * as React from 'react';
 
 import { faPlay, faPlus, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { ArtistModel } from './Artist';
+import { ArtistModel } from 'src/redux/artists/initial-state';
 
 interface Props {
   openVideoModal: React.MouseEventHandler;

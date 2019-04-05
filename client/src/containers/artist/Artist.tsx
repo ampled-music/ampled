@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { getArtistAction } from 'src/redux/artists/get-details';
+import { Store } from 'src/redux/configure-store';
 
-import { getArtistData } from '../../redux/ducks/get-artist';
+import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
+import { initialState as authenticateInitialState } from '../../redux/ducks/authenticate-initial-state';
 import { Nav } from '../nav/Nav';
 import { PostsContainer } from '../posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
@@ -10,42 +13,18 @@ import { PostModal } from '../shared/post-modal/PostModal';
 import { VideoModal } from '../shared/video-modal/VideoModal';
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
-
-export interface ArtistModel {
-  name: string;
-  id: number;
-  accent_color: string;
-  video_url: string;
-  video_screenshot_url: string;
-  location: string;
-  twitter_handle: string;
-  instagram_handle: string;
-  posts: [];
-  images: [];
-  owners: OwnersProps[];
-  supporters: SupportersProps[];
-}
-
-interface OwnersProps {
-  id: string;
-  name: string;
-  profile_image_url: string;
-}
-interface SupportersProps {
-  id: string;
-  name: string;
-  profile_image_url: string;
-}
-interface Props {
+interface ArtistProps {
   match: {
     params: {
       id: string;
     };
   };
-  getArtist: Function;
-  artist: { artist: ArtistModel; loading: boolean };
   userAuthenticated: boolean;
+  artists: typeof artistsInitialState;
 }
+
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+type Props = typeof authenticateInitialState & Dispatchers & ArtistProps;
 
 class ArtistComponent extends React.Component<Props, any> {
   constructor(props) {
@@ -100,12 +79,8 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { artist, userAuthenticated } = this.props;
-    const artistData = artist.artist;
-
-    if (artist.loading) {
-      return <span>Loading...</span>;
-    }
+    const { artists, userAuthenticated } = this.props;
+    const artistData = artists.artist;
 
     return (
       <div className="App">
@@ -145,16 +120,17 @@ class ArtistComponent extends React.Component<Props, any> {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: Store) => {
   return {
-    artist: state.artist,
+    artists: state.artists,
     userAuthenticated: state.authentication.authenticated,
+    posts: state.posts,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getArtist: bindActionCreators(getArtistData, dispatch),
+    getArtist: bindActionCreators(getArtistAction, dispatch),
   };
 };
 

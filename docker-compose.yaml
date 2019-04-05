@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  site:
+    image: node:8.14.0
+    command: npm start
+    working_dir: /usr/src/app
+    volumes:
+      - ./client:/usr/src/app
+    ports:
+      - 5000:5000
+    environment:
+      NODE_ENV: development
+      REACT_APP_API_URL: http://localhost:3000
+  # server:
+  #   build: .
+  #   command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - db
+  #     - mailcatcher
+  mailcatcher:
+    image: zolweb/docker-mailcatcher:latest
+    ports:
+      - 1025:1025
+      - 1080:1080
+  db:
+    image: postgres:10.4
+    ports:
+      - 5432:5432
+    command: postgres -D /run/pgsql-10.4-data -c logging_collector=on
+    volumes:
+      - ./db/local_database_volume:/run/pgsql-10.4-data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      LOGGING_COLLECTOR: "on"
+      PGDATA: /run/pgsql-10.4-data
+      POSTGRES_DB: ampled_web_development
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user

@@ -1,11 +1,12 @@
+import './login.scss';
+
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { userLoginAction } from 'src/redux/ducks/login';
-import { routePaths } from '../route-paths';
 
-import './login.scss';
+import { routePaths } from '../route-paths';
 
 interface Props {
   login: {

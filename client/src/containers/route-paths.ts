@@ -7,7 +7,4 @@ export const routePaths = {
   login: '/login',
   signup: '/sign-up',
   upload: '/upload',
-  loggedUser: {
-    root: '/logged-user',
-  },
 };

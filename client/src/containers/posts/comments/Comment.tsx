@@ -1,7 +1,8 @@
+import * as React from 'react';
+
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';
-import * as React from 'react';
 
 const Comment = ({ comment, isLogged, deleteComment } = this.props) => {
   return (

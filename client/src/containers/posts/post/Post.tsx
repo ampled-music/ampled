@@ -1,3 +1,6 @@
+import classnames from 'classnames';
+import * as React from 'react';
+
 import { faArrowDown, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';
@@ -9,9 +12,8 @@ import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
-import * as React from 'react';
-import { config } from '../../config';
+
+import { config } from '../../../config';
 import { styles } from './post-style';
 
 class PostComponent extends React.Component<any, any> {

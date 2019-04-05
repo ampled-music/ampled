@@ -1,9 +1,10 @@
+import './comment.scss';
+
+import * as React from 'react';
+
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconButton, InputAdornment, InputBase } from '@material-ui/core';
-import * as React from 'react';
-
-import './comment.scss';
 
 interface Props {
   handleSubmit: Function;

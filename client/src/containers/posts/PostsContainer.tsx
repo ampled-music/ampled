@@ -1,12 +1,13 @@
+import './post-container.scss';
+
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { addComment } from 'src/api/post/add-comment';
 import { deleteComment } from 'src/api/post/delete-comment';
-import { Comment } from './Comment';
-import { CommentForm } from './CommentForm';
-import { Post } from './Post';
 
-import './post-container.scss';
+import { Comment } from './comments/Comment';
+import { CommentForm } from './comments/CommentForm';
+import { Post } from './post/Post';
 
 interface CommentProps {
   id: string;

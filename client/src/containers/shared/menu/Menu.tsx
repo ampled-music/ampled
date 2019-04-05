@@ -16,9 +16,9 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
 
-import { config } from '../../config';
-import menu from '../../images/menu.svg';
-import { routePaths } from '../route-paths';
+import { config } from '../../../config';
+import menu from '../../../images/menu.svg';
+import { routePaths } from '../../route-paths';
 
 const styles = (theme) => ({
   root: {

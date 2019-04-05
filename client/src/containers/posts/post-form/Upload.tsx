@@ -1,7 +1,8 @@
-import { Button } from '@material-ui/core';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import axios from 'axios';
 import * as React from 'react';
+
+import { Button } from '@material-ui/core';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 interface UploadState {
   progress: number;
@@ -17,10 +18,14 @@ interface UploadProps {
 }
 
 class Upload extends React.Component<UploadProps, UploadState> {
-  constructor(props) {
-    super(props);
-    this.state = { progress: 0, complete: false, completedUrl: '', key: '', fileName: '', uploadError: '' };
-  }
+  state = {
+    progress: 0,
+    complete: false,
+    completedUrl: undefined,
+    key: undefined,
+    fileName: undefined,
+    uploadError: undefined,
+  };
 
   updateProgress = (e) => {
     const percentage = Math.ceil((100 * e.loaded) / e.total);
@@ -34,19 +39,19 @@ class Upload extends React.Component<UploadProps, UploadState> {
       return;
     }
 
-    if ( file.name && file.name.split('.').pop() !== 'mp3' ) {
-      this.setState({ uploadError: "Upload only accepts mp3 files." });
+    const fileExtension = file.name && file.name.split('.').pop();
+
+    if (fileExtension !== 'mp3') {
+      this.setState({ uploadError: 'Upload only accepts mp3 files.' });
+
       return;
     }
-    else {
-      this.setState({ uploadError: "" });
-    }
 
-    this.getFileName(e);
+    const fileName = this.getFileName(e);
 
     this.signFile(file).then((response) => {
       const putUrl = response.data.signedUrl;
-      this.setState({ key: response.data.key });
+      this.setState({ uploadError: undefined, key: response.data.key, fileName });
 
       const options = {
         url: putUrl,
@@ -58,7 +63,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
         data: file,
       };
 
-      axios.request(options).then((_) => {
+      axios.request(options).then(() => {
         this.fetchPlayableUrl();
         this.props.onComplete(this.state.key);
       });
@@ -67,9 +72,8 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
   getFileName(e) {
     const filePath = e.target.value;
-    const fileName = filePath.split('\\').pop();
 
-    this.setState({ fileName });
+    return filePath.split('\\').pop();
   }
 
   fetchPlayableUrl = () => {
@@ -92,14 +96,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
           <span>{this.state.fileName}</span>
           <span>{progress}%</span>
         </div>
-        <div className="upload-error">
-          {
-            this.state.uploadError !== '' &&
-            <h5>
-              {this.state.uploadError}
-            </h5>
-          }
-        </div>
+        <div className="upload-error">{this.state.uploadError && <h5>{this.state.uploadError}</h5>}</div>
 
         <input
           style={{ display: 'none' }}

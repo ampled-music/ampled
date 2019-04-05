@@ -10,10 +10,10 @@ import * as store from 'store';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { config } from '../../config';
-import logo from '../../images/ampled_logo.svg';
+import { config } from '../../../config';
+import logo from '../../../images/ampled_logo.svg';
+import { routePaths } from '../../route-paths';
 import { Menu } from '../menu/Menu';
-import { routePaths } from '../route-paths';
 
 interface Props {
   authentication: {

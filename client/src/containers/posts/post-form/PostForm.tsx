@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deleteFileFromCloudinary } from 'src/api/cloudinary/delete-image';
 import { uploadFileToCloudinary } from 'src/api/cloudinary/upload-image';
+import { getArtistAction } from 'src/redux/artists/get-details';
 import { Store } from 'src/redux/configure-store';
 import { createPostAction } from 'src/redux/posts/create';
 
@@ -13,9 +14,8 @@ import { faSpinner, faSync, faTrashAlt } from '@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
 
-import { initialState as postsInitialState } from '../../redux/posts/initial-state';
+import { initialState as postsInitialState } from '../../../redux/posts/initial-state';
 import { Upload } from './Upload';
-import { getArtistAction } from 'src/redux/artists/get-details';
 
 interface PostFormProps {
   artistId: number;

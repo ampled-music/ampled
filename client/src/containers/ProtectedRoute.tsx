@@ -3,9 +3,9 @@ import { Redirect, Route } from 'react-router-dom';
 import * as store from 'store';
 
 import { config } from '../config';
-import { Menu } from './menu/Menu';
-import { Nav } from './nav/Nav';
 import { routePaths } from './route-paths';
+import { Menu } from './shared/menu/Menu';
+import { Nav } from './shared/nav/Nav';
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
   const isLoggedIn = !!store.get(config.localStorageKeys.token);

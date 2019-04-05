@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { userSignUpAction } from 'src/redux/ducks/login';
-import { Nav } from '../nav/Nav';
 import { routePaths } from '../route-paths';
 
 import './login.scss';
@@ -112,7 +111,6 @@ class SignupComponent extends React.Component<Props, any> {
 
     return (
       <div>
-        <Nav />
         <div className="login">
           <h2>SIGN UP</h2>
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>

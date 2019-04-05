@@ -6,7 +6,6 @@ import { Store } from 'src/redux/configure-store';
 
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../redux/ducks/authenticate-initial-state';
-import { Nav } from '../nav/Nav';
 import { PostsContainer } from '../posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { PostModal } from '../shared/post-modal/PostModal';
@@ -84,7 +83,6 @@ class ArtistComponent extends React.Component<Props, any> {
 
     return (
       <div className="App">
-        <Nav />
         <ArtistHeader
           artist={artist}
           openVideoModal={this.openVideoModal}

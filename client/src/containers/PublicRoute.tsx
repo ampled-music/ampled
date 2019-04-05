@@ -11,7 +11,6 @@ export const PublicRoute = ({ component: Component, ...rest }) => {
           <Component {...props} />
         </main>
       </div>
-      <img className="hipaa-logo" src="/assets/images/hipaa-logo.svg" />
     </div>
   );
 

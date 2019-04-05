@@ -17,8 +17,7 @@
     "dsa": "npm run docker-stop-all",
     "client-npm": "docker-compose run --rm site npm",
     "bundle-install": "docker-compose run --rm server bundle install",
-    "db-create-all": "docker-compose run --rm server rails db:create:all",
-    "setup-dev-db": " && ./bin/rails db:setup db:sample_data"
+    "db-create-all": "docker-compose run --rm server rails db:create:all"
   },
   "devDependencies": {
     "concurrently": "^3.6.1",

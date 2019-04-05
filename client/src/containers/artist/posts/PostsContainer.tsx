@@ -2,9 +2,12 @@ import './post-container.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { addComment } from 'src/api/post/add-comment';
-import { deleteComment } from 'src/api/post/delete-comment';
+import { bindActionCreators } from 'redux';
+import { createCommentAction } from 'src/redux/comments/create';
+import { deleteCommentAction } from 'src/redux/comments/delete';
+import { Store } from 'src/redux/configure-store';
 
+import { initialState as commentsInitialState } from '../../../redux/comments/initial-state';
 import { Comment } from './comments/Comment';
 import { CommentForm } from './comments/CommentForm';
 import { Post } from './post/Post';
@@ -26,7 +29,8 @@ interface PostProps {
   created_at: number;
   created_ago: string;
 }
-interface Props {
+
+interface PostsProps {
   posts: PostProps[];
   accentColor: string;
   authentication: {
@@ -34,20 +38,21 @@ interface Props {
   };
 
   updateArtist: Function;
+  comments: typeof commentsInitialState;
 }
 
-class PostsContainerComponent extends React.Component<Props, any> {
-  constructor(props) {
-    super(props);
-  }
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
+type Props = PostsProps & Dispatchers;
+
+class PostsContainerComponent extends React.Component<Props, any> {
   handleSubmit = async (comment) => {
-    await addComment(comment);
+    await this.props.addComment(comment);
     this.props.updateArtist();
   };
 
   deleteComment = async (commentId) => {
-    await deleteComment(commentId);
+    await this.props.deleteComment(commentId);
     this.props.updateArtist();
   };
 
@@ -95,10 +100,21 @@ class PostsContainerComponent extends React.Component<Props, any> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: Store) => ({
   authentication: state.authentication,
+  comments: state.comments,
 });
 
-const PostsContainer = connect(mapStateToProps)(PostsContainerComponent);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addComment: bindActionCreators(createCommentAction, dispatch),
+    deleteComment: bindActionCreators(deleteCommentAction, dispatch),
+  };
+};
+
+const PostsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PostsContainerComponent);
 
 export { PostsContainer };

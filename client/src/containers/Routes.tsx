@@ -3,11 +3,11 @@ import { Switch } from 'react-router-dom';
 
 import { PublicRoute } from './PublicRoute';
 import { Artist } from './artist/Artist';
+import { PostForm } from './artist/posts/post-form/PostForm';
 import { Connect } from './connect/Connect';
 import { Login } from './connect/Login';
 import { Signup } from './connect/Signup';
 import { Home } from './home/Home';
-import { PostForm } from './posts/post-form/PostForm';
 import { routePaths } from './route-paths';
 
 const Routes = () => {

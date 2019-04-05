@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
-import { config } from '../../../config';
+import { config } from '../../../../config';
 import { styles } from './post-style';
 
 class PostComponent extends React.Component<any, any> {

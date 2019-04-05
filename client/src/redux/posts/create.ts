@@ -21,6 +21,6 @@ export const createPostReducer = {
   [createPostAction.ENDED]: (state) => ({
     ...state,
     postCreated: false,
-    creating: false,
+    creatingPost: false,
   }),
 };

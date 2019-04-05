@@ -14,7 +14,7 @@ import { faSpinner, faSync, faTrashAlt } from '@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
 
-import { initialState as postsInitialState } from '../../../redux/posts/initial-state';
+import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
 import { Upload } from './Upload';
 
 interface PostFormProps {

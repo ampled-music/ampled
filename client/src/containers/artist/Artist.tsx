@@ -6,7 +6,7 @@ import { Store } from 'src/redux/configure-store';
 
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../redux/ducks/authenticate-initial-state';
-import { PostsContainer } from '../posts/PostsContainer';
+import { PostsContainer } from '../artist/posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { PostModal } from '../shared/post-modal/PostModal';
 import { VideoModal } from '../shared/video-modal/VideoModal';

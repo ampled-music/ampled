@@ -1,7 +1,7 @@
 import './post-modal.scss';
 
 import * as React from 'react';
-import { PostForm } from 'src/containers/posts/post-form/PostForm';
+import { PostForm } from 'src/containers/artist/posts/post-form/PostForm';
 
 import { Dialog } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';

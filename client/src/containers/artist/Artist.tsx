@@ -80,36 +80,32 @@ class ArtistComponent extends React.Component<Props, any> {
 
   render() {
     const { artists, userAuthenticated } = this.props;
-    const artistData = artists.artist;
+    const artist = artists.artist;
 
     return (
       <div className="App">
         <Nav />
         <ArtistHeader
-          artist={artistData}
+          artist={artist}
           openVideoModal={this.openVideoModal}
           openPostModal={this.openPostModal}
           userAuthenticated={userAuthenticated}
         />
         <ArtistInfo
-          location={artistData.location}
-          accentColor={artistData.accent_color}
-          twitterHandle={artistData.twitter_handle}
-          instagramHandle={artistData.instagram_handle}
+          location={artist.location}
+          accentColor={artist.accent_color}
+          twitterHandle={artist.twitter_handle}
+          instagramHandle={artist.instagram_handle}
         />
-        <PostsContainer
-          posts={artistData.posts}
-          accentColor={artistData.accent_color}
-          updateArtist={this.getArtistInfo}
-        />
+        <PostsContainer posts={artist.posts} accentColor={artist.accent_color} updateArtist={this.getArtistInfo} />
         <PostModal
           close={this.getUserConfirmation}
           open={this.state.openPostModal}
-          artistId={artistData.id}
+          artistId={artist.id}
           discardChanges={this.discardChanges}
           updateArtist={this.getArtistInfo}
         />
-        <VideoModal open={this.state.openVideoModal} videoUrl={artistData.video_url} onClose={this.closeVideoModal} />
+        <VideoModal open={this.state.openVideoModal} videoUrl={artist.video_url} onClose={this.closeVideoModal} />
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}
           closeConfirmationDialog={this.closeConfirmationDialog}

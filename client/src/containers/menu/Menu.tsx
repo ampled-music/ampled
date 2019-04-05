@@ -1,3 +1,10 @@
+import './menu.scss';
+
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import * as store from 'store';
+
 import { faSearch, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';
@@ -8,15 +15,10 @@ import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import * as store from 'store';
+
 import { config } from '../../config';
 import menu from '../../images/menu.svg';
 import { routePaths } from '../route-paths';
-
-import './menu.scss';
 
 const styles = (theme) => ({
   root: {
@@ -66,7 +68,7 @@ class MenuListComposition extends React.Component<Props, State> {
     this.setState({ anchorEl: this.refs.menu });
   }
 
-  renderDefaultMenu(): React.ReactNode {
+  renderDefaultMenu = () => {
     return (
       <div>
         <MenuItem>
@@ -89,9 +91,9 @@ class MenuListComposition extends React.Component<Props, State> {
         </MenuItem>
       </div>
     );
-  }
+  };
 
-  renderUserMenu(): React.ReactNode {
+  renderUserMenu = () => {
     return (
       <div>
         <MenuItem>
@@ -120,7 +122,7 @@ class MenuListComposition extends React.Component<Props, State> {
         </MenuItem>
       </div>
     );
-  }
+  };
 
   render() {
     const { open, anchorEl } = this.state;

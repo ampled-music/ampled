@@ -1,9 +1,13 @@
-import * as React from 'react';
 import '../../styles/App.css';
 
-import { AuthenticationGateway } from '../AuthenticationGateway';
-import { ProtectedRoutes } from '../ProtectedRoutes';
+import * as React from 'react';
 
-const App = () => <AuthenticationGateway component={ProtectedRoutes} path="/" />;
+import { Routes } from '../Routes';
+
+const App = () => (
+  <div className="page">
+    <Routes />
+  </div>
+);
 
 export { App };

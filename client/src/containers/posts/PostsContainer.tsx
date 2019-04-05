@@ -61,7 +61,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
       <div className="comments-list">
         <span>COMMENTS</span>
         {this.sortItemsByCreationDate(post.comments).map((comment) => {
-          return <Comment comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
+          return <Comment key={comment.id} comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
         })}
         {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
       </div>

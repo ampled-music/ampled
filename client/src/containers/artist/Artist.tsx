@@ -95,7 +95,12 @@ class ArtistComponent extends React.Component<Props, any> {
           twitterHandle={artist.twitter_handle}
           instagramHandle={artist.instagram_handle}
         />
-        <PostsContainer posts={artist.posts} accentColor={artist.accent_color} updateArtist={this.getArtistInfo} />
+        <PostsContainer
+          match={this.props.match}
+          posts={artist.posts}
+          accentColor={artist.accent_color}
+          updateArtist={this.getArtistInfo}
+        />
         <PostModal
           close={this.getUserConfirmation}
           open={this.state.openPostModal}

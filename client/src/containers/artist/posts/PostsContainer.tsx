@@ -37,6 +37,8 @@ interface PostsProps {
   authentication: typeof authenticationInitialState;
   updateArtist: Function;
   comments: typeof commentsInitialState;
+  me: { artistPages: any[] };
+  match: any;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -59,7 +61,9 @@ class PostsContainerComponent extends React.Component<Props, any> {
   }
 
   renderComments = (post) => {
-    const hasCommentAccess = this.props.authentication.token;
+    const currentArtistId = this.props.match.params.id;
+    const currentArtistPageAccess = this.props.me.artistPages.find((page) => +page.artistId === +currentArtistId);
+    const hasCommentAccess = currentArtistPageAccess && currentArtistPageAccess.role === 'supporter';
 
     return (
       <div className="comments-list">
@@ -108,6 +112,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
 const mapStateToProps = (state: Store) => ({
   authentication: state.authentication,
   comments: state.comments,
+  me: state.me.me,
 });
 
 const mapDispatchToProps = (dispatch) => {

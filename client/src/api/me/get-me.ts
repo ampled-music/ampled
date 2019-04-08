@@ -9,9 +9,7 @@ export const getMeData = async () => {
 
   return !!store.get('token')
     ? {
-        me: {
-          artistPages: [{ artistId: 8, role: 'owner' }, { artistId: 10, role: 'supporter' }],
-        },
+        artistPages: [{ artistId: 8, role: 'owner' }, { artistId: 10, role: 'supporter' }],
       }
     : undefined;
 };

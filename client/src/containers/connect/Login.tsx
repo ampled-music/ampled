@@ -2,30 +2,45 @@ import './login.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
-import { userLoginAction } from 'src/redux/ducks/login';
+import { loginAction } from 'src/redux/authentication/login';
+import { Store } from 'src/redux/configure-store';
+import * as store from 'store';
 
+import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { routePaths } from '../route-paths';
 
-interface Props {
-  login: {
-    error: string;
-  };
-  userLogin: Function;
-  authentication: {
-    authenticated: boolean;
-  };
+interface LoginProps {
+  history: any;
   location?: {
     showMessage: boolean;
   };
 }
 
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+type Props = typeof loginInitialState & Dispatchers & LoginProps;
+
 class LoginComponent extends React.Component<Props, any> {
   state = {
     email: '',
     password: '',
-    submitted: false,
+  };
+
+  componentDidUpdate() {
+    if (!this.props.token) {
+      return;
+    }
+
+    this.saveTokenToLocalStorage();
+    this.redirectToRoot();
+  }
+
+  saveTokenToLocalStorage = () => {
+    store.set('token', this.props.token);
+  };
+
+  redirectToRoot = () => {
+    this.props.history.push(routePaths.root);
   };
 
   handleSubmit = async (e) => {
@@ -33,9 +48,7 @@ class LoginComponent extends React.Component<Props, any> {
 
     const { email, password } = this.state;
 
-    await this.props.userLogin(email, password);
-
-    this.setState({ submitted: true });
+    await this.props.login(email, password);
   };
 
   handleChange = (e) => {
@@ -44,15 +57,7 @@ class LoginComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { authentication, login, location } = this.props;
-
-    if (this.state.submitted && !login.error) {
-      return <Redirect to={routePaths.connect} />;
-    }
-
-    if (authentication.authenticated) {
-      return <Redirect to={routePaths.root} />;
-    }
+    const { login, location } = this.props;
 
     return (
       <div>
@@ -100,18 +105,17 @@ class LoginComponent extends React.Component<Props, any> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  authentication: state.authentication,
-  login: state.userLogin,
+const mapStateToProps = (state: Store) => ({
+  ...state.authentication,
 });
 
-const mapPropsToDispatch = (dispatch) => ({
-  userLogin: bindActionCreators(userLoginAction, dispatch),
+const mapDispatchToProps = (dispatch) => ({
+  login: bindActionCreators(loginAction, dispatch),
 });
 
 const Login = connect(
   mapStateToProps,
-  mapPropsToDispatch,
+  mapDispatchToProps,
 )(LoginComponent);
 
 export { Login };

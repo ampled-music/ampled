@@ -3,6 +3,7 @@ import './menu.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Store } from 'src/redux/configure-store';
 import * as store from 'store';
 
 import { faSearch, faUsers } from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +19,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { config } from '../../../config';
 import menu from '../../../images/menu.svg';
+import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
 import { routePaths } from '../../route-paths';
 
 const styles = (theme) => ({
@@ -34,11 +36,7 @@ interface State {
   anchorEl: any;
 }
 
-interface Props {
-  authentication: {
-    authenticated: boolean;
-  };
-}
+type Props = typeof authenticationInitialState;
 
 class MenuListComposition extends React.Component<Props, State> {
   state = {
@@ -126,7 +124,7 @@ class MenuListComposition extends React.Component<Props, State> {
 
   render() {
     const { open, anchorEl } = this.state;
-    const { authentication } = this.props;
+    const { token } = this.props;
 
     return (
       <div className="menu">
@@ -140,7 +138,7 @@ class MenuListComposition extends React.Component<Props, State> {
             >
               <Paper className="menu-list">
                 <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList>{authentication.authenticated ? this.renderUserMenu() : this.renderDefaultMenu()}</MenuList>
+                  <MenuList>{token ? this.renderUserMenu() : this.renderDefaultMenu()}</MenuList>
                 </ClickAwayListener>
               </Paper>
             </Grow>
@@ -151,8 +149,8 @@ class MenuListComposition extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  authentication: state.authentication,
+const mapStateToProps = (state: Store) => ({
+  ...state.authentication,
 });
 
 const MenuComponent = withStyles(styles)(MenuListComposition);

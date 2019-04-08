@@ -7,6 +7,7 @@ import { createCommentAction } from 'src/redux/comments/create';
 import { deleteCommentAction } from 'src/redux/comments/delete';
 import { Store } from 'src/redux/configure-store';
 
+import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as commentsInitialState } from '../../../redux/comments/initial-state';
 import { Comment } from './comments/Comment';
 import { CommentForm } from './comments/CommentForm';
@@ -33,10 +34,7 @@ interface PostProps {
 interface PostsProps {
   posts: PostProps[];
   accentColor: string;
-  authentication: {
-    authenticated: boolean;
-  };
-
+  authentication: typeof authenticationInitialState;
   updateArtist: Function;
   comments: typeof commentsInitialState;
 }
@@ -61,7 +59,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
   }
 
   renderComments = (post) => {
-    const isLogged = this.props.authentication.authenticated;
+    const isLogged = this.props.authentication.token;
 
     return (
       <div className="comments-list">

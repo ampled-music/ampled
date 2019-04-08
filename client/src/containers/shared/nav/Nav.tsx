@@ -3,23 +3,52 @@ import './nav.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 import { Store } from 'src/redux/configure-store';
+import { getMeAction } from 'src/redux/me/get-me';
 
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import logo from '../../../images/ampled_logo.svg';
+import { initialState as loginInitialState } from '../../../redux/authentication/initial-state';
+import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import { routePaths } from '../../route-paths';
 import { Menu } from '../menu/Menu';
 
-import { initialState as loginInitialState } from '../../../redux/authentication/initial-state';
-
-type Props = typeof loginInitialState;
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+type Props = typeof loginInitialState & typeof meInitialState & Dispatchers;
 
 class NavComponent extends React.Component<Props, any> {
-  render() {
-    const { token } = this.props;
+  componentDidMount() {
+    this.props.getMe();
+  }
 
+  componentDidUpdate() {
+    if (this.props.token && !this.props.me) {
+      this.props.getMe();
+    }
+  }
+
+  renderLoginLink = () => (
+    <div className="loginLink">
+      {this.props.me ? (
+        <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+      ) : (
+        <div>
+          <Link to={routePaths.login}>
+            <b>Login</b>
+          </Link>{' '}
+          or{' '}
+          <Link to={routePaths.signup}>
+            <b>Sign Up</b>
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+
+  render() {
     return (
       <header className="header">
         <Link className="logo" to="/">
@@ -27,21 +56,7 @@ class NavComponent extends React.Component<Props, any> {
         </Link>
         <button className="btn btn-support">Support</button>
         <div className="menus">
-          <div className="loginLink">
-            {token ? (
-              <FontAwesomeIcon className="user-image" icon={faUserCircle} />
-            ) : (
-              <div>
-                <Link to={routePaths.login}>
-                  <b>Login</b>
-                </Link>{' '}
-                or{' '}
-                <Link to={routePaths.signup}>
-                  <b>Sign Up</b>
-                </Link>
-              </div>
-            )}
-          </div>
+          {this.renderLoginLink()}
           <Menu />
         </div>
       </header>
@@ -51,8 +66,16 @@ class NavComponent extends React.Component<Props, any> {
 
 const mapStateToProps = (state: Store) => ({
   ...state.authentication,
+  ...state.me,
 });
 
-const Nav = connect(mapStateToProps)(NavComponent);
+const mapDispatchToProps = (dispatch) => ({
+  getMe: bindActionCreators(getMeAction, dispatch),
+});
+
+const Nav = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(NavComponent);
 
 export { Nav };

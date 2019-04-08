@@ -9,7 +9,8 @@ import { initialState as authenticationInitialState } from './authentication/ini
 import { comments } from './comments';
 import { initialState as commentsInitialState } from './comments/initial-state';
 import { pages } from './ducks/get-artists-pages';
-import { me } from './ducks/get-me';
+import { me } from './me';
+import { initialState as meInitialState } from './me/initial-state';
 import { posts } from './posts';
 import { initialState as postsInitialState } from './posts/initial-state';
 import { signup } from './signup';
@@ -21,14 +22,15 @@ export interface Store {
   authentication: typeof authenticationInitialState;
   comments: typeof commentsInitialState;
   signup: typeof signupInitialState;
+  me: typeof meInitialState;
 }
 
 const ducks = combineReducers({
   authentication,
   artists,
   pages,
-  me,
   posts,
+  me,
   comments,
   signup,
 });

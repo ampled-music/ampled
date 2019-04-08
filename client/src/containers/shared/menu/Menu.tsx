@@ -20,6 +20,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { config } from '../../../config';
 import menu from '../../../images/menu.svg';
 import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
+import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import { routePaths } from '../../route-paths';
 
 const styles = (theme) => ({
@@ -36,13 +37,17 @@ interface State {
   anchorEl: any;
 }
 
-type Props = typeof authenticationInitialState;
+type Props = typeof authenticationInitialState & typeof meInitialState;
 
 class MenuListComposition extends React.Component<Props, State> {
   state = {
     open: false,
     anchorEl: undefined,
   };
+
+  componentDidMount() {
+    this.setState({ anchorEl: this.refs.menu });
+  }
 
   handleToggle = () => {
     this.setState((state) => ({ open: !state.open }));
@@ -61,10 +66,6 @@ class MenuListComposition extends React.Component<Props, State> {
     this.handleClose(event);
     window.location.href = routePaths.root;
   };
-
-  componentDidMount() {
-    this.setState({ anchorEl: this.refs.menu });
-  }
 
   renderDefaultMenu = () => {
     return (
@@ -124,7 +125,7 @@ class MenuListComposition extends React.Component<Props, State> {
 
   render() {
     const { open, anchorEl } = this.state;
-    const { token } = this.props;
+    const { me } = this.props;
 
     return (
       <div className="menu">
@@ -138,7 +139,7 @@ class MenuListComposition extends React.Component<Props, State> {
             >
               <Paper className="menu-list">
                 <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList>{token ? this.renderUserMenu() : this.renderDefaultMenu()}</MenuList>
+                  <MenuList>{me ? this.renderUserMenu() : this.renderDefaultMenu()}</MenuList>
                 </ClickAwayListener>
               </Paper>
             </Grow>
@@ -151,6 +152,7 @@ class MenuListComposition extends React.Component<Props, State> {
 
 const mapStateToProps = (state: Store) => ({
   ...state.authentication,
+  ...state.me,
 });
 
 const MenuComponent = withStyles(styles)(MenuListComposition);

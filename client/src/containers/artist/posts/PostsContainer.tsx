@@ -59,15 +59,22 @@ class PostsContainerComponent extends React.Component<Props, any> {
   }
 
   renderComments = (post) => {
-    const isLogged = this.props.authentication.token;
+    const hasCommentAccess = this.props.authentication.token;
 
     return (
       <div className="comments-list">
         <span>COMMENTS</span>
         {this.sortItemsByCreationDate(post.comments).map((comment) => {
-          return <Comment key={comment.id} comment={comment} isLogged={isLogged} deleteComment={this.deleteComment} />;
+          return (
+            <Comment
+              key={comment.id}
+              comment={comment}
+              canDelete={hasCommentAccess}
+              deleteComment={this.deleteComment}
+            />
+          );
         })}
-        {isLogged && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+        {hasCommentAccess && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
       </div>
     );
   };

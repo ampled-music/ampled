@@ -78,8 +78,11 @@ class ArtistComponent extends React.Component<Props, any> {
     this.setState({ openVideoModal: false });
   };
 
-  getLoggedUserPageAccess = () =>
-    this.props.me.me && this.props.me.me.artistPages.find((page) => page.artistId === +this.props.match.params.id);
+  getLoggedUserPageAccess = () => {
+    const { me, match } = this.props;
+
+    return me.userData && me.userData.artistPages.find((page) => page.artistId === +match.params.id);
+  };
 
   render() {
     const { artists } = this.props;

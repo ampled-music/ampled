@@ -25,14 +25,14 @@ class NavComponent extends React.Component<Props, any> {
   }
 
   componentDidUpdate() {
-    if (this.props.token && !this.props.me) {
+    if (this.props.token && !this.props.userData) {
       this.props.getMe();
     }
   }
 
   renderLoginLink = () => (
     <div className="loginLink">
-      {this.props.me ? (
+      {this.props.userData ? (
         <FontAwesomeIcon className="user-image" icon={faUserCircle} />
       ) : (
         <div>

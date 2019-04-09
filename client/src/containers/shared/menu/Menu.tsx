@@ -125,7 +125,7 @@ class MenuListComposition extends React.Component<Props, State> {
 
   render() {
     const { open, anchorEl } = this.state;
-    const { me } = this.props;
+    const { userData } = this.props;
 
     return (
       <div className="menu">
@@ -139,7 +139,7 @@ class MenuListComposition extends React.Component<Props, State> {
             >
               <Paper className="menu-list">
                 <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList>{me ? this.renderUserMenu() : this.renderDefaultMenu()}</MenuList>
+                  <MenuList>{userData ? this.renderUserMenu() : this.renderDefaultMenu()}</MenuList>
                 </ClickAwayListener>
               </Paper>
             </Grow>

@@ -67,7 +67,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
     return loggedUserAccess && ['supporter', 'owner'].includes(loggedUserAccess.role);
   };
 
-  canLoggedUserDeleteComment = (commentUserId) => {
+  canLoggedUserDeleteComment = (commentUserId: number) => {
     const { loggedUserAccess } = this.props;
 
     (loggedUserAccess && loggedUserAccess.role === 'owner') || commentUserId === this.props.me.userId;
@@ -119,7 +119,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
 const mapStateToProps = (state: Store) => ({
   authentication: state.authentication,
   comments: state.comments,
-  me: state.me.me,
+  me: state.me.userData,
 });
 
 const mapDispatchToProps = (dispatch) => {

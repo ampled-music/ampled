@@ -11,14 +11,15 @@ export const getMeReducer = {
     ...state,
     loading: true,
   }),
-  [getMeAction.SUCCEEDED]: (state, action) => ({
+  [getMeAction.SUCCEEDED]: (state, { payload }) => ({
     ...state,
-    me: action.payload,
+    userData: payload,
   }),
-  [getMeAction.FAILED]: (state, action) => ({
+  [getMeAction.FAILED]: (state, { payload }) => ({
     ...state,
     loading: false,
-    error: action.payload,
+    error: payload,
+    userData: undefined,
   }),
   [getMeAction.ENDED]: (state) => ({
     ...state,

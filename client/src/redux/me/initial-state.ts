@@ -1,5 +1,5 @@
 export const initialState = {
-  me: undefined,
+  userData: undefined,
   loadingMe: false,
   error: null,
 };

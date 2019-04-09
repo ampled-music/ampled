@@ -6,6 +6,7 @@ import { Store } from 'src/redux/configure-store';
 
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../redux/authentication/initial-state';
+import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { PostsContainer } from '../artist/posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { PostModal } from '../shared/post-modal/PostModal';
@@ -18,8 +19,8 @@ interface ArtistProps {
       id: string;
     };
   };
-  userAuthenticated: boolean;
   artists: typeof artistsInitialState;
+  me: typeof meInitialState;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -77,9 +78,13 @@ class ArtistComponent extends React.Component<Props, any> {
     this.setState({ openVideoModal: false });
   };
 
+  getLoggedUserPageAccess = () =>
+    this.props.me.me && this.props.me.me.artistPages.find((page) => page.artistId === +this.props.match.params.id);
+
   render() {
-    const { artists, userAuthenticated } = this.props;
+    const { artists } = this.props;
     const artist = artists.artist;
+    const loggedUserAccess = this.getLoggedUserPageAccess();
 
     return (
       <div className="App">
@@ -87,7 +92,7 @@ class ArtistComponent extends React.Component<Props, any> {
           artist={artist}
           openVideoModal={this.openVideoModal}
           openPostModal={this.openPostModal}
-          userAuthenticated={userAuthenticated}
+          loggedUserAccess={loggedUserAccess}
         />
         <ArtistInfo
           location={artist.location}
@@ -100,6 +105,7 @@ class ArtistComponent extends React.Component<Props, any> {
           posts={artist.posts}
           accentColor={artist.accent_color}
           updateArtist={this.getArtistInfo}
+          loggedUserAccess={loggedUserAccess}
         />
         <PostModal
           close={this.getUserConfirmation}
@@ -122,7 +128,7 @@ class ArtistComponent extends React.Component<Props, any> {
 const mapStateToProps = (state: Store) => {
   return {
     artists: state.artists,
-    userAuthenticated: state.authentication.token,
+    me: state.me,
     posts: state.posts,
   };
 };

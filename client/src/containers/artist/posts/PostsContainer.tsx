@@ -37,8 +37,9 @@ interface PostsProps {
   authentication: typeof authenticationInitialState;
   updateArtist: Function;
   comments: typeof commentsInitialState;
-  me: { artistPages: any[] };
+  me: { userId: number; artistPages: any[] };
   match: any;
+  loggedUserAccess: { role: string; artistId: number };
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -60,25 +61,31 @@ class PostsContainerComponent extends React.Component<Props, any> {
     return items.sort((a, b) => b.created_at - a.created_at);
   }
 
-  renderComments = (post) => {
-    const currentArtistId = this.props.match.params.id;
-    const currentArtistPageAccess = this.props.me.artistPages.find((page) => +page.artistId === +currentArtistId);
-    const hasCommentAccess = currentArtistPageAccess && currentArtistPageAccess.role === 'supporter';
+  canLoggedUserComment = () => {
+    const { loggedUserAccess } = this.props;
 
+    return loggedUserAccess && ['supporter', 'owner'].includes(loggedUserAccess.role);
+  };
+
+  canLoggedUserDeleteComment = (commentUserId) => {
+    const { loggedUserAccess } = this.props;
+
+    (loggedUserAccess && loggedUserAccess.role === 'owner') || commentUserId === this.props.me.userId;
+  };
+
+  renderComments = (post) => {
     return (
       <div className="comments-list">
         <span>COMMENTS</span>
-        {this.sortItemsByCreationDate(post.comments).map((comment) => {
-          return (
-            <Comment
-              key={comment.id}
-              comment={comment}
-              canDelete={hasCommentAccess}
-              deleteComment={this.deleteComment}
-            />
-          );
-        })}
-        {hasCommentAccess && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+        {this.sortItemsByCreationDate(post.comments).map((comment) => (
+          <Comment
+            key={comment.id}
+            comment={comment}
+            canDelete={this.canLoggedUserDeleteComment(comment.userId)}
+            deleteComment={this.deleteComment}
+          />
+        ))}
+        {this.canLoggedUserComment() && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
       </div>
     );
   };

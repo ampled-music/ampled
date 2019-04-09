@@ -9,8 +9,8 @@ import { ArtistModel } from 'src/redux/artists/initial-state';
 interface Props {
   openVideoModal: React.MouseEventHandler;
   openPostModal: React.MouseEventHandler;
-  userAuthenticated: boolean;
   artist: ArtistModel;
+  loggedUserAccess: { role: string; artistId: number };
 }
 
 export class ArtistHeader extends React.Component<Props, any> {
@@ -72,8 +72,12 @@ export class ArtistHeader extends React.Component<Props, any> {
     </div>
   );
 
+  canLoggedUserPost = () => {
+    return this.props.loggedUserAccess && this.props.loggedUserAccess.role === 'owner';
+  };
+
   renderFloatingNewPostButton = () =>
-    this.props.userAuthenticated && (
+    this.canLoggedUserPost() && (
       <div className="new-post">
         <button onClick={this.props.openPostModal}>
           <span>New Post</span>

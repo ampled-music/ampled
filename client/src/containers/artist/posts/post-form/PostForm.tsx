@@ -27,7 +27,7 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 type Props = typeof postsInitialState & typeof artistsInitialState & Dispatchers & PostFormProps;
 
 class PostFormComponent extends React.Component<Props, any> {
-  state = {
+  initialState = {
     title: '',
     body: '',
     audioFile: '',
@@ -38,6 +38,8 @@ class PostFormComponent extends React.Component<Props, any> {
     savingPost: false,
   };
 
+  state = this.initialState;
+
   componentDidUpdate() {
     if (!this.props.postCreated && !this.state.savingPost) {
       return;
@@ -47,7 +49,7 @@ class PostFormComponent extends React.Component<Props, any> {
   }
 
   refreshArtist = () => {
-    this.clearForm();
+    this.setState(this.initialState);
     this.props.getArtist(this.props.artist.id);
     this.props.discardChanges();
   };
@@ -73,19 +75,6 @@ class PostFormComponent extends React.Component<Props, any> {
     this.setState({ savingPost: true });
     this.props.createPost(post);
   };
-
-  clearForm() {
-    this.setState({
-      title: '',
-      body: '',
-      audioFile: '',
-      imageUrl: undefined,
-      deleteToken: undefined,
-      hasUnsavedChanges: false,
-      loadingImage: false,
-      savingPost: false,
-    });
-  }
 
   updateAudioFile = (audioFile) => {
     this.setState({ audioFile, hasUnsavedChanges: true });

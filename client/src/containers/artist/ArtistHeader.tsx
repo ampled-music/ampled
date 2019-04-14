@@ -14,13 +14,9 @@ interface Props {
 }
 
 export class ArtistHeader extends React.Component<Props, any> {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showConfirmationDialog: false,
-    };
-  }
+  state = {
+    showConfirmationDialog: false,
+  };
 
   renderArtistName = () => <div className="artist-header__title">{this.props.artist.name}</div>;
 

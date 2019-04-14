@@ -113,7 +113,6 @@ class ArtistComponent extends React.Component<Props, any> {
         <PostModal
           close={this.getUserConfirmation}
           open={this.state.openPostModal}
-          artistId={artist.id}
           discardChanges={this.discardChanges}
           updateArtist={this.getArtistInfo}
         />

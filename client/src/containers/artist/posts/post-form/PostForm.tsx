@@ -14,17 +14,17 @@ import { faSpinner, faSync, faTrashAlt } from '@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
 
+import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
 import { Upload } from './Upload';
 
 interface PostFormProps {
-  artistId: number;
   close: (hasUnsavedChanges: boolean) => React.MouseEventHandler;
   discardChanges: () => void;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
-type Props = typeof postsInitialState & Dispatchers & PostFormProps;
+type Props = typeof postsInitialState & typeof artistsInitialState & Dispatchers & PostFormProps;
 
 class PostFormComponent extends React.Component<Props, any> {
   state = {
@@ -33,7 +33,6 @@ class PostFormComponent extends React.Component<Props, any> {
     audioFile: '',
     imageUrl: undefined,
     deleteToken: undefined,
-    artist_page_id: this.props.artistId,
     hasUnsavedChanges: false,
     loadingImage: false,
     savingPost: false,
@@ -49,7 +48,7 @@ class PostFormComponent extends React.Component<Props, any> {
 
   refreshArtist = () => {
     this.clearForm();
-    this.props.getArtist(this.props.artistId);
+    this.props.getArtist(this.props.artist.id);
     this.props.discardChanges();
   };
 
@@ -61,14 +60,14 @@ class PostFormComponent extends React.Component<Props, any> {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const { title, body, audioFile, imageUrl, artist_page_id } = this.state;
+    const { title, body, audioFile, imageUrl } = this.state;
 
     const post = {
       title,
       body,
       audio_file: audioFile,
       image_url: imageUrl,
-      artist_page_id,
+      artist_page_id: this.props.artist.id,
     };
 
     this.setState({ savingPost: true });
@@ -247,6 +246,7 @@ class PostFormComponent extends React.Component<Props, any> {
 
 const mapStateToProps = (state: Store) => ({
   ...state.posts,
+  ...state.artists,
 });
 
 const mapDispatchToProps = (dispatch) => {

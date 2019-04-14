@@ -70,7 +70,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
   canLoggedUserDeleteComment = (commentUserId: number) => {
     const { loggedUserAccess, me } = this.props;
 
-    (loggedUserAccess && loggedUserAccess.role === 'owner') || (me && commentUserId === me.userId);
+    return (loggedUserAccess && loggedUserAccess.role === 'owner') || (me && commentUserId === me.userId);
   };
 
   renderComments = (post) => {

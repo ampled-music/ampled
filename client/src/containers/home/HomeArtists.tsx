@@ -18,7 +18,6 @@ interface State {
 }
 
 class HomeArtistsComponent extends React.Component<Props, State> {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +30,6 @@ class HomeArtistsComponent extends React.Component<Props, State> {
   }
 
   render() {
-
     const loading = this.props.artistsPages.loading;
     const artistsPages = this.props.artistsPages.pages;
 
@@ -41,23 +39,24 @@ class HomeArtistsComponent extends React.Component<Props, State> {
 
     return (
       <div className="home-artists">
-        <div className="container">
-          {this.getArtistsList(artistsPages)}
-        </div>
+        <div className="container">{this.getArtistsList(artistsPages)}</div>
       </div>
     );
   }
 
   private getArtistsList(artistsPages: any) {
-    return artistsPages.map((page) => {
-      return (
-        <div key={page.id}>
-          <Link to={`/artists/${page.id}`}>{page.name}</Link>
-        </div>
-      );
-    });
+    return (
+      artistsPages &&
+      artistsPages.length &&
+      artistsPages.map((page) => {
+        return (
+          <div key={page.id}>
+            <Link to={`/artists/${page.id}`}>Artist: {page.name}</Link>
+          </div>
+        );
+      })
+    );
   }
-
 }
 
 const mapStateToProps = (state) => {

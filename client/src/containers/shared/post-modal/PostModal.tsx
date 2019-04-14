@@ -1,62 +1,30 @@
-import * as React from 'react';
-
-import { Button, Dialog, Divider } from '@material-ui/core';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import cx from 'classnames';
-
 import './post-modal.scss';
+
+import * as React from 'react';
+import { PostForm } from 'src/containers/artist/posts/post-form/PostForm';
+
+import { Dialog } from '@material-ui/core';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+
 import { theme } from './theme';
 
-class PostModalComponent extends React.Component<any, any> {
-  tabs = {
-    newPost: 'newPost',
-    yourPosts: 'yourPosts',
-  };
+interface Props {
+  close: any;
+  open: any;
+  discardChanges: any;
+  updateArtist: any;
+}
 
-  state = {
-    selectedTab: this.tabs.newPost,
-  };
-
-  selectTab = (name) => {
-    this.setState({ selectedTab: name });
-  };
-
+export class PostModal extends React.Component<Props, any> {
   render() {
-    const { newPost, yourPosts } = this.tabs;
-    const { selectedTab } = this.state;
+    const { close, discardChanges } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>
         <Dialog open={this.props.open} aria-labelledby="form-dialog-title">
-          <div className="tabs">
-            <Button
-              className={cx({
-                selected: selectedTab === newPost,
-                disabled: selectedTab !== newPost,
-              })}
-              onClick={() => this.selectTab(newPost)}
-            >
-              NEW POST
-            </Button>
-            <Button
-              className={cx({
-                selected: selectedTab === yourPosts,
-                disabled: selectedTab !== yourPosts,
-              })}
-              onClick={() => this.selectTab(yourPosts)}
-              disabled
-            >
-              YOUR POSTS
-            </Button>
-          </div>
-          <Divider />
-          {this.props.children}
+          <PostForm close={close} discardChanges={discardChanges} />
         </Dialog>
       </MuiThemeProvider>
     );
   }
 }
-
-const PostModal = PostModalComponent;
-
-export { PostModal };

@@ -1,43 +1,30 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { getArtistAction } from 'src/redux/artists/get-details';
+import { Store } from 'src/redux/configure-store';
 
-import { getArtistData } from '../../redux/ducks/get-artist';
-import { Nav } from '../nav/Nav';
-import { ArtistHeader } from './ArtistHeader';
-import { ArtistInfo } from './ArtistInfo';
-import { PostsContainer } from '../posts/PostsContainer';
-import { PostForm } from '../posts/PostForm';
+import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
+import { initialState as authenticateInitialState } from '../../redux/authentication/initial-state';
+import { initialState as meInitialState } from '../../redux/me/initial-state';
+import { PostsContainer } from '../artist/posts/PostsContainer';
+import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { PostModal } from '../shared/post-modal/PostModal';
 import { VideoModal } from '../shared/video-modal/VideoModal';
-import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
-
-interface Props {
+import { ArtistHeader } from './ArtistHeader';
+import { ArtistInfo } from './ArtistInfo';
+interface ArtistProps {
   match: {
     params: {
       id: string;
     };
   };
-  getArtist: Function;
-  artist: {
-    loading: boolean;
-    artist: {
-      name: string;
-      id: number;
-      accent_color: string;
-      video_url: string;
-      video_screenshot_url: string;
-      location: string;
-      twitter_handle: string;
-      instagram_handle: string;
-      posts: [];
-      owners: [];
-      supporters: [];
-      images: [];
-    };
-  };
-  userAuthenticated: boolean;
+  artists: typeof artistsInitialState;
+  me: typeof meInitialState;
 }
+
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+type Props = typeof authenticateInitialState & Dispatchers & ArtistProps;
 
 class ArtistComponent extends React.Component<Props, any> {
   constructor(props) {
@@ -91,54 +78,45 @@ class ArtistComponent extends React.Component<Props, any> {
     this.setState({ openVideoModal: false });
   };
 
-  render() {
-    const { artist, userAuthenticated } = this.props;
-    const artistData = artist.artist;
-    const loading = artist.loading;
+  getLoggedUserPageAccess = () => {
+    const { me, match } = this.props;
 
-    return loading ? (
-      <span>Loading...</span>
-    ) : (
+    return me.userData && me.userData.artistPages.find((page) => page.artistId === +match.params.id);
+  };
+
+  render() {
+    const { artists } = this.props;
+    const artist = artists.artist;
+    const loggedUserAccess = this.getLoggedUserPageAccess();
+
+    return (
       <div className="App">
-        <Nav />
         <ArtistHeader
-          videoUrl={artistData.video_url}
-          name={artistData.name}
-          accentColor={artistData.accent_color}
-          id={artistData.id}
-          bannerImages={artistData.images}
-          videoScreenshotUrl={artistData.video_screenshot_url}
-          owners={artistData.owners}
-          supporters={artistData.supporters}
+          artist={artist}
           openVideoModal={this.openVideoModal}
           openPostModal={this.openPostModal}
-          userAuthenticated={userAuthenticated}
+          loggedUserAccess={loggedUserAccess}
         />
         <ArtistInfo
-          location={artistData.location}
-          accentColor={artistData.accent_color}
-          twitterHandle={artistData.twitter_handle}
-          instagramHandle={artistData.instagram_handle}
+          location={artist.location}
+          accentColor={artist.accent_color}
+          twitterHandle={artist.twitter_handle}
+          instagramHandle={artist.instagram_handle}
         />
         <PostsContainer
-          posts={artistData.posts}
-          accentColor={artistData.accent_color}
+          match={this.props.match}
+          posts={artist.posts}
+          accentColor={artist.accent_color}
+          updateArtist={this.getArtistInfo}
+          loggedUserAccess={loggedUserAccess}
+        />
+        <PostModal
+          close={this.getUserConfirmation}
+          open={this.state.openPostModal}
+          discardChanges={this.discardChanges}
           updateArtist={this.getArtistInfo}
         />
-        <PostModal close={this.getUserConfirmation} open={this.state.openPostModal}>
-          <PostForm
-            artistId={artistData.id}
-            close={this.getUserConfirmation}
-            discardChanges={this.discardChanges}
-            updateArtist={this.getArtistInfo}
-          />
-        </PostModal>
-        <VideoModal
-          open={this.state.openVideoModal}
-          videoUrl={artistData.video_url}
-          onClose={this.closeVideoModal}
-
-        />
+        <VideoModal open={this.state.openVideoModal} videoUrl={artist.video_url} onClose={this.closeVideoModal} />
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}
           closeConfirmationDialog={this.closeConfirmationDialog}
@@ -149,16 +127,17 @@ class ArtistComponent extends React.Component<Props, any> {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: Store) => {
   return {
-    artist: state.artist,
-    userAuthenticated: state.authentication.authenticated,
+    artists: state.artists,
+    me: state.me,
+    posts: state.posts,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getArtist: bindActionCreators(getArtistData, dispatch),
+    getArtist: bindActionCreators(getArtistAction, dispatch),
   };
 };
 

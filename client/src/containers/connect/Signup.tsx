@@ -1,22 +1,23 @@
+import './login.scss';
+
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
-import { userSignUpAction } from 'src/redux/ducks/login';
-import { Nav } from '../nav/Nav';
+import { Store } from 'src/redux/configure-store';
+import { signupAction } from 'src/redux/signup/signup';
+
+import { initialState as authenticationInitialState } from '../../redux/authentication/initial-state';
+import { initialState as signupInitialState } from '../../redux/signup/initial-state';
 import { routePaths } from '../route-paths';
 
-import './login.scss';
-
-interface Props {
-  signup: {
-    errors: {};
-  };
-  userSignUp: Function;
-  authentication: {
-    authenticated: boolean;
-  };
+interface SignupProps {
+  signup: typeof signupInitialState;
+  authentication: typeof authenticationInitialState;
 }
+
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+type Props = SignupProps & Dispatchers;
 
 class SignupComponent extends React.Component<Props, any> {
   state = {
@@ -62,7 +63,7 @@ class SignupComponent extends React.Component<Props, any> {
 
     const { email, password, confirmPassword, name } = this.state;
 
-    await this.props.userSignUp(email, password, confirmPassword, name);
+    await this.props.signup(email, password, confirmPassword, name);
 
     this.setState({ submitted: true });
 
@@ -104,7 +105,7 @@ class SignupComponent extends React.Component<Props, any> {
       );
     }
 
-    if (authentication.authenticated) {
+    if (authentication.token) {
       return <Redirect to={routePaths.root} />;
     }
 
@@ -112,7 +113,6 @@ class SignupComponent extends React.Component<Props, any> {
 
     return (
       <div>
-        <Nav />
         <div className="login">
           <h2>SIGN UP</h2>
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
@@ -182,18 +182,18 @@ class SignupComponent extends React.Component<Props, any> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   authentication: state.authentication,
-  signup: state.userSignUp,
+  signup: state.signup,
 });
 
-const mapPropsToDispatch = (dispatch) => ({
-  userSignUp: bindActionCreators(userSignUpAction, dispatch),
+const mapDispatchToProps = (dispatch) => ({
+  signup: bindActionCreators(signupAction, dispatch),
 });
 
 const Signup = connect(
   mapStateToProps,
-  mapPropsToDispatch,
+  mapDispatchToProps,
 )(SignupComponent);
 
 export { Signup };

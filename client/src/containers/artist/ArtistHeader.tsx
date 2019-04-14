@@ -1,158 +1,171 @@
-import * as React from 'react';
-
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import './artist.scss';
 
+import * as React from 'react';
 
-interface OwnersProps {
-  id: string;
-  name: string;
-  profile_image_url: string;
-}
-interface SupportersProps {
-  id: string;
-  name: string;
-  profile_image_url: string;
-}
+import { faPlay, faPlus, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArtistModel } from 'src/redux/artists/initial-state';
+
 interface Props {
-  name: string;
-  id: number;
-  accentColor: string;
-  videoUrl: string;
   openVideoModal: React.MouseEventHandler;
-  bannerImages: string[];
-  videoScreenshotUrl: string;
   openPostModal: React.MouseEventHandler;
-  userAuthenticated: boolean;
-  owners: OwnersProps[];
-  supporters: SupportersProps[];
+  artist: ArtistModel;
+  loggedUserAccess: { role: string; artistId: number };
 }
 
+export class ArtistHeader extends React.Component<Props, any> {
+  state = {
+    showConfirmationDialog: false,
+  };
 
-class ArtistHeader extends React.Component<Props, any> {
-  constructor(props) {
-    super(props);
+  renderArtistName = () => <div className="artist-header__title">{this.props.artist.name}</div>;
 
-    this.state = {
-      showConfirmationDialog: false,
-    };
-  }
-
-  render() {
-    const {
-      name,
-      accentColor,
-      bannerImages,
-      videoUrl,
-      owners,
-      supporters,
-      userAuthenticated
-    } = this.props;
+  renderOwners = () => {
+    const { artist } = this.props;
 
     return (
+      <div className="artist-header__persons">
+        {artist.owners &&
+          artist.owners.map((owner) => (
+            <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person">
+              {owner.profile_image_url ? (
+                <img
+                  className="artist-header__person_image"
+                  src={owner.profile_image_url}
+                  alt={owner.name}
+                  style={{ borderColor: artist.accent_color }}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  className="artist-header__person_svg"
+                  icon={faUserCircle}
+                  style={{ borderColor: artist.accent_color }}
+                />
+              )}
+            </div>
+          ))}
+      </div>
+    );
+  };
+
+  renderBanners = () => {
+    const { artist } = this.props;
+
+    return (
+      <div className="artist-header__photos">
+        {artist.images &&
+          artist.images.map((image, index) => {
+            return <img key={index} className="artist-header__photo" src={image} />;
+          })}
+      </div>
+    );
+  };
+
+  renderPhotoContainer = () => (
+    <div className="artist-header__photo-container" style={{ borderColor: this.props.artist.accent_color }}>
+      {this.renderOwners()}
+      {this.renderBanners()}
+    </div>
+  );
+
+  canLoggedUserPost = () => {
+    return this.props.loggedUserAccess && this.props.loggedUserAccess.role === 'owner';
+  };
+
+  renderFloatingNewPostButton = () =>
+    this.canLoggedUserPost() && (
+      <div className="new-post">
+        <button onClick={this.props.openPostModal}>
+          <span>New Post</span>
+          <FontAwesomeIcon icon={faPlus} color="#ffffff" />
+        </button>
+      </div>
+    );
+
+  renderMessageContainer = () => {
+    const { artist } = this.props;
+
+    return (
+      <div className="artist-header__message-container" style={{ borderColor: artist.accent_color }}>
+        <button onClick={this.props.openVideoModal} className="artist-header__play">
+          <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />
+        </button>
+        <img className="artist-header__message-image" src={artist.video_url} />
+      </div>
+    );
+  };
+
+  renderSupporter = ({ supporter, borderColor, isSmall = false }) => {
+    return (
+      <div
+        key={`supporter-${supporter.id}`}
+        id={`supporter-${supporter.id}`}
+        className={isSmall ? 'artist-header__person_small' : 'artist-header__person'}
+      >
+        {supporter.profile_image_url ? (
+          <img
+            className="artist-header__person_image"
+            src={supporter.profile_image_url}
+            alt={supporter.name}
+            style={{ borderColor }}
+          />
+        ) : (
+          <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor }} />
+        )}
+      </div>
+    );
+  };
+
+  renderSupportersContainer = () => {
+    const { artist } = this.props;
+
+    if (!artist.supporters) {
+      return null;
+    }
+
+    const borderColor = artist.accent_color;
+
+    return (
+      <div className="artist-header__supporters">
+        <div className="artist-header__supporter-title">{artist.supporters.length} Supporters</div>
+
+        {artist.supporters.slice(0, 2).map((supporter) => {
+          return (
+            <div className="row align-items-center">
+              <div className="col-3">{this.renderSupporter({ supporter, borderColor })}</div>
+              <div className="col-9">
+                <div className="artist-header__person_name">{supporter.name}</div>
+                <div className="artist-header__person_quote" />
+              </div>
+            </div>
+          );
+        })}
+
+        <div className="row justify-content-start no-gutters">
+          {artist.supporters.slice(2, 24).map((supporter) => {
+            return <div className="col-2">{this.renderSupporter({ supporter, borderColor, isSmall: true })}</div>;
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  render() {
+    return (
       <div className="artist-header container">
-        {' '}
-        {/* Main Section */}
         <div className="row">
           <div className="col-md-8">
-            {/* Left Side */}
-            <div className="artist-header__title">{name}</div>
-            <div className="artist-header__photo-container" style={{ borderColor: accentColor }} >
-              <div className="artist-header__persons">
-                {owners.map((owner) => {
-                  return (
-                    <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person">
-                      {owner.profile_image_url ? (
-                        <img className="artist-header__person_image" src={owner.profile_image_url} alt={owner.name} style={{ borderColor: accentColor }} />
-                      ) :
-                        <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
-                      }
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="artist-header__photos">
-                {bannerImages.map((image) => {
-                  return <img className="artist-header__photo" src={image} />
-                })}
-              </div>
-            </div>
+            {this.renderArtistName()}
+            {this.renderPhotoContainer()}
           </div>
-          {/* Close Left Side */}
-
           <div className="col-md-4">
-            {/* Right Side */}
             <div className="artist-header__message">A Message From The Band</div>
-
-            {userAuthenticated && (
-              <div className="new-post">
-                <button onClick={this.props.openPostModal}>
-                  <span>New Post</span>
-                  <FontAwesomeIcon icon={faPlus} color="#ffffff" />
-                </button>
-              </div>
-            )}
-
-            <div className="artist-header__message-container" style={{ borderColor: accentColor }}>
-              <button onClick={this.props.openVideoModal} className="artist-header__play">
-                <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: accentColor }} />
-              </button>
-              <img className="artist-header__message-image" src={videoUrl} />
-
-            </div>
-
-            <div className="artist-header__supporters">
-
-              <div className="artist-header__supporter-title">{supporters.length} Supporters</div>
-
-              {supporters.slice(0,2).map((supporter) => {
-                return (
-                  <div className="row align-items-center">
-                    <div className="col-3">
-                      <div key={`supporter-${supporter.id}`} id={`supporter-${supporter.id}`} className="artist-header__person">
-                        {supporter.profile_image_url ? (
-                          <img className="artist-header__person_image" src={supporter.profile_image_url} alt={supporter.name} style={{ borderColor: accentColor }} />
-                        ) :
-                          <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
-                        }
-                      </div>
-                    </div>
-                    <div className="col-9">
-                      <div className="artist-header__person_name">{supporter.name}</div>
-                      <div className="artist-header__person_quote"></div>
-                    </div>
-                  </div>
-                );
-              })}
-
-              <div className="row justify-content-start no-gutters">
-                {supporters.slice(2,24).map((supporter) => {
-                  return (
-                    <div className="col-2">
-                      <div key={`supporter-${supporter.id}`} id={`supporter-${supporter.id}`} className="artist-header__person_small">
-                        {supporter.profile_image_url ? (
-                          <img className="artist-header__person_image" src={supporter.profile_image_url} alt={supporter.name} style={{ borderColor: accentColor }} />
-                        ) :
-                          <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor: accentColor }} />
-                        }
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-            </div>
+            {this.renderFloatingNewPostButton()}
+            {this.renderMessageContainer()}
+            {this.renderSupportersContainer()}
           </div>
-          {/* Close Right Side */}
         </div>
       </div>
     );
   }
 }
-
-export { ArtistHeader };

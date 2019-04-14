@@ -6,7 +6,7 @@ export const PublicRoute = ({ component: Component, ...rest }) => {
   const renderComponent = (props) => (
     <div className="public-routes">
       <div className="card">
-        <Nav />
+        <Nav match={props.match} />
         <main>
           <Component {...props} />
         </main>

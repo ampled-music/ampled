@@ -5,6 +5,7 @@ import * as React from 'react';
 import { faPlay, faPlus, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from 'src/redux/artists/initial-state';
+import { UserRoles } from '../shared/user-roles';
 
 interface Props {
   openVideoModal: React.MouseEventHandler;
@@ -69,7 +70,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   );
 
   canLoggedUserPost = () => {
-    return this.props.loggedUserAccess && this.props.loggedUserAccess.role === 'owner';
+    return this.props.loggedUserAccess && this.props.loggedUserAccess.role === UserRoles.Owner;
   };
 
   renderFloatingNewPostButton = () =>

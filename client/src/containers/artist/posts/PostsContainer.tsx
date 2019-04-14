@@ -12,6 +12,7 @@ import { initialState as commentsInitialState } from '../../../redux/comments/in
 import { Comment } from './comments/Comment';
 import { CommentForm } from './comments/CommentForm';
 import { Post } from './post/Post';
+import { UserRoles } from 'src/containers/shared/user-roles';
 
 interface CommentProps {
   id: string;
@@ -64,13 +65,15 @@ class PostsContainerComponent extends React.Component<Props, any> {
   canLoggedUserComment = () => {
     const { loggedUserAccess } = this.props;
 
-    return loggedUserAccess && ['supporter', 'owner'].includes(loggedUserAccess.role);
+    return (
+      loggedUserAccess && [UserRoles.Supporter.toString(), UserRoles.Owner.toString()].includes(loggedUserAccess.role)
+    );
   };
 
   canLoggedUserDeleteComment = (commentUserId: number) => {
     const { loggedUserAccess, me } = this.props;
 
-    (loggedUserAccess && loggedUserAccess.role === 'owner') || (me && commentUserId === me.userId);
+    return (loggedUserAccess && loggedUserAccess.role === UserRoles.Owner) || (me && commentUserId === me.userId);
   };
 
   renderComments = (post) => {

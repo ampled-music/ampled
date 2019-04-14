@@ -1,16 +1,20 @@
 # PostgreSQL: versions 9.1 and up are supported.
 
+# Setup user, password and database name (api-db) when using docker to run the project
+
 default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV["DB_POOL"].presence || ENV["RAILS_MAX_THREADS"].presence || 5 %>
   timeout: 5000
   host: localhost
-
+  # user: user
+  # password: password
 
 development:
   <<: *default
   database: ampled_web_development
+  # database: api-db
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

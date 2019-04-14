@@ -15,9 +15,19 @@ import { initialState as loginInitialState } from '../../../redux/authentication
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import { routePaths } from '../../route-paths';
 import { Menu } from '../menu/Menu';
+import { UserRoles } from '../user-roles';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
-type Props = typeof loginInitialState & typeof meInitialState & Dispatchers;
+
+interface NavComponentProps {
+  match: {
+    params: {
+      id: string;
+    };
+  };
+}
+
+type Props = typeof loginInitialState & typeof meInitialState & Dispatchers & NavComponentProps;
 
 class NavComponent extends React.Component<Props, any> {
   componentDidMount() {
@@ -29,6 +39,20 @@ class NavComponent extends React.Component<Props, any> {
       this.props.getMe();
     }
   }
+
+  getLoggedUserPageAccess = () => {
+    const { userData, match } = this.props;
+
+    return userData && userData.artistPages.find((page) => page.artistId === +match.params.id);
+  };
+
+  showSupportButton = () => {
+    const loggedUserAccess = this.getLoggedUserPageAccess();
+
+    return (
+      !loggedUserAccess || ![UserRoles.Supporter.toString(), UserRoles.Owner.toString()].includes(loggedUserAccess.role)
+    );
+  };
 
   renderLoginLink = () => (
     <div className="loginLink">
@@ -54,7 +78,7 @@ class NavComponent extends React.Component<Props, any> {
         <Link className="logo" to="/">
           <img src={logo} alt="logo" height="100%" />
         </Link>
-        <button className="btn btn-support">Support</button>
+        {this.showSupportButton() && <button className="btn btn-support">Support</button>}
         <div className="menus">
           {this.renderLoginLink()}
           <Menu />

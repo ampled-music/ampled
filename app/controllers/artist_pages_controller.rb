@@ -55,7 +55,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def set_page_ownership
-    @role = PageOwnership.where(user_id: current_user.id, artist_page_id: params[:id]).take.try(:role)
+    @role = PageOwnership.where(user_id: current_user.try(:id), artist_page_id: params[:id]).take.try(:role)
   end
 
   # Only allow a trusted parameter "white list" through.

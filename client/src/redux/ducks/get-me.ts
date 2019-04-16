@@ -1,15 +1,15 @@
-import { handleActions } from 'redux-actions'
-import { createActionThunk } from 'redux-thunk-actions'
+import { handleActions } from 'redux-actions';
+import { createActionThunk } from 'redux-thunk-actions';
 
-import { getMeData } from '../../api/me/get-me'
+import { getMeData } from '../../api/me/get-me';
 
 export const initialState = {
   me: {},
   loading: false,
   error: null,
-}
+};
 
-export const getMe = createActionThunk('GET_ME', () => getMeData())
+export const getMe = createActionThunk('GET_ME', () => getMeData());
 
 export const me = handleActions(
   {
@@ -32,4 +32,4 @@ export const me = handleActions(
     }),
   },
   initialState,
-)
+);

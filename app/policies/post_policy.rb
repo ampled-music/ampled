@@ -25,10 +25,10 @@ class PostPolicy
   private
 
   def owner?
-    @user.owned_pages.include?(@post.artist_page)
+    @user&.owned_pages&.include?(@post.artist_page)
   end
 
   def subscriber?
-    @user.subscribed?(@post.artist_page)
+    @user&.subscribed?(@post.artist_page)
   end
 end

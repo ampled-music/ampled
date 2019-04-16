@@ -1,15 +1,11 @@
-import classnames from 'classnames';
 import * as React from 'react';
 
-import { faArrowDown, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -17,8 +13,6 @@ import { config } from '../../../../config';
 import { styles } from './post-style';
 
 class PostComponent extends React.Component<any, any> {
-  state = { expanded: false };
-
   handleExpandClick = () => {
     this.setState((state) => ({ expanded: !state.expanded }));
   };
@@ -65,33 +59,11 @@ class PostComponent extends React.Component<any, any> {
           </Typography>
         </CardContent>
 
-        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph className={classes.postBody}>
-              {post.body}
-            </Typography>
-          </CardContent>
-        </Collapse>
-
-        <CardActions className={classes.actions} disableActionSpacing>
-          {post.body && (
-            <IconButton
-              className={classnames(
-                classes.expand,
-                {
-                  [classes.expandOpen]: this.state.expanded,
-                },
-                classes.iconButton,
-              )}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
-              aria-label="View more"
-              title="View more"
-            >
-              <FontAwesomeIcon icon={faArrowDown} size="xs" />
-            </IconButton>
-          )}
-        </CardActions>
+        <CardContent>
+          <Typography paragraph className={classes.postBody}>
+            {post.body}
+          </Typography>
+        </CardContent>
       </Card>
     );
   }

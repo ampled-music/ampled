@@ -46,6 +46,8 @@ class LoginComponent extends React.Component<Props, any> {
   handleSubmit = async (e) => {
     e.preventDefault();
 
+    store.clearAll();
+
     const { email, password } = this.state;
 
     await this.props.login(email, password);

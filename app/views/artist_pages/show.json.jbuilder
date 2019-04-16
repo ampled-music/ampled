@@ -27,6 +27,7 @@ json.posts @artist_page.posts do |post|
   json.created_at post.created_at.to_i
   json.created_ago time_ago_in_words(post.created_at)
   json.comments post.comments, partial: "comments/comment", as: :comment
+  json.is_private post.is_private
   if PostPolicy.new(current_user, post).view_details?
     json.body post.body
     json.audio_file post.audio_file

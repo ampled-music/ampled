@@ -1,3 +1,6 @@
+import './post.scss';
+
+import cx from 'classnames';
 import * as React from 'react';
 
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -33,38 +36,44 @@ class PostComponent extends React.Component<any, any> {
     const { classes, post, accentColor } = this.props;
 
     return (
-      <Card className={classes.card} style={{ border: `2px solid ${accentColor}` }}>
-        <CardContent className={classes.header}>
-          <div className={classes.postTitle}>
-            <FontAwesomeIcon className={classes.userImage} icon={faUserCircle} />
-            <span>{post.author}</span>
-          </div>
-          <div className={classes.postDate}>{post.created_ago} ago</div>
-        </CardContent>
-        <Divider />
+      <div className="post">
+        <Card className={classes.card} style={{ border: `2px solid ${accentColor}` }}>
+          <CardContent className={classes.header}>
+            <div className={classes.postTitle}>
+              <FontAwesomeIcon className={classes.userImage} icon={faUserCircle} />
+              <span>{post.author}</span>
+            </div>
+            <div className={classes.postDate}>{post.created_ago} ago</div>
+          </CardContent>
+          <Divider />
 
-        {post.image_url && <CardMedia className={classes.media} image={post.image_url} />}
+          {post.image_url && (
+            <div className={cx({ 'blur-image': !post.allow_details })}>
+              <CardMedia className={classes.media} image={post.image_url} />
+            </div>
+          )}
 
-        {post.audio_file && (
-          <CardMedia
-            className={classes.media}
-            image={post.image_url}
-            component={() => this.audioPLayer(post.audio_file)}
-          />
-        )}
+          {post.audio_file && (
+            <CardMedia
+              className={classes.media}
+              image={post.image_url}
+              component={() => this.audioPLayer(post.audio_file)}
+            />
+          )}
 
-        <CardContent>
-          <Typography component="p" className={classes.postTitle}>
-            {post.title}
-          </Typography>
-        </CardContent>
+          <CardContent>
+            <Typography component="p" className={classes.postTitle}>
+              {post.title}
+            </Typography>
+          </CardContent>
 
-        <CardContent>
-          <Typography paragraph className={classes.postBody}>
-            {post.body}
-          </Typography>
-        </CardContent>
-      </Card>
+          <CardContent>
+            <Typography paragraph className={classes.postBody}>
+              {post.body}
+            </Typography>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 }

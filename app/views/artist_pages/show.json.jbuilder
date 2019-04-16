@@ -21,7 +21,7 @@ json.supporters @artist_page.subscribers do |supporter|
 end
 
 json.posts @artist_page.posts do |post|
-  if !post.is_private || (post.is_private? && (@role == "supporter") || (@role == "owner"))
+  if PostPolicy.new(current_user, post).view_details?
     json.id post.id
     json.author post.author
     json.title post.title

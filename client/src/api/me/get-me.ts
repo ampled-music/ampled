@@ -9,7 +9,7 @@ export const getMeData = async () => {
 
   const { data } = await apiAxios({
     method: 'get',
-    url: '/me',
+    url: '/me.json',
   });
 
   return data

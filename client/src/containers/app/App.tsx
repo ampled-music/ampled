@@ -35,6 +35,7 @@ class AppComponent extends React.Component<Props, any> {
 }
 
 const mapStateToProps = (state: Store) => ({
+  ...state.authentication,
   ...state.me,
 });
 

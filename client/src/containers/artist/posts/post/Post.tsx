@@ -2,6 +2,8 @@ import './post.scss';
 
 import cx from 'classnames';
 import * as React from 'react';
+import { withRouter } from 'react-router-dom';
+import { routePaths } from 'src/containers/route-paths';
 
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -48,7 +50,10 @@ class PostComponent extends React.Component<any, any> {
           <Divider />
 
           {post.image_url && (
-            <div className={cx({ 'blur-image': !post.allow_details })}>
+            <div
+              className={cx({ 'blur-image': !post.allow_details })}
+              onClick={() => !post.allow_details && this.props.history.push(routePaths.login)}
+            >
               <CardMedia className={classes.media} image={post.image_url} />
             </div>
           )}
@@ -78,6 +83,6 @@ class PostComponent extends React.Component<any, any> {
   }
 }
 
-const Post = withStyles(styles)(PostComponent);
+const Post = withStyles(styles)(withRouter(PostComponent));
 
 export { Post };

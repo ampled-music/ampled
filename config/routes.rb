@@ -25,4 +25,6 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { confirmations: "confirmations", registrations: "registrations" }
 
   root to: "pages#root"
+
+  get 'stripe' to: "pages#stripe"
 end

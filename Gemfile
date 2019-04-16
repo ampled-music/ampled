@@ -23,6 +23,7 @@ gem "rack-canonical-host"
 gem "rack-cors", require: "rack/cors"
 gem "rails", "~> 5.2.1"
 gem "sidekiq"
+gem "stripe"
 gem "skylight"
 gem "zencoder"
 

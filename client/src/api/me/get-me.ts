@@ -1,16 +1,21 @@
 import * as store from 'store';
-// import axios from 'axios';
+
+import { apiAxios } from '../setup-axios';
 
 export const getMeData = async () => {
-  // const { data } = await axios({
-  //   method: 'get',
-  //   url: '/me',
-  // });
+  if (!store.get('token')) {
+    return undefined;
+  }
 
-  return !!store.get('token')
+  const { data } = await apiAxios({
+    method: 'get',
+    url: '/me.json',
+  });
+
+  return data
     ? {
-        id: 1,
-        artistPages: [{ artistId: 8, role: 'owner' }, { artistId: 10, role: 'supporter' }],
+        ...data.userInfo,
+        artistPages: data.artistPages,
       }
     : undefined;
 };

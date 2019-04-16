@@ -3,9 +3,7 @@ import './nav.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
 import { Store } from 'src/redux/configure-store';
-import { getMeAction } from 'src/redux/me/get-me';
 
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,29 +15,18 @@ import { routePaths } from '../../route-paths';
 import { Menu } from '../menu/Menu';
 import { UserRoles } from '../user-roles';
 
-type Dispatchers = ReturnType<typeof mapDispatchToProps>;
-
 interface NavComponentProps {
   match: {
     params: {
       id: string;
     };
+    path: string;
   };
 }
 
-type Props = typeof loginInitialState & typeof meInitialState & Dispatchers & NavComponentProps;
+type Props = typeof loginInitialState & typeof meInitialState & NavComponentProps;
 
 class NavComponent extends React.Component<Props, any> {
-  componentDidMount() {
-    this.props.getMe();
-  }
-
-  componentDidUpdate() {
-    if (this.props.token && !this.props.userData) {
-      this.props.getMe();
-    }
-  }
-
   getLoggedUserPageAccess = () => {
     const { userData, match } = this.props;
 
@@ -48,6 +35,10 @@ class NavComponent extends React.Component<Props, any> {
 
   showSupportButton = () => {
     const loggedUserAccess = this.getLoggedUserPageAccess();
+
+    if (this.props.match.path === routePaths.root) {
+      return false;
+    }
 
     return (
       !loggedUserAccess || ![UserRoles.Supporter.toString(), UserRoles.Owner.toString()].includes(loggedUserAccess.role)
@@ -93,13 +84,6 @@ const mapStateToProps = (state: Store) => ({
   ...state.me,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getMe: bindActionCreators(getMeAction, dispatch),
-});
-
-const Nav = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(NavComponent);
+const Nav = connect(mapStateToProps)(NavComponent);
 
 export { Nav };

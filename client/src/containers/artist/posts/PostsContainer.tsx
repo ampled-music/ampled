@@ -3,6 +3,7 @@ import './post-container.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { UserRoles } from 'src/containers/shared/user-roles';
 import { createCommentAction } from 'src/redux/comments/create';
 import { deleteCommentAction } from 'src/redux/comments/delete';
 import { Store } from 'src/redux/configure-store';
@@ -12,7 +13,6 @@ import { initialState as commentsInitialState } from '../../../redux/comments/in
 import { Comment } from './comments/Comment';
 import { CommentForm } from './comments/CommentForm';
 import { Post } from './post/Post';
-import { UserRoles } from 'src/containers/shared/user-roles';
 
 interface CommentProps {
   id: string;
@@ -38,7 +38,7 @@ interface PostsProps {
   authentication: typeof authenticationInitialState;
   updateArtist: Function;
   comments: typeof commentsInitialState;
-  me: { userId: number; artistPages: any[] };
+  me: { id: number; artistPages: any[] };
   match: any;
   loggedUserAccess: { role: string; artistId: number };
 }
@@ -73,25 +73,23 @@ class PostsContainerComponent extends React.Component<Props, any> {
   canLoggedUserDeleteComment = (commentUserId: number) => {
     const { loggedUserAccess, me } = this.props;
 
-    return (loggedUserAccess && loggedUserAccess.role === UserRoles.Owner) || (me && commentUserId === me.userId);
+    return (loggedUserAccess && loggedUserAccess.role === UserRoles.Owner) || (me && commentUserId === me.id);
   };
 
-  renderComments = (post) => {
-    return (
-      <div className="comments-list">
-        <span>COMMENTS</span>
-        {this.sortItemsByCreationDate(post.comments).map((comment) => (
-          <Comment
-            key={comment.id}
-            comment={comment}
-            canDelete={this.canLoggedUserDeleteComment(comment.userId)}
-            deleteComment={this.deleteComment}
-          />
-        ))}
-        {this.canLoggedUserComment() && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
-      </div>
-    );
-  };
+  renderComments = (post) => (
+    <div className="comments-list">
+      <span>COMMENTS</span>
+      {this.sortItemsByCreationDate(post.comments).map((comment) => (
+        <Comment
+          key={comment.id}
+          comment={comment}
+          canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
+          deleteComment={this.deleteComment}
+        />
+      ))}
+      {this.canLoggedUserComment() && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+    </div>
+  );
 
   renderPosts = () => {
     const { posts, accentColor } = this.props;

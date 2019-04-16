@@ -1,8 +1,9 @@
 class ArtistPagesController < ApplicationController
-  before_action :set_artist_page, only: %i[show edit update destroy]
+  before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy]
 
   def index
     @artist_pages = ArtistPage.all
+
     respond_to do |format|
       format.html
       format.json { render json: @artist_pages }
@@ -51,6 +52,10 @@ class ArtistPagesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_artist_page
     @artist_page = ArtistPage.find(params[:id])
+  end
+
+  def set_page_ownership
+    @role = PageOwnership.where(user_id: current_user.try(:id), artist_page_id: params[:id]).take.try(:role)
   end
 
   # Only allow a trusted parameter "white list" through.

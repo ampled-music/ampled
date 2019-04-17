@@ -38,6 +38,7 @@ class ArtistComponent extends React.Component<Props, any> {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.getArtistInfo();
   }
 

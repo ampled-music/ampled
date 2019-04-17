@@ -12,10 +12,14 @@ export const getMeData = async () => {
     url: '/me.json',
   });
 
-  return data
-    ? {
-        ...data.userInfo,
-        artistPages: data.artistPages,
-      }
-    : undefined;
+  if (data && !data.userInfo.id) {
+    store.clearAll();
+
+    return undefined;
+  }
+
+  return {
+    ...data.userInfo,
+    artistPages: data.artistPages,
+  };
 };

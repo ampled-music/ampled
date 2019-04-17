@@ -3,6 +3,8 @@ import './menu.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { logoutAction } from 'src/redux/authentication/logout';
 import { Store } from 'src/redux/configure-store';
 import * as store from 'store';
 
@@ -37,13 +39,24 @@ interface State {
   anchorEl: any;
 }
 
-type Props = typeof authenticationInitialState & typeof meInitialState;
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+
+type Props = typeof authenticationInitialState & typeof meInitialState & Dispatchers;
 
 class MenuListComposition extends React.Component<Props, State> {
   state = {
     open: false,
     anchorEl: undefined,
   };
+
+  componentDidUpdate() {
+    if (!this.props.loggedOut) {
+      return;
+    }
+
+    store.remove(config.localStorageKeys.token);
+    window.location.href = routePaths.root;
+  }
 
   componentDidMount() {
     this.setState({ anchorEl: this.refs.menu });
@@ -62,9 +75,8 @@ class MenuListComposition extends React.Component<Props, State> {
   };
 
   logout = (event: any) => {
-    store.remove(config.localStorageKeys.token);
+    this.props.logout();
     this.handleClose(event);
-    window.location.href = routePaths.root;
   };
 
   renderDefaultMenu = () => {
@@ -155,7 +167,16 @@ const mapStateToProps = (state: Store) => ({
   ...state.me,
 });
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: bindActionCreators(logoutAction, dispatch),
+  };
+};
+
 const MenuComponent = withStyles(styles)(MenuListComposition);
-const Menu = connect(mapStateToProps)(MenuComponent);
+const Menu = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MenuComponent);
 
 export { Menu };

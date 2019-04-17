@@ -36,7 +36,7 @@ class NavComponent extends React.Component<Props, any> {
   showSupportButton = () => {
     const loggedUserAccess = this.getLoggedUserPageAccess();
 
-    if (this.props.match.path === routePaths.root) {
+    if (this.props.match.path.indexOf(routePaths.artists) === -1) {
       return false;
     }
 

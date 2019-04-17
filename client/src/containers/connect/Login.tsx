@@ -2,6 +2,7 @@ import './login.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { loginAction } from 'src/redux/authentication/login';
 import { Store } from 'src/redux/configure-store';
@@ -92,6 +93,13 @@ class LoginComponent extends React.Component<Props, any> {
             <a href="">
               <u>click here</u>
             </a>
+            .
+          </label>
+          <label>
+            Don't have an account?{' '}
+            <Link to={routePaths.signup}>
+              <u>Sign up</u>
+            </Link>
             .
           </label>
 

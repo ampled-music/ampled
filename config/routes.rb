@@ -19,10 +19,13 @@ Rails.application.routes.draw do
 
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"
-
   get "/me", to: "me#index"
 
-  devise_for :users, controllers: { confirmations: "confirmations", registrations: "registrations" }
+  devise_for :users, controllers: {
+    confirmations: "confirmations",
+    registrations: "registrations",
+    sessions: "sessions"
+  }
 
   root to: "pages#root"
 end

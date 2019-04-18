@@ -94,7 +94,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
   );
 
   renderPosts = () => {
-    const { posts, accentColor, artistName } = this.props;
+    const { posts, accentColor, artistName, me } = this.props;
 
     console.log('this.props', this.props);
 
@@ -104,7 +104,13 @@ class PostsContainerComponent extends React.Component<Props, any> {
 
     return this.sortItemsByCreationDate(posts).map((post) => (
       <div key={`post-${post.id}`} id={`post-${post.id}`} className="col-md-4">
-        <Post post={post} accentColor={accentColor} openAuthModal={this.props.openAuthModal} artistName={artistName} />
+        <Post
+          post={post}
+          accentColor={accentColor}
+          openAuthModal={this.props.openAuthModal}
+          artistName={artistName}
+          authenticated={!!me}
+        />
         {this.renderComments(post)}
       </div>
     ));

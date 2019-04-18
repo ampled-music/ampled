@@ -86,13 +86,6 @@ class LoginComponent extends React.Component<Props, any> {
             <span className="error-message">{login.error}</span>
           </form>
           <label>
-            Forgot your password?{' '}
-            <a href="">
-              <u>click here</u>
-            </a>
-            .
-          </label>
-          <label>
             Don't have an account?{' '}
             <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
               <u>Sign up</u>

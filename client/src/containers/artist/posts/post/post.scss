@@ -11,3 +11,18 @@
     filter: blur(20px);
   }
 }
+
+.private-post-modal {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+
+  p {
+    margin: 2rem;
+  }
+
+  button {
+    width: 50px;
+    align-self: flex-end;
+  }
+}

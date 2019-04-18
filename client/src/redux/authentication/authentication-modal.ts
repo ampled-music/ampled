@@ -7,9 +7,10 @@ export const openAuthModalAction = createAction(actions.openAuthModal);
 export const closeAuthModalAction = createAction(actions.closeAuthModal);
 
 export const authModalReducer = {
-  [actions.openAuthModal]: (state) => ({
+  [actions.openAuthModal]: (state, { payload }) => ({
     ...state,
     authModalOpen: true,
+    modalPage: payload,
   }),
   [actions.closeAuthModal]: (state) => ({
     ...state,

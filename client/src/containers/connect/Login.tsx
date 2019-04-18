@@ -2,9 +2,8 @@ import './login.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { loginAction } from 'src/redux/authentication/login';
 import { Store } from 'src/redux/configure-store';
 import * as store from 'store';
@@ -95,9 +94,9 @@ class LoginComponent extends React.Component<Props, any> {
           </label>
           <label>
             Don't have an account?{' '}
-            <Link to={routePaths.signup}>
+            <a onClick={() => this.props.openAuthModal('signup')}>
               <u>Sign up</u>
-            </Link>
+            </a>
             .
           </label>
         </div>
@@ -112,6 +111,7 @@ const mapStateToProps = (state: Store) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   login: bindActionCreators(loginAction, dispatch),
+  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
 });
 

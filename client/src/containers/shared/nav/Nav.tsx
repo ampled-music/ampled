@@ -55,13 +55,13 @@ class NavComponent extends React.Component<Props, any> {
         <FontAwesomeIcon className="user-image" icon={faUserCircle} />
       ) : (
         <div>
-          <a onClick={this.props.openAuthModal}>
+          <a onClick={() => this.props.openAuthModal('login')}>
             <b>Login</b>
           </a>{' '}
           or{' '}
-          <Link to={routePaths.signup}>
+          <a onClick={() => this.props.openAuthModal('signup')}>
             <b>Sign Up</b>
-          </Link>
+          </a>
         </div>
       )}
     </div>

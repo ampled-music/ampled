@@ -2,15 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #c5e4e4;
-  height: calc(100vh - 55px);
-
-  h2 {
-    margin-top: 70px;
-    margin-bottom: 30px;
-  }
+  padding: 1rem;
 
   a {
+    cursor: pointer;
     color: #000000;
   }
 
@@ -40,11 +35,10 @@
   .form-container {
     display: flex;
     max-width: 450px;
-    padding: 85px 20px 35px 20px;
+    padding: 30px 20px 35px 20px;
     height: auto;
     border: none;
     border-radius: 0;
-    background: url(../../images/background_login.svg);
     background-repeat: no-repeat;
 
     .input-group-text {

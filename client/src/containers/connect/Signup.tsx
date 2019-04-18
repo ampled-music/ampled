@@ -2,26 +2,26 @@ import './login.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
 import { signupAction } from 'src/redux/signup/signup';
 
 import { initialState as authenticationInitialState } from '../../redux/authentication/initial-state';
+import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as signupInitialState } from '../../redux/signup/initial-state';
-import { routePaths } from '../route-paths';
 
 interface SignupProps {
   signup: typeof signupInitialState;
   authentication: typeof authenticationInitialState;
+  me: typeof meInitialState;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 type Props = SignupProps & Dispatchers;
 
 class SignupComponent extends React.Component<Props, any> {
-  state = {
+  initialState = {
     email: '',
     password: '',
     name: '',
@@ -33,6 +33,17 @@ class SignupComponent extends React.Component<Props, any> {
     acceptTerms: false,
     submitted: false,
   };
+
+  state = this.initialState;
+
+  componentDidUpdate() {
+    const { signup, closeAuthModal, authentication } = this.props;
+
+    if (this.state.submitted && !signup.errors && authentication.authModalOpen) {
+      this.setState(this.initialState);
+      closeAuthModal();
+    }
+  }
 
   passwordsMatch(): boolean {
     const { password, confirmPassword } = this.state;
@@ -92,23 +103,7 @@ class SignupComponent extends React.Component<Props, any> {
   }
 
   render() {
-    const { submitted, matchPasswordsError, emailError, passwordError } = this.state;
-    const { signup, authentication } = this.props;
-
-    if (submitted && !signup.errors) {
-      return (
-        <Redirect
-          to={{
-            pathname: routePaths.login,
-            showMessage: true,
-          }}
-        />
-      );
-    }
-
-    if (authentication.token) {
-      return <Redirect to={routePaths.root} />;
-    }
+    const { matchPasswordsError, emailError, passwordError } = this.state;
 
     const passwordErrorMessage = 'Passwords do not match.';
 
@@ -172,9 +167,9 @@ class SignupComponent extends React.Component<Props, any> {
           </form>
           <label>
             Already have an account?{' '}
-            <Link to={routePaths.login}>
+            <a onClick={() => this.props.openAuthModal('login')}>
               <u>Log in</u>
-            </Link>
+            </a>
             .
           </label>
         </div>
@@ -186,10 +181,13 @@ class SignupComponent extends React.Component<Props, any> {
 const mapStateToProps = (state: Store) => ({
   authentication: state.authentication,
   signup: state.signup,
+  me: state.me,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   signup: bindActionCreators(signupAction, dispatch),
+  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
 });
 
 const Signup = connect(

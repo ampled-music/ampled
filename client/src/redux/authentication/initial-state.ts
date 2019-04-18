@@ -4,4 +4,5 @@ export const initialState = {
   loggingOut: false,
   loggedOut: false,
   authModalOpen: false,
+  modalPage: 'login',
 };

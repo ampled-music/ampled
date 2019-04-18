@@ -9,10 +9,11 @@ import { initialState as authenticateInitialState } from '../../redux/authentica
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { PostsContainer } from '../artist/posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
-import { PostModal } from '../shared/post-modal/PostModal';
+import { Modal } from '../shared/modal/Modal';
 import { VideoModal } from '../shared/video-modal/VideoModal';
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
+import { PostForm } from './posts/post-form/PostForm';
 interface ArtistProps {
   match: {
     params: {
@@ -21,10 +22,11 @@ interface ArtistProps {
   };
   artists: typeof artistsInitialState;
   me: typeof meInitialState;
+  authentication: typeof authenticateInitialState;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
-type Props = typeof authenticateInitialState & Dispatchers & ArtistProps;
+type Props = Dispatchers & ArtistProps;
 
 class ArtistComponent extends React.Component<Props, any> {
   constructor(props) {
@@ -40,6 +42,12 @@ class ArtistComponent extends React.Component<Props, any> {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.getArtistInfo();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (!prevProps.me.userData && this.props.me.userData) {
+      this.getArtistInfo();
+    }
   }
 
   getArtistInfo = () => {
@@ -107,16 +115,14 @@ class ArtistComponent extends React.Component<Props, any> {
         <PostsContainer
           match={this.props.match}
           posts={artist.posts}
+          artistName={artist.name}
           accentColor={artist.accent_color}
           updateArtist={this.getArtistInfo}
           loggedUserAccess={loggedUserAccess}
         />
-        <PostModal
-          close={this.getUserConfirmation}
-          open={this.state.openPostModal}
-          discardChanges={this.discardChanges}
-          updateArtist={this.getArtistInfo}
-        />
+        <Modal open={this.state.openPostModal}>
+          <PostForm close={this.getUserConfirmation} discardChanges={this.discardChanges} />
+        </Modal>
         <VideoModal open={this.state.openVideoModal} videoUrl={artist.video_url} onClose={this.closeVideoModal} />
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}
@@ -133,6 +139,7 @@ const mapStateToProps = (state: Store) => {
     artists: state.artists,
     me: state.me,
     posts: state.posts,
+    authentication: state.authentication,
   };
 };
 

@@ -3,4 +3,8 @@ export const initialState = {
   token: undefined,
   loggingOut: false,
   loggedOut: false,
+  authModalOpen: false,
+  modalPage: 'login',
+  showSupportMessage: false,
+  artistName: undefined,
 };

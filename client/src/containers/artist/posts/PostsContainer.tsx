@@ -13,6 +13,7 @@ import { initialState as commentsInitialState } from '../../../redux/comments/in
 import { Comment } from './comments/Comment';
 import { CommentForm } from './comments/CommentForm';
 import { Post } from './post/Post';
+import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 
 interface CommentProps {
   id: string;
@@ -41,6 +42,7 @@ interface PostsProps {
   me: { id: number; artistPages: any[] };
   match: any;
   loggedUserAccess: { role: string; artistId: number };
+  artistName: string;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -92,7 +94,9 @@ class PostsContainerComponent extends React.Component<Props, any> {
   );
 
   renderPosts = () => {
-    const { posts, accentColor } = this.props;
+    const { posts, accentColor, artistName } = this.props;
+
+    console.log('this.props', this.props);
 
     if (!posts) {
       return null;
@@ -100,7 +104,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
 
     return this.sortItemsByCreationDate(posts).map((post) => (
       <div key={`post-${post.id}`} id={`post-${post.id}`} className="col-md-4">
-        <Post post={post} accentColor={accentColor} />
+        <Post post={post} accentColor={accentColor} openAuthModal={this.props.openAuthModal} artistName={artistName} />
         {this.renderComments(post)}
       </div>
     ));
@@ -126,6 +130,7 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     addComment: bindActionCreators(createCommentAction, dispatch),
+    openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
     deleteComment: bindActionCreators(deleteCommentAction, dispatch),
   };
 };

@@ -10,7 +10,9 @@ export const authModalReducer = {
   [actions.openAuthModal]: (state, { payload }) => ({
     ...state,
     authModalOpen: true,
-    modalPage: payload,
+    modalPage: payload.modalPage,
+    showSupportMessage: payload.showSupportMessage,
+    artistName: payload.artistName,
   }),
   [actions.closeAuthModal]: (state) => ({
     ...state,

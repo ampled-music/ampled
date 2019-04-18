@@ -3,7 +3,6 @@ import './post.scss';
 import cx from 'classnames';
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import { routePaths } from 'src/containers/route-paths';
 
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,7 +34,7 @@ class PostComponent extends React.Component<any, any> {
   };
 
   handlePrivatePostClick = () => {
-    this.props.history.push(routePaths.signup);
+    this.props.openAuthModal({ modalPage: 'signup', showSupportMessage: true, artistName: this.props.artistName });
   };
 
   render() {

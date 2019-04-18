@@ -104,6 +104,7 @@ class SignupComponent extends React.Component<Props, any> {
 
   render() {
     const { matchPasswordsError, emailError, passwordError } = this.state;
+    const { authentication } = this.props;
 
     const passwordErrorMessage = 'Passwords do not match.';
 
@@ -111,6 +112,9 @@ class SignupComponent extends React.Component<Props, any> {
       <div>
         <div className="login">
           <h2>SIGN UP</h2>
+          {authentication.showSupportMessage && (
+            <p>This is a private post. Sign up and become a supporter of {authentication.artistName} to access it.</p>
+          )}
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
             <input
               className="input-group-text"
@@ -167,7 +171,7 @@ class SignupComponent extends React.Component<Props, any> {
           </form>
           <label>
             Already have an account?{' '}
-            <a onClick={() => this.props.openAuthModal('login')}>
+            <a onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>
               <u>Log in</u>
             </a>
             .

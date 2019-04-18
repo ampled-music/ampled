@@ -9,6 +9,12 @@
     color: #000000;
   }
 
+  p {
+    margin: 1rem 0;
+    text-align: center;
+    width: 360px;
+  }
+
   label {
     font-family: Courier, 'Courier New', monospace;
     font-size: 18px;
@@ -34,7 +40,7 @@
 
   .form-container {
     display: flex;
-    max-width: 450px;
+    width: 450px;
     padding: 30px 20px 35px 20px;
     height: auto;
     border: none;

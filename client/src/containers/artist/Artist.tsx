@@ -115,6 +115,7 @@ class ArtistComponent extends React.Component<Props, any> {
         <PostsContainer
           match={this.props.match}
           posts={artist.posts}
+          artistName={artist.name}
           accentColor={artist.accent_color}
           updateArtist={this.getArtistInfo}
           loggedUserAccess={loggedUserAccess}

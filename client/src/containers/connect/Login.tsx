@@ -94,7 +94,7 @@ class LoginComponent extends React.Component<Props, any> {
           </label>
           <label>
             Don't have an account?{' '}
-            <a onClick={() => this.props.openAuthModal('signup')}>
+            <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
               <u>Sign up</u>
             </a>
             .

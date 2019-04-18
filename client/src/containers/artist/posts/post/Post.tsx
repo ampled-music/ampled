@@ -34,11 +34,21 @@ class PostComponent extends React.Component<any, any> {
     );
   };
 
+  handlePrivatePostClick = () => {
+    this.props.history.push(routePaths.signup);
+  };
+
   render() {
     const { classes, post, accentColor } = this.props;
 
+    const allowDetails = post.allow_details;
+
     return (
-      <div className="post">
+      <div
+        className={cx('post', { 'clickable-post': !allowDetails })}
+        onClick={() => !allowDetails && this.handlePrivatePostClick()}
+        title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
+      >
         <Card className={classes.card} style={{ border: `2px solid ${accentColor}` }}>
           <CardContent className={classes.header}>
             <div className={classes.postTitle}>
@@ -50,10 +60,7 @@ class PostComponent extends React.Component<any, any> {
           <Divider />
 
           {post.image_url && (
-            <div
-              className={cx({ 'blur-image': !post.allow_details })}
-              onClick={() => !post.allow_details && this.props.history.push(routePaths.login)}
-            >
+            <div className={cx({ 'blur-image': !allowDetails })}>
               <CardMedia className={classes.media} image={post.image_url} />
             </div>
           )}

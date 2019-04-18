@@ -1,7 +1,6 @@
-import './post-modal.scss';
+import './modal.scss';
 
 import * as React from 'react';
-import { PostForm } from 'src/containers/artist/posts/post-form/PostForm';
 
 import { Dialog } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -9,20 +8,15 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { theme } from './theme';
 
 interface Props {
-  close: any;
   open: any;
-  discardChanges: any;
-  updateArtist: any;
 }
 
-export class PostModal extends React.Component<Props, any> {
+export class Modal extends React.Component<Props, any> {
   render() {
-    const { close, discardChanges } = this.props;
-
     return (
       <MuiThemeProvider theme={theme}>
         <Dialog open={this.props.open} aria-labelledby="form-dialog-title">
-          <PostForm close={close} discardChanges={discardChanges} />
+          {this.props.children}
         </Dialog>
       </MuiThemeProvider>
     );

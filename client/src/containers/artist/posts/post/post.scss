@@ -1,4 +1,8 @@
 .post {
+  &.clickable-post {
+    cursor: pointer;
+  }
+
   .blur-image {
     -webkit-filter: blur(20px);
     -moz-filter: blur(20px);

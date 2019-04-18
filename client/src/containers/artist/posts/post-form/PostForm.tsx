@@ -19,7 +19,7 @@ import { initialState as postsInitialState } from '../../../../redux/posts/initi
 import { Upload } from './Upload';
 
 interface PostFormProps {
-  close: (hasUnsavedChanges: boolean) => React.MouseEventHandler;
+  close: (hasUnsavedChanges: any) => void;
   discardChanges: () => void;
 }
 

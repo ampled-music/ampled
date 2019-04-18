@@ -3,4 +3,5 @@ export const initialState = {
   token: undefined,
   loggingOut: false,
   loggedOut: false,
+  authModalOpen: false,
 };

@@ -9,10 +9,12 @@ import { getMeAction } from 'src/redux/me/get-me';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { Routes } from '../Routes';
+import { Login } from '../connect/Login';
+import { Modal } from '../shared/modal/Modal';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
-type Props = typeof loginInitialState & typeof meInitialState & Dispatchers;
+type Props = typeof loginInitialState & typeof meInitialState & Dispatchers & { history: any };
 
 class AppComponent extends React.Component<Props, any> {
   componentDidMount() {
@@ -29,6 +31,9 @@ class AppComponent extends React.Component<Props, any> {
     return (
       <div className="page">
         <Routes />
+        <Modal open={this.props.authModalOpen}>
+          <Login history={this.props.history} />
+        </Modal>
       </div>
     );
   }

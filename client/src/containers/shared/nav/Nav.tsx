@@ -3,6 +3,8 @@ import './nav.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
 
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +26,9 @@ interface NavComponentProps {
   };
 }
 
-type Props = typeof loginInitialState & typeof meInitialState & NavComponentProps;
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+
+type Props = typeof loginInitialState & typeof meInitialState & NavComponentProps & Dispatchers;
 
 class NavComponent extends React.Component<Props, any> {
   getLoggedUserPageAccess = () => {
@@ -51,9 +55,9 @@ class NavComponent extends React.Component<Props, any> {
         <FontAwesomeIcon className="user-image" icon={faUserCircle} />
       ) : (
         <div>
-          <Link to={routePaths.login}>
+          <a onClick={this.props.openAuthModal}>
             <b>Login</b>
-          </Link>{' '}
+          </a>{' '}
           or{' '}
           <Link to={routePaths.signup}>
             <b>Sign Up</b>
@@ -84,6 +88,13 @@ const mapStateToProps = (state: Store) => ({
   ...state.me,
 });
 
-const Nav = connect(mapStateToProps)(NavComponent);
+const mapDispatchToProps = (dispatch) => ({
+  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+});
+
+const Nav = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(NavComponent);
 
 export { Nav };

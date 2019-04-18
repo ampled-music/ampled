@@ -11,6 +11,8 @@ import { initialState as commentsInitialState } from './comments/initial-state';
 import { pages } from './ducks/get-artists-pages';
 import { me } from './me';
 import { initialState as meInitialState } from './me/initial-state';
+import { navigation } from './navigation';
+import { initialState as navigationInitialState } from './navigation/initial-state';
 import { posts } from './posts';
 import { initialState as postsInitialState } from './posts/initial-state';
 import { signup } from './signup';
@@ -23,6 +25,7 @@ export interface Store {
   comments: typeof commentsInitialState;
   signup: typeof signupInitialState;
   me: typeof meInitialState;
+  navigation: typeof navigationInitialState;
 }
 
 const ducks = combineReducers({
@@ -33,6 +36,7 @@ const ducks = combineReducers({
   me,
   comments,
   signup,
+  navigation,
 });
 
 const configureStore = () => createStore(ducks, composeWithDevTools(applyMiddleware(thunk)));

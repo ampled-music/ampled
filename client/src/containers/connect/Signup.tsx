@@ -76,7 +76,7 @@ class SignupComponent extends React.Component<Props, any> {
     this.setState({ [name]: value, matchPasswordsError: false, passwordError: null, emailError: null });
   };
 
-  toggle = (e) => {
+  toggle = () => {
     this.setState({ acceptTerms: !this.state.acceptTerms });
   };
 

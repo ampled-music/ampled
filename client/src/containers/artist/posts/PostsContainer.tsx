@@ -8,12 +8,12 @@ import { createCommentAction } from 'src/redux/comments/create';
 import { deleteCommentAction } from 'src/redux/comments/delete';
 import { Store } from 'src/redux/configure-store';
 
+import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as commentsInitialState } from '../../../redux/comments/initial-state';
 import { Comment } from './comments/Comment';
 import { CommentForm } from './comments/CommentForm';
 import { Post } from './post/Post';
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 
 interface CommentProps {
   id: string;
@@ -95,8 +95,6 @@ class PostsContainerComponent extends React.Component<Props, any> {
 
   renderPosts = () => {
     const { posts, accentColor, artistName, me } = this.props;
-
-    console.log('this.props', this.props);
 
     if (!posts) {
       return null;

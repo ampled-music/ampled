@@ -91,7 +91,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         <button onClick={this.props.openVideoModal} className="artist-header__play">
           <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />
         </button>
-        <img className="artist-header__message-image" src={artist.video_url} />
+        <img className="artist-header__message-image" src={artist.video_screenshot_url} />
       </div>
     );
   };

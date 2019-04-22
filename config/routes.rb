@@ -24,7 +24,9 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { confirmations: "confirmations", registrations: "registrations" }
 
-  root to: "app#index"
+  get "*page", to: "static#index", constraints: ->(req) do
+    !req.xhr? && req.format.html?
+  end
 
-  match "*path" => redirect("/"), via: :get
+  root to: "static#index"
 end

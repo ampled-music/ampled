@@ -1,9 +1,9 @@
 class PagesController < ApplicationController
+  layout "empty"
   def root
   end
 
   def stripe
-    account = Stripe::Account.retrieve("{CONNECTED_STRIPE_ACCOUNT_ID}")
-    account.login_links.create()
+    @current_user = User.where(email: "benton.anderson@gmail.com").first
   end
 end

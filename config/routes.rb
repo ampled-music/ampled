@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     get "/add_credit_card", to: "stripe#add_credit_card"
     post "/save_card", to: "stripe#save_card"
 
-    # TODO change this to POST
-    get '/subscribe/:artist_page_id', to: "stripe#subscribe"
+    # TODO: change this to POST
+    get "/subscribe/:artist_page_id", to: "stripe#subscribe"
   end
 end

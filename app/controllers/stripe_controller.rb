@@ -33,37 +33,41 @@ class StripeController < ApplicationController
     stripe_subscription = create_stripe_subscription(customer.id, artist_page, plan)
 
     @subscription = Subscription.create(user: current_user, artist_page: artist_page, plan_id: plan.id)
-    redirect_to '/stripe'
-  rescue Exception => e
-    binding.pry
+    redirect_to "/stripe"
   end
 
   private
 
   def create_stripe_subscription(customer_id, artist_page, plan)
-    Stripe::Subscription.create({
-      customer: customer_id,
-      plan: plan.stripe_id,
-      expand: ["latest_invoice.payment_intent"]
-    }, stripe_account: artist_page.stripe_user_id)
+    Stripe::Subscription.create(
+      {
+        customer: customer_id,
+        plan: plan.stripe_id,
+        expand: ["latest_invoice.payment_intent"]
+      }, stripe_account: artist_page.stripe_user_id
+    )
   end
 
   def setup_account(artist_page)
-    product = Stripe::Product.create({
-      name: 'Ampled Support',
-      type: 'service',
-    }, stripe_account: artist_page.stripe_user_id)
+    product = Stripe::Product.create(
+      {
+        name: "Ampled Support",
+        type: "service"
+      }, stripe_account: artist_page.stripe_user_id
+    )
 
     artist_page.update(stripe_product_id: product.id)
 
     amount = 5 * 100
-    plan = Stripe::Plan.create({
-      product: product.id,
-      nickname: 'Ampled Support $5',
-      interval: 'month',
-      currency: 'usd',
-      amount: amount,
-    }, stripe_account: artist_page.stripe_user_id)
+    plan = Stripe::Plan.create(
+      {
+        product: product.id,
+        nickname: "Ampled Support $5",
+        interval: "month",
+        currency: "usd",
+        amount: amount
+      }, stripe_account: artist_page.stripe_user_id
+    )
 
     artist_page.plans << Plan.new(stripe_id: plan.id, amount: amount)
   end

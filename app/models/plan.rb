@@ -16,7 +16,6 @@
 #  fk_rails_...  (artist_page_id => artist_pages.id)
 #
 
-
 class Plan < ApplicationRecord
   belongs_to :artist_page
 end

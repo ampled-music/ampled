@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { confirmations: "confirmations", registrations: "registrations" }
 
-  root to: "pages#root"
+  root to: "app#index"
 
-  get "*path", to: "pages#root"
+  get "*path", to: "app#index"
 end

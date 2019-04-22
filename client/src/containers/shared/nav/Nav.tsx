@@ -24,6 +24,7 @@ interface NavComponentProps {
     };
     path: string;
   };
+  history: any;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -47,6 +48,14 @@ class NavComponent extends React.Component<Props, any> {
     return (
       !loggedUserAccess || ![UserRoles.Supporter.toString(), UserRoles.Owner.toString()].includes(loggedUserAccess.role)
     );
+  };
+
+  handleSupportClick = () => {
+    if (this.props.userData) {
+      this.props.history.push(routePaths.support.replace(':id', this.props.match.params.id));
+    } else {
+      this.props.openAuthModal({ modalPage: 'signup' });
+    }
   };
 
   renderLoginLink = () => (
@@ -73,7 +82,11 @@ class NavComponent extends React.Component<Props, any> {
         <Link className="logo" to="/">
           <img src={logo} alt="logo" height="100%" />
         </Link>
-        {this.showSupportButton() && <button className="btn btn-support">Support</button>}
+        {this.showSupportButton() && (
+          <button className="btn btn-support" onClick={this.handleSupportClick}>
+            Support
+          </button>
+        )}
         <div className="menus">
           {this.renderLoginLink()}
           <Menu />

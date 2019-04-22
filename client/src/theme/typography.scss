@@ -1,8 +1,6 @@
-$font-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-  "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-  sans-serif;
-$font-monospace: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-  monospace;
+$font-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+  'Droid Sans', 'Helvetica Neue', sans-serif;
+$font-monospace: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 
 @mixin body-text {
   font-family: $font-sans-serif;

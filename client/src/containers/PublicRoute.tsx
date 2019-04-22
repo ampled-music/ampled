@@ -5,8 +5,8 @@ import { Nav } from './shared/nav/Nav';
 export const PublicRoute = ({ component: Component, ...rest }) => {
   const renderComponent = (props) => (
     <div className="public-routes">
-      <div className="card">
-        <Nav match={props.match} />
+      <div>
+        <Nav match={props.match} history={props.history} />
         <main>
           <Component {...props} />
         </main>

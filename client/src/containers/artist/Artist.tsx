@@ -29,15 +29,11 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 type Props = Dispatchers & ArtistProps;
 
 class ArtistComponent extends React.Component<Props, any> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: this.props.match.params.id,
-      openPostModal: false,
-      openVideoModal: false,
-      showConfirmationDialog: false,
-    };
-  }
+  state = {
+    openPostModal: false,
+    openVideoModal: false,
+    showConfirmationDialog: false,
+  };
 
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -51,7 +47,7 @@ class ArtistComponent extends React.Component<Props, any> {
   }
 
   getArtistInfo = () => {
-    this.props.getArtist(this.state.id);
+    this.props.getArtist(this.props.match.params.id);
   };
 
   getUserConfirmation = (hasUnsavedChanges) => {

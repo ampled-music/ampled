@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { getArtistAction } from 'src/redux/artists/get-details';
 import { Store } from 'src/redux/configure-store';
 
+import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { initialState as artistsInitialState } from '../../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
@@ -38,6 +39,12 @@ export class SupportComponent extends React.Component<Props, any> {
 
   getArtistInfo = () => {
     this.props.getArtist(this.props.match.params.id);
+  };
+
+  handleSupportClick = () => {
+    if (!this.props.me.userData) {
+      this.props.openAuthModal({ modalPage: 'signup' });
+    }
   };
 
   renderSupportHeader = (artistName) => (
@@ -80,11 +87,15 @@ export class SupportComponent extends React.Component<Props, any> {
     </div>
   );
 
-  renderSupportAction = (artistName) => (
-    <div className="support-action">
-      <button>SUPPORT {artistName.toUpperCase()}</button>
-    </div>
-  );
+  renderSupportAction = (artistName) => {
+    const buttonLabel = this.props.me.userData ? `SUPPORT ${artistName.toUpperCase()}` : 'SIGNUP OR LOGIN TO SUPPORT';
+
+    return (
+      <div className="support-action">
+        <button onClick={this.handleSupportClick}>{buttonLabel}</button>
+      </div>
+    );
+  };
 
   render() {
     const artist = this.props.artists.artist;
@@ -123,6 +134,7 @@ const mapStateToProps = (state: Store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getArtist: bindActionCreators(getArtistAction, dispatch),
+    openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   };
 };
 

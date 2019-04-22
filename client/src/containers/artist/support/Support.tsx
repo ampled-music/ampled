@@ -6,10 +6,14 @@ import { bindActionCreators } from 'redux';
 import { getArtistAction } from 'src/redux/artists/get-details';
 import { Store } from 'src/redux/configure-store';
 
+import { routePaths } from 'src/containers/route-paths';
 import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { getMeAction } from 'src/redux/me/get-me';
+import { createSubscriptionAction } from 'src/redux/subscriptions/create';
 import { initialState as artistsInitialState } from '../../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
+import { initialState as subscriptionsInitialState } from '../../../redux/subscriptions/initial-state';
 
 interface ArtistProps {
   match: {
@@ -20,30 +24,61 @@ interface ArtistProps {
   artists: typeof artistsInitialState;
   me: typeof meInitialState;
   authentication: typeof authenticateInitialState;
+  subscriptions: typeof subscriptionsInitialState;
+  history: any;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 type Props = Dispatchers & ArtistProps;
 
 export class SupportComponent extends React.Component<Props, any> {
+  state = {
+    supportLevelValue: undefined,
+  };
+
   componentDidMount() {
     window.scrollTo(0, 0);
     this.getArtistInfo();
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.me.userData && this.props.me.userData) {
+    const { me, artists, subscriptions, getMe } = this.props;
+
+    if (!prevProps.me.userData && me.userData) {
       this.getArtistInfo();
     }
+
+    if (subscriptions.subscriptionCreated) {
+      getMe();
+      this.redirectToArtistsPage();
+    }
+
+    if (artists.artist.supporters && artists.artist.supporters.find((supporter) => supporter.id === me.userData.id)) {
+      this.redirectToArtistsPage();
+    }
   }
+
+  redirectToArtistsPage = () => {
+    const { history, match } = this.props;
+
+    history.push(routePaths.artists.replace(':id', match.params.id));
+  };
 
   getArtistInfo = () => {
     this.props.getArtist(this.props.match.params.id);
   };
 
+  handleChange = (event) => {
+    const { value } = event.target;
+    this.setState({ supportLevelValue: value });
+  };
+
   handleSupportClick = () => {
     if (!this.props.me.userData) {
       this.props.openAuthModal({ modalPage: 'signup' });
+    } else {
+      const artistPageId = this.props.match.params.id;
+      this.props.createSubscription({ artistPageId, supportLevelValue: this.state.supportLevelValue });
     }
   };
 
@@ -77,7 +112,13 @@ export class SupportComponent extends React.Component<Props, any> {
       <h3>ENTER YOUR SUPPORT LEVEL</h3>
       <div className="support-value-field">
         <p>$</p>
-        <input type="number" name="support-level" placeholder="6.37" />
+        <input
+          type="number"
+          name="supportLevelValue"
+          placeholder="6.37"
+          onChange={this.handleChange}
+          value={this.state.supportLevelValue}
+        />
         <p className="month-text">/Month</p>
       </div>
       <p className="support-value-description">
@@ -128,13 +169,16 @@ const mapStateToProps = (state: Store) => {
     artists: state.artists,
     me: state.me,
     authentication: state.authentication,
+    subscriptions: state.subscriptions,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getArtist: bindActionCreators(getArtistAction, dispatch),
+    getMe: bindActionCreators(getMeAction, dispatch),
     openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+    createSubscription: bindActionCreators(createSubscriptionAction, dispatch),
   };
 };
 

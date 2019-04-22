@@ -17,6 +17,8 @@ import { posts } from './posts';
 import { initialState as postsInitialState } from './posts/initial-state';
 import { signup } from './signup';
 import { initialState as signupInitialState } from './signup/initial-state';
+import { subscriptions } from './subscriptions';
+import { initialState as subscriptionsInitialState } from './subscriptions/initial-state';
 
 export interface Store {
   posts: typeof postsInitialState;
@@ -26,6 +28,7 @@ export interface Store {
   signup: typeof signupInitialState;
   me: typeof meInitialState;
   navigation: typeof navigationInitialState;
+  subscriptions: typeof subscriptionsInitialState;
 }
 
 const ducks = combineReducers({
@@ -37,6 +40,7 @@ const ducks = combineReducers({
   comments,
   signup,
   navigation,
+  subscriptions,
 });
 
 const configureStore = () => createStore(ducks, composeWithDevTools(applyMiddleware(thunk)));

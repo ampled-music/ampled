@@ -89,12 +89,12 @@ export class SupportComponent extends React.Component<Props, any> {
     </div>
   );
 
-  renderArtistImage = () => (
-    <img
-      className="support-artist-image"
-      src="https://images.pexels.com/photos/1749822/pexels-photo-1749822.jpeg?cs=srgb&dl=backlit-band-concert-1749822.jpg"
-    />
-  );
+  renderArtistImage = (images) => {
+    const placeholderImage =
+      'https://images.pexels.com/photos/1749822/pexels-photo-1749822.jpeg?cs=srgb&dl=backlit-band-concert-1749822.jpg';
+
+    return <img className="support-artist-image" src={images.length ? images[0] : placeholderImage} />;
+  };
 
   renderArtists = (owners) => (
     <div className="support-artists">
@@ -152,7 +152,7 @@ export class SupportComponent extends React.Component<Props, any> {
         {this.renderSupportHeader(artistName)}
         <div className="stripe" />
         <div className="support-content">
-          {this.renderArtistImage()}
+          {this.renderArtistImage(artist.images)}
           <div className="support-central-area">
             {this.renderArtists(artist.owners)}
             {this.renderSupportLevelForm(artistName)}

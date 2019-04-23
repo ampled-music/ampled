@@ -15,5 +15,5 @@ p #{@current_user.email}
     - if @current_user.stripe_customer_id.present?
       = link_to 'support', "/subscribe/#{ap.id}"
   -else
-    a href="https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/stripe_oauth_callback&client_id=ca_Eowu0ycKNxFo46f8hqlCNCpt4w26bxer&state=#{ap.stripe_state_token}"
+    a href="#{stripe_signup_url(ap)}"
       p set up stripe

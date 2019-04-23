@@ -43,7 +43,8 @@ class StripeController < ApplicationController
       {
         customer: customer_id,
         plan: plan.stripe_id,
-        expand: ["latest_invoice.payment_intent"]
+        expand: ["latest_invoice.payment_intent"],
+        application_fee_percent: 15,
       }, stripe_account: artist_page.stripe_user_id
     )
   end

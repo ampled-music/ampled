@@ -39,7 +39,7 @@ type Props = Dispatchers & ArtistProps;
 
 export class SupportComponent extends React.Component<Props, any> {
   state = {
-    supportLevelValue: undefined,
+    supportLevelValue: 3,
   };
 
   componentDidMount() {
@@ -128,15 +128,14 @@ export class SupportComponent extends React.Component<Props, any> {
         <input
           type="number"
           name="supportLevelValue"
-          placeholder="6.37"
           onChange={this.handleChange}
           value={this.state.supportLevelValue}
         />
         <p className="month-text">/Month</p>
       </div>
       <p className="support-value-description">
-        $6.37 is the average monthly support amount for {artistName}, but whatever your support level; the band
-        certainly appreciates it. However, the minimum is $3 to cover the costs and keep the lights on at Ampled.
+        $3 is the average monthly support amount for {artistName}, but whatever your support level; the band certainly
+        appreciates it. However, the minimum is $3 to cover the costs and keep the lights on at Ampled.
       </p>
     </div>
   );
@@ -146,7 +145,9 @@ export class SupportComponent extends React.Component<Props, any> {
 
     return (
       <div className="support-action">
-        <button onClick={this.handleSupportClick}>{buttonLabel}</button>
+        <button disabled={!this.state.supportLevelValue} onClick={this.handleSupportClick}>
+          {buttonLabel}
+        </button>
       </div>
     );
   };

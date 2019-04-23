@@ -3,12 +3,13 @@ import './stripe-payment-provider.scss';
 import * as React from 'react';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 
+import { config } from 'src/config';
 import { CheckoutForm } from './CheckoutForm';
 
 export const StripePaymentProvider = (
   { createSubscription, declineStep, artistPageId, subscriptionLevelValue } = this.props,
 ) => (
-  <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+  <StripeProvider apiKey={config.stripeApiKey}>
     <Elements>
       <CheckoutForm
         artistPageId={artistPageId}

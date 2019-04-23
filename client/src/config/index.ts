@@ -1,5 +1,6 @@
 export const config = {
   apiUrl: process.env.REACT_APP_API_URL || 'http://localhost:3000',
+  stripeApiKey: process.env.REACT_APP_STRIPE_API_KEY || 'pk_test_TYooMQauvdEDq54NiTphI7jx',
   localStorageKeys: {
     token: 'token',
   },

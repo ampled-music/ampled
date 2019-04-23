@@ -8,7 +8,7 @@ import { CheckoutForm } from './CheckoutForm';
 export const StripePaymentProvider = (
   { createSubscription, declineStep, artistPageId, subscriptionLevelValue } = this.props,
 ) => (
-  <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+  <StripeProvider apiKey="pk_test_aTJ8eejqwF4Jdavp5DvlM9s7007l3Gps6E">
     <Elements>
       <CheckoutForm
         artistPageId={artistPageId}

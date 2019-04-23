@@ -26,8 +26,6 @@ class CheckoutFormComponent extends React.Component<Props, any> {
 
     let { token: paymentToken, error } = await this.props.stripe.createToken();
 
-    paymentToken && alert(paymentToken.id);
-
     if (error) {
       showToastMessage(error.message, MessageType.ERROR);
       this.setState({ disableActions: false });

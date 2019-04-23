@@ -820,6 +820,10 @@ GEM
       railties (>= 3.0.0)
     faker (1.9.1)
       i18n (>= 0.7)
+    faraday (0.15.4)
+      multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.13.1)
+      faraday (>= 0.7.4, < 1.0)
     ffi (1.9.25)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -876,6 +880,9 @@ GEM
       railties (>= 3.1)
     msgpack (1.2.4)
     multi_json (1.13.1)
+    multipart-post (2.0.0)
+    net-http-persistent (3.0.0)
+      connection_pool (~> 2.2)
     netrc (0.11.0)
     nio4r (2.3.1)
     nokogiri (1.8.5)
@@ -1045,6 +1052,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stripe (4.12.0)
+      faraday (~> 0.13)
+      net-http-persistent (~> 3.0)
     temple (0.8.0)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
@@ -1096,6 +1106,8 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  faraday
+  faraday_middleware
   jbuilder
   jquery-rails
   jwt
@@ -1125,6 +1137,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   spring-watcher-listen
+  stripe
   uglifier
   zencoder
 

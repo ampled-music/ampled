@@ -1,0 +1,19 @@
+
+
+p #{@current_user.email}
+
+- if @current_user.stripe_customer_id.present?
+  p= "Stripe Customer ID: #{@current_user.stripe_customer_id}"
+-else
+  = link_to "add credit card", '/add_credit_card'
+
+- ArtistPage.all.each do |ap|
+  h3 #{ap.name}
+  - if ap.stripe_user_id.present?
+    a href="#{Stripe::Account.retrieve(ap.stripe_user_id).login_links.create['url']}"
+      p dashboard
+    - if @current_user.stripe_customer_id.present?
+      = link_to 'support', "/subscribe/#{ap.id}"
+  -else
+    a href="#{stripe_signup_url(ap)}"
+      p set up stripe

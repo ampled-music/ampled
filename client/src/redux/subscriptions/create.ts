@@ -2,20 +2,22 @@ import { createActionThunk } from 'redux-thunk-actions';
 
 import { createSubscription } from '../../api/artist/create-subscription';
 import { actions } from './actions';
+import { initialState, SubscriptionStep } from './initial-state';
 
 export const createSubscriptionAction = createActionThunk(
   actions.createSubscription,
-  (subscription: { artistPageId: number; subscriptionLevelValue: number }) => createSubscription(subscription),
+  (subscription: { artistPageId: number; subscriptionLevelValue: number; paymentToken: string }) =>
+    createSubscription(subscription),
 );
 
 export const createSubscriptionReducer = {
   [createSubscriptionAction.STARTED]: (state) => ({
     ...state,
-    creatingSubscription: true,
+    processing: true,
   }),
   [createSubscriptionAction.SUCCEEDED]: (state) => ({
     ...state,
-    subscriptionCreated: true,
+    status: SubscriptionStep.Finished,
   }),
   [createSubscriptionAction.FAILED]: (state, { payload }) => ({
     ...state,
@@ -23,7 +25,6 @@ export const createSubscriptionReducer = {
   }),
   [createSubscriptionAction.ENDED]: (state) => ({
     ...state,
-    subscriptionCreated: false,
-    creatingSubscription: false,
+    ...initialState,
   }),
 };

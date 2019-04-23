@@ -39,4 +39,17 @@ class ArtistPage < ApplicationRecord
     update(state_token: SecureRandom.uuid)
     state_token
   end
+
+  def stripe_signup_url
+    return "" if stripe_user_id.present?
+
+    base = "https://connect.stripe.com/express/oauth/authorize"
+    params = {
+      redirect_uri: "http://localhost:3000/stripe_oauth_callback",
+      client_id: "ca_Eowu0ycKNxFo46f8hqlCNCpt4w26bxer",
+      state: stripe_state_token,
+      "suggested_capabilities[]" => "card_payments"
+    }.to_query
+    "#{base}?#{params}"
+  end
 end

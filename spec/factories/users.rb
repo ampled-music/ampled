@@ -9,6 +9,7 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  id                     :bigint(8)        not null, primary key
+#  jti                    :string           not null
 #  locked_at              :datetime
 #  name                   :string           not null
 #  profile_image_url      :string
@@ -21,6 +22,7 @@
 #
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_jti                   (jti) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
@@ -32,5 +34,6 @@ FactoryBot.define do
     factory :confirmed_user do
       confirmed_at { Time.zone.now }
     end
+    jti { SecureRandom.uuid }
   end
 end

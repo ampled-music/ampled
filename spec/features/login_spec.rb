@@ -44,7 +44,7 @@ RSpec.describe "POST /users/sign_in.json", type: :request do
   end
 end
 
-RSpec.describe "DELETE /logout", type: :request do
+RSpec.describe "DELETE /users/sign_out.json", type: :request do
   let(:url) { "/users/sign_out.json" }
 
   it "returns 204, no content" do

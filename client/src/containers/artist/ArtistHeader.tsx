@@ -130,22 +130,22 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__supporters">
         <div className="artist-header__supporter-title">{artist.supporters.length} Supporters</div>
 
-        {artist.supporters.slice(0, 2).map((supporter) => {
-          return (
-            <div className="row align-items-center">
-              <div className="col-3">{this.renderSupporter({ supporter, borderColor })}</div>
-              <div className="col-9">
-                <div className="artist-header__person_name">{supporter.name}</div>
-                <div className="artist-header__person_quote" />
-              </div>
+        {artist.supporters.slice(0, 2).map((supporter) => (
+          <div key={supporter.id} className="row align-items-center">
+            <div className="col-3">{this.renderSupporter({ supporter, borderColor })}</div>
+            <div className="col-9">
+              <div className="artist-header__person_name">{supporter.name}</div>
+              <div className="artist-header__person_quote" />
             </div>
-          );
-        })}
+          </div>
+        ))}
 
         <div className="row justify-content-start no-gutters">
-          {artist.supporters.slice(2, 24).map((supporter) => {
-            return <div className="col-2">{this.renderSupporter({ supporter, borderColor, isSmall: true })}</div>;
-          })}
+          {artist.supporters.slice(2, 24).map((supporter) => (
+            <div key={supporter.id} className="col-2">
+              {this.renderSupporter({ supporter, borderColor, isSmall: true })}
+            </div>
+          ))}
         </div>
       </div>
     );

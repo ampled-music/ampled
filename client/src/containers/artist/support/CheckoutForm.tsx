@@ -1,5 +1,8 @@
+import './checkout-form.scss';
+
 import * as React from 'react';
-import { injectStripe, CardElement } from 'react-stripe-elements';
+import { injectStripe, CardCVCElement, CardExpiryElement, CardNumberElement } from 'react-stripe-elements';
+import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast';
 
 interface Props {
   artistPageId: number;
@@ -12,11 +15,28 @@ interface Props {
 }
 
 class CheckoutFormComponent extends React.Component<Props, any> {
+  state = {
+    disableActions: false,
+  };
+
   submit = async (event) => {
+    this.setState({ disableActions: true });
+
     event.preventDefault();
 
-    let { token: paymentToken } = await this.props.stripe.createToken();
+    let { token: paymentToken, error } = await this.props.stripe.createToken();
 
+    paymentToken && alert(paymentToken.id);
+
+    if (error) {
+      showToastMessage(error.message, MessageType.ERROR);
+      this.setState({ disableActions: false });
+    } else {
+      this.createSubscription(paymentToken);
+    }
+  };
+
+  createSubscription = (paymentToken: { id: string }) => {
     const { artistPageId, subscriptionLevelValue } = this.props;
 
     paymentToken &&
@@ -25,14 +45,29 @@ class CheckoutFormComponent extends React.Component<Props, any> {
 
   render() {
     return (
-      <div className="checkout">
-        <p>Would you like to complete the purchase?</p>
+      <div className="checkout-form-container">
         <form onSubmit={this.submit}>
-          <CardElement />
-          <button type="cancel" onClick={this.props.declineStep}>
-            CHANGE AMOUNT
-          </button>
-          <button type="submit">YEAH, SUPPORT!</button>
+          <p>ENTER YOUR PAYMENT DETAILS</p>
+          <label>
+            Card Number
+            <CardNumberElement />
+          </label>
+          <label>
+            Expiration Date
+            <CardExpiryElement />
+          </label>
+          <label>
+            CVC
+            <CardCVCElement />
+          </label>
+          <div className="actions">
+            <button disabled={this.state.disableActions} className="btn" type="cancel" onClick={this.props.declineStep}>
+              CHANGE AMOUNT
+            </button>
+            <button disabled={this.state.disableActions} className="btn btn-support-action" type="submit">
+              SUPPORT!
+            </button>
+          </div>
         </form>
       </div>
     );

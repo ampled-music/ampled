@@ -4,4 +4,7 @@ class PagesController < ApplicationController
   def root
   end
 
+  def stripe_success
+  end
+
 end

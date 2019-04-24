@@ -24,14 +24,12 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { confirmations: "confirmations", registrations: "registrations" }
 
+  get "/stripe_success", to: "pages#stripe_success"
+  devise_scope :user do
+    get "stripe_oauth_callback", to: "stripe#callback"
+  end
+
   root to: "react#index"
   get "/*path", to: "react#index"
 
-  devise_scope :user do
-    get "stripe_oauth_callback", to: "stripe#callback"
-    get "/add_credit_card", to: "stripe#add_credit_card"
-    post "/save_card", to: "stripe#save_card"
-    # TODO: change this to POST
-    get "/subscribe/:artist_page_id", to: "stripe#subscribe"
-  end
 end

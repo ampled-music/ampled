@@ -52,4 +52,9 @@ class ArtistPage < ApplicationRecord
     }.to_query
     "#{base}?#{params}"
   end
+
+  def stripe_dashboard_url
+    return "" if stripe_user_id.blank?
+    Stripe::Account.retrieve(stripe_user_id).login_links.create['url']
+  end
 end

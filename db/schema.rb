@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+ActiveRecord::Schema.define(version: 2019_04_22_005316) do
 
-ActiveRecord::Schema.define(version: 2019_04_18_022045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,10 @@ ActiveRecord::Schema.define(version: 2019_04_18_022045) do
     t.datetime "updated_at", null: false
     t.string "video_url"
     t.string "video_screenshot_url"
+    t.string "state_token"
+    t.string "stripe_user_id"
+    t.string "stripe_access_token"
+    t.string "stripe_product_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -59,6 +63,13 @@ ActiveRecord::Schema.define(version: 2019_04_18_022045) do
     t.index ["user_id", "artist_page_id"], name: "index_page_ownerships_on_user_id_and_artist_page_id"
   end
 
+  create_table "plans", force: :cascade do |t|
+    t.integer "amount", null: false
+    t.string "stripe_id", null: false
+    t.bigint "artist_page_id", null: false
+    t.index ["artist_page_id"], name: "index_plans_on_artist_page_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.bigint "artist_page_id"
     t.bigint "user_id"
@@ -76,7 +87,10 @@ ActiveRecord::Schema.define(version: 2019_04_18_022045) do
   create_table "subscriptions", force: :cascade do |t|
     t.bigint "artist_page_id"
     t.bigint "user_id"
+    t.string "stripe_customer_id"
+    t.bigint "plan_id", null: false
     t.index ["artist_page_id"], name: "index_subscriptions_on_artist_page_id"
+    t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
@@ -95,6 +109,7 @@ ActiveRecord::Schema.define(version: 2019_04_18_022045) do
     t.datetime "locked_at"
     t.string "profile_image_url"
     t.string "jti", null: false
+    t.string "stripe_customer_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
@@ -103,8 +118,10 @@ ActiveRecord::Schema.define(version: 2019_04_18_022045) do
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "plans", "artist_pages"
   add_foreign_key "posts", "artist_pages"
   add_foreign_key "posts", "users"
   add_foreign_key "subscriptions", "artist_pages"
+  add_foreign_key "subscriptions", "plans"
   add_foreign_key "subscriptions", "users"
 end

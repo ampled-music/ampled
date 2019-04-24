@@ -12,14 +12,7 @@ services:
     environment:
       NODE_ENV: development
       REACT_APP_API_URL: http://localhost:3000
-  # server:
-  #   build: .
-  #   command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - db
-  #     - mailcatcher
+      REACT_APP_STRIPE_API_KEY: pk_test_TYooMQauvdEDq54NiTphI7jx
   mailcatcher:
     image: zolweb/docker-mailcatcher:latest
     ports:

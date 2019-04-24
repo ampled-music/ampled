@@ -10,6 +10,10 @@
 #  instagram_handle     :string
 #  location             :string
 #  name                 :string
+#  state_token          :string
+#  stripe_access_token  :string
+#  stripe_product_id    :string
+#  stripe_user_id       :string
 #  twitter_handle       :string
 #  updated_at           :datetime         not null
 #  video_screenshot_url :string

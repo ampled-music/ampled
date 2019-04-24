@@ -27,7 +27,11 @@ Rails.application.routes.draw do
     sessions: "sessions"
   }
 
-  root to: "react#index"
+  get "/stripe_success", to: "pages#stripe_success"
+  devise_scope :user do
+    get "stripe_oauth_callback", to: "stripe#callback"
+  end
 
+  root to: "react#index"
   get "/*path", to: "react#index"
 end

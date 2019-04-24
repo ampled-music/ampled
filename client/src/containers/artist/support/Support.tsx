@@ -3,17 +3,23 @@ import './support.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getArtistAction } from 'src/redux/artists/get-details';
-import { Store } from 'src/redux/configure-store';
-
 import { routePaths } from 'src/containers/route-paths';
+import { getArtistAction } from 'src/redux/artists/get-details';
 import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { Store } from 'src/redux/configure-store';
 import { getMeAction } from 'src/redux/me/get-me';
 import { createSubscriptionAction } from 'src/redux/subscriptions/create';
-import { initialState as artistsInitialState } from '../../../redux/artists/initial-state';
+import { declineStepAction } from 'src/redux/subscriptions/decline-step';
+import { startSubscriptionAction } from 'src/redux/subscriptions/start-subscription';
+
+import { initialState as artistsInitialState, ArtistModel } from '../../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
-import { initialState as subscriptionsInitialState } from '../../../redux/subscriptions/initial-state';
+import {
+  initialState as subscriptionsInitialState,
+  SubscriptionStep,
+} from '../../../redux/subscriptions/initial-state';
+import { StripePaymentProvider } from './StripePaymentProvider';
 
 interface ArtistProps {
   match: {
@@ -33,7 +39,7 @@ type Props = Dispatchers & ArtistProps;
 
 export class SupportComponent extends React.Component<Props, any> {
   state = {
-    supportLevelValue: undefined,
+    supportLevelValue: 3,
   };
 
   componentDidMount() {
@@ -48,7 +54,7 @@ export class SupportComponent extends React.Component<Props, any> {
       this.getArtistInfo();
     }
 
-    if (subscriptions.subscriptionCreated) {
+    if (subscriptions.status === SubscriptionStep.Finished) {
       getMe();
       this.redirectToArtistsPage();
     }
@@ -77,9 +83,16 @@ export class SupportComponent extends React.Component<Props, any> {
     if (!this.props.me.userData) {
       this.props.openAuthModal({ modalPage: 'signup' });
     } else {
-      const artistPageId = this.props.match.params.id;
-      this.props.createSubscription({ artistPageId, supportLevelValue: this.state.supportLevelValue });
+      this.startSubscription();
     }
+  };
+
+  startSubscription = () => {
+    const artistPageId = this.props.match.params.id;
+    this.props.startSubscription({
+      artistPageId,
+      supportLevelValue: this.state.supportLevelValue,
+    });
   };
 
   renderSupportHeader = (artistName) => (
@@ -97,9 +110,9 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   renderArtists = (owners) => (
-    <div className="support-artists">
-      {owners.map((owner) => (
-        <div className="support-artist-info">
+    <div key="artists" className="support-artists">
+      {owners.map((owner, index) => (
+        <div key={index} className="support-artist-info">
           <img src={owner.profile_image_url} />
           <p>{owner.name}</p>
         </div>
@@ -108,38 +121,63 @@ export class SupportComponent extends React.Component<Props, any> {
   );
 
   renderSupportLevelForm = (artistName) => (
-    <div className="support-level-form">
+    <div key="support-level-form" className="support-level-form">
       <h3>ENTER YOUR SUPPORT LEVEL</h3>
       <div className="support-value-field">
         <p>$</p>
         <input
           type="number"
           name="supportLevelValue"
-          placeholder="6.37"
           onChange={this.handleChange}
           value={this.state.supportLevelValue}
         />
         <p className="month-text">/Month</p>
       </div>
       <p className="support-value-description">
-        $6.37 is the average monthly support amount for {artistName}, but whatever your support level; the band
-        certainly appreciates it. However, the minimum is $3 to cover the costs and keep the lights on at Ampled.
+        $3 is the average monthly support amount for {artistName}, but whatever your support level; the band certainly
+        appreciates it. However, the minimum is $3 to cover the costs and keep the lights on at Ampled.
       </p>
     </div>
   );
 
-  renderSupportAction = (artistName) => {
+  renderStartSubscriptionAction = (artistName) => {
     const buttonLabel = this.props.me.userData ? `SUPPORT ${artistName.toUpperCase()}` : 'SIGNUP OR LOGIN TO SUPPORT';
 
     return (
       <div className="support-action">
-        <button onClick={this.handleSupportClick}>{buttonLabel}</button>
+        <button disabled={!this.state.supportLevelValue} onClick={this.handleSupportClick}>
+          {buttonLabel}
+        </button>
       </div>
     );
   };
 
+  renderPaymentStep = (artist: ArtistModel) => {
+    const { subscriptions, createSubscription, declineStep } = this.props;
+
+    const { artistPageId, subscriptionLevelValue } = subscriptions;
+
+    switch (subscriptions.status) {
+      case SubscriptionStep.SupportLevel:
+        return [this.renderArtists(artist.owners), this.renderSupportLevelForm(artist.name)];
+      case SubscriptionStep.PaymentDetails:
+        return (
+          <StripePaymentProvider
+            artistPageId={artistPageId}
+            subscriptionLevelValue={subscriptionLevelValue}
+            createSubscription={createSubscription}
+            declineStep={declineStep}
+          />
+        );
+      default:
+        break;
+    }
+  };
+
   render() {
-    const artist = this.props.artists.artist;
+    const { artists, subscriptions } = this.props;
+
+    const artist = artists.artist;
 
     if (!Object.keys(artist).length) {
       return null;
@@ -153,12 +191,9 @@ export class SupportComponent extends React.Component<Props, any> {
         <div className="stripe" />
         <div className="support-content">
           {this.renderArtistImage(artist.images)}
-          <div className="support-central-area">
-            {this.renderArtists(artist.owners)}
-            {this.renderSupportLevelForm(artistName)}
-          </div>
+          <div className="support-central-area">{this.renderPaymentStep(artist)}</div>
         </div>
-        {this.renderSupportAction(artistName)}
+        {subscriptions.status === SubscriptionStep.SupportLevel && this.renderStartSubscriptionAction(artistName)}
       </div>
     );
   }
@@ -178,7 +213,9 @@ const mapDispatchToProps = (dispatch) => {
     getArtist: bindActionCreators(getArtistAction, dispatch),
     getMe: bindActionCreators(getMeAction, dispatch),
     openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+    startSubscription: bindActionCreators(startSubscriptionAction, dispatch),
     createSubscription: bindActionCreators(createSubscriptionAction, dispatch),
+    declineStep: bindActionCreators(declineStepAction, dispatch),
   };
 };
 

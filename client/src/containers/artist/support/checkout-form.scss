@@ -1,0 +1,51 @@
+.checkout-form-container {
+  font-family: 'Courier New', Courier, monospace;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    margin-bottom: 1rem;
+
+    p {
+      font-weight: bold;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #cbd6e9;
+    }
+
+    label {
+      margin-top: 1rem;
+    }
+
+    .actions {
+      margin-top: 3rem;
+      display: flex;
+
+      .btn-support-action {
+        border-radius: 0px;
+        text-transform: uppercase;
+        background-color: black;
+        color: white;
+        font-family: 'Courier New', Courier, monospace;
+        max-width: 250px;
+        margin-left: 1rem;
+        font-weight: 200;
+      }
+
+      .btn-support-action:hover {
+        background-color: white;
+        color: black;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 812px) {
+  .checkout-form-container {
+    form {
+      margin-top: 2rem;
+      width: 100%;
+    }
+  }
+}

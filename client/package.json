@@ -22,11 +22,13 @@
     "react-player": "^1.9.3",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
+    "react-stripe-elements": "^3.0.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "redux-thunk-actions": "github:wgrisa/redux-thunk-actions",
     "sha1": "^1.1.1",
-    "store": "^2.0.12"
+    "store": "^2.0.12",
+    "toastr": "^2.1.4"
   },
   "scripts": {
     "start": "PORT=5000 react-scripts-ts start",

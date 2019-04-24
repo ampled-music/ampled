@@ -24,6 +24,8 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     instagram_handle: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    stripe_signup_url: Field::Text,
+    stripe_dashboard_url: Field::Text
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -50,6 +52,8 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :instagram_handle,
     :created_at,
     :updated_at,
+    :stripe_signup_url,
+    :stripe_dashboard_url
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -61,7 +65,6 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :location,
     :bio,
     :accent_color,
-    :video_screenshot_url,
     :twitter_handle,
     :instagram_handle,
   ].freeze

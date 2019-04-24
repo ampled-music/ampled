@@ -16,6 +16,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  stripe_customer_id     :string
 #  updated_at             :datetime         not null
 #
 # Indexes

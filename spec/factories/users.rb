@@ -35,5 +35,6 @@ FactoryBot.define do
     factory :confirmed_user do
       confirmed_at { Time.zone.now }
     end
+    jti { SecureRandom.uuid }
   end
 end

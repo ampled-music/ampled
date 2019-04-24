@@ -3,9 +3,11 @@
 # Table name: subscriptions
 #
 #  artist_page_id     :bigint(8)
+#  created_at         :datetime         not null
 #  id                 :bigint(8)        not null, primary key
 #  plan_id            :bigint(8)        not null
 #  stripe_customer_id :string
+#  updated_at         :datetime         not null
 #  user_id            :bigint(8)
 #
 # Indexes
@@ -24,6 +26,8 @@
 class Subscription < ApplicationRecord
   belongs_to :user
   belongs_to :artist_page
+
+  belongs_to :plan
 
   before_destroy :check_stripe
 

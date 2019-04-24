@@ -45,7 +45,7 @@ class ArtistPage < ApplicationRecord
 
     base = "https://connect.stripe.com/express/oauth/authorize"
     params = {
-      redirect_uri: "http://localhost:3000/stripe_oauth_callback",
+      redirect_uri: "#{ENV['REACT_APP_API_URL']}stripe_oauth_callback",
       client_id: "ca_Eowu0ycKNxFo46f8hqlCNCpt4w26bxer",
       state: stripe_state_token,
       "suggested_capabilities[]" => "card_payments"

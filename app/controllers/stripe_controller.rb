@@ -7,7 +7,7 @@ class StripeController < ApplicationController
     ap = ArtistPage.find_by(state_token: params[:state])
     ap.update(stripe_user_id: stripe_account["stripe_user_id"])
     setup_account(ap)
-    redirect_to "/stripe_success" 
+    redirect_to "/stripe_success"
   end
 
   private

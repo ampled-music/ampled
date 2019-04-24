@@ -70,7 +70,8 @@ class SubscriptionsController < ApplicationController
     plan = current_artist_page.plans.first
     token = create_token
     artist_customer = create_artist_customer(token)
-    stripe_subscription = create_stripe_subscription(plan, artist_customer.id)
+
+    create_stripe_subscription(plan, artist_customer.id)
 
     Subscription.create!(user: current_user, artist_page: current_artist_page, plan_id: plan.id)
   end

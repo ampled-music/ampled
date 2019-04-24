@@ -6,5 +6,4 @@ class PagesController < ApplicationController
 
   def stripe_success
   end
-
 end

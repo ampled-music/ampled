@@ -31,7 +31,7 @@ class ArtistPage < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
   has_many :subscribers, through: :subscriptions, source: :user
 
-  has_many :plans
+  has_many :plans, dependent: :destroy
 
   def stripe_state_token
     return state_token if state_token.present?
@@ -45,7 +45,7 @@ class ArtistPage < ApplicationRecord
 
     base = "https://connect.stripe.com/express/oauth/authorize"
     params = {
-      redirect_uri: "#{ENV['REACT_APP_API_URL']}stripe_oauth_callback",
+      redirect_uri: "#{ENV["REACT_APP_API_URL"]}stripe_oauth_callback",
       client_id: "ca_Eowu0ycKNxFo46f8hqlCNCpt4w26bxer",
       state: stripe_state_token,
       "suggested_capabilities[]" => "card_payments"
@@ -55,6 +55,7 @@ class ArtistPage < ApplicationRecord
 
   def stripe_dashboard_url
     return "" if stripe_user_id.blank?
-    Stripe::Account.retrieve(stripe_user_id).login_links.create['url']
+
+    Stripe::Account.retrieve(stripe_user_id).login_links.create["url"]
   end
 end

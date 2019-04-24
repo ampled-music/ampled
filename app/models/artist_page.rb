@@ -58,4 +58,8 @@ class ArtistPage < ApplicationRecord
 
     Stripe::Account.retrieve(stripe_user_id).login_links.create["url"]
   end
+
+  def last_post_date
+    posts.order(created_at: :desc).first.created_at
+  end
 end

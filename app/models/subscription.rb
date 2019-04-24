@@ -25,6 +25,8 @@ class Subscription < ApplicationRecord
   belongs_to :user
   belongs_to :artist_page
 
+  has_one :plan
+
   before_destroy :check_stripe
 
   def check_stripe

@@ -101,6 +101,6 @@ class ArtistPage < ApplicationRecord
   end
 
   def last_post_date
-    posts.order(created_at: :desc).first.created_at
+    posts.order(created_at: :desc).first&.created_at
   end
 end

@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2019_04_24_234940) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,6 +90,7 @@ ActiveRecord::Schema.define(version: 2019_04_24_234940) do
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
     t.string "stripe_id"
+
     t.index ["artist_page_id"], name: "index_subscriptions_on_artist_page_id"
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"

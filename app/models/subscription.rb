@@ -30,7 +30,7 @@ class Subscription < ApplicationRecord
   belongs_to :artist_page
   belongs_to :plan
 
-  has_one :plan
+  belongs_to :plan
 
   before_destroy :check_stripe
 

@@ -30,6 +30,8 @@ class Subscription < ApplicationRecord
   belongs_to :artist_page
   belongs_to :plan
 
+  has_one :plan
+
   before_destroy :check_stripe
 
   validate :plan_must_belong_to_artist

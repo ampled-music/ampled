@@ -49,6 +49,10 @@ class MenuListComposition extends React.Component<Props, State> {
     anchorEl: undefined,
   };
 
+  componentDidMount() {
+    this.setState({ anchorEl: this.refs.menu });
+  }
+
   componentDidUpdate() {
     if (!this.props.loggedOut) {
       return;
@@ -56,10 +60,6 @@ class MenuListComposition extends React.Component<Props, State> {
 
     store.remove(config.localStorageKeys.token);
     window.location.href = routePaths.root;
-  }
-
-  componentDidMount() {
-    this.setState({ anchorEl: this.refs.menu });
   }
 
   handleToggle = () => {
@@ -116,7 +116,9 @@ class MenuListComposition extends React.Component<Props, State> {
         </MenuItem>
         <div className="divider" />
         <MenuItem>
-          <Link to="">Account Settings</Link>
+          <Link to={routePaths.settings} onClick={this.handleClose}>
+            Account Settings
+          </Link>
         </MenuItem>
         <MenuItem>
           <Link to="">Blog</Link>

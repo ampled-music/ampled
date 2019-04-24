@@ -1,0 +1,33 @@
+.user-settings-container {
+  font-family: 'Courier New', Courier, monospace;
+
+  .content {
+    margin-top: 7rem;
+    display: flex;
+
+    .user-info-container {
+      p {
+        font-weight: bold;
+      }
+    }
+
+    .pages-container {
+      display: flex;
+      flex-direction: column;
+
+      .pages {
+        border-top: 4px solid black;
+        width: 600px;
+        margin-left: 2rem;
+
+        h1 {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
+
+.user-settings-loading-modal {
+  padding: 1rem;
+}

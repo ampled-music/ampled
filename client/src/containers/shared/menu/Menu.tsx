@@ -116,9 +116,7 @@ class MenuListComposition extends React.Component<Props, State> {
         </MenuItem>
         <div className="divider" />
         <MenuItem>
-          <Link to={routePaths.settings} onClick={this.handleClose}>
-            Account Settings
-          </Link>
+          <Link to={routePaths.settings}>Account Settings</Link>
         </MenuItem>
         <MenuItem>
           <Link to="">Blog</Link>

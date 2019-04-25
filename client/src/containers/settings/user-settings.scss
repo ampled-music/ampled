@@ -66,36 +66,35 @@
         .artist {
           display: flex;
           flex-direction: column;
-          width: 250px;
+          width: 300px;
 
           .image-border {
             border: 2px solid white;
             width: 200px;
             height: 200px;
             align-self: center;
-            margin-bottom: -80px;
+            margin-bottom: -90px;
+            z-index: 1;
 
             img {
               height: 200px;
               width: 200px;
               transform: rotate(-3deg);
-              margin-bottom: -60px;
               align-self: center;
               position: relative;
-              z-index: -1;
               object-fit: scale-down;
             }
           }
 
           .artist-info {
-            z-index: -2;
-            height: 200px;
+            height: 250px;
             display: flex;
             flex-direction: column;
             align-self: center;
             background-color: #1e1e1e;
-            color: #d6d2d2;
-            padding: 0.5rem;
+            color: #fefefe;
+            padding: 1.5rem;
+            padding-bottom: 0.5rem;
 
             .artist-name {
               display: flex;
@@ -105,10 +104,11 @@
               align-items: flex-end;
               height: 250px;
               padding-bottom: 1rem;
-              border-bottom: 2px solid #9b9b9b;
+              border-bottom: 2px solid #fefefe;
               width: 100%;
               justify-content: center;
               margin: 0;
+              margin-bottom: 1rem;
             }
 
             .extra-info {
@@ -117,20 +117,67 @@
               align-self: center;
               align-items: flex-end;
               font-size: 13px;
-              font-weight: 700;
+              font-weight: normal;
 
               p {
-                font-weight: normal;
                 margin: 0;
               }
 
               label:not(:last-child) {
                 margin-right: 2rem;
               }
+
+              .info-title {
+                font-weight: 700;
+                font-size: 11px;
+              }
+
+              .info-value {
+                font-size: 14px;
+              }
+
+              .support-info {
+                display: flex;
+                flex-direction: column;
+
+                .supporting-at {
+                  margin-bottom: 1rem;
+
+                  .supporting-at-value {
+                    font-size: 21px;
+                  }
+
+                  svg {
+                    margin-right: 5px;
+                  }
+
+                  button {
+                    cursor: pointer;
+                    outline: none;
+                    color: #fe7272;
+                    letter-spacing: 1px;
+                    border: 0;
+                    background: transparent;
+                  }
+                }
+              }
             }
           }
         }
       }
+    }
+  }
+}
+
+.user-settings-cancel-modal {
+  padding: 1rem;
+
+  .actions {
+    margin-top: 2rem;
+    display: flex;
+
+    button:not(:last-child) {
+      margin-right: 2rem;
     }
   }
 }

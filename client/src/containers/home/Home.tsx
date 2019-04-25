@@ -1,34 +1,19 @@
-import * as React from 'react';
-
-import { Nav } from '../nav/Nav';
-
-import { HomeHeader } from './HomeHeader';
-import { HomeFor } from './HomeFor';
-import { HomeHow } from './HomeHow';
-import { HomeArtists } from './HomeArtists';
-
 import './home.scss';
 
-interface Props {
-}
+import * as React from 'react';
 
-interface State {
-}
+import { Footer } from '../footer/Footer';
+import { HomeArtists } from './HomeArtists';
+import { HomeFor } from './HomeFor';
+import { HomeHeader } from './HomeHeader';
+import { HomeHow } from './HomeHow';
 
-class Home extends React.Component<Props, State> {
-
-  render() {
-
-    return (
-      <div>
-        <Nav />
-        <HomeHeader />
-        <HomeFor />
-        <HomeHow />
-        <HomeArtists />
-      </div>
-    );
-  }
-}
-
-export { Home };
+export const Home = () => (
+  <div>
+    <HomeHeader />
+    <HomeFor />
+    <HomeHow />
+    <HomeArtists />
+    <Footer />
+  </div>
+);

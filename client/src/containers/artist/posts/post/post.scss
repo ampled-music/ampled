@@ -1,0 +1,28 @@
+.post {
+  &.clickable-post {
+    cursor: pointer;
+  }
+
+  .blur-image {
+    -webkit-filter: blur(20px);
+    -moz-filter: blur(20px);
+    -o-filter: blur(20px);
+    -ms-filter: blur(20px);
+    filter: blur(20px);
+  }
+}
+
+.private-post-modal {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+
+  p {
+    margin: 2rem;
+  }
+
+  button {
+    width: 50px;
+    align-self: flex-end;
+  }
+}

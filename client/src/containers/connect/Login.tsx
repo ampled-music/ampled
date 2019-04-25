@@ -1,41 +1,54 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { userLoginAction } from 'src/redux/ducks/login';
-import { Nav } from '../nav/Nav';
-import { routePaths } from '../route-paths';
-
 import './login.scss';
 
-interface Props {
-  login: {
-    error: string;
-  };
-  userLogin: Function;
-  authentication: {
-    authenticated: boolean;
-  };
-  location?: {
-    showMessage: boolean;
-  };
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { loginAction } from 'src/redux/authentication/login';
+import { Store } from 'src/redux/configure-store';
+import * as store from 'store';
+
+import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
+import { routePaths } from '../route-paths';
+
+interface LoginProps {
+  history: any;
 }
+
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+type Props = typeof loginInitialState & Dispatchers & LoginProps;
 
 class LoginComponent extends React.Component<Props, any> {
   state = {
     email: '',
     password: '',
-    submitted: false,
+  };
+
+  componentDidUpdate() {
+    if (!this.props.token) {
+      return;
+    }
+
+    this.saveTokenToLocalStorage();
+    this.props.closeAuthModal();
+  }
+
+  saveTokenToLocalStorage = () => {
+    store.set('token', this.props.token);
+  };
+
+  redirectToRoot = () => {
+    this.props.history.push(routePaths.root);
   };
 
   handleSubmit = async (e) => {
     e.preventDefault();
 
+    store.clearAll();
+
     const { email, password } = this.state;
 
-    await this.props.userLogin(email, password);
-
-    this.setState({ submitted: true });
+    await this.props.login(email, password);
   };
 
   handleChange = (e) => {
@@ -44,19 +57,10 @@ class LoginComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { authentication, login, location } = this.props;
-
-    if (this.state.submitted && !login.error) {
-      return <Redirect to={routePaths.connect} />;
-    }
-
-    if (authentication.authenticated) {
-      return <Redirect to={routePaths.root} />;
-    }
+    const { login } = this.props;
 
     return (
       <div>
-        <Nav />
         <div className="login">
           <h2>LOGIN</h2>
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
@@ -82,37 +86,31 @@ class LoginComponent extends React.Component<Props, any> {
             <span className="error-message">{login.error}</span>
           </form>
           <label>
-            Forgot your password?{' '}
-            <a href="">
-              <u>click here</u>
+            Don't have an account?{' '}
+            <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
+              <u>Sign up</u>
             </a>
             .
           </label>
-
-          {location.showMessage && (
-            <label className="confirmation-message">
-              Thank you for signing up!
-              <br /> Please check your inbox for a confirmation email.
-            </label>
-          )}
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  authentication: state.authentication,
-  login: state.userLogin,
+const mapStateToProps = (state: Store) => ({
+  ...state.authentication,
 });
 
-const mapPropsToDispatch = (dispatch) => ({
-  userLogin: bindActionCreators(userLoginAction, dispatch),
+const mapDispatchToProps = (dispatch) => ({
+  login: bindActionCreators(loginAction, dispatch),
+  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
 });
 
 const Login = connect(
   mapStateToProps,
-  mapPropsToDispatch,
+  mapDispatchToProps,
 )(LoginComponent);
 
 export { Login };

@@ -2,16 +2,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #c5e4e4;
-  height: calc(100vh - 55px);
-
-  h2 {
-    margin-top: 70px;
-    margin-bottom: 30px;
-  }
+  padding: 1rem;
 
   a {
+    cursor: pointer;
     color: #000000;
+  }
+
+  p {
+    margin: 1rem 0;
+    text-align: center;
+    width: 360px;
   }
 
   label {
@@ -39,12 +40,11 @@
 
   .form-container {
     display: flex;
-    max-width: 450px;
-    padding: 85px 20px 35px 20px;
+    width: 450px;
+    padding: 30px 20px 35px 20px;
     height: auto;
     border: none;
     border-radius: 0;
-    background: url(../../images/background_login.svg);
     background-repeat: no-repeat;
 
     .input-group-text {
@@ -81,6 +81,16 @@
       border-radius: 0;
       margin-top: 40px;
       margin-bottom: 15px;
+    }
+  }
+}
+
+@media only screen and (max-width: 812px) {
+  .login {
+    .form-container {
+      width: 100%;
+      padding: 0;
+      padding-top: 1rem;
     }
   }
 }

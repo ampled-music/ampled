@@ -13,16 +13,19 @@ class ArtistPageDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     owners: Field::HasMany.with_options(class_name: "User", show: %i[email], searchable: true,
                                         searchable_field: 'email'),
+    images: Field::HasMany.with_options(show: %i[url]),
     id: Field::Number,
     name: Field::String,
     location: Field::String,
     bio: Field::String,
     accent_color: Field::String,
-    banner_image_url: Field::String,
+    video_url: Field::String,
     twitter_handle: Field::String,
     instagram_handle: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    stripe_signup_url: Field::Text,
+    stripe_dashboard_url: Field::Text
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -45,11 +48,12 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :location,
     :bio,
     :accent_color,
-    :banner_image_url,
     :twitter_handle,
     :instagram_handle,
     :created_at,
     :updated_at,
+    :stripe_signup_url,
+    :stripe_dashboard_url
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -61,7 +65,6 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :location,
     :bio,
     :accent_color,
-    :banner_image_url,
     :twitter_handle,
     :instagram_handle,
   ].freeze

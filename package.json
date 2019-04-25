@@ -8,7 +8,18 @@
     "start:server": "rails s",
     "build-client": "cd client && npm i --only=dev && npm i && npm run build",
     "deploy": "cp -a client/build/. public/",
-    "heroku-postbuild": "npm run build-client && npm run deploy"
+    "heroku-postbuild": "npm run build-client && npm run deploy",
+    "compose-up": "docker-compose up",
+    "dev": "concurrently -k -r npm:compose-up npm:start:server",
+    "docker-stop": "docker-compose stop",
+    "docker-ps": "docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}'",
+    "docker-stop-all": "docker stop $(docker ps -q) || true && docker rm $(docker ps -aq) || true",
+    "dsa": "npm run docker-stop-all",
+    "client-npm": "docker-compose run --rm site npm",
+    "bundle-install": "docker-compose run --rm server bundle install",
+    "db-create-all": "docker-compose run --rm server rails db:create:all",
+    "migrate": "rails db:migrate RAILS_ENV=development",
+    "generate-migration": "rails generate migration"
   },
   "devDependencies": {
     "concurrently": "^3.6.1",

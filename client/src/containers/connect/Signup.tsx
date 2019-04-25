@@ -1,25 +1,27 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { userSignUpAction } from 'src/redux/ducks/login';
-import { Nav } from '../nav/Nav';
-import { routePaths } from '../route-paths';
-
 import './login.scss';
 
-interface Props {
-  signup: {
-    errors: {};
-  };
-  userSignUp: Function;
-  authentication: {
-    authenticated: boolean;
-  };
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { Store } from 'src/redux/configure-store';
+import { signupAction } from 'src/redux/signup/signup';
+
+import { initialState as authenticationInitialState } from '../../redux/authentication/initial-state';
+import { initialState as meInitialState } from '../../redux/me/initial-state';
+import { initialState as signupInitialState } from '../../redux/signup/initial-state';
+
+interface SignupProps {
+  signup: typeof signupInitialState;
+  authentication: typeof authenticationInitialState;
+  me: typeof meInitialState;
 }
 
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+type Props = SignupProps & Dispatchers;
+
 class SignupComponent extends React.Component<Props, any> {
-  state = {
+  initialState = {
     email: '',
     password: '',
     name: '',
@@ -31,6 +33,17 @@ class SignupComponent extends React.Component<Props, any> {
     acceptTerms: false,
     submitted: false,
   };
+
+  state = this.initialState;
+
+  componentDidUpdate() {
+    const { signup, closeAuthModal, authentication } = this.props;
+
+    if (this.state.submitted && !signup.errors && authentication.authModalOpen) {
+      this.setState(this.initialState);
+      closeAuthModal();
+    }
+  }
 
   passwordsMatch(): boolean {
     const { password, confirmPassword } = this.state;
@@ -62,7 +75,7 @@ class SignupComponent extends React.Component<Props, any> {
 
     const { email, password, confirmPassword, name } = this.state;
 
-    await this.props.userSignUp(email, password, confirmPassword, name);
+    await this.props.signup(email, password, confirmPassword, name);
 
     this.setState({ submitted: true });
 
@@ -74,7 +87,7 @@ class SignupComponent extends React.Component<Props, any> {
     this.setState({ [name]: value, matchPasswordsError: false, passwordError: null, emailError: null });
   };
 
-  toggle = (e) => {
+  toggle = () => {
     this.setState({ acceptTerms: !this.state.acceptTerms });
   };
 
@@ -90,31 +103,18 @@ class SignupComponent extends React.Component<Props, any> {
   }
 
   render() {
-    const { submitted, matchPasswordsError, emailError, passwordError } = this.state;
-    const { signup, authentication } = this.props;
-
-    if (submitted && !signup.errors) {
-      return (
-        <Redirect
-          to={{
-            pathname: routePaths.login,
-            showMessage: true,
-          }}
-        />
-      );
-    }
-
-    if (authentication.authenticated) {
-      return <Redirect to={routePaths.root} />;
-    }
+    const { matchPasswordsError, emailError, passwordError } = this.state;
+    const { authentication } = this.props;
 
     const passwordErrorMessage = 'Passwords do not match.';
 
     return (
       <div>
-        <Nav />
         <div className="login">
           <h2>SIGN UP</h2>
+          {authentication.showSupportMessage && (
+            <p>This is a private post. Sign up and become a supporter of {authentication.artistName} to access it.</p>
+          )}
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
             <input
               className="input-group-text"
@@ -171,7 +171,7 @@ class SignupComponent extends React.Component<Props, any> {
           </form>
           <label>
             Already have an account?{' '}
-            <a href="/login">
+            <a onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>
               <u>Log in</u>
             </a>
             .
@@ -182,18 +182,21 @@ class SignupComponent extends React.Component<Props, any> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: Store) => ({
   authentication: state.authentication,
-  signup: state.userSignUp,
+  signup: state.signup,
+  me: state.me,
 });
 
-const mapPropsToDispatch = (dispatch) => ({
-  userSignUp: bindActionCreators(userSignUpAction, dispatch),
+const mapDispatchToProps = (dispatch) => ({
+  signup: bindActionCreators(signupAction, dispatch),
+  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
 });
 
 const Signup = connect(
   mapStateToProps,
-  mapPropsToDispatch,
+  mapDispatchToProps,
 )(SignupComponent);
 
 export { Signup };

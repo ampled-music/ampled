@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
     resources :artist_pages
+    resources :images
     resources :posts
     resources :subscriptions
     resources :comments
@@ -18,8 +19,19 @@ Rails.application.routes.draw do
 
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"
+  get "/me", to: "me#index"
 
-  devise_for :users, controllers: { confirmations: "confirmations", registrations: "registrations" }
+  devise_for :users, controllers: {
+    confirmations: "confirmations",
+    registrations: "registrations",
+    sessions: "sessions"
+  }
 
-  root to: "pages#root"
+  get "/stripe_success", to: "pages#stripe_success"
+  devise_scope :user do
+    get "stripe_oauth_callback", to: "stripe#callback"
+  end
+
+  root to: "react#index"
+  get "/*path", to: "react#index"
 end

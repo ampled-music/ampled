@@ -41,10 +41,27 @@ Note: `./bin/rake` runs the springified version of rake (there's a `./bin/rspec`
 
 ### Running the Application Locally
 
-The easiest way to run the app is using `heroku local`. This starts all the processes defined in `Procfile`, including the Rails server.
+First you need to install all npm dependencies in both root as well as client.
 
-    $ heroku local
-    $ open http://localhost:3000
+    $ npm install
+    $ cd client
+    $ npm install
+
+Back in the root directory migrate the database
+
+    $ bundle exec rake db:migrate
+
+Then populate database with faker data.
+
+    $ bundle exec rake dummy:artist_pages
+    $ bundle exec rake dummy:posts
+    $ bundle exec rake dummy:users
+
+Once your database is set up and filled with data simply run the following command and give it a moment to spin up a local test environment.
+
+    $ npm run start
+
+This will also automatically compile and js or css changes live on the fly.
 
 ## Conventions
 

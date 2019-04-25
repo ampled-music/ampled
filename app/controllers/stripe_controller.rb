@@ -4,8 +4,6 @@ class StripeController < ApplicationController
   def callback
     # This is the callback hit after the artist signs up for a stripe account
     stripe_account = authorize_stripe_account
-    puts "STRIPE ACCOUNT: "
-    puts stripe_account.to_h
     ap = ArtistPage.find_by(state_token: params[:state])
     ap.update(stripe_user_id: stripe_account["stripe_user_id"])
     setup_account(ap)

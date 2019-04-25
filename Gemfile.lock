@@ -818,7 +818,7 @@ GEM
     factory_bot_rails (4.11.1)
       factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
-    faker (1.9.1)
+    faker (1.9.3)
       i18n (>= 0.7)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
@@ -1069,6 +1069,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.5)
     unicode-display_width (1.4.0)
+    vcr (4.0.0)
     warden (1.2.7)
       rack (>= 1.0)
     warden-jwt_auth (0.3.5)
@@ -1139,6 +1140,7 @@ DEPENDENCIES
   spring-watcher-listen
   stripe
   uglifier
+  vcr
   zencoder
 
 RUBY VERSION

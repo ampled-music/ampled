@@ -50,6 +50,4 @@ class User < ApplicationRecord
     supported_artists.include?(artist_page)
   end
 
-  def stripe_uid
-  end
 end

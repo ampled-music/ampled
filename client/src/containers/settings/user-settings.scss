@@ -1,27 +1,134 @@
 .user-settings-container {
   font-family: 'Courier New', Courier, monospace;
+  margin: 0 5rem;
 
   .content {
     margin-top: 7rem;
     display: flex;
 
     .user-info-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 300px;
+
       p {
         font-weight: bold;
+        margin: 0;
+      }
+
+      .user-image {
+        height: 120px;
+        width: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        z-index: 1;
+        margin-bottom: -50px;
+      }
+
+      .user-content {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        height: 150px;
+        background-color: white;
+        align-items: center;
+        padding: 4rem;
+
+        .user-name {
+          font-size: 20px;
+          font-weight: bold;
+        }
+
+        .joined-at {
+          font-size: 13px;
+          font-weight: 100;
+        }
       }
     }
 
     .pages-container {
-      display: flex;
-      flex-direction: column;
+      border-top: 4px solid black;
+      padding-top: 1rem;
+      margin-left: 2rem;
+      width: 100%;
+
+      h1 {
+        font-size: 20px;
+        padding-bottom: 1.5rem;
+        font-weight: bold;
+      }
 
       .pages {
-        border-top: 4px solid black;
-        width: 600px;
-        margin-left: 2rem;
+        display: flex;
+        flex-wrap: wrap;
 
-        h1 {
-          font-size: 20px;
+        .artist {
+          display: flex;
+          flex-direction: column;
+          width: 250px;
+
+          .image-border {
+            border: 2px solid white;
+            width: 200px;
+            height: 200px;
+            align-self: center;
+            margin-bottom: -80px;
+
+            img {
+              height: 200px;
+              width: 200px;
+              transform: rotate(-3deg);
+              margin-bottom: -60px;
+              align-self: center;
+              position: relative;
+              z-index: -1;
+              object-fit: scale-down;
+            }
+          }
+
+          .artist-info {
+            z-index: -2;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            background-color: #1e1e1e;
+            color: #d6d2d2;
+            padding: 0.5rem;
+
+            .artist-name {
+              display: flex;
+              font-weight: bold;
+              align-self: center;
+              font-size: 18px;
+              align-items: flex-end;
+              height: 250px;
+              padding-bottom: 1rem;
+              border-bottom: 2px solid #9b9b9b;
+              width: 100%;
+              justify-content: center;
+              margin: 0;
+            }
+
+            .extra-info {
+              height: 200px;
+              display: flex;
+              align-self: center;
+              align-items: flex-end;
+              font-size: 13px;
+              font-weight: 700;
+
+              p {
+                font-weight: normal;
+                margin: 0;
+              }
+
+              label:not(:last-child) {
+                margin-right: 2rem;
+              }
+            }
+          }
         }
       }
     }

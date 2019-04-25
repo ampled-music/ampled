@@ -21,5 +21,6 @@ export const getMeData = async () => {
   return {
     ...data.userInfo,
     artistPages: data.artistPages,
+    subscriptions: data.subscriptions,
   };
 };

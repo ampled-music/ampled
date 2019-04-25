@@ -128,7 +128,7 @@ export class ArtistHeader extends React.Component<Props, any> {
 
     return (
       <div className="artist-header__supporters">
-        <div className="artist-header__supporter-title">{artist.supporters.length} Supporters</div>
+        <div className="artist-header__supporter-title">{artist.supporters.length} Supporter(s)</div>
 
         {artist.supporters.slice(0, 2).map((supporter) => (
           <div key={supporter.id} className="row align-items-center">

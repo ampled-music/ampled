@@ -1,6 +1,8 @@
 json.userInfo do
   json.id current_user&.id
   json.name current_user&.name
+  json.image current_user&.profile_image_url
+  json.created_at current_user&.created_at
 end
 json.artistPages @owned&.concat(@supported) do |page|
   json.artistId page.id

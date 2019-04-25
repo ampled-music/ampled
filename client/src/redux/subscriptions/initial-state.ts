@@ -10,6 +10,7 @@ export const initialState = {
   subscriptionLevelValue: 6.37,
   paymentToken: '',
   status: SubscriptionStep.SupportLevel,
+  cancelled: false,
 };
 
 export interface Reducer {

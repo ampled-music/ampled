@@ -10,6 +10,7 @@ import { getMeAction } from 'src/redux/me/get-me';
 import { faHeartBroken, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { Modal } from '../shared/modal/Modal';
@@ -45,6 +46,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
   };
 
   closeCancelModal = () => this.setState({ showCancelModal: false, subscription: undefined });
+
+  cancelSubscription = () => {
+    this.props.cancelSubscription({ artistPageId: this.state.subscription.id });
+    this.closeCancelModal();
+  };
 
   renderUserImage = () => {
     const { userData } = this.props;
@@ -82,7 +88,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
         <div className="user-settings-cancel-modal">
           <p>Are you sure you want to stop supporting {this.state.subscription.name}?</p>
           <div className="actions">
-            <button className="btn">yes</button>
+            <button className="btn" onClick={this.cancelSubscription}>
+              yes
+            </button>
             <button className="btn" onClick={this.closeCancelModal}>
               OF COURSE NOT!
             </button>
@@ -144,6 +152,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
   render() {
     const { userData } = this.props;
 
+    console.log('userData', userData);
+
     return (
       <div className="user-settings-container">
         <Modal open={!userData}>
@@ -167,6 +177,7 @@ const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  cancelSubscription: bindActionCreators(cancelSubscriptionAction, dispatch),
 });
 
 const UserSettings = connect(

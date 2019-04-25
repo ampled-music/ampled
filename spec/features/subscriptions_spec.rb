@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SubscriptionsController, type: :request do
+RSpec.describe SubscriptionsController, :vcr, type: :request  do
   
   let(:user) do 
     create(:user, stripe_customer_id: "cus_Evgqn1glWV1erN", confirmed_at: Time.now)

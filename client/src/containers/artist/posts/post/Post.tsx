@@ -3,10 +3,11 @@ import './post.scss';
 import cx from 'classnames';
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
+import { Modal } from 'src/containers/shared/modal/Modal';
 
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Divider, Button } from '@material-ui/core';
+import { Button, Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -15,7 +16,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { config } from '../../../../config';
 import { styles } from './post-style';
-import { Modal } from 'src/containers/shared/modal/Modal';
 
 class PostComponent extends React.Component<any, any> {
   state = {

@@ -7,7 +7,7 @@ export enum SubscriptionStep {
 export const initialState = {
   processing: false,
   artistPageId: 0,
-  subscriptionLevelValue: 6.37,
+  subscriptionLevelValue: 637,
   paymentToken: '',
   status: SubscriptionStep.SupportLevel,
 };

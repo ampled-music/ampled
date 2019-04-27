@@ -65,10 +65,14 @@ class SubscriptionsController < ApplicationController
     )
   end
 
+  def stripe_plan
+    current_artist_page.plan_for_amount(amount_param)
+  end
+
   def subscribe_stripe
     create_platform_customer if current_user.stripe_customer_id.blank?
 
-    plan = current_artist_page.plans.first
+    plan = stripe_plan
     token = create_token
     artist_customer = create_artist_customer(token)
 
@@ -102,5 +106,9 @@ class SubscriptionsController < ApplicationController
 
   def current_subscription
     Subscription.find(params.require(:id))
+  end
+
+  def amount_param
+    500
   end
 end

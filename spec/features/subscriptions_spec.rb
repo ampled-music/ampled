@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe SubscriptionsController, :vcr, type: :request  do
-  
-  let(:user) do 
-    create(:user, stripe_customer_id: "cus_Evgqn1glWV1erN", confirmed_at: Time.now)
+RSpec.describe SubscriptionsController, :vcr, type: :request do
+  let(:user) do
+    # when recording VCR cassettes, use a real (test) customer id
+    create(:user, stripe_customer_id: "cus_Evgqn1glWV1erN", confirmed_at: Time.current)
   end
   let(:artist_page) { create(:artist_page) }
 
-  let(:existing_stripe_auth){ JSON.parse(File.read('stripe_account_stub.json')) }
+  let(:existing_stripe_auth) { JSON.parse(File.read("stripe_account_stub.json")) }
 
   before(:each) do
     sign_in user
@@ -21,32 +21,9 @@ RSpec.describe SubscriptionsController, :vcr, type: :request  do
 
   before do
     artist_page.update(stripe_user_id: existing_stripe_auth["stripe_user_id"])
-
-    product = Stripe::Product.create(
-      {
-        name: "Ampled Support",
-        type: "service"
-      }, stripe_account: artist_page.stripe_user_id
-    )
-
-    artist_page.update(stripe_product_id: product.id)
-
-    amount = 5 * 100
-    plan = Stripe::Plan.create(
-      {
-        product: product.id,
-        nickname: "Ampled Support $5",
-        interval: "month",
-        currency: "usd",
-        amount: amount
-      }, stripe_account: artist_page.stripe_user_id
-    )
-
-    artist_page.plans << Plan.new(stripe_id: plan.id, amount: amount)
   end
 
   context "when creating a subscription" do
-
     let(:url) { "/subscriptions/" }
 
     it "returns 200" do
@@ -67,13 +44,11 @@ RSpec.describe SubscriptionsController, :vcr, type: :request  do
       customer = Stripe::Customer.retrieve(subscription.stripe_customer_id, stripe_account: artist_page.stripe_user_id)
       expect(customer.subscriptions.count).to eq 1
     end
-
   end
 
   context "when cancelling a subscription" do
-
     before(:each) do
-      post '/subscriptions', params: create_params
+      post "/subscriptions", params: create_params
       @subscription = user.subscriptions.first
     end
 
@@ -96,5 +71,4 @@ RSpec.describe SubscriptionsController, :vcr, type: :request  do
       expect(cancelled_sub.status).to eq("canceled")
     end
   end
-
 end

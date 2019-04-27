@@ -49,5 +49,4 @@ class User < ApplicationRecord
   def subscribed?(artist_page)
     supported_artists.include?(artist_page)
   end
-
 end

@@ -4,37 +4,14 @@ class StripeController < ApplicationController
   def callback
     # This is the callback hit after the artist signs up for a stripe account
     stripe_account = authorize_stripe_account
+    # to generate the stub used in testing
+    # File.open('stripe_account_stub.json','w'){ |f| f.write(stripe_account.to_json) }
     ap = ArtistPage.find_by(state_token: params[:state])
     ap.update(stripe_user_id: stripe_account["stripe_user_id"])
-    setup_account(ap)
-    redirect_to "/stripe_success" 
+    redirect_to "/stripe_success"
   end
 
   private
-
-  def setup_account(artist_page)
-    product = Stripe::Product.create(
-      {
-        name: "Ampled Support",
-        type: "service"
-      }, stripe_account: artist_page.stripe_user_id
-    )
-
-    artist_page.update(stripe_product_id: product.id)
-
-    amount = 5 * 100
-    plan = Stripe::Plan.create(
-      {
-        product: product.id,
-        nickname: "Ampled Support $5",
-        interval: "month",
-        currency: "usd",
-        amount: amount
-      }, stripe_account: artist_page.stripe_user_id
-    )
-
-    artist_page.plans << Plan.new(stripe_id: plan.id, amount: amount)
-  end
 
   def authorize_stripe_account
     connection.post("https://connect.stripe.com/oauth/token",

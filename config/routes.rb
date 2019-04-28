@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :artist_pages
   namespace :admin do
     resources :users
     resources :artist_pages
@@ -10,15 +11,8 @@ Rails.application.routes.draw do
     root to: "users#index"
   end
 
-  devise_for :users, controllers: {
-    confirmations: "confirmations",
-    registrations: "registrations",
-    sessions: "sessions"
-  }
-
   resources :comments, only: %i[create destroy]
   resources :subscriptions
-  resources :artist_pages
   resources :artist_pages, only: [] do
     resources :posts, only: %i[create index]
   end
@@ -27,11 +21,17 @@ Rails.application.routes.draw do
   get "uploads/playable_url", to: "uploads#playable_url"
   get "/me", to: "me#index"
 
+  devise_for :users, controllers: {
+    confirmations: "confirmations",
+    registrations: "registrations",
+    sessions: "sessions"
+  }
+
+  get "/stripe_success", to: "pages#stripe_success"
   devise_scope :user do
     get "stripe_oauth_callback", to: "stripe#callback"
   end
 
-  get "/stripe_success", to: "pages#stripe_success"
   root to: "react#index"
   get "/*path", to: "react#index"
 end

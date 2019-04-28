@@ -31,7 +31,7 @@ FactoryBot.define do
   factory :user do
     email { Faker::Internet.email }
     password { "password" }
-    name { Faker::Movies::StarWars.character }
+    name { Faker::StarWars.character }
     factory :confirmed_user do
       confirmed_at { Time.zone.now }
     end

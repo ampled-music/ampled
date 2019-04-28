@@ -4,11 +4,7 @@ export const createSubscription = async (subscription: { artistPageId: number; p
   const { data } = await apiAxios({
     method: 'post',
     url: `/subscriptions`,
-    data: { 
-      artist_page_id: subscription.artistPageId,
-      token: subscription.paymentToken,
-      amount: subscription.subscriptionLevelValue
-    },
+    data: { artist_page_id: subscription.artistPageId, token: subscription.paymentToken },
   });
 
   return { subscriptionResult: data };

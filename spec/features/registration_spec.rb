@@ -8,7 +8,7 @@ RSpec.describe "POST /users", type: :request do
         email: "user@example.com",
         password: "password",
         password_confirmation: "password",
-        name: Faker::Movies::StarWars.character
+        name: Faker::StarWars.character
       }
     }
   end

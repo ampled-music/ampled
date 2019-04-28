@@ -152,8 +152,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
   render() {
     const { userData } = this.props;
 
-    console.log('userData', userData);
-
     return (
       <div className="user-settings-container">
         <Modal open={!userData}>

@@ -17,13 +17,25 @@
         margin: 0;
       }
 
-      .user-image {
-        height: 120px;
-        width: 120px;
-        border-radius: 50%;
-        object-fit: cover;
+      .user-image-container {
         z-index: 1;
-        margin-bottom: -50px;
+
+        button {
+          display: flex;
+          flex-direction: column;
+          cursor: pointer;
+          outline: none;
+          border: 0;
+          background: transparent;
+        }
+
+        .user-image {
+          height: 120px;
+          width: 120px;
+          border-radius: 50%;
+          object-fit: cover;
+          margin-bottom: -60px;
+        }
       }
 
       .user-content {
@@ -185,4 +197,77 @@
 
 .user-settings-loading-modal {
   padding: 1rem;
+}
+
+.user-photo-selector-modal {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  padding: 1rem;
+
+  .processing-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    b {
+      position: absolute;
+      margin-top: -2rem;
+    }
+  }
+
+  .image-preview {
+    align-self: center;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .add-photo-button-container {
+    margin-top: 2rem;
+  }
+
+  .photo-actions {
+    margin-top: 1rem;
+    display: flex;
+
+    button:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 812px) {
+  .user-settings-container {
+    margin: 0;
+
+    .content {
+      margin-top: 5rem;
+      flex-direction: column;
+
+      .user-info-container {
+        align-self: center;
+      }
+
+      .pages-container {
+        margin-top: 2rem;
+        width: 85%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 812px) {
+  .user-photo-selector-modal {
+    width: 100%;
+
+    button {
+      width: 115px;
+    }
+
+    .add-media-button {
+      width: 100%;
+    }
+  }
 }

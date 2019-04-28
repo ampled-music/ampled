@@ -1,5 +1,6 @@
 import './user-settings.scss';
 
+import * as loadImage from 'blueimp-load-image';
 import { DateTime } from 'luxon';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -14,6 +15,7 @@ import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { Modal } from '../shared/modal/Modal';
+import { UploadFile } from '../shared/upload/UploadFile';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
@@ -23,6 +25,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
   state = {
     showCancelModal: false,
     subscription: undefined,
+    showUserPhotoModal: false,
+    photoContent: undefined,
+    photoBody: undefined,
+    processingImage: false,
   };
 
   componentDidMount() {
@@ -47,18 +53,51 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   closeCancelModal = () => this.setState({ showCancelModal: false, subscription: undefined });
 
+  showUserPhotoModal = () => this.setState({ showUserPhotoModal: true });
+
+  closeUserPhotoModal = () =>
+    this.setState({ showUserPhotoModal: false, photoBody: undefined, photoContent: undefined });
+
   cancelSubscription = () => {
     this.props.cancelSubscription({ artistPageId: this.state.subscription.id });
     this.closeCancelModal();
+  };
+
+  loadPhotoContent = (photoContent) => {
+    this.setState({ processingImage: true });
+
+    loadImage(
+      photoContent.body,
+      (canvas) => {
+        this.setState({
+          processingImage: false,
+          photoBody: canvas.toDataURL(),
+          photoContent,
+        });
+      },
+      { orientation: true },
+    );
+  };
+
+  saveUserPhoto = () => {
+    console.log('this.state', this.state);
   };
 
   renderUserImage = () => {
     const { userData } = this.props;
 
     return userData.image ? (
-      <img src={userData.image} className="user-image" />
+      <div className="user-image-container">
+        <button onClick={this.showUserPhotoModal}>
+          <img src={userData.image} className="user-image" />
+        </button>
+      </div>
     ) : (
-      <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+      <div className="user-image-container">
+        <button onClick={this.showUserPhotoModal}>
+          <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+        </button>
+      </div>
     );
   };
 
@@ -139,8 +178,63 @@ class UserSettingsComponent extends React.Component<Props, any> {
     </div>
   );
 
+  renderAddPhotoButton = () => (
+    <div className="add-photo-button-container">
+      <UploadFile inputRefId="input-user-photo" uploadFile={this.loadPhotoContent} />
+      <div className="media-button-wrapper">
+        <button
+          className="btn add-media-button"
+          color="purple"
+          onClick={() => document.getElementById('input-user-photo').click()}
+        >
+          {this.state.photoContent || this.props.userData.image ? 'Change photo' : 'Add photo'}
+        </button>
+      </div>
+    </div>
+  );
+
+  renderPhoto = () => {
+    const { photoBody, processingImage } = this.state;
+    const { userData } = this.props;
+
+    if (processingImage) {
+      return (
+        <div className="processing-image">
+          <FontAwesomeIcon className="image-preview" icon={faUserCircle} />
+          <b>Processing image...</b>
+        </div>
+      );
+    }
+
+    const placeholderImage = userData.image ? (
+      <img className="image-preview" src={userData.image} />
+    ) : (
+      <FontAwesomeIcon className="image-preview" icon={faUserCircle} />
+    );
+
+    return photoBody ? <img className="image-preview" src={photoBody} /> : placeholderImage;
+  };
+
+  renderPhotoSelector = () => (
+    <div className="user-photo-selector-modal">
+      {this.renderPhoto()}
+      {this.renderAddPhotoButton()}
+      <div className="photo-actions">
+        <button className="btn" onClick={this.closeUserPhotoModal}>
+          CANCEL
+        </button>
+        <button disabled={!this.state.photoContent} className="btn" onClick={this.saveUserPhoto}>
+          SAVE
+        </button>
+      </div>
+    </div>
+  );
+
   renderContent = () => (
     <div className="content">
+      <Modal open={this.state.showUserPhotoModal} onClose={this.closeUserPhotoModal}>
+        {this.renderPhotoSelector()}
+      </Modal>
       {this.renderUserInfo()}
       <div className="pages-container">
         {this.renderPagesTitle('SUPPORTED ARTISTS')}

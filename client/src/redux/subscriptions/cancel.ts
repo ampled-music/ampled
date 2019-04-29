@@ -10,9 +10,11 @@ export const cancelSubscriptionAction = createActionThunk(
 );
 
 export const cancelSubscriptionReducer = {
-  [cancelSubscriptionAction.STARTED]: (state: typeof initialState) => ({
+  [cancelSubscriptionAction.STARTED]: (state: typeof initialState, { payload }) => ({
     ...state,
     processing: true,
+    artistPageId: payload.artistPageId,
+    artistName: payload.artistName,
   }),
   [cancelSubscriptionAction.SUCCEEDED]: (state: typeof initialState) => ({
     ...state,
@@ -26,5 +28,6 @@ export const cancelSubscriptionReducer = {
     ...state,
     processing: initialState.processing,
     cancelled: initialState.cancelled,
+    artistName: undefined,
   }),
 };

@@ -16,13 +16,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
+import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
+import { routePaths } from '../route-paths';
 import { Modal } from '../shared/modal/Modal';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { UploadFile } from '../shared/upload/UploadFile';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
-type Props = typeof loginInitialState & typeof meInitialState & Dispatchers & { history: any };
+type Props = typeof loginInitialState &
+  typeof meInitialState &
+  Dispatchers & { history: any; subscriptions: typeof subscriptionsInitialState };
 
 class UserSettingsComponent extends React.Component<Props, any> {
   state = {
@@ -39,14 +43,30 @@ class UserSettingsComponent extends React.Component<Props, any> {
   }
 
   componentDidUpdate() {
-    if (this.props.token && !this.props.error && !this.props.userData) {
+    if (this.props.token && !this.props.error && !this.props.userData && !this.props.loadingMe) {
       this.props.getMe();
     }
 
     if (this.state.showUserPhotoModal && this.props.updated) {
       this.updateUserPhoto();
     }
+
+    if (this.props.subscriptions.cancelled && !this.props.loadingMe) {
+      this.showCancelledSuccessMessage();
+      this.props.getMe();
+    }
   }
+
+  showCancelledSuccessMessage = () => {
+    const artistPageLink = routePaths.support.replace(':id', this.props.subscriptions.artistPageId.toString());
+
+    showToastMessage(
+      `We are sad to see you leaving. Remember that you can always support <a href="${artistPageLink}">${
+        this.props.subscriptions.artistName
+      }</a> with a different value!`,
+      MessageType.SUCCESS,
+    );
+  };
 
   updateUserPhoto = () => {
     this.closeUserPhotoModal();
@@ -72,7 +92,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
     this.setState({ showUserPhotoModal: false, photoBody: undefined, photoContent: undefined });
 
   cancelSubscription = () => {
-    this.props.cancelSubscription({ artistPageId: this.state.subscription.id });
+    this.props.cancelSubscription({
+      artistPageId: this.state.subscription.id,
+      artistName: this.state.subscription.name,
+    });
     this.closeCancelModal();
   };
 
@@ -323,6 +346,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 const mapStateToProps = (state: Store) => ({
   ...state.authentication,
   ...state.me,
+  subscriptions: state.subscriptions,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -9,7 +9,7 @@ export const getMeAction = createActionThunk(actions.getMe, () => getMeData());
 export const getMeReducer = {
   [getMeAction.STARTED]: (state) => ({
     ...state,
-    loading: true,
+    loadingMe: true,
   }),
   [getMeAction.SUCCEEDED]: (state, { payload }) => ({
     ...state,
@@ -23,6 +23,6 @@ export const getMeReducer = {
   }),
   [getMeAction.ENDED]: (state) => ({
     ...state,
-    loading: false,
+    loadingMe: false,
   }),
 } as Reducer;

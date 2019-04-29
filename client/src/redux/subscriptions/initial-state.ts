@@ -11,6 +11,7 @@ export const initialState = {
   paymentToken: '',
   status: SubscriptionStep.SupportLevel,
   cancelled: false,
+  artistName: undefined,
 };
 
 export interface Reducer {

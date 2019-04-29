@@ -108,6 +108,16 @@ class PostFormComponent extends React.Component<Props, any> {
     this.setState({ imageUrl: undefined, deleteToken: undefined, hasUnsavedChanges: false });
   };
 
+  isSaveEnabled = () => {
+    const { title, body, imageUrl, audioFile } = this.state;
+
+    return (
+      title &&
+      title.length > 0 &&
+      ((audioFile && audioFile.length > 0) || (imageUrl && imageUrl.length > 0) || (body && body.length > 0))
+    );
+  };
+
   renderUploader(): React.ReactNode {
     return (
       <div className="uploader">
@@ -142,19 +152,21 @@ class PostFormComponent extends React.Component<Props, any> {
     return (
       <label htmlFor="image-file">
         <Button className="image-button" variant="contained" component="span">
-          Update Image
+          Add Image
         </Button>
       </label>
     );
   }
 
   render() {
-    const { hasUnsavedChanges, title, body, imageUrl, audioFile } = this.state;
+    const { hasUnsavedChanges, title, body, imageUrl } = this.state;
+
+    const isSaveEnabled = this.isSaveEnabled();
 
     return (
       <div className="post-form">
         <DialogContent>
-          <h1>AUDIO POST</h1>
+          <h1>NEW POST</h1>
           <form onSubmit={this.handleSubmit}>
             <Upload onComplete={this.updateAudioFile} />
 
@@ -220,10 +232,10 @@ class PostFormComponent extends React.Component<Props, any> {
               </Button>
               <Button
                 type="Submit"
-                className={cx('post-button', { disabled: audioFile.length === 0 })}
-                disabled={audioFile.length === 0}
+                className={cx('post-button', { disabled: !isSaveEnabled })}
+                disabled={!isSaveEnabled}
               >
-                Post Audio
+                Save Post
               </Button>
             </DialogActions>
           </form>

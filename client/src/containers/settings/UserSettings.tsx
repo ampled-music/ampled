@@ -11,11 +11,13 @@ import { getMeAction } from 'src/redux/me/get-me';
 import { faHeartBroken, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { updateMeAction } from 'src/redux/me/update-me';
 import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { Modal } from '../shared/modal/Modal';
 import { UploadFile } from '../shared/upload/UploadFile';
+import { showToastMessage, MessageType } from '../shared/toast/toast';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
@@ -39,7 +41,17 @@ class UserSettingsComponent extends React.Component<Props, any> {
     if (this.props.token && !this.props.error && !this.props.userData) {
       this.props.getMe();
     }
+
+    if (this.state.showUserPhotoModal && this.props.updated) {
+      this.updateUserPhoto();
+    }
   }
+
+  updateUserPhoto = () => {
+    this.closeUserPhotoModal();
+    this.props.getMe();
+    showToastMessage('User photo updated!', MessageType.SUCCESS);
+  };
 
   getFormattedDate = (date: string) => {
     return DateTime.fromString(date.split('T')[0], 'yyyy-MM-dd').toLocaleString(DateTime.DATE_MED);
@@ -80,7 +92,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
   };
 
   saveUserPhoto = () => {
-    console.log('this.state', this.state);
+    const me = {
+      file: this.state.photoContent.file,
+    };
+
+    this.props.updateMe(me);
   };
 
   renderUserImage = () => {
@@ -183,6 +199,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <UploadFile inputRefId="input-user-photo" uploadFile={this.loadPhotoContent} />
       <div className="media-button-wrapper">
         <button
+          disabled={this.props.updating}
           className="btn add-media-button"
           color="purple"
           onClick={() => document.getElementById('input-user-photo').click()}
@@ -218,12 +235,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderPhotoSelector = () => (
     <div className="user-photo-selector-modal">
       {this.renderPhoto()}
+      {this.props.updating && <b>Saving image...</b>}
       {this.renderAddPhotoButton()}
       <div className="photo-actions">
-        <button className="btn" onClick={this.closeUserPhotoModal}>
+        <button disabled={this.props.updating} className="btn" onClick={this.closeUserPhotoModal}>
           CANCEL
         </button>
-        <button disabled={!this.state.photoContent} className="btn" onClick={this.saveUserPhoto}>
+        <button disabled={!this.state.photoContent || this.props.updating} className="btn" onClick={this.saveUserPhoto}>
           SAVE
         </button>
       </div>
@@ -232,7 +250,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   renderContent = () => (
     <div className="content">
-      <Modal open={this.state.showUserPhotoModal} onClose={this.closeUserPhotoModal}>
+      <Modal open={this.state.showUserPhotoModal} onClose={!this.props.updating && this.closeUserPhotoModal}>
         {this.renderPhotoSelector()}
       </Modal>
       {this.renderUserInfo()}
@@ -270,6 +288,7 @@ const mapDispatchToProps = (dispatch) => ({
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
   cancelSubscription: bindActionCreators(cancelSubscriptionAction, dispatch),
+  updateMe: bindActionCreators(updateMeAction, dispatch),
 });
 
 const UserSettings = connect(

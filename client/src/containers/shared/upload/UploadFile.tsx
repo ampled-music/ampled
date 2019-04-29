@@ -20,6 +20,7 @@ export class UploadFile extends React.Component<UploadFileProps, any> {
         fileName: selectedFile.name,
         size: selectedFile.size,
         mimeType: selectedFile.type,
+        file: selectedFile,
       });
     };
 

@@ -209,11 +209,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
 
-    b {
-      position: absolute;
-      margin-top: -2rem;
-    }
+  b {
+    align-self: center;
+    position: absolute;
+    margin-top: -2rem;
   }
 
   .image-preview {

@@ -12,6 +12,9 @@ import { createSubscriptionAction } from 'src/redux/subscriptions/create';
 import { declineStepAction } from 'src/redux/subscriptions/decline-step';
 import { startSubscriptionAction } from 'src/redux/subscriptions/start-subscription';
 
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { initialState as artistsInitialState, ArtistModel } from '../../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
@@ -113,7 +116,11 @@ export class SupportComponent extends React.Component<Props, any> {
     <div key="artists" className="support-artists">
       {owners.map((owner, index) => (
         <div key={index} className="support-artist-info">
-          <img src={owner.profile_image_url} />
+          {owner.profile_image_url ? (
+            <img className="artist-image" src={owner.profile_image_url} />
+          ) : (
+            <FontAwesomeIcon className="artist-image" icon={faUserCircle} />
+          )}
           <p>{owner.name}</p>
         </div>
       ))}

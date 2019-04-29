@@ -118,12 +118,6 @@ class MenuListComposition extends React.Component<Props, State> {
         <MenuItem>
           <Link to={routePaths.settings}>Account Settings</Link>
         </MenuItem>
-        <MenuItem>
-          <Link to="">Blog</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="">About us</Link>
-        </MenuItem>
         <MenuItem onClick={this.logout}>Logout</MenuItem>
         <Divider />
         <MenuItem>

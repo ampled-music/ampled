@@ -5,19 +5,20 @@ import { DateTime } from 'luxon';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
 import { getMeAction } from 'src/redux/me/get-me';
+import { updateMeAction } from 'src/redux/me/update-me';
+import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
 
 import { faHeartBroken, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { updateMeAction } from 'src/redux/me/update-me';
-import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
+
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { Modal } from '../shared/modal/Modal';
-import { UploadFile } from '../shared/upload/UploadFile';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
+import { UploadFile } from '../shared/upload/UploadFile';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
@@ -155,6 +156,45 @@ class UserSettingsComponent extends React.Component<Props, any> {
     );
   };
 
+  renderOwnedPages = () => (
+    <div className="pages">
+      {this.props.userData.ownedPages.map((ownedPage) => (
+        <div key={`artist-${ownedPage.id}`} className="artist">
+          <div className="image-border">
+            <img src={ownedPage.image} />
+          </div>
+          <div className="artist-info">
+            <p className="artist-name">{ownedPage.name}</p>
+            <div className="extra-info">
+              <div className="owned-info">
+                <div className="column">
+                  <label>
+                    <p className="info-title">SUPPORTERS</p>
+                    <p className="supporting-at-value">1,000</p>
+                  </label>
+                  <label>
+                    <p className="info-title">LAST POST</p>
+                    <p className="info-value">MARCH 1, 2019</p>
+                  </label>
+                </div>
+                <div className="column">
+                  <label>
+                    <p className="info-title">MONTHLY TOTAL</p>
+                    <p className="info-value">$ 4,300</p>
+                  </label>
+                  <label>
+                    <p className="info-title">LAST PAYOUT</p>
+                    <p className="info-value">APRIL 30, 2019</p>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
   renderSupportedArtists = () => (
     <div className="pages">
       {this.props.userData.subscriptions.map((subscription) => (
@@ -255,6 +295,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
       </Modal>
       {this.renderUserInfo()}
       <div className="pages-container">
+        {this.renderPagesTitle('MY ARTIST PAGES')}
+        {this.renderOwnedPages()}
         {this.renderPagesTitle('SUPPORTED ARTISTS')}
         {this.renderSupportedArtists()}
       </div>

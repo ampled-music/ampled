@@ -60,18 +60,19 @@
     }
 
     .pages-container {
-      border-top: 4px solid black;
-      padding-top: 1rem;
       margin-left: 2rem;
-      width: 100%;
 
       h1 {
+        border-top: 4px solid black;
         font-size: 20px;
-        padding-bottom: 1.5rem;
+        padding: 1.5rem 0;
+        margin: 0;
         font-weight: bold;
       }
 
       .pages {
+        padding-top: 1rem;
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
 
@@ -146,6 +147,20 @@
 
               .info-value {
                 font-size: 14px;
+              }
+
+              .owned-info {
+                display: flex;
+                justify-content: space-between;
+
+                .column {
+                  display: flex;
+                  flex-direction: column;
+                }
+
+                .column:not(:last-child) {
+                  margin-right: 1rem;
+                }
               }
 
               .support-info {

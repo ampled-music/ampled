@@ -16,3 +16,8 @@ json.subscriptions @subscriptions do |subscription|
   json.support_date subscription.created_at
   json.amount subscription.plan.amount
 end
+json.ownedPages @owned_pages do |page|
+  json.artistId page.id
+  json.name page.name
+  json.image page.image
+end

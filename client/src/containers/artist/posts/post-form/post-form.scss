@@ -149,4 +149,17 @@
       max-width: 375px;
     }
   }
+
+  .form-bottom {
+    font-family: Courier, 'Courier New', monospace;
+
+    .make-public-label {
+      margin-right: auto;
+      margin-left: 0;
+
+      input {
+        margin-right: 0.5rem;
+      }
+    }
+  }
 }

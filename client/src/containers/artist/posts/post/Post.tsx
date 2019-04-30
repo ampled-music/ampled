@@ -104,7 +104,7 @@ class PostComponent extends React.Component<any, any> {
               <div className="private-support-btn">
                 <button className="btn" onClick={this.redirectToSupport}>
                   <FontAwesomeIcon icon={faLock} />
-                  SUPPORT TO SEE DETAILS
+                  SUPPORT TO UNLOCK
                 </button>
               </div>
             )}

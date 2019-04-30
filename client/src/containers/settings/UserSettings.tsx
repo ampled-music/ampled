@@ -11,7 +11,7 @@ import { getMeAction } from 'src/redux/me/get-me';
 import { updateMeAction } from 'src/redux/me/update-me';
 import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
 
-import { faHeartBroken, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faHeartBroken, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
@@ -126,16 +126,17 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderUserImage = () => {
     const { userData } = this.props;
 
-    return userData.image ? (
+    return (
       <div className="user-image-container">
         <button onClick={this.showUserPhotoModal}>
-          <img src={userData.image} className="user-image" />
-        </button>
-      </div>
-    ) : (
-      <div className="user-image-container">
-        <button onClick={this.showUserPhotoModal}>
-          <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+          {userData.image ? (
+            <img src={userData.image} className="user-image" />
+          ) : (
+            <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+          )}
+          <b className="tag">
+            <FontAwesomeIcon icon={faEdit} />
+          </b>
         </button>
       </div>
     );

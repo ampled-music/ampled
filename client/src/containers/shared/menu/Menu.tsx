@@ -8,7 +8,7 @@ import { logoutAction } from 'src/redux/authentication/logout';
 import { Store } from 'src/redux/configure-store';
 import * as store from 'store';
 
-import { faCog, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -97,12 +97,6 @@ class MenuListComposition extends React.Component<Props, State> {
           <a href="https://www.ampled.com/about" target="_blank">
             About us
           </a>
-        </MenuItem>
-        <Divider />
-        <MenuItem>
-          <div>
-            <FontAwesomeIcon icon={faSearch} /> Search
-          </div>
         </MenuItem>
       </div>
     );

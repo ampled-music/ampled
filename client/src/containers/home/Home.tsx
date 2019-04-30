@@ -9,7 +9,7 @@ import { HomeHeader } from './HomeHeader';
 import { HomeHow } from './HomeHow';
 
 export const Home = () => (
-  <div>
+  <div className="home-section">
     <HomeHeader />
     <HomeFor />
     <HomeHow />

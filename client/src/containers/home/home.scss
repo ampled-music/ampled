@@ -1,4 +1,4 @@
-section {
+.home-section {
   overflow: hidden;
 }
 
@@ -21,7 +21,6 @@ section {
 }
 
 .home-header {
-  background-color: #e9c7c6;
   padding-top: 3rem;
 
   &__support {
@@ -159,10 +158,9 @@ section {
   &.tear_1 {}
 
   &.tear_2 {
-    background-color: #e9c7c6;
   }
 }
 
 .home-artists {
-  background-color: #e9c7c6;
+  padding: 2rem;
 }

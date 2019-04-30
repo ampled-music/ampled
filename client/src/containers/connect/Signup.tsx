@@ -165,8 +165,11 @@ class SignupComponent extends React.Component<Props, any> {
               </a>
               .
             </label>
-            <button className="btn" type="submit">
+            <button className="btn btn-submit" type="submit">
               SIGN UP
+            </button>
+            <button className="btn" type="reset" onClick={this.props.closeAuthModal}>
+              CANCEL
             </button>
           </form>
           <label>

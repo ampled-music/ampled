@@ -82,8 +82,11 @@ class LoginComponent extends React.Component<Props, any> {
               onChange={this.handleChange}
               required
             />
-            <button className="btn" type="submit">
+            <button className="btn-submit" type="submit">
               LOGIN
+            </button>
+            <button className="btn" type="reset" onClick={this.props.closeAuthModal}>
+              CANCEL
             </button>
             <span className="error-message">{login.error}</span>
           </form>

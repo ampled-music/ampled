@@ -2,8 +2,8 @@ import { apiAxios } from '../setup-axios';
 
 export const updateMe = async (me) => {
   const { data } = await apiAxios({
-    method: 'update',
-    url: '/me.json',
+    method: 'put',
+    url: '/users.json',
     data: me,
   });
 

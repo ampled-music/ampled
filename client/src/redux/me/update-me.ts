@@ -1,4 +1,5 @@
 import { createActionThunk } from 'redux-thunk-actions';
+import { updateMe } from 'src/api/me/update-me';
 import { signinFile } from 'src/api/signin-file';
 import { uploadFile } from 'src/api/upload-file';
 
@@ -6,9 +7,13 @@ import { actions } from './actions';
 import { Reducer } from './initial-state';
 
 export const updateMeAction = createActionThunk(actions.updateMe, async (updatedMe) => {
-  if (updatedMe.file) {
-    return await uploadPhoto(updatedMe.file);
+  if (!updatedMe.file) {
+    return;
   }
+
+  const profile_image_url = await uploadPhoto(updatedMe.file);
+
+  updateMe({ profile_image_url });
 });
 
 const uploadPhoto = async (file) => {

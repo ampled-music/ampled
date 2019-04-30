@@ -25,10 +25,14 @@
 
   &__support {
     width: 100%;
-    margin: auto;
     display: block;
     position: relative;
     z-index: 0;
+    font-size: 6rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .5rem;
+    font-weight: bold;
   }
 
   &__info {
@@ -36,13 +40,14 @@
     border: 2px solid black;
     padding: 2rem;
     margin: 4rem auto 2rem;
+    background-color: #fffc;
   }
 
-  &__collage {
-    width: 140%;
+  &__bg-image {
+    width: 100%;
+    height: 600px;
+    background-size: cover;
     position: relative;
-    left: -100px;
-    margin-top: -40px;
   }
 }
 

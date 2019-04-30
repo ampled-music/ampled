@@ -120,6 +120,7 @@ class ArtistComponent extends React.Component<Props, any> {
           match={this.props.match}
           posts={artist.posts}
           artistName={artist.name}
+          artistId={artist.id}
           accentColor={artist.accent_color}
           updateArtist={this.getArtistInfo}
           loggedUserAccess={loggedUserAccess}

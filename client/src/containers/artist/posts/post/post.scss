@@ -10,6 +10,20 @@
     -ms-filter: blur(20px);
     filter: blur(20px);
   }
+
+  .private-support-btn {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+
+    svg {
+      margin-right: 0.5rem;
+    }
+
+    button {
+      width: 260px;
+    }
+  }
 }
 
 .private-post-modal {

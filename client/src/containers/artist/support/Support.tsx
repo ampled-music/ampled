@@ -23,6 +23,7 @@ import {
   SubscriptionStep,
 } from '../../../redux/subscriptions/initial-state';
 import { StripePaymentProvider } from './StripePaymentProvider';
+import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast';
 
 interface ArtistProps {
   match: {
@@ -83,6 +84,12 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   handleSupportClick = () => {
+    if (this.state.supportLevelValue < 3) {
+      showToastMessage('Sorry, but you need to insert a value bigger or equal $ 3.00.', MessageType.ERROR);
+
+      return;
+    }
+
     if (!this.props.me.userData) {
       this.props.openAuthModal({ modalPage: 'signup' });
     } else {
@@ -94,7 +101,7 @@ export class SupportComponent extends React.Component<Props, any> {
     const artistPageId = this.props.match.params.id;
     this.props.startSubscription({
       artistPageId,
-      supportLevelValue: this.state.supportLevelValue,
+      supportLevelValue: this.state.supportLevelValue * 100,
     });
   };
 

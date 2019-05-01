@@ -1,5 +1,5 @@
 class SubscriptionsController < ApplicationController
-  # before_action :set_artist_page, only: %i[show edit update destroy]
+  before_action :authenticate_user!
 
   def index
     @subscriptions = current_user.subscriptions
@@ -29,8 +29,9 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
-    # @.destroy
+    current_subscription.cancel!
     # redirect_to artist_pages_url, notice: "Artist page was successfully destroyed."
+    render json: :ok
   end
 
   private
@@ -64,16 +65,27 @@ class SubscriptionsController < ApplicationController
     )
   end
 
+  def stripe_plan
+    current_artist_page.plan_for_amount(subscription_params[:amount].to_i)
+  end
+
   def subscribe_stripe
     create_platform_customer if current_user.stripe_customer_id.blank?
 
-    plan = current_artist_page.plans.first
+    plan = stripe_plan
     token = create_token
     artist_customer = create_artist_customer(token)
 
-    create_stripe_subscription(plan, artist_customer.id)
+    stripe_subscription = create_stripe_subscription(plan, artist_customer.id)
 
-    Subscription.create!(user: current_user, artist_page: current_artist_page, plan_id: plan.id)
+    Subscription.create!(
+      user: current_user,
+      artist_page: current_artist_page,
+      plan_id: plan.id,
+      stripe_customer_id: artist_customer.id,
+      stripe_id: stripe_subscription.id,
+      status: :active
+    )
   end
 
   def create_platform_customer
@@ -89,6 +101,10 @@ class SubscriptionsController < ApplicationController
   end
 
   def subscription_params
-    params.require(:subscription).permit(:artist_page_id).merge(user_id: current_user.id)
+    params.require(:subscription).permit(:artist_page_id, :amount).merge(user_id: current_user.id)
+  end
+
+  def current_subscription
+    Subscription.find(params.require(:id))
   end
 end

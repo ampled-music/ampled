@@ -53,9 +53,50 @@ class ArtistPage < ApplicationRecord
     "#{base}?#{params}"
   end
 
+  def create_plan(amount)
+    stripe_plan = Stripe::Plan.create(
+      {
+        product: stripe_product.id,
+        nickname: "Ampled Support $5",
+        interval: "month",
+        currency: "usd",
+        amount: amount
+      }, stripe_account: stripe_user_id
+    )
+    plan = Plan.new(stripe_id: stripe_plan.id, amount: amount)
+    plans << plan
+    plan
+  end
+
+  def plan_for_amount(amount)
+    plans.find_by(amount: amount) || create_plan(amount)
+  end
+
   def stripe_dashboard_url
     return "" if stripe_user_id.blank?
 
-    Stripe::Account.retrieve(stripe_user_id).login_links.create["url"]
+    stripe_account.login_links.create["url"]
+  end
+
+  def stripe_account
+    Stripe::Account.retrieve(stripe_user_id)
+  end
+
+  def stripe_product
+    create_product if stripe_product_id.nil?
+
+    @stripe_product ||= Stripe::Product.retrieve(stripe_product_id, stripe_account: stripe_user_id)
+  end
+
+  private
+
+  def create_product
+    product = Stripe::Product.create(
+      {
+        name: "Ampled Support",
+        type: "service"
+      }, stripe_account: stripe_user_id
+    )
+    update(stripe_product_id: product.id)
   end
 end

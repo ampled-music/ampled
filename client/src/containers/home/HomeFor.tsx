@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-// import mission from '../../images/home/home_for_mission.png';
+import mission from '../../images/home/home_for_mission.png';
 import owned_by from '../../images/home/home_for_owned_by.png';
 import transparent from '../../images/home/home_for_transparent.png';
 
@@ -34,7 +34,7 @@ export const HomeFor = () => (
           <button className="home-for__button btn">Learn More</button>
         </div>
         <div className="col-md-4">
-          {/* <img className="home-for__image" src={mission} /> */}
+          <img className="home-for__image" src={mission} />
           <h3 className="home-for__sub-title">Missions Driven</h3>
           <p className="home-for__copy">
             Our mission is to make music more equitable for artists and to operate ethically and transparently. Let’s work together.

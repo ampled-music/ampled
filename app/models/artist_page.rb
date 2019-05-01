@@ -88,6 +88,22 @@ class ArtistPage < ApplicationRecord
     @stripe_product ||= Stripe::Product.retrieve(stripe_product_id, stripe_account: stripe_user_id)
   end
 
+  def subscriber_count
+    subscribers.count
+  end
+
+  def monthly_total
+    43_000 * 100
+  end
+
+  def last_post_date
+    posts.order(created_at: :desc).first&.created_at
+  end
+
+  def last_payout
+    1.week.ago
+  end
+
   private
 
   def create_product
@@ -98,10 +114,6 @@ class ArtistPage < ApplicationRecord
       }, stripe_account: stripe_user_id
     )
     update(stripe_product_id: product.id)
-  end
-
-  def last_post_date
-    posts.order(created_at: :desc).first&.created_at
   end
 
   def most_recent_supporter

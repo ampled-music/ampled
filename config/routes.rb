@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :comments, only: %i[create destroy]
   resources :subscriptions
   resources :artist_pages
+  
   resources :artist_pages, only: [] do
     resources :posts, only: %i[create index]
   end

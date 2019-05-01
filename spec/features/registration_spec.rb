@@ -44,10 +44,10 @@ RSpec.describe "POST /users", type: :request do
 
   context "when updating a user" do
     let(:user) do
-      create(:user, confirmed_at: Time.current, profile_image_url: 'old_image')
+      create(:user, confirmed_at: Time.current, profile_image_url: "old_image")
     end
-  
-    let(:update_params){ { user: { profile_image_url: 'http://some.image.jpg'} } }
+
+    let(:update_params) { { user: { profile_image_url: "http://some.image.jpg" } } }
 
     let(:url) { "/users" }
 
@@ -62,9 +62,9 @@ RSpec.describe "POST /users", type: :request do
     end
 
     it "saves the subscription in the database" do
-        put url, params: update_params
+      put url, params: update_params
 
-      expect(user.profile_image_url).to eq 'http://some.image.jpg'
+      expect(user.profile_image_url).to eq "http://some.image.jpg"
     end
   end
 end

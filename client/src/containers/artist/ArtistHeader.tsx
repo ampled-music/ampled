@@ -134,14 +134,16 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__supporters">
         <div className="artist-header__supporter-title">{artist.supporters.length} Supporter(s)</div>
 
-        <div key={mostRecentSupporter.id} className="row align-items-center">
-          <div className="col-3">{this.renderSupporter({ supporter: mostRecentSupporter, borderColor })}</div>
-          <div className="col-9">
-            <b className="most-recent-supporter-tag">MOST RECENT SUPPORTER</b>
-            <div className="artist-header__person_name">{mostRecentSupporter.name}</div>
-            <div className="artist-header__person_quote" />
+        {mostRecentSupporter && (
+          <div key={mostRecentSupporter.id} className="row align-items-center">
+            <div className="col-3">{this.renderSupporter({ supporter: mostRecentSupporter, borderColor })}</div>
+            <div className="col-9">
+              <b className="most-recent-supporter-tag">MOST RECENT SUPPORTER</b>
+              <div className="artist-header__person_name">{mostRecentSupporter.name}</div>
+              <div className="artist-header__person_quote" />
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="row justify-content-start no-gutters">
           {artist.supporters

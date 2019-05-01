@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
 import { getMeAction } from 'src/redux/me/get-me';
+import { setUserDataAction } from 'src/redux/me/set-me';
 import { updateMeAction } from 'src/redux/me/update-me';
 import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
 
@@ -70,7 +71,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   updateUserPhoto = () => {
     this.closeUserPhotoModal();
-    this.props.getMe();
+    this.props.setMe({ image: this.props.updatedData.profileImageUrl });
     showToastMessage('User photo updated!', MessageType.SUCCESS);
   };
 
@@ -352,6 +353,7 @@ const mapStateToProps = (state: Store) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
+  setMe: bindActionCreators(setUserDataAction, dispatch),
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
   cancelSubscription: bindActionCreators(cancelSubscriptionAction, dispatch),

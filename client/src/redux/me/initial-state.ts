@@ -4,6 +4,7 @@ export const initialState = {
   error: null,
   updating: false,
   updated: false,
+  updatedData: undefined,
 };
 
 export interface Reducer {

@@ -13,7 +13,7 @@ export const updateMeAction = createActionThunk(actions.updateMe, async (updated
 
   const profile_image_url = await uploadPhoto(updatedMe.file);
 
-  updateMe({ profile_image_url });
+  return updateMe({ profile_image_url });
 });
 
 const uploadPhoto = async (file) => {
@@ -29,18 +29,20 @@ export const updateMeReducer = {
     ...state,
     updating: true,
   }),
-  [updateMeAction.SUCCEEDED]: (state) => ({
+  [updateMeAction.SUCCEEDED]: (state, { payload }) => ({
     ...state,
     updated: true,
+    updatedData: payload,
   }),
   [updateMeAction.FAILED]: (state, { payload }) => ({
     ...state,
     updating: false,
-    error: payload.image,
+    error: payload,
   }),
   [updateMeAction.ENDED]: (state) => ({
     ...state,
     updating: false,
     updated: false,
+    updatedData: undefined,
   }),
 } as Reducer;

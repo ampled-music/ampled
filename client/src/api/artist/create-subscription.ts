@@ -8,10 +8,10 @@ export const createSubscription = async (subscription: {
   const { data } = await apiAxios({
     method: 'post',
     url: `/subscriptions`,
-    data: {
+    data: { 
       artist_page_id: subscription.artistPageId,
       token: subscription.paymentToken,
-      subscriptionLevelValue: subscription.subscriptionLevelValue,
+      amount: subscription.subscriptionLevelValue,
     },
   });
 

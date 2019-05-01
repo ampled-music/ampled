@@ -161,6 +161,20 @@
   }
 }
 
+.home-artists {
+  padding: 2rem;
+}
+
+.home-membership {
+  padding: 2rem;
+
+  h1 {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 2rem auto;
+  }
+}
+
 .tear {
   width: 100%;
 
@@ -168,8 +182,4 @@
 
   &.tear_2 {
   }
-}
-
-.home-artists {
-  padding: 2rem;
 }

@@ -7,6 +7,7 @@ import { HomeArtists } from './HomeArtists';
 import { HomeFor } from './HomeFor';
 import { HomeHeader } from './HomeHeader';
 import { HomeHow } from './HomeHow';
+import { HomeMembership } from './HomeMembership';
 
 export const Home = () => (
   <div className="home-section">
@@ -14,6 +15,7 @@ export const Home = () => (
     <HomeFor />
     <HomeHow />
     <HomeArtists />
+    <HomeMembership />
     <Footer />
   </div>
 );

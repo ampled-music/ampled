@@ -21,3 +21,4 @@ json.ownedPages @owned_pages do |page|
   json.name page.name
   json.image page.image
 end
+

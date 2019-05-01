@@ -29,6 +29,8 @@ class Subscription < ApplicationRecord
 
   belongs_to :plan
 
+  belongs_to :plan
+
   before_destroy :check_stripe
 
   def check_stripe

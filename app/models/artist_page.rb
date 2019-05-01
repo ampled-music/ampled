@@ -66,4 +66,8 @@ class ArtistPage < ApplicationRecord
   def most_recent_supporter
     subscriptions.order(created_at: :desc).first&.user_id
   end
+
+  def last_post_date
+    posts.order(created_at: :desc).first&.created_at
+  end
 end

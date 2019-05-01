@@ -23,10 +23,10 @@ export const HomeHow = () => (
               </div>
               <div className="col-10">
                 <div className="home-how__list-item_title">
-                  Create a page on ampled and post unique or unreleased content
+                  Artists post unique/ unreleased content.
                 </div>
                 <div className="home-how__list-item_copy">
-                  Free for artists to join. Fans subscribe directly to a particular artist, not the platform.{' '}
+                Artists on Ampled post things you won’t find anywhere else - like demos, unreleased recordings, access to exclusive merch, discounts, personal notes, announcements - and more.
                 </div>
               </div>
             </div>
@@ -35,10 +35,9 @@ export const HomeHow = () => (
                 <div className="home-how__list-item_number">02</div>
               </div>
               <div className="col-10">
-                <div className="home-how__list-item_title">Artists are supported directly by their audience </div>
+                <div className="home-how__list-item_title">Artists are supported directly by their community</div>
                 <div className="home-how__list-item_copy">
-                  may also choose to be a 2X or even 10x supporter. Minimum monthly support per fan is $3. An audience
-                  member{' '}
+                  Artists can be supported directly for $3 or more per month - unlocking access to their exclusive content.
                 </div>
               </div>
             </div>
@@ -49,7 +48,7 @@ export const HomeHow = () => (
               <div className="col-10">
                 <div className="home-how__list-item_title">Artists collect monthly recurring revenue</div>
                 <div className="home-how__list-item_copy">
-                  Supporters get a notification when an artist they support posts something new.
+                  When an artist posts something new, their supporters get a notification. 
                 </div>
               </div>
             </div>

@@ -119,5 +119,4 @@ class ArtistPage < ApplicationRecord
     )
     update(stripe_product_id: product.id)
   end
-
 end

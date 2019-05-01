@@ -3,16 +3,13 @@ import './post-container.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { UserRoles } from 'src/containers/shared/user-roles';
+import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { createCommentAction } from 'src/redux/comments/create';
 import { deleteCommentAction } from 'src/redux/comments/delete';
 import { Store } from 'src/redux/configure-store';
 
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as commentsInitialState } from '../../../redux/comments/initial-state';
-import { Comment } from './comments/Comment';
-import { CommentForm } from './comments/CommentForm';
 import { Post } from './post/Post';
 
 interface CommentProps {
@@ -51,51 +48,16 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 type Props = PostsProps & Dispatchers;
 
 class PostsContainerComponent extends React.Component<Props, any> {
-  handleSubmit = async (comment) => {
-    await this.props.addComment(comment);
-    this.props.updateArtist();
-  };
-
-  deleteComment = async (commentId) => {
-    await this.props.deleteComment(commentId);
-    this.props.updateArtist();
+  handleExpandClick = () => {
+    this.setState((state) => ({ expanded: !state.expanded }));
   };
 
   sortItemsByCreationDate(items) {
     return items.sort((a, b) => b.created_at - a.created_at);
   }
 
-  canLoggedUserComment = () => {
-    const { loggedUserAccess } = this.props;
-
-    return (
-      loggedUserAccess && [UserRoles.Supporter.toString(), UserRoles.Owner.toString()].includes(loggedUserAccess.role)
-    );
-  };
-
-  canLoggedUserDeleteComment = (commentUserId: number) => {
-    const { loggedUserAccess, me } = this.props;
-
-    return (loggedUserAccess && loggedUserAccess.role === UserRoles.Owner) || (me && commentUserId === me.id);
-  };
-
-  renderComments = (post) => (
-    <div className="comments-list">
-      <span>COMMENTS</span>
-      {this.sortItemsByCreationDate(post.comments).map((comment) => (
-        <Comment
-          key={comment.id}
-          comment={comment}
-          canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
-          deleteComment={this.deleteComment}
-        />
-      ))}
-      {this.canLoggedUserComment() && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
-    </div>
-  );
-
   renderPosts = () => {
-    const { posts, accentColor, artistName, me, openAuthModal, artistId } = this.props;
+    const { posts, accentColor, artistName, me, openAuthModal, artistId, loggedUserAccess } = this.props;
 
     if (!posts) {
       return null;
@@ -104,14 +66,17 @@ class PostsContainerComponent extends React.Component<Props, any> {
     return this.sortItemsByCreationDate(posts).map((post) => (
       <div key={`post-${post.id}`} id={`post-${post.id}`} className="col-md-4">
         <Post
+          me={me}
           post={post}
           accentColor={accentColor}
-          openAuthModal={openAuthModal}
           artistName={artistName}
           artistId={artistId}
-          authenticated={!!me}
+          loggedUserAccess={loggedUserAccess}
+          openAuthModal={openAuthModal}
+          addComment={this.props.addComment}
+          deleteComment={this.props.deleteComment}
+          updateArtist={this.props.updateArtist}
         />
-        {this.renderComments(post)}
       </div>
     ));
   };

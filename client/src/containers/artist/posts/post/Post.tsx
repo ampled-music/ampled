@@ -4,10 +4,11 @@ import cx from 'classnames';
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import { routePaths } from 'src/containers/route-paths';
+import { UserRoles } from 'src/containers/shared/user-roles';
 
 import { faLock, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Divider } from '@material-ui/core';
+import { CardActions, Collapse, Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -15,11 +16,14 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 import { config } from '../../../../config';
+import { Comment } from '../comments/Comment';
+import { CommentForm } from '../comments/CommentForm';
 import { styles } from './post-style';
 
 class PostComponent extends React.Component<any, any> {
   state = {
     showPrivatePostModal: false,
+    expanded: false,
   };
 
   handleExpandClick = () => {
@@ -56,15 +60,43 @@ class PostComponent extends React.Component<any, any> {
     history.push(routePaths.support.replace(':id', artistId));
   };
 
-  render() {
-    const { classes, post, accentColor, authenticated } = this.props;
+  sortItemsByCreationDate(items) {
+    return items.sort((a, b) => b.created_at - a.created_at);
+  }
+
+  handleSubmit = async (comment) => {
+    await this.props.addComment(comment);
+    this.props.updateArtist();
+  };
+
+  canLoggedUserComment = () => {
+    const { loggedUserAccess } = this.props;
+
+    return (
+      loggedUserAccess && [UserRoles.Supporter.toString(), UserRoles.Owner.toString()].includes(loggedUserAccess.role)
+    );
+  };
+
+  canLoggedUserDeleteComment = (commentUserId: number) => {
+    const { loggedUserAccess, me } = this.props;
+
+    return (loggedUserAccess && loggedUserAccess.role === UserRoles.Owner) || (me && commentUserId === me.id);
+  };
+
+  deleteComment = async (commentId) => {
+    await this.props.deleteComment(commentId);
+    this.props.updateArtist();
+  };
+
+  renderPost = () => {
+    const { classes, post, accentColor, me } = this.props;
 
     const allowDetails = post.allow_details;
-
+    const authenticated = !!me;
     const privateNotAuthenticated = !allowDetails && !authenticated;
 
     return (
-      <div>
+      <div className="post">
         <div
           className={cx('post', { 'clickable-post': privateNotAuthenticated })}
           onClick={() => privateNotAuthenticated && this.handlePrivatePostClick()}
@@ -121,8 +153,57 @@ class PostComponent extends React.Component<any, any> {
             )}
           </Card>
         </div>
+        {this.renderComments()}
       </div>
     );
+  };
+
+  renderComments = () => {
+    const { classes, post } = this.props;
+    const { expanded } = this.state;
+
+    const allComments = this.sortItemsByCreationDate(post.comments);
+    const firstComments = allComments.slice(0, 2).reverse();
+    const hasPreviousComments = allComments.length > 2;
+
+    return (
+      <div className="comments-list">
+        <span>COMMENTS</span>
+        {!expanded &&
+          firstComments.map((comment) => (
+            <Comment
+              key={comment.id}
+              comment={comment}
+              canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
+              deleteComment={this.deleteComment}
+            />
+          ))}
+        {hasPreviousComments && (
+          <div>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              {allComments.reverse().map((comment) => (
+                <Comment
+                  key={comment.id}
+                  comment={comment}
+                  canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
+                  deleteComment={this.deleteComment}
+                />
+              ))}
+            </Collapse>
+            <CardActions className={cx(classes.actions, 'collapse-actions')} disableActionSpacing>
+              <button className="show-previous-command-btn" onClick={this.handleExpandClick}>
+                {expanded ? <b>HIDE PREVIOUS COMMENTS</b> : <b>VIEW PREVIOUS COMMENTS</b>}
+              </button>
+            </CardActions>
+          </div>
+        )}
+        {this.canLoggedUserComment() && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+      </div>
+    );
+  };
+
+  render() {
+    return <div>{this.renderPost()}</div>;
   }
 }
 

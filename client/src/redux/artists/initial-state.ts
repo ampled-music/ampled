@@ -11,6 +11,7 @@ export interface ArtistModel {
   images: [];
   owners: OwnersProps[];
   supporters: SupportersProps[];
+  most_recent_supporter_user_id: number;
 }
 
 interface OwnersProps {

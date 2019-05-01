@@ -132,6 +132,10 @@ $randomNumber5: random(9);
     text-transform: uppercase;
   }
 
+  .most-recent-supporter-tag {
+    font-family: 'Courier New', Courier, monospace;
+  }
+
   &__play {
     display: flex;
     position: absolute;

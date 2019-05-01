@@ -99,4 +99,8 @@ class ArtistPage < ApplicationRecord
     )
     update(stripe_product_id: product.id)
   end
+
+  def last_post_date
+    posts.order(created_at: :desc).first&.created_at
+  end
 end

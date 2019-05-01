@@ -104,6 +104,10 @@ class ArtistPage < ApplicationRecord
     1.week.ago
   end
 
+  def most_recent_supporter
+    subscriptions.order(created_at: :desc).first&.user_id
+  end
+
   private
 
   def create_product
@@ -116,7 +120,4 @@ class ArtistPage < ApplicationRecord
     update(stripe_product_id: product.id)
   end
 
-  def most_recent_supporter
-    subscriptions.order(created_at: :desc).first&.user_id
-  end
 end

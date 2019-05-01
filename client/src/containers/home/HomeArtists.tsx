@@ -39,7 +39,12 @@ class HomeArtistsComponent extends React.Component<Props, State> {
 
     return (
       <div className="home-artists">
-        <div className="container">{this.getArtistsList(artistsPages)}</div>
+        <h1 className="home-artists__title">Artists on Ampled</h1>
+        <div className="container">
+          <div className="row">
+            {this.getArtistsList(artistsPages)}
+          </div>
+        </div>
       </div>
     );
   }
@@ -50,8 +55,13 @@ class HomeArtistsComponent extends React.Component<Props, State> {
       artistsPages.length &&
       artistsPages.map((page) => {
         return (
-          <div key={page.id}>
-            <Link to={`/artists/${page.id}`}>Artist: {page.name}</Link>
+          <div className="col-md-4" key={page.id}>
+            <Link to={`/artists/${page.id}`}>
+              <div className="home-artists__item" key={page.id}>
+                <div className="home-artists__item_title">{page.name}</div>
+                <img className="home-artists__item_image" src={page.banner_image_url} />
+              </div>
+            </Link>
           </div>
         );
       })

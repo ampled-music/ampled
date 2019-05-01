@@ -28,7 +28,7 @@
     display: block;
     position: relative;
     z-index: 0;
-    font-size: 6rem;
+    font-size: 3rem;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: .5rem;
@@ -163,6 +163,28 @@
 
 .home-artists {
   padding: 2rem;
+
+  h1 {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 2rem auto;
+  }
+
+  &__item {
+    border: 3px solid #1E1E1E;
+    height: 300px;
+    margin-bottom: 2rem;
+    padding: 1rem;
+
+    &_title {
+      font-family: 'Courier New', Courier, monospace;
+      color: white;
+      background-color: #1E1E1E;
+      display: inline;
+      padding: 5px 10px;
+    }
+  }
+
 }
 
 .home-membership {

@@ -5,7 +5,7 @@ import header_collage from '../../images/home/home_header_collage_2.png';
 export const HomeHeader = () => (
   <div className="home-header">
     <div className="container">
-      <div className="home-header__support">Direct Community Support for Artists</div>
+      <div className="home-header__support">Direct Community Support <br/> for Artists</div>
       <div className="home-header__bg-image" style={{backgroundImage: `url(${header_collage}`}}>
         <div className="row">
           <div className="col-md-4">

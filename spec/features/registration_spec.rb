@@ -41,4 +41,30 @@ RSpec.describe "POST /users", type: :request do
       expect(json["errors"].first["title"]).to eq("Bad Request")
     end
   end
+
+  context "when updating a user" do
+    let(:user) do
+      create(:user, confirmed_at: Time.current, profile_image_url: "old_image")
+    end
+
+    let(:update_params) { { user: { profile_image_url: "http://some.image.jpg" } } }
+
+    let(:url) { "/users" }
+
+    before(:each) do
+      sign_in user
+    end
+
+    it "returns 200" do
+      put url, params: update_params
+
+      expect(response.status).to eq 200
+    end
+
+    it "saves the subscription in the database" do
+      put url, params: update_params
+
+      expect(user.profile_image_url).to eq "http://some.image.jpg"
+    end
+  end
 end

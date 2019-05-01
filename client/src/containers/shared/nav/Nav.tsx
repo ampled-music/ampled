@@ -58,10 +58,20 @@ class NavComponent extends React.Component<Props, any> {
     }
   };
 
+  renderUserImage = () => {
+    const { userData } = this.props;
+
+    return userData.image ? (
+      <img src={userData.image} className="user-image" />
+    ) : (
+      <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+    );
+  };
+
   renderLoginLink = () => (
     <div className="loginLink">
       {this.props.userData ? (
-        <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+        this.renderUserImage()
       ) : (
         <div>
           <a onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>

@@ -43,6 +43,7 @@ interface PostsProps {
   match: any;
   loggedUserAccess: { role: string; artistId: number };
   artistName: string;
+  artistId: number;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -94,7 +95,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
   );
 
   renderPosts = () => {
-    const { posts, accentColor, artistName, me } = this.props;
+    const { posts, accentColor, artistName, me, openAuthModal, artistId } = this.props;
 
     if (!posts) {
       return null;
@@ -105,8 +106,9 @@ class PostsContainerComponent extends React.Component<Props, any> {
         <Post
           post={post}
           accentColor={accentColor}
-          openAuthModal={this.props.openAuthModal}
+          openAuthModal={openAuthModal}
           artistName={artistName}
+          artistId={artistId}
           authenticated={!!me}
         />
         {this.renderComments(post)}

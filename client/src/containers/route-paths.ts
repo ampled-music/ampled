@@ -6,4 +6,5 @@ export const routePaths = {
   connect: '/connect',
   home: '/home',
   upload: '/upload',
+  settings: '/settings',
 };

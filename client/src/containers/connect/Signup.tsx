@@ -37,11 +37,11 @@ class SignupComponent extends React.Component<Props, any> {
   state = this.initialState;
 
   componentDidUpdate() {
-    const { signup, closeAuthModal, authentication } = this.props;
+    const { signup, openAuthModal, authentication } = this.props;
 
     if (this.state.submitted && !signup.errors && authentication.authModalOpen) {
       this.setState(this.initialState);
-      closeAuthModal();
+      openAuthModal({ modalPage: 'login' });
     }
   }
 
@@ -165,8 +165,11 @@ class SignupComponent extends React.Component<Props, any> {
               </a>
               .
             </label>
-            <button className="btn" type="submit">
+            <button className="btn btn-submit" type="submit">
               SIGN UP
+            </button>
+            <button className="btn" type="reset" onClick={this.props.closeAuthModal}>
+              CANCEL
             </button>
           </form>
           <label>

@@ -3,10 +3,11 @@ import './post.scss';
 import cx from 'classnames';
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
+import { routePaths } from 'src/containers/route-paths';
 
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Divider, Button } from '@material-ui/core';
+import { Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -15,7 +16,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { config } from '../../../../config';
 import { styles } from './post-style';
-import { Modal } from 'src/containers/shared/modal/Modal';
 
 class PostComponent extends React.Component<any, any> {
   state = {
@@ -47,24 +47,28 @@ class PostComponent extends React.Component<any, any> {
   };
 
   handlePrivatePostClick = () => {
-    if (!this.props.authenticated) {
-      this.props.openAuthModal({ modalPage: 'signup', showSupportMessage: true, artistName: this.props.artistName });
-    } else {
-      this.openPrivatePostModal();
-    }
+    this.props.openAuthModal({ modalPage: 'signup', showSupportMessage: true, artistName: this.props.artistName });
+  };
+
+  redirectToSupport = () => {
+    const { history, artistId } = this.props;
+
+    history.push(routePaths.support.replace(':id', artistId));
   };
 
   render() {
-    const { classes, post, accentColor, artistName } = this.props;
+    const { classes, post, accentColor, authenticated } = this.props;
 
     const allowDetails = post.allow_details;
+
+    const privateNotAuthenticated = !allowDetails && !authenticated;
 
     return (
       <div>
         <div
-          className={cx('post', { 'clickable-post': !allowDetails })}
-          onClick={() => !allowDetails && this.handlePrivatePostClick()}
-          title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
+          className={cx('post', { 'clickable-post': privateNotAuthenticated })}
+          onClick={() => privateNotAuthenticated && this.handlePrivatePostClick()}
+          title={privateNotAuthenticated ? 'SUBSCRIBER-ONLY CONTENT' : ''}
         >
           <Card className={classes.card} style={{ border: `2px solid ${accentColor}` }}>
             <CardContent className={classes.header}>
@@ -77,8 +81,11 @@ class PostComponent extends React.Component<any, any> {
             <Divider />
 
             {post.image_url && (
-              <div className={cx({ 'blur-image': !allowDetails })}>
-                <CardMedia className={classes.media} image={post.image_url} />
+              <div className="this-image-container">
+                <div>
+                  <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
+                </div>
+                {!allowDetails && <FontAwesomeIcon icon={faLock} />}
               </div>
             )}
 
@@ -96,19 +103,24 @@ class PostComponent extends React.Component<any, any> {
               </Typography>
             </CardContent>
 
-            <CardContent>
-              <Typography paragraph className={classes.postBody}>
-                {post.body}
-              </Typography>
-            </CardContent>
+            {!allowDetails && authenticated && (
+              <div className="private-support-btn">
+                <button className="btn" onClick={this.redirectToSupport}>
+                  <FontAwesomeIcon icon={faLock} />
+                  SUPPORT TO UNLOCK
+                </button>
+              </div>
+            )}
+
+            {post.body && (
+              <CardContent>
+                <Typography paragraph className={classes.postBody}>
+                  {post.body}
+                </Typography>
+              </CardContent>
+            )}
           </Card>
         </div>
-        <Modal open={this.state.showPrivatePostModal} onClose={this.closePrivatePostModal}>
-          <div className="private-post-modal">
-            <p>This is a private post. Become a supporter of {artistName} to access it.</p>
-            <Button onClick={this.closePrivatePostModal}>Ok</Button>
-          </div>
-        </Modal>
       </div>
     );
   }

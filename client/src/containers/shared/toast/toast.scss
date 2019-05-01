@@ -97,7 +97,7 @@
 }
 
 .toast-warning {
-  background-color: white;
+  background-color: black;
   color: yellow;
 
   .toast-close-button {
@@ -108,7 +108,7 @@
 /* Place toast */
 
 #toast-container.toast-top-full-width > div {
-  width: 40%;
+  width: 50%;
   margin-top: 2rem;
   margin-left: auto;
   margin-right: auto;

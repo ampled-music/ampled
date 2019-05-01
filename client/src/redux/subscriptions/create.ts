@@ -11,20 +11,21 @@ export const createSubscriptionAction = createActionThunk(
 );
 
 export const createSubscriptionReducer = {
-  [createSubscriptionAction.STARTED]: (state) => ({
+  [createSubscriptionAction.STARTED]: (state: typeof initialState) => ({
     ...state,
     processing: true,
   }),
-  [createSubscriptionAction.SUCCEEDED]: (state) => ({
+  [createSubscriptionAction.SUCCEEDED]: (state: typeof initialState) => ({
     ...state,
     status: SubscriptionStep.Finished,
   }),
-  [createSubscriptionAction.FAILED]: (state, { payload }) => ({
+  [createSubscriptionAction.FAILED]: (state: typeof initialState, { payload }) => ({
     ...state,
     error: payload,
   }),
-  [createSubscriptionAction.ENDED]: (state) => ({
+  [createSubscriptionAction.ENDED]: (state: typeof initialState) => ({
     ...state,
-    ...initialState,
+    processing: initialState.processing,
+    status: initialState.status,
   }),
 };

@@ -107,7 +107,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
         />
         <label htmlFor="raised-button-file">
           <Button className="upload-button" variant="contained" component="span">
-            Upload
+            Upload MP3
           </Button>
         </label>
       </div>

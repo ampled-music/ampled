@@ -1,0 +1,301 @@
+.user-settings-container {
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0 5rem;
+
+  .content {
+    margin-top: 7rem;
+    display: flex;
+
+    .user-info-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 300px;
+
+      p {
+        font-weight: bold;
+        margin: 0;
+      }
+
+      .user-image-container {
+        position: relative;
+
+        button {
+          display: flex;
+          flex-direction: column;
+          cursor: pointer;
+          outline: none;
+          border: 0;
+          background: transparent;
+        }
+
+        .user-image {
+          height: 120px;
+          width: 120px;
+          border-radius: 50%;
+          object-fit: cover;
+          margin-bottom: -60px;
+          z-index: 1;
+          filter: brightness(70%);
+        }
+
+        .tag {
+          font-size: 30px;
+          color: white;
+          text-transform: capitalize;
+          align-self: center;
+          z-index: 3;
+          position: absolute;
+          margin-top: 5rem;
+        }
+      }
+
+      .user-content {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        height: 150px;
+        background-color: white;
+        align-items: center;
+        padding: 4rem;
+
+        .user-name {
+          font-size: 20px;
+          font-weight: bold;
+        }
+
+        .joined-at {
+          font-size: 13px;
+          font-weight: 100;
+        }
+      }
+    }
+
+    .pages-container {
+      margin-left: 2rem;
+
+      h1 {
+        border-top: 4px solid black;
+        font-size: 20px;
+        padding: 1.5rem 0;
+        margin: 0;
+        font-weight: bold;
+      }
+
+      .pages {
+        padding-top: 1rem;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+
+        .artist {
+          display: flex;
+          flex-direction: column;
+          width: 300px;
+
+          .image-border {
+            border: 2px solid white;
+            width: 200px;
+            height: 200px;
+            align-self: center;
+            margin-bottom: -90px;
+            z-index: 1;
+
+            img {
+              height: 200px;
+              width: 200px;
+              transform: rotate(-3deg);
+              align-self: center;
+              position: relative;
+              object-fit: scale-down;
+            }
+          }
+
+          .artist-info {
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            background-color: #1e1e1e;
+            color: #fefefe;
+            padding: 1.5rem;
+            padding-bottom: 0.5rem;
+
+            .artist-name {
+              display: flex;
+              font-weight: bold;
+              align-self: center;
+              font-size: 18px;
+              align-items: flex-end;
+              height: 250px;
+              padding-bottom: 1rem;
+              border-bottom: 2px solid #fefefe;
+              width: 100%;
+              justify-content: center;
+              margin: 0;
+              margin-bottom: 1rem;
+            }
+
+            .extra-info {
+              height: 200px;
+              display: flex;
+              align-self: center;
+              align-items: flex-end;
+              font-size: 13px;
+              font-weight: normal;
+
+              p {
+                margin: 0;
+              }
+
+              label:not(:last-child) {
+                margin-right: 2rem;
+              }
+
+              .info-title {
+                font-weight: 700;
+                font-size: 11px;
+              }
+
+              .info-value {
+                font-size: 14px;
+              }
+
+              .owned-info {
+                display: flex;
+                justify-content: space-between;
+
+                .column {
+                  display: flex;
+                  flex-direction: column;
+                }
+
+                .column:not(:last-child) {
+                  margin-right: 1rem;
+                }
+              }
+
+              .support-info {
+                display: flex;
+                flex-direction: column;
+
+                .supporting-at {
+                  margin-bottom: 1rem;
+
+                  .supporting-at-value {
+                    font-size: 21px;
+                  }
+
+                  svg {
+                    margin-right: 5px;
+                  }
+
+                  button {
+                    font-size: 11px;
+                    cursor: pointer;
+                    outline: none;
+                    color: grey;
+                    letter-spacing: 1px;
+                    border: 0;
+                    background: transparent;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.user-settings-cancel-modal {
+  padding: 1rem;
+
+  .actions {
+    margin-top: 2rem;
+    display: flex;
+
+    button:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}
+
+.user-settings-loading-modal {
+  padding: 1rem;
+}
+
+.user-photo-selector-modal {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  padding: 1rem;
+
+  .processing-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  b {
+    align-self: center;
+    position: absolute;
+    margin-top: -2rem;
+  }
+
+  .image-preview {
+    align-self: center;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .add-photo-button-container {
+    margin-top: 2rem;
+  }
+
+  .photo-actions {
+    margin-top: 1rem;
+    display: flex;
+
+    button:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 812px) {
+  .user-settings-container {
+    margin: 0;
+
+    .content {
+      margin-top: 5rem;
+      flex-direction: column;
+
+      .user-info-container {
+        align-self: center;
+      }
+
+      .pages-container {
+        margin-top: 2rem;
+        width: 85%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 812px) {
+  .user-photo-selector-modal {
+    width: 100%;
+
+    button {
+      width: 115px;
+    }
+
+    .add-media-button {
+      width: 100%;
+    }
+  }
+}

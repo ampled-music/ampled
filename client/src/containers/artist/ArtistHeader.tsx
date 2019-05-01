@@ -126,26 +126,33 @@ export class ArtistHeader extends React.Component<Props, any> {
 
     const borderColor = artist.accent_color;
 
+    const mostRecentSupporter = artist.supporters.find(
+      (supporter) => +supporter.id === artist.most_recent_supporter_user_id,
+    );
+
     return (
       <div className="artist-header__supporters">
-        <div className="artist-header__supporter-title">{artist.supporters.length} Supporters</div>
+        <div className="artist-header__supporter-title">{artist.supporters.length} Supporter(s)</div>
 
-        {artist.supporters.slice(0, 2).map((supporter) => (
-          <div key={supporter.id} className="row align-items-center">
-            <div className="col-3">{this.renderSupporter({ supporter, borderColor })}</div>
+        {mostRecentSupporter && (
+          <div key={mostRecentSupporter.id} className="row align-items-center">
+            <div className="col-3">{this.renderSupporter({ supporter: mostRecentSupporter, borderColor })}</div>
             <div className="col-9">
-              <div className="artist-header__person_name">{supporter.name}</div>
+              <b className="most-recent-supporter-tag">MOST RECENT SUPPORTER</b>
+              <div className="artist-header__person_name">{mostRecentSupporter.name}</div>
               <div className="artist-header__person_quote" />
             </div>
           </div>
-        ))}
+        )}
 
         <div className="row justify-content-start no-gutters">
-          {artist.supporters.slice(2, 24).map((supporter) => (
-            <div key={supporter.id} className="col-2">
-              {this.renderSupporter({ supporter, borderColor, isSmall: true })}
-            </div>
-          ))}
+          {artist.supporters
+            .filter((supporter) => +supporter.id !== artist.most_recent_supporter_user_id)
+            .map((supporter) => (
+              <div key={supporter.id} className="col-2">
+                {this.renderSupporter({ supporter, borderColor, isSmall: true })}
+              </div>
+            ))}
         </div>
       </div>
     );

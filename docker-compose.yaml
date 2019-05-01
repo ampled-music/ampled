@@ -12,7 +12,7 @@ services:
     environment:
       NODE_ENV: development
       REACT_APP_API_URL: http://localhost:3000
-      REACT_APP_STRIPE_API_KEY: pk_test_TYooMQauvdEDq54NiTphI7jx
+      REACT_APP_STRIPE_API_KEY: pk_test_eQaIuCWvTwMYxTXFPXLho6n700kZpCcztx
   mailcatcher:
     image: zolweb/docker-mailcatcher:latest
     ports:

@@ -40,7 +40,7 @@
       background-color: #2557a7;
       color: #ffffff;
       border-radius: 0px;
-      width: 100px;
+      width: 150px;
       letter-spacing: 0.7px;
       text-transform: capitalize;
       margin-top: 10px;
@@ -147,6 +147,19 @@
       flex-grow: 2;
       margin-left: 20px;
       max-width: 375px;
+    }
+  }
+
+  .form-bottom {
+    font-family: Courier, 'Courier New', monospace;
+
+    .make-public-label {
+      margin-right: auto;
+      margin-left: 0;
+
+      input {
+        margin-right: 0.5rem;
+      }
     }
   }
 }

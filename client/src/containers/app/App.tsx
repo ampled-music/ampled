@@ -32,7 +32,7 @@ class AppComponent extends React.Component<Props, any> {
     return (
       <div className="page">
         <Routes />
-        <Modal open={this.props.authModalOpen} onClose={this.props.closeAuthModal}>
+        <Modal open={this.props.authModalOpen}>
           <AuthModal history={this.props.history} />
         </Modal>
       </div>

@@ -7,13 +7,16 @@ import { Store } from 'src/redux/configure-store';
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
+import { initialState as subscriptionsInitialState, SubscriptionStep } from '../../redux/subscriptions/initial-state';
 import { PostsContainer } from '../artist/posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { Modal } from '../shared/modal/Modal';
+import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { VideoModal } from '../shared/video-modal/VideoModal';
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
 import { PostForm } from './posts/post-form/PostForm';
+
 interface ArtistProps {
   match: {
     params: {
@@ -23,6 +26,7 @@ interface ArtistProps {
   artists: typeof artistsInitialState;
   me: typeof meInitialState;
   authentication: typeof authenticateInitialState;
+  subscriptions: typeof subscriptionsInitialState;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -43,6 +47,10 @@ class ArtistComponent extends React.Component<Props, any> {
   componentDidUpdate(prevProps: Props) {
     if (!prevProps.me.userData && this.props.me.userData) {
       this.getArtistInfo();
+    }
+
+    if (this.props.subscriptions.status === SubscriptionStep.Finished) {
+      showToastMessage(`Thanks for supporting ${this.props.artists.artist.name}!`, MessageType.SUCCESS);
     }
   }
 
@@ -112,6 +120,7 @@ class ArtistComponent extends React.Component<Props, any> {
           match={this.props.match}
           posts={artist.posts}
           artistName={artist.name}
+          artistId={artist.id}
           accentColor={artist.accent_color}
           updateArtist={this.getArtistInfo}
           loggedUserAccess={loggedUserAccess}
@@ -136,6 +145,7 @@ const mapStateToProps = (state: Store) => {
     me: state.me,
     posts: state.posts,
     authentication: state.authentication,
+    subscriptions: state.subscriptions,
   };
 };
 

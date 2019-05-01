@@ -8,7 +8,7 @@ import { logoutAction } from 'src/redux/authentication/logout';
 import { Store } from 'src/redux/configure-store';
 import * as store from 'store';
 
-import { faSearch, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -49,6 +49,10 @@ class MenuListComposition extends React.Component<Props, State> {
     anchorEl: undefined,
   };
 
+  componentDidMount() {
+    this.setState({ anchorEl: this.refs.menu });
+  }
+
   componentDidUpdate() {
     if (!this.props.loggedOut) {
       return;
@@ -56,10 +60,6 @@ class MenuListComposition extends React.Component<Props, State> {
 
     store.remove(config.localStorageKeys.token);
     window.location.href = routePaths.root;
-  }
-
-  componentDidMount() {
-    this.setState({ anchorEl: this.refs.menu });
   }
 
   handleToggle = () => {
@@ -83,22 +83,20 @@ class MenuListComposition extends React.Component<Props, State> {
     return (
       <div>
         <MenuItem>
-          <Link to="">
+          <a href="https://www.ampled.com/create-an-artist-page" target="_blank">
             <b>Create an artist page</b>
-          </Link>
+          </a>
         </MenuItem>
         <div className="divider" />
         <MenuItem>
-          <Link to="">Blog</Link>
+          <a href="https://www.ampled.com" target="_blank">
+            Blog
+          </a>
         </MenuItem>
         <MenuItem>
-          <Link to="">About us</Link>
-        </MenuItem>
-        <Divider />
-        <MenuItem>
-          <div>
-            <FontAwesomeIcon icon={faSearch} /> Search
-          </div>
+          <a href="https://www.ampled.com/about" target="_blank">
+            About us
+          </a>
         </MenuItem>
       </div>
     );
@@ -108,29 +106,14 @@ class MenuListComposition extends React.Component<Props, State> {
     return (
       <div>
         <MenuItem>
-          <Link to="">
+          <Link to={routePaths.settings}>
             <div>
-              <FontAwesomeIcon icon={faUsers} size="lg" /> <b>Your band here</b>
+              <FontAwesomeIcon icon={faCog} /> <b>Account Settings</b>
             </div>
           </Link>
         </MenuItem>
-        <div className="divider" />
-        <MenuItem>
-          <Link to="">Account Settings</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="">Blog</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="">About us</Link>
-        </MenuItem>
-        <MenuItem onClick={this.logout}>Logout</MenuItem>
         <Divider />
-        <MenuItem>
-          <div>
-            <FontAwesomeIcon icon={faSearch} /> Search
-          </div>
-        </MenuItem>
+        <MenuItem onClick={this.logout}>Logout</MenuItem>
       </div>
     );
   };

@@ -3,12 +3,26 @@
     cursor: pointer;
   }
 
-  .blur-image {
-    -webkit-filter: blur(20px);
-    -moz-filter: blur(20px);
-    -o-filter: blur(20px);
-    -ms-filter: blur(20px);
-    filter: blur(20px);
+  .this-image-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .blur-image {
+      -webkit-filter: blur(20px);
+      -moz-filter: blur(20px);
+      -o-filter: blur(20px);
+      -ms-filter: blur(20px);
+      filter: blur(20px);
+    }
+
+    svg {
+      font-size: 80px;
+      position: absolute;
+      align-self: center;
+      margin-top: 8rem;
+      color: white;
+    }
   }
 
   .private-support-btn {

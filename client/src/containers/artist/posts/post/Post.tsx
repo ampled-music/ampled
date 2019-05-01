@@ -81,8 +81,11 @@ class PostComponent extends React.Component<any, any> {
             <Divider />
 
             {post.image_url && (
-              <div className={cx({ 'blur-image': !allowDetails })}>
-                <CardMedia className={classes.media} image={post.image_url} />
+              <div className="this-image-container">
+                <div>
+                  <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
+                </div>
+                {!allowDetails && <FontAwesomeIcon icon={faLock} />}
               </div>
             )}
 

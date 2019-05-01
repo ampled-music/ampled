@@ -47,7 +47,7 @@ RSpec.describe "POST /users", type: :request do
       create(:user, confirmed_at: Time.current, profile_image_url: "old_image")
     end
 
-    let(:update_params) { { user: { profile_image_url: "http://some.image.jpg" } } }
+    let(:update_params) { { profile_image_url: "http://some.image.jpg" } }
 
     let(:url) { "/users" }
 

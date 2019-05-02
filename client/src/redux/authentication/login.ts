@@ -18,10 +18,11 @@ export const loginReducer = {
   }),
   [loginAction.FAILED]: (state, { payload }) => ({
     ...state,
-    error: payload,
+    error: payload.error,
   }),
   [loginAction.ENDED]: (state) => ({
     ...state,
     authenticating: false,
+    error: undefined,
   }),
 };

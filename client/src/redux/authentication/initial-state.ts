@@ -7,4 +7,5 @@ export const initialState = {
   modalPage: 'login',
   showSupportMessage: false,
   artistName: undefined,
+  error: undefined,
 };

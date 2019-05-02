@@ -26,6 +26,10 @@ class LoginComponent extends React.Component<Props, any> {
   };
 
   componentDidUpdate() {
+    if (this.props.error) {
+      showToastMessage(this.props.error, MessageType.ERROR);
+    }
+
     if (!this.props.token) {
       return;
     }

@@ -1,8 +1,7 @@
 import { createActionThunk } from 'redux-thunk-actions';
 import { updateMe } from 'src/api/me/update-me';
-import { signinFile } from 'src/api/signin-file';
-import { uploadFile } from 'src/api/upload-file';
 
+import { uploadFileToCloudinary } from 'src/api/cloudinary/upload-image';
 import { actions } from './actions';
 import { Reducer } from './initial-state';
 
@@ -11,18 +10,10 @@ export const updateMeAction = createActionThunk(actions.updateMe, async (updated
     return;
   }
 
-  const profile_image_url = await uploadPhoto(updatedMe.file);
+  const fileInfo = await uploadFileToCloudinary(updatedMe.file);
 
-  return updateMe({ profile_image_url });
+  return updateMe({ profile_image_url: fileInfo.secure_url });
 });
-
-const uploadPhoto = async (file) => {
-  const fileUploadResponse = await signinFile(file.type);
-  const putUrl = fileUploadResponse.signedUrl;
-  const userPhotoUrl = await uploadFile(putUrl, file, fileUploadResponse.key);
-
-  return userPhotoUrl;
-};
 
 export const updateMeReducer = {
   [updateMeAction.STARTED]: (state) => ({

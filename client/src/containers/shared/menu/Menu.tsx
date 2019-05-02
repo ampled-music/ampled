@@ -83,18 +83,18 @@ class MenuListComposition extends React.Component<Props, State> {
     return (
       <div>
         <MenuItem>
-          <a href="https://www.ampled.com/create-an-artist-page" target="_blank">
+          <a href={config.menuUrls.createArtist} target="_blank">
             <b>Create an artist page</b>
           </a>
         </MenuItem>
         <div className="divider" />
         <MenuItem>
-          <a href="https://www.ampled.com" target="_blank">
+          <a href={config.menuUrls.blog} target="_blank">
             Blog
           </a>
         </MenuItem>
         <MenuItem>
-          <a href="https://www.ampled.com/about" target="_blank">
+          <a href={config.menuUrls.about} target="_blank">
             About us
           </a>
         </MenuItem>

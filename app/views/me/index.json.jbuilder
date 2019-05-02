@@ -9,7 +9,8 @@ json.artistPages @owned&.concat(@supported) do |page|
   json.role page.role
 end
 json.subscriptions @subscriptions do |subscription|
-  json.id subscription.artist_page.id
+  json.subscriptionId subscription.id
+  json.artistPageId subscription.artist_page.id
   json.name subscription.artist_page.name
   json.image subscription.artist_page.banner_image_url
   json.last_post_date subscription.artist_page.last_post_date

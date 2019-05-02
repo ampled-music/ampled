@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { config } from 'src/config';
 import header_collage from '../../images/home/home_header_collage.png';
 import support from '../../images/home/home_header_support.png';
 
@@ -18,10 +19,7 @@ export const HomeHeader = () => (
             Ampled is a space where music artists post unreleased, unique, or exclusive content and are directly
             supported on a monthly basis by their audience.
           </div>
-          <button
-            className="home-header__button btn"
-            onClick={() => openInNewTab('https://www.ampled.com/create-an-artist-page')}
-          >
+          <button className="home-header__button btn" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
             Create an Artist Page
           </button>
         </div>

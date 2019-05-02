@@ -1,10 +1,9 @@
 import { apiAxios } from '../setup-axios';
 
-export const cancelSubscription = async (subscription: { artistPageId: number }) => {
+export const cancelSubscription = async ({ subscriptionId }: { subscriptionId: number }) => {
   const { data } = await apiAxios({
     method: 'delete',
-    url: `/subscriptions`,
-    data: { artist_page_id: subscription.artistPageId },
+    url: `/subscriptions/${subscriptionId}`,
   });
 
   return { cancelResult: data };

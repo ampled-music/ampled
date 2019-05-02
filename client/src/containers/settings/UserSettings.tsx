@@ -98,7 +98,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   cancelSubscription = () => {
     this.props.cancelSubscription({
-      artistPageId: this.state.subscription.id,
+      subscriptionId: this.state.subscription.subscriptionId,
+      artistPageId: this.state.subscription.artistPageId,
       artistName: this.state.subscription.name,
     });
     this.closeCancelModal();
@@ -239,9 +240,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderSupportedArtists = () => (
     <div className="pages">
       {this.props.userData.subscriptions.map((subscription) => (
-        <div key={`artist-${subscription.id}`} className="artist">
+        <div key={`artist-${subscription.artistPageId}`} className="artist">
           <div className="image-border">
-            <img src={subscription.image} onClick={() => this.redirectToArtistPage(subscription.id)} />
+            <img src={subscription.image} onClick={() => this.redirectToArtistPage(subscription.artistPageId)} />
           </div>
           <div className="artist-info">
             <p className="artist-name">{subscription.name}</p>

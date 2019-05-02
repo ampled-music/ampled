@@ -6,7 +6,8 @@ import { initialState } from './initial-state';
 
 export const cancelSubscriptionAction = createActionThunk(
   actions.cancelSubscription,
-  (subscription: { artistPageId: number }) => cancelSubscription(subscription),
+  (subscription: { artistPageId: number; subscriptionId: number; artistName: string }) =>
+    cancelSubscription({ subscriptionId: subscription.subscriptionId }),
 );
 
 export const cancelSubscriptionReducer = {

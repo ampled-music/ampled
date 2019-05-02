@@ -76,6 +76,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
   };
 
   getFormattedDate = (date: string) => {
+    if (!date) {
+      return '-';
+    }
+
     return DateTime.fromString(date.split('T')[0], 'yyyy-MM-dd').toLocaleString(DateTime.DATE_MED);
   };
 
@@ -122,6 +126,18 @@ class UserSettingsComponent extends React.Component<Props, any> {
     };
 
     this.props.updateMe(me);
+  };
+
+  formatMoney = (value) => {
+    if (isNaN(value)) {
+      return 0;
+    }
+
+    return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  };
+
+  redirectToArtistPage = (pageId) => {
+    this.props.history.push(routePaths.artists.replace(':id', pageId));
   };
 
   renderUserImage = () => {
@@ -186,7 +202,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.props.userData.ownedPages.map((ownedPage) => (
         <div key={`artist-${ownedPage.id}`} className="artist">
           <div className="image-border">
-            <img src={ownedPage.image} />
+            <img src={ownedPage.image} onClick={() => this.redirectToArtistPage(ownedPage.artistId)} />
           </div>
           <div className="artist-info">
             <p className="artist-name">{ownedPage.name}</p>
@@ -195,21 +211,21 @@ class UserSettingsComponent extends React.Component<Props, any> {
                 <div className="column">
                   <label>
                     <p className="info-title">SUPPORTERS</p>
-                    <p className="supporting-at-value">1,000</p>
+                    <p className="supporting-at-value">{ownedPage.supportersCount || 0}</p>
                   </label>
                   <label>
                     <p className="info-title">LAST POST</p>
-                    <p className="info-value">MARCH 1, 2019</p>
+                    <p className="info-value">{this.getFormattedDate(ownedPage.lastPost)}</p>
                   </label>
                 </div>
                 <div className="column">
                   <label>
                     <p className="info-title">MONTHLY TOTAL</p>
-                    <p className="info-value">$ 4,300</p>
+                    <p className="info-value">$ {this.formatMoney(ownedPage.monthlyTotal)}</p>
                   </label>
                   <label>
                     <p className="info-title">LAST PAYOUT</p>
-                    <p className="info-value">APRIL 30, 2019</p>
+                    <p className="info-value">{this.getFormattedDate(ownedPage.lastPayout)}</p>
                   </label>
                 </div>
               </div>
@@ -223,9 +239,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderSupportedArtists = () => (
     <div className="pages">
       {this.props.userData.subscriptions.map((subscription) => (
-        <div key={`artist-${subscription.name}`} className="artist">
+        <div key={`artist-${subscription.id}`} className="artist">
           <div className="image-border">
-            <img src={subscription.image} />
+            <img src={subscription.image} onClick={() => this.redirectToArtistPage(subscription.id)} />
           </div>
           <div className="artist-info">
             <p className="artist-name">{subscription.name}</p>

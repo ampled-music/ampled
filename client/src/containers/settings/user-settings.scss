@@ -91,7 +91,7 @@
         .artist {
           display: flex;
           flex-direction: column;
-          width: 300px;
+          width: 320px;
 
           .image-border {
             border: 2px solid white;
@@ -104,10 +104,15 @@
             img {
               height: 200px;
               width: 200px;
-              transform: rotate(-3deg);
+              transform: rotate(-4deg);
               align-self: center;
               position: relative;
               object-fit: scale-down;
+              cursor: pointer;
+            }
+
+            img:hover {
+              transform: rotate(0);
             }
           }
 

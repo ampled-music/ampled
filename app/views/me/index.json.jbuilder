@@ -19,7 +19,7 @@ end
 json.ownedPages @owned_pages do |page|
   json.artistId page.id
   json.name page.name
-  json.image page.image
+  json.image page.banner_image_url
   json.supportersCount page.subscriber_count
   json.monthlyTotal page.monthly_total
   json.lastPost page.last_post_date

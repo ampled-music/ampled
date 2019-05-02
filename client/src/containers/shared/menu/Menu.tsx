@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
-import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
@@ -81,39 +80,29 @@ class MenuListComposition extends React.Component<Props, State> {
 
   renderDefaultMenu = () => {
     return (
-      <div>
-        <MenuItem>
-          <a href={config.menuUrls.createArtist} target="_blank">
-            <b>Create an artist page</b>
-          </a>
-        </MenuItem>
+      <div className="menu-items">
+        <a href={config.menuUrls.createArtist} target="_blank">
+          <b>Create an artist page</b>
+        </a>
         <div className="divider" />
-        <MenuItem>
-          <a href={config.menuUrls.blog} target="_blank">
-            Blog
-          </a>
-        </MenuItem>
-        <MenuItem>
-          <a href={config.menuUrls.about} target="_blank">
-            About us
-          </a>
-        </MenuItem>
+        <a href={config.menuUrls.blog} target="_blank">
+          Blog
+        </a>
+        <a href={config.menuUrls.about} target="_blank">
+          About us
+        </a>
       </div>
     );
   };
 
   renderUserMenu = () => {
     return (
-      <div>
-        <MenuItem>
-          <Link to={routePaths.settings}>
-            <div>
-              <FontAwesomeIcon icon={faCog} /> <b>Account Settings</b>
-            </div>
-          </Link>
-        </MenuItem>
+      <div className="menu-items">
+        <Link to={routePaths.settings}>
+          <FontAwesomeIcon icon={faCog} /> <b>Account Settings</b>
+        </Link>
         <Divider />
-        <MenuItem onClick={this.logout}>Logout</MenuItem>
+        <a onClick={this.logout}>Logout</a>
       </div>
     );
   };

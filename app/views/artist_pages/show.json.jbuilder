@@ -24,7 +24,6 @@ end
 json.posts @artist_page.posts do |post|
   json.id post.id
   json.author post.author
-  json.author_photo post.author.profile_image_url
   json.title post.title
   json.created_at post.created_at.to_i
   json.created_ago time_ago_in_words(post.created_at)

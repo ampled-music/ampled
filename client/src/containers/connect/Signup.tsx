@@ -3,7 +3,7 @@ import './login.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
 import { signupAction } from 'src/redux/signup/signup';
 
@@ -165,11 +165,8 @@ class SignupComponent extends React.Component<Props, any> {
               </a>
               .
             </label>
-            <button className="btn btn-submit" type="submit">
+            <button className="btn" type="submit">
               SIGN UP
-            </button>
-            <button className="btn" type="reset" onClick={this.props.closeAuthModal}>
-              CANCEL
             </button>
           </form>
           <label>
@@ -194,7 +191,6 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = (dispatch) => ({
   signup: bindActionCreators(signupAction, dispatch),
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
-  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
 });
 
 const Signup = connect(

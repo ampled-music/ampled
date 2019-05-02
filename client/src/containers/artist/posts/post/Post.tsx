@@ -50,7 +50,7 @@ class PostComponent extends React.Component<any, any> {
     this.setState({ showPrivatePostModal: false });
   };
 
-  handlePrivatePostClick = () => {
+  openSignupModal = () => {
     this.props.openAuthModal({ modalPage: 'signup', showSupportMessage: true, artistName: this.props.artistName });
   };
 
@@ -88,19 +88,26 @@ class PostComponent extends React.Component<any, any> {
     this.props.updateArtist();
   };
 
+  handlePrivatePostClick = (authenticated: boolean) => {
+    if (!authenticated) {
+      this.openSignupModal();
+    } else {
+      this.redirectToSupport();
+    }
+  };
+
   renderPost = () => {
     const { classes, post, accentColor, me } = this.props;
 
     const allowDetails = post.allow_details;
     const authenticated = !!me;
-    const privateNotAuthenticated = !allowDetails && !authenticated;
 
     return (
       <div className="post">
         <div
-          className={cx('post', { 'clickable-post': privateNotAuthenticated })}
-          onClick={() => privateNotAuthenticated && this.handlePrivatePostClick()}
-          title={privateNotAuthenticated ? 'SUBSCRIBER-ONLY CONTENT' : ''}
+          className={cx('post', { 'clickable-post': !allowDetails })}
+          onClick={() => this.handlePrivatePostClick(authenticated)}
+          title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
         >
           <Card className={classes.card} style={{ border: `2px solid ${accentColor}` }}>
             <CardContent className={classes.header}>
@@ -135,9 +142,9 @@ class PostComponent extends React.Component<any, any> {
               </Typography>
             </CardContent>
 
-            {!allowDetails && authenticated && (
+            {!allowDetails && (
               <div className="private-support-btn">
-                <button className="btn" onClick={this.redirectToSupport}>
+                <button className="btn" onClick={() => this.handlePrivatePostClick(authenticated)}>
                   <FontAwesomeIcon icon={faLock} />
                   SUPPORT TO UNLOCK
                 </button>
@@ -192,7 +199,7 @@ class PostComponent extends React.Component<any, any> {
             </Collapse>
             <CardActions className={cx(classes.actions, 'collapse-actions')} disableActionSpacing>
               <button className="show-previous-command-btn" onClick={this.handleExpandClick}>
-                {expanded ? <b>HIDE PREVIOUS COMMENTS</b> : <b>VIEW PREVIOUS COMMENTS</b>}
+                <b>{expanded ? 'HIDE PREVIOUS COMMENTS' : 'VIEW PREVIOUS COMMENTS'}</b>
               </button>
             </CardActions>
           </div>

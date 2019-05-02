@@ -124,6 +124,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
     this.props.updateMe(me);
   };
 
+  formatMoney = (value) => {
+    if (isNaN(value)) {
+      return 0;
+    }
+
+    return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  };
+
   renderUserImage = () => {
     const { userData } = this.props;
 
@@ -195,21 +203,21 @@ class UserSettingsComponent extends React.Component<Props, any> {
                 <div className="column">
                   <label>
                     <p className="info-title">SUPPORTERS</p>
-                    <p className="supporting-at-value">1,000</p>
+                    <p className="supporting-at-value">{ownedPage.supportersCount}</p>
                   </label>
                   <label>
                     <p className="info-title">LAST POST</p>
-                    <p className="info-value">MARCH 1, 2019</p>
+                    <p className="info-value">{this.getFormattedDate(ownedPage.lastPost)}</p>
                   </label>
                 </div>
                 <div className="column">
                   <label>
                     <p className="info-title">MONTHLY TOTAL</p>
-                    <p className="info-value">$ 4,300</p>
+                    <p className="info-value">$ {this.formatMoney(ownedPage.monthlyTotal)}</p>
                   </label>
                   <label>
                     <p className="info-title">LAST PAYOUT</p>
-                    <p className="info-value">APRIL 30, 2019</p>
+                    <p className="info-value">{this.getFormattedDate(ownedPage.lastPayout)}</p>
                   </label>
                 </div>
               </div>

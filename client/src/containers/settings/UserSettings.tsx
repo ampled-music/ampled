@@ -76,6 +76,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
   };
 
   getFormattedDate = (date: string) => {
+    if (!date) {
+      return '-';
+    }
+
     return DateTime.fromString(date.split('T')[0], 'yyyy-MM-dd').toLocaleString(DateTime.DATE_MED);
   };
 
@@ -203,7 +207,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                 <div className="column">
                   <label>
                     <p className="info-title">SUPPORTERS</p>
-                    <p className="supporting-at-value">{ownedPage.supportersCount}</p>
+                    <p className="supporting-at-value">{ownedPage.supportersCount || 0}</p>
                   </label>
                   <label>
                     <p className="info-title">LAST POST</p>

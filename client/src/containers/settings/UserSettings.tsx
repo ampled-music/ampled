@@ -136,6 +136,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   };
 
+  redirectToArtistPage = (pageId) => {
+    this.props.history.push(routePaths.artists.replace(':id', pageId));
+  };
+
   renderUserImage = () => {
     const { userData } = this.props;
 
@@ -198,7 +202,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.props.userData.ownedPages.map((ownedPage) => (
         <div key={`artist-${ownedPage.id}`} className="artist">
           <div className="image-border">
-            <img src={ownedPage.image} />
+            <img src={ownedPage.image} onClick={() => this.redirectToArtistPage(ownedPage.artistId)} />
           </div>
           <div className="artist-info">
             <p className="artist-name">{ownedPage.name}</p>
@@ -235,9 +239,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderSupportedArtists = () => (
     <div className="pages">
       {this.props.userData.subscriptions.map((subscription) => (
-        <div key={`artist-${subscription.name}`} className="artist">
+        <div key={`artist-${subscription.id}`} className="artist">
           <div className="image-border">
-            <img src={subscription.image} />
+            <img src={subscription.image} onClick={() => this.redirectToArtistPage(subscription.id)} />
           </div>
           <div className="artist-info">
             <p className="artist-name">{subscription.name}</p>

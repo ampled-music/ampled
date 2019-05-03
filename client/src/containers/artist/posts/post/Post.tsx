@@ -112,7 +112,11 @@ class PostComponent extends React.Component<any, any> {
           <Card className={classes.card} style={{ border: `2px solid ${accentColor}` }}>
             <CardContent className={classes.header}>
               <div className={classes.postTitle}>
-                <FontAwesomeIcon className={classes.userImage} icon={faUserCircle} />
+                {post.authorImage ? (
+                  <img className="user-image" src={post.authorImage} />
+                ) : (
+                  <FontAwesomeIcon className={classes.userImage} icon={faUserCircle} />
+                )}
                 <span>{post.author}</span>
               </div>
               <div className={classes.postDate}>{post.created_ago} ago</div>

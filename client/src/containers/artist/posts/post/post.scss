@@ -3,6 +3,14 @@
     cursor: pointer;
   }
 
+  .user-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0.5rem;
+  }
+
   .this-image-container {
     display: flex;
     flex-direction: column;

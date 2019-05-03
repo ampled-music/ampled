@@ -36,4 +36,8 @@ class Post < ApplicationRecord
   def author
     user.name
   end
+
+  def author_image
+    user.profile_image_url
+  end
 end

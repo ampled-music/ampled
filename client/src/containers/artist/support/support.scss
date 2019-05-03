@@ -9,6 +9,7 @@
     flex-direction: column;
     margin: 3rem 5rem;
     font-size: 1.5rem;
+    font-family: 'LL Replica Bold Web';
 
     h2 {
       font-weight: bold;
@@ -40,6 +41,10 @@
         flex-direction: column;
         align-items: center;
 
+        p {
+          font-family: 'LL Replica Bold Web';
+        }
+
         .artist-image {
           height: 80px;
           width: 80px;
@@ -63,6 +68,7 @@
         h3 {
           font-size: 16px;
           margin-bottom: 1.5rem;
+          font-family: 'LL Replica Bold Web';
         }
 
         .support-value-description {

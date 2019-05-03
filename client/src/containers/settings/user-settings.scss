@@ -2,6 +2,10 @@
   font-family: 'Courier New', Courier, monospace;
   margin: 0 5rem;
 
+  h1 {
+    font-family: 'LL Replica Bold Web';
+  }
+
   .content {
     margin-top: 7rem;
     display: flex;
@@ -62,6 +66,7 @@
         .user-name {
           font-size: 20px;
           font-weight: bold;
+          font-family: 'LL Replica Bold Web';
         }
 
         .joined-at {
@@ -139,6 +144,7 @@
               justify-content: center;
               margin: 0;
               margin-bottom: 1rem;
+              font-family: 'LL Replica Bold Web';
             }
 
             .extra-info {

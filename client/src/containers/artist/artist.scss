@@ -5,6 +5,8 @@ $randomNumber4: random(8);
 $randomNumber5: random(9);
 
 .artist-header {
+  font-family: 'LL Replica Bold Web';
+
   &__photo-container {
     display: flex;
     border: 2px solid #2557a7;
@@ -38,8 +40,8 @@ $randomNumber5: random(9);
     margin: 10px auto;
 
     &_image {
-      width: 60px;
-      height: 60px;
+      width: 90px;
+      height: 90px;
       object-fit: cover;
       border-radius: 50%;
       border: 1px solid #2557a7;
@@ -130,6 +132,7 @@ $randomNumber5: random(9);
     font-size: 1.2rem;
     margin: 1rem 0;
     text-transform: uppercase;
+    font-weight: bold;
   }
 
   .most-recent-supporter-tag {

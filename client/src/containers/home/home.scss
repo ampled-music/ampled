@@ -21,18 +21,18 @@
 }
 
 .home-header {
-  padding-top: 3rem;
 
   &__support {
-    width: 100%;
     display: block;
     position: relative;
     z-index: 0;
+    font-family: 'LL Replica Bold Web';
     font-size: 3rem;
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: .5rem;
-    font-weight: bold;
+    letter-spacing: .2rem;
+    background-image: linear-gradient(white, transparent);
+    padding: 2rem;
   }
 
   &__info {
@@ -40,18 +40,19 @@
     border: 2px solid black;
     padding: 2rem;
     margin: 4rem auto 2rem;
-    background-color: #fffc;
+    background-color: #fff;
   }
 
   &__bg-image {
-    width: 100%;
-    height: 600px;
+    height: 95vh;
     background-size: cover;
+    background-position: center;
     position: relative;
   }
 
   &__button {
-    background-color: #fffc;
+    background-color: #fff;
+    margin-bottom: 2rem;
   }
 }
 
@@ -59,6 +60,7 @@
   border-top: 10px solid black;
 
   h1 {
+    font-family: 'LL Replica Bold Web';
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;
@@ -95,6 +97,7 @@
   color: white;
 
   h1 {
+    font-family: 'LL Replica Bold Web';
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;
@@ -150,6 +153,7 @@
     }
 
     &_title {
+      font-family: 'LL Replica Bold Web';
       font-size: 1.8rem;
       margin-bottom: 1rem;
     }
@@ -165,6 +169,7 @@
   padding: 2rem;
 
   h1 {
+    font-family: 'LL Replica Bold Web';
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;
@@ -191,6 +196,7 @@
   padding: 2rem;
 
   h1 {
+    font-family: 'LL Replica Bold Web';
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;

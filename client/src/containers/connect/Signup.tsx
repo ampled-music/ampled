@@ -3,7 +3,7 @@ import './login.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
 import { signupAction } from 'src/redux/signup/signup';
 
@@ -37,11 +37,11 @@ class SignupComponent extends React.Component<Props, any> {
   state = this.initialState;
 
   componentDidUpdate() {
-    const { signup, closeAuthModal, authentication } = this.props;
+    const { signup, openAuthModal, authentication } = this.props;
 
     if (this.state.submitted && !signup.errors && authentication.authModalOpen) {
       this.setState(this.initialState);
-      closeAuthModal();
+      openAuthModal({ modalPage: 'login' });
     }
   }
 
@@ -191,7 +191,6 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = (dispatch) => ({
   signup: bindActionCreators(signupAction, dispatch),
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
-  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
 });
 
 const Signup = connect(

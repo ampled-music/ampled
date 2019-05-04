@@ -21,18 +21,6 @@ export const styles = (theme) => ({
     display: 'flex',
   },
 
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-
   iconButton: {
     outline: 'none !important',
   },
@@ -56,7 +44,7 @@ export const styles = (theme) => ({
 
   postTitle: {
     display: 'flex',
-    fontFamily: 'inherit !important',
+    fontFamily: 'Courier, Courier New, monospace !important',
     fontSize: '18px !important',
     letterSpacing: '0.3px',
     alignItems: 'center',

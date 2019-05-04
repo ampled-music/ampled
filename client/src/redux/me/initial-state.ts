@@ -2,6 +2,9 @@ export const initialState = {
   userData: undefined,
   loadingMe: false,
   error: null,
+  updating: false,
+  updated: false,
+  updatedData: undefined,
 };
 
 export interface Reducer {

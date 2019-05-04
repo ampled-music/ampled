@@ -12,6 +12,10 @@ import { createSubscriptionAction } from 'src/redux/subscriptions/create';
 import { declineStepAction } from 'src/redux/subscriptions/decline-step';
 import { startSubscriptionAction } from 'src/redux/subscriptions/start-subscription';
 
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast';
 import { initialState as artistsInitialState, ArtistModel } from '../../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
@@ -80,6 +84,12 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   handleSupportClick = () => {
+    if (this.state.supportLevelValue < 3) {
+      showToastMessage('Sorry, but you need to insert a value equal or bigger than $ 3.00.', MessageType.ERROR);
+
+      return;
+    }
+
     if (!this.props.me.userData) {
       this.props.openAuthModal({ modalPage: 'signup' });
     } else {
@@ -91,7 +101,7 @@ export class SupportComponent extends React.Component<Props, any> {
     const artistPageId = this.props.match.params.id;
     this.props.startSubscription({
       artistPageId,
-      supportLevelValue: this.state.supportLevelValue,
+      supportLevelValue: this.state.supportLevelValue * 100,
     });
   };
 
@@ -113,7 +123,11 @@ export class SupportComponent extends React.Component<Props, any> {
     <div key="artists" className="support-artists">
       {owners.map((owner, index) => (
         <div key={index} className="support-artist-info">
-          <img src={owner.profile_image_url} />
+          {owner.profile_image_url ? (
+            <img className="artist-image" src={owner.profile_image_url} />
+          ) : (
+            <FontAwesomeIcon className="artist-image" icon={faUserCircle} />
+          )}
           <p>{owner.name}</p>
         </div>
       ))}
@@ -134,8 +148,8 @@ export class SupportComponent extends React.Component<Props, any> {
         <p className="month-text">/Month</p>
       </div>
       <p className="support-value-description">
-        $3 is the average monthly support amount for {artistName}, but whatever your support level; the band certainly
-        appreciates it. However, the minimum is $3 to cover the costs and keep the lights on at Ampled.
+        Support {artistName} directly for $3 (or more) per month to unlock access to all of their posts and get
+        notifications when they post anything new.
       </p>
     </div>
   );

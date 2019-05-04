@@ -9,13 +9,35 @@
     margin-right: 15px;
     width: 300px;
 
-    li {
-      font-family: Courier, 'Courier New', monospace !important;
-    }
+    .menu-items {
+      display: flex;
+      flex-direction: column;
 
-    li:first-of-type {
-      margin-top: 20px;
-      font-size: 17px;
+      a {
+        padding: 0.5rem;
+        padding-left: 16px;
+        padding-right: 16px;
+        color: rgba(0, 0, 0, 0.87);
+        width: auto;
+        height: 24px;
+        overflow: hidden;
+        font-size: 1rem;
+        box-sizing: content-box;
+        font-weight: 400;
+        line-height: 1.5em;
+        white-space: nowrap;
+        font-family: Courier, 'Courier New', monospace !important;
+      }
+
+      a:hover {
+        text-decoration: none;
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+
+      a:first-of-type {
+        margin-top: 20px;
+        font-size: 17px;
+      }
     }
   }
 

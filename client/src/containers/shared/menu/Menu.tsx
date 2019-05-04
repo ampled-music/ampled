@@ -8,12 +8,11 @@ import { logoutAction } from 'src/redux/authentication/logout';
 import { Store } from 'src/redux/configure-store';
 import * as store from 'store';
 
-import { faSearch, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
-import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
@@ -49,6 +48,10 @@ class MenuListComposition extends React.Component<Props, State> {
     anchorEl: undefined,
   };
 
+  componentDidMount() {
+    this.setState({ anchorEl: this.refs.menu });
+  }
+
   componentDidUpdate() {
     if (!this.props.loggedOut) {
       return;
@@ -56,10 +59,6 @@ class MenuListComposition extends React.Component<Props, State> {
 
     store.remove(config.localStorageKeys.token);
     window.location.href = routePaths.root;
-  }
-
-  componentDidMount() {
-    this.setState({ anchorEl: this.refs.menu });
   }
 
   handleToggle = () => {
@@ -81,56 +80,29 @@ class MenuListComposition extends React.Component<Props, State> {
 
   renderDefaultMenu = () => {
     return (
-      <div>
-        <MenuItem>
-          <Link to="">
-            <b>Create an artist page</b>
-          </Link>
-        </MenuItem>
+      <div className="menu-items">
+        <a href={config.menuUrls.createArtist} target="_blank">
+          <b>Create an artist page</b>
+        </a>
         <div className="divider" />
-        <MenuItem>
-          <Link to="">Blog</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="">About us</Link>
-        </MenuItem>
-        <Divider />
-        <MenuItem>
-          <div>
-            <FontAwesomeIcon icon={faSearch} /> Search
-          </div>
-        </MenuItem>
+        <a href={config.menuUrls.blog} target="_blank">
+          Blog
+        </a>
+        <a href={config.menuUrls.about} target="_blank">
+          About us
+        </a>
       </div>
     );
   };
 
   renderUserMenu = () => {
     return (
-      <div>
-        <MenuItem>
-          <Link to="">
-            <div>
-              <FontAwesomeIcon icon={faUsers} size="lg" /> <b>Your band here</b>
-            </div>
-          </Link>
-        </MenuItem>
-        <div className="divider" />
-        <MenuItem>
-          <Link to="">Account Settings</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="">Blog</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="">About us</Link>
-        </MenuItem>
-        <MenuItem onClick={this.logout}>Logout</MenuItem>
+      <div className="menu-items">
+        <Link to={routePaths.settings}>
+          <FontAwesomeIcon icon={faCog} /> <b>Account Settings</b>
+        </Link>
         <Divider />
-        <MenuItem>
-          <div>
-            <FontAwesomeIcon icon={faSearch} /> Search
-          </div>
-        </MenuItem>
+        <a onClick={this.logout}>Logout</a>
       </div>
     );
   };

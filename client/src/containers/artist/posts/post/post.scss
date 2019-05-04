@@ -3,12 +3,107 @@
     cursor: pointer;
   }
 
-  .blur-image {
-    -webkit-filter: blur(20px);
-    -moz-filter: blur(20px);
-    -o-filter: blur(20px);
-    -ms-filter: blur(20px);
-    filter: blur(20px);
+  span {
+    font-family: 'LL Replica Bold Web';
+  }
+
+  .user-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+  }
+
+  .this-image-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .blur-image {
+      -webkit-filter: blur(20px);
+      -moz-filter: blur(20px);
+      -o-filter: blur(20px);
+      -ms-filter: blur(20px);
+      filter: blur(20px);
+    }
+
+    svg {
+      font-size: 80px;
+      position: absolute;
+      align-self: center;
+      margin-top: 8rem;
+      color: white;
+    }
+  }
+
+  .private-support-btn {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+
+    svg {
+      margin-right: 0.5rem;
+    }
+
+    button {
+      width: 240px;
+      text-transform: capitalize;
+    }
+  }
+
+  .comments-list {
+    background-color: #f3f3f3;
+    padding: 20px;
+    margin-bottom: 50px;
+    color: #1e1e1e;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+
+    span {
+      font-family: Courier, 'Courier New', monospace;
+      font-size: 14px;
+    }
+
+    .sendCommentIcon {
+      button {
+        outline: none;
+      }
+    }
+
+    .collapse-actions {
+      justify-content: center;
+
+      .show-previous-command-btn {
+        font-family: 'Courier New', Courier, monospace;
+        width: 100%;
+        cursor: pointer;
+        font-size: 12px;
+        height: 30px;
+        width: 200px;
+        align-self: center;
+        justify-self: center;
+        border: 0;
+        text-decoration: underline;
+        outline: none;
+        background-color: transparent;
+      }
+
+      .show-previous-command-btn:hover {
+        transform: rotate(-2deg);
+        color: black;
+        font-size: 13px;
+        outline: none;
+      }
+    }
+
+    .comment-input {
+      background-color: white;
+      padding: 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
   }
 }
 

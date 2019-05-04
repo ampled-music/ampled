@@ -25,7 +25,8 @@ class PostsController < ApplicationController
       :body,
       :artist_page_id,
       :image_url,
-      :audio_file
+      :audio_file,
+      :is_private
     ).merge(user_id: current_user.id)
   end
 

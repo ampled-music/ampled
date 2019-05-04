@@ -4,6 +4,11 @@ export const config = {
   localStorageKeys: {
     token: 'token',
   },
+  menuUrls: {
+    createArtist: process.env.REACT_APP_URL_CREATE_ARTIST || 'https://www.ampled.com/create-an-artist-page',
+    blog: process.env.REACT_APP_URL_BLOG || 'https://ampled.com/zine',
+    about: process.env.REACT_APP_URL_ABOUT || 'https://ampled.com/about',
+  },
   authUrl: {
     google: process.env.REACT_APP_GOOGLE_AUTH_URL || '/api/auth/google',
     linkedIn: process.env.REACT_APP_LINKEDIN_AUTH_URL || '/api/auth/linkedin',

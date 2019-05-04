@@ -27,6 +27,8 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
+  config.include Devise::Test::IntegrationHelpers, type: :request
+
   config.use_transactional_fixtures = true
 
   # RSpec Rails can automatically mix in different behaviours to your tests

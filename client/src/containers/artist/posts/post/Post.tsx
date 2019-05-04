@@ -3,10 +3,12 @@ import './post.scss';
 import cx from 'classnames';
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
+import { routePaths } from 'src/containers/route-paths';
+import { UserRoles } from 'src/containers/shared/user-roles';
 
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Divider, Button } from '@material-ui/core';
+import { CardActions, Collapse, Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -14,12 +16,14 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 import { config } from '../../../../config';
+import { Comment } from '../comments/Comment';
+import { CommentForm } from '../comments/CommentForm';
 import { styles } from './post-style';
-import { Modal } from 'src/containers/shared/modal/Modal';
 
 class PostComponent extends React.Component<any, any> {
   state = {
     showPrivatePostModal: false,
+    expanded: false,
   };
 
   handleExpandClick = () => {
@@ -46,30 +50,73 @@ class PostComponent extends React.Component<any, any> {
     this.setState({ showPrivatePostModal: false });
   };
 
-  handlePrivatePostClick = () => {
-    if (!this.props.authenticated) {
-      this.props.openAuthModal({ modalPage: 'signup', showSupportMessage: true, artistName: this.props.artistName });
+  openSignupModal = () => {
+    this.props.openAuthModal({ modalPage: 'signup', showSupportMessage: true, artistName: this.props.artistName });
+  };
+
+  redirectToSupport = () => {
+    const { history, artistId } = this.props;
+
+    history.push(routePaths.support.replace(':id', artistId));
+  };
+
+  sortItemsByCreationDate(items) {
+    return items.sort((a, b) => b.created_at - a.created_at);
+  }
+
+  handleSubmit = async (comment) => {
+    await this.props.addComment(comment);
+    this.props.updateArtist();
+  };
+
+  canLoggedUserComment = () => {
+    const { loggedUserAccess } = this.props;
+
+    return (
+      loggedUserAccess && [UserRoles.Supporter.toString(), UserRoles.Owner.toString()].includes(loggedUserAccess.role)
+    );
+  };
+
+  canLoggedUserDeleteComment = (commentUserId: number) => {
+    const { loggedUserAccess, me } = this.props;
+
+    return (loggedUserAccess && loggedUserAccess.role === UserRoles.Owner) || (me && commentUserId === me.id);
+  };
+
+  deleteComment = async (commentId) => {
+    await this.props.deleteComment(commentId);
+    this.props.updateArtist();
+  };
+
+  handlePrivatePostClick = (authenticated: boolean) => {
+    if (!authenticated) {
+      this.openSignupModal();
     } else {
-      this.openPrivatePostModal();
+      this.redirectToSupport();
     }
   };
 
-  render() {
-    const { classes, post, accentColor, artistName } = this.props;
+  renderPost = () => {
+    const { classes, post, accentColor, me } = this.props;
 
     const allowDetails = post.allow_details;
+    const authenticated = !!me;
 
     return (
-      <div>
+      <div className="post">
         <div
           className={cx('post', { 'clickable-post': !allowDetails })}
-          onClick={() => !allowDetails && this.handlePrivatePostClick()}
+          onClick={() => this.handlePrivatePostClick(authenticated)}
           title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
         >
           <Card className={classes.card} style={{ border: `2px solid ${accentColor}` }}>
             <CardContent className={classes.header}>
               <div className={classes.postTitle}>
-                <FontAwesomeIcon className={classes.userImage} icon={faUserCircle} />
+                {post.authorImage ? (
+                  <img className="user-image" src={post.authorImage} />
+                ) : (
+                  <FontAwesomeIcon className={classes.userImage} icon={faUserCircle} />
+                )}
                 <span>{post.author}</span>
               </div>
               <div className={classes.postDate}>{post.created_ago} ago</div>
@@ -77,8 +124,11 @@ class PostComponent extends React.Component<any, any> {
             <Divider />
 
             {post.image_url && (
-              <div className={cx({ 'blur-image': !allowDetails })}>
-                <CardMedia className={classes.media} image={post.image_url} />
+              <div className="this-image-container">
+                <div>
+                  <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
+                </div>
+                {!allowDetails && <FontAwesomeIcon icon={faLock} />}
               </div>
             )}
 
@@ -96,21 +146,75 @@ class PostComponent extends React.Component<any, any> {
               </Typography>
             </CardContent>
 
-            <CardContent>
-              <Typography paragraph className={classes.postBody}>
-                {post.body}
-              </Typography>
-            </CardContent>
+            {!allowDetails && (
+              <div className="private-support-btn">
+                <button className="btn" onClick={() => this.handlePrivatePostClick(authenticated)}>
+                  <FontAwesomeIcon icon={faLock} />
+                  SUPPORT TO UNLOCK
+                </button>
+              </div>
+            )}
+
+            {post.body && (
+              <CardContent>
+                <Typography paragraph className={classes.postBody}>
+                  {post.body}
+                </Typography>
+              </CardContent>
+            )}
           </Card>
         </div>
-        <Modal open={this.state.showPrivatePostModal} onClose={this.closePrivatePostModal}>
-          <div className="private-post-modal">
-            <p>This is a private post. Become a supporter of {artistName} to access it.</p>
-            <Button onClick={this.closePrivatePostModal}>Ok</Button>
-          </div>
-        </Modal>
+        {this.renderComments()}
       </div>
     );
+  };
+
+  renderComments = () => {
+    const { classes, post } = this.props;
+    const { expanded } = this.state;
+
+    const allComments = this.sortItemsByCreationDate(post.comments);
+    const firstComments = allComments.slice(0, 2).reverse();
+    const hasPreviousComments = allComments.length > 2;
+
+    return (
+      <div className="comments-list">
+        <span>COMMENTS</span>
+        {!expanded &&
+          firstComments.map((comment) => (
+            <Comment
+              key={comment.id}
+              comment={comment}
+              canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
+              deleteComment={this.deleteComment}
+            />
+          ))}
+        {hasPreviousComments && (
+          <div>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              {allComments.reverse().map((comment) => (
+                <Comment
+                  key={comment.id}
+                  comment={comment}
+                  canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
+                  deleteComment={this.deleteComment}
+                />
+              ))}
+            </Collapse>
+            <CardActions className={cx(classes.actions, 'collapse-actions')} disableActionSpacing>
+              <button className="show-previous-command-btn" onClick={this.handleExpandClick}>
+                <b>{expanded ? 'HIDE PREVIOUS COMMENTS' : 'VIEW PREVIOUS COMMENTS'}</b>
+              </button>
+            </CardActions>
+          </div>
+        )}
+        {this.canLoggedUserComment() && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+      </div>
+    );
+  };
+
+  render() {
+    return <div>{this.renderPost()}</div>;
   }
 }
 

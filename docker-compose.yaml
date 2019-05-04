@@ -12,7 +12,10 @@ services:
     environment:
       NODE_ENV: development
       REACT_APP_API_URL: http://localhost:3000
-      REACT_APP_STRIPE_API_KEY: pk_test_TYooMQauvdEDq54NiTphI7jx
+      REACT_APP_STRIPE_API_KEY: pk_test_eQaIuCWvTwMYxTXFPXLho6n700kZpCcztx
+      REACT_APP_URL_CREATE_ARTIST: "https://www.ampled.com/create-an-artist-page"
+      REACT_APP_URL_BLOG: "https://ampled.com/zine"
+      REACT_APP_URL_ABOUT: "https://ampled.com/about"
   mailcatcher:
     image: zolweb/docker-mailcatcher:latest
     ports:

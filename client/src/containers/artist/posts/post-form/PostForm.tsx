@@ -31,6 +31,7 @@ class PostFormComponent extends React.Component<Props, any> {
     title: '',
     body: '',
     audioFile: '',
+    isPublic: false,
     imageUrl: undefined,
     deleteToken: undefined,
     hasUnsavedChanges: false,
@@ -62,13 +63,14 @@ class PostFormComponent extends React.Component<Props, any> {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const { title, body, audioFile, imageUrl } = this.state;
+    const { title, body, audioFile, imageUrl, isPublic } = this.state;
 
     const post = {
       title,
       body,
       audio_file: audioFile,
       image_url: imageUrl,
+      is_private: !isPublic,
       artist_page_id: this.props.artist.id,
     };
 
@@ -108,6 +110,20 @@ class PostFormComponent extends React.Component<Props, any> {
     this.setState({ imageUrl: undefined, deleteToken: undefined, hasUnsavedChanges: false });
   };
 
+  handleMakePublicChange = (event) => {
+    this.setState({ isPublic: event.target.checked });
+  };
+
+  isSaveEnabled = () => {
+    const { title, body, imageUrl, audioFile } = this.state;
+
+    return (
+      title &&
+      title.length > 0 &&
+      ((audioFile && audioFile.length > 0) || (imageUrl && imageUrl.length > 0) || (body && body.length > 0))
+    );
+  };
+
   renderUploader(): React.ReactNode {
     return (
       <div className="uploader">
@@ -142,19 +158,21 @@ class PostFormComponent extends React.Component<Props, any> {
     return (
       <label htmlFor="image-file">
         <Button className="image-button" variant="contained" component="span">
-          Update Image
+          Add Image
         </Button>
       </label>
     );
   }
 
   render() {
-    const { hasUnsavedChanges, title, body, imageUrl, audioFile } = this.state;
+    const { hasUnsavedChanges, title, body, imageUrl } = this.state;
+
+    const isSaveEnabled = this.isSaveEnabled();
 
     return (
       <div className="post-form">
         <DialogContent>
-          <h1>AUDIO POST</h1>
+          <h1>NEW POST</h1>
           <form onSubmit={this.handleSubmit}>
             <Upload onComplete={this.updateAudioFile} />
 
@@ -214,18 +232,29 @@ class PostFormComponent extends React.Component<Props, any> {
                 />
               </div>
             </div>
-            <DialogActions className="action-buttons">
-              <Button className="cancel-button" onClick={() => this.props.close(hasUnsavedChanges)}>
-                Cancel
-              </Button>
-              <Button
-                type="Submit"
-                className={cx('post-button', { disabled: audioFile.length === 0 })}
-                disabled={audioFile.length === 0}
-              >
-                Post Audio
-              </Button>
-            </DialogActions>
+            <div className="form-bottom">
+              <DialogActions className="action-buttons">
+                <label className="make-public-label" htmlFor="make-public">
+                  <input
+                    name="make-public"
+                    type="checkbox"
+                    onChange={this.handleMakePublicChange}
+                    checked={this.state.isPublic}
+                  />
+                  Make public
+                </label>
+                <Button className="cancel-button" onClick={() => this.props.close(hasUnsavedChanges)}>
+                  Cancel
+                </Button>
+                <Button
+                  type="Submit"
+                  className={cx('post-button', { disabled: !isSaveEnabled })}
+                  disabled={!isSaveEnabled}
+                >
+                  Save Post
+                </Button>
+              </DialogActions>
+            </div>
           </form>
         </DialogContent>
       </div>

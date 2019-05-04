@@ -10,6 +10,7 @@ import * as store from 'store';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { routePaths } from '../route-paths';
+import { showToastMessage, MessageType } from '../shared/toast/toast';
 
 interface LoginProps {
   history: any;
@@ -25,11 +26,16 @@ class LoginComponent extends React.Component<Props, any> {
   };
 
   componentDidUpdate() {
+    if (this.props.error) {
+      showToastMessage(this.props.error, MessageType.ERROR);
+    }
+
     if (!this.props.token) {
       return;
     }
 
     this.saveTokenToLocalStorage();
+    showToastMessage('You are logged in. Welcome back!', MessageType.SUCCESS);
     this.props.closeAuthModal();
   }
 

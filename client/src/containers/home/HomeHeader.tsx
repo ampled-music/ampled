@@ -1,6 +1,13 @@
 import * as React from 'react';
 
+import { config } from 'src/config';
+import support from '../../images/home/home_header_support.png';
 import header_collage from '../../images/home/home_header_collage_2.png';
+
+const openInNewTab = (url: string) => {
+  var win = window.open(url, '_blank');
+  win.focus();
+};
 
 export const HomeHeader = () => (
   <div className="home-header">
@@ -14,6 +21,9 @@ export const HomeHeader = () => (
             </div>
             <button className="home-header__button btn">Create an Artist Page</button>
           </div>
+          <button className="home-header__button btn" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
+            Create an Artist Page
+          </button>
         </div>
       </div>
     </div>

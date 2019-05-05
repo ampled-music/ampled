@@ -1021,6 +1021,8 @@ GEM
     selenium-webdriver (3.14.1)
       childprocess (~> 0.5)
       rubyzip (~> 1.2, >= 1.2.2)
+    sentry-raven (2.9.0)
+      faraday (>= 0.7.6, < 1.0)
     sidekiq (5.2.3)
       connection_pool (~> 2.2, >= 2.2.2)
       rack-protection (>= 1.5.0)
@@ -1141,6 +1143,7 @@ DEPENDENCIES
   sass-rails
   sassc-rails
   selenium-webdriver
+  sentry-raven
   sidekiq
   simple_form
   simplecov

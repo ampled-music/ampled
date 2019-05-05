@@ -57,7 +57,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
         return (
           <div className="col-md-4" key={page.id}>
             <Link to={`/artists/${page.id}`}>
-              <div className="home-artists__item" key={page.id}>
+              <div className="home-artists__item" style={{ borderColor: page.accent_color }} key={page.id}>
                 <div className="home-artists__item_title">{page.name}</div>
                 <img className="home-artists__item_image" src={page.banner_image_url} />
               </div>

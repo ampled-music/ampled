@@ -23,6 +23,7 @@
 .home-header {
 
   &__support {
+    width: 100%;
     display: block;
     position: relative;
     z-index: 0;
@@ -32,7 +33,7 @@
     text-transform: uppercase;
     letter-spacing: .2rem;
     background-image: linear-gradient(white, transparent);
-    padding: 2rem;
+    padding: 2rem 1rem 4rem;
   }
 
   &__info {

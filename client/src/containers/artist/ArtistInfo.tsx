@@ -28,13 +28,13 @@ export class ArtistInfo extends React.Component<Props, any> {
         <div className="artist-info__social_twitter">
           <FontAwesomeIcon className="icon" icon={faTwitter} />
           <a href="https://twitter.com/{twitterHandle}" target="_blank" style={{ color: accentColor }}>
-            @{twitterHandle}
+            {twitterHandle}
           </a>
         </div>
         <div className="artist-info__social_instagram">
           <FontAwesomeIcon className="icon" icon={faInstagram} />
           <a href="https://instagram.com/{instagramHandle}" target="_blank" style={{ color: accentColor }}>
-            #{instagramHandle}
+            {instagramHandle}
           </a>
         </div>
       </div>

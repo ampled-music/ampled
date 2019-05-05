@@ -1,9 +1,3 @@
-$randomNumber1: random(5);
-$randomNumber2: random(6);
-$randomNumber3: random(7);
-$randomNumber4: random(8);
-$randomNumber5: random(9);
-
 .artist-header {
   font-family: 'LL Replica Bold Web';
 
@@ -83,24 +77,19 @@ $randomNumber5: random(9);
     transition: all 0.25s ease-in-out;
 
     &:nth-child(1) {
-      transform: scale(1) rotate($randomNumber1 + deg);
+      transform: scale(1.05) rotate(5deg);
     }
     &:nth-child(2) {
-      transform: scale(1) rotate(-($randomNumber2 + deg));
+      transform: scale(1.05) rotate(3deg);
     }
     &:nth-child(3) {
-      transform: scale(1) rotate($randomNumber3 + deg);
+      transform: scale(1.05) rotate(-5deg);
     }
     &:nth-child(4) {
-      transform: scale(1) rotate(-($randomNumber4 + deg));
+      transform: scale(1.05) rotate(-3deg);
     }
     &:nth-child(5) {
-      transform: scale(1) rotate($randomNumber5 + deg);
-    }
-
-    &:hover {
-      z-index: 10;
-      transform: scale(1.1) rotate(0deg);
+      transform: scale(1.05) rotate(-7deg);
     }
   }
 
@@ -121,10 +110,9 @@ $randomNumber5: random(9);
   }
 
   &__message-image {
-    width: 110%;
-    transform: rotate(-2deg);
+    width: 100%;
+    transform: scale(1.1) rotate(-2deg);
     position: relative;
-    left: -5%;
     z-index: -1;
   }
 
@@ -166,7 +154,6 @@ $randomNumber5: random(9);
 
 .artist-info {
   font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
   border-top: 2px solid #000000;
   border-bottom: 2px solid #000000;
   margin: 2rem auto;

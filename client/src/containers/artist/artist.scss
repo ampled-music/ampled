@@ -8,8 +8,8 @@
   }
 
   &__title {
-    font-size: 3rem;
-    margin: 2rem 0;
+    font-size: 2rem;
+    margin: 2rem 0 3rem;
     text-transform: uppercase;
     font-weight: bolder;
   }
@@ -22,20 +22,20 @@
     flex-direction: column;
     padding-top: 20px;
     position: absolute;
-    left: -30px;
+    left: -20px;
   }
 
   &__person {
     width: 100%;
-    max-width: 90px;
-    max-height: 90px;
+    max-width: 70px;
+    max-height: 70px;
     position: relative;
     z-index: 10;
     margin: 10px auto;
 
     &_image {
-      width: 90px;
-      height: 90px;
+      width: 70px;
+      height: 70px;
       object-fit: cover;
       border-radius: 50%;
       border: 1px solid #2557a7;
@@ -94,7 +94,7 @@
   }
 
   &__message {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     margin: 2rem 0;
     text-transform: uppercase;
     font-weight: bold;

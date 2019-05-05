@@ -45,7 +45,7 @@ export const styles = (theme) => ({
   postTitle: {
     display: 'flex',
     fontFamily: 'Courier, Courier New, monospace !important',
-    fontSize: '18px !important',
+    fontSize: '16px !important',
     letterSpacing: '0.3px',
     alignItems: 'center',
   },

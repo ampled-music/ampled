@@ -38,6 +38,8 @@ class Subscription < ApplicationRecord
 
   enum status: { pending_active: 0, active: 1, pending_cancelled: 2, cancelled: 3 }
 
+  scope :active, -> { where(status: %i[pending_active active]) }
+
   def check_stripe
     raise "Don't just delete a subscription"
   end

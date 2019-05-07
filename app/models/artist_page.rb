@@ -29,9 +29,12 @@ class ArtistPage < ApplicationRecord
   has_many :images, dependent: :destroy
 
   has_many :subscriptions, dependent: :destroy
-  has_many :subscribers, through: :subscriptions, source: :user
 
   has_many :plans, dependent: :destroy
+
+  def active_subscribers
+    subscribers.merge(Subscription.active)
+  end
 
   def stripe_state_token
     return state_token if state_token.present?

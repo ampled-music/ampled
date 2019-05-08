@@ -8,6 +8,11 @@
     display: flex;
     border: 2px solid $brand-primary;
     justify-content: center;
+    margin: 0 2rem;
+    @include mq( $layout-m ) {
+      margin: auto;
+    }
+
   }
 
   &__title {
@@ -15,6 +20,11 @@
     margin: 2rem 0 3rem;
     text-transform: uppercase;
     font-weight: bolder;
+    text-align: center;
+
+    @include mq( $layout-m ) {
+      text-align: left;
+    }
   }
 
   &__persons {
@@ -23,25 +33,36 @@
     align-content: flex-start;
     flex-wrap: wrap;
     flex-direction: column;
-    padding-top: 20px;
     position: absolute;
-    left: -20px;
+    left: 20px;
+    @include mq( $layout-m ) {
+      padding-top: 20px;
+      left: -20px;
+    }
   }
 
   &__person {
     width: 100%;
-    max-width: 70px;
-    max-height: 70px;
+    max-width: 50px;
+    max-height: 50px;
     position: relative;
     z-index: 10;
     margin: 10px auto;
+    @include mq( $layout-m ) {
+      max-width: 70px;
+      max-height: 70px;
+    }
 
     &_image {
-      width: 70px;
-      height: 70px;
+      width: 50px;
+      height: 50px;
       object-fit: cover;
       border-radius: 50%;
       border: 1px solid $brand-primary;
+      @include mq( $layout-m ) {
+        max-width: 70px;
+        max-height: 70px;
+      }
     }
     &_svg {
       width: 100% !important;
@@ -65,34 +86,55 @@
   }
 
   &__photos {
-    height: 570px;
+    height: 335px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     align-content: flex-start;
+    @include mq( $layout-m ) {
+      height: 570px;
+    }
   }
 
   &__photo {
     position: absolute;
     display: block;
     z-index: 1;
-    width: 550px;
     transition: all 0.25s ease-in-out;
+    width: 335px;
+    @include mq( $layout-m ) {
+      width: 550px;
+    }
 
     &:nth-child(1) {
-      transform: scale(1.05) rotate(5deg);
+      transform: rotate(5deg);
+      @include mq( $layout-m ) {
+        transform: scale(1.05) rotate(5deg);
+      }
     }
     &:nth-child(2) {
-      transform: scale(1.05) rotate(3deg);
+      transform: rotate(3deg);
+      @include mq( $layout-m ) {
+        transform: scale(1.05) rotate(3deg);
+      }
     }
     &:nth-child(3) {
-      transform: scale(1.05) rotate(-5deg);
+      transform: rotate(-5deg);
+      @include mq( $layout-m ) {
+        transform: scale(1.05) rotate(-5deg);
+      }
     }
     &:nth-child(4) {
-      transform: scale(1.05) rotate(-3deg);
+      transform: rotate(-3deg);
+      @include mq( $layout-m ) {
+        transform: scale(1.05) rotate(-3deg);
+      }
     }
     &:nth-child(5) {
-      transform: scale(1.05) rotate(-7deg);
+      transform: rotate(-7deg);
+      @include mq( $layout-m ) {
+        transform: scale(1.05) rotate(-7deg);
+      }
     }
   }
 
@@ -174,12 +216,19 @@
     display: flex;
     justify-content: flex-end;
 
-    &_twitter {
-      margin: 0 1rem;
+    span {
+      display: none;
+      @include mq( $layout-m ) {
+        display: block;
+      }
     }
 
+    &_twitter,
     &_instagram {
-      margin: 0 1rem;
+      margin: 0 0 0 .5rem;
+      @include mq( $layout-m ) {
+        margin: 0 1rem;
+      }
     }
   }
 }

@@ -26,15 +26,15 @@ export class ArtistInfo extends React.Component<Props, any> {
     return (
       <div className="artist-info__social">
         <div className="artist-info__social_twitter">
-          <FontAwesomeIcon className="icon" icon={faTwitter} />
           <a href="https://twitter.com/{twitterHandle}" target="_blank" style={{ color: accentColor }}>
-            {twitterHandle}
+            <FontAwesomeIcon className="icon" icon={faTwitter} />
+            <span>{twitterHandle}</span>
           </a>
         </div>
         <div className="artist-info__social_instagram">
-          <FontAwesomeIcon className="icon" icon={faInstagram} />
           <a href="https://instagram.com/{instagramHandle}" target="_blank" style={{ color: accentColor }}>
-            {instagramHandle}
+            <FontAwesomeIcon className="icon" icon={faInstagram} />
+            <span>{instagramHandle}</span>
           </a>
         </div>
       </div>
@@ -45,8 +45,8 @@ export class ArtistInfo extends React.Component<Props, any> {
     return (
       <div className="artist-info container">
         <div className="row justify-content-between">
-          <div className="col-sm-6">{this.renderArtistLocation()}</div>
-          <div className="col-sm-6">{this.renderSocialInfo()}</div>
+          <div className="col-6">{this.renderArtistLocation()}</div>
+          <div className="col-6">{this.renderSocialInfo()}</div>
         </div>
       </div>
     );

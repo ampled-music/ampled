@@ -1,0 +1,205 @@
+// Custom Colors:
+$gray:                      #3D3D3D;
+$black:						          #000;
+$white:						          #FFF;
+
+$brand-primary:             #2557a7;
+
+$brand-success:             #5cb85c;
+$brand-info:                #5bc0de;
+$brand-warning:             #f0ad4e;
+$brand-danger:              #d9534f; 
+
+// Social Colors
+$twitter: 					#00aced;
+$facebook: 					#3b5998;
+$googleplus: 				#dd4b39;
+$pinterest:				 	#cb2027;
+$linkedin: 					#007bb6;
+$youtube: 					#bb0000;
+$vimeo: 					  #aad450;
+$tumblr: 					  #32506d;
+$instagram: 				#405de6;
+$flickr: 					  #ff0084;
+$dribbble: 					#ea4c89;
+$quora: 					  #a82400;
+$foursquare: 				#0072b1;
+$forrst: 				   	#5B9A68;
+$vk: 						    #45668e;
+$wordpress: 				#21759b;
+$stumbleupon: 		  #EB4823;
+$yahoo: 					  #7B0099;
+$blogger: 					#fb8f3d;
+$soundcloud: 				#ff3a00;
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+
+$enable-flex:               false;
+$enable-rounded:            true;
+$enable-shadows:            false;
+$enable-gradients:          false;
+$enable-transitions:        false;
+$enable-hover-media-query:  false;
+$enable-grid-classes:       true;
+
+// Transition Speed
+$speed: .25s ease-in-out;
+
+
+// Links
+//
+// Style anchor elements.
+
+$link-color:                 $brand-primary;
+$link-decoration:            none;
+$link-hover-color:           darken($link-color, 15%);
+$link-hover-decoration:      none;
+
+// Grid breakpoints
+//
+// Define the minimum and maximum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+// Breakpoints
+// -----------------------------------------------------------------
+
+// Generic
+$mobile: 320px;
+$mobile-l: 375px;
+$phablet: 400px;
+$phablet-l: 500px;
+$tablet: 768px;
+$tablet-xl: 992px;
+$desktop: 1024px;
+$desktop-m: 1200px;
+$desktop-l: 1320px;
+$desktop-l2: 1500px;
+$desktop-xl: 1800px;
+$desktop-jumbo: 2100px;
+
+// Breakpoint applications
+$nav-desktop: $tablet;
+
+$layout-s: 0;
+$layout-m: $tablet;
+$layout-l: $tablet-xl;
+$layout-xl: $desktop-m;
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+
+$grid-columns:               12;
+$grid-gutter-width:          1.618rem; // 40px
+
+// Grid breakpoints
+//
+// Define the minimum and maximum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints: (
+  // Extra small screen / phone
+  xs: 0,
+  // Small screen / phone
+  sm: 544px,
+  // Medium screen / tablet
+  md: 768px,
+  // Large screen / desktop
+  lg: 992px,
+  // Extra large screen / wide desktop
+  xl: 1300px
+);
+
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+$container-max-widths: (
+  sm: 576px,
+  md: 720px,
+  lg: 940px,
+  xl: 1300px
+);
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+
+$grid-columns:               12;
+$grid-gutter-width:          1.618rem; // 40px
+
+
+// Typography
+//
+// Font, line-height, and color for body text, headings, and more.
+$font-family-sans-serif:     'LL Replica Bold Web', sans-serif;
+$font-family-serif:          'FayonGrandePro', serif;
+$font-family-monospace:      'Courier New', Courier, monospace;
+$font-family-base:           'AvenirLTStd-Light', Helvetica Neue, Helvetica, Arial, sans-serif;
+
+// Pixel value used to responsively scale all typography. Applied to the `<html>` element.
+$font-size-root:             21px;
+
+$font-size-base:             1rem; 
+$font-size-lg:               1.25rem;
+$font-size-md:               .85rem; 
+$font-size-sm:               .75rem; 
+$font-size-xs:               .6rem;  
+
+$font-size-h1:               2.3rem; 
+$font-size-h2:               2rem;   
+$font-size-h3:               1.7rem; 
+$font-size-h4:               1.5rem; 
+$font-size-h5:               1.3rem; 
+$font-size-h6:               1.15rem;
+
+$line-height-h1:             2.85rem;
+$line-height-h2:             2.5rem; 
+$line-height-h3:             2.3rem; 
+$line-height-h4:             2.3rem; 
+$line-height-h5:             1.9rem; 
+$line-height-h6:             1.7rem; 
+
+$display1-size:               6rem;
+$display2-size:               5.5rem;
+$display3-size:               4.5rem;
+$display4-size:               3.5rem;
+
+$display1-weight:             300;
+$display2-weight:             500;
+$display3-weight:             700;
+$display4-weight:             700;
+
+$line-height:                 1.5;
+
+$headings-font-family:        $font-family-sans-serif;
+$headings-font-weight:        500;
+$headings-font-weight-bold:   700;
+$headings-line-height:        1.1;
+$headings-color:              inherit;
+ 
+$lead-font-size:              1.25rem;
+$lead-font-weight:            300;
+
+$header-height-lg:            535px;
+$header-height-sm:            360px;
+
+$blockquote-small-color:      $gray;
+$blockquote-font-size:        ($font-size-base * 1.25);
+$blockquote-border-color:     $gray;
+$blockquote-font-weight:      500;
+
+$hr-border-color:             rgba(0,0,0,.1);
+
+$shadow:                      0px 0px 10px rgba(0, 0, 0, 0.7);
+
+$dt-font-weight:              bold;
+
+$nested-kbd-font-weight:      bold;
+
+$list-inline-padding:         5px;
+
+$nav-height:                  86px;

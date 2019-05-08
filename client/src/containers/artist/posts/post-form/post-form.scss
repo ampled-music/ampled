@@ -1,3 +1,6 @@
+@import "../../../../styles/vars.scss";
+@import "../../../../styles/mixins.scss";
+
 .post-form {
   display: flex;
   flex-direction: column;
@@ -37,8 +40,8 @@
 
     .upload-button {
       outline: none;
-      background-color: #2557a7;
-      color: #ffffff;
+      background-color: $brand-primary;
+      color: $white;
       border-radius: 0px;
       width: 150px;
       letter-spacing: 0.7px;
@@ -59,7 +62,7 @@
     text-align: left;
 
     a {
-      color: #2557a7;
+      color: $brand-primary;
       text-decoration: underline;
     }
 
@@ -110,7 +113,7 @@
 
         span {
           display: flex;
-          border: 1px solid #2557a7;
+          border: 1px solid $brand-primary;
           cursor: pointer;
           width: 25px;
           height: 25px;
@@ -132,7 +135,7 @@
     }
 
     .image-button {
-      background-color: #ffffff;
+      background-color: $white;
       border: 1px solid #000000;
       border-radius: 0px;
       text-transform: capitalize;

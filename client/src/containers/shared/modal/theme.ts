@@ -29,7 +29,7 @@ export const theme = createMuiTheme({
     },
     MuiFormLabel: {
       focused: {
-        color: '#2557a7 !important',
+        color: '$brand-primary !important',
       },
     },
     MuiLinearProgress: {
@@ -37,7 +37,7 @@ export const theme = createMuiTheme({
         backgroundColor: '#eeeeee',
       },
       barColorPrimary: {
-        backgroundColor: '#2557a7',
+        backgroundColor: '$brand-primary',
       },
     },
   },

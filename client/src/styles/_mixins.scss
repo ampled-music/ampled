@@ -1,0 +1,118 @@
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// 1. LAYOUT MIXINS 
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+
+
+// Clearfix
+// -------
+
+// FOR: Clearing floats w/out using overflow:hidden
+// USE: @include clearfix
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+
+// The Media Query Mixin
+// -------
+// FOR: Write less verbose Media Queries with variables or using straight figures (eg 320px)
+// USE: @include mq(320px, 798px);
+// USE: @include mq($tablet, $desktop);
+// USE: @include mq(max, $desktop);
+
+// variable enables or disables MQ mixin
+$MQs: true;
+
+@mixin mq($bp-1, $bp-2:null) {
+  @if ($MQs) {
+    @if $bp-1 == "max" {
+      @media (max-width:$bp-2 - 1) {
+        @content;
+      }
+    }
+    @elseif $bp-2 == "max" {
+      @media (max-width:$bp-1 - 1) {
+        @content;
+      }
+    }
+    @elseif $bp-2 == null {
+      @media (min-width:$bp-1) {
+        @content;
+      }
+    }
+    //single bp
+
+    @else {
+      @media (min-width:$bp-1) and (max-width:$bp-2 - 1) {
+        @content;
+      }
+    }
+    //bracketed breakpoint
+  }
+  @else {
+    @content;
+  }
+}
+
+
+
+// Fullbleed image mixin
+// -------
+// FOR: making full-browser-width images when inside a limited-width parent
+// NOTE: The parent must be centered in the browser for this technique to work
+// USE: @include fullbleed;
+
+@mixin fullbleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+
+
+
+// Visually Hidden
+// -------
+// Hide only visually, but have it available for screen readers. Add a class of `focusable` to your markup if you want to allow a keyboard to tab the object into focus.
+// @link http://codepen.io/upstatement/pen/aOYyEo See it on Codepen >
+// @link https://css-tricks.com/examples/ImageReplacement/ CSS Tricks: Image Replacement >
+// @link https://github.com/h5bp/html5-boilerplate/blob/5.2.0/dist/doc/css.md Notes in HTML5BP about hidden/invisible accessibility >
+//
+// @example markup - HTML
+// <div class="item focusable">Lorem ipsum dolor sit amet.</div>
+//
+// @example scss - SCSS
+// .item {
+//   @include visually-hidden;
+// }
+
+@mixin visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+
+  &.focusable:active,
+  &.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+  }
+}

@@ -1,5 +1,8 @@
+@import "../../styles/vars.scss";
+@import "../../styles/mixins.scss";
+
 .footer {
-    border-top: 10px solid black;
+    border-top: 10px solid $black;
     padding-top: 2rem;
     background-color: #e9c7c6;
 
@@ -9,8 +12,8 @@
     }
     a {
         display: block;
-        font-family: 'Courier New', Courier, monospace;
-        color: black;
+        font-family: $font-family-monospace;
+        color: $black;
         text-decoration: underline;
         &:hover {
             text-decoration: none;
@@ -22,7 +25,7 @@
     }
     .copyright {
         display: block;
-        font-family: 'Courier New', Courier, monospace;
-        color: black;
+        font-family: $font-family-monospace;
+        color: $black;
     }
 }

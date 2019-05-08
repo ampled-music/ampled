@@ -1,9 +1,12 @@
+@import "../../styles/vars.scss";
+@import "../../styles/mixins.scss";
+
 .artist-header {
-  font-family: 'LL Replica Bold Web';
+  font-family: $font-family-sans-serif;
 
   &__photo-container {
     display: flex;
-    border: 2px solid #2557a7;
+    border: 2px solid $brand-primary;
     justify-content: center;
   }
 
@@ -38,14 +41,14 @@
       height: 70px;
       object-fit: cover;
       border-radius: 50%;
-      border: 1px solid #2557a7;
+      border: 1px solid $brand-primary;
     }
     &_svg {
       width: 100% !important;
       height: auto;
-      background-color: white;
+      background-color: $white;
       border-radius: 100px;
-      border: 1px solid #2557a7;
+      border: 1px solid $brand-primary;
     }
 
     &_name {
@@ -53,7 +56,7 @@
     }
     &_quote {
       font-size: 0.8rem;
-      font-family: 'Courier New', Courier, monospace;
+      font-family: $font-family-monospace;
     }
 
     &_small {
@@ -105,7 +108,7 @@
     align-items: center;
     width: 90%;
     margin: 2rem auto;
-    border: 2px solid #2557a7;
+    border: 2px solid $brand-primary;
     padding: 10px 0px;
   }
 
@@ -124,7 +127,7 @@
   }
 
   .most-recent-supporter-tag {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: $font-family-monospace;
   }
 
   &__play {
@@ -147,13 +150,13 @@
       transition: all 0.25s ease-in-out;
     }
     &_svg {
-      color: #2557a7;
+      color: $brand-primary;
     }
   }
 }
 
 .artist-info {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: $font-family-monospace;
   border-top: 2px solid #000000;
   border-bottom: 2px solid #000000;
   margin: 2rem auto;
@@ -188,7 +191,7 @@
 
   button {
     cursor: pointer;
-    background-color: #2557a7;
+    background-color: $brand-primary;
     border-radius: 20px;
     z-index: 1;
     height: 38px;
@@ -197,7 +200,7 @@
   }
 
   span {
-    color: #ffffff;
+    color: $white;
     visibility: hidden;
   }
 

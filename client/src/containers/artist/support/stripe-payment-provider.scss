@@ -1,3 +1,6 @@
+@import "../../../styles/vars.scss";
+@import "../../../styles/mixins.scss";
+
 .StripeElement {
   box-sizing: border-box;
 
@@ -7,7 +10,7 @@
 
   border: 1px solid transparent;
   border-radius: 4px;
-  background-color: white;
+  background-color: $white;
 
   box-shadow: 0 1px 3px 0 #e6ebf1;
   -webkit-transition: box-shadow 150ms ease;

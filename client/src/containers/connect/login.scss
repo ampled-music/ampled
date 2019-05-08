@@ -1,3 +1,6 @@
+@import "../../styles/vars.scss";
+@import "../../styles/mixins.scss";
+
 .login {
   display: flex;
   flex-direction: column;
@@ -33,7 +36,7 @@
   .confirmation-message {
     max-width: 70%;
     color: #00807c;
-    background-color: #ffffff;
+    background-color: $white;
     padding: 20px;
     text-align: center;
   }
@@ -49,7 +52,7 @@
 
     .input-group-text {
       text-align: left;
-      background-color: #ffffff;
+      background-color: $white;
       color: #9b9b9b;
       font-size: 16px;
       border: none;

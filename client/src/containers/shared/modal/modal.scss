@@ -1,3 +1,6 @@
+@import "../../../styles/vars.scss";
+@import "../../../styles/mixins.scss";
+
 .tabs {
   margin-left: 25px;
 
@@ -10,12 +13,12 @@
   }
 
   .selected {
-    border-bottom: 3px solid #2557a7;
+    border-bottom: 3px solid $brand-primary;
     border-radius: 0px;
   }
 
   .disabled {
-    border-bottom: 3px solid #ffffff;
+    border-bottom: 3px solid $white;
     border-radius: 0px;
     color: #9b9b9b;
   }
@@ -33,14 +36,14 @@
   }
 
   .cancel-button {
-    color: #2557a7;
+    color: $brand-primary;
     text-decoration: underline;
     letter-spacing: 0.8px;
   }
 
   .post-button {
-    background-color: #2557a7;
-    color: #ffffff;
+    background-color: $brand-primary;
+    color: $white;
     border-radius: 0px;
     padding: 8px 20px;
     margin-left: 25px;

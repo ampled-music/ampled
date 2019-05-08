@@ -219,7 +219,7 @@
     span {
       display: none;
       @include mq( $layout-m ) {
-        display: block;
+        display: inline;
       }
     }
 

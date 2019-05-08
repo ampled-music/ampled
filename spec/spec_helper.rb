@@ -1,6 +1,7 @@
 # Coverage must be enabled before the application is loaded.
 if ENV["COVERAGE"]
   require "simplecov"
+  require "codecov"
 
   SimpleCov.start do
     add_filter "/spec/"
@@ -11,6 +12,7 @@ if ENV["COVERAGE"]
     add_group  "Helpers", "app/helpers"
     add_group  "Views", "app/views"
     add_group  "Mailers", "app/mailers"
+    formatter SimpleCov::Formatter::Codecov
   end
 end
 

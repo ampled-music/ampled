@@ -1,5 +1,5 @@
-@import "../../../styles/vars.scss";
-@import "../../../styles/mixins.scss";
+@import "../../../theme/vars.scss";
+@import "../../../theme/mixins.scss";
 
 .menu {
   .menu-icon {
@@ -45,7 +45,7 @@
   }
 
   a {
-    color: #000000;
+    color: $black;
   }
 
   a:hover {
@@ -53,7 +53,7 @@
   }
 
   .divider {
-    border-bottom: 7px solid #000000;
+    border-bottom: 7px solid $black;
     margin: 25px auto 15px auto;
     width: 90%;
     text-align: center;

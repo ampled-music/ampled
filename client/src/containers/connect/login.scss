@@ -1,5 +1,5 @@
-@import "../../styles/vars.scss";
-@import "../../styles/mixins.scss";
+@import "../../theme/vars.scss";
+@import "../../theme/mixins.scss";
 
 .login {
   display: flex;
@@ -9,7 +9,7 @@
 
   a {
     cursor: pointer;
-    color: #000000;
+    color: $black;
   }
 
   p {
@@ -22,7 +22,7 @@
     font-family: Courier, 'Courier New', monospace;
     font-size: 18px;
     letter-spacing: 0.7px;
-    color: #000000;
+    color: $black;
     margin-top: 10px;
   }
 

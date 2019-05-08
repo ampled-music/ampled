@@ -1,5 +1,5 @@
-@import "../../../../styles/vars.scss";
-@import "../../../../styles/mixins.scss";
+@import "../../../../theme/vars.scss";
+@import "../../../../theme/mixins.scss";
 
 .post-form {
   display: flex;
@@ -136,7 +136,7 @@
 
     .image-button {
       background-color: $white;
-      border: 1px solid #000000;
+      border: 1px solid $black;
       border-radius: 0px;
       text-transform: capitalize;
       margin: 0 auto 15px auto;

@@ -1,5 +1,5 @@
-@import "../../../styles/vars.scss";
-@import "../../../styles/mixins.scss";
+@import "../../../theme/vars.scss";
+@import "../../../theme/mixins.scss";
 
 .menus {
   display: flex;
@@ -11,7 +11,7 @@
   }
 
   a {
-    color: #000000;
+    color: $black;
     cursor: pointer;
   }
 

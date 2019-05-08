@@ -1,5 +1,5 @@
-@import "../../styles/vars.scss";
-@import "../../styles/mixins.scss";
+@import "../../theme/vars.scss";
+@import "../../theme/mixins.scss";
 
 .artist-header {
   font-family: $font-family-sans-serif;
@@ -157,8 +157,8 @@
 
 .artist-info {
   font-family: $font-family-monospace;
-  border-top: 2px solid #000000;
-  border-bottom: 2px solid #000000;
+  border-top: 2px solid $black;
+  border-bottom: 2px solid $black;
   margin: 2rem auto;
   padding: 1rem 0;
 

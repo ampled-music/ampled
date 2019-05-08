@@ -1,5 +1,5 @@
-@import "../../../styles/vars.scss";
-@import "../../../styles/mixins.scss";
+@import "../../../theme/vars.scss";
+@import "../../../theme/mixins.scss";
 
 #toast-container {
   position: fixed;
@@ -60,7 +60,7 @@
   font-size: 1.3em;
   border: 0;
   background: transparent;
-  color: #ffff;
+  color: $white;
   opacity: 0.8;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
   filter: alpha(opacity=80);

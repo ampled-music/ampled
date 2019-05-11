@@ -35,9 +35,10 @@
     flex-direction: column;
     position: absolute;
     left: 20px;
+
     @include mq( $layout-m ) {
       padding-top: 20px;
-      left: -20px;
+      left: -10px;
     }
   }
 
@@ -48,6 +49,7 @@
     position: relative;
     z-index: 10;
     margin: 10px auto;
+
     @include mq( $layout-m ) {
       max-width: 70px;
       max-height: 70px;
@@ -59,17 +61,23 @@
       object-fit: cover;
       border-radius: 50%;
       border: 1px solid $brand-primary;
+      margin: auto;
       @include mq( $layout-m ) {
         max-width: 70px;
         max-height: 70px;
       }
     }
     &_svg {
-      width: 100% !important;
-      height: auto;
+      width: 50px !important;
+      height: 50px;
       background-color: $white;
       border-radius: 100px;
       border: 1px solid $brand-primary;
+      margin: auto;
+      @include mq( $layout-m ) {
+        max-width: 70px;
+        max-height: 70px;
+      }
     }
 
     &_name {

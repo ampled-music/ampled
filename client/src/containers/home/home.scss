@@ -55,8 +55,9 @@
   }
 
   &__button {
-    background-color: #fff;
+    background-color: $brand-primary;
     margin-bottom: 2rem;
+    color: $white;
   }
 }
 
@@ -184,6 +185,7 @@
     height: 300px;
     margin-bottom: 2rem;
     padding: 1rem;
+    overflow: hidden;
 
     &_title {
       font-family: 'Courier New', Courier, monospace;
@@ -191,6 +193,9 @@
       background-color: #1E1E1E;
       display: inline;
       padding: 5px 10px;
+    }
+    &_image {
+      width: 100%;
     }
   }
 

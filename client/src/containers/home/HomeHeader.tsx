@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { config } from 'src/config';
-import header_collage from '../../images/home/home_header_collage_2.png';
+import header_collage from '../../images/home/home_header_collage_3.png';
 
 const openInNewTab = (url: string) => {
   var win = window.open(url, '_blank');

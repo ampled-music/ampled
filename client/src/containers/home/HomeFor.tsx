@@ -23,7 +23,7 @@ export const HomeFor = () => (
           <p className="home-for__copy">
             We’re a platform 100% owned and governed by our artists and members - not VC investors.  Join us and become a member-owner.
           </p>
-          <button className="home-for__button btn">Read More</button>
+          <a href="http://ampled.com/coop"><button className="home-for__button btn">Read More</button></a>
         </div>
         <div className="col-md-4">
           <img className="home-for__image" src={transparent} />
@@ -31,15 +31,15 @@ export const HomeFor = () => (
           <p className="home-for__copy">
             We’ve made our finances transparent to stay accountable to our members.  View our revenue, expenses, salaries, and more.
           </p>
-          <button className="home-for__button btn">Learn More</button>
+          <a href="http://ampled.com/transparency"><button className="home-for__button btn">Learn More</button></a>
         </div>
         <div className="col-md-4">
           <img className="home-for__image" src={mission} />
-          <h3 className="home-for__sub-title">Missions Driven</h3>
+          <h3 className="home-for__sub-title">Mission-Driven</h3>
           <p className="home-for__copy">
             Our mission is to make music more equitable for artists and to operate ethically and transparently. Let’s work together.
           </p>
-          <button className="home-for__button btn">Read Our Charter</button>
+          <a href="http://ampled.com/our-mission"><button className="home-for__button btn">Our Vision</button></a>
         </div>
       </div>
     </div>

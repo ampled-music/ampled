@@ -212,3 +212,12 @@
   &.tear_2 {
   }
 }
+
+.home-artists {
+  background-color: #e9c7c6;
+  &__item {
+    &_image {
+      width: 100%;
+    }
+  }
+}

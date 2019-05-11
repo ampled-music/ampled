@@ -1,3 +1,6 @@
+@import "../../../theme/vars.scss";
+@import "../../../theme/mixins.scss";
+
 #toast-container {
   position: fixed;
   z-index: 9000;
@@ -12,8 +15,8 @@
     margin: 0 0 0.4em;
     padding: 1em 1em 1em 3em;
     border-radius: 0.2em 0.2em 0.2em 0.2em;
-    border: 1px solid black;
-    border-left: 5px solid black;
+    border: 1px solid $black;
+    border-left: 5px solid $black;
     -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
     filter: alpha(opacity=80);
   }
@@ -57,7 +60,7 @@
   font-size: 1.3em;
   border: 0;
   background: transparent;
-  color: #ffff;
+  color: $white;
   opacity: 0.8;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
   filter: alpha(opacity=80);
@@ -79,16 +82,16 @@
 }
 
 .toast-success {
-  background-color: white;
-  color: black;
+  background-color: $white;
+  color: $black;
 
   .toast-close-button {
-    color: black;
+    color: $black;
   }
 }
 
 .toast-error {
-  background-color: white;
+  background-color: $white;
   color: red;
 
   .toast-close-button {
@@ -97,7 +100,7 @@
 }
 
 .toast-warning {
-  background-color: black;
+  background-color: $black;
   color: yellow;
 
   .toast-close-button {

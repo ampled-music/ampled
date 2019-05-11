@@ -1,3 +1,6 @@
+@import "../../../theme/vars.scss";
+@import "../../../theme/mixins.scss";
+
 .menus {
   display: flex;
   flex-direction: row;
@@ -8,7 +11,7 @@
   }
 
   a {
-    color: #000000;
+    color: $black;
     cursor: pointer;
   }
 
@@ -27,8 +30,8 @@
 .btn-support {
   border-radius: 0px;
   text-transform: uppercase;
-  background-color: black;
-  color: white;
-  font-family: 'Courier New', Courier, monospace;
+  background-color: $black;
+  color: $white;
+  font-family: $font-family-monospace;
   max-width: 250px;
 }

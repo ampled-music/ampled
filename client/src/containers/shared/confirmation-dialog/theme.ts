@@ -22,7 +22,7 @@ export const theme = createMuiTheme({
     },
     MuiButton: {
       textPrimary: {
-        color: '#2557a7',
+        color: '$brand-primary',
       },
     },
   },

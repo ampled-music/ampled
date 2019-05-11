@@ -1,9 +1,12 @@
+@import "../../theme/vars.scss";
+@import "../../theme/mixins.scss";
+
 .user-settings-container {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: $font-family-monospace;
   margin: 0 5rem;
 
   h1 {
-    font-family: 'LL Replica Bold Web';
+    font-family: $font-family-sans-serif;
   }
 
   .content {
@@ -45,7 +48,7 @@
 
         .tag {
           font-size: 30px;
-          color: white;
+          color: $white;
           text-transform: capitalize;
           align-self: center;
           z-index: 3;
@@ -59,14 +62,14 @@
         flex-direction: column;
         width: 300px;
         height: 150px;
-        background-color: white;
+        background-color: $white;
         align-items: center;
         padding: 4rem;
 
         .user-name {
           font-size: 20px;
           font-weight: bold;
-          font-family: 'LL Replica Bold Web';
+          font-family: $font-family-sans-serif;
         }
 
         .joined-at {
@@ -80,7 +83,7 @@
       margin-left: 2rem;
 
       h1 {
-        border-top: 4px solid black;
+        border-top: 4px solid $black;
         font-size: 20px;
         padding: 1.5rem 0;
         margin: 0;
@@ -99,7 +102,7 @@
           width: 320px;
 
           .image-border {
-            border: 2px solid white;
+            border: 2px solid $white;
             width: 200px;
             height: 200px;
             align-self: center;
@@ -144,7 +147,7 @@
               justify-content: center;
               margin: 0;
               margin-bottom: 1rem;
-              font-family: 'LL Replica Bold Web';
+              font-family: $font-family-sans-serif;
             }
 
             .extra-info {

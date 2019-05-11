@@ -1,23 +1,30 @@
-$randomNumber1: random(5);
-$randomNumber2: random(6);
-$randomNumber3: random(7);
-$randomNumber4: random(8);
-$randomNumber5: random(9);
+@import "../../theme/vars.scss";
+@import "../../theme/mixins.scss";
 
 .artist-header {
-  font-family: 'LL Replica Bold Web';
+  font-family: $font-family-sans-serif;
 
   &__photo-container {
     display: flex;
-    border: 2px solid #2557a7;
+    border: 2px solid $brand-primary;
     justify-content: center;
+    margin: 0 2rem;
+    @include mq( $layout-m ) {
+      margin: auto;
+    }
+
   }
 
   &__title {
-    font-size: 3rem;
-    margin: 2rem 0;
+    font-size: 2rem;
+    margin: 2rem 0 3rem;
     text-transform: uppercase;
     font-weight: bolder;
+    text-align: center;
+
+    @include mq( $layout-m ) {
+      text-align: left;
+    }
   }
 
   &__persons {
@@ -26,32 +33,43 @@ $randomNumber5: random(9);
     align-content: flex-start;
     flex-wrap: wrap;
     flex-direction: column;
-    padding-top: 20px;
     position: absolute;
-    left: -30px;
+    left: 20px;
+    @include mq( $layout-m ) {
+      padding-top: 20px;
+      left: -20px;
+    }
   }
 
   &__person {
     width: 100%;
-    max-width: 90px;
-    max-height: 90px;
+    max-width: 50px;
+    max-height: 50px;
     position: relative;
     z-index: 10;
     margin: 10px auto;
+    @include mq( $layout-m ) {
+      max-width: 70px;
+      max-height: 70px;
+    }
 
     &_image {
-      width: 90px;
-      height: 90px;
+      width: 50px;
+      height: 50px;
       object-fit: cover;
       border-radius: 50%;
-      border: 1px solid #2557a7;
+      border: 1px solid $brand-primary;
+      @include mq( $layout-m ) {
+        max-width: 70px;
+        max-height: 70px;
+      }
     }
     &_svg {
       width: 100% !important;
       height: auto;
-      background-color: white;
+      background-color: $white;
       border-radius: 100px;
-      border: 1px solid #2557a7;
+      border: 1px solid $brand-primary;
     }
 
     &_name {
@@ -59,7 +77,7 @@ $randomNumber5: random(9);
     }
     &_quote {
       font-size: 0.8rem;
-      font-family: 'Courier New', Courier, monospace;
+      font-family: $font-family-monospace;
     }
 
     &_small {
@@ -68,44 +86,60 @@ $randomNumber5: random(9);
   }
 
   &__photos {
-    height: 570px;
+    height: 335px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     align-content: flex-start;
+    @include mq( $layout-m ) {
+      height: 570px;
+    }
   }
 
   &__photo {
     position: absolute;
     display: block;
     z-index: 1;
-    width: 550px;
     transition: all 0.25s ease-in-out;
+    width: 335px;
+    @include mq( $layout-m ) {
+      width: 550px;
+    }
 
     &:nth-child(1) {
-      transform: scale(1) rotate($randomNumber1 + deg);
+      transform: rotate(5deg);
+      @include mq( $layout-m ) {
+        transform: scale(1.05) rotate(5deg);
+      }
     }
     &:nth-child(2) {
-      transform: scale(1) rotate(-($randomNumber2 + deg));
+      transform: rotate(3deg);
+      @include mq( $layout-m ) {
+        transform: scale(1.05) rotate(3deg);
+      }
     }
     &:nth-child(3) {
-      transform: scale(1) rotate($randomNumber3 + deg);
+      transform: rotate(-5deg);
+      @include mq( $layout-m ) {
+        transform: scale(1.05) rotate(-5deg);
+      }
     }
     &:nth-child(4) {
-      transform: scale(1) rotate(-($randomNumber4 + deg));
+      transform: rotate(-3deg);
+      @include mq( $layout-m ) {
+        transform: scale(1.05) rotate(-3deg);
+      }
     }
     &:nth-child(5) {
-      transform: scale(1) rotate($randomNumber5 + deg);
-    }
-
-    &:hover {
-      z-index: 10;
-      transform: scale(1.1) rotate(0deg);
+      transform: rotate(-7deg);
+      @include mq( $layout-m ) {
+        transform: scale(1.05) rotate(-7deg);
+      }
     }
   }
 
   &__message {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     margin: 2rem 0;
     text-transform: uppercase;
     font-weight: bold;
@@ -116,15 +150,14 @@ $randomNumber5: random(9);
     align-items: center;
     width: 90%;
     margin: 2rem auto;
-    border: 2px solid #2557a7;
+    border: 2px solid $brand-primary;
     padding: 10px 0px;
   }
 
   &__message-image {
-    width: 110%;
-    transform: rotate(-2deg);
+    width: 100%;
+    transform: scale(1.1) rotate(-2deg);
     position: relative;
-    left: -5%;
     z-index: -1;
   }
 
@@ -136,7 +169,7 @@ $randomNumber5: random(9);
   }
 
   .most-recent-supporter-tag {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: $font-family-monospace;
   }
 
   &__play {
@@ -159,16 +192,15 @@ $randomNumber5: random(9);
       transition: all 0.25s ease-in-out;
     }
     &_svg {
-      color: #2557a7;
+      color: $brand-primary;
     }
   }
 }
 
 .artist-info {
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  border-top: 2px solid #000000;
-  border-bottom: 2px solid #000000;
+  font-family: $font-family-monospace;
+  border-top: 2px solid $black;
+  border-bottom: 2px solid $black;
   margin: 2rem auto;
   padding: 1rem 0;
 
@@ -184,12 +216,19 @@ $randomNumber5: random(9);
     display: flex;
     justify-content: flex-end;
 
-    &_twitter {
-      margin: 0 1rem;
+    span {
+      display: none;
+      @include mq( $layout-m ) {
+        display: inline;
+      }
     }
 
+    &_twitter,
     &_instagram {
-      margin: 0 1rem;
+      margin: 0 0 0 .5rem;
+      @include mq( $layout-m ) {
+        margin: 0 1rem;
+      }
     }
   }
 }
@@ -201,7 +240,7 @@ $randomNumber5: random(9);
 
   button {
     cursor: pointer;
-    background-color: #2557a7;
+    background-color: $brand-primary;
     border-radius: 20px;
     z-index: 1;
     height: 38px;
@@ -210,7 +249,7 @@ $randomNumber5: random(9);
   }
 
   span {
-    color: #ffffff;
+    color: $white;
     visibility: hidden;
   }
 

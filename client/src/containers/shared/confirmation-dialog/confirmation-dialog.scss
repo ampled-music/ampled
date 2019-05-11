@@ -1,3 +1,6 @@
+@import "../../../theme/vars.scss";
+@import "../../../theme/mixins.scss";
+
 .action-buttons {
   button {
     text-transform: capitalize;
@@ -5,14 +8,14 @@
   }
 
   .discard-button {
-    color: #2557a7;
+    color: $brand-primary;
     text-decoration: underline;
     letter-spacing: 0.8px;
   }
 
   .continue-button {
-    background-color: #2557a7;
-    color: #ffffff;
+    background-color: $brand-primary;
+    color: $white;
     border-radius: 0px;
     padding: 8px 20px;
     margin-left: 25px;

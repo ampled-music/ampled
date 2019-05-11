@@ -40,6 +40,7 @@ class UserDashboard < Administrate::BaseDashboard
     :id,
     :email,
     :reset_password_sent_at,
+    :reset_password_token,
     :remember_created_at,
     :locked_at,
     :created_at,
@@ -52,7 +53,6 @@ class UserDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :email,
-    :reset_password_token,
     :reset_password_sent_at,
     :remember_created_at,
     :locked_at,

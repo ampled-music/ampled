@@ -3,47 +3,10 @@ html
   head
     title Ampled
     = stylesheet_link_tag    "application", media: "all"
-    = javascript_include_tag "application"
-    = cloudinary_js_config
     = csrf_meta_tag
-    javascript:
-      $(function() {
-        if($.fn.cloudinary_fileupload !== undefined) {
-          $("input.cloudinary-fileupload[type=file]").cloudinary_fileupload();
-        }
-      });
 
     meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
 
-  body id=(controller.controller_name) class=(controller.action_name)
-    header
-      nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
-        .container
-          a.navbar-brand href="/" Ampled
-          button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-            span.navbar-toggler-icon
-
-          #navbarSupportedContent.collapse.navbar-collapse
-            ul.navbar-nav.ml-auto
-               - if current_user
-                 li.nav-item.dropdown
-                   a#dropdown.nav-link.dropdown-toggle data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
-                     = current_user.email
-
-                   .dropdown-menu aria-labelledby="dropdown"
-                     =link_to "Sign Out", destroy_user_session_path, method: :delete , class: "dropdown-item"
-               - else
-                 a.nav-link href="/users/sign_in" Sign In
-
-
+  body 
     main.container role="main"
-      - flash.each do |name, msg|
-        .alert.alert-dismissable class=alert_class(name) role="alert"
-          button.close type="button" data-dismiss="alert" aria-label="Close"
-            span aria-hidden="true" &times;
-          = raw(msg)
       = yield
-
-    footer.footer
-      .container
-        p &copy; #{Date.current.year} All rights reserved.

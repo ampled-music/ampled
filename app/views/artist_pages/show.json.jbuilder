@@ -15,7 +15,7 @@ json.owners @artist_page.owners do |owner|
   json.profile_image_url owner.profile_image_url
 end
 
-json.supporters @artist_page.subscribers do |supporter|
+json.supporters @artist_page.active_subscribers do |supporter|
   json.id supporter.id
   json.name supporter.name
   json.profile_image_url supporter.profile_image_url

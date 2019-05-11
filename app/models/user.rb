@@ -42,9 +42,13 @@ class User < ApplicationRecord
   has_many :owned_pages, through: :page_ownerships, source: :artist_page
 
   has_many :subscriptions, dependent: :destroy
-  has_many :supported_artists, through: :subscriptions, source: :artist_page
+  has_many :subscribed_artists, through: :subscriptions, source: :artist_page
 
   has_many :posts, dependent: :destroy
+
+  def supported_artists
+    subscribed_artists.merge(Subscription.active)
+  end
 
   def subscribed?(artist_page)
     supported_artists.include?(artist_page)

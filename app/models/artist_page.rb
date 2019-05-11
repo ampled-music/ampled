@@ -33,6 +33,10 @@ class ArtistPage < ApplicationRecord
 
   has_many :plans, dependent: :destroy
 
+  def active_subscribers
+    subscribers.merge(Subscription.active)
+  end
+
   def stripe_state_token
     return state_token if state_token.present?
 

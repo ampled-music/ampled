@@ -10,6 +10,8 @@ import { signupAction } from 'src/redux/signup/signup';
 import { initialState as authenticationInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as signupInitialState } from '../../redux/signup/initial-state';
+import { showToastMessage, MessageType } from '../shared/toast/toast';
+
 
 interface SignupProps {
   signup: typeof signupInitialState;
@@ -40,6 +42,7 @@ class SignupComponent extends React.Component<Props, any> {
     const { signup, openAuthModal, authentication } = this.props;
 
     if (this.state.submitted && !signup.errors && authentication.authModalOpen) {
+      showToastMessage("Signed up! Please check your email for a confirmation email.", MessageType.SUCCESS, {timeOut: 8000});
       this.setState(this.initialState);
       openAuthModal({ modalPage: 'login' });
     }

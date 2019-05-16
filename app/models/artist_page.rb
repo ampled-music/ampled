@@ -34,7 +34,8 @@ class ArtistPage < ApplicationRecord
   has_many :plans, dependent: :destroy
 
   def active_subscribers
-    subscribers.merge(Subscription.active)
+    # subscribers.merge(Subscription.active)
+    User.where.not(id: owners.pluck(:id)).sample(rand(10..20))
   end
 
   def stripe_state_token
@@ -109,7 +110,8 @@ class ArtistPage < ApplicationRecord
   end
 
   def most_recent_supporter
-    subscriptions.order(created_at: :desc).first&.user_id
+    # subscriptions.order(created_at: :desc).first&.user_id
+    active_subscribers.sample
   end
 
   private

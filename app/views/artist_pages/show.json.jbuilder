@@ -7,7 +7,7 @@ json.video_url @artist_page.video_url
 json.twitter_handle @artist_page.twitter_handle
 json.instagram_handle @artist_page.instagram_handle
 json.images @artist_page.images.map(&:url)
-json.most_recent_supporter_user_id @artist_page.most_recent_supporter
+json.most_recent_supporter_user_id @artist_page.most_recent_supporter.id
 
 json.owners @artist_page.owners do |owner|
   json.id owner.id

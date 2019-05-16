@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { config } from 'src/config';
-import header_collage from '../../images/home/home_header_collage_3.png';
+import header_collage from '../../images/home/home_header_collage_4.png';
 
 const openInNewTab = (url: string) => {
   var win = window.open(url, '_blank');
@@ -9,17 +9,20 @@ const openInNewTab = (url: string) => {
 };
 
 export const HomeHeader = () => (
-  <div className="home-header container-fluid">
-    <div className="home-header__bg-image row justify-content-center" style={{backgroundImage: `url(${header_collage}`}}>
-    <div className="col-md-12 align-self-start home-header__support">Direct Community Support for Artists</div>
-    <div className="col-md-6 align-self-end">
-      <div className="home-header__info">
-        Simple recurring payments directly to music artists on a platform owned by artists.  Own your creative freedom and sustainably continue making art for the people that love it. Join us and become a member-owner of an alternative platform that values artists.
+  <div className="home-header bg-texture bg-texture__bottom container-fluid">
+    <div className="row justify-content-md-center">
+      <div className="col-md-3">
+        <div className="home-header__support">Support for any sound</div>
+        <div className="home-header__info">
+          Receive support via direct payments from your community. Own your creative freedom and sustainably continue making art for the people who love it. Join us and become a member-owner of an alternative platform that puts artists first.
+        </div>
+        <button className="home-header__button btn" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
+          Create Your Page
+        </button>
       </div>
-      <button className="home-header__button btn" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
-        Create an Artist Page
-      </button>
-    </div>
+      <div className="col-md-6">
+        <img className="home-header__image" src={header_collage} />
+      </div>
     </div>
   </div>
 );

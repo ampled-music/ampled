@@ -5,7 +5,7 @@ import owned_by from '../../images/home/home_for_owned_by.png';
 import transparent from '../../images/home/home_for_transparent.png';
 
 export const HomeFor = () => (
-  <div className="home-for">
+  <div className="home-for bg-texture bg-texture__flip">
     <div className="container">
       <div className="row">
         <div className="col-md-12">

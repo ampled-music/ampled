@@ -23,6 +23,10 @@
   }
 }
 
+.container {
+  max-width: 1140px;
+}
+
 .home-header {
 
   &__support {
@@ -32,32 +36,27 @@
     z-index: 0;
     font-family: 'LL Replica Bold Web';
     font-size: 3rem;
-    text-align: center;
+    line-height: 3.5rem;
     text-transform: uppercase;
     letter-spacing: .2rem;
-    background-image: linear-gradient(white, transparent);
-    padding: 2rem 1rem 4rem;
+    margin: 2rem 0;
   }
 
   &__info {
     font-family: $font-family-monospace;
-    border: 2px solid $black;
-    padding: 2rem;
-    margin: 4rem auto 2rem;
-    background-color: #fff;
   }
 
-  &__bg-image {
-    height: 95vh;
-    background-size: cover;
-    background-position: center;
+  &__image {
+    width: 115%;
+    display: block;
     position: relative;
+    left: -15%;
   }
 
   &__button {
-    background-color: $brand-primary;
-    margin-bottom: 2rem;
-    color: $white;
+    background-color: $white;
+    margin: 2rem 0;
+    color: $black;
   }
 }
 
@@ -203,11 +202,15 @@
 
 .home-membership {
   padding: 2rem;
-
+  font-family: $font-family-monospace;
+  text-align: center;
   h1 {
     font-family: 'LL Replica Bold Web';
     text-align: center;
     text-transform: uppercase;
+    margin: 2rem auto;
+  }
+  &__button {
     margin: 2rem auto;
   }
 }
@@ -218,5 +221,14 @@
   &.tear_1 {}
 
   &.tear_2 {
+  }
+}
+
+.home-artists {
+  background-color: $white;
+  &__item {
+    &_image {
+      width: 100%;
+    }
   }
 }

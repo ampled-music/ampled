@@ -12,10 +12,6 @@ export const HomeMembership = () => (
             <div className="row justify-content-center">
                 <div className="col-md-6">
                     <div className="home-membership__info">
-                        <ul>
-                            <li>Artists become member-owners of Ampled by creating a free artist page.</li>
-                            <li>Supporters of an artist can become member-owners by contributing a one-time membership fee.</li>
-                        </ul>
                         <p>We’re a co-op, which means we are 100% owned by the artists, workers, and community that rely on Ampled. Become a member-owner of Ampled by creating an artist page and inviting your community to support you.</p>
 
                         <p>Artists on Ampled receive one share, one vote in how we do business, dividends based on Ampled’s profits, and get a bunch of perks and discounts through our partners. </p>                        

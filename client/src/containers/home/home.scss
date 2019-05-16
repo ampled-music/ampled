@@ -1,8 +1,8 @@
 @import "../../theme/vars.scss";
 @import "../../theme/mixins.scss";
 
-.home-section {
-  overflow: hidden;
+.container {
+  max-width: 1140px;
 }
 
 .btn {
@@ -23,8 +23,24 @@
   }
 }
 
-.container {
-  max-width: 1140px;
+.bg-texture {
+  background-image: url('../../images/background_texture.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  &__bottom {
+    background-position: left 0 bottom -100%;
+  }
+  &__top {
+    background-position: left 0 top -50%;
+  }
+  &__flip {
+    background-image: url('../../images/background_texture_flip.png');
+  }
+}
+
+.home-section {
+  overflow: hidden;
 }
 
 .home-header {

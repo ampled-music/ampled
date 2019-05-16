@@ -9,7 +9,7 @@ const openInNewTab = (url: string) => {
 };
 
 export const HomeHeader = () => (
-  <div className="home-header container-fluid">
+  <div className="home-header bg-texture bg-texture__bottom container-fluid">
     <div className="row justify-content-md-center">
       <div className="col-md-3">
         <div className="home-header__support">Support for any sound</div>

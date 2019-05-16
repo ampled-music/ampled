@@ -161,8 +161,8 @@ export class ArtistHeader extends React.Component<Props, any> {
   render() {
     return (
       <div className="artist-header container">
-        <div className="row">
-          <div className="col-md-8">
+        <div className="row justify-content-center">
+          <div className="col-md-7">
             {this.renderArtistName()}
             {this.renderPhotoContainer()}
           </div>

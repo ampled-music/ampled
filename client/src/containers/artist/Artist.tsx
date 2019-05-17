@@ -104,6 +104,14 @@ class ArtistComponent extends React.Component<Props, any> {
 
     return (
       <div className="App">
+        <style
+          dangerouslySetInnerHTML={{
+          __html: `
+            .btn-support { border-color: ${artist.accent_color}; }
+            .btn-support:hover { background-color: ${artist.accent_color}; }
+          `
+          }}
+        />
         <ArtistHeader
           artist={artist}
           openVideoModal={this.openVideoModal}

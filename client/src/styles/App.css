@@ -13750,10 +13750,10 @@ body {
   position: fixed;
   z-index: 1000;
   top: 0px;
-  height: 55px;
+  height: 50px;
   width: 100%;
   padding: 0 20px;
-  border-bottom: 2px solid #000000;
+  border-bottom: 1px solid #000000;
   background-color: #ffffff;
   justify-content: space-between;
   align-items: center;
@@ -13761,4 +13761,9 @@ body {
 
 .logo {
   height: 100%;
+  margin-right: 45px;
+}
+
+.logo img {
+  width: 115px;
 }

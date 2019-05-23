@@ -17,7 +17,31 @@ interface Props {
 export class ArtistHeader extends React.Component<Props, any> {
   state = {
     showConfirmationDialog: false,
+    screenshotURL: this.props.artist.video_screenshot_url
   };
+
+  componentDidUpdate = async (prevProps) => {
+    const { artist } = this.props;
+    if (artist.video_url === prevProps.artist.video_url) {
+      return;
+    } else {
+      if (artist.video_url) {
+        if (/vimeo/i.test(artist.video_url)) {
+          const vimeoJSON = await (await fetch(`http://vimeo.com/api/v2/video/${artist.video_url.match(/vimeo.com\/([\d\w]+)/)[1]}.json`)).json();
+          if (vimeoJSON && vimeoJSON[0] && vimeoJSON[0].thumbnail_large) {
+            this.setState({
+              screenshotURL: vimeoJSON[0].thumbnail_large
+            });
+          }
+        } else if (/youtu/i.test(artist.video_url)) {
+          const youtubeId = artist.video_url.match(/(youtube\.com\/watch\?v\=|youtu.be\/)(.+)/i)[2];
+          this.setState({
+            screenshotURL: `https://img.youtube.com/vi/${youtubeId}/0.jpg`
+          });
+        }
+      }  
+    }
+  }
 
   renderArtistName = () => <div className="artist-header__title">{this.props.artist.name}</div>;
 
@@ -91,7 +115,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         <button onClick={this.props.openVideoModal} className="artist-header__play">
           <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />
         </button>
-        <img className="artist-header__message-image" src={artist.video_screenshot_url} />
+        <img className="artist-header__message-image" src={this.state.screenshotURL} />
       </div>
     );
   };

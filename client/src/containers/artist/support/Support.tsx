@@ -63,7 +63,7 @@ export class SupportComponent extends React.Component<Props, any> {
       this.redirectToArtistsPage();
     }
 
-    if (artists.artist.supporters && artists.artist.supporters.find((supporter) => supporter.id === me.userData.id)) {
+    if (me.userData && me.userData.id && artists.artist.supporters && artists.artist.supporters.find((supporter) => supporter.id === me.userData.id)) {
       this.redirectToArtistsPage();
     }
   }

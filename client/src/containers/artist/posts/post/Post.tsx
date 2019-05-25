@@ -21,10 +21,46 @@ import { CommentForm } from '../comments/CommentForm';
 import { styles } from './post-style';
 
 class PostComponent extends React.Component<any, any> {
-  state = {
-    showPrivatePostModal: false,
-    expanded: false,
-  };
+  constructor(props) {
+    super(props);
+
+    const { post } = this.props;
+    let displayText = false;
+    let showReadMore = false;
+    let isReadingMore = false;
+    if (post && post.body && post.body.length > 100) {
+      displayText = post.body.substring(0, 100);
+      showReadMore = true;
+      isReadingMore = false;
+    }
+
+    this.state = {
+      showPrivatePostModal: false,
+      expanded: false,
+      displayText,
+      showReadMore,
+      isReadingMore,
+    };
+  
+  }
+
+  componentDidUpdate(prevProps) {
+    const { post } = this.props;
+    const { post: prevPost } = prevProps;
+    if (post && post.body && post.body.length > 100) {
+      if (prevPost && prevPost.body && prevPost.body !== post.body) {
+        this.setState({
+          displayText: post.body.substring(0, 100),
+          showReadMore: true,
+          isReadingMore: false
+        });  
+      }
+    }
+  }
+
+  readMore = () => {
+    this.setState({ isReadingMore: !this.state.isReadingMore });
+  }
 
   handleExpandClick = () => {
     this.setState((state) => ({ expanded: !state.expanded }));
@@ -98,6 +134,10 @@ class PostComponent extends React.Component<any, any> {
 
   renderPost = () => {
     const { classes, post, accentColor, me } = this.props;
+    let { displayText, showReadMore, isReadingMore } = this.state;
+    if (!displayText || isReadingMore) {
+      displayText = post.body;
+    }
 
     const allowDetails = post.allow_details;
     const authenticated = !!me;
@@ -155,10 +195,17 @@ class PostComponent extends React.Component<any, any> {
               </div>
             )}
 
-            {post.body && (
+            {displayText && (
               <CardContent>
                 <Typography paragraph className={classes.postBody}>
-                  {post.body}
+                  {displayText}
+                  {
+                    showReadMore && (
+                    isReadingMore ? 
+                      null :
+                      <span onClick={this.readMore}>...</span>
+                    )
+                  }
                 </Typography>
               </CardContent>
             )}

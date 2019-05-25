@@ -98,6 +98,9 @@ class NavComponent extends React.Component<Props, any> {
           </button>
         )}
         <div className="menus">
+          <div className="supporter-message">
+            You are a supporter
+          </div>
           {this.renderLoginLink()}
           <Menu />
         </div>

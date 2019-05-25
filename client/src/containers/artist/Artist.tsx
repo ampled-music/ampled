@@ -98,9 +98,19 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { artists } = this.props;
+    const { artists, me } = this.props;
     const artist = artists.artist;
     const loggedUserAccess = this.getLoggedUserPageAccess();
+    let isSupporter = false;
+    if (me.userData && me.userData.subscriptions) {
+      for (const subscription of me.userData.subscriptions) {
+        if (subscription.artistPageId === artist.id) {
+          isSupporter = true;
+          break;
+        }
+      }
+    }
+  
 
     return (
       <div className="App">
@@ -109,6 +119,10 @@ class ArtistComponent extends React.Component<Props, any> {
           __html: `
             .btn-support { border-color: ${artist.accent_color}; }
             .btn-support:hover { background-color: ${artist.accent_color}; }
+            ${isSupporter && `
+              .user-image { border: 1px solid ${artist.accent_color}; }
+              header .supporter-message { display: inline-block !important; color: ${artist.accent_color}; }
+            `}
           `
           }}
         />

@@ -13762,3 +13762,9 @@ body {
 .logo {
   height: 100%;
 }
+
+header .supporter-message {
+  display: none;
+  font-family: 'LL Replica Bold Web', sans-serif;
+  padding-right: 48px;
+}

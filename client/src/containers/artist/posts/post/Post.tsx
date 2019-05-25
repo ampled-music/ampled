@@ -205,7 +205,14 @@ class PostComponent extends React.Component<any, any> {
                     showReadMore && (
                     isReadingMore ? 
                       null :
-                      <span onClick={this.readMore}>...</span>
+                      <span
+                        onClick={this.readMore}
+                          style={{
+                            cursor: 'pointer'
+                        }}
+                      >
+                        ...
+                      </span>
                     )
                   }
                 </Typography>

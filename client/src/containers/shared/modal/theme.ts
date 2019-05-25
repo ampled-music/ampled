@@ -44,6 +44,5 @@ export const theme = createMuiTheme({
 
   typography: {
     fontFamily: 'Courier, Courier New, monospace',
-    useNextVariants: true,
   },
 });

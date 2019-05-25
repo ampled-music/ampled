@@ -1,4 +1,4 @@
-import { MuiThemeProvider } from '@material-ui/core';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';

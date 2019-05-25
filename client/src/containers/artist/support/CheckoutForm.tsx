@@ -59,7 +59,7 @@ class CheckoutFormComponent extends React.Component<Props, any> {
             <CardCVCElement />
           </label>
           <div className="actions">
-            <button disabled={this.state.disableActions} className="btn" type="cancel" onClick={this.props.declineStep}>
+            <button disabled={this.state.disableActions} className="btn" onClick={this.props.declineStep}>
               CHANGE AMOUNT
             </button>
             <button disabled={this.state.disableActions} className="btn btn-support-action" type="submit">

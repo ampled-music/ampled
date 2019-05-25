@@ -1,6 +1,7 @@
 import './artist.scss';
 
 import * as React from 'react';
+import path from 'ramda/src/path';
 
 import { faPlay, faPlus, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,8 +18,35 @@ interface Props {
 export class ArtistHeader extends React.Component<Props, any> {
   state = {
     showConfirmationDialog: false,
+    screenshotURL: this.props.artist.video_screenshot_url
   };
 
+  componentDidUpdate = async (prevProps) => {
+    const { artist: { video_url } } = this.props;
+    if (video_url === prevProps.artist.video_url) {
+      return;
+    } else if (video_url) {
+      this.setState({
+        screenshotURL: await this.getThumbnailURLFromVideoURL(video_url)
+      });
+    }
+  }
+
+  getThumbnailURLFromVideoURL = async (videoURL: string) => {
+    if (/vimeo/i.test(videoURL)) {
+      const vimeoId = videoURL.match(/vimeo.com\/([\d\w]+)/)[1];
+      const vimeoJSON = await (await fetch(`http://vimeo.com/api/v2/video/${vimeoId}.json`)).json();
+      const vimeoURL = path([0, 'thumbnail_large'], vimeoJSON);
+      if (vimeoURL) {
+        return vimeoURL;
+      }
+    } else if (/youtu/i.test(videoURL)) {
+      const youtubeId = videoURL.match(/(youtube\.com\/watch\?v\=|youtu.be\/)(.+)/i)[2];
+      return `https://img.youtube.com/vi/${youtubeId}/0.jpg`;
+    }
+    return this.state.screenshotURL;
+  }
+  
   renderArtistName = () => <div className="artist-header__title">{this.props.artist.name}</div>;
 
   renderOwners = () => {
@@ -91,7 +119,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         <button onClick={this.props.openVideoModal} className="artist-header__play">
           <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />
         </button>
-        <img className="artist-header__message-image" src={artist.video_screenshot_url} />
+        <img className="artist-header__message-image" src={this.state.screenshotURL} />
       </div>
     );
   };

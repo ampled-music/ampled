@@ -91,7 +91,7 @@ class PostComponent extends React.Component<any, any> {
   handlePrivatePostClick = (authenticated: boolean) => {
     if (!authenticated) {
       this.openSignupModal();
-    } else {
+    } else if (!this.props.post.allow_details) {
       this.redirectToSupport();
     }
   };

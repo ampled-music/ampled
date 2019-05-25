@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Dialog } from '@material-ui/core';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 
 import ReactPlayer from 'react-player';
 
@@ -42,6 +43,6 @@ class VideoModalComponent extends React.Component<Props, any> {
   }
 }
 
-const VideoModal = VideoModalComponent;
+const VideoModal = withMobileDialog({ breakpoint: 'lg' })(VideoModalComponent);
 
 export { VideoModal };

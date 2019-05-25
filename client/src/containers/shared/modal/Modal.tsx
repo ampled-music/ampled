@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { Dialog } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 
 import { theme } from './theme';
 
@@ -12,7 +13,7 @@ interface Props {
   onClose?: () => void;
 }
 
-export class Modal extends React.Component<Props, any> {
+class Modal extends React.Component<Props, any> {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
@@ -23,3 +24,9 @@ export class Modal extends React.Component<Props, any> {
     );
   }
 }
+
+const mobileModal = withMobileDialog({ breakpoint: 'lg' })(Modal);
+
+export {
+  mobileModal as Modal
+};

@@ -1,6 +1,7 @@
 import './artist.scss';
 
 import * as React from 'react';
+import path from 'ramda/src/path';
 
 import { faPlay, faPlus, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,28 +22,30 @@ export class ArtistHeader extends React.Component<Props, any> {
   };
 
   componentDidUpdate = async (prevProps) => {
-    const { artist } = this.props;
-    if (artist.video_url === prevProps.artist.video_url) {
+    const { artist: { video_url } } = this.props;
+    if (video_url === prevProps.artist.video_url) {
       return;
-    } else {
-      if (artist.video_url) {
-        if (/vimeo/i.test(artist.video_url)) {
-          const vimeoJSON = await (await fetch(`http://vimeo.com/api/v2/video/${artist.video_url.match(/vimeo.com\/([\d\w]+)/)[1]}.json`)).json();
-          if (vimeoJSON && vimeoJSON[0] && vimeoJSON[0].thumbnail_large) {
-            this.setState({
-              screenshotURL: vimeoJSON[0].thumbnail_large
-            });
-          }
-        } else if (/youtu/i.test(artist.video_url)) {
-          const youtubeId = artist.video_url.match(/(youtube\.com\/watch\?v\=|youtu.be\/)(.+)/i)[2];
-          this.setState({
-            screenshotURL: `https://img.youtube.com/vi/${youtubeId}/0.jpg`
-          });
-        }
-      }  
+    } else if (video_url) {
+      this.setState({
+        screenshotURL: await this.getThumbnailURLFromVideoURL(video_url)
+      });
     }
   }
 
+  getThumbnailURLFromVideoURL = async (videoURL: string) => {
+    if (/vimeo/i.test(videoURL)) {
+      const vimeoJSON = await (await fetch(`http://vimeo.com/api/v2/video/${videoURL.match(/vimeo.com\/([\d\w]+)/)[1]}.json`)).json();
+      const vimeoURL = path([0, 'thumbnail_large'], vimeoJSON);
+      if (vimeoURL) {
+        return vimeoURL;
+      }
+    } else if (/youtu/i.test(videoURL)) {
+      const youtubeId = videoURL.match(/(youtube\.com\/watch\?v\=|youtu.be\/)(.+)/i)[2];
+      return `https://img.youtube.com/vi/${youtubeId}/0.jpg`;
+    }
+    return this.state.screenshotURL;
+  }
+  
   renderArtistName = () => <div className="artist-header__title">{this.props.artist.name}</div>;
 
   renderOwners = () => {

@@ -31,6 +31,11 @@ const styles = (theme) => ({
   paper: {
     marginRight: theme.spacing.unit * 2,
   },
+  hideDesktop: {
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  }
 });
 
 interface State {
@@ -38,9 +43,16 @@ interface State {
   anchorEl: any;
 }
 
+interface menuProps {
+  renderLoginLink: any;
+  classes: {
+    hideDesktop: string;
+  };
+}
+
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
-type Props = typeof authenticationInitialState & typeof meInitialState & Dispatchers;
+type Props = typeof authenticationInitialState & typeof meInitialState & Dispatchers & menuProps;
 
 class MenuListComposition extends React.Component<Props, State> {
   state = {
@@ -81,6 +93,11 @@ class MenuListComposition extends React.Component<Props, State> {
   renderDefaultMenu = () => {
     return (
       <div className="menu-items">
+        <div className={this.props.classes.hideDesktop}>
+        {
+          !this.props.userData && this.props.renderLoginLink()
+        }
+        </div>
         <a href={config.menuUrls.createArtist} target="_blank">
           <b>Create an artist page</b>
         </a>

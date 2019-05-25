@@ -8,6 +8,10 @@
 
   .loginLink {
     margin-right: 40px;
+    display: none;
+    @include mq( $layout-m ) {
+      display: block;
+    }
   }
 
   a {

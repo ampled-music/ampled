@@ -10,6 +10,7 @@ import { theme } from './theme';
 
 interface Props {
   open: any;
+  fullScreen: boolean;
   onClose?: () => void;
 }
 
@@ -17,7 +18,22 @@ class Modal extends React.Component<Props, any> {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <Dialog open={this.props.open} aria-labelledby="form-dialog-title" onClose={this.props.onClose}>
+        <Dialog
+          open={this.props.open}
+          aria-labelledby="form-dialog-title"
+          onClose={this.props.onClose}
+          fullScreen={this.props.fullScreen}
+        >
+          {
+            this.props.fullScreen && 
+            (<span
+              onClick={this.props.onClose}
+              aria-label="Close"
+              className="fullscreen-close"
+            >
+              X
+            </span>)  
+          }
           {this.props.children}
         </Dialog>
       </MuiThemeProvider>
@@ -25,8 +41,8 @@ class Modal extends React.Component<Props, any> {
   }
 }
 
-const mobileModal = withMobileDialog({ breakpoint: 'lg' })(Modal);
+const ModalComponent = withMobileDialog()(Modal);
 
 export {
-  mobileModal as Modal
+  ModalComponent as Modal
 };

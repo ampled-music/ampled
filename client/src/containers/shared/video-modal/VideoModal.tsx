@@ -13,6 +13,7 @@ interface Props {
   open: boolean;
   onClose: Function;
   videoUrl: string;
+  fullScreen: boolean;
 }
 
 class VideoModalComponent extends React.Component<Props, any> {
@@ -24,6 +25,7 @@ class VideoModalComponent extends React.Component<Props, any> {
         <Dialog
           open={this.props.open}
           fullWidth={true}
+          fullScreen={this.props.fullScreen}
           maxWidth={"md"}
           aria-labelledby="video"
           onClose={(e) => this.props.onClose(e)}
@@ -37,12 +39,22 @@ class VideoModalComponent extends React.Component<Props, any> {
               playing
             />
           </div>
+          {
+            this.props.fullScreen && 
+            (<span
+              onClick={(e) => this.props.onClose(e)}
+              aria-label="Close"
+              className="fullscreen-close"
+            >
+              X
+            </span>)  
+          }
         </Dialog>
       </MuiThemeProvider>
     );
   }
 }
 
-const VideoModal = withMobileDialog({ breakpoint: 'lg' })(VideoModalComponent);
+const VideoModal = withMobileDialog()(VideoModalComponent);
 
 export { VideoModal };

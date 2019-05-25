@@ -23,13 +23,16 @@ import { styles } from './post-style';
 class PostComponent extends React.Component<any, any> {
   constructor(props) {
     super(props);
-
+    
     const { post } = this.props;
     let displayText = false;
     let showReadMore = false;
     let isReadingMore = false;
-    if (post && post.body && post.body.length > 100) {
-      displayText = post.body.substring(0, 100);
+
+    const textBreakpoint = this.calculateTextBreakpoint(post);
+
+    if (post && post.body && post.body.length > textBreakpoint) {
+      displayText = post.body.substring(0, textBreakpoint);
       showReadMore = true;
       isReadingMore = false;
     }
@@ -47,15 +50,24 @@ class PostComponent extends React.Component<any, any> {
   componentDidUpdate(prevProps) {
     const { post } = this.props;
     const { post: prevPost } = prevProps;
-    if (post && post.body && post.body.length > 100) {
+    const textBreakpoint = this.calculateTextBreakpoint(post);
+
+    if (post && post.body && post.body.length > textBreakpoint) {
       if (prevPost && prevPost.body && prevPost.body !== post.body) {
         this.setState({
-          displayText: post.body.substring(0, 100),
+          displayText: post.body.substring(0, textBreakpoint),
           showReadMore: true,
           isReadingMore: false
         });  
       }
     }
+  }
+
+  calculateTextBreakpoint(post) {
+    if (post.image_url) {
+      return 100;
+    }
+    return 500;
   }
 
   readMore = () => {

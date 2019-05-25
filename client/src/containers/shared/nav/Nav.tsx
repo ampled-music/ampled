@@ -98,6 +98,13 @@ class NavComponent extends React.Component<Props, any> {
           </div>
           <Menu renderLoginLink={this.renderLoginLink} />
         </div>
+        {this.showSupportButton() && (
+          <div className="stickySupport">
+            <button className="btn btn-support" onClick={this.handleSupportClick}>
+              Support
+            </button>
+          </div>
+        )}
       </header>
     );
   }

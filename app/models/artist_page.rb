@@ -98,7 +98,9 @@ class ArtistPage < ApplicationRecord
   end
 
   def monthly_total
-    43_000 * 100
+    subscriptions.active.includes(:plan).reduce(0) do |sum, subscription|
+      sum + subscription.plan.amount
+    end
   end
 
   def last_post_date
@@ -106,7 +108,11 @@ class ArtistPage < ApplicationRecord
   end
 
   def last_payout
-    1.week.ago
+    response = Stripe::Payout.list({ limit: 1 }, stripe_account: ArtistPage.all.sample.stripe_user_id)
+    payout = payout.data[0]
+    return nil if payout.blank?
+
+    DateTime.strptime(payout["arrival_date"], "%s")
   end
 
   def most_recent_supporter

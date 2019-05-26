@@ -31,7 +31,7 @@ class Modal extends React.Component<Props, any> {
               aria-label="Close"
               className="fullscreen-close"
             >
-              X
+              x
             </span>)  
           }
           {this.props.children}

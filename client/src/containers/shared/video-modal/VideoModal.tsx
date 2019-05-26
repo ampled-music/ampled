@@ -46,7 +46,7 @@ class VideoModalComponent extends React.Component<Props, any> {
               aria-label="Close"
               className="fullscreen-close"
             >
-              X
+              x
             </span>)  
           }
         </Dialog>

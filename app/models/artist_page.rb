@@ -109,7 +109,7 @@ class ArtistPage < ApplicationRecord
 
   def last_payout
     response = Stripe::Payout.list({ limit: 1 }, stripe_account: ArtistPage.all.sample.stripe_user_id)
-    payout = payout.data[0]
+    payout = response.data[0]
     return nil if payout.blank?
 
     DateTime.strptime(payout["arrival_date"], "%s")

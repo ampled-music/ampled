@@ -98,12 +98,12 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { artists, me } = this.props;
+    const { artists, me: { userData } } = this.props;
     const artist = artists.artist;
     const loggedUserAccess = this.getLoggedUserPageAccess();
     let isSupporter = false;
-    if (me.userData && me.userData.subscriptions) {
-      for (const subscription of me.userData.subscriptions) {
+    if (userData) {
+      for (const subscription of userData.subscriptions) {
         if (subscription.artistPageId === artist.id) {
           isSupporter = true;
           break;

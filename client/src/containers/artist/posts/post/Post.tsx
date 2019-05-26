@@ -31,7 +31,7 @@ class PostComponent extends React.Component<any, any> {
 
     const textBreakpoint = this.calculateTextBreakpoint(post);
 
-    if (post && post.body && post.body.length > textBreakpoint) {
+    if (post.body && post.body.length > textBreakpoint) {
       displayText = post.body.substring(0, textBreakpoint);
       showReadMore = true;
       isReadingMore = false;
@@ -52,7 +52,7 @@ class PostComponent extends React.Component<any, any> {
     const { post: prevPost } = prevProps;
     const textBreakpoint = this.calculateTextBreakpoint(post);
 
-    if (post && post.body && post.body.length > textBreakpoint) {
+    if (post.body && post.body.length > textBreakpoint) {
       if (prevPost && prevPost.body && prevPost.body !== post.body) {
         this.setState({
           displayText: post.body.substring(0, textBreakpoint),

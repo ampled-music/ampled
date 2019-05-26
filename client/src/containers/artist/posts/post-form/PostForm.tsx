@@ -247,7 +247,7 @@ class PostFormComponent extends React.Component<Props, any> {
                   Cancel
                 </Button>
                 <Button
-                  type="Submit"
+                  type="submit"
                   className={cx('post-button', { disabled: !isSaveEnabled })}
                   disabled={!isSaveEnabled}
                 >

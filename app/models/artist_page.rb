@@ -110,8 +110,7 @@ class ArtistPage < ApplicationRecord
   end
 
   def most_recent_supporter
-    # subscriptions.order(created_at: :desc).first&.user_id
-    active_subscribers.sample
+    subscriptions.order(created_at: :desc).first&.user
   end
 
   private

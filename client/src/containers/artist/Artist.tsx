@@ -98,12 +98,34 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { artists } = this.props;
+    const { artists, me: { userData } } = this.props;
     const artist = artists.artist;
     const loggedUserAccess = this.getLoggedUserPageAccess();
+    let isSupporter = false;
+    if (userData) {
+      for (const subscription of userData.subscriptions) {
+        if (subscription.artistPageId === artist.id) {
+          isSupporter = true;
+          break;
+        }
+      }
+    }
+  
 
     return (
       <div className="App">
+        <style
+          dangerouslySetInnerHTML={{
+          __html: `
+            .btn-support { border-color: ${artist.accent_color}; }
+            .btn-support:hover { background-color: ${artist.accent_color}; }
+            ${isSupporter && `
+              .user-image { border: 1px solid ${artist.accent_color}; }
+              header .supporter-message { display: inline-block !important; color: ${artist.accent_color}; }
+            `}
+          `
+          }}
+        />
         <ArtistHeader
           artist={artist}
           openVideoModal={this.openVideoModal}

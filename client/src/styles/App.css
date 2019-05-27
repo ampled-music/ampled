@@ -13768,6 +13768,12 @@ body {
   width: 115px;
 }
 
+header .supporter-message {
+  display: none;
+  font-family: 'LL Replica Bold Web', sans-serif;
+  padding-right: 48px;
+}
+
 .fullscreen-close {
   position: absolute;
   right: 24px;

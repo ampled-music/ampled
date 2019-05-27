@@ -108,11 +108,13 @@ class ArtistPage < ApplicationRecord
   end
 
   def last_payout
-    response = Stripe::Payout.list({ limit: 1 }, stripe_account: ArtistPage.all.sample.stripe_user_id)
+    return nil if stripe_user_id.blank?
+
+    response = Stripe::Payout.list({ limit: 1 }, stripe_account: stripe_user_id)
     payout = response.data[0]
     return nil if payout.blank?
 
-    DateTime.strptime(payout["arrival_date"], "%s")
+    DateTime.strptime(payout["arrival_date"].to_s, "%s")
   end
 
   def most_recent_supporter

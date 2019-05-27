@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[destroy]
-  respond_to :json
 
   def create
     @post = Post.new(post_params)
@@ -13,7 +12,6 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    artist_page_id = @post.artist_page.id
     @post.destroy
     200
   end

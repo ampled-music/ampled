@@ -7,6 +7,7 @@ import { faPlay, faPlus, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from 'src/redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
+import * as R from 'ramda';
 
 interface Props {
   openVideoModal: React.MouseEventHandler;
@@ -154,9 +155,7 @@ export class ArtistHeader extends React.Component<Props, any> {
 
     const borderColor = artist.accent_color;
 
-    const mostRecentSupporter = artist.supporters.find(
-      (supporter) => +supporter.id === artist.most_recent_supporter_user_id,
-    );
+    const mostRecentSupporter = artist.most_recent_supporter;
 
     return (
       <div className="artist-header__supporters">
@@ -175,7 +174,7 @@ export class ArtistHeader extends React.Component<Props, any> {
 
         <div className="row justify-content-start no-gutters">
           {artist.supporters
-            .filter((supporter) => +supporter.id !== artist.most_recent_supporter_user_id)
+            .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
             .map((supporter) => (
               <div key={supporter.id} className="col-2">
                 {this.renderSupporter({ supporter, borderColor, isSmall: true })}

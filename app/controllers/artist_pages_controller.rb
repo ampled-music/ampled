@@ -1,50 +1,25 @@
 class ArtistPagesController < ApplicationController
   before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy]
+  respond_to :json
 
   def index
     @artist_pages = ArtistPage.all
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @artist_pages }
-    end
+    render json: @artist_pages
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.json
-    end
-  end
-
-  def new
-    @artist_page = ArtistPage.new
   end
 
   def edit
   end
 
   def create
-    @artist_page = ArtistPage.new(artist_page_params)
-
-    if @artist_page.save
-      redirect_to @artist_page, notice: "Artist page was successfully created."
-    else
-      render :new
-    end
   end
 
   def update
-    if @artist_page.update(artist_page_params)
-      redirect_to @artist_page, notice: "Artist page was successfully updated."
-    else
-      render :edit
-    end
   end
 
   def destroy
-    @artist_page.destroy
-    redirect_to artist_pages_url, notice: "Artist page was successfully destroyed."
   end
 
   private

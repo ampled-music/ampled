@@ -1,20 +1,21 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[destroy]
+  respond_to :json
 
   def create
     @post = Post.new(post_params)
 
     if @post.save
-      redirect_to @post.artist_page, notice: "Post added"
+      render json: { status: 200 }
     else
-      render :new
+      render json: { status: 400, errors: @post.errors }
     end
   end
 
   def destroy
     artist_page_id = @post.artist_page.id
     @post.destroy
-    redirect_to artist_page_path(artist_page_id), notice: "Post removed"
+    200
   end
 
   private

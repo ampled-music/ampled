@@ -1,13 +1,14 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[destroy]
+  respond_to :json
 
   def create
     @comment = Comment.new(comment_params)
 
     if @comment.save
-      redirect_to @comment.post.artist_page, notice: "Comment added"
+      render json: { status: 200 }
     else
-      render :new
+      render json: { status: 400, errors: @comment.errors }
     end
   end
 

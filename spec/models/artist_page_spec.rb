@@ -41,11 +41,14 @@ RSpec.describe ArtistPage, type: :model do
           }
         )
 
-        Stripe::Payout.create({
-                                amount: 1,
-          currency: "usd",
-          source_type: "card"
-                              }, stripe_account: ap.stripe_user_id)
+        Stripe::Payout.create(
+          {
+            amount: 1,
+            currency: "usd",
+            source_type: "card"
+          },
+          stripe_account: ap.stripe_user_id
+        )
 
         expect(ap.last_payout).to eq(Time.new(2019, 5, 28, 0, 0, 0, "+00:00"))
       end

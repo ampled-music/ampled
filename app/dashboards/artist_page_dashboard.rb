@@ -25,7 +25,8 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     stripe_signup_url: Field::Text,
-    stripe_dashboard_url: Field::Text
+    stripe_dashboard_url: Field::Text,
+    video_url: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -53,7 +54,8 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :created_at,
     :updated_at,
     :stripe_signup_url,
-    :stripe_dashboard_url
+    :stripe_dashboard_url,
+    :video_url
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -67,6 +69,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :accent_color,
     :twitter_handle,
     :instagram_handle,
+    :video_url
   ].freeze
 
   # Overwrite this method to customize how artist pages are displayed

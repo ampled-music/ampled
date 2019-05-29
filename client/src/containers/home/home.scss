@@ -135,13 +135,13 @@
       position: absolute;
       width: 100%;
       display: none;
+      z-index: 0;
       
       &.phone {
         width: 600px;
       }
       &.crowd {
         width: 780px;
-        top: 80px;
       }
       &.money {
         width: 600px;
@@ -163,16 +163,19 @@
     &.phone:hover {
       .home-how__list_image.phone {
         display: block;
+        transform: translate(690px,0);
       }
     }
     &.crowd:hover {
       .home-how__list_image.crowd {
         display: block;
+        transform: translate(540px, -140px) rotate(-8deg);
       }
     }
     &.money:hover {
       .home-how__list_image.money {
         display: block;
+        transform: translate(470px, -620px);
       }
     }
 
@@ -213,11 +216,15 @@
       font-family: 'LL Replica Bold Web';
       font-size: 1.8rem;
       margin-bottom: 1rem;
+      position: relative;
+      z-index: 5;
     }
 
     &_copy {
       font-family: $font-family-monospace;
       font-size: 1.2rem;
+      position: relative;
+      z-index: 5;
     }
   }
 }

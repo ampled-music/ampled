@@ -63,10 +63,14 @@
   }
 
   &__image {
-    width: 115%;
+    width: 100%;
     display: block;
     position: relative;
-    left: -15%;
+    @include mq($desktop) {
+      left: -15%; 
+      width: 115%;
+      min-width: 800px;
+    }
   }
 
   &__button {
@@ -126,6 +130,23 @@
   &__list {
     border: 2px solid $white;
     padding: 3rem;
+
+    &_image {
+      position: absolute;
+      width: 100%;
+      display: none;
+      
+      &.phone {
+        width: 600px;
+      }
+      &.crowd {
+        width: 780px;
+        top: 80px;
+      }
+      &.money {
+        width: 600px;
+      }
+    }
   }
 
   &__list-item {
@@ -136,6 +157,22 @@
         background-color: $white;
         color: #1E1E1E;
         transition: .25s all ease-in-out;
+      }
+    }
+
+    &.phone:hover {
+      .home-how__list_image.phone {
+        display: block;
+      }
+    }
+    &.crowd:hover {
+      .home-how__list_image.crowd {
+        display: block;
+      }
+    }
+    &.money:hover {
+      .home-how__list_image.money {
+        display: block;
       }
     }
 

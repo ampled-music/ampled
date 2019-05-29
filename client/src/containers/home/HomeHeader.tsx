@@ -10,8 +10,8 @@ const openInNewTab = (url: string) => {
 
 export const HomeHeader = () => (
   <div className="home-header bg-texture bg-texture__bottom container-fluid">
-    <div className="row justify-content-md-center">
-      <div className="col-md-3">
+    <div className="row align-items-center justify-content-center">
+      <div className="col-lg-3">
         <div className="home-header__support">Support for any sound</div>
         <div className="home-header__info">
           Receive support via direct payments from your community. Own your creative freedom and sustainably continue making art for the people who love it. Join us and become a member-owner of an alternative platform that puts artists first.
@@ -20,7 +20,7 @@ export const HomeHeader = () => (
           Create Your Page
         </button>
       </div>
-      <div className="col-md-6">
+      <div className="col-lg-6">
         <img className="home-header__image" src={header_collage} />
       </div>
     </div>

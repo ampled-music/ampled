@@ -117,8 +117,8 @@ class ArtistComponent extends React.Component<Props, any> {
         <style
           dangerouslySetInnerHTML={{
           __html: `
-            .btn-support { border-color: ${artist.accent_color}; }
-            .btn-support:hover { background-color: ${artist.accent_color}; }
+            .btn-support, .private-support-btn > .btn { border-color: ${artist.accent_color}; }
+            .btn-support:hover, .private-support-btn > .btn:hover { background-color: ${artist.accent_color}; }
             ${isSupporter && `
               .user-image { border: 1px solid ${artist.accent_color}; }
               header .supporter-message { display: inline-block !important; color: ${artist.accent_color}; }

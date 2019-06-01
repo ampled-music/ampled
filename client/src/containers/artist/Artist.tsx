@@ -97,6 +97,26 @@ class ArtistComponent extends React.Component<Props, any> {
     return me.userData && me.userData.artistPages.find((page) => page.artistId === +match.params.id);
   };
 
+  ColorLuminance = (hex, lum) => {
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+      hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    }
+    lum = lum || 0;
+  
+    // convert to decimal and change luminosity
+    var rgb = "#", c, i;
+    for (i = 0; i < 3; i++) {
+      c = parseInt(hex.substr(i*2,2), 16);
+      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+      rgb += ("00"+c).substr(c.length);
+    }
+  
+    return rgb;
+  }
+  
+
   render() {
     const { artists, me: { userData } } = this.props;
     const artist = artists.artist;
@@ -117,8 +137,14 @@ class ArtistComponent extends React.Component<Props, any> {
         <style
           dangerouslySetInnerHTML={{
           __html: `
-            .btn-support, .private-support-btn > .btn { border-color: ${artist.accent_color}; }
-            .btn-support:hover, .private-support-btn > .btn:hover { background-color: ${artist.accent_color}; }
+            .btn-support, .private-support-btn > .btn {
+              border-color: unset;
+              background-color: ${artist.accent_color};
+              color: white;
+            }
+            .btn-support:hover, .private-support-btn > .btn:hover {
+              background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
+            }
             ${isSupporter && `
               .user-image { border: 1px solid ${artist.accent_color}; }
               header .supporter-message { display: inline-block !important; color: ${artist.accent_color}; }

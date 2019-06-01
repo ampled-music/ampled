@@ -63,10 +63,14 @@
   }
 
   &__image {
-    width: 115%;
+    width: 100%;
     display: block;
     position: relative;
-    left: -15%;
+    @include mq($desktop) {
+      left: -15%; 
+      width: 115%;
+      min-width: 800px;
+    }
   }
 
   &__button {
@@ -126,6 +130,23 @@
   &__list {
     border: 2px solid $white;
     padding: 3rem;
+
+    &_image {
+      position: absolute;
+      width: 100%;
+      display: none;
+      z-index: 0;
+      
+      &.phone {
+        width: 600px;
+      }
+      &.crowd {
+        width: 780px;
+      }
+      &.money {
+        width: 600px;
+      }
+    }
   }
 
   &__list-item {
@@ -136,6 +157,25 @@
         background-color: $white;
         color: #1E1E1E;
         transition: .25s all ease-in-out;
+      }
+    }
+
+    &.phone:hover {
+      .home-how__list_image.phone {
+        display: block;
+        transform: translate(690px,0);
+      }
+    }
+    &.crowd:hover {
+      .home-how__list_image.crowd {
+        display: block;
+        transform: translate(540px, -140px) rotate(-8deg);
+      }
+    }
+    &.money:hover {
+      .home-how__list_image.money {
+        display: block;
+        transform: translate(470px, -620px);
       }
     }
 
@@ -155,16 +195,17 @@
       font-size: 2rem;
       transition: .25s all ease-in-out;
 
-      &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 70px;
-        width: 2px;
-        height: 80%;
-        background-color: $white;
+      @include mq($desktop) {
+        &:after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 70px;
+          width: 2px;
+          height: 80%;
+          background-color: $white;
+        }
       }
-
       &.no-tail {
         &:after {
           height: 0px;
@@ -176,11 +217,15 @@
       font-family: 'LL Replica Bold Web';
       font-size: 1.8rem;
       margin-bottom: 1rem;
+      position: relative;
+      z-index: 5;
     }
 
     &_copy {
       font-family: $font-family-monospace;
       font-size: 1.2rem;
+      position: relative;
+      z-index: 5;
     }
   }
 }

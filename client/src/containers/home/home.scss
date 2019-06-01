@@ -195,16 +195,17 @@
       font-size: 2rem;
       transition: .25s all ease-in-out;
 
-      &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 70px;
-        width: 2px;
-        height: 80%;
-        background-color: $white;
+      @include mq($desktop) {
+        &:after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 70px;
+          width: 2px;
+          height: 80%;
+          background-color: $white;
+        }
       }
-
       &.no-tail {
         &:after {
           height: 0px;

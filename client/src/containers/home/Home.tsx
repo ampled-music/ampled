@@ -9,13 +9,36 @@ import { HomeHeader } from './HomeHeader';
 import { HomeHow } from './HomeHow';
 import { HomeTexture } from './HomeTexture';
 
-export const Home = () => (
-  <div className="home-section">
-    <HomeHeader />
-    <HomeTexture />
-    <HomeFor />
-    <HomeHow />
-    <HomeArtists />
-    <Footer />
-  </div>
-);
+
+class Home extends React.Component<any> {
+
+  randomColor = () => {
+    const bgColor = ['#e9c7c6', '#eddfbd', '#baddac', '#cae4e7'];
+    return bgColor[Math.floor(Math.random() * bgColor.length)];
+  };
+  
+  render() {
+    const randomColor = this.randomColor();
+
+    return (
+      <div className="home-section">
+        <HomeHeader
+          bgColor={randomColor}
+        />
+        <HomeTexture />
+        <HomeFor />
+        <HomeHow 
+          bgColor={randomColor}
+        />
+        <HomeArtists 
+          bgColor={randomColor}
+        />
+        <Footer 
+          bgColor={randomColor}
+        />
+      </div>
+    )
+  };
+}
+
+export { Home };

@@ -6,7 +6,12 @@ import money from '../../images/home/home_how_money.png';
 import tear_1 from '../../images/home/home_tear_1.png';
 import tear_2 from '../../images/home/home_tear_2.png';
 
-class HomeHowComponent extends React.Component<any> {
+
+interface Props {
+  bgColor: string;
+}
+
+class HomeHowComponent extends React.Component<Props,any> {
 
   state = {
     showSpeaker: false,
@@ -100,7 +105,7 @@ class HomeHowComponent extends React.Component<any> {
             </div>
           </div>
         </div>
-        <img className="tear tear_2" src={tear_2} />
+        <img className="tear tear_2" src={tear_2} style={{ backgroundColor: this.props.bgColor }} />
       </div>
     )
   }

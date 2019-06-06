@@ -11,6 +11,7 @@ interface Props {
     loading: boolean;
     pages: [];
   };
+  bgColor: string;
 }
 
 interface State {
@@ -38,7 +39,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
     }
 
     return (
-      <div className="home-artists bg-texture bg-texture__flip">
+      <div className="home-artists bg-texture bg-texture__flip" style={{ backgroundColor: this.props.bgColor }}>
         <h1 className="home-artists__title">Artists on Ampled</h1>
         <div className="container">
           <div className="row">

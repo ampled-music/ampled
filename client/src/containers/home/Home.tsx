@@ -7,15 +7,15 @@ import { HomeArtists } from './HomeArtists';
 import { HomeFor } from './HomeFor';
 import { HomeHeader } from './HomeHeader';
 import { HomeHow } from './HomeHow';
-import { HomeMembership } from './HomeMembership';
+import { HomeTexture } from './HomeTexture';
 
 export const Home = () => (
   <div className="home-section">
     <HomeHeader />
+    <HomeTexture />
     <HomeFor />
     <HomeHow />
     <HomeArtists />
-    <HomeMembership />
     <Footer />
   </div>
 );

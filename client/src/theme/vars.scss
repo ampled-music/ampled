@@ -92,7 +92,7 @@ $layout-xl: $desktop-m;
 // Font, line-height, and color for body text, headings, and more.
 $font-family-sans-serif:     'LL Replica Bold Web', sans-serif;
 $font-family-serif:          'FayonGrandePro', serif;
-$font-family-monospace:      'Courier New', Courier, monospace;
+$font-family-monospace:      'Courier', Courier, monospace;
 $font-family-base:           'AvenirLTStd-Light', Helvetica Neue, Helvetica, Arial, sans-serif;
 
 // Pixel value used to responsively scale all typography. Applied to the `<html>` element.
@@ -106,10 +106,10 @@ $font-size-xs:               .6rem;
 
 $font-size-h1:               2.3rem; 
 $font-size-h2:               2rem;   
-$font-size-h3:               1.7rem; 
-$font-size-h4:               1.5rem; 
-$font-size-h5:               1.3rem; 
-$font-size-h6:               1.15rem;
+$font-size-h3:               1.5rem; 
+$font-size-h4:               1.3rem; 
+$font-size-h5:               1.1rem; 
+$font-size-h6:               .9rem;
 
 $line-height-h1:             2.85rem;
 $line-height-h2:             2.5rem; 

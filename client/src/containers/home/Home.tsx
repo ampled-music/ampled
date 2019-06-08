@@ -25,12 +25,20 @@ class Home extends React.Component<any> {
         <HomeHeader
           bgColor={randomColor}
         />
-        <HomeTexture />
+        <HomeTexture 
+          positionTop25={false}
+          positionTop50={true}
+          positionFlip={false}
+        />
         <HomeFor />
         <HomeHow 
           bgColor={randomColor}
         />
-        <HomeTexture />
+        <HomeTexture 
+          positionTop25={true}
+          positionTop50={false}
+          positionFlip={true}
+        />
         <HomeArtists 
           bgColor={randomColor}
         />

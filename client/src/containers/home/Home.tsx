@@ -30,6 +30,7 @@ class Home extends React.Component<any> {
         <HomeHow 
           bgColor={randomColor}
         />
+        <HomeTexture />
         <HomeArtists 
           bgColor={randomColor}
         />

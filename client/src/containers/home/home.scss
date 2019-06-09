@@ -1,56 +1,19 @@
 @import "../../theme/vars.scss";
 @import "../../theme/mixins.scss";
+@import "../../theme/global.scss";
 
-.container {
-  max-width: 1140px;
-}
-
-.btn {
-  border-radius: 0px;
-  border: 2px solid $black;
-  background-color: $white;
-  color: $black;
-  width: 100%;
-  font-family: $font-family-monospace;
-  font-weight: 700;
-  position: relative;
-  z-index: 10;
-
-  &:hover {
-    background-color: #1E1E1E;
-    color: $white;
-    transition: .25s all ease-in-out;
-  }
-}
-
-.bg-texture {
-  background-image: url('../../images/background_texture.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center center;
-  &__bottom {
-    background-position: left 0 bottom -100%;
-  }
-  &__top {
-    background-position: left 0 top -50%;
-  }
-  &__flip {
-    background-image: url('../../images/background_texture_flip.png');
-  }
-}
 
 .home-section {
   overflow: hidden;
 }
 
 .home-header {
-
   &__support {
     width: 100%;
     display: block;
     position: relative;
     z-index: 0;
-    font-family: 'LL Replica Bold Web';
+    font-family: $font-family-sans-serif;
     font-size: 3rem;
     line-height: 3.5rem;
     text-transform: uppercase;
@@ -84,7 +47,7 @@
   border-top: 10px solid $black;
 
   h1 {
-    font-family: 'LL Replica Bold Web';
+    font-family: $font-family-sans-serif;
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;
@@ -104,6 +67,7 @@
   }
 
   &__sub-title {
+    font-family: $font-family-sans-serif;
     text-transform: uppercase;
     text-align: center;
     margin: 1rem 0;
@@ -117,11 +81,11 @@
 }
 
 .home-how {
-  background-color: #1E1E1E;
+  background-color: $black;
   color: $white;
 
   h1 {
-    font-family: 'LL Replica Bold Web';
+    font-family: $font-family-sans-serif;
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;
@@ -130,23 +94,6 @@
   &__list {
     border: 2px solid $white;
     padding: 3rem;
-
-    &_image {
-      position: absolute;
-      width: 100%;
-      display: none;
-      z-index: 0;
-      
-      &.phone {
-        width: 600px;
-      }
-      &.crowd {
-        width: 780px;
-      }
-      &.money {
-        width: 600px;
-      }
-    }
   }
 
   &__list-item {
@@ -155,32 +102,49 @@
     &:hover {
       .home-how__list-item_number {
         background-color: $white;
-        color: #1E1E1E;
+        color: $black;
         transition: .25s all ease-in-out;
       }
     }
 
-    &.phone:hover {
-      .home-how__list_image.phone {
-        display: block;
-        transform: translate(690px,0);
+    &_image {
+      position: absolute;
+      z-index: 1;
+      img {
+        opacity: 0;
+        transition: opacity $speed;
       }
-    }
-    &.crowd:hover {
-      .home-how__list_image.crowd {
-        display: block;
-        transform: translate(540px, -140px) rotate(-8deg);
+      &.crowd {
+        img {
+          width: 790px;
+          transform: translate(380px, -110px) rotate(-5deg);
+        }
+        .show {
+          opacity: 1;
+        }
       }
-    }
-    &.money:hover {
-      .home-how__list_image.money {
-        display: block;
-        transform: translate(470px, -620px);
+      &.money {
+        img {
+          width: 560px;
+          transform: translate(480px, -460px);
+        }
+        .show {
+          opacity: 1;
+        }
+      }
+      &.speaker {
+        img {
+          width: 460px;
+          transform: translate(630px, -30px);
+        }
+        .show {
+          opacity: 1;
+        }
       }
     }
 
     &_number {
-      background-color: #1E1E1E;
+      background-color: $black;
       color: $white;
       text-align: center;
       border: 2px solid $white;
@@ -193,7 +157,7 @@
       justify-content: center;
       font-family: $font-family-monospace;
       font-size: 2rem;
-      transition: .25s all ease-in-out;
+      transition: all $speed;
 
       @include mq($desktop) {
         &:after {
@@ -214,8 +178,9 @@
     }
 
     &_title {
-      font-family: 'LL Replica Bold Web';
-      font-size: 1.8rem;
+      font-family: $font-family-sans-serif;
+      font-size: 1.5rem;
+      line-height: 1.7rem;
       margin-bottom: 1rem;
       position: relative;
       z-index: 5;
@@ -223,7 +188,7 @@
 
     &_copy {
       font-family: $font-family-monospace;
-      font-size: 1.2rem;
+      font-size: 1rem;
       position: relative;
       z-index: 5;
     }
@@ -232,33 +197,71 @@
 
 .home-artists {
   padding: 2rem;
+  background-color: $white;
 
   h1 {
-    font-family: 'LL Replica Bold Web';
+    font-family: $font-family-sans-serif;
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;
   }
 
   &__item {
-    border: 3px solid #1E1E1E;
-    height: 300px;
     margin-bottom: 2rem;
-    padding: 1rem;
-    overflow: hidden;
 
+    &_border {
+      height: 300px;
+      padding: 1rem;
+      border: 3px solid $black;
+      position: relative;
+      z-index: 2;
+    }
     &_title {
       font-family: 'Courier New', Courier, monospace;
       color: white;
-      background-color: #1E1E1E;
+      background-color: $black;
       display: inline;
       padding: 5px 10px;
+      position: relative;
+      z-index: 2;
     }
     &_image {
       width: 100%;
+      position: relative;
+      z-index: -1;
+    }
+
+    &:nth-child(1) {
+      .home-artists__item_image {
+        transform: translate(-10px, -60px);
+      }
+    }
+    &:nth-child(2) {
+      .home-artists__item_image {
+        transform: translate(5px, -40px);
+      }
+    }
+    &:nth-child(3) {
+      .home-artists__item_image {
+        transform: translate(10px,-50px);
+      }
+    }
+    &:nth-child(4) {
+      .home-artists__item_image {
+        transform: translate(20px,10px);
+      }
+    }
+    &:nth-child(5) {
+      .home-artists__item_image {
+        transform: translate(-5px,-10px);
+      }
+    }
+    &:nth-child(6) {
+      .home-artists__item_image {
+        transform: translate(10px,-60px);
+      }
     }
   }
-
 }
 
 .home-membership {
@@ -266,7 +269,7 @@
   font-family: $font-family-monospace;
   text-align: center;
   h1 {
-    font-family: 'LL Replica Bold Web';
+    font-family: $font-family-sans-serif;
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;
@@ -278,18 +281,15 @@
 
 .tear {
   width: 100%;
+  position: relative;
 
-  &.tear_1 {}
+  &.tear_1 {
+    bottom: -30px;
+    margin-top: -30px;
+  }
 
   &.tear_2 {
-  }
-}
-
-.home-artists {
-  background-color: $white;
-  &__item {
-    &_image {
-      width: 100%;
-    }
+    background-color: $white; 
+    margin-bottom: -70px;
   }
 }

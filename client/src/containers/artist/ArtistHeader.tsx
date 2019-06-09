@@ -146,6 +146,21 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
   };
 
+  renderSupportButton = () => {
+
+    const { artist } = this.props;
+    const borderColor = artist.accent_color;
+    
+    return (
+      <div>
+        <button className="btn btn-support" style={{ borderColor }} >
+          Become a Supporter 
+        </button>
+      </div>
+
+    );
+  };
+
   renderSupportersContainer = () => {
     const { artist } = this.props;
 
@@ -198,6 +213,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderFloatingNewPostButton()}
             {this.renderMessageContainer()}
             {this.renderSupportersContainer()}
+            {this.renderSupportButton()}
           </div>
         </div>
       </div>

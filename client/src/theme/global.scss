@@ -1,0 +1,58 @@
+.container {
+    max-width: 1140px;
+}
+
+.btn {
+    border-radius: 0px;
+    border: 2px solid $black;
+    background-color: $white;
+    color: $black;
+    width: 100%;
+    font-family: $font-family-monospace;
+    font-weight: 500;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 10;
+
+    &:hover {
+        background-color: #1E1E1E;
+        color: $white;
+        transition: .25s all ease-in-out;
+    }
+}
+
+.bg-texture {
+    background-image: url('../../images/background_texture.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    &__bottom {
+        background-position: left 0 bottom -100%;
+    }
+    &__top {
+        background-position: left 0 top -50%;
+    }
+    &__flip {
+        background-image: url('../../images/background_texture_flip.png');
+    }
+    &__absolute {
+        position: absolute;
+        z-index: 0;
+        width: 100%;
+        height: 100vh;
+        &_25 {
+            z-index: 0;
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            transform: translateY(-25%);
+        }
+        &_50 {
+            z-index: 0;
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            transform: translateY(-50%);
+        }
+    }
+}

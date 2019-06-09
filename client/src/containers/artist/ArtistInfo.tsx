@@ -21,20 +21,20 @@ export class ArtistInfo extends React.Component<Props, any> {
   );
 
   renderSocialInfo = () => {
-    const { accentColor, instagramHandle, twitterHandle } = this.props;
+    const { instagramHandle, twitterHandle } = this.props;
 
     return (
       <div className="artist-info__social">
         <div className="artist-info__social_twitter">
-          <a href={`https://twitter.com/${twitterHandle}`} target="_blank" style={{ color: accentColor }}>
+          <a href={`https://twitter.com/${twitterHandle}`} target="_blank" style={{ color: 'black' }}>
             <FontAwesomeIcon className="icon" icon={faTwitter} />
-            <span>{twitterHandle}</span>
+            <span>@{twitterHandle}</span>
           </a>
         </div>
         <div className="artist-info__social_instagram">
-          <a href={`https://instagram.com/${instagramHandle}`} target="_blank" style={{ color: accentColor }}>
+          <a href={`https://instagram.com/${instagramHandle}`} target="_blank" style={{ color: 'black' }}>
             <FontAwesomeIcon className="icon" icon={faInstagram} />
-            <span>{instagramHandle}</span>
+            <span>@{instagramHandle}</span>
           </a>
         </div>
       </div>

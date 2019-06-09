@@ -125,6 +125,16 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
   };
 
+  anonymizeSupporterName = name => {
+    const nameParts = name.split(' ');
+    if (nameParts.length < 2) {
+      return name;
+    } else {
+      nameParts[nameParts.length - 1] = nameParts[nameParts.length - 1].slice(0, 1);
+      return nameParts.join(' ') + '.';
+    }
+  }
+
   renderSupporter = ({ supporter, borderColor, isSmall = false }) => {
     let style = { borderColor, maxWidth: 'auto', maxHeight: 'auto' };
     if (isSmall) {
@@ -141,7 +151,7 @@ export class ArtistHeader extends React.Component<Props, any> {
           <img
             className="artist-header__person_image"
             src={supporter.profile_image_url}
-            alt={supporter.name}
+            alt={this.anonymizeSupporterName(supporter.name)}
             style={style}
           />
         ) : (
@@ -158,7 +168,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     
     return (
       <div>
-        <button className="btn btn-support" style={{ borderColor }} >
+        <button className="btn btn-support" style={{ borderColor, maxWidth: '100%' }} >
           Become a Supporter 
         </button>
       </div>
@@ -181,9 +191,9 @@ export class ArtistHeader extends React.Component<Props, any> {
 
     return (
       <div className="artist-header__supporters">
-        <div className="artist-header__supporter-title">{artist.supporters.length} Supporter(s)</div>
 
-        {mostRecentSupporter && (
+        {mostRecentSupporter && (<div>
+            <div className="artist-header__supporter-title">MOST RECENT SUPPORTER</div>
           <div key={mostRecentSupporter.id} className="row align-items-center">
             <div className="col-3">
               <RenderSupporter
@@ -192,12 +202,13 @@ export class ArtistHeader extends React.Component<Props, any> {
               />
             </div>
             <div className="col-9">
-              <b className="most-recent-supporter-tag">MOST RECENT SUPPORTER</b>
-              <div className="artist-header__person_name">{mostRecentSupporter.name}</div>
+              <div className="artist-header__person_name">{this.anonymizeSupporterName(mostRecentSupporter.name)}</div>
               <div className="artist-header__person_quote" />
             </div>
           </div>
+          </div>
         )}
+        <div className="artist-header__supporter-title">{artist.supporters.length} Supporter(s)</div>
 
         <div className="row justify-content-start no-gutters">
           {artist.supporters

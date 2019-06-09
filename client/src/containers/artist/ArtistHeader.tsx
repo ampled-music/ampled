@@ -126,6 +126,11 @@ export class ArtistHeader extends React.Component<Props, any> {
   };
 
   renderSupporter = ({ supporter, borderColor, isSmall = false }) => {
+    let style = { borderColor, maxWidth: 'auto', maxHeight: 'auto' };
+    if (isSmall) {
+      style.maxWidth = '36px';
+      style.maxHeight = '36px';
+    }
     return (
       <div
         key={`supporter-${supporter.id}`}
@@ -137,10 +142,10 @@ export class ArtistHeader extends React.Component<Props, any> {
             className="artist-header__person_image"
             src={supporter.profile_image_url}
             alt={supporter.name}
-            style={{ borderColor }}
+            style={style}
           />
         ) : (
-          <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor }} />
+          <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={style} />
         )}
       </div>
     );
@@ -164,6 +169,8 @@ export class ArtistHeader extends React.Component<Props, any> {
   renderSupportersContainer = () => {
     const { artist } = this.props;
 
+    const RenderSupporter = this.renderSupporter;
+
     if (!artist.supporters) {
       return null;
     }
@@ -178,7 +185,12 @@ export class ArtistHeader extends React.Component<Props, any> {
 
         {mostRecentSupporter && (
           <div key={mostRecentSupporter.id} className="row align-items-center">
-            <div className="col-3">{this.renderSupporter({ supporter: mostRecentSupporter, borderColor })}</div>
+            <div className="col-3">
+              <RenderSupporter
+                supporter={mostRecentSupporter}
+                borderColor={borderColor}
+              />
+            </div>
             <div className="col-9">
               <b className="most-recent-supporter-tag">MOST RECENT SUPPORTER</b>
               <div className="artist-header__person_name">{mostRecentSupporter.name}</div>
@@ -191,8 +203,15 @@ export class ArtistHeader extends React.Component<Props, any> {
           {artist.supporters
             .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
             .map((supporter) => (
-              <div key={supporter.id} className="col-2">
-                {this.renderSupporter({ supporter, borderColor, isSmall: true })}
+              <div key={supporter.id} className="col-2" style={{
+                maxWidth: '12.5%',
+                flex: '0 0 12.5%',
+              }}>
+                <RenderSupporter
+                  supporter={supporter}
+                  borderColor={borderColor}
+                  isSmall
+                />
               </div>
             ))}
         </div>

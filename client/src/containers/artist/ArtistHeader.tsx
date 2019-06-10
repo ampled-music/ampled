@@ -60,14 +60,14 @@ export class ArtistHeader extends React.Component<Props, any> {
             <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person">
               {owner.profile_image_url ? (
                 <img
-                  className="artist-header__person_image"
+                  className="artist-header__person_image member"
                   src={owner.profile_image_url}
                   alt={owner.name}
                   style={{ borderColor: artist.accent_color }}
                 />
               ) : (
                 <FontAwesomeIcon
-                  className="artist-header__person_svg"
+                  className="artist-header__person_svg member"
                   icon={faUserCircle}
                   style={{ borderColor: artist.accent_color }}
                 />
@@ -95,6 +95,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     <div className="artist-header__photo-container" style={{ borderColor: this.props.artist.accent_color }}>
       {this.renderOwners()}
       {this.renderBanners()}
+      <div className="artist-header__photo-container_border" style={{ borderColor: this.props.artist.accent_color }} />
     </div>
   );
 
@@ -125,7 +126,22 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
   };
 
+  anonymizeSupporterName = name => {
+    const nameParts = name.split(' ');
+    if (nameParts.length < 2) {
+      return name;
+    } else {
+      nameParts[nameParts.length - 1] = nameParts[nameParts.length - 1].slice(0, 1);
+      return nameParts.join(' ') + '.';
+    }
+  }
+
   renderSupporter = ({ supporter, borderColor, isSmall = false }) => {
+    let style = { borderColor, maxWidth: 'auto', maxHeight: 'auto' };
+    if (isSmall) {
+      style.maxWidth = '36px';
+      style.maxHeight = '36px';
+    }
     return (
       <div
         key={`supporter-${supporter.id}`}
@@ -136,11 +152,11 @@ export class ArtistHeader extends React.Component<Props, any> {
           <img
             className="artist-header__person_image"
             src={supporter.profile_image_url}
-            alt={supporter.name}
-            style={{ borderColor }}
+            alt={this.anonymizeSupporterName(supporter.name)}
+            style={style}
           />
         ) : (
-          <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={{ borderColor }} />
+          <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={style} />
         )}
       </div>
     );
@@ -153,9 +169,15 @@ export class ArtistHeader extends React.Component<Props, any> {
     
     return (
       <div>
-        <button className="btn btn-support" style={{ borderColor }} >
+        <button className="btn btn-support" style={{ borderColor, maxWidth: '100%' }} >
           Become a Supporter 
         </button>
+        <br />
+        <div style={{ width: '100%', textAlign: 'center' }}>
+          <a href="https://www.ampled.com/why-support" target="_blank" style={{ color: '#969696' }}>
+            Why support?
+          </a>
+        </div>
       </div>
 
     );
@@ -163,6 +185,8 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   renderSupportersContainer = () => {
     const { artist } = this.props;
+
+    const RenderSupporter = this.renderSupporter;
 
     if (!artist.supporters) {
       return null;
@@ -174,25 +198,38 @@ export class ArtistHeader extends React.Component<Props, any> {
 
     return (
       <div className="artist-header__supporters">
-        <div className="artist-header__supporter-title">{artist.supporters.length} Supporter(s)</div>
 
-        {mostRecentSupporter && (
+        {mostRecentSupporter && (<div>
+            <div className="artist-header__supporter-title">MOST RECENT SUPPORTER</div>
           <div key={mostRecentSupporter.id} className="row align-items-center">
-            <div className="col-3">{this.renderSupporter({ supporter: mostRecentSupporter, borderColor })}</div>
+            <div className="col-3">
+              <RenderSupporter
+                supporter={mostRecentSupporter}
+                borderColor={borderColor}
+              />
+            </div>
             <div className="col-9">
-              <b className="most-recent-supporter-tag">MOST RECENT SUPPORTER</b>
-              <div className="artist-header__person_name">{mostRecentSupporter.name}</div>
+              <div className="artist-header__person_name">{this.anonymizeSupporterName(mostRecentSupporter.name)}</div>
               <div className="artist-header__person_quote" />
             </div>
           </div>
+          </div>
         )}
+        <div className="artist-header__supporter-title">{artist.supporters.length} Supporter(s)</div>
 
-        <div className="row justify-content-start no-gutters">
+        <div className="row justify-content-start no-gutters" style={{ marginBottom: '24px' }}>
           {artist.supporters
             .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
             .map((supporter) => (
-              <div key={supporter.id} className="col-2">
-                {this.renderSupporter({ supporter, borderColor, isSmall: true })}
+              <div key={supporter.id} className="col-2" style={{
+                maxWidth: '12.5%',
+                flex: '0 0 12.5%',
+              }}>
+                <RenderSupporter
+                  supporter={supporter}
+                  borderColor={borderColor}
+                  isSmall
+                />
               </div>
             ))}
         </div>
@@ -208,7 +245,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderArtistName()}
             {this.renderPhotoContainer()}
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4 artist-header artist-header__message-col">
             <div className="artist-header__message">Message from the Artist</div>
             {this.renderFloatingNewPostButton()}
             {this.renderMessageContainer()}

@@ -88,7 +88,7 @@ class NavComponent extends React.Component<Props, any> {
         </Link>
         {this.showSupportButton() && (
           <button className="btn btn-support" onClick={this.handleSupportClick}>
-            Support
+            Support this artist
           </button>
         )}
         <div className="menus">
@@ -104,7 +104,7 @@ class NavComponent extends React.Component<Props, any> {
         {this.showSupportButton() && (
           <div className="stickySupport">
             <button className="btn btn-support" onClick={this.handleSupportClick}>
-              Support
+              Support this artist
             </button>
           </div>
         )}

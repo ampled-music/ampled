@@ -210,7 +210,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         )}
         <div className="artist-header__supporter-title">{artist.supporters.length} Supporter(s)</div>
 
-        <div className="row justify-content-start no-gutters">
+        <div className="row justify-content-start no-gutters" style={{ marginBottom: '24px' }}>
           {artist.supporters
             .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
             .map((supporter) => (

@@ -16,9 +16,12 @@
       border: 2px solid;
       z-index: 100;
       width: calc(100% - 30px);
-      height: 574px;
+      height: 339px;
       position: absolute;
       margin: -2px 0;
+      @include mq( $layout-m ) {
+        height: 574px;
+      }  
     }
   }
 

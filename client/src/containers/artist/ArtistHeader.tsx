@@ -95,6 +95,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     <div className="artist-header__photo-container" style={{ borderColor: this.props.artist.accent_color }}>
       {this.renderOwners()}
       {this.renderBanners()}
+      <div className="artist-header__photo-container_border" style={{ borderColor: this.props.artist.accent_color }} />
     </div>
   );
 

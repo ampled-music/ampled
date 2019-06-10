@@ -60,14 +60,14 @@ export class ArtistHeader extends React.Component<Props, any> {
             <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person">
               {owner.profile_image_url ? (
                 <img
-                  className="artist-header__person_image"
+                  className="artist-header__person_image member"
                   src={owner.profile_image_url}
                   alt={owner.name}
                   style={{ borderColor: artist.accent_color }}
                 />
               ) : (
                 <FontAwesomeIcon
-                  className="artist-header__person_svg"
+                  className="artist-header__person_svg member"
                   icon={faUserCircle}
                   style={{ borderColor: artist.accent_color }}
                 />
@@ -172,6 +172,12 @@ export class ArtistHeader extends React.Component<Props, any> {
         <button className="btn btn-support" style={{ borderColor, maxWidth: '100%' }} >
           Become a Supporter 
         </button>
+        <br />
+        <div style={{ width: '100%', textAlign: 'center' }}>
+          <a href="https://www.ampled.com/why-support" target="_blank" style={{ color: '#969696' }}>
+            Why support?
+          </a>
+        </div>
       </div>
 
     );

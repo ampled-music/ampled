@@ -245,7 +245,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderArtistName()}
             {this.renderPhotoContainer()}
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4 artist-header artist-header__message-col">
             <div className="artist-header__message">Message from the Artist</div>
             {this.renderFloatingNewPostButton()}
             {this.renderMessageContainer()}

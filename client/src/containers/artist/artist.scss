@@ -179,6 +179,12 @@
     font-weight: bold;
   }
 
+  &__message-col {
+    background-image: url(../../images/paper_header.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+  }
+
   &__message-container {
     display: flex;
     align-items: center;

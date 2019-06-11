@@ -13,7 +13,7 @@
     position: relative;
     z-index: 10;
     width: 100%;
-    max-width: 500px;
+    max-width: 350px;
     margin: auto;
     display: block;
 
@@ -23,10 +23,6 @@
         transition: all $speed;
     }
 
-    @include mq($desktop) {
-        width: 100%;
-        max-width: 500px;
-    }
     &__dark {
         border: 0px;
         background-color: $black;
@@ -84,4 +80,16 @@
             width: 350px;
         }
     }
+}
+
+.loading {
+    display: block;
+    margin: 2rem auto;
+    padding: 2rem;
+    text-align: center;
+}
+.center {
+    text-align: center;
+    display: block;
+    margin: auto;
 }

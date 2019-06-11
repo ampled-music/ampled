@@ -57,13 +57,20 @@
     font-family: $font-family-monospace;
     font-size: 1.2rem;
     text-align: center;
-    width: 50%;
-    margin: 2rem auto;
+    width: 100%;
+    margin: 1rem auto;
+   
+    @include mq($desktop) {
+      margin: 2rem auto;
+      width: 50%;
+    }
   }
 
   &__image {
+    display: block;
     margin: auto;
     width: 100%;
+    max-width: 400px;
   }
 
   &__sub-title {
@@ -76,7 +83,10 @@
   &__copy {
     font-family: $font-family-monospace;
     text-align: center;
-    min-height: 110px;
+
+    @include mq($desktop) {
+      min-height: 110px;
+    }
   }
 }
 
@@ -116,31 +126,33 @@
         opacity: 0;
         transition: opacity $speed;
       }
-      &.crowd {
-        img {
-          width: 790px;
-          transform: translate(380px, -110px) rotate(-5deg);
+      @include mq($desktop) {
+        &.crowd {
+          img {
+            width: 790px;
+            transform: translate(380px, -110px) rotate(-5deg);
+          }
+          .show {
+            opacity: 1;
+          }
         }
-        .show {
-          opacity: 1;
+        &.money {
+          img {
+            width: 560px;
+            transform: translate(480px, -460px);
+          }
+          .show {
+            opacity: 1;
+          }
         }
-      }
-      &.money {
-        img {
-          width: 560px;
-          transform: translate(480px, -460px);
-        }
-        .show {
-          opacity: 1;
-        }
-      }
-      &.speaker {
-        img {
-          width: 460px;
-          transform: translate(630px, -30px);
-        }
-        .show {
-          opacity: 1;
+        &.speaker {
+          img {
+            width: 460px;
+            transform: translate(630px, -30px);
+          }
+          .show {
+            opacity: 1;
+          }
         }
       }
     }

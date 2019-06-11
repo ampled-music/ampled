@@ -59,11 +59,11 @@ class HomeHowComponent extends React.Component<Props,any> {
           </div>
     
           <div className="home-how__list">
-            <div className="row home-how__list-item speaker" onClick={this.openSpeaker}>
-              <div className="col-1">
+            <div className="row justify-content-center justify-content-lg-start home-how__list-item speaker" onClick={this.openSpeaker}>
+              <div className="col-3 col-md-2 col-lg-1">
                 <div className="home-how__list-item_number">01</div>
               </div>
-              <div className="col-md-6">
+              <div className="col-9 col-md-7 col-lg-6">
                 <div className="home-how__list-item_title">
                   Artists post unique/ unreleased content.
                 </div>
@@ -75,11 +75,11 @@ class HomeHowComponent extends React.Component<Props,any> {
                 <img className={this.showGraphic(this.state.showSpeaker)} src={speaker} />
               </div>
             </div>
-            <div className="row home-how__list-item crowd" onClick={this.openMoney}>
-              <div className="col-1">
+            <div className="row justify-content-center justify-content-lg-start home-how__list-item crowd" onClick={this.openMoney}>
+              <div className="col-3 col-md-2 col-lg-1">
                 <div className="home-how__list-item_number">02</div>
               </div>
-              <div className="col-md-6">
+              <div className="col-9 col-md-7 col-lg-6">
                 <div className="home-how__list-item_title">Artists are supported directly by their community</div>
                 <div className="home-how__list-item_copy">
                   Artists can be supported directly for $3 or more per month - unlocking access to their exclusive content.
@@ -89,11 +89,11 @@ class HomeHowComponent extends React.Component<Props,any> {
                 <img className={this.showGraphic(this.state.showCrowd)} src={crowd} />
               </div>
             </div>
-            <div className="row home-how__list-item money" onClick={this.openCrowd}>
-              <div className="col-1">
+            <div className="row justify-content-center justify-content-lg-start home-how__list-item money" onClick={this.openCrowd}>
+              <div className="col-3 col-md-2 col-lg-1">
                 <div className="home-how__list-item_number no-tail">03</div>
               </div>
-              <div className="col-md-6">
+              <div className="col-9 col-md-7 col-lg-6">
                 <div className="home-how__list-item_title">Artists collect monthly recurring revenue</div>
                 <div className="home-how__list-item_copy">
                   When an artist posts something new, their supporters get a notification. 

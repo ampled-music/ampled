@@ -1,6 +1,11 @@
 .container {
     max-width: 1140px;
 }
+a {
+    &:hover {
+        text-decoration: none;
+    }
+}
 
 .btn {
     border-radius: 0px;
@@ -20,6 +25,7 @@
     &:hover {
         background-color: $black;
         color: $white;
+        text-decoration: none;
         transition: all $speed;
     }
 

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
+import { config } from 'src/config';
+
 import { artistsPages } from '../../redux/ducks/get-artists-pages';
 
 interface Props {
@@ -17,6 +19,12 @@ interface Props {
 interface State {
   artistPages: [];
 }
+
+
+const openInNewTab = (url: string) => {
+  var win = window.open(url, '_blank');
+  win.focus();
+};
 
 class HomeArtistsComponent extends React.Component<Props, State> {
   constructor(props) {
@@ -35,7 +43,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
     const artistsPages = this.props.artistsPages.pages;
 
     if (loading) {
-      return <span>Loading...</span>;
+      return <div className="loading">Loading Artists...</div>;
     }
 
     return (
@@ -44,6 +52,11 @@ class HomeArtistsComponent extends React.Component<Props, State> {
         <div className="container">
           <div className="row">
             {this.getArtistsList(artistsPages)}
+          </div>
+          <div className="row">
+            <button className="home-artists__button btn center" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
+              Create Your Artist Page
+            </button>
           </div>
         </div>
       </div>
@@ -56,11 +69,13 @@ class HomeArtistsComponent extends React.Component<Props, State> {
       artistsPages.length &&
       artistsPages.map((page) => {
         return (
-          <div className="col-md-4 home-artists__item" key={page.id}>
+          <div className="col-sm-6 col-md-4 home-artists__item" key={page.id}>
             <Link to={`/artists/${page.id}`}>
               <div className="home-artists__item_border" style={{ borderColor: page.accent_color }} >
                 <div className="home-artists__item_title">{page.name}</div>
-                <img className="home-artists__item_image" src={page.banner_image_url} />
+                <div className="home-artists__item_image_hover" style={{ backgroundColor: page.accent_color }}>
+                  <img className="home-artists__item_image" src={page.banner_image_url} />
+                </div>
               </div>
             </Link>
           </div>

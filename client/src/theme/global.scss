@@ -1,23 +1,43 @@
 .container {
     max-width: 1140px;
 }
+a {
+    &:hover {
+        text-decoration: none;
+    }
+}
 
 .btn {
     border-radius: 0px;
     border: 2px solid $black;
     background-color: $white;
     color: $black;
-    width: 100%;
     font-family: $font-family-monospace;
     font-weight: 500;
     text-transform: uppercase;
     position: relative;
     z-index: 10;
+    width: 100%;
+    max-width: 350px;
+    margin: auto;
+    display: block;
 
     &:hover {
-        background-color: #1E1E1E;
+        background-color: $black;
         color: $white;
-        transition: .25s all ease-in-out;
+        text-decoration: none;
+        transition: all $speed;
+    }
+
+    &__dark {
+        border: 0px;
+        background-color: $black;
+        color: $white;
+        &:hover {
+            background-color: $white;
+            color: $black;
+            transition: all $speed;
+        }
     }
 }
 
@@ -55,4 +75,27 @@
             transform: translateY(-50%);
         }
     }
+}
+
+.hr {
+    &__thick {
+        height: 10px;
+        background: black;
+        width: 50%;
+        @include mq($tablet) {
+            width: 350px;
+        }
+    }
+}
+
+.loading {
+    display: block;
+    margin: 2rem auto;
+    padding: 2rem;
+    text-align: center;
+}
+.center {
+    text-align: center;
+    display: block;
+    margin: auto;
 }

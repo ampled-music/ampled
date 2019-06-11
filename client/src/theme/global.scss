@@ -18,14 +18,24 @@
     display: block;
 
     &:hover {
-        background-color: #1E1E1E;
+        background-color: $black;
         color: $white;
-        transition: .25s all ease-in-out;
+        transition: all $speed;
     }
 
     @include mq($desktop) {
         width: 100%;
         max-width: 500px;
+    }
+    &__dark {
+        border: 0px;
+        background-color: $black;
+        color: $white;
+        &:hover {
+            background-color: $white;
+            color: $black;
+            transition: all $speed;
+        }
     }
 }
 

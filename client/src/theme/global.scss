@@ -64,3 +64,14 @@
         }
     }
 }
+
+.hr {
+    &__thick {
+        height: 10px;
+        background: black;
+        width: 50%;
+        @include mq($tablet) {
+            width: 350px;
+        }
+    }
+}

@@ -95,6 +95,13 @@
   color: $white;
   position: relative;
   overflow: hidden;
+  margin: 2rem auto 0;
+  padding: 0 0 2rem;
+
+  @include mq($desktop) {
+    margin: 0;
+    padding: 0;
+  }
 
   h1 {
     font-family: $font-family-sans-serif;
@@ -296,6 +303,7 @@
 .tear {
   width: 100%;
   position: relative;
+  display: none;
 
   &.tear_1 {
     bottom: -30px;
@@ -305,5 +313,8 @@
   &.tear_2 {
     background-color: $white; 
     margin-bottom: -70px;
+  }
+  @include mq($desktop) {
+    display: block;
   }
 }

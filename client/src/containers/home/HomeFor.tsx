@@ -13,6 +13,7 @@ export const HomeFor = () => (
           <p className="home-for__mission">
             Ampled is a mission-driven platform created by and for artists.  That means we do some things differently.
           </p>
+          <hr className="hr__thick"/>
         </div>
       </div>
 

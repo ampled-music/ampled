@@ -56,7 +56,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
       artistsPages.length &&
       artistsPages.map((page) => {
         return (
-          <div className="col-md-4 home-artists__item" key={page.id}>
+          <div className="col-sm-6 col-md-4 home-artists__item" key={page.id}>
             <Link to={`/artists/${page.id}`}>
               <div className="home-artists__item_border" style={{ borderColor: page.accent_color }} >
                 <div className="home-artists__item_title">{page.name}</div>

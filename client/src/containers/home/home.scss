@@ -83,6 +83,8 @@
 .home-how {
   background-color: $gray-dark;
   color: $white;
+  position: relative;
+  overflow: hidden;
 
   h1 {
     font-family: $font-family-sans-serif;

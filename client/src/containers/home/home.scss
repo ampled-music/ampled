@@ -235,16 +235,15 @@
     }
 
     &_border {
-      height: calc(100% - 30px);
-      border: 3px solid $black;
-      position: relative;
-      z-index: 2;
-      &:after {
-        border: 3px solid $black;
-        height: 100%;
-        width: 100%;
-        z-index: 10;
-      }
+      border: 2px solid $black;
+      z-index: 100;
+      width: calc(100% - 30px);
+      height: 100%;
+      position: absolute;
+      border-width: 2px;
+      border-style: solid;
+      margin: -2px 0px;
+      top: 0;
     }
 
     &_title {

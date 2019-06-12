@@ -239,6 +239,12 @@
       border: 3px solid $black;
       position: relative;
       z-index: 2;
+      &:after {
+        border: 3px solid $black;
+        height: 100%;
+        width: 100%;
+        z-index: 10;
+      }
     }
 
     &_title {
@@ -328,7 +334,7 @@
 
   &.tear_2 {
     background-color: $white; 
-    margin-bottom: -70px;
+    margin-bottom: -44px;
   }
   @include mq($desktop) {
     display: block;

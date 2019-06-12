@@ -35,7 +35,7 @@ class ArtistPage < ApplicationRecord
 
   def active_subscribers
     # subscribers.merge(Subscription.active)
-    User.where.not(id: owners.pluck(:id)).sample(10)
+    User.where.not(id: owners.pluck(:id)).sample(10, random: Random.new(id))
   end
 
   def stripe_state_token

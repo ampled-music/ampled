@@ -52,7 +52,7 @@ export class SupportComponent extends React.Component<Props, any> {
   }
 
   componentDidUpdate(prevProps) {
-    const { me, artists, subscriptions, getMe } = this.props;
+    const { me, subscriptions, getMe } = this.props;
 
     if (!prevProps.me.userData && me.userData) {
       this.getArtistInfo();
@@ -63,7 +63,7 @@ export class SupportComponent extends React.Component<Props, any> {
       this.redirectToArtistsPage();
     }
 
-    if (me.userData && me.userData.id && artists.artist.supporters && artists.artist.supporters.find((supporter) => supporter.id === me.userData.id)) {
+    if (me.userData && me.userData && me.userData.subscriptions && me.userData.subscriptions.find(sub => Number(sub.artistPageId) === Number(this.props.match.params.id))) {
       this.redirectToArtistsPage();
     }
   }

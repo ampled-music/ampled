@@ -20,6 +20,7 @@ class UserDashboard < Administrate::BaseDashboard
     updated_at: Field::DateTime,
     locked_at: Field::DateTime,
     name: Field::String,
+    login_redirect_url: Field::String,
     profile_image_url: Field::String
   }.freeze
 

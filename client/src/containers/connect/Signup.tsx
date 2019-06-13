@@ -77,8 +77,9 @@ class SignupComponent extends React.Component<Props, any> {
     }
 
     const { email, password, confirmPassword, name } = this.state;
+    const loginRedirect = window.location.href;
 
-    const submitResult = await this.props.signup(email, password, confirmPassword, name);
+    const submitResult = await this.props.signup(email, password, confirmPassword, name, loginRedirect);
 
     if (submitResult) {
       this.setState({ submitted: true });

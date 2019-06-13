@@ -17,5 +17,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def user_params
     params.permit(:profile_image_url)
+    params.permit(:login_redirect_url)
   end
 end

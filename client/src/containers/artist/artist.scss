@@ -1,5 +1,6 @@
 @import "../../theme/vars.scss";
 @import "../../theme/mixins.scss";
+@import "../../theme/global.scss";
 
 .artist-header {
   font-family: $font-family-sans-serif;
@@ -54,7 +55,7 @@
   }
 
   &__person {
-    width: 100%;
+    width: auto;
     max-width: 50px;
     max-height: 50px;
     position: relative;
@@ -71,13 +72,14 @@
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
-      border: 1px solid $brand-primary;
+      border-width: 1px;  
+      border-style: solid;  
       margin: auto;
+
       @include mq( $layout-m ) {
         max-width: 70px;
         max-height: 70px;
       }
-      
       &.member {
         @include mq( $layout-m ) {
           width: 56px !important;
@@ -90,8 +92,14 @@
       height: 50px;
       background-color: $white;
       border-radius: 100px;
-      border: 1px solid $brand-primary;
+      border-width: 1px;  
+      border-style: solid;  
       margin: auto;
+      
+      path {
+        fill: $gray-light;
+      }
+
       @include mq( $layout-m ) {
         max-width: 70px;
         max-height: 70px;
@@ -105,6 +113,13 @@
       }
     }
 
+    &_info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+
     &_name {
       font-size: 1.0rem;
     }
@@ -114,7 +129,7 @@
     }
 
     &_small {
-      margin: 4px;
+      margin: 0 3px;
     }
   }
 
@@ -201,11 +216,30 @@
     z-index: -1;
   }
 
-  &__supporter-title {
-    font-size: 1.2rem;
-    margin: 1rem 0 0.5rem 0;
-    text-transform: uppercase;
-    font-weight: bold;
+  &__supporters {
+    &_title {
+      font-size: 1.2rem;
+      margin: 1rem 0 0.5rem 0;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    &_recent {
+      display: flex;
+
+      .artist-header__person {
+        margin: 0 1rem 0 0 ;
+      }
+    }
+
+    &_all {
+      display: flex;
+      flex-flow: wrap;
+      margin-bottom:1.5rem;
+      .artist-header__person_image,
+      .artist-header__person_svg {
+        border-width:0;
+      }
+    }
   }
 
   .most-recent-supporter-tag {

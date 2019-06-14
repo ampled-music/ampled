@@ -169,7 +169,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     
     return (
       <div>
-        <button className="btn btn-support btn-support-header" style={{ borderColor }} >
+        <button className="btn btn-support" style={{ borderColor }} >
           Become a Supporter 
         </button>
         <a href="https://www.ampled.com/why-support" target="_blank" className="link link__why">

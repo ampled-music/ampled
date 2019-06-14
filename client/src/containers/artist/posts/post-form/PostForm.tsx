@@ -215,13 +215,13 @@ class PostFormComponent extends React.Component<Props, any> {
                   name="body"
                   label="Caption"
                   type="text"
-                  helperText="300 character limit"
+                  helperText="3000 character limit"
                   fullWidth
                   multiline
                   rows="3"
                   variant="outlined"
                   inputProps={{
-                    maxLength: 300,
+                    maxLength: 3000,
                   }}
                   InputLabelProps={{
                     shrink: true,
@@ -247,7 +247,7 @@ class PostFormComponent extends React.Component<Props, any> {
                   Cancel
                 </Button>
                 <Button
-                  type="Submit"
+                  type="submit"
                   className={cx('post-button', { disabled: !isSaveEnabled })}
                   disabled={!isSaveEnabled}
                 >

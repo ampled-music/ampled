@@ -69,20 +69,14 @@ class NavComponent extends React.Component<Props, any> {
   };
 
   renderLoginLink = () => (
-    <div className="loginLink">
-      {this.props.userData ? (
-        this.renderUserImage()
-      ) : (
-        <div>
-          <a onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>
-            <b>Login</b>
-          </a>{' '}
-          or{' '}
-          <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
-            <b>Sign Up</b>
-          </a>
-        </div>
-      )}
+    <div>
+      <a onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>
+        <b>Login</b>
+      </a>{' '}
+      or{' '}
+      <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
+        <b>Sign Up</b>
+      </a>
     </div>
   );
 
@@ -94,13 +88,26 @@ class NavComponent extends React.Component<Props, any> {
         </Link>
         {this.showSupportButton() && (
           <button className="btn btn-support" onClick={this.handleSupportClick}>
-            Support
+            Support this artist
           </button>
         )}
         <div className="menus">
-          {this.renderLoginLink()}
-          <Menu />
+          <div className="supporter-message">
+            You are a supporter
+          </div>
+          <div className="loginLink">
+            {this.props.userData && this.renderUserImage()}
+            {!this.props.userData && this.renderLoginLink()}
+          </div>
+          <Menu renderLoginLink={this.renderLoginLink} />
         </div>
+        {this.showSupportButton() && (
+          <div className="stickySupport">
+            <button className="btn btn-support" onClick={this.handleSupportClick}>
+              Support this artist
+            </button>
+          </div>
+        )}
       </header>
     );
   }

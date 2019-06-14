@@ -78,11 +78,14 @@ class SignupComponent extends React.Component<Props, any> {
 
     const { email, password, confirmPassword, name } = this.state;
 
-    await this.props.signup(email, password, confirmPassword, name);
+    const submitResult = await this.props.signup(email, password, confirmPassword, name);
 
-    this.setState({ submitted: true });
-
-    this.checkErrors();
+    if (submitResult) {
+      this.setState({ submitted: true });
+      this.checkErrors();
+    } else {
+      showToastMessage("Error signing up. Maybe you already have an account?", MessageType.ERROR, {timeOut: 8000});
+    }
   };
 
   handleChange = (e) => {

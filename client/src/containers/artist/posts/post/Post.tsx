@@ -89,7 +89,9 @@ class PostComponent extends React.Component<any, any> {
   };
 
   handlePrivatePostClick = (authenticated: boolean) => {
-    if (!authenticated) {
+    if (this.props.post.allow_details) {
+      return;
+    } else if (!authenticated) {
       this.openSignupModal();
     } else {
       this.redirectToSupport();
@@ -201,7 +203,7 @@ class PostComponent extends React.Component<any, any> {
                 />
               ))}
             </Collapse>
-            <CardActions className={cx(classes.actions, 'collapse-actions')} disableActionSpacing>
+            <CardActions className={cx(classes.actions, 'collapse-actions')} disableSpacing>
               <button className="show-previous-command-btn" onClick={this.handleExpandClick}>
                 <b>{expanded ? 'HIDE PREVIOUS COMMENTS' : 'VIEW PREVIOUS COMMENTS'}</b>
               </button>

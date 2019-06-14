@@ -35,7 +35,7 @@ class ArtistPage < ApplicationRecord
 
   def active_subscribers
     # subscribers.merge(Subscription.active)
-    User.where.not(id: owners.pluck(:id)).sample(rand(10..20))
+    User.where.not(id: owners.pluck(:id)).sample(10)
   end
 
   def stripe_state_token
@@ -98,7 +98,9 @@ class ArtistPage < ApplicationRecord
   end
 
   def monthly_total
-    43_000 * 100
+    subscriptions.active.includes(:plan).reduce(0) do |sum, subscription|
+      sum + subscription.plan.amount
+    end
   end
 
   def last_post_date
@@ -106,12 +108,17 @@ class ArtistPage < ApplicationRecord
   end
 
   def last_payout
-    1.week.ago
+    return nil if stripe_user_id.blank?
+
+    response = Stripe::Payout.list({ limit: 1 }, stripe_account: stripe_user_id)
+    payout = response.data[0]
+    return nil if payout.blank?
+
+    DateTime.strptime(payout["arrival_date"].to_s, "%s")
   end
 
   def most_recent_supporter
-    # subscriptions.order(created_at: :desc).first&.user_id
-    active_subscribers.sample
+    subscriptions.order(created_at: :desc).first&.user
   end
 
   private

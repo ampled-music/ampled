@@ -12,7 +12,17 @@
     @include mq( $layout-m ) {
       margin: auto;
     }
-
+    &_border {
+      border: 2px solid;
+      z-index: 100;
+      width: calc(100% - 30px);
+      height: 339px;
+      position: absolute;
+      margin: -2px 0;
+      @include mq( $layout-m ) {
+        height: 574px;
+      }  
+    }
   }
 
   &__title {
@@ -28,6 +38,7 @@
   }
 
   &__persons {
+    z-index: 200;
     display: flex;
     align-items: flex-start;
     align-content: flex-start;
@@ -38,7 +49,7 @@
 
     @include mq( $layout-m ) {
       padding-top: 20px;
-      left: -10px;
+      left: -12px;
     }
   }
 
@@ -66,6 +77,13 @@
         max-width: 70px;
         max-height: 70px;
       }
+      
+      &.member {
+        @include mq( $layout-m ) {
+          width: 56px !important;
+          height: 56px !important;
+        }
+      }
     }
     &_svg {
       width: 50px !important;
@@ -78,10 +96,17 @@
         max-width: 70px;
         max-height: 70px;
       }
+
+      &.member {
+        @include mq( $layout-m ) {
+          width: 56px !important;
+          height: 56px !important;
+        }
+      }
     }
 
     &_name {
-      font-size: 0.9rem;
+      font-size: 1.0rem;
     }
     &_quote {
       font-size: 0.8rem;
@@ -101,6 +126,7 @@
     align-content: flex-start;
     @include mq( $layout-m ) {
       height: 570px;
+      margin-left: 54px;
     }
   }
 
@@ -153,6 +179,12 @@
     font-weight: bold;
   }
 
+  &__message-col {
+    background-image: url(../../images/paper_header.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+  }
+
   &__message-container {
     display: flex;
     align-items: center;
@@ -171,7 +203,7 @@
 
   &__supporter-title {
     font-size: 1.2rem;
-    margin: 1rem 0;
+    margin: 1rem 0 0.5rem 0;
     text-transform: uppercase;
     font-weight: bold;
   }

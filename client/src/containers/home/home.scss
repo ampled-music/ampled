@@ -232,11 +232,17 @@
 
     a {
       text-decoration: none !important;
+      
+      &:hover {
+        .home-artists__item_image {
+          opacity: .75;
+          transition: all $speed;
+        }
+      }
     }
 
     &_border {
       border: 2px solid $black;
-      z-index: 100;
       width: calc(100% - 30px);
       height: 100%;
       position: absolute;
@@ -244,6 +250,7 @@
       border-style: solid;
       margin: -2px 0px;
       top: 0;
+      z-index: 5;
     }
 
     &_title {
@@ -264,12 +271,6 @@
         width: 100%;
         position: relative;
         opacity: 1;
-        &:hover {
-          .home-artists__item_image {
-            opacity: .75;
-            transition: all $speed;
-          }
-        }
       }
     }
 

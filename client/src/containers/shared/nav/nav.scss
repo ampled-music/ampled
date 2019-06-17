@@ -31,17 +31,10 @@
   }
 }
 
-.btn-support {
-  border-radius: 0px;
-  text-transform: uppercase;
-  background-color: $black;
-  color: $white;
-  font-family: $font-family-monospace;
-  max-width: 250px;
-  display: none;
-  @include mq( $layout-m ) {
-    display: block;
-  }
+.btn-support-header {
+  position: absolute !important;
+  left: 0;
+  right: 0;
 }
 
 .stickySupport {
@@ -54,7 +47,7 @@
   background: white;
   padding: 8px 0;
   
-  .btn-support {
+  .btn-support-header {
     display: block !important;
     margin: 0 auto;
   }

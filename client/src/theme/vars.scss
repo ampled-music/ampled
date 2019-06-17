@@ -1,4 +1,5 @@
 // Custom Colors:
+$gray-light:                #969696;
 $gray:                      #3D3D3D;
 $black:						#1E1E1E;
 $white:						#FFF;
@@ -93,7 +94,7 @@ $layout-xl: $desktop-m;
 $font-family-sans-serif:     'LL Replica Bold Web', sans-serif;
 $font-family-serif:          'FayonGrandePro', serif;
 $font-family-monospace:      'Courier', Courier, monospace;
-$font-family-base:           'AvenirLTStd-Light', Helvetica Neue, Helvetica, Arial, sans-serif;
+$font-family-base:           Helvetica Neue, Helvetica, Arial, sans-serif;
 
 // Pixel value used to responsively scale all typography. Applied to the `<html>` element.
 $font-size-root:             21px;

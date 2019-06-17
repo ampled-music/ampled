@@ -169,15 +169,12 @@ export class ArtistHeader extends React.Component<Props, any> {
     
     return (
       <div>
-        <button className="btn btn-support" style={{ borderColor, maxWidth: '100%' }} >
+        <button className="btn btn-support" style={{ borderColor }} >
           Become a Supporter 
         </button>
-        <br />
-        <div style={{ width: '100%', textAlign: 'center' }}>
-          <a href="https://www.ampled.com/why-support" target="_blank" style={{ color: '#969696' }}>
-            Why support?
-          </a>
-        </div>
+        <a href="https://www.ampled.com/why-support" target="_blank" className="link link__why">
+          Why support?
+        </a>
       </div>
 
     );
@@ -185,7 +182,6 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   renderSupportersContainer = () => {
     const { artist } = this.props;
-
     const RenderSupporter = this.renderSupporter;
 
     if (!artist.supporters) {
@@ -193,41 +189,35 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
 
     const borderColor = artist.accent_color;
-
     const mostRecentSupporter = artist.most_recent_supporter;
 
     return (
       <div className="artist-header__supporters">
 
-        {mostRecentSupporter && (<div>
-            <div className="artist-header__supporter-title">MOST RECENT SUPPORTER</div>
-          <div key={mostRecentSupporter.id} className="row align-items-center">
-            <div className="col-3">
+        {mostRecentSupporter && (
+          <div>
+            <div className="artist-header__supporters_title">Most Recent Supporter</div>
+            <div className="artist-header__supporters_recent">
               <RenderSupporter
                 supporter={mostRecentSupporter}
                 borderColor={borderColor}
               />
+              <div className="artist-header__person_info">
+                <div className="artist-header__person_name">{this.anonymizeSupporterName(mostRecentSupporter.name)}</div>
+                <div className="artist-header__person_quote" /></div>
+              </div>
             </div>
-            <div className="col-9">
-              <div className="artist-header__person_name">{this.anonymizeSupporterName(mostRecentSupporter.name)}</div>
-              <div className="artist-header__person_quote" />
-            </div>
-          </div>
-          </div>
         )}
-        <div className="artist-header__supporter-title">{artist.supporters.length} Supporter(s)</div>
+        <div className="artist-header__supporters_title">{artist.supporters.length} Supporter(s)</div>
 
-        <div className="row justify-content-start no-gutters" style={{ marginBottom: '24px' }}>
+        <div className="artist-header__supporters_all">
           {artist.supporters
             .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
             .map((supporter) => (
-              <div key={supporter.id} className="col-2" style={{
-                maxWidth: '12.5%',
-                flex: '0 0 12.5%',
-              }}>
+              <div>
                 <RenderSupporter
                   supporter={supporter}
-                  borderColor={borderColor}
+                  borderColor
                   isSmall
                 />
               </div>
@@ -240,7 +230,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   render() {
     return (
       <div className="artist-header container">
-        <div className="row justify-content-center">
+        <div className="row justify-content-between">
           <div className="col-md-7">
             {this.renderArtistName()}
             {this.renderPhotoContainer()}

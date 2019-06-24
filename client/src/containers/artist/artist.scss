@@ -211,10 +211,12 @@
   }
 
   &__message-col {
-    @include mq( $layout-m ) {
-      background-image: url(../../images/paper_header.png);
-      background-repeat: no-repeat;
-      background-size: auto;
+    background-image: url(../../images/paper_header.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+
+    @include mq( $phablet-l, $desktop ) {
+      background-image:none;
     }
   }
 

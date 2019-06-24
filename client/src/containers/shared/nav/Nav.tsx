@@ -103,7 +103,7 @@ class NavComponent extends React.Component<Props, any> {
         </div>
         {this.showSupportButton() && (
           <div className="stickySupport">
-            <button className="btn btn-support btn-support-header" onClick={this.handleSupportClick}>
+            <button className="btn btn-support" onClick={this.handleSupportClick}>
               Support this artist
             </button>
           </div>

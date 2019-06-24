@@ -7,21 +7,21 @@
 
   &__photo-container {
     display: flex;
-    border: 2px solid $brand-primary;
     justify-content: center;
     margin: 0 2rem;
     @include mq( $layout-m ) {
       margin: auto;
     }
     &_border {
-      border: 2px solid;
+      border: 2px solid $brand-primary;
       z-index: 100;
-      width: calc(100% - 30px);
+      width: calc(100% - 85px);
       height: 339px;
       position: absolute;
       margin: -2px 0;
       @include mq( $layout-m ) {
         height: 574px;
+        width: calc(100% - 30px);
       }  
     }
   }
@@ -264,6 +264,7 @@
       width: 85px;
       background-color: rgba(255, 255, 255, 0.6);
       transition: all 0.25s ease-in-out;
+      cursor: pointer;
     }
     &_svg {
       color: $brand-primary;

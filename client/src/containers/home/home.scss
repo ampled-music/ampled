@@ -274,34 +274,34 @@
       }
     }
 
-    &:nth-child(1) {
+    &:nth-child(1n) {
       .home-artists__item_image_hover {
-        transform: translate(7px, -40px);
+        transform: translate(7px, -30px);
       }
     }
-    &:nth-child(2) {
+    &:nth-child(2n) {
       .home-artists__item_image_hover {
         transform: translate(13px, -10px);
       }
     }
-    &:nth-child(3) {
+    &:nth-child(3n) {
       .home-artists__item_image_hover {
         transform: translate(-10px,-5px);
       }
     }
-    &:nth-child(4) {
+    &:nth-child(4n) {
       .home-artists__item_image_hover {
-        transform: translate(20px,-3px);
+        transform: translate(10px,-3px);
       }
     }
-    &:nth-child(5) {
+    &:nth-child(5n) {
       .home-artists__item_image_hover {
         transform: translate(-5px,-10px);
       }
     }
-    &:nth-child(6) {
+    &:nth-child(6n) {
       .home-artists__item_image_hover {
-        transform: translate(9px,-30px);
+        transform: translate(9px,-25px);
       }
     }
   }

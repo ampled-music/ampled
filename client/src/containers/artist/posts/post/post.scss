@@ -2,6 +2,8 @@
 @import "../../../../theme/mixins.scss";
 
 .post {
+  max-width: 500px;
+  margin: auto;
   &.clickable-post {
     cursor: pointer;
   }
@@ -64,6 +66,7 @@
     max-width: 500px;
     display: flex;
     flex-direction: column;
+    margin: 0 auto 2rem;
 
     span {
       font-family: Courier, 'Courier New', monospace;

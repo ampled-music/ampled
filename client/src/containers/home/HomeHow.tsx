@@ -51,58 +51,64 @@ class HomeHowComponent extends React.Component<Props,any> {
     return (
         <div className="home-how">
         <img className="tear tear_1" src={tear_1} />
+
+
         <div className="container">
           <div className="row">
             <div className="col-md-12">
               <h1 className="home-how__title">How it Works</h1>
             </div>
           </div>
+
     
           <div className="home-how__list">
-            <div className="row justify-content-center justify-content-lg-start home-how__list-item speaker" onClick={this.openSpeaker}>
-              <div className="col-3 col-md-2 col-lg-1">
-                <div className="home-how__list-item_number">01</div>
+            
+            <div className="home-how__numbers">
+              <div className="section_1">
+                <div className="home-how__number">1</div>
               </div>
-              <div className="col-9 col-md-7 col-lg-6">
-                <div className="home-how__list-item_title">
-                  Artists post unique/ unreleased content.
-                </div>
-                <div className="home-how__list-item_copy">
+              <div className="section_2">
+                <div className="home-how__number">2</div>
+              </div>
+              <div className="section_3">
+                <div className="home-how__number no-tail">3</div>
+              </div>
+            </div>
+
+            <div className="home-how__info">
+              <div className="section_1">
+                <div className="home-how__title">Artists post unique/ unreleased content.</div>
+                <div className="home-how__copy">
                   Artists on Ampled post things you won’t find anywhere else - like demos, unreleased recordings, access to exclusive merch, discounts, personal notes, announcements - and more.
                 </div>
               </div>
-              <div className="home-how__list-item_image speaker">
-                <img className={this.showGraphic(this.state.showSpeaker)} src={speaker} />
-              </div>
-            </div>
-            <div className="row justify-content-center justify-content-lg-start home-how__list-item crowd" onClick={this.openCrowd}>
-              <div className="col-3 col-md-2 col-lg-1">
-                <div className="home-how__list-item_number">02</div>
-              </div>
-              <div className="col-9 col-md-7 col-lg-6">
-                <div className="home-how__list-item_title">Artists are supported directly by their community</div>
-                <div className="home-how__list-item_copy">
+              <div className="section_2">
+                <div className="home-how__title">Artists are supported directly by their community</div>
+                <div className="home-how__copy">
                   Artists can be supported directly for $3 or more per month - unlocking access to their exclusive content.
                 </div>
               </div>
-              <div className="home-how__list-item_image crowd">
-                <img className={this.showGraphic(this.state.showCrowd)} src={crowd} />
-              </div>
-            </div>
-            <div className="row justify-content-center justify-content-lg-start home-how__list-item money" onClick={this.openMoney}>
-              <div className="col-3 col-md-2 col-lg-1">
-                <div className="home-how__list-item_number no-tail">03</div>
-              </div>
-              <div className="col-9 col-md-7 col-lg-6">
-                <div className="home-how__list-item_title">Artists collect monthly recurring revenue</div>
-                <div className="home-how__list-item_copy">
+              <div className="section_3">
+                <div className="home-how__title">Artists collect monthly recurring revenue</div>
+                <div className="home-how__copy">
                   When an artist posts something new, their supporters get a notification. 
                 </div>
-                <div className="home-how__list-item_image money">
-                  <img className={this.showGraphic(this.state.showMoney)} src={money} />
-                </div>
               </div>
             </div>
+
+            <div className="home-how__images">
+              <div className="section_1 home-how__image speaker">
+                <img className={this.showGraphic(this.state.showSpeaker)} src={speaker} />
+              </div>
+              <div className="section_2 home-how__image crowd">
+                <img className={this.showGraphic(this.state.showCrowd)} src={crowd} />
+              </div>
+              <div className="section_3 home-how__image money">
+                <img className={this.showGraphic(this.state.showMoney)} src={money} />
+              </div>
+            </div>
+
+
           </div>
         </div>
         <img className="tear tear_2" src={tear_2} />

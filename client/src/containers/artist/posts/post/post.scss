@@ -2,6 +2,8 @@
 @import "../../../../theme/mixins.scss";
 
 .post {
+  max-width: 500px;
+  margin: auto;
   &.clickable-post {
     cursor: pointer;
   }
@@ -64,6 +66,7 @@
     max-width: 500px;
     display: flex;
     flex-direction: column;
+    margin: 0 auto 2rem;
 
     span {
       font-family: Courier, 'Courier New', monospace;
@@ -81,6 +84,7 @@
 
       .show-previous-command-btn {
         font-family: $font-family-monospace;
+        text-transform: uppercase;
         width: 100%;
         cursor: pointer;
         font-size: 12px;
@@ -92,9 +96,11 @@
         text-decoration: underline;
         outline: none;
         background-color: transparent;
+        transition: all $speed;
       }
 
       .show-previous-command-btn:hover {
+        transition: all $speed;
         transform: rotate(-2deg);
         color: $black;
         font-size: 13px;

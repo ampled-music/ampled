@@ -4,24 +4,34 @@
 
 .artist-header {
   font-family: $font-family-sans-serif;
+  
+  @include mq( $layout-m ) {
+    padding: 0 40px;
+  }
+  @include mq( $layout-l ) {
+    padding: 0 15px;
+  }
 
   &__photo-container {
     display: flex;
-    border: 2px solid $brand-primary;
     justify-content: center;
     margin: 0 2rem;
     @include mq( $layout-m ) {
       margin: auto;
     }
     &_border {
-      border: 2px solid;
+      border: 2px solid $brand-primary;
       z-index: 100;
-      width: calc(100% - 30px);
+      width: calc(100% - 85px);
       height: 339px;
       position: absolute;
       margin: -2px 0;
       @include mq( $layout-m ) {
-        height: 574px;
+        height: 475px;
+        width: calc(100% - 30px);
+      }  
+      @include mq( $layout-l ) {
+        height: 575px;
       }  
     }
   }
@@ -140,8 +150,11 @@
     align-items: flex-start;
     align-content: flex-start;
     @include mq( $layout-m ) {
-      height: 570px;
-      margin-left: 54px;
+      height: 475px;
+      margin-left: 55px;
+    }
+    @include mq( $layout-l ) {
+      height: 575px;
     }
   }
 
@@ -152,6 +165,9 @@
     transition: all 0.25s ease-in-out;
     width: 335px;
     @include mq( $layout-m ) {
+      width: 450px;
+    }
+    @include mq( $layout-l ) {
       width: 550px;
     }
 
@@ -198,6 +214,10 @@
     background-image: url(../../images/paper_header.png);
     background-repeat: no-repeat;
     background-size: auto;
+
+    @include mq( $phablet-l, $desktop ) {
+      background-image:none;
+    }
   }
 
   &__message-container {
@@ -264,6 +284,7 @@
       width: 85px;
       background-color: rgba(255, 255, 255, 0.6);
       transition: all 0.25s ease-in-out;
+      cursor: pointer;
     }
     &_svg {
       color: $brand-primary;

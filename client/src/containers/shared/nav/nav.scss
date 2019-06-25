@@ -33,8 +33,12 @@
 
 .btn-support-header {
   position: absolute !important;
+  display: none !important;
   left: 0;
   right: 0;
+  @include mq( $layout-m ) {
+      display: block !important;
+  }
 }
 
 .stickySupport {
@@ -47,8 +51,8 @@
   background: white;
   padding: 8px 0;
   
-  .btn-support-header {
-    display: block !important;
+  .btn-support {
+    display: block;
     margin: 0 auto;
   }
   @include mq( $layout-m ) {

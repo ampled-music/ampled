@@ -85,7 +85,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
     return (
       <div className="post-container">
         <div className="container ">
-          <div className="row">{this.renderPosts()}</div>
+          <div className="row justify-content-center justify-content-md-start">{this.renderPosts()}</div>
         </div>
       </div>
     );

@@ -13,6 +13,7 @@ interface Props {
 }
 
 export class ArtistInfo extends React.Component<Props, any> {
+  
   renderArtistLocation = () => (
     <div className="artist-info__location">
       <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} />
@@ -20,23 +21,39 @@ export class ArtistInfo extends React.Component<Props, any> {
     </div>
   );
 
-  renderSocialInfo = () => {
-    const { instagramHandle, twitterHandle } = this.props;
-
-    return (
-      <div className="artist-info__social">
+  renderTwitter = () => {
+    const { twitterHandle } = this.props;
+    if ( twitterHandle ) {
+      return (
         <div className="artist-info__social_twitter">
           <a href={`https://twitter.com/${twitterHandle}`} target="_blank" style={{ color: 'black' }}>
             <FontAwesomeIcon className="icon" icon={faTwitter} />
             <span>@{twitterHandle}</span>
           </a>
         </div>
+      );
+    }
+  };
+
+  renderInstagram = () => {
+    const { instagramHandle } = this.props;
+    if ( instagramHandle ) {
+      return (
         <div className="artist-info__social_instagram">
           <a href={`https://instagram.com/${instagramHandle}`} target="_blank" style={{ color: 'black' }}>
             <FontAwesomeIcon className="icon" icon={faInstagram} />
             <span>@{instagramHandle}</span>
           </a>
         </div>
+      );
+    }
+  };
+
+  renderSocialInfo = () => {
+    return (
+      <div className="artist-info__social">
+        {this.renderTwitter()}
+        {this.renderInstagram()}
       </div>
     );
   };

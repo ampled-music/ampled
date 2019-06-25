@@ -34,8 +34,10 @@ export const theme = createMuiTheme({
       },
     },
     MuiFormLabel: {
-      focused: {
-        color: '$brand-primary !important',
+      root: {
+        focused: {
+          color: '$brand-primary',
+        },
       },
     },
     MuiLinearProgress: {

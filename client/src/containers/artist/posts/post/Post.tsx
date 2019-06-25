@@ -205,7 +205,7 @@ class PostComponent extends React.Component<any, any> {
             </Collapse>
             <CardActions className={cx(classes.actions, 'collapse-actions')} disableSpacing>
               <button className="show-previous-command-btn" onClick={this.handleExpandClick}>
-                <b>{expanded ? 'HIDE PREVIOUS COMMENTS' : 'VIEW PREVIOUS COMMENTS'}</b>
+                <b>{expanded ? 'Hide Previous Comments' : 'View Previous Comments'}</b>
               </button>
             </CardActions>
           </div>

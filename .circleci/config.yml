@@ -56,7 +56,7 @@ jobs:
         enabled: true
     working_directory: ~/circleci-demo-workflows
     environment:
-      HEROKU_APP: "ampled-web-production"
+      HEROKU_APP: "ampled-web-prod"
     steps:
       - checkout
       - run:

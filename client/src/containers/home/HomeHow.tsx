@@ -41,9 +41,19 @@ class HomeHowComponent extends React.Component<Props,any> {
     });
   };
 
-  showGraphic = (graphic) => {
+
+  changeItem = () => {
+
+    this.setState({ 
+      showCrowd: true,
+      showMoney: false,
+      showSpeaker: false
+    });
+  };
+
+  setActive = (graphic) => {
     if (graphic) {
-      return 'show';
+      return 'active';
     }
   };
 
@@ -56,7 +66,7 @@ class HomeHowComponent extends React.Component<Props,any> {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h1 className="home-how__title">How it Works</h1>
+              <h1>How it Works</h1>
             </div>
           </div>
 
@@ -64,31 +74,31 @@ class HomeHowComponent extends React.Component<Props,any> {
           <div className="home-how__list">
             
             <div className="home-how__numbers">
-              <div className="section_1">
-                <div className="home-how__number">1</div>
+              <div className="section section_1">
+                <div className="home-how__number">01</div>
               </div>
-              <div className="section_2">
-                <div className="home-how__number">2</div>
+              <div className="section section_2">
+                <div className="home-how__number">02</div>
               </div>
-              <div className="section_3">
-                <div className="home-how__number no-tail">3</div>
+              <div className="section section_3">
+                <div className="home-how__number no-tail">03</div>
               </div>
             </div>
 
             <div className="home-how__info">
-              <div className="section_1">
+              <div className="section section_1">
                 <div className="home-how__title">Artists post unique/ unreleased content.</div>
                 <div className="home-how__copy">
                   Artists on Ampled post things you won’t find anywhere else - like demos, unreleased recordings, access to exclusive merch, discounts, personal notes, announcements - and more.
                 </div>
               </div>
-              <div className="section_2">
+              <div className="section section_2">
                 <div className="home-how__title">Artists are supported directly by their community</div>
                 <div className="home-how__copy">
                   Artists can be supported directly for $3 or more per month - unlocking access to their exclusive content.
                 </div>
               </div>
-              <div className="section_3">
+              <div className="section section_3">
                 <div className="home-how__title">Artists collect monthly recurring revenue</div>
                 <div className="home-how__copy">
                   When an artist posts something new, their supporters get a notification. 
@@ -97,14 +107,14 @@ class HomeHowComponent extends React.Component<Props,any> {
             </div>
 
             <div className="home-how__images">
-              <div className="section_1 home-how__image speaker">
-                <img className={this.showGraphic(this.state.showSpeaker)} src={speaker} />
+              <div className="section section_1 home-how__image speaker">
+                <img className={this.setActive(this.state.showSpeaker)} src={speaker} />
               </div>
-              <div className="section_2 home-how__image crowd">
-                <img className={this.showGraphic(this.state.showCrowd)} src={crowd} />
+              <div className="section section_2 home-how__image crowd">
+                <img className={this.setActive(this.state.showCrowd)} src={crowd} />
               </div>
-              <div className="section_3 home-how__image money">
-                <img className={this.showGraphic(this.state.showMoney)} src={money} />
+              <div className="section section_3 home-how__image money">
+                <img className={this.setActive(this.state.showMoney)} src={money} />
               </div>
             </div>
 

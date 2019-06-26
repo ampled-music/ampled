@@ -112,22 +112,40 @@
 
   &__list {
     border: 2px solid $white;
-    padding: 3rem;
+    padding: 1rem;
     display: flex;
+    flex-direction: column;
+    @include mq($desktop) {
+      flex-direction: row;    
+      padding: 3rem;  
+    }
   }
 
-  .section_1 {
-    height: 200px;
-  }
-  .section_2 {
-    height: 200px;
-  }
-  .section_3 {
-    height: auto;
-  }
+  
 
   &__info {
     width: 70%;
+    min-height: 200px;
+
+    .section {
+      height: 200px;
+      width: 70%;
+      position: absolute;
+      @include mq($desktop) {
+        height: 200px;
+        width: 100%;
+        position: relative;
+      }
+      &_1 {
+        
+      }
+      &_2 {
+        
+      }
+      &_3 {
+        height: auto;
+      }
+    }
   }
 
   &__images {
@@ -172,6 +190,22 @@
   }
   &__numbers {
     margin-right: 2rem;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 3rem;
+    @include mq($desktop) {
+      flex-direction: column;
+      margin-bottom: 0rem;
+    }
+    .section {
+      height: auto;
+      @include mq($desktop) {
+        height: 200px;
+      }
+      &_3 {
+        height: auto;
+      }
+    }
   }
 
   &__number {
@@ -180,22 +214,26 @@
     text-align: center;
     border: 2px solid $white;
     border-radius: 100%;
-    height: 70px;
-    width: 70px;
-    margin: auto;
+    height: 40px;
+    width: 40px;
+    margin: 0 1rem 0 0;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: $font-family-monospace;
-    font-size: 2rem;
     transition: all $speed;
+    font-size: 1rem;
 
     @include mq($desktop) {
+      height: 70px;
+      width: 70px;
+      font-size: 2rem;
+      margin: auto;
       &:after {
         content: '';
         display: block;
         position: relative;
-        left: -10px;
+        left: -20px;
         top: 100px;
         width: 2px;
         height: 130px;
@@ -219,7 +257,6 @@
   }
 
   &__copy {
-    font-family: $font-family-monospace;
     font-size: 1rem;
     position: relative;
     z-index: 5;

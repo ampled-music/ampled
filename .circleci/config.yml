@@ -50,6 +50,19 @@ jobs:
           name: Deploy Master to Heroku
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git development:master
+  
+  deploy-production:
+    machine:
+        enabled: true
+    working_directory: ~/circleci-demo-workflows
+    environment:
+      HEROKU_APP: "ampled-web-production"
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master:master
 
 workflows:
   version: 2
@@ -57,6 +70,15 @@ workflows:
     jobs:
       - build
       - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: development
+  build-and-deploy-production:
+    jobs:
+      - build
+      - deploy-production:
           requires:
             - build
           filters:

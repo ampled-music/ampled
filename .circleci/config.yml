@@ -83,5 +83,5 @@ workflows:
             - build
           filters:
             branches:
-              only: development
+              only: master
 

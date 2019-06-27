@@ -3,22 +3,22 @@ import './login.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
 import * as store from 'store';
 import { signupAction } from 'src/redux/signup/signup';
+import { loginAction } from 'src/redux/authentication/login';
 
 import { initialState as authenticationInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as signupInitialState } from '../../redux/signup/initial-state';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 
-import { login } from '../../api/login/login';
-
 interface SignupProps {
   signup: typeof signupInitialState;
   authentication: typeof authenticationInitialState;
   me: typeof meInitialState;
+  login: typeof authenticationInitialState;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -47,19 +47,17 @@ class SignupComponent extends React.Component<Props, any> {
   componentDidUpdate() {
     const { signup, authentication } = this.props;
 
-    if (this.state.submitted && !signup.errors && authentication.authModalOpen) {
+    if (this.state.submitted && !signup.errors && authentication.authModalOpen && !authentication.authenticating) {
       showToastMessage("Signed up! Please check your email for a confirmation email.", MessageType.SUCCESS, { timeOut: 8000 });
-      // this.setState(this.initialState);
       this.login();
-      // openAuthModal({ modalPage: 'login' });
     }
   }
 
   async login() {
-    const { token } = await login(this.emailPass.email, this.emailPass.password);
-    console.log(token);
+    const { token } = await this.props.login(this.emailPass.email, this.emailPass.password);
     if (token) {
       store.set('token', token);
+      this.props.closeAuthModal();
     }
   }
 
@@ -211,8 +209,10 @@ const mapStateToProps = (state: Store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  login: bindActionCreators(loginAction, dispatch),
   signup: bindActionCreators(signupAction, dispatch),
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
 });
 
 const Signup = connect(

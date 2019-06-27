@@ -13,6 +13,9 @@ Devise.setup do |config|
     jwt.request_formats = {
       user: [:json]
     }
+    jwt.dispatch_requests = [
+      ['GET', %r{^/me.json$}],
+    ]
   end
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.

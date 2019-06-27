@@ -14,7 +14,7 @@ Devise.setup do |config|
       user: [:json]
     }
     jwt.dispatch_requests = [
-      ['GET', %r{^/me.json$}],
+      ['GET', %r{^/token}],
     ]
   end
   # ==> Controller configuration

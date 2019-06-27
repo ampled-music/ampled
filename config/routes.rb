@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     sessions: "sessions"
   }
 
+  get '/token', to: "me#token"
+
   resources :comments, only: %i[create destroy]
   resources :subscriptions
   resources :artist_pages

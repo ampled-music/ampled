@@ -14,9 +14,9 @@ interface Props {
 class HomeHowComponent extends React.Component<Props,any> {
 
   state = {
-    showSpeaker: false,
-    showMoney: false,
+    showSpeaker: true,
     showCrowd: false,
+    showMoney: false,
   };
 
   openSpeaker = () => {
@@ -44,12 +44,16 @@ class HomeHowComponent extends React.Component<Props,any> {
 
   changeItem = () => {
 
+    setInterval( this.openCrowd, 7000);
+
     this.setState({ 
       showCrowd: true,
       showMoney: false,
       showSpeaker: false
     });
   };
+
+
 
   setActive = (graphic) => {
     if (graphic) {
@@ -61,7 +65,6 @@ class HomeHowComponent extends React.Component<Props,any> {
     return (
         <div className="home-how">
         <img className="tear tear_1" src={tear_1} />
-
 
         <div className="container">
           <div className="row">
@@ -75,46 +78,64 @@ class HomeHowComponent extends React.Component<Props,any> {
             
             <div className="home-how__numbers">
               <div className="section section_1">
-                <div className="home-how__number">01</div>
+                <div className={this.setActive(this.state.showSpeaker)}>
+                  <div className="home-how__number">01</div>
+                </div>
               </div>
               <div className="section section_2">
-                <div className="home-how__number">02</div>
+                <div className={this.setActive(this.state.showCrowd)}>
+                  <div className="home-how__number">02</div>
+                </div>
               </div>
               <div className="section section_3">
-                <div className="home-how__number no-tail">03</div>
+                <div className={this.setActive(this.state.showMoney)}>
+                  <div className="home-how__number no-tail">03</div>
+                </div>
               </div>
             </div>
 
             <div className="home-how__info">
               <div className="section section_1">
-                <div className="home-how__title">Artists post unique/ unreleased content.</div>
-                <div className="home-how__copy">
-                  Artists on Ampled post things you won’t find anywhere else - like demos, unreleased recordings, access to exclusive merch, discounts, personal notes, announcements - and more.
+                <div className={this.setActive(this.state.showSpeaker)}>
+                  <div className="home-how__title">Artists post unique/ unreleased content.</div>
+                  <div className="home-how__copy">
+                    Artists on Ampled post things you won’t find anywhere else - like demos, unreleased recordings, access to exclusive merch, discounts, personal notes, announcements - and more.
+                  </div>
                 </div>
               </div>
               <div className="section section_2">
-                <div className="home-how__title">Artists are supported directly by their community</div>
-                <div className="home-how__copy">
-                  Artists can be supported directly for $3 or more per month - unlocking access to their exclusive content.
+                <div className={this.setActive(this.state.showCrowd)}>
+                  <div className="home-how__title">Artists are supported directly by their community</div>
+                  <div className="home-how__copy">
+                    Artists can be supported directly for $3 or more per month - unlocking access to their exclusive content.
+                  </div>
                 </div>
               </div>
               <div className="section section_3">
-                <div className="home-how__title">Artists collect monthly recurring revenue</div>
-                <div className="home-how__copy">
-                  When an artist posts something new, their supporters get a notification. 
+                <div className={this.setActive(this.state.showMoney)}>
+                  <div className="home-how__title">Artists collect monthly recurring revenue</div>
+                  <div className="home-how__copy">
+                    When an artist posts something new, their supporters get a notification. 
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="home-how__images">
-              <div className="section section_1 home-how__image speaker">
-                <img className={this.setActive(this.state.showSpeaker)} src={speaker} />
+              <div className="section section_1">
+                <div className={this.setActive(this.state.showSpeaker)}>
+                  <img className="home-how__image speaker" src={speaker} />
+                </div>
               </div>
-              <div className="section section_2 home-how__image crowd">
-                <img className={this.setActive(this.state.showCrowd)} src={crowd} />
+              <div className="section section_2">
+                <div className={this.setActive(this.state.showCrowd)}>  
+                  <img className="home-how__image crowd" src={crowd} />
+                </div>
               </div>
-              <div className="section section_3 home-how__image money">
-                <img className={this.setActive(this.state.showMoney)} src={money} />
+              <div className="section section_3">
+                <div className={this.setActive(this.state.showMoney)}>  
+                  <img className="home-how__image money" src={money} />
+                </div>
               </div>
             </div>
 

@@ -114,89 +114,44 @@
     border: 2px solid $white;
     padding: 1rem;
     display: flex;
-    flex-direction: column;
-    @include mq($desktop) {
-      flex-direction: row;    
+    flex-direction: row;
+    flex-wrap: wrap;
+    @include mq($desktop) {  
       padding: 3rem;  
     }
   }
 
-  
-
-  &__info {
-    width: 70%;
-    min-height: 200px;
-
-    .section {
-      height: 200px;
-      width: 70%;
-      position: absolute;
-      @include mq($desktop) {
-        height: 200px;
-        width: 100%;
-        position: relative;
+  .section {
+    .active {
+      .home-how__number {
+        background: $white;
+        color: $black;
       }
-      &_1 {
-        
-      }
-      &_2 {
-        
-      }
-      &_3 {
-        height: auto;
-      }
-    }
-  }
-
-  &__images {
-    width: 30%;
-  }
-  &__image {
-    position: absolute;
-    z-index: 1;
-    img {
-      opacity: 0;
-      transition: opacity $speed;
-    }
-    @include mq($desktop) {
-      &.crowd {
-        img {
-          width: 790px;
-          transform: translate(380px, -110px) rotate(-5deg);
-        }
-        .show {
-          opacity: 1;
-        }
-      }
-      &.money {
-        img {
-          width: 560px;
-          transform: translate(480px, -460px);
-        }
-        .show {
-          opacity: 1;
-        }
-      }
-      &.speaker {
-        img {
-          width: 460px;
-          transform: translate(630px, -30px);
-        }
-        .show {
+      .home-how__image,
+      .home-how__title,
+      .home-how__copy {
+        opacity: 1;
+        @include mq($desktop) {
           opacity: 1;
         }
       }
     }
   }
+
   &__numbers {
-    margin-right: 2rem;
     display: flex;
     flex-direction: row;
     margin-bottom: 3rem;
+    width: 50%;
+    order: 1;
+
     @include mq($desktop) {
+      width: 7%;
       flex-direction: column;
       margin-bottom: 0rem;
+      margin-right: 2rem;
     }
+
     .section {
       height: auto;
       @include mq($desktop) {
@@ -207,7 +162,6 @@
       }
     }
   }
-
   &__number {
     background-color: $black;
     color: $white;
@@ -247,6 +201,76 @@
     }
   }
 
+
+  &__info {
+    width: 100%;
+    min-height: 200px;
+    order: 3;
+
+    @include mq($desktop) {
+      width: 60%;
+      order: 2;
+    }
+
+    .section {
+      height: 200px;
+      width: 70%;
+      position: absolute;
+
+      @include mq($desktop) {
+        height: 200px;
+        width: 100%;
+        position: relative;
+      }
+      &_3 {
+        height: auto;
+      }
+    }
+  }
+
+  &__images {
+    width: 50%;
+    order: 2;
+    @include mq($desktop) {
+      width: 29%;
+      order: 3;
+    }
+  }
+  &__image {
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity $speed;
+
+    &.speaker {
+      width: 50%;
+      transform: translate(0px, 0px);
+    }
+    &.crowd {
+      width: 50%;
+      transform: translate(20px, -60px) rotate(-5deg);
+    }
+    &.money {
+      width: 50%;
+      transform: translate(0px, 0px);
+    }
+
+    @include mq($desktop) {
+      &.speaker {
+        width: 460px;
+        transform: translate(0px, 0px);
+      }
+      &.crowd {
+        width: 790px;
+        transform: translate(-280px, 20px) rotate(-5deg);
+      }
+      &.money {
+        width: 560px;
+        transform: translate(-90px, 0px);
+      }
+    }
+  }
+  
   &__title {
     font-family: $font-family-sans-serif;
     font-size: 1.5rem;
@@ -254,12 +278,20 @@
     margin-bottom: 1rem;
     position: relative;
     z-index: 5;
+    opacity: 0;
+    @include mq($desktop) {
+      opacity: 1;
+    }
   }
 
   &__copy {
     font-size: 1rem;
     position: relative;
     z-index: 5;
+    opacity: 0;
+    @include mq($desktop) {
+      opacity: 1;
+    }
   }
 }
 

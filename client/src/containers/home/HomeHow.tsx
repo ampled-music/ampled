@@ -19,6 +19,26 @@ class HomeHowComponent extends React.Component<Props,any> {
     showMoney: false,
   };
 
+  theLoop = ( activeState ) => {
+
+    setInterval( function () {
+
+      if ( activeState == 'section_1' ) {
+        this.openSpeaker;
+        activeState = 'section_2';
+      } else if ( activeState == 'section_2' ) {
+        this.openCloud;
+        activeState = 'section_3';
+      } else if ( activeState == 'section_3' ) {
+        this.openMoney;
+        activeState = 'section_1';
+      }
+
+      console.log(activeState);
+    }, 4000);
+  };
+
+
   openSpeaker = () => {
     this.setState({ 
       showSpeaker: true,
@@ -41,20 +61,6 @@ class HomeHowComponent extends React.Component<Props,any> {
     });
   };
 
-
-  changeItem = () => {
-
-    setInterval( this.openCrowd, 7000);
-
-    this.setState({ 
-      showCrowd: true,
-      showMoney: false,
-      showSpeaker: false
-    });
-  };
-
-
-
   setActive = (graphic) => {
     if (graphic) {
       return 'active';
@@ -62,6 +68,7 @@ class HomeHowComponent extends React.Component<Props,any> {
   };
 
   render() {
+    this.theLoop('section_1');
     return (
         <div className="home-how">
         <img className="tear tear_1" src={tear_1} />

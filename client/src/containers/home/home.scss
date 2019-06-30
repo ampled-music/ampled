@@ -60,7 +60,7 @@
     width: 100%;
     margin: 1rem auto;
    
-    @include mq($desktop) {
+    @include mq($tablet) {
       margin: 2rem auto;
       width: 50%;
     }
@@ -84,7 +84,7 @@
     font-family: $font-family-monospace;
     text-align: center;
 
-    @include mq($desktop) {
+    @include mq($tablet) {
       min-height: 110px;
     }
   }
@@ -98,7 +98,7 @@
   margin: 2rem auto 0;
   padding: 0 0 2rem;
 
-  @include mq($desktop) {
+  @include mq($tablet) {
     margin: 0;
     padding: 0;
   }
@@ -108,6 +108,8 @@
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;
+    position: relative;
+    z-index: 10;
   }
 
   &__list {
@@ -116,7 +118,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    @include mq($desktop) {  
+    @include mq($tablet) {  
       padding: 3rem;  
     }
   }
@@ -127,11 +129,13 @@
         background: $white;
         color: $black;
       }
-      .home-how__image,
       .home-how__title,
       .home-how__copy {
         opacity: 1;
-        @include mq($desktop) {
+      }
+      .home-how__image {
+        opacity: .8;
+        @include mq($tablet) {
           opacity: 1;
         }
       }
@@ -145,7 +149,7 @@
     width: 50%;
     order: 1;
 
-    @include mq($desktop) {
+    @include mq($tablet) {
       width: 7%;
       flex-direction: column;
       margin-bottom: 0rem;
@@ -154,7 +158,7 @@
 
     .section {
       height: auto;
-      @include mq($desktop) {
+      @include mq($tablet) {
         height: 200px;
       }
       &_3 {
@@ -178,7 +182,7 @@
     transition: all $speed;
     font-size: 1rem;
 
-    @include mq($desktop) {
+    @include mq($tablet) {
       height: 70px;
       width: 70px;
       font-size: 2rem;
@@ -207,8 +211,8 @@
     min-height: 200px;
     order: 3;
 
-    @include mq($desktop) {
-      width: 60%;
+    @include mq($tablet) {
+      width: 57%;
       order: 2;
     }
 
@@ -217,7 +221,7 @@
       width: 70%;
       position: absolute;
 
-      @include mq($desktop) {
+      @include mq($tablet) {
         height: 200px;
         width: 100%;
         position: relative;
@@ -231,7 +235,7 @@
   &__images {
     width: 50%;
     order: 2;
-    @include mq($desktop) {
+    @include mq($tablet) {
       width: 29%;
       order: 3;
     }
@@ -244,7 +248,7 @@
 
     &.speaker {
       width: 50%;
-      transform: translate(0px, 0px);
+      transform: translate(70px, -90px);
     }
     &.crowd {
       width: 50%;
@@ -252,10 +256,10 @@
     }
     &.money {
       width: 50%;
-      transform: translate(0px, 0px);
+      transform: translate(50px, -110px)
     }
 
-    @include mq($desktop) {
+    @include mq($tablet) {
       &.speaker {
         width: 460px;
         transform: translate(0px, 0px);
@@ -266,7 +270,7 @@
       }
       &.money {
         width: 560px;
-        transform: translate(-90px, 0px);
+        transform: translate(-90px, -60px);
       }
     }
   }
@@ -279,7 +283,7 @@
     position: relative;
     z-index: 5;
     opacity: 0;
-    @include mq($desktop) {
+    @include mq($tablet) {
       opacity: 1;
     }
   }
@@ -289,7 +293,7 @@
     position: relative;
     z-index: 5;
     opacity: 0;
-    @include mq($desktop) {
+    @include mq($tablet) {
       opacity: 1;
     }
   }
@@ -415,7 +419,7 @@
     background-color: $white; 
     margin-bottom: -44px;
   }
-  @include mq($desktop) {
+  @include mq($tablet) {
     display: block;
   }
 }

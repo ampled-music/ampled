@@ -131,14 +131,9 @@
         color: $black;
       }
       .home-how__title,
-      .home-how__copy {
-        opacity: 1;
-      }
+      .home-how__copy,
       .home-how__image {
-        opacity: .8;
-        @include mq($tablet) {
           opacity: 1;
-        }
       }
     }
   }
@@ -248,16 +243,16 @@
     transition: opacity $speed;
 
     &.speaker {
-      width: 50%;
-      transform: translate(70px, -90px);
+      width: 40%;
+      transform: translate(70px, -60px);
     }
     &.crowd {
-      width: 50%;
-      transform: translate(20px, -60px) rotate(-5deg);
+      width: 60%;
+      transform: translate(20px, -60px) rotate(5deg);
     }
     &.money {
       width: 50%;
-      transform: translate(50px, -110px)
+      transform: translate(50px, -70px)
     }
 
     @include mq($tablet) {

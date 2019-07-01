@@ -14,6 +14,8 @@ import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as signupInitialState } from '../../redux/signup/initial-state';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 
+import { once } from 'ramda';
+
 interface SignupProps {
   signup: typeof signupInitialState;
   authentication: typeof authenticationInitialState;
@@ -48,8 +50,8 @@ class SignupComponent extends React.Component<Props, any> {
     const { signup, authentication } = this.props;
 
     if (this.state.submitted && !signup.errors && authentication.authModalOpen && !authentication.authenticating) {
-      showToastMessage("Signed up! Please check your email for a confirmation email.", MessageType.SUCCESS, { timeOut: 8000 });
-      this.login();
+      // showToastMessage("Signed up! Please check your email for a confirmation email.", MessageType.SUCCESS, { timeOut: 8000 });
+      once(this.login())();
     }
   }
 
@@ -58,6 +60,9 @@ class SignupComponent extends React.Component<Props, any> {
     if (token) {
       store.set('token', token);
       this.props.closeAuthModal();
+      if (this.props.authentication.redirectTo) {
+        window.location = this.props.authentication.redirectTo;
+      }
     }
   }
 
@@ -194,7 +199,7 @@ class SignupComponent extends React.Component<Props, any> {
           </form>
           <label>
             Already have an account?{' '}
-            <a onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>
+            <a onClick={() => this.props.openAuthModal({ modalPage: 'login', redirectTo: this.props.authentication.redirectTo })}>
               <u>Log in</u>
             </a>
             .

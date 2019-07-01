@@ -25,6 +25,7 @@ interface NavComponentProps {
     path: string;
   };
   history: any;
+  artist: any;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -54,7 +55,12 @@ class NavComponent extends React.Component<Props, any> {
     if (this.props.userData) {
       this.props.history.push(routePaths.support.replace(':id', this.props.match.params.id));
     } else {
-      this.props.openAuthModal({ modalPage: 'signup' });
+      this.props.openAuthModal({
+        modalPage: 'signup',
+        showSupportMessage: 'artist',
+        artistName: this.props.artist.name,
+        redirectTo: routePaths.support.replace(':id', this.props.match.params.id),
+      });
     }
   };
 
@@ -116,6 +122,7 @@ class NavComponent extends React.Component<Props, any> {
 const mapStateToProps = (state: Store) => ({
   ...state.authentication,
   ...state.me,
+  artist: state.artists.artist,
 });
 
 const mapDispatchToProps = (dispatch) => ({

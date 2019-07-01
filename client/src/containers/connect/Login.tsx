@@ -12,6 +12,8 @@ import { initialState as loginInitialState } from '../../redux/authentication/in
 import { routePaths } from '../route-paths';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 
+import { once } from 'ramda';
+
 interface LoginProps {
   history: any;
 }
@@ -34,9 +36,14 @@ class LoginComponent extends React.Component<Props, any> {
       return;
     }
 
-    this.saveTokenToLocalStorage();
-    showToastMessage('You are logged in. Welcome back!', MessageType.SUCCESS);
-    this.props.closeAuthModal();
+    once(() => {
+      this.saveTokenToLocalStorage();
+      showToastMessage('You are logged in. Welcome back!', MessageType.SUCCESS);
+      if (this.props.redirectTo) {
+        window.location = this.props.redirectTo;
+      }
+      this.props.closeAuthModal();  
+    })();
   }
 
   saveTokenToLocalStorage = () => {

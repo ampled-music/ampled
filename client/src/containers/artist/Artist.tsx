@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getArtistAction } from 'src/redux/artists/get-details';
+import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
 
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
@@ -16,13 +17,17 @@ import { VideoModal } from '../shared/video-modal/VideoModal';
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
 import { PostForm } from './posts/post-form/PostForm';
+import { routePaths } from '../route-paths';
+
 
 interface ArtistProps {
   match: {
     params: {
       id: string;
     };
+    path: string;
   };
+  history: any;
   artists: typeof artistsInitialState;
   me: typeof meInitialState;
   authentication: typeof authenticateInitialState;
@@ -115,7 +120,19 @@ class ArtistComponent extends React.Component<Props, any> {
   
     return rgb;
   }
-  
+
+  handleSupportClick = () => {
+    if (this.props.me && this.props.me.userData) {
+      this.props.history.push(routePaths.support.replace(':id', this.props.match.params.id));
+    } else {
+      this.props.openAuthModal({
+        modalPage: 'signup',
+        showSupportMessage: 'artist',
+        artistName: this.props.artists.artist.name,
+        redirectTo: routePaths.support.replace(':id', this.props.match.params.id),
+      });
+    }
+  };
 
   render() {
     const { artists, me: { userData } } = this.props;
@@ -157,6 +174,8 @@ class ArtistComponent extends React.Component<Props, any> {
           openVideoModal={this.openVideoModal}
           openPostModal={this.openPostModal}
           loggedUserAccess={loggedUserAccess}
+          isSupporter={isSupporter}
+          handleSupportClick={this.handleSupportClick}
         />
         <ArtistInfo
           location={artist.location}
@@ -200,6 +219,7 @@ const mapStateToProps = (state: Store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getArtist: bindActionCreators(getArtistAction, dispatch),
+    openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   };
 };
 

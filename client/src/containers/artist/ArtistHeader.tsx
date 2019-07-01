@@ -14,6 +14,8 @@ interface Props {
   openPostModal: React.MouseEventHandler;
   artist: ArtistModel;
   loggedUserAccess: { role: string; artistId: number };
+  isSupporter: Boolean;
+  handleSupportClick: Function;
 }
 
 export class ArtistHeader extends React.Component<Props, any> {
@@ -32,14 +34,6 @@ export class ArtistHeader extends React.Component<Props, any> {
       });
     }
   }
-
-  // handleSupportClick = () => {
-  //   if (this.props.userData) {
-  //     this.props.history.push(routePaths.support.replace(':id', this.props.match.params.id));
-  //   } else {
-  //     this.props.openAuthModal({ modalPage: 'signup' });
-  //   }
-  // };
 
   getThumbnailURLFromVideoURL = async (videoURL: string) => {
     if (/vimeo/i.test(videoURL)) {
@@ -177,7 +171,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     
     return (
       <div>
-        <button className="btn btn-support" style={{ borderColor }} > 
+        <button className="btn btn-support" style={{ borderColor }} onClick={(e) => this.props.handleSupportClick()}> 
           Become a Supporter 
         </button>
         <a href="https://www.ampled.com/why-support" target="_blank" className="link link__why">
@@ -248,7 +242,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderFloatingNewPostButton()}
             {this.renderMessageContainer()}
             {this.renderSupportersContainer()}
-            {this.renderSupportButton()}
+            {!this.props.isSupporter && this.renderSupportButton()}
           </div>
         </div>
       </div>

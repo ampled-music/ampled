@@ -20,17 +20,17 @@ class HomeHowComponent extends React.Component<Props,any> {
   };
 
   theLoop = ( activeState ) => {
-
+    const self = this;
     setInterval( function () {
 
       if ( activeState == 'section_1' ) {
-        this.openSpeaker;
+        self.openSpeaker();
         activeState = 'section_2';
       } else if ( activeState == 'section_2' ) {
-        this.openCloud;
+        self.openCrowd();
         activeState = 'section_3';
       } else if ( activeState == 'section_3' ) {
-        this.openMoney;
+        self.openMoney();
         activeState = 'section_1';
       }
 
@@ -67,8 +67,11 @@ class HomeHowComponent extends React.Component<Props,any> {
     }
   };
 
-  render() {
+  componentDidMount() {
     this.theLoop('section_1');
+  }
+
+  render() {
     return (
         <div className="home-how">
         <img className="tear tear_1" src={tear_1} />

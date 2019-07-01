@@ -1,0 +1,10 @@
+@import "../../../theme/vars.scss";
+@import "../../../theme/mixins.scss";
+
+.why-support {
+  overflow: hidden;
+  height: 100vh;
+  @include mq( $layout-m ) {
+    height: 540px;
+  }
+}

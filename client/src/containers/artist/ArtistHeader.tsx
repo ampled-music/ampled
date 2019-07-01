@@ -12,6 +12,7 @@ import * as R from 'ramda';
 interface Props {
   openVideoModal: React.MouseEventHandler;
   openPostModal: React.MouseEventHandler;
+  openWhyModal: React.MouseEventHandler;
   artist: ArtistModel;
   loggedUserAccess: { role: string; artistId: number };
   isSupporter: Boolean;

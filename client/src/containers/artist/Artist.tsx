@@ -41,6 +41,7 @@ class ArtistComponent extends React.Component<Props, any> {
   state = {
     openPostModal: false,
     openVideoModal: false,
+    openWhyModal: false,
     showConfirmationDialog: false,
   };
 
@@ -94,6 +95,14 @@ class ArtistComponent extends React.Component<Props, any> {
 
   closeVideoModal = () => {
     this.setState({ openVideoModal: false });
+  };
+
+  openWhyModal = () => {
+    this.setState({ openWhyModal: true });
+  };
+
+  closeWhyModal = () => {
+    this.setState({ openWhyModal: false });
   };
 
   getLoggedUserPageAccess = () => {
@@ -173,6 +182,7 @@ class ArtistComponent extends React.Component<Props, any> {
           artist={artist}
           openVideoModal={this.openVideoModal}
           openPostModal={this.openPostModal}
+          openWhyModal={this.openWhyModal}
           loggedUserAccess={loggedUserAccess}
           isSupporter={isSupporter}
           handleSupportClick={this.handleSupportClick}
@@ -193,9 +203,16 @@ class ArtistComponent extends React.Component<Props, any> {
           loggedUserAccess={loggedUserAccess}
         />
         <Modal open={this.state.openPostModal}>
-          <PostForm close={this.getUserConfirmation} discardChanges={this.discardChanges} />
+          <PostForm 
+            close={this.getUserConfirmation}
+            discardChanges={this.discardChanges}
+          />
         </Modal>
-        <VideoModal open={this.state.openVideoModal} videoUrl={artist.video_url} onClose={this.closeVideoModal} />
+        <VideoModal 
+          open={this.state.openVideoModal} 
+          videoUrl={artist.video_url} 
+          onClose={this.closeVideoModal} 
+        />
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}
           closeConfirmationDialog={this.closeConfirmationDialog}

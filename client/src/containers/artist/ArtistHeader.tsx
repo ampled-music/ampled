@@ -216,7 +216,7 @@ export class ArtistHeader extends React.Component<Props, any> {
           {artist.supporters
             .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
             .map((supporter) => (
-              <div>
+              <div key={`minisupporter-${supporter.id}`}>
                 <RenderSupporter
                   supporter={supporter}
                   borderColor

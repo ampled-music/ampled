@@ -5,7 +5,7 @@ export const initialState = {
   loggedOut: false,
   authModalOpen: false,
   modalPage: 'login',
-  showSupportMessage: false,
+  showSupportMessage: '',
   artistName: undefined,
   error: undefined,
 };

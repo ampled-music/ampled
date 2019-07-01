@@ -51,7 +51,7 @@ class PostComponent extends React.Component<any, any> {
   };
 
   openSignupModal = () => {
-    this.props.openAuthModal({ modalPage: 'signup', showSupportMessage: true, artistName: this.props.artistName });
+    this.props.openAuthModal({ modalPage: 'signup', showSupportMessage: 'post', artistName: this.props.artistName });
   };
 
   redirectToSupport = () => {

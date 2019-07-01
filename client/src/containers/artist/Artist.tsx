@@ -125,7 +125,7 @@ class ArtistComponent extends React.Component<Props, any> {
     if (this.props.me && this.props.me.userData) {
       this.props.history.push(routePaths.support.replace(':id', this.props.match.params.id));
     } else {
-      this.props.openAuthModal({ modalPage: 'signup' });
+      this.props.openAuthModal({ modalPage: 'signup', showSupportMessage: 'artist', artistName: this.props.artists.artist.name });
     }
   };
 

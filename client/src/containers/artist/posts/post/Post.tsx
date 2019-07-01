@@ -103,6 +103,15 @@ class PostComponent extends React.Component<any, any> {
     }
   };
 
+  returnFirstName = (name) => {
+    let spacePosition = name.indexOf(' ');
+    if (spacePosition === -1) {
+      return name;
+    } else {
+      return name.substr(0, spacePosition);
+    }
+  };
+
   renderPost = () => {
     const { classes, post, accentColor, me } = this.props;
 
@@ -124,7 +133,7 @@ class PostComponent extends React.Component<any, any> {
                 ) : (
                   <FontAwesomeIcon className={classes.userImage} icon={faUserCircle} />
                 )}
-                <span>{post.author}</span>
+                <span>{this.returnFirstName(post.author)}</span>
               </div>
               <div className={classes.postDate}>{post.created_ago} ago</div>
             </CardContent>

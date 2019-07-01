@@ -17,11 +17,12 @@ class HomeHowComponent extends React.Component<Props,any> {
     showSpeaker: true,
     showCrowd: false,
     showMoney: false,
+    intervalId: undefined,
   };
 
   theLoop = ( activeState ) => {
     const self = this;
-    setInterval( function () {
+    const intervalId = setInterval( function () {
 
       if ( activeState == 'section_1' ) {
         self.openSpeaker();
@@ -36,6 +37,8 @@ class HomeHowComponent extends React.Component<Props,any> {
 
       console.log(activeState);
     }, 4000);
+
+    this.setState({ intervalId });
   };
 
 
@@ -69,6 +72,12 @@ class HomeHowComponent extends React.Component<Props,any> {
 
   componentDidMount() {
     this.theLoop('section_1');
+  }
+
+  componentWillUnmount() {
+    if (this.state.intervalId) {
+      clearInterval(this.state.intervalId);
+    }
   }
 
   render() {

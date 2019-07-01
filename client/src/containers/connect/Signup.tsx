@@ -132,8 +132,11 @@ class SignupComponent extends React.Component<Props, any> {
       <div>
         <div className="login">
           <h2>SIGN UP</h2>
-          {authentication.showSupportMessage && (
+          {authentication.showSupportMessage && authentication.showSupportMessage === 'post' && authentication.artistName && (
             <p>This is a private post. Sign up and become a supporter of {authentication.artistName} to access it.</p>
+          )}
+          {authentication.showSupportMessage && authentication.showSupportMessage === 'artist' && authentication.artistName && (
+            <p>Sign up to become a supporter of {authentication.artistName}.</p>
           )}
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
             <input

@@ -4,6 +4,7 @@
 
 .artist-header {
   font-family: $font-family-sans-serif;
+  margin-top: 50px;
   
   @include mq( $layout-m ) {
     padding: 0 40px;

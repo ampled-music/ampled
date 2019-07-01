@@ -13,6 +13,7 @@ export const authModalReducer = {
     modalPage: payload.modalPage,
     showSupportMessage: payload.showSupportMessage,
     artistName: payload.artistName,
+    redirectTo: payload.redirectTo,
   }),
   [actions.closeAuthModal]: (state) => ({
     ...state,

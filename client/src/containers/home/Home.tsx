@@ -34,11 +34,11 @@ class Home extends React.Component<any> {
         <HomeHow 
           bgColor={randomColor}
         />
-        <HomeTexture 
+        {/* <HomeTexture 
           positionTop25={true}
           positionTop50={false}
           positionFlip={true}
-        />
+        /> */}
         <HomeArtists 
           bgColor={randomColor}
         />

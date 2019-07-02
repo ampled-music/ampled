@@ -56,7 +56,6 @@ class ArtistComponent extends React.Component<Props, any> {
 
     if (this.props.subscriptions.status === SubscriptionStep.Finished) {
       showToastMessage(`Thanks for supporting ${this.props.artists.artist.name}!`, MessageType.SUCCESS);
-      this.setState({ showConfirmationDialog: true });
     }
   }
 

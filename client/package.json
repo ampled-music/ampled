@@ -22,7 +22,6 @@
     "ramda": "0.26.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-dom-confetti": "^0.1.1",
     "react-player": "^1.9.3",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",

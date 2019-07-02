@@ -14,6 +14,7 @@ import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDi
 import { Modal } from '../shared/modal/Modal';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { VideoModal } from '../shared/video-modal/VideoModal';
+import { WhyModal } from '../shared/why-modal/WhyModal';
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
 import { PostForm } from './posts/post-form/PostForm';
@@ -140,6 +141,7 @@ class ArtistComponent extends React.Component<Props, any> {
         artistName: this.props.artists.artist.name,
         redirectTo: routePaths.support.replace(':id', this.props.match.params.id),
       });
+      this.setState({ openWhyModal: false });
     }
   };
 
@@ -212,6 +214,11 @@ class ArtistComponent extends React.Component<Props, any> {
           open={this.state.openVideoModal} 
           videoUrl={artist.video_url} 
           onClose={this.closeVideoModal} 
+        />
+        <WhyModal 
+          open={this.state.openWhyModal}
+          onClose={this.closeWhyModal} 
+          handleSupportClick={this.handleSupportClick}
         />
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}

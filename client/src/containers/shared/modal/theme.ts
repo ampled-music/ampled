@@ -9,7 +9,7 @@ export const theme = createMuiTheme({
       root: {
         background: `url(${background})`,
         backgroundRepeat: 'no-repeat',
-        paddingTop: '93px',
+        paddingTop: '60px',
         backgroundColor: 'initial',
         [defaultTheme.breakpoints.down('sm')]: {
           background: 'white',

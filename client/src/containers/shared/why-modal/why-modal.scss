@@ -2,9 +2,26 @@
 @import "../../../theme/mixins.scss";
 
 .why-support {
-  overflow: hidden;
-  height: 100vh;
-  @include mq( $layout-m ) {
-    height: 540px;
+  text-align: center;
+  padding: 1rem;
+
+  &__title {
+    font-family: $font-family-sans-serif;
+    font-size: 1.25rem;
+    margin: 1rem 0 2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  &__subheader {
+    font-weight: bold;
+  }
+  &__copy {
+    font-family: $font-family-monospace;
+    margin-bottom: 1.5rem;
+  }
+  
+  .link__why {
+    text-decoration: underline;
   }
 }

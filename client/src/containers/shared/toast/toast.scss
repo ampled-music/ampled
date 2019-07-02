@@ -22,7 +22,7 @@
   }
 
   > div:hover {
-    box-shadow: 0 0 0.75em #211e1f;
+    box-shadow: 0 0 0.75em $gray-light;
     -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
     filter: alpha(opacity=100);
     cursor: pointer;
@@ -92,19 +92,19 @@
 
 .toast-error {
   background-color: $white;
-  color: red;
+  color: $brand-danger;
 
   .toast-close-button {
-    color: red;
+    color: $brand-danger;
   }
 }
 
 .toast-warning {
   background-color: $black;
-  color: yellow;
+  color: $brand-warning;
 
   .toast-close-button {
-    color: yellow;
+    color: $brand-warning;
   }
 }
 

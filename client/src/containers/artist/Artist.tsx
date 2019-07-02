@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Confetti from 'react-dom-confetti';
 import { getArtistAction } from 'src/redux/artists/get-details';
 import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
@@ -42,6 +43,7 @@ class ArtistComponent extends React.Component<Props, any> {
     openPostModal: false,
     openVideoModal: false,
     showConfirmationDialog: false,
+    successfulSupport: false
   };
 
   componentDidMount() {
@@ -56,6 +58,7 @@ class ArtistComponent extends React.Component<Props, any> {
 
     if (this.props.subscriptions.status === SubscriptionStep.Finished) {
       showToastMessage(`Thanks for supporting ${this.props.artists.artist.name}!`, MessageType.SUCCESS);
+      this.setState({ showConfirmationDialog: true });
     }
   }
 
@@ -201,6 +204,7 @@ class ArtistComponent extends React.Component<Props, any> {
           closeConfirmationDialog={this.closeConfirmationDialog}
           discardChanges={this.discardChanges}
         />
+        <Confetti active={ this.state.successfulSupport } />
       </div>
     );
   }

@@ -129,3 +129,11 @@ a {
     display: block;
     margin: auto;
 }
+
+.confetti-overlay {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 99999;
+    width: 50%;
+}

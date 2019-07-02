@@ -197,7 +197,6 @@ class ArtistComponent extends React.Component<Props, any> {
           isSupporter={isSupporter}
           handleSupportClick={this.handleSupportClick}
         />
-        <Confetti active={ this.state.successfulSupport } config={ confettiConfig } />
         <ArtistInfo
           location={artist.location}
           accentColor={artist.accent_color}
@@ -222,6 +221,12 @@ class ArtistComponent extends React.Component<Props, any> {
           closeConfirmationDialog={this.closeConfirmationDialog}
           discardChanges={this.discardChanges}
         />
+        <div className="confetti-overlay">
+          <Confetti
+            active={ this.state.successfulSupport } 
+            config={ confettiConfig } 
+          />
+        </div>
       </div>
     );
   }

@@ -64,18 +64,21 @@ class ArtistComponent extends React.Component<Props, any> {
     this.getArtistInfo();
   }
 
-  showConfetti = () => {
-    this.setState({ successfulSupport: true });
-  }
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: Props, prevState) {
     if (!prevProps.me.userData && this.props.me.userData) {
       this.getArtistInfo();
     }
 
+    console.log(prevState.successfulSupport);
+
     if (this.props.subscriptions.status === SubscriptionStep.Finished) {
       showToastMessage(`Thanks for supporting ${this.props.artists.artist.name}!`, MessageType.SUCCESS);
-      this.showConfetti();
+      // Confetti
+      if (prevState.successfulSupport === false) {
+        this.setState({ successfulSupport: true });
+      }
     }
+
   }
 
 

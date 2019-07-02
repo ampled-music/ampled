@@ -35,19 +35,6 @@ interface ArtistProps {
   subscriptions: typeof subscriptionsInitialState;
 }
 
-const confettiConfig = {
-  angle: 90,
-  spread: 45,
-  startVelocity: 45,
-  elementCount: 50,
-  dragFriction: 0.1,
-  duration: 3000,
-  stagger: 0,
-  width: "10px",
-  height: "10px",
-  colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
-};
-
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 type Props = Dispatchers & ArtistProps;
 
@@ -81,6 +68,21 @@ class ArtistComponent extends React.Component<Props, any> {
 
   }
 
+  getConfettiConfig = () => {
+    const confettiConfig = {
+      angle: 90,
+      spread: 60,
+      startVelocity: 60,
+      elementCount: 50,
+      dragFriction: 0.1,
+      duration: 5000,
+      stagger: 0,
+      width: "10px",
+      height: "10px",
+      colors: [this.props.artists.artist.accent_color]
+    };
+    return confettiConfig;
+  };
 
   getArtistInfo = () => {
     this.props.getArtist(this.props.match.params.id);
@@ -227,7 +229,7 @@ class ArtistComponent extends React.Component<Props, any> {
         <div className="confetti-overlay">
           <Confetti
             active={ this.state.successfulSupport } 
-            config={ confettiConfig } 
+            config={ this.getConfettiConfig() } 
           />
         </div>
       </div>

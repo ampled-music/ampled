@@ -14,6 +14,8 @@ import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDi
 import { Modal } from '../shared/modal/Modal';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { VideoModal } from '../shared/video-modal/VideoModal';
+import { Texture } from '../shared/texture/Texture';
+
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
 import { PostForm } from './posts/post-form/PostForm';
@@ -168,6 +170,11 @@ class ArtistComponent extends React.Component<Props, any> {
             `}
           `
           }}
+        />
+        <Texture 
+          positionTop25={true}
+          positionTop50={false}
+          positionFlip={false}
         />
         <ArtistHeader
           artist={artist}

@@ -35,6 +35,19 @@ interface ArtistProps {
   subscriptions: typeof subscriptionsInitialState;
 }
 
+const confettiConfig = {
+  angle: 90,
+  spread: 45,
+  startVelocity: 45,
+  elementCount: 50,
+  dragFriction: 0.1,
+  duration: 3000,
+  stagger: 0,
+  width: "10px",
+  height: "10px",
+  colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+};
+
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 type Props = Dispatchers & ArtistProps;
 
@@ -51,6 +64,9 @@ class ArtistComponent extends React.Component<Props, any> {
     this.getArtistInfo();
   }
 
+  showConfetti = () => {
+    this.setState({ successfulSupport: true });
+  }
   componentDidUpdate(prevProps: Props) {
     if (!prevProps.me.userData && this.props.me.userData) {
       this.getArtistInfo();
@@ -58,9 +74,10 @@ class ArtistComponent extends React.Component<Props, any> {
 
     if (this.props.subscriptions.status === SubscriptionStep.Finished) {
       showToastMessage(`Thanks for supporting ${this.props.artists.artist.name}!`, MessageType.SUCCESS);
-      this.setState({ showConfirmationDialog: true });
+      this.showConfetti();
     }
   }
+
 
   getArtistInfo = () => {
     this.props.getArtist(this.props.match.params.id);
@@ -180,6 +197,7 @@ class ArtistComponent extends React.Component<Props, any> {
           isSupporter={isSupporter}
           handleSupportClick={this.handleSupportClick}
         />
+        <Confetti active={ this.state.successfulSupport } config={ confettiConfig } />
         <ArtistInfo
           location={artist.location}
           accentColor={artist.accent_color}
@@ -204,7 +222,6 @@ class ArtistComponent extends React.Component<Props, any> {
           closeConfirmationDialog={this.closeConfirmationDialog}
           discardChanges={this.discardChanges}
         />
-        <Confetti active={ this.state.successfulSupport } />
       </div>
     );
   }
@@ -216,7 +233,7 @@ const mapStateToProps = (state: Store) => {
     me: state.me,
     posts: state.posts,
     authentication: state.authentication,
-    subscriptions: state.subscriptions,
+    subscriptions: state.subscriptions
   };
 };
 

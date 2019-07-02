@@ -243,7 +243,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderFloatingNewPostButton()}
             {this.renderMessageContainer()}
             {this.renderSupportersContainer()}
-            {!this.props.isSupporter && this.renderSupportButton()}
+            {!this.props.isSupporter && !this.canLoggedUserPost() && this.renderSupportButton()}
           </div>
         </div>
       </div>

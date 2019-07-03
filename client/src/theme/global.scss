@@ -56,13 +56,18 @@ a {
 
 .link {
     color: $gray-light;
+    cursor: pointer;
+    border: 0;
+    background: none;
+    margin: .75rem auto;
+    transition: color $speed;
+
     &:hover {
         color: $black;
     }
     &__why {
         text-align: center;
         display: block;
-        margin-top: .75rem;
         font-family: $font-family-base;
         font-size: .9rem;
     }

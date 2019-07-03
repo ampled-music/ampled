@@ -25,32 +25,8 @@ export const theme = createMuiTheme({
     },
     MuiDialog: {
       paperWidthSm: {
-        maxWidth: '670px',
+        maxWidth: '450px',
       },
-    },
-    MuiOutlinedInput: {
-      notchedOutline: {
-        borderRadius: '0px',
-      },
-    },
-    MuiFormLabel: {
-      root: {
-        focused: {
-          color: '$brand-primary',
-        },
-      },
-    },
-    MuiLinearProgress: {
-      colorPrimary: {
-        backgroundColor: '#eeeeee',
-      },
-      barColorPrimary: {
-        backgroundColor: '$brand-primary',
-      },
-    },
-  },
-
-  typography: {
-    fontFamily: 'Courier, Courier New, monospace',
-  },
+    }
+  }
 });

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import   Confetti from 'react-dom-confetti';
 import { getArtistAction } from 'src/redux/artists/get-details';
 import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
@@ -43,7 +44,8 @@ class ArtistComponent extends React.Component<Props, any> {
   state = {
     openPostModal: false,
     openVideoModal: false,
-    showConfirmationDialog: false
+    showConfirmationDialog: false,
+    successfulSupport: false
   };
 
   componentDidMount() {
@@ -51,15 +53,36 @@ class ArtistComponent extends React.Component<Props, any> {
     this.getArtistInfo();
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: Props, prevState) {
     if (!prevProps.me.userData && this.props.me.userData) {
       this.getArtistInfo();
     }
 
     if (this.props.subscriptions.status === SubscriptionStep.Finished) {
       showToastMessage(`Thanks for supporting ${this.props.artists.artist.name}!`, MessageType.SUCCESS);
+      // Confetti
+      if (prevState.successfulSupport === false) {
+        this.setState({ successfulSupport: true });
+      }
     }
+
   }
+
+  getConfettiConfig = () => {
+    const confettiConfig = {
+      angle: 90,
+      spread: 60,
+      startVelocity: 60,
+      elementCount: 50,
+      dragFriction: 0.1,
+      duration: 5000,
+      stagger: 0,
+      width: "10px",
+      height: "10px",
+      colors: [this.props.artists.artist.accent_color]
+    };
+    return confettiConfig;
+  };
 
   getArtistInfo = () => {
     this.props.getArtist(this.props.match.params.id);
@@ -208,6 +231,12 @@ class ArtistComponent extends React.Component<Props, any> {
           closeConfirmationDialog={this.closeConfirmationDialog}
           discardChanges={this.discardChanges}
         />
+        <div className="confetti-overlay">
+          <Confetti
+            active={ this.state.successfulSupport } 
+            config={ this.getConfettiConfig() } 
+          />
+        </div>
       </div>
     );
   }
@@ -219,7 +248,7 @@ const mapStateToProps = (state: Store) => {
     me: state.me,
     posts: state.posts,
     authentication: state.authentication,
-    subscriptions: state.subscriptions,
+    subscriptions: state.subscriptions
   };
 };
 

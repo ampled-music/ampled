@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import   Confetti from 'react-dom-confetti';
+import Confetti from 'react-dom-confetti';
 import { getArtistAction } from 'src/redux/artists/get-details';
 import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';

@@ -61,11 +61,12 @@
       font-family: $font-family-sans-serif;
     }
 
-    .artist-image {
+    &_image {
       height: 80px;
       width: 80px;
       border-radius: 50%;
-      border: 2px solid #5d82be;
+      border: 2px solid $brand-primary;
+      margin-bottom:.5rem;
     }
   }
 

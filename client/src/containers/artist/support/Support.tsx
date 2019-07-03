@@ -68,6 +68,15 @@ export class SupportComponent extends React.Component<Props, any> {
     }
   }
 
+  returnFirstName = (name) => {
+    let spacePosition = name.indexOf(' ');
+    if (spacePosition === -1) {
+      return name;
+    } else {
+      return name.substr(0, spacePosition);
+    }
+  };
+
   redirectToArtistsPage = () => {
     const { history, match } = this.props;
 
@@ -124,11 +133,11 @@ export class SupportComponent extends React.Component<Props, any> {
       {owners.map((owner, index) => (
         <div key={index} className="support__artist-info">
           {owner.profile_image_url ? (
-            <img className="artist-image" src={owner.profile_image_url} />
+            <img className="support__artist-info_image" src={owner.profile_image_url} />
           ) : (
-            <FontAwesomeIcon className="artist-image" icon={faUserCircle} />
+            <FontAwesomeIcon className="support__artist-info_image" icon={faUserCircle} />
           )}
-          <p>{owner.name}</p>
+          <p>{this.returnFirstName(owner.name)}</p>
         </div>
       ))}
     </div>

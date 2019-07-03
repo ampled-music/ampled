@@ -43,30 +43,34 @@ class CheckoutFormComponent extends React.Component<Props, any> {
 
   render() {
     return (
-      <div className="checkout-form-container">
-        <form onSubmit={this.submit}>
-          <p>ENTER YOUR PAYMENT DETAILS</p>
-          <label>
-            Card Number
-            <CardNumberElement />
-          </label>
-          <label>
-            Expiration Date
-            <CardExpiryElement />
-          </label>
-          <label>
-            CVC
-            <CardCVCElement />
-          </label>
-          <div className="actions">
-            <button disabled={this.state.disableActions} className="btn" onClick={this.props.declineStep}>
-              CHANGE AMOUNT
-            </button>
-            <button disabled={this.state.disableActions} className="btn btn-support-action" type="submit">
-              SUPPORT!
-            </button>
+      <div className="container checkout-form-container">
+        <div className="row justify-content-center">
+          <div className="col-md-5">
+            <form onSubmit={this.submit}>
+              <p>ENTER YOUR PAYMENT DETAILS</p>
+              <label>
+                Card Number
+                <CardNumberElement />
+              </label>
+              <label>
+                Expiration Date
+                <CardExpiryElement />
+              </label>
+              <label>
+                CVC
+                <CardCVCElement />
+              </label>
+              <div className="actions">
+                <button disabled={this.state.disableActions} className="btn" onClick={this.props.declineStep}>
+                  CHANGE AMOUNT
+                </button>
+                <button disabled={this.state.disableActions} className="btn btn-support-action" type="submit">
+                  SUPPORT!
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     );
   }

@@ -1,18 +1,34 @@
 @import "../../../theme/vars.scss";
 @import "../../../theme/mixins.scss";
 
-.support-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  font-family: $font-family-monospace;
+.support {
 
-  .support-header {
+  &__container {
     display: flex;
     flex-direction: column;
-    margin: 3rem 5rem;
+    width: 100%;
+    font-family: $font-family-monospace;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 5rem 0;
     font-size: 1.5rem;
     font-family: $font-family-sans-serif;
+
+    &_support {
+      font-size: 1rem;
+      font-family: $font-family-monospace;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    &_artist-name {
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
 
     h2 {
       font-weight: bold;
@@ -20,106 +36,114 @@
     }
   }
 
-  .support-content {
+  &__artist-image {
+    width: 280px;
+    height: 280px;
+    margin-right: 2.5rem;
+    object-fit: cover;
+    transform: rotate(-3deg);
+  }
+
+  &__artists {
     display: flex;
-    margin: 0 5rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+    justify-content: center;
+  }
 
-    .support-artist-image {
-      width: 280px;
-      height: 280px;
-      margin-right: 2.5rem;
-      object-fit: cover;
-      transform: rotate(-3deg);
+  &__artist-info {
+    margin: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      font-family: $font-family-sans-serif;
     }
 
-    .support-artists {
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: -1rem;
-      margin-bottom: 1.5rem;
-
-      .support-artist-info {
-        margin-right: 3rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        p {
-          font-family: $font-family-sans-serif;
-        }
-
-        .artist-image {
-          height: 80px;
-          width: 80px;
-          border-radius: 50%;
-          border: 2px solid #5d82be;
-        }
-      }
-    }
-
-    .support-central-area {
-      display: flex;
-      flex-direction: column;
-
-      .support-level-form {
-        width: 500px;
-        padding: 1rem;
-        border-top: 5px solid #2557a8;
-        text-align: center;
-        box-shadow: 0 20px 20px 0 rgba(10, 31, 68, 0.1), 0 0 1px 0 rgba(10, 31, 68, 0.08);
-
-        h3 {
-          font-size: 16px;
-          margin-bottom: 1.5rem;
-          font-family: $font-family-sans-serif;
-        }
-
-        .support-value-description {
-          margin-top: 1.5rem;
-          font-size: 14px;
-          color: #5d5d5d;
-        }
-
-        .month-text {
-          font-size: 0.8rem;
-        }
-
-        .support-value-field {
-          display: flex;
-          justify-content: center;
-          align-items: flex-end;
-
-          p {
-            margin: 0 0.5rem;
-          }
-
-          input[type='number'],
-          input[type='number']::-webkit-outer-spin-button,
-          input[type='number']::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-            text-align: left;
-            background-color: $white;
-            font-size: 30px;
-            border: none;
-            border-bottom: 1.2px solid #9b9b9b;
-            border-radius: 0;
-            margin-top: 15px;
-            outline: none;
-          }
-        }
-      }
+    .artist-image {
+      height: 80px;
+      width: 80px;
+      border-radius: 50%;
+      border: 2px solid #5d82be;
     }
   }
 
-  .support-action {
-    margin: 0 1rem;
-    margin-top: 3rem;
+  &__level-form {
+    width: 100%;
+    padding: 1rem;
+    border-top: 5px solid $brand-primary;
+    text-align: center;
+    box-shadow: 0 20px 20px 0 rgba(10, 31, 68, 0.1), 0 0 1px 0 rgba(10, 31, 68, 0.08);
+
+    h3 {
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      font-family: $font-family-sans-serif;
+    }
+  }
+
+  &__value-description {
+    margin-top: 1.5rem;
+    font-size: .9rem;
+    color: $black;
+  }
+
+  &__value-field {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    &:before {
+      content: '$';
+      position: absolute;
+      left: 140px;
+      margin-bottom: 30px;
+      font-size: 1.5rem;
+    }
+    &:after {
+      content: '/Month';
+      position: absolute;
+      right: 30px;
+      font-size: .9rem;
+    }
+
+    p {
+      margin: 0 0.5rem;
+    }
+
+    input[type='number'] {
+      text-align: center;
+      background-color: $white;
+      font-size: 3rem;
+      border: none;
+      border-bottom: 1px solid $gray-light;
+      border-radius: 0;
+      margin-top: 15px;
+      outline: none;
+      width: 100%;
+
+      &::placeholder {
+        color: $gray-light;
+        opacity: .6;
+      }
+    }
+
+    input[type='number']::-webkit-outer-spin-button,
+    input[type='number']::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &__action {
+    margin-top: 2rem;
 
     button {
       cursor: pointer;
       width: 100%;
-      background-color: #2557a8;
+      background-color: $brand-primary;
       color: #cbd6e9;
       height: 45px;
     }
@@ -129,49 +153,8 @@
     }
 
     button:disabled {
-      background-color: #2557a8;
+      background-color: $brand-primary;
       cursor: not-allowed;
-    }
-  }
-}
-
-@media only screen and (max-width: 812px) {
-  .support-container {
-    .support-header {
-      margin: 1rem;
-    }
-
-    .support-content {
-      flex-direction: column;
-      margin: 0 1rem;
-
-      .support-artist-image {
-        align-self: center;
-        margin-right: 0;
-      }
-
-      .support-artists {
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-
-        .support-artist-info {
-          margin-right: 1.5rem;
-        }
-      }
-
-      .support-central-area {
-        .support-level-form {
-          width: inherit;
-
-          input {
-            width: 80%;
-          }
-        }
-      }
-    }
-
-    .support-action {
-      margin-bottom: 1rem;
     }
   }
 }

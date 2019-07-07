@@ -46,8 +46,8 @@ class CheckoutFormComponent extends React.Component<Props, any> {
       <div className="container checkout-form-container">
         <div className="row justify-content-center">
           <div className="col-md-5">
-            <form onSubmit={this.submit}>
-              <p>ENTER YOUR PAYMENT DETAILS</p>
+            <form className="form-group support__level-form" onSubmit={this.submit}>
+              <h3>Enter your payment details</h3>
               <label>
                 Card Number
                 <CardNumberElement />
@@ -61,11 +61,11 @@ class CheckoutFormComponent extends React.Component<Props, any> {
                 <CardCVCElement />
               </label>
               <div className="actions">
-                <button disabled={this.state.disableActions} className="btn" onClick={this.props.declineStep}>
-                  CHANGE AMOUNT
+                <button disabled={this.state.disableActions} className="btn btn-secondary" type="button" onClick={this.props.declineStep}>
+                  Change amount
                 </button>
-                <button disabled={this.state.disableActions} className="btn btn-support-action" type="submit">
-                  SUPPORT!
+                <button disabled={this.state.disableActions} className="btn btn-primary" type="submit">
+                  Support
                 </button>
               </div>
             </form>

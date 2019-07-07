@@ -186,10 +186,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
         <div className="user-settings-cancel-modal">
           <p>Are you sure you want to stop supporting {this.state.subscription.name}?</p>
           <div className="actions">
-            <button className="btn" onClick={this.cancelSubscription}>
+            <button className="btn btn-ampled" onClick={this.cancelSubscription}>
               yes
             </button>
-            <button className="btn" onClick={this.closeCancelModal}>
+            <button className="btn btn-ampled" onClick={this.closeCancelModal}>
               OF COURSE NOT!
             </button>
           </div>
@@ -282,7 +282,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="media-button-wrapper">
         <button
           disabled={this.props.updating}
-          className="btn add-media-button"
+          className="btn btn-ampled add-media-button"
           color="purple"
           onClick={() => document.getElementById('input-user-photo').click()}
         >
@@ -320,10 +320,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.props.updating && <b>Saving image...</b>}
       {this.renderAddPhotoButton()}
       <div className="photo-actions">
-        <button disabled={this.props.updating} className="btn" onClick={this.closeUserPhotoModal}>
+        <button disabled={this.props.updating} className="btn btn-ampled" onClick={this.closeUserPhotoModal}>
           CANCEL
         </button>
-        <button disabled={!this.state.photoContent || this.props.updating} className="btn" onClick={this.saveUserPhoto}>
+        <button disabled={!this.state.photoContent || this.props.updating} className="btn btn-ampled" onClick={this.saveUserPhoto}>
           SAVE
         </button>
       </div>

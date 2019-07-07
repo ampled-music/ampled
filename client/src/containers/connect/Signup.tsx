@@ -193,7 +193,7 @@ class SignupComponent extends React.Component<Props, any> {
               </a>
               .
             </label>
-            <button className="btn" type="submit">
+            <button className="btn btn-ampled" type="submit">
               SIGN UP
             </button>
           </form>

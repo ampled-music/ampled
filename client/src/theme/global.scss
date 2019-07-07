@@ -8,25 +8,28 @@ a {
 }
 
 .btn {
-    border-radius: 0px;
-    border: 2px solid $black;
-    background-color: $white;
-    color: $black;
-    font-family: $font-family-monospace;
-    font-weight: 500;
-    text-transform: uppercase;
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    max-width: 350px;
-    margin: auto;
-    display: block;
 
-    &:hover {
-        background-color: $black;
-        color: $white;
-        text-decoration: none;
-        transition: all $speed;
+    &-ampled {
+        border-radius: 0px;
+        border: 2px solid $black;
+        background-color: $white;
+        color: $black;
+        font-family: $font-family-monospace;
+        font-weight: 500;
+        text-transform: uppercase;
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        max-width: 350px;
+        margin: auto;
+        display: block;
+
+        &:hover {
+            background-color: $black;
+            color: $white;
+            text-decoration: none;
+            transition: all $speed;
+        }
     }
 
     &__dark {

@@ -21,7 +21,7 @@ class Footer extends React.Component<Props,any> {
               <div className="input-group mb-3">
                 <input type="text" className="form-control" placeholder="Email Address" aria-label="" aria-describedby="" />
                 <div className="input-group-append">
-                  <button className="btn btn__dark" type="button" id="button-addon">
+                  <button className="btn btn-ampled btn__dark" type="button" id="button-addon">
                     Gimme &rarr;
                   </button>
                 </div>

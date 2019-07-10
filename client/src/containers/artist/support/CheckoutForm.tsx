@@ -48,18 +48,22 @@ class CheckoutFormComponent extends React.Component<Props, any> {
           <div className="col-md-5">
             <form className="form-group support__level-form" onSubmit={this.submit}>
               <h3>Enter your payment details</h3>
-              <label>
-                Card Number
-                <CardNumberElement />
-              </label>
-              <label>
-                Expiration Date
-                <CardExpiryElement />
-              </label>
-              <label>
-                CVC
-                <CardCVCElement />
-              </label>
+              <div className="form-row">
+                <div className="col">
+                  <label>Credit Card Number</label>
+                  <CardNumberElement />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="col">
+                  <label>Expiration Date</label>
+                  <CardExpiryElement />
+                </div>
+                <div className="col">
+                  <label>CVC</label>
+                  <CardCVCElement />
+                </div>
+              </div>
               <div className="actions">
                 <button disabled={this.state.disableActions} className="btn btn-secondary" type="button" onClick={this.props.declineStep}>
                   Change amount

@@ -68,6 +68,25 @@ export class SupportComponent extends React.Component<Props, any> {
     }
   }
 
+  ColorLuminance = (hex, lum) => {
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+      hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    }
+    lum = lum || 0;
+  
+    // convert to decimal and change luminosity
+    var rgb = "#", c, i;
+    for (i = 0; i < 3; i++) {
+      c = parseInt(hex.substr(i*2,2), 16);
+      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+      rgb += ("00"+c).substr(c.length);
+    }
+  
+    return rgb;
+  }
+
   returnFirstName = (name) => {
     let spacePosition = name.indexOf(' ');
     if (spacePosition === -1) {
@@ -217,17 +236,36 @@ export class SupportComponent extends React.Component<Props, any> {
 
     return (
       <div className="container support__container">
-        <div className="row justify-content-center">
+        <style
+          dangerouslySetInnerHTML={{
+          __html: `
+          body {
+            background-color: ${this.ColorLuminance(artist.accent_color, 0.7)} !important;
+          }
+          .support__action button {
+            background-color: ${artist.accent_color};
+            color: white;
+          }
+          .support__action button:hover {
+            background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
+          }
+          .support__level-form,
+          .support__artist-info_image {
+            border-color: ${artist.accent_color};
+          }`
+          }}
+        />
+        <div className="row no-gutters justify-content-center">
           <div className="col-md-8">
             {this.renderSupportHeader(artistName)}
           </div>
         </div>
-        <div className="row justify-content-center">
+        <div className="row no-gutters justify-content-center">
           <div className="col-md-8">
             <div className="stripe" />
           </div>
         </div>
-        <div className="row justify-content-center">
+        <div className="row no-gutters justify-content-center">
           <div className="col-md-12">
             <div className="support__content">
               {this.renderPaymentStep(artist)}

@@ -1,6 +1,7 @@
 import './footer.scss';
 
 import * as React from 'react';
+import * as moment from 'moment'
 import { Link } from 'react-router-dom';
 
 import logo from '../../images/ampled_logo.svg';
@@ -37,7 +38,7 @@ class Footer extends React.Component<Props,any> {
             <div className="col-6 col-md-2">
               <div className="title">Get Involved</div>
               <a href="https://www.ampled.com/create-an-artist-page">Create An Artist Page</a>
-              <a href="https://www.ampled.com/">Become a Member</a>
+              <a href="https://ampledmembership.lpages.co/membership/">Become a Member</a>
               <a href="https://www.ampled.com/jobs">Work at Ampled</a>
               <a href="https://www.ampled.com/press">Press</a>
             </div>
@@ -52,7 +53,7 @@ class Footer extends React.Component<Props,any> {
               <Link to="/">
                 <img src={logo} alt="logo" className="logo" />
               </Link>
-              <div className="copyright">©2018 Ampled</div>
+              <div className="copyright">©{moment().year()} Ampled</div>
             </div>
           </div>
         </div>

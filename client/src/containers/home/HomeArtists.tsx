@@ -54,7 +54,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
             {/* {this.getArtistsList(artistsPages)} */}
           </div>
           <div className="row">
-            <button className="home-artists__button btn center" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
+            <button className="home-artists__button btn btn-ampled center" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
               Create Your Artist Page
             </button>
           </div>

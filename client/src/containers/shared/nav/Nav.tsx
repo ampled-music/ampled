@@ -93,7 +93,7 @@ class NavComponent extends React.Component<Props, any> {
           <img src={logo} alt="logo" height="100%" />
         </Link>
         {this.showSupportButton() && (
-          <button className="btn btn-support btn-support-header" onClick={this.handleSupportClick}>
+          <button className="btn btn-ampled btn-support btn-support-header" onClick={this.handleSupportClick}>
             Support this artist
           </button>
         )}
@@ -109,7 +109,7 @@ class NavComponent extends React.Component<Props, any> {
         </div>
         {this.showSupportButton() && (
           <div className="stickySupport">
-            <button className="btn btn-support" onClick={this.handleSupportClick}>
+            <button className="btn btn-ampled btn-support" onClick={this.handleSupportClick}>
               Support this artist
             </button>
           </div>

@@ -172,7 +172,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     
     return (
       <div>
-        <button className="btn btn-support" style={{ borderColor }} onClick={(e) => this.props.handleSupportClick()}> 
+        <button className="btn btn-ampled btn-support" style={{ borderColor }} onClick={(e) => this.props.handleSupportClick()}> 
           Become a Supporter 
         </button>
         <button onClick={this.props.openWhyModal} className="link link__why">

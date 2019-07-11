@@ -164,7 +164,7 @@ class PostComponent extends React.Component<any, any> {
 
             {!allowDetails && (
               <div className="private-support-btn">
-                <button className="btn" onClick={() => this.handlePrivatePostClick(authenticated)}>
+                <button className="btn btn-ampled" onClick={() => this.handlePrivatePostClick(authenticated)}>
                   <FontAwesomeIcon icon={faLock} />
                   SUPPORT TO UNLOCK
                 </button>

@@ -190,12 +190,12 @@ class ArtistComponent extends React.Component<Props, any> {
         <style
           dangerouslySetInnerHTML={{
           __html: `
-            .btn-support, .private-support-btn > .btn {
-              border-color: unset;
+            .btn.btn-support, .private-support-btn > .btn {
+              border-width: 0px;
               background-color: ${artist.accent_color};
               color: white;
             }
-            .btn-support:hover, .private-support-btn > .btn:hover {
+            .btn.btn-support:hover, .private-support-btn > .btn:hover {
               background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
             }
             ${isSupporter && `

@@ -68,6 +68,34 @@ export class SupportComponent extends React.Component<Props, any> {
     }
   }
 
+  ColorLuminance = (hex, lum) => {
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+      hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    }
+    lum = lum || 0;
+  
+    // convert to decimal and change luminosity
+    var rgb = "#", c, i;
+    for (i = 0; i < 3; i++) {
+      c = parseInt(hex.substr(i*2,2), 16);
+      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+      rgb += ("00"+c).substr(c.length);
+    }
+  
+    return rgb;
+  }
+
+  returnFirstName = (name) => {
+    let spacePosition = name.indexOf(' ');
+    if (spacePosition === -1) {
+      return name;
+    } else {
+      return name.substr(0, spacePosition);
+    }
+  };
+
   redirectToArtistsPage = () => {
     const { history, match } = this.props;
 
@@ -106,9 +134,9 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   renderSupportHeader = (artistName) => (
-    <div className="support-header">
-      Support
-      <h2>{artistName}</h2>
+    <div className="support__header">
+      <div className="support__header_support">Support</div>
+      <h2 className="support__header_artist-name">{artistName}</h2>
     </div>
   );
 
@@ -116,41 +144,44 @@ export class SupportComponent extends React.Component<Props, any> {
     const placeholderImage =
       'https://images.pexels.com/photos/1749822/pexels-photo-1749822.jpeg?cs=srgb&dl=backlit-band-concert-1749822.jpg';
 
-    return <img className="support-artist-image" src={images.length ? images[0] : placeholderImage} />;
+    return <img className="support__artist-image" src={images.length ? images[0] : placeholderImage} />;
   };
 
   renderArtists = (owners) => (
-    <div key="artists" className="support-artists">
+    <div key="artists" className="support__artists">
       {owners.map((owner, index) => (
-        <div key={index} className="support-artist-info">
+        <div key={index} className="support__artist-info">
           {owner.profile_image_url ? (
-            <img className="artist-image" src={owner.profile_image_url} />
+            <img className="support__artist-info_image" src={owner.profile_image_url} />
           ) : (
-            <FontAwesomeIcon className="artist-image" icon={faUserCircle} />
+            <FontAwesomeIcon className="support__artist-info_image" icon={faUserCircle} />
           )}
-          <p>{owner.name}</p>
+          <p>{this.returnFirstName(owner.name)}</p>
         </div>
       ))}
     </div>
   );
 
   renderSupportLevelForm = (artistName) => (
-    <div key="support-level-form" className="support-level-form">
-      <h3>ENTER YOUR SUPPORT LEVEL</h3>
-      <div className="support-value-field">
-        <p>$</p>
-        <input
-          type="number"
-          name="supportLevelValue"
-          onChange={this.handleChange}
-          value={this.state.supportLevelValue}
-        />
-        <p className="month-text">/Month</p>
+    <div className="row justify-content-center">
+      <div className="col-md-5">
+        <div key="support__level-form" className="support__level-form">
+          <h3>Support What You Want</h3>
+          <div className="support__value-field">
+            <input
+              type="number"
+              name="supportLevelValue"
+              onChange={this.handleChange}
+              value={this.state.supportLevelValue}
+              placeholder="3 min"
+            />
+          </div>
+          <p className="support__value-description">
+            Support {artistName} directly for $3 (or more) per month to unlock access to all of their posts and get
+            notifications when they post anything new.
+          </p>
+        </div>
       </div>
-      <p className="support-value-description">
-        Support {artistName} directly for $3 (or more) per month to unlock access to all of their posts and get
-        notifications when they post anything new.
-      </p>
     </div>
   );
 
@@ -158,10 +189,14 @@ export class SupportComponent extends React.Component<Props, any> {
     const buttonLabel = this.props.me.userData ? `SUPPORT ${artistName.toUpperCase()}` : 'SIGNUP OR LOGIN TO SUPPORT';
 
     return (
-      <div className="support-action">
-        <button disabled={!this.state.supportLevelValue} onClick={this.handleSupportClick}>
-          {buttonLabel}
-        </button>
+      <div className="row justify-content-center">
+        <div className="col-md-5">
+          <div className="support__action">
+            <button disabled={!this.state.supportLevelValue} onClick={this.handleSupportClick}>
+              {buttonLabel}
+            </button>
+          </div>
+        </div>
       </div>
     );
   };
@@ -200,14 +235,45 @@ export class SupportComponent extends React.Component<Props, any> {
     const artistName = artist.name;
 
     return (
-      <div className="support-container">
-        {this.renderSupportHeader(artistName)}
-        <div className="stripe" />
-        <div className="support-content">
-          {this.renderArtistImage(artist.images)}
-          <div className="support-central-area">{this.renderPaymentStep(artist)}</div>
+      <div className="container support__container">
+        <style
+          dangerouslySetInnerHTML={{
+          __html: `
+          body {
+            background-color: ${this.ColorLuminance(artist.accent_color, 0.7)} !important;
+          }
+          .support__action button {
+            background-color: ${artist.accent_color};
+            color: white;
+          }
+          .support__action button:hover {
+            background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
+          }
+          .support__level-form,
+          .support__artist-info_image {
+            border-color: ${artist.accent_color};
+          }`
+          }}
+        />
+        <div className="row no-gutters justify-content-center">
+          <div className="col-md-8">
+            {this.renderSupportHeader(artistName)}
+          </div>
+        </div>
+        <div className="row no-gutters justify-content-center">
+          <div className="col-md-8">
+            <div className="stripe" />
+          </div>
+        </div>
+        <div className="row no-gutters justify-content-center">
+          <div className="col-md-12">
+            <div className="support__content">
+              {this.renderPaymentStep(artist)}
+            </div>
+          </div>
         </div>
         {subscriptions.status === SubscriptionStep.SupportLevel && this.renderStartSubscriptionAction(artistName)}
+
       </div>
     );
   }

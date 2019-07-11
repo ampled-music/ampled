@@ -93,7 +93,7 @@ class LoginComponent extends React.Component<Props, any> {
               onChange={this.handleChange}
               required
             />
-            <button className="btn" type="submit">
+            <button className="btn btn-ampled" type="submit">
               LOGIN
             </button>
             <span className="error-message">{login.error}</span>

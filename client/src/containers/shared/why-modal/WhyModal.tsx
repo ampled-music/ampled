@@ -31,7 +31,7 @@ class WhyModalComponent extends React.Component<Props, any> {
             <div className="why-support__copy">Unlock and get first access to anything this artist posts.</div>
             <div className="why-support__subheader">Support Artist Solidarity</div>
             <div className="why-support__copy">Show that you are a responsible music consumer by contributing directly to the artists you love.</div>
-            <button className="btn btn-support" onClick={(e) => this.props.handleSupportClick()}> 
+            <button className="btn btn-ampled btn-support" onClick={(e) => this.props.handleSupportClick()}> 
               Become a Supporter 
             </button>
             { <div

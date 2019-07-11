@@ -20,12 +20,12 @@ class Footer extends React.Component<Props,any> {
             <div className="col-12 col-md-4">
               <div className="title">Join Our Mailing List</div>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Email Address" aria-label="" aria-describedby="" />
-                <div className="input-group-append">
-                  <button className="btn btn__dark" type="button" id="button-addon">
-                    Gimme &rarr;
-                  </button>
-                </div>
+                <form action="https://ampled.us19.list-manage.com/subscribe/post?u=514372f571f3cb5abdf8a2637&amp;id=50f2ab4389" method="post" >
+                  <input className="form-control" type="email" name="EMAIL" placeholder="Email Address" />
+                  <div className="input-group-append">
+                    <input type="submit" value="Gimme &rarr;" name="subscribe" id="mc-embedded-subscribe" className="btn btn__dark" />
+                  </div>
+                </form>
               </div>
             </div>
             <div className="col-6 col-md-2">

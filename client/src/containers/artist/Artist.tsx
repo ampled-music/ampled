@@ -73,9 +73,9 @@ class ArtistComponent extends React.Component<Props, any> {
   getConfettiConfig = () => {
     const confettiConfig = {
       angle: 90,
-      spread: 60,
-      startVelocity: 60,
-      elementCount: 50,
+      spread: 70,
+      startVelocity: 70,
+      elementCount: 200,
       dragFriction: 0.1,
       duration: 5000,
       stagger: 0,

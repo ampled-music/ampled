@@ -28,7 +28,7 @@ export const HomeFor = () => (
         </div>
         <div className="col-md-4">
           <img className="home-for__image" src={transparent} />
-          <h3 className="home-for__sub-title">Radically Transparent</h3>
+          <h3 className="home-for__sub-title">Transparent</h3>
           <p className="home-for__copy">
             We’ve made our finances transparent to stay accountable to our members.  View our revenue, expenses, salaries, and more.
           </p>

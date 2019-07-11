@@ -3,21 +3,21 @@
 
 .user-settings-container {
   font-family: $font-family-monospace;
-  margin: 0 5rem;
 
   h1 {
     font-family: $font-family-sans-serif;
   }
 
   .content {
-    margin-top: 7rem;
+    margin-top: 5rem;
     display: flex;
 
     .user-info-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 300px;
+      width: 100%;
+      margin-bottom: 2rem;
 
       p {
         font-weight: bold;
@@ -47,24 +47,26 @@
         }
 
         .tag {
-          font-size: 30px;
-          color: $white;
+          font-size: 1rem;
+          color: $black;
           text-transform: capitalize;
           align-self: center;
           z-index: 3;
           position: absolute;
-          margin-top: 5rem;
+          top: 110%;
+          right: -20px;
         }
       }
 
       .user-content {
         display: flex;
         flex-direction: column;
-        width: 300px;
         height: 150px;
-        background-color: $white;
+        width: 100%;
+        max-width: 350px;
+        background-image: url(../../images/background_post.svg);
         align-items: center;
-        padding: 4rem;
+        padding: 4rem 1rem 1rem;
 
         .user-name {
           font-size: 20px;
@@ -80,14 +82,17 @@
     }
 
     .pages-container {
-      margin-left: 2rem;
 
       h1 {
         border-top: 4px solid $black;
         font-size: 20px;
-        padding: 1.5rem 0;
+        padding: 1rem 0;
         margin: 0;
         font-weight: bold;
+        text-align: center;
+        @include mq($tablet) {
+          text-align: left;
+        }
       }
 
       .pages {
@@ -113,10 +118,13 @@
               height: 200px;
               width: 200px;
               transform: rotate(-4deg);
+              left: -2px;
+              top: -2px;
               align-self: center;
               position: relative;
               object-fit: scale-down;
               cursor: pointer;
+              transition: transform $speed;
             }
 
             img:hover {
@@ -208,10 +216,14 @@
                     font-size: 11px;
                     cursor: pointer;
                     outline: none;
-                    color: grey;
+                    color: $gray-light;
                     letter-spacing: 1px;
                     border: 0;
                     background: transparent;
+                    transition: color $speed;
+                    &:hover {
+                      color: $brand-danger;
+                    }
                   }
                 }
               }
@@ -276,40 +288,6 @@
 
     button:not(:last-child) {
       margin-right: 1rem;
-    }
-  }
-}
-
-@media only screen and (max-width: 812px) {
-  .user-settings-container {
-    margin: 0;
-
-    .content {
-      margin-top: 5rem;
-      flex-direction: column;
-
-      .user-info-container {
-        align-self: center;
-      }
-
-      .pages-container {
-        margin-top: 2rem;
-        width: 85%;
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 812px) {
-  .user-photo-selector-modal {
-    width: 100%;
-
-    button {
-      width: 115px;
-    }
-
-    .add-media-button {
-      width: 100%;
     }
   }
 }

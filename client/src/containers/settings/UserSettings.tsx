@@ -164,7 +164,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     const { userData } = this.props;
 
     return (
-      <div className="user-info-container">
+      <div className="user-info-container col-md-3">
         {this.renderUserImage()}
         <div className="user-content">
           <p className="user-name">{userData.name}</p>
@@ -199,80 +199,95 @@ class UserSettingsComponent extends React.Component<Props, any> {
   };
 
   renderOwnedPages = () => (
-    <div className="pages">
-      {this.props.userData.ownedPages.map((ownedPage) => (
-        <div key={`artist-${ownedPage.id}`} className="artist">
-          <div className="image-border">
-            <img src={ownedPage.image} onClick={() => this.redirectToArtistPage(ownedPage.artistId)} />
-          </div>
-          <div className="artist-info">
-            <p className="artist-name">{ownedPage.name}</p>
-            <div className="extra-info">
-              <div className="owned-info">
-                <div className="column">
-                  <label>
-                    <p className="info-title">SUPPORTERS</p>
-                    <p className="supporting-at-value">{ownedPage.supportersCount || 0}</p>
-                  </label>
-                  <label>
-                    <p className="info-title">LAST POST</p>
-                    <p className="info-value">{this.getFormattedDate(ownedPage.lastPost)}</p>
-                  </label>
-                </div>
-                <div className="column">
-                  <label>
-                    <p className="info-title">MONTHLY TOTAL</p>
-                    <p className="info-value">$ {this.formatMoney(ownedPage.monthlyTotal)}</p>
-                  </label>
-                  <label>
-                    <p className="info-title">LAST PAYOUT</p>
-                    <p className="info-value">{this.getFormattedDate(ownedPage.lastPayout)}</p>
-                  </label>
+    <div>
+      {this.renderPagesTitle('MY ARTIST PAGES')}
+      <div className="pages row no-gutters justify-content-center justify-content-md-start">
+        {this.props.userData.ownedPages.map((ownedPage) => (
+          <div key={`artist-${ownedPage.id}`} className="artist col-sm-6">
+            <div className="image-border">
+              <img src={ownedPage.image} onClick={() => this.redirectToArtistPage(ownedPage.artistId)} />
+            </div>
+            <div className="artist-info">
+              <p className="artist-name">{ownedPage.name}</p>
+              <div className="extra-info">
+                <div className="owned-info">
+                  <div className="column">
+                    <label>
+                      <p className="info-title">SUPPORTERS</p>
+                      <p className="supporting-at-value">{ownedPage.supportersCount || 0}</p>
+                    </label>
+                    <label>
+                      <p className="info-title">LAST POST</p>
+                      <p className="info-value">{this.getFormattedDate(ownedPage.lastPost)}</p>
+                    </label>
+                  </div>
+                  <div className="column">
+                    <label>
+                      <p className="info-title">MONTHLY TOTAL</p>
+                      <p className="info-value">$ {this.formatMoney(ownedPage.monthlyTotal)}</p>
+                    </label>
+                    <label>
+                      <p className="info-title">LAST PAYOUT</p>
+                      <p className="info-value">{this.getFormattedDate(ownedPage.lastPayout)}</p>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 
   renderSupportedArtists = () => (
-    <div className="pages">
-      {this.props.userData.subscriptions.map((subscription) => (
-        <div key={`artist-${subscription.artistPageId}`} className="artist">
-          <div className="image-border">
-            <img src={subscription.image} onClick={() => this.redirectToArtistPage(subscription.artistPageId)} />
-          </div>
-          <div className="artist-info">
-            <p className="artist-name">{subscription.name}</p>
-            <div className="extra-info">
-              <div className="support-info">
-                <div className="supporting-at">
-                  <label>
-                    <p className="info-title">SUPPORTING AT</p>
-                    <p className="supporting-at-value">${subscription.amount / 100}/Month</p>
-                  </label>
-                  <button onClick={(event) => this.openCancelModal(event, subscription)}>
-                    <FontAwesomeIcon icon={faHeartBroken} />
-                    CANCEL
-                  </button>
-                </div>
-                <div>
-                  <label>
-                    <p className="info-title">LAST POST</p>
-                    <p className="info-value">{this.getFormattedDate(subscription.last_post_date)}</p>
-                  </label>
-                  <label>
-                    <p className="info-title">SUPPORT DATE</p>
-                    <p className="info-value">{this.getFormattedDate(subscription.support_date)}</p>
-                  </label>
+    <div>
+      {this.renderPagesTitle('SUPPORTED ARTISTS')}
+      <div className="pages row no-gutters justify-content-center justify-content-md-start">
+        {this.props.userData.subscriptions.map((subscription) => (
+          <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-6">
+            <div className="image-border">
+              <img src={subscription.image} onClick={() => this.redirectToArtistPage(subscription.artistPageId)} />
+            </div>
+            <div className="artist-info">
+              <p className="artist-name">{subscription.name}</p>
+              <div className="extra-info">
+                <div className="support-info">
+                  <div className="supporting-at">
+                    <label>
+                      <p className="info-title">SUPPORTING AT</p>
+                      <p className="supporting-at-value">${subscription.amount / 100}/Month</p>
+                    </label>
+                    <button onClick={(event) => this.openCancelModal(event, subscription)}>
+                      <FontAwesomeIcon icon={faHeartBroken} />
+                      CANCEL
+                    </button>
+                  </div>
+                  <div>
+                    <label>
+                      <p className="info-title">LAST POST</p>
+                      <p className="info-value">{this.getFormattedDate(subscription.last_post_date)}</p>
+                    </label>
+                    <label>
+                      <p className="info-title">SUPPORT DATE</p>
+                      <p className="info-value">{this.getFormattedDate(subscription.support_date)}</p>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+    </div>
+  );
+
+  renderEmptyArtists = () => (
+    <div>
+      {this.renderPagesTitle('SUPPORTED ARTISTS')}
+      <div className="pages row no-gutters justify-content-center justify-content-md-start">
+        <div className="center col-md-8">You currently don't support any artists.</div>
+      </div>
     </div>
   );
 
@@ -331,25 +346,26 @@ class UserSettingsComponent extends React.Component<Props, any> {
   );
 
   renderContent = () => (
-    <div className="content">
+    <div className="row content">
       <Modal open={this.state.showUserPhotoModal} onClose={!this.props.updating && this.closeUserPhotoModal}>
         {this.renderPhotoSelector()}
       </Modal>
       {this.renderUserInfo()}
-      <div className="pages-container">
-        {this.renderPagesTitle('MY ARTIST PAGES')}
-        {this.renderOwnedPages()}
-        {this.renderPagesTitle('SUPPORTED ARTISTS')}
-        {this.renderSupportedArtists()}
+      <div className="pages-container col-md-9">
+        { this.props.userData.ownedPages.length > 0 ?
+          this.renderOwnedPages() : '' }
+        { this.props.userData.subscriptions.length > 0 ?
+          this.renderSupportedArtists() : this.renderEmptyArtists() }
       </div>
     </div>
   );
+
 
   render() {
     const { userData } = this.props;
 
     return (
-      <div className="user-settings-container">
+      <div className="container user-settings-container">
         <Modal open={!userData}>
           <div className="user-settings-loading-modal">
             <h1>LOADING...</h1>

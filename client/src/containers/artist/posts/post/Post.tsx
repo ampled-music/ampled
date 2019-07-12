@@ -51,7 +51,12 @@ class PostComponent extends React.Component<any, any> {
   };
 
   openSignupModal = () => {
-    this.props.openAuthModal({ modalPage: 'signup', showSupportMessage: true, artistName: this.props.artistName });
+    this.props.openAuthModal({
+      modalPage: 'signup',
+      showSupportMessage: 'post',
+      artistName: this.props.artistName,
+      redirectTo: routePaths.support.replace(':id', this.props.match.params.id),
+    });
   };
 
   redirectToSupport = () => {
@@ -98,6 +103,15 @@ class PostComponent extends React.Component<any, any> {
     }
   };
 
+  returnFirstName = (name) => {
+    let spacePosition = name.indexOf(' ');
+    if (spacePosition === -1) {
+      return name;
+    } else {
+      return name.substr(0, spacePosition);
+    }
+  };
+
   renderPost = () => {
     const { classes, post, accentColor, me } = this.props;
 
@@ -119,7 +133,7 @@ class PostComponent extends React.Component<any, any> {
                 ) : (
                   <FontAwesomeIcon className={classes.userImage} icon={faUserCircle} />
                 )}
-                <span>{post.author}</span>
+                <span>{this.returnFirstName(post.author)}</span>
               </div>
               <div className={classes.postDate}>{post.created_ago} ago</div>
             </CardContent>
@@ -150,7 +164,7 @@ class PostComponent extends React.Component<any, any> {
 
             {!allowDetails && (
               <div className="private-support-btn">
-                <button className="btn" onClick={() => this.handlePrivatePostClick(authenticated)}>
+                <button className="btn btn-ampled" onClick={() => this.handlePrivatePostClick(authenticated)}>
                   <FontAwesomeIcon icon={faLock} />
                   SUPPORT TO UNLOCK
                 </button>

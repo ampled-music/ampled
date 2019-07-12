@@ -25,6 +25,7 @@ interface NavComponentProps {
     path: string;
   };
   history: any;
+  artist: any;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -54,7 +55,12 @@ class NavComponent extends React.Component<Props, any> {
     if (this.props.userData) {
       this.props.history.push(routePaths.support.replace(':id', this.props.match.params.id));
     } else {
-      this.props.openAuthModal({ modalPage: 'signup' });
+      this.props.openAuthModal({
+        modalPage: 'signup',
+        showSupportMessage: 'artist',
+        artistName: this.props.artist.name,
+        redirectTo: routePaths.support.replace(':id', this.props.match.params.id),
+      });
     }
   };
 
@@ -87,7 +93,7 @@ class NavComponent extends React.Component<Props, any> {
           <img src={logo} alt="logo" height="100%" />
         </Link>
         {this.showSupportButton() && (
-          <button className="btn btn-support btn-support-header" onClick={this.handleSupportClick}>
+          <button className="btn btn-ampled btn-support btn-support-header" onClick={this.handleSupportClick}>
             Support this artist
           </button>
         )}
@@ -103,7 +109,7 @@ class NavComponent extends React.Component<Props, any> {
         </div>
         {this.showSupportButton() && (
           <div className="stickySupport">
-            <button className="btn btn-support" onClick={this.handleSupportClick}>
+            <button className="btn btn-ampled btn-support" onClick={this.handleSupportClick}>
               Support this artist
             </button>
           </div>
@@ -116,6 +122,7 @@ class NavComponent extends React.Component<Props, any> {
 const mapStateToProps = (state: Store) => ({
   ...state.authentication,
   ...state.me,
+  artist: state.artists.artist,
 });
 
 const mapDispatchToProps = (dispatch) => ({

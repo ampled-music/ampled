@@ -3,20 +3,24 @@ import './login.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
+import * as store from 'store';
 import { signupAction } from 'src/redux/signup/signup';
+import { loginAction } from 'src/redux/authentication/login';
 
 import { initialState as authenticationInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as signupInitialState } from '../../redux/signup/initial-state';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 
+import { once } from 'ramda';
 
 interface SignupProps {
   signup: typeof signupInitialState;
   authentication: typeof authenticationInitialState;
   me: typeof meInitialState;
+  login: typeof authenticationInitialState;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -37,14 +41,28 @@ class SignupComponent extends React.Component<Props, any> {
   };
 
   state = this.initialState;
+  emailPass = {
+    email: null,
+    password: null
+  };
 
   componentDidUpdate() {
-    const { signup, openAuthModal, authentication } = this.props;
+    const { signup, authentication } = this.props;
 
-    if (this.state.submitted && !signup.errors && authentication.authModalOpen) {
-      showToastMessage("Signed up! Please check your email for a confirmation email.", MessageType.SUCCESS, {timeOut: 8000});
-      this.setState(this.initialState);
-      openAuthModal({ modalPage: 'login' });
+    if (this.state.submitted && !signup.errors && authentication.authModalOpen && !authentication.authenticating) {
+      // showToastMessage("Signed up! Please check your email for a confirmation email.", MessageType.SUCCESS, { timeOut: 8000 });
+      once(this.login())();
+    }
+  }
+
+  async login() {
+    const { token } = await this.props.login(this.emailPass.email, this.emailPass.password);
+    if (token) {
+      store.set('token', token);
+      this.props.closeAuthModal();
+      if (this.props.authentication.redirectTo) {
+        window.location = this.props.authentication.redirectTo;
+      }
     }
   }
 
@@ -77,6 +95,7 @@ class SignupComponent extends React.Component<Props, any> {
     }
 
     const { email, password, confirmPassword, name } = this.state;
+    this.emailPass = { email, password };
 
     const submitResult = await this.props.signup(email, password, confirmPassword, name);
 
@@ -118,8 +137,11 @@ class SignupComponent extends React.Component<Props, any> {
       <div>
         <div className="login">
           <h2>SIGN UP</h2>
-          {authentication.showSupportMessage && (
+          {authentication.showSupportMessage && authentication.showSupportMessage === 'post' && authentication.artistName && (
             <p>This is a private post. Sign up and become a supporter of {authentication.artistName} to access it.</p>
+          )}
+          {authentication.showSupportMessage && authentication.showSupportMessage === 'artist' && authentication.artistName && (
+            <p>Sign up to become a supporter of {authentication.artistName}.</p>
           )}
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
             <input
@@ -171,13 +193,13 @@ class SignupComponent extends React.Component<Props, any> {
               </a>
               .
             </label>
-            <button className="btn" type="submit">
+            <button className="btn btn-ampled" type="submit">
               SIGN UP
             </button>
           </form>
           <label>
             Already have an account?{' '}
-            <a onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>
+            <a onClick={() => this.props.openAuthModal({ modalPage: 'login', redirectTo: this.props.authentication.redirectTo })}>
               <u>Log in</u>
             </a>
             .
@@ -195,8 +217,10 @@ const mapStateToProps = (state: Store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  login: bindActionCreators(loginAction, dispatch),
   signup: bindActionCreators(signupAction, dispatch),
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
 });
 
 const Signup = connect(

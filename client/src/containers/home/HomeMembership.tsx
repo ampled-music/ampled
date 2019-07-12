@@ -16,7 +16,7 @@ export const HomeMembership = () => (
 
                         <p>Artists on Ampled receive one share, one vote in how we do business, dividends based on Ampled’s profits, and get a bunch of perks and discounts through our partners. </p>                        
                     </div>
-                    <a href="http://ampled.com/create-an-artist-page"><button className="home-membership__button btn">Create an Artist Page</button></a>
+                    <a href="http://ampled.com/create-an-artist-page"><button className="home-membership__button btn btn-ampled">Create an Artist Page</button></a>
                 </div>
             </div>
         </div>

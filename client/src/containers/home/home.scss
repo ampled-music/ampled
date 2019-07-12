@@ -5,6 +5,7 @@
 
 .home-section {
   overflow: hidden;
+  margin-top: 50px;
 }
 
 .home-header {
@@ -60,7 +61,7 @@
     width: 100%;
     margin: 1rem auto;
    
-    @include mq($desktop) {
+    @include mq($tablet) {
       margin: 2rem auto;
       width: 50%;
     }
@@ -84,7 +85,7 @@
     font-family: $font-family-monospace;
     text-align: center;
 
-    @include mq($desktop) {
+    @include mq($tablet) {
       min-height: 110px;
     }
   }
@@ -98,7 +99,7 @@
   margin: 2rem auto 0;
   padding: 0 0 2rem;
 
-  @include mq($desktop) {
+  @include mq($tablet) {
     margin: 0;
     padding: 0;
   }
@@ -108,110 +109,189 @@
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;
+    position: relative;
+    z-index: 10;
   }
 
   &__list {
     border: 2px solid $white;
-    padding: 3rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    @include mq($tablet) {  
+      padding: 3rem;  
+    }
   }
 
-  &__list-item {
-    margin-bottom: 1rem;
-
-    &:hover {
-      .home-how__list-item_number {
-        background-color: $white;
+  .section {
+    .active {
+      .home-how__number {
+        background: $white;
         color: $black;
-        transition: .25s all ease-in-out;
+      }
+      .home-how__title,
+      .home-how__copy,
+      .home-how__image {
+          opacity: 1;
       }
     }
+  }
 
-    &_image {
-      position: absolute;
-      z-index: 1;
-      img {
-        opacity: 0;
-        transition: opacity $speed;
-      }
-      @include mq($desktop) {
-        &.crowd {
-          img {
-            width: 790px;
-            transform: translate(380px, -110px) rotate(-5deg);
-          }
-          .show {
-            opacity: 1;
-          }
-        }
-        &.money {
-          img {
-            width: 560px;
-            transform: translate(480px, -460px);
-          }
-          .show {
-            opacity: 1;
-          }
-        }
-        &.speaker {
-          img {
-            width: 460px;
-            transform: translate(630px, -30px);
-          }
-          .show {
-            opacity: 1;
-          }
-        }
-      }
+  &__numbers {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 3rem;
+    width: 50%;
+    order: 1;
+
+    @include mq($tablet) {
+      width: 7%;
+      flex-direction: column;
+      margin-bottom: 0rem;
+      margin-right: 2rem;
     }
 
-    &_number {
-      background-color: $black;
-      color: $white;
-      text-align: center;
-      border: 2px solid $white;
-      border-radius: 100%;
+    .section {
+      height: auto;
+      @include mq($tablet) {
+        height: 200px;
+      }
+      &_3 {
+        height: auto;
+      }
+    }
+  }
+  &__number {
+    background-color: $black;
+    color: $white;
+    text-align: center;
+    border: 2px solid $white;
+    border-radius: 100%;
+    height: 40px;
+    width: 40px;
+    margin: 0 1rem 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-family-monospace;
+    transition: all $speed;
+    font-size: 1rem;
+
+    @include mq($tablet) {
       height: 70px;
       width: 70px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: $font-family-monospace;
       font-size: 2rem;
-      transition: all $speed;
-
-      @include mq($desktop) {
-        &:after {
-          content: '';
-          display: block;
-          position: absolute;
-          top: 70px;
-          width: 2px;
-          height: 80%;
-          background-color: $white;
-        }
-      }
-      &.no-tail {
-        &:after {
-          height: 0px;
-        }
+      margin: auto;
+      &:after {
+        content: '';
+        display: block;
+        position: relative;
+        left: -20px;
+        top: 100px;
+        width: 2px;
+        height: 130px;
+        background-color: $white;
       }
     }
+    &.no-tail {
+      &:after {
+        height: 0px;
+      }
+    }
+  }
 
-    &_title {
-      font-family: $font-family-sans-serif;
-      font-size: 1.5rem;
-      line-height: 1.7rem;
-      margin-bottom: 1rem;
-      position: relative;
-      z-index: 5;
+
+  &__info {
+    width: 100%;
+    min-height: 200px;
+    order: 3;
+
+    @include mq($tablet) {
+      width: 57%;
+      order: 2;
     }
 
-    &_copy {
-      font-family: $font-family-monospace;
-      font-size: 1rem;
-      position: relative;
-      z-index: 5;
+    .section {
+      height: 200px;
+      width: 70%;
+      position: absolute;
+
+      @include mq($tablet) {
+        height: 200px;
+        width: 100%;
+        position: relative;
+      }
+      &_3 {
+        height: auto;
+      }
+    }
+  }
+
+  &__images {
+    width: 50%;
+    order: 2;
+    @include mq($tablet) {
+      width: 29%;
+      order: 3;
+    }
+  }
+  &__image {
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity $speed;
+
+    &.speaker {
+      width: 40%;
+      transform: translate(70px, -60px);
+    }
+    &.crowd {
+      width: 60%;
+      transform: translate(20px, -60px) rotate(5deg);
+    }
+    &.money {
+      width: 50%;
+      transform: translate(50px, -70px)
+    }
+
+    @include mq($tablet) {
+      &.speaker {
+        width: 460px;
+        transform: translate(0px, 0px);
+      }
+      &.crowd {
+        width: 790px;
+        transform: translate(-280px, 20px) rotate(-5deg);
+      }
+      &.money {
+        width: 560px;
+        transform: translate(-90px, -60px);
+      }
+    }
+  }
+  
+  &__title {
+    font-family: $font-family-sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.7rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 5;
+    opacity: 0;
+    @include mq($tablet) {
+      opacity: 1;
+    }
+  }
+
+  &__copy {
+    font-size: 1rem;
+    position: relative;
+    z-index: 5;
+    opacity: 0;
+    font-family: $font-family-monospace;
+    @include mq($tablet) {
+      opacity: 1;
     }
   }
 }
@@ -336,7 +416,7 @@
     background-color: $white; 
     margin-bottom: -44px;
   }
-  @include mq($desktop) {
+  @include mq($tablet) {
     display: block;
   }
 }

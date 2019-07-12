@@ -7,7 +7,7 @@ interface Props {
   positionFlip: boolean;
 }
   
-class HomeTexture extends React.Component<Props,any> {
+class Texture extends React.Component<Props,any> {
       
   render() {
     var classes = classNames(
@@ -23,4 +23,4 @@ class HomeTexture extends React.Component<Props,any> {
   }
 }
 
-export { HomeTexture };
+export { Texture };

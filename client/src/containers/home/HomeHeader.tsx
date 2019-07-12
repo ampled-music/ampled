@@ -23,7 +23,7 @@ class HomeHeader extends React.Component<Props,any> {
             <div className="home-header__info">
               Receive support via direct payments from your community. Own your creative freedom and sustainably continue making art for the people who love it. Join us and become a member-owner of an alternative platform that puts artists first.
             </div>
-            <button className="home-header__button btn" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
+            <button className="home-header__button btn btn-ampled" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
               Create Your Page
             </button>
           </div>

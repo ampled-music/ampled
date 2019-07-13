@@ -195,6 +195,9 @@ class ArtistComponent extends React.Component<Props, any> {
               background-color: ${artist.accent_color};
               color: white;
             }
+            .new-post button {
+              background-color: ${artist.accent_color};
+            }
             .btn.btn-support:hover, .private-support-btn > .btn:hover {
               background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
             }

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Confetti from 'react-dom-confetti';
 import { getArtistAction } from 'src/redux/artists/get-details';
 import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
@@ -14,6 +15,9 @@ import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDi
 import { Modal } from '../shared/modal/Modal';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { VideoModal } from '../shared/video-modal/VideoModal';
+import { WhyModal } from '../shared/why-modal/WhyModal';
+import { Texture } from '../shared/texture/Texture';
+
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
 import { PostForm } from './posts/post-form/PostForm';
@@ -41,7 +45,9 @@ class ArtistComponent extends React.Component<Props, any> {
   state = {
     openPostModal: false,
     openVideoModal: false,
-    showConfirmationDialog: false
+    openWhyModal: false,
+    showConfirmationDialog: false,
+    successfulSupport: false,
   };
 
   componentDidMount() {
@@ -49,16 +55,36 @@ class ArtistComponent extends React.Component<Props, any> {
     this.getArtistInfo();
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: Props, prevState) {
     if (!prevProps.me.userData && this.props.me.userData) {
       this.getArtistInfo();
     }
 
     if (this.props.subscriptions.status === SubscriptionStep.Finished) {
       showToastMessage(`Thanks for supporting ${this.props.artists.artist.name}!`, MessageType.SUCCESS);
-      this.setState({ showConfirmationDialog: true });
+      // Confetti
+      if (prevState.successfulSupport === false) {
+        this.setState({ successfulSupport: true });
+      }
     }
+
   }
+
+  getConfettiConfig = () => {
+    const confettiConfig = {
+      angle: 90,
+      spread: 70,
+      startVelocity: 70,
+      elementCount: 200,
+      dragFriction: 0.1,
+      duration: 5000,
+      stagger: 0,
+      width: "10px",
+      height: "10px",
+      colors: [this.props.artists.artist.accent_color]
+    };
+    return confettiConfig;
+  };
 
   getArtistInfo = () => {
     this.props.getArtist(this.props.match.params.id);
@@ -97,6 +123,14 @@ class ArtistComponent extends React.Component<Props, any> {
     this.setState({ openVideoModal: false });
   };
 
+  openWhyModal = () => {
+    this.setState({ openWhyModal: true });
+  };
+
+  closeWhyModal = () => {
+    this.setState({ openWhyModal: false });
+  };
+
   getLoggedUserPageAccess = () => {
     const { me, match } = this.props;
 
@@ -132,6 +166,7 @@ class ArtistComponent extends React.Component<Props, any> {
         artistName: this.props.artists.artist.name,
         redirectTo: routePaths.support.replace(':id', this.props.match.params.id),
       });
+      this.setState({ openWhyModal: false });
     }
   };
 
@@ -155,12 +190,12 @@ class ArtistComponent extends React.Component<Props, any> {
         <style
           dangerouslySetInnerHTML={{
           __html: `
-            .btn-support, .private-support-btn > .btn {
-              border-color: unset;
+            .btn.btn-support, .private-support-btn > .btn {
+              border-width: 0px;
               background-color: ${artist.accent_color};
               color: white;
             }
-            .btn-support:hover, .private-support-btn > .btn:hover {
+            .btn.btn-support:hover, .private-support-btn > .btn:hover {
               background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
             }
             ${isSupporter && `
@@ -170,10 +205,16 @@ class ArtistComponent extends React.Component<Props, any> {
           `
           }}
         />
+        <Texture 
+          positionTop25={false}
+          positionTop50={false}
+          positionFlip={false}
+        />
         <ArtistHeader
           artist={artist}
           openVideoModal={this.openVideoModal}
           openPostModal={this.openPostModal}
+          openWhyModal={this.openWhyModal}
           loggedUserAccess={loggedUserAccess}
           isSupporter={isSupporter}
           handleSupportClick={this.handleSupportClick}
@@ -194,14 +235,32 @@ class ArtistComponent extends React.Component<Props, any> {
           loggedUserAccess={loggedUserAccess}
         />
         <Modal open={this.state.openPostModal}>
-          <PostForm close={this.getUserConfirmation} discardChanges={this.discardChanges} />
+          <PostForm 
+            close={this.getUserConfirmation}
+            discardChanges={this.discardChanges}
+          />
         </Modal>
-        <VideoModal open={this.state.openVideoModal} videoUrl={artist.video_url} onClose={this.closeVideoModal} />
+        <VideoModal 
+          open={this.state.openVideoModal} 
+          videoUrl={artist.video_url} 
+          onClose={this.closeVideoModal} 
+        />
+        <WhyModal 
+          open={this.state.openWhyModal}
+          onClose={this.closeWhyModal} 
+          handleSupportClick={this.handleSupportClick}
+        />
         <ConfirmationDialog
           open={this.state.showConfirmationDialog}
           closeConfirmationDialog={this.closeConfirmationDialog}
           discardChanges={this.discardChanges}
         />
+        <div className="confetti-overlay">
+          <Confetti
+            active={ this.state.successfulSupport } 
+            config={ this.getConfettiConfig() } 
+          />
+        </div>
       </div>
     );
   }
@@ -213,7 +272,7 @@ const mapStateToProps = (state: Store) => {
     me: state.me,
     posts: state.posts,
     authentication: state.authentication,
-    subscriptions: state.subscriptions,
+    subscriptions: state.subscriptions
   };
 };
 

@@ -7,8 +7,7 @@ import { HomeArtists } from './HomeArtists';
 import { HomeFor } from './HomeFor';
 import { HomeHeader } from './HomeHeader';
 import { HomeHow } from './HomeHow';
-import { HomeTexture } from './HomeTexture';
-
+import { Texture } from '../shared/texture/Texture';
 
 class Home extends React.Component<any> {
 
@@ -25,7 +24,7 @@ class Home extends React.Component<any> {
         <HomeHeader
           bgColor={randomColor}
         />
-        <HomeTexture 
+        <Texture 
           positionTop25={false}
           positionTop50={true}
           positionFlip={false}
@@ -34,7 +33,7 @@ class Home extends React.Component<any> {
         <HomeHow 
           bgColor={randomColor}
         />
-        {/* <HomeTexture 
+        {/* <Texture 
           positionTop25={true}
           positionTop50={false}
           positionFlip={true}

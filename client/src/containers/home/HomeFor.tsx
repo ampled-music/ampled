@@ -24,15 +24,15 @@ export const HomeFor = () => (
           <p className="home-for__copy">
             We’re a platform 100% owned and governed by our artists and members - not VC investors.  Join us and become a member-owner.
           </p>
-          <a href="http://ampled.com/coop"><button className="home-for__button btn">Read More</button></a>
+          <a href="http://ampled.com/coop"><button className="home-for__button btn btn-ampled">Read More</button></a>
         </div>
         <div className="col-md-4">
           <img className="home-for__image" src={transparent} />
-          <h3 className="home-for__sub-title">Radically Transparent</h3>
+          <h3 className="home-for__sub-title">Transparent</h3>
           <p className="home-for__copy">
             We’ve made our finances transparent to stay accountable to our members.  View our revenue, expenses, salaries, and more.
           </p>
-          <a href="http://ampled.com/transparency"><button className="home-for__button btn">Learn More</button></a>
+          <a href="http://ampled.com/transparency"><button className="home-for__button btn btn-ampled">Learn More</button></a>
         </div>
         <div className="col-md-4">
           <img className="home-for__image" src={mission} />
@@ -40,7 +40,7 @@ export const HomeFor = () => (
           <p className="home-for__copy">
             Our mission is to make music more equitable for artists and to operate ethically and transparently. Let’s work together.
           </p>
-          <a href="http://ampled.com/our-mission"><button className="home-for__button btn">Our Vision</button></a>
+          <a href="http://ampled.com/our-mission"><button className="home-for__button btn btn-ampled">Our Vision</button></a>
         </div>
       </div>
     </div>

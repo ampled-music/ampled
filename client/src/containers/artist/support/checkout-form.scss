@@ -2,44 +2,28 @@
 @import "../../../theme/mixins.scss";
 
 .checkout-form-container {
-  font-family: $font-family-monospace;
+  font-family: $font-family-base;
 
   form {
     display: flex;
     flex-direction: column;
-    width: 450px;
     margin-bottom: 1rem;
 
-    p {
-      font-weight: bold;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #cbd6e9;
-    }
-
-    label {
+    .form-row {
       margin-top: 1rem;
     }
-
-    .actions {
-      margin-top: 3rem;
-      display: flex;
-
-      .btn-support-action {
-        border-radius: 0px;
-        text-transform: uppercase;
-        background-color: $black;
-        color: $white;
-        font-family: $font-family-monospace;
-        max-width: 250px;
-        margin-left: 1rem;
-        font-weight: 200;
-      }
-
-      .btn-support-action:hover {
-        background-color: $white;
-        color: $black;
-        font-weight: 700;
-      }
+    label {
+      font-size: .8rem;
+      text-align: left;
+    }
+  }
+  
+  .actions {
+    margin: 1rem auto;
+    display: flex;
+    justify-content: space-around;
+    .btn:first-child {
+      margin-right: 1rem;
     }
   }
 }

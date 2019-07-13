@@ -12,6 +12,7 @@ import * as R from 'ramda';
 interface Props {
   openVideoModal: React.MouseEventHandler;
   openPostModal: React.MouseEventHandler;
+  openWhyModal: React.MouseEventHandler;
   artist: ArtistModel;
   loggedUserAccess: { role: string; artistId: number };
   isSupporter: Boolean;
@@ -171,12 +172,12 @@ export class ArtistHeader extends React.Component<Props, any> {
     
     return (
       <div>
-        <button className="btn btn-support" style={{ borderColor }} onClick={(e) => this.props.handleSupportClick()}> 
+        <button className="btn btn-ampled btn-support" style={{ borderColor }} onClick={(e) => this.props.handleSupportClick()}> 
           Become a Supporter 
         </button>
-        <a href="https://www.ampled.com/why-support" target="_blank" className="link link__why">
+        <button onClick={this.props.openWhyModal} className="link link__why">
           Why support?
-        </a>
+        </button>
       </div>
 
     );
@@ -242,7 +243,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderFloatingNewPostButton()}
             {this.renderMessageContainer()}
             {this.renderSupportersContainer()}
-            {!this.props.isSupporter && this.renderSupportButton()}
+            {!this.props.isSupporter && !this.canLoggedUserPost() && this.renderSupportButton()}
           </div>
         </div>
       </div>

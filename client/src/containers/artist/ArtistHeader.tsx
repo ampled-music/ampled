@@ -22,12 +22,12 @@ interface Props {
 export class ArtistHeader extends React.Component<Props, any> {
   state = {
     showConfirmationDialog: false,
-    screenshotURL: this.props.artist.video_screenshot_url
+    screenshotURL: ''
   };
 
   componentDidUpdate = async (prevProps) => {
     const { artist: { video_url } } = this.props;
-    if (video_url === prevProps.artist.video_url) {
+    if (video_url === prevProps.artist.video_url && this.state.screenshotURL) {
       return;
     } else if (video_url) {
       this.setState({

@@ -3,11 +3,10 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-
     if PostPolicy.new(current_user, @post).create? && @post.save
       render json: :ok
     else
-      render json: {}, status: :bad_request
+      render json: { errors: @post.errors }, status: :bad_request
     end
   end
 
@@ -19,10 +18,12 @@ class PostsController < ApplicationController
     end
   end
 
-  def edit
-    artist_page_id = @Post.artist_page.id
-    @post.update(post_update_params)
-    200
+  def update
+    if PostPolicy.new(current_user, @post).destroy? && @post.update(post_update_params)
+      render json: :ok
+    else
+      render json: { errors: @post.errors }
+    end
   end
 
   private
@@ -50,4 +51,5 @@ class PostsController < ApplicationController
       :audio_file,
       :is_private
     )
+  end
 end

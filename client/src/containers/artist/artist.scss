@@ -211,16 +211,6 @@
     font-weight: bold;
   }
 
-  &__message-col {
-    background-image: url(../../images/paper_header.png);
-    background-repeat: no-repeat;
-    background-size: auto;
-
-    @include mq( $phablet-l, $desktop ) {
-      background-image:none;
-    }
-  }
-
   &__message-container {
     display: flex;
     align-items: center;
@@ -230,11 +220,20 @@
     padding: 10px 0px;
   }
 
-  &__message-image {
+  &__message-video {
     width: 100%;
     transform: scale(1.1) rotate(-2deg);
     position: relative;
     z-index: -1;
+  }
+  &__message-image {
+    width: 100%;
+  }
+  &__message-tear {
+    width: 102%;
+    left: -2px;
+    top: -2px;
+    position: absolute;    
   }
 
   &__supporters {

@@ -106,7 +106,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
           onChange={this.processFile}
         />
         <label htmlFor="raised-button-file">
-          <Button className="upload-button" variant="contained" component="span">
+          <Button className="btn btn-ampled" variant="contained" component="span">
             Upload MP3
           </Button>
         </label>

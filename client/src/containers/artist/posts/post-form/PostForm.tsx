@@ -157,7 +157,7 @@ class PostFormComponent extends React.Component<Props, any> {
   renderUploadButton(): React.ReactNode {
     return (
       <label htmlFor="image-file">
-        <Button className="image-button" variant="contained" component="span">
+        <Button className="btn btn-ampled" variant="contained" component="span">
           Add Image
         </Button>
       </label>
@@ -172,21 +172,51 @@ class PostFormComponent extends React.Component<Props, any> {
     return (
       <div className="post-form">
         <DialogContent>
-          <h1>NEW POST</h1>
+          <h2>NEW POST</h2>
           <form onSubmit={this.handleSubmit}>
-            <Upload onComplete={this.updateAudioFile} />
 
-            <div className="instructions">
-              <p>
-                Upload as MP3 audio file to provide the best audio quality. Learn more <a href="">here</a>.
-              </p>
-              <p>
-                By uploading, you confirm that your sounds comply with our <a href="">Terms of Use</a> and you don't
-                infringe anyone else's rights.
-              </p>
+            <div className="post-form__instructions">
+              <p>Create a new post for your supporters. A post can contain an image, audio file, title, and text. Choose weather you want the post to be public or just for your supporters. You can pin the post to keep it at the top of your page.</p>
             </div>
 
-            <div className="post-info">
+            <div className="post-form__description">
+              <TextField
+                autoFocus
+                name="title"
+                label="Post Title"
+                type="text"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={title}
+                onChange={this.handleChange}
+                required
+              />
+              <TextField
+                name="body"
+                label="Caption"
+                type="text"
+                helperText="3000 character limit"
+                fullWidth
+                multiline
+                rows="3"
+                variant="outlined"
+                inputProps={{
+                  maxLength: 3000,
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                style={{ marginTop: 20 }}
+                value={body}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="post-form__audio">
+              <Upload onComplete={this.updateAudioFile} />
+            </div>
+            <div className="post-form__image">
               <input
                 style={{ display: 'none' }}
                 id="image-file"
@@ -196,53 +226,37 @@ class PostFormComponent extends React.Component<Props, any> {
               />
 
               {imageUrl ? this.renderPreview() : this.renderUploader()}
+            </div>
 
-              <div className="post-description">
-                <TextField
-                  autoFocus
-                  name="title"
-                  label="Post Title"
-                  type="text"
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={title}
-                  onChange={this.handleChange}
-                  required
-                />
-                <TextField
-                  name="body"
-                  label="Caption"
-                  type="text"
-                  helperText="3000 character limit"
-                  fullWidth
-                  multiline
-                  rows="3"
-                  variant="outlined"
-                  inputProps={{
-                    maxLength: 3000,
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  style={{ marginTop: 20 }}
-                  value={body}
-                  onChange={this.handleChange}
-                />
+            <div className="post-form__checkboxes">
+              <div className="row">
+                <div className="col">
+                  <label className="make-public-label" htmlFor="make-public">
+                    <input
+                      name="make-public"
+                      type="checkbox"
+                      onChange={this.handleMakePublicChange}
+                      checked={this.state.isPublic}
+                    />
+                    Make public
+                  </label>
+                </div>
+                <div className="col">
+                  <label className="pin-post-label" htmlFor="pin-post">
+                    <input
+                      name="pin-post"
+                      type="checkbox"
+                      onChange={this.handleMakePublicChange}
+                      checked={this.state.isPublic}
+                    />
+                    Pin post
+                  </label>
+                </div>
               </div>
             </div>
-            <div className="form-bottom">
+
+            <div className="post-form__actions">
               <DialogActions className="action-buttons">
-                <label className="make-public-label" htmlFor="make-public">
-                  <input
-                    name="make-public"
-                    type="checkbox"
-                    onChange={this.handleMakePublicChange}
-                    checked={this.state.isPublic}
-                  />
-                  Make public
-                </label>
                 <Button className="cancel-button" onClick={() => this.props.close(hasUnsavedChanges)}>
                   Cancel
                 </Button>
@@ -251,7 +265,7 @@ class PostFormComponent extends React.Component<Props, any> {
                   className={cx('post-button', { disabled: !isSaveEnabled })}
                   disabled={!isSaveEnabled}
                 >
-                  Save Post
+                  Finished
                 </Button>
               </DialogActions>
             </div>

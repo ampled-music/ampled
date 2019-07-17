@@ -62,8 +62,8 @@ export class ArtistInfo extends React.Component<Props, any> {
     return (
       <div className="artist-info container">
         <div className="row justify-content-between">
-          <div className="col-6">{this.renderArtistLocation()}</div>
-          <div className="col-6">{this.renderSocialInfo()}</div>
+          <div className="col-auto">{this.renderArtistLocation()}</div>
+          <div className="col-auto col-md-6">{this.renderSocialInfo()}</div>
         </div>
       </div>
     );

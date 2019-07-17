@@ -4,7 +4,7 @@ export const theme = createMuiTheme({
   overrides: {
     MuiPaper: {
       root: {
-        background: 'transparent',
+        backgroundColor: 'transparent',
       },
       elevation24: {
         boxShadow: 'none',

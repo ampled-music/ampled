@@ -68,9 +68,13 @@ class NavComponent extends React.Component<Props, any> {
     const { userData } = this.props;
 
     return userData.image ? (
-      <img src={userData.image} className="user-image" />
+      <a href="/settings">
+        <img src={userData.image} className="user-image" />
+      </a>
     ) : (
-      <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+      <a href="/settings">
+        <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+      </a>
     );
   };
 

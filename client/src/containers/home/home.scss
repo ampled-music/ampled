@@ -401,22 +401,3 @@
     margin: 2rem auto;
   }
 }
-
-.tear {
-  width: 100%;
-  position: relative;
-  display: none;
-
-  &.tear_1 {
-    bottom: -30px;
-    margin-top: -30px;
-  }
-
-  &.tear_2 {
-    background-color: $white; 
-    margin-bottom: -44px;
-  }
-  @include mq($tablet) {
-    display: block;
-  }
-}

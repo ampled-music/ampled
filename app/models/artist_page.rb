@@ -34,8 +34,7 @@ class ArtistPage < ApplicationRecord
   has_many :plans, dependent: :destroy
 
   def active_subscribers
-    # subscribers.merge(Subscription.active)
-    User.where.not(id: owners.pluck(:id)).sample(10)
+    subscribers.merge(Subscription.active)
   end
 
   def stripe_state_token

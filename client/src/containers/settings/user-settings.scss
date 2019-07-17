@@ -236,6 +236,7 @@
 }
 
 .user-settings-cancel-modal {
+  background-color: $white;
   padding: 1rem;
 
   .actions {
@@ -257,6 +258,7 @@
   flex-direction: column;
   width: 400px;
   padding: 1rem;
+  background-color: $white;
 
   .processing-image {
     display: flex;

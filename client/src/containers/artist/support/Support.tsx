@@ -240,7 +240,7 @@ export class SupportComponent extends React.Component<Props, any> {
           dangerouslySetInnerHTML={{
           __html: `
           body {
-            background-color: ${this.ColorLuminance(artist.accent_color, 0.7)} !important;
+            background-color: ${artist.accent_color}20 !important;
           }
           .support__action button {
             background-color: ${artist.accent_color};

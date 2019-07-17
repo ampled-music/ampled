@@ -53,7 +53,29 @@
     }
   }
 
-  
+  .uploader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    label {
+      width: 100%;
+    }
+
+    .loading-icon {
+      margin-bottom: 15px;
+      width: 25px;
+      height: 25px;
+    }
+    .audio-button,
+    .image-button {
+      &:hover {
+        color: $white;
+        background-color: black;
+      }
+    }
+  }
 
   .post-info {
     display: flex;
@@ -67,11 +89,6 @@
       justify-content: center;
       background: url(../../../../images/post_image.svg) no-repeat;
 
-      .loading-icon {
-        margin-bottom: 15px;
-        width: 25px;
-        height: 25px;
-      }
     }
 
     .post-image {

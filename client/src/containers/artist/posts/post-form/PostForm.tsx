@@ -157,7 +157,7 @@ class PostFormComponent extends React.Component<Props, any> {
   renderUploadButton(): React.ReactNode {
     return (
       <label htmlFor="image-file">
-        <Button className="btn btn-ampled" variant="contained" component="span">
+        <Button className="btn btn-ampled image-button" component="span">
           Add Image
         </Button>
       </label>
@@ -174,10 +174,6 @@ class PostFormComponent extends React.Component<Props, any> {
         <DialogContent>
           <h2>NEW POST</h2>
           <form onSubmit={this.handleSubmit}>
-
-            <div className="post-form__instructions">
-              <p>Create a new post for your supporters. A post can contain an image, audio file, title, and text. Choose weather you want the post to be public or just for your supporters. You can pin the post to keep it at the top of your page.</p>
-            </div>
 
             <div className="post-form__description">
               <TextField

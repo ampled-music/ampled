@@ -205,6 +205,7 @@ class ArtistComponent extends React.Component<Props, any> {
           `
           }}
         />
+        
         <Texture 
           positionTop25={false}
           positionTop50={false}

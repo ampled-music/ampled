@@ -1,20 +1,10 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import background from '../../../images/background_post.svg';
-
-const defaultTheme = createMuiTheme();
 
 export const theme = createMuiTheme({
   overrides: {
     MuiPaper: {
       root: {
-        background: `url(${background})`,
-        backgroundRepeat: 'no-repeat',
-        paddingTop: '60px',
-        backgroundColor: 'initial',
-        [defaultTheme.breakpoints.down('sm')]: {
-          background: 'white',
-          paddingTop: '0px'
-        },
+        background: 'transparent',
       },
       elevation24: {
         boxShadow: 'none',
@@ -45,7 +35,26 @@ export const theme = createMuiTheme({
         backgroundColor: '#eeeeee',
       },
       barColorPrimary: {
-        backgroundColor: '$brand-primary',
+        backgroundColor: 'blue',
+      },
+    },
+    MuiButton: {
+      root: {
+        color: 'black',
+        backgroundColor: 'white',
+        width: '100%',
+        borderRadius: '0',
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        borderColor: 'black',
+        transition: 'all .25s ease-in-out',
+        maxWidth: '500px',
+      },
+    },
+    MuiDialogActions: {
+      root: {
+        justifyContent: 'center',
+        padding: '0px',
       },
     },
   },

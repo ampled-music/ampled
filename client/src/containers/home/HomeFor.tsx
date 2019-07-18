@@ -9,9 +9,9 @@ export const HomeFor = () => (
     <div className="container">
       <div className="row">
         <div className="col-md-12">
-          <h1 className="home-for__title">Built For Music</h1>
+          <h1 className="home-for__title">Made for music</h1>
           <p className="home-for__mission">
-            Ampled is a mission-driven platform created by and for artists.  That means we do some things differently.
+            We’re an ethical platform owned by its users.
           </p>
           <hr className="hr__thick"/>
         </div>
@@ -22,7 +22,7 @@ export const HomeFor = () => (
           <img className="home-for__image" src={owned_by} />
           <h3 className="home-for__sub-title">Artist Owned Co-op</h3>
           <p className="home-for__copy">
-            We’re a platform 100% owned and governed by our artists and members - not VC investors.  Join us and become a member-owner.
+            100% owned by artists, workers, and community - not reptilian overlords.
           </p>
           <a href="http://ampled.com/coop"><button className="home-for__button btn">Read More</button></a>
         </div>
@@ -30,7 +30,7 @@ export const HomeFor = () => (
           <img className="home-for__image" src={transparent} />
           <h3 className="home-for__sub-title">Transparent</h3>
           <p className="home-for__copy">
-            We’ve made our finances transparent to stay accountable to our members.  View our revenue, expenses, salaries, and more.
+            We’ve opened up our books to stay accountable to our members.
           </p>
           <a href="http://ampled.com/transparency"><button className="home-for__button btn">Learn More</button></a>
         </div>
@@ -38,7 +38,7 @@ export const HomeFor = () => (
           <img className="home-for__image" src={mission} />
           <h3 className="home-for__sub-title">Mission-Driven</h3>
           <p className="home-for__copy">
-            Our mission is to make music more equitable for artists and to operate ethically and transparently. Let’s work together.
+            We’re making music more equitable for artists in an ethical and transparent way.
           </p>
           <a href="http://ampled.com/our-mission"><button className="home-for__button btn">Our Vision</button></a>
         </div>

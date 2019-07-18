@@ -1,20 +1,10 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import background from '../../../images/background_post.svg';
-
-const defaultTheme = createMuiTheme();
 
 export const theme = createMuiTheme({
   overrides: {
     MuiPaper: {
       root: {
-        background: `url(${background})`,
-        backgroundRepeat: 'no-repeat',
-        paddingTop: '60px',
-        backgroundColor: 'initial',
-        [defaultTheme.breakpoints.down('sm')]: {
-          background: 'white',
-          paddingTop: '0px'
-        },
+        backgroundColor: 'transparent',
       },
       elevation24: {
         boxShadow: 'none',

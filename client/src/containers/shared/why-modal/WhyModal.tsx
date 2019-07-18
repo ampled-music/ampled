@@ -4,6 +4,8 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Dialog } from '@material-ui/core';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 
+import tear from '../../../images/background_tear.png';
+
 import './why-modal.scss';
 import { theme } from './theme';
 
@@ -23,6 +25,7 @@ class WhyModalComponent extends React.Component<Props, any> {
           open={this.props.open}
           onClose={(e) => this.props.onClose(e)}
         >
+          <img className="tear__topper" src={tear} />
           <div className="why-support">
             <h1 className="why-support__title">Why Support Through Ampled?</h1>
             <div className="why-support__subheader">Your Money, Directly To Artists</div>

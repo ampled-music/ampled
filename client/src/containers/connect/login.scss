@@ -6,6 +6,7 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem;
+  background-color: $white;
 
   a {
     cursor: pointer;
@@ -19,7 +20,7 @@
   }
 
   label {
-    font-family: Courier, 'Courier New', monospace;
+    font-family: $font-family-monospace;
     font-size: 18px;
     letter-spacing: 0.7px;
     color: $black;
@@ -27,15 +28,15 @@
   }
 
   .error-message {
-    font-family: Courier, 'Courier New', monospace;
+    font-family: $font-family-monospace;
     font-size: 12px;
-    color: red;
+    color: $brand-danger;
     min-height: 18px;
   }
 
   .confirmation-message {
     max-width: 70%;
-    color: #00807c;
+    color: $brand-success;
     background-color: $white;
     padding: 20px;
     text-align: center;
@@ -53,10 +54,10 @@
     .input-group-text {
       text-align: left;
       background-color: $white;
-      color: #9b9b9b;
+      color: $gray-light;
       font-size: 16px;
       border: none;
-      border-bottom: 1.2px solid #9b9b9b;
+      border-bottom: 1.2px solid $gray-light;
       border-radius: 0;
       margin-top: 15px;
       outline: none;

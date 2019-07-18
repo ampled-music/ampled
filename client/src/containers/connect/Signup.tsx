@@ -14,6 +14,8 @@ import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as signupInitialState } from '../../redux/signup/initial-state';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 
+import tear from '../../images/background_tear.png';
+
 import { once } from 'ramda';
 
 interface SignupProps {
@@ -135,6 +137,7 @@ class SignupComponent extends React.Component<Props, any> {
 
     return (
       <div>
+        <img className="tear__topper" src={tear} />
         <div className="login">
           <h2>SIGN UP</h2>
           {authentication.showSupportMessage && authentication.showSupportMessage === 'post' && authentication.artistName && (

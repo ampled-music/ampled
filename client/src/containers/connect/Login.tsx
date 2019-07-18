@@ -12,6 +12,8 @@ import { initialState as loginInitialState } from '../../redux/authentication/in
 import { routePaths } from '../route-paths';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 
+import tear from '../../images/background_tear.png';
+
 import { once } from 'ramda';
 
 interface LoginProps {
@@ -74,6 +76,7 @@ class LoginComponent extends React.Component<Props, any> {
 
     return (
       <div>
+        <img className="tear__topper" src={tear} />
         <div className="login">
           <h2>LOGIN</h2>
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>

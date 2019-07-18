@@ -211,16 +211,6 @@
     font-weight: bold;
   }
 
-  &__message-col {
-    background-image: url(../../images/paper_header.png);
-    background-repeat: no-repeat;
-    background-size: auto;
-
-    @include mq( $phablet-l, $desktop ) {
-      background-image:none;
-    }
-  }
-
   &__message-container {
     display: flex;
     align-items: center;
@@ -230,11 +220,20 @@
     padding: 10px 0px;
   }
 
-  &__message-image {
+  &__message-video {
     width: 100%;
     transform: scale(1.1) rotate(-2deg);
     position: relative;
     z-index: -1;
+  }
+  &__message-image {
+    width: 100%;
+  }
+  &__message-tear {
+    width: 102%;
+    left: -2px;
+    top: -2px;
+    position: absolute;    
   }
 
   &__supporters {
@@ -322,7 +321,7 @@
     &_twitter,
     &_instagram {
       margin: 0 0 0 .5rem;
-      @include mq( $layout-m ) {
+      @include mq($layout-m) {
         margin: 0 1rem;
       }
     }
@@ -330,38 +329,59 @@
 }
 
 .new-post {
-  text-align: right;
   position: fixed;
-  right: 10px;
+  z-index: 100;
+
+  @include mq(0,$layout-m) {
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    border-top: 1px solid $black;
+  }
+
+  @include mq($layout-m) {
+    text-align: right;
+    right: 10px;
+    top: 70px;
+  }
 
   button {
     cursor: pointer;
     background-color: $brand-primary;
-    border-radius: 20px;
-    z-index: 1;
-    height: 38px;
-    padding: 0 11px;
-    outline: none;
+    border-width: 0px;
+    width: 100%;
+    height: 50px;
+    transition: background-color $speed;
+
+    span {
+      visibility: visible;
+      margin-right: .5rem;
+    }
+
+    @include mq($layout-m) {
+      width: auto;
+      height: 36px;
+      padding: 0 10px;
+      outline: none;
+      border-radius: 20px;
+
+      span {
+        visibility: visible;
+        padding-right: 20px;
+        padding-left: 5px;
+        max-width: 150px;
+        transition: max-width $speed;
+        display: inline-block;
+        vertical-align: top;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-right: 0;
+      }
+    }
   }
 
   span {
     color: $white;
     visibility: hidden;
-  }
-
-  button span {
-    max-width: 0px;
-    transition: max-width 0.3s;
-    display: inline-block;
-    vertical-align: top;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  button:hover span {
-    visibility: visible;
-    padding-right: 20px;
-    padding-left: 5px;
-    max-width: 150px;
   }
 }

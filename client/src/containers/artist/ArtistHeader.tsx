@@ -9,6 +9,8 @@ import { ArtistModel } from 'src/redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
 import * as R from 'ramda';
 
+import tear from '../../images/paper_header.png';
+
 interface Props {
   openVideoModal: React.MouseEventHandler;
   openPostModal: React.MouseEventHandler;
@@ -22,12 +24,12 @@ interface Props {
 export class ArtistHeader extends React.Component<Props, any> {
   state = {
     showConfirmationDialog: false,
-    screenshotURL: this.props.artist.video_screenshot_url
+    screenshotURL: ''
   };
 
   componentDidUpdate = async (prevProps) => {
     const { artist: { video_url } } = this.props;
-    if (video_url === prevProps.artist.video_url) {
+    if (video_url === prevProps.artist.video_url && this.state.screenshotURL) {
       return;
     } else if (video_url) {
       this.setState({
@@ -55,7 +57,7 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   renderOwners = () => {
     const { artist } = this.props;
-
+    console.log(artist);
     return (
       <div className="artist-header__persons">
         {artist.owners &&
@@ -119,14 +121,22 @@ export class ArtistHeader extends React.Component<Props, any> {
   renderMessageContainer = () => {
     const { artist } = this.props;
 
-    return (
-      <div className="artist-header__message-container" style={{ borderColor: artist.accent_color }}>
-        <button onClick={this.props.openVideoModal} className="artist-header__play">
-          <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />
-        </button>
-        <img className="artist-header__message-image" src={this.state.screenshotURL} />
-      </div>
-    );
+    if (artist.video_url) {
+      return (
+        <div>
+          <div className="artist-header__message">Message from the Artist</div>
+          <div className="artist-header__message-container" style={{ borderColor: artist.accent_color }}>
+            <button onClick={this.props.openVideoModal} className="artist-header__play">
+              <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />
+            </button>
+            <div className="artist-header__message-video">
+              <img className="artist-header__message-tear" src={tear} />
+              <img className="artist-header__message-image" src={this.state.screenshotURL} />
+            </div>
+          </div>
+        </div>
+      );
+    }
   };
 
   anonymizeSupporterName = name => {
@@ -196,7 +206,6 @@ export class ArtistHeader extends React.Component<Props, any> {
 
     return (
       <div className="artist-header__supporters">
-
         {mostRecentSupporter && (
           <div>
             <div className="artist-header__supporters_title">Most Recent Supporter</div>
@@ -239,9 +248,8 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderPhotoContainer()}
           </div>
           <div className="col-md-4 artist-header artist-header__message-col">
-            <div className="artist-header__message">Message from the Artist</div>
-            {this.renderFloatingNewPostButton()}
             {this.renderMessageContainer()}
+            {this.renderFloatingNewPostButton()}
             {this.renderSupportersContainer()}
             {!this.props.isSupporter && !this.canLoggedUserPost() && this.renderSupportButton()}
           </div>

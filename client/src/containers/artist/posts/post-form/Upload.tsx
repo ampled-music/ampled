@@ -86,16 +86,35 @@ class Upload extends React.Component<UploadProps, UploadState> {
     return axios.get(`/uploads/sign?contentType=${file.type}`);
   }
 
-  render() {
+  renderPreview(): React.ReactNode {
     const { progress } = this.state;
-
     return (
-      <div className="upload">
+      <div className="progress-container">
         <div className="progress-info">
           <span className="progress-info__name">{this.state.fileName}</span>
           <span className="progress-info__progress">{progress}%</span>
         </div>
-        <LinearProgress className="progress-bar" variant="determinate" value={progress} style={{ height: 5}} />
+        <LinearProgress className="progress-bar" variant="determinate" value={progress} style={{ height: 30}} />
+      </div>
+    );
+  }
+
+  renderUploadButton(): React.ReactNode {
+    return (
+      <label htmlFor="raised-button-file">
+        <Button className="btn btn-ampled audio-button" component="span">
+          Add MP3 audio
+        </Button>
+      </label>
+    );
+  }
+
+  render() {
+    const { fileName } = this.state;
+
+    return (
+      <div className="upload">
+
         <div className="upload-error">{this.state.uploadError && <h5>{this.state.uploadError}</h5>}</div>
 
         <input
@@ -106,11 +125,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
           onChange={this.processFile}
         />
         <div className="uploader">
-          <label htmlFor="raised-button-file">
-            <Button className="btn btn-ampled audio-button" component="span">
-              Add MP3 audio
-            </Button>
-          </label>
+          {fileName ? this.renderPreview() : this.renderUploadButton()}
         </div>
       </div>
     );

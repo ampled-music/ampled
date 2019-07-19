@@ -19,6 +19,7 @@
   }
 
   &__image {
+    min-height: 50px;
 
     .post-image {
       display: flex;
@@ -69,6 +70,10 @@
 
     label {
       text-align: left;
+      margin: 0px;
+    }
+    .progress-container {
+      width: 100%;
     }
     .progress-info {
       display: flex;

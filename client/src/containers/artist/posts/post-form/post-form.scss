@@ -46,10 +46,15 @@
         .remove-button {
           text-decoration: underline;
           cursor: pointer;
+          margin-right: .5rem;
+          align-self: center;
           &:hover {
             text-decoration: none;
           }
-          margin-right: .5rem;
+        }
+        label {
+          align-self: center;
+          margin: 0;
         }
         .replace-button {
           text-decoration: underline;

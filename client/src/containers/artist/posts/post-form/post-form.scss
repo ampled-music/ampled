@@ -35,34 +35,41 @@
           margin-right: .5rem;
         }
       }
+    }
+  }
 
-      .image-actions {
-        font-family: $font-family-monospace;
-        color: $brand-primary;
-        font-size: .8rem;
-        display: flex;
-        align-content: center;
-        
-        .remove-button {
-          text-decoration: underline;
-          cursor: pointer;
-          margin-right: .5rem;
-          align-self: center;
-          &:hover {
-            text-decoration: none;
-          }
-        }
-        label {
-          align-self: center;
-          margin: 0;
-        }
-        .replace-button {
-          text-decoration: underline;
-          cursor: pointer;
-          &:hover {
-            text-decoration: none;
-          }
-        }
+  .file-actions {
+    font-family: $font-family-monospace;
+    color: $brand-primary;
+    font-size: .8rem;
+    display: flex;
+    align-content: center;
+
+    &[data-progress] {
+      display: none;
+    }
+    &[data-progress="100"] {
+      display: inherit;
+    }
+    
+    .remove-button {
+      text-decoration: underline;
+      cursor: pointer;
+      margin-right: 1rem;
+      align-self: center;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    label {
+      align-self: center;
+      margin: 0;
+    }
+    .replace-button {
+      text-decoration: underline;
+      cursor: pointer;
+      &:hover {
+        text-decoration: none;
       }
     }
   }
@@ -87,11 +94,13 @@
       justify-content: space-between;
 
       &__progress {
-
       }
       &__name {
-        
       }
+    }
+    .progress-bar[aria-valuenow="100"],
+    .progress-info__progress[data-progress="100"] {
+      display: none;
     }
 
     .upload-error {

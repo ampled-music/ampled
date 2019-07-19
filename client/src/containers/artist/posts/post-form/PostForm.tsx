@@ -10,9 +10,7 @@ import { getArtistAction } from 'src/redux/artists/get-details';
 import { Store } from 'src/redux/configure-store';
 import { createPostAction } from 'src/redux/posts/create';
 
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
+import { Button, DialogActions, DialogContent, TextField, CircularProgress } from '@material-ui/core';
 
 import tear from '../../../../images/background_tear.png';
 
@@ -136,7 +134,7 @@ class PostFormComponent extends React.Component<Props, any> {
     return (
       <div className="uploader">
         {this.state.loadingImage ? (
-          <FontAwesomeIcon className="loading-icon" icon={faSpinner} spin />
+          <CircularProgress />
         ) : (
           this.renderUploadButton()
         )}
@@ -151,7 +149,7 @@ class PostFormComponent extends React.Component<Props, any> {
           <img className="preview__image" src={this.state.imageUrl} />
           <span className="preview__name">{this.state.imageName}</span>
         </div>
-        <div className="image-actions">
+        <div className="file-actions">
           <span className="remove-button" title="Remove image" onClick={this.removeImage}>
             Remove
           </span>
@@ -185,7 +183,7 @@ class PostFormComponent extends React.Component<Props, any> {
         <img className="tear__topper" src={tear} />
         <div className="post-form">
           <DialogContent>
-            <h3>NEW POST</h3>
+            <h4>NEW POST</h4>
             <form onSubmit={this.handleSubmit}>
 
               <div className="post-form__description">
@@ -241,7 +239,8 @@ class PostFormComponent extends React.Component<Props, any> {
                   <div className="col-auto">
                     <label className="make-public-label" htmlFor="make-public">
                       <input
-                        name="make-public"
+                        name="make-public"   
+                        id="make-public"
                         type="checkbox"
                         onChange={this.handleMakePublicChange}
                         checked={this.state.isPublic}
@@ -253,6 +252,7 @@ class PostFormComponent extends React.Component<Props, any> {
                     <label className="pin-post-label" htmlFor="pin-post">
                       <input
                         name="pin-post"
+                        id="pin-post"
                         type="checkbox"
                         // onChange={this.state.isPinned}
                         checked={this.state.isPinned}

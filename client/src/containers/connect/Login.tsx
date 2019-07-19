@@ -78,7 +78,7 @@ class LoginComponent extends React.Component<Props, any> {
       <div>
         <img className="tear__topper" src={tear} />
         <div className="login">
-          <h2>LOGIN</h2>
+          <h4>LOGIN</h4>
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
             <input
               className="input-group-text"

@@ -34,7 +34,8 @@
     font-size: 15px;
   }
 
-  .cancel-button {
+  .cancel-button,
+  .discard-button {
     color: $brand-primary;
     text-decoration: underline;
     letter-spacing: 0.8px;
@@ -47,8 +48,10 @@
     }
   }
 
-  .post-button {
+  .post-button,
+  .continue-button {
     color: $black;
+    background-color: $white;
     border-radius: 0px;
     padding: 8px 20px;
     margin-left: 25px;

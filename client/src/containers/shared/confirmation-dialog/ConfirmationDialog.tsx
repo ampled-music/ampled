@@ -30,10 +30,10 @@ class ResponsiveDialog extends React.Component<Props, any> {
             <DialogContentText>Your changes have not been saved, if you leave now they will be lost.</DialogContentText>
           </DialogContent>
           <DialogActions className="action-buttons">
-            <Button className="discard-button" onClick={this.props.discardChanges} color="primary">
+            <Button className="discard-button" onClick={this.props.discardChanges}>
               Discard changes
             </Button>
-            <Button className="continue-button" onClick={this.props.closeConfirmationDialog} color="primary" autoFocus>
+            <Button className="continue-button" onClick={this.props.closeConfirmationDialog} autoFocus>
               Continue editing
             </Button>
           </DialogActions>

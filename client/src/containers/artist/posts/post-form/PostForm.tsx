@@ -14,6 +14,8 @@ import { faSpinner, faSync, faTrashAlt } from '@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
 
+import tear from '../../../../images/background_tear.png';
+
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
 import { Upload } from './Upload';
@@ -32,6 +34,7 @@ class PostFormComponent extends React.Component<Props, any> {
     body: '',
     audioFile: '',
     isPublic: false,
+    isPinned: false,
     imageUrl: undefined,
     deleteToken: undefined,
     hasUnsavedChanges: false,
@@ -63,7 +66,7 @@ class PostFormComponent extends React.Component<Props, any> {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const { title, body, audioFile, imageUrl, isPublic } = this.state;
+    const { title, body, audioFile, imageUrl, isPublic, isPinned } = this.state;
 
     const post = {
       title,
@@ -71,6 +74,7 @@ class PostFormComponent extends React.Component<Props, any> {
       audio_file: audioFile,
       image_url: imageUrl,
       is_private: !isPublic,
+      is_pinned: isPinned,
       artist_page_id: this.props.artist.id,
     };
 
@@ -170,103 +174,105 @@ class PostFormComponent extends React.Component<Props, any> {
     const isSaveEnabled = this.isSaveEnabled();
 
     return (
-      <div className="post-form">
-        <DialogContent>
-          <h2>NEW POST</h2>
-          <form onSubmit={this.handleSubmit}>
+      <div>
+        <img className="tear__topper" src={tear} />
+        <div className="post-form">
+          <DialogContent>
+            <h3>NEW POST</h3>
+            <form onSubmit={this.handleSubmit}>
 
-            <div className="post-form__description">
-              <TextField
-                autoFocus
-                name="title"
-                label="Post Title"
-                type="text"
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={title}
-                onChange={this.handleChange}
-                required
-              />
-              <TextField
-                name="body"
-                label="Caption"
-                type="text"
-                helperText="3000 character limit"
-                fullWidth
-                multiline
-                rows="3"
-                variant="outlined"
-                inputProps={{
-                  maxLength: 3000,
-                }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                style={{ marginTop: 20 }}
-                value={body}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="post-form__audio">
-              <Upload onComplete={this.updateAudioFile} />
-            </div>
-            <div className="post-form__image">
-              <input
-                style={{ display: 'none' }}
-                id="image-file"
-                type="file"
-                accept="image/*"
-                onChange={this.processImage}
-              />
+              <div className="post-form__description">
+                <TextField
+                  autoFocus
+                  name="title"
+                  placeholder="Post title"
+                  type="text"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={title}
+                  onChange={this.handleChange}
+                  required
+                />
+                <TextField
+                  name="body"
+                  type="text"
+                  placeholder="Text (3000 character limit)"
+                  fullWidth
+                  multiline
+                  rows="10"
+                  variant="outlined"
+                  inputProps={{
+                    maxLength: 3000,
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  style={{ marginTop: 20 }}
+                  value={body}
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div className="post-form__audio">
+                <Upload onComplete={this.updateAudioFile} />
+              </div>
+              <div className="post-form__image">
+                <input
+                  style={{ display: 'none' }}
+                  id="image-file"
+                  type="file"
+                  accept="image/*"
+                  onChange={this.processImage}
+                />
 
-              {imageUrl ? this.renderPreview() : this.renderUploader()}
-            </div>
+                {imageUrl ? this.renderPreview() : this.renderUploader()}
+              </div>
 
-            <div className="post-form__checkboxes">
-              <div className="row">
-                <div className="col">
-                  <label className="make-public-label" htmlFor="make-public">
-                    <input
-                      name="make-public"
-                      type="checkbox"
-                      onChange={this.handleMakePublicChange}
-                      checked={this.state.isPublic}
-                    />
-                    Make public
-                  </label>
-                </div>
-                <div className="col">
-                  <label className="pin-post-label" htmlFor="pin-post">
-                    <input
-                      name="pin-post"
-                      type="checkbox"
-                      onChange={this.handleMakePublicChange}
-                      checked={this.state.isPublic}
-                    />
-                    Pin post
-                  </label>
+              <div className="post-form__checkboxes">
+                <div className="row justify-content-between">
+                  <div className="col-auto">
+                    <label className="make-public-label" htmlFor="make-public">
+                      <input
+                        name="make-public"
+                        type="checkbox"
+                        onChange={this.handleMakePublicChange}
+                        checked={this.state.isPublic}
+                      />
+                      Make public
+                    </label>
+                  </div>
+                  <div className="col-auto">
+                    <label className="pin-post-label" htmlFor="pin-post">
+                      <input
+                        name="pin-post"
+                        type="checkbox"
+                        // onChange={this.state.isPinned}
+                        checked={this.state.isPinned}
+                      />
+                      Pin post
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="post-form__actions">
-              <DialogActions className="action-buttons">
-                <Button className="cancel-button" onClick={() => this.props.close(hasUnsavedChanges)}>
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  className={cx('post-button', { disabled: !isSaveEnabled })}
-                  disabled={!isSaveEnabled}
-                >
-                  Finished
-                </Button>
-              </DialogActions>
-            </div>
-          </form>
-        </DialogContent>
+              <div className="post-form__actions">
+                <DialogActions className="action-buttons">
+                  <Button className="cancel-button" style={{ textAlign: 'left' }} onClick={() => this.props.close(hasUnsavedChanges)}>
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    className={cx('post-button finished-button', { disabled: !isSaveEnabled })}
+                    disabled={!isSaveEnabled}
+                  >
+                    Finished
+                  </Button>
+                </DialogActions>
+              </div>
+            </form>
+          </DialogContent>
+        </div>
       </div>
     );
   }

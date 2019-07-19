@@ -33,9 +33,12 @@ export const theme = createMuiTheme({
     MuiLinearProgress: {
       colorPrimary: {
         backgroundColor: '#eeeeee',
+        marginBottom: '1rem',
       },
-      barColorPrimary: {
-        backgroundColor: 'blue',
+    },
+    MuiInputBase: {
+      input: {
+        fontFamily: 'LL Replica Light Web, sans-serif'
       },
     },
     MuiButton: {
@@ -49,6 +52,7 @@ export const theme = createMuiTheme({
         borderColor: 'black',
         transition: 'all .25s ease-in-out',
         maxWidth: '500px',
+        textTransform: 'initial',
       },
     },
     MuiDialogActions: {

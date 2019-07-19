@@ -13,6 +13,17 @@
 
   }
 
+  &__checkboxes {
+    font-family: $font-family-monospace;
+    font-weight: bold;
+    margin-bottom: 1rem;
+
+    input[type="checkbox"] {
+      width: 15px;
+      margin-right: .5rem;
+    }
+  }
+
 
 
 
@@ -21,6 +32,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-top: 1rem;
 
     label {
       text-align: left;
@@ -31,6 +43,14 @@
       font-family: $font-family-monospace;
       font-size: 13px;
       justify-content: space-between;
+
+
+      &__progress {
+
+      }
+      &__name {
+        
+      }
     }
 
     .upload-error {
@@ -58,7 +78,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
 
     label {
       width: 100%;
@@ -71,83 +90,30 @@
     }
     .audio-button,
     .image-button {
-      &:hover {
-        color: $white;
-        background-color: black;
-      }
-    }
-  }
-
-  .post-info {
-    display: flex;
-    justify-content: space-between;
-
-    .uploader {
-      width: 190px;
-      height: 190px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      background: url(../../../../images/post_image.svg) no-repeat;
-
-    }
-
-    .post-image {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      max-width: 190px;
-      height: 190px;
-
-      .preview {
-        max-width: 190px;
-        max-height: 190px;
-        margin-bottom: 10px;
-      }
-
-      .image-actions {
-        display: flex;
-        justify-content: space-between;
-
-        span {
-          display: flex;
-          border: 1px solid $brand-primary;
-          cursor: pointer;
-          width: 25px;
-          height: 25px;
-          justify-content: center;
-          align-items: center;
-          z-index: 1;
-        }
-
-        label {
-          cursor: pointer;
-          z-index: 2;
-        }
-
-        .action-icon {
-          width: 15px;
-          height: 15px;
-        }
-      }
-    }
-
-    .image-button {
-      background-color: $white;
+      text-transform: capitalize;
+      min-height: 55px;
       border: 1px solid $black;
+      background-color: $white;
       border-radius: 0px;
       text-transform: capitalize;
       margin: 0 auto 15px auto;
       padding: 0 15px;
       outline: none;
-    }
-
-    .post-description {
-      display: flex;
-      flex-direction: column;
-      flex-grow: 2;
-      margin-left: 20px;
-      max-width: 375px;
+      &:hover {
+        color: $white;
+        background-color: $black;
+      }
+      .finished-button {
+        border: 1px solid $black;
+        color: $black;
+        .MuiButton-label {
+          color: $black;
+        }
+        &.disabled {
+          border: 1px solid $gray-light;
+          color: $gray-light;
+        }
+      }
     }
   }
 

@@ -95,7 +95,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
           <span className="progress-info__name">{this.state.fileName}</span>
           <span className="progress-info__progress">{progress}%</span>
         </div>
-        <LinearProgress variant="determinate" value={progress} style={{ height: 30}} />
+        <LinearProgress className="progress-bar" variant="determinate" value={progress} style={{ height: 5}} />
         <div className="upload-error">{this.state.uploadError && <h5>{this.state.uploadError}</h5>}</div>
 
         <input

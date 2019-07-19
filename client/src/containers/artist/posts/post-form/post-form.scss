@@ -7,12 +7,6 @@
   text-align: center;
   background-color: $white;
 
-
-
-  &__instructions {
-
-  }
-
   &__checkboxes {
     font-family: $font-family-monospace;
     font-weight: bold;
@@ -24,9 +18,48 @@
     }
   }
 
+  &__image {
 
+    .post-image {
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+      margin-bottom: 1rem;
 
+      .preview {
+        font-size: .8rem;
 
+        &__image {
+          width: 30px;
+          margin-right: .5rem;
+        }
+      }
+
+      .image-actions {
+        font-family: $font-family-monospace;
+        color: $brand-primary;
+        font-size: .8rem;
+        display: flex;
+        align-content: center;
+        
+        .remove-button {
+          text-decoration: underline;
+          cursor: pointer;
+          &:hover {
+            text-decoration: none;
+          }
+          margin-right: .5rem;
+        }
+        .replace-button {
+          text-decoration: underline;
+          cursor: pointer;
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
 
   .upload {
     display: flex;
@@ -37,13 +70,11 @@
     label {
       text-align: left;
     }
-
     .progress-info {
       display: flex;
       font-family: $font-family-monospace;
       font-size: 13px;
       justify-content: space-between;
-
 
       &__progress {
 

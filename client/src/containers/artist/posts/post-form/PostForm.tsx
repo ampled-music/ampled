@@ -10,7 +10,7 @@ import { getArtistAction } from 'src/redux/artists/get-details';
 import { Store } from 'src/redux/configure-store';
 import { createPostAction } from 'src/redux/posts/create';
 
-import { faSpinner, faSync, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
 
@@ -33,6 +33,7 @@ class PostFormComponent extends React.Component<Props, any> {
     title: '',
     body: '',
     audioFile: '',
+    imageName: '',
     isPublic: false,
     isPinned: false,
     imageUrl: undefined,
@@ -98,14 +99,17 @@ class PostFormComponent extends React.Component<Props, any> {
     if (this.state.deleteToken) {
       this.removeImage();
     }
+    
 
     const fileInfo = await uploadFileToCloudinary(imageFile);
+    const fileName = imageFile.name;
 
     this.setState({
       imageUrl: fileInfo.secure_url,
       deleteToken: fileInfo.delete_token,
       hasUnsavedChanges: true,
       loadingImage: false,
+      imageName: fileName,
     });
   };
 
@@ -143,14 +147,17 @@ class PostFormComponent extends React.Component<Props, any> {
   renderPreview(): React.ReactNode {
     return (
       <div className="post-image">
-        <img className="preview" src={this.state.imageUrl} />
+        <div className="preview">
+          <img className="preview__image" src={this.state.imageUrl} />
+          <span className="preview__name">{this.state.imageName}</span>
+        </div>
         <div className="image-actions">
-          <span title="Remove image" onClick={this.removeImage}>
-            <FontAwesomeIcon className="action-icon" icon={faTrashAlt} />
+          <span className="remove-button" title="Remove image" onClick={this.removeImage}>
+            Remove
           </span>
           <label htmlFor="image-file">
-            <span title="Change image">
-              <FontAwesomeIcon className="action-icon" icon={faSync} />
+            <span  className="replace-button" title="Change image">
+              Replace
             </span>
           </label>
         </div>

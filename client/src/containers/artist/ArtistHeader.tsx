@@ -57,7 +57,7 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   renderOwners = () => {
     const { artist } = this.props;
-    console.log(artist);
+    
     return (
       <div className="artist-header__persons">
         {artist.owners &&

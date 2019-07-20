@@ -5,6 +5,8 @@ import * as React from 'react';
 import { Dialog } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
+import { faTimes} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { theme } from './theme';
 
@@ -26,13 +28,11 @@ class Modal extends React.Component<Props, any> {
         >
           {
             this.props.fullScreen && 
-            (<span
-              onClick={this.props.onClose}
-              aria-label="Close"
+            (<div onClick={this.props.onClose}>
+                <FontAwesomeIcon
               className="fullscreen-close"
-            >
-              x
-            </span>)  
+              icon={faTimes}
+            /></div>)  
           }
           {this.props.children}
         </Dialog>

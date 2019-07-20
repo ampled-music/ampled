@@ -75,10 +75,10 @@ class LoginComponent extends React.Component<Props, any> {
     const { login } = this.props;
 
     return (
-      <div>
-        <img className="tear__topper" src={tear} />
+      <div className="login__container">
+        <img className="tear tear__topper" src={tear} />
         <div className="login">
-          <h2>LOGIN</h2>
+          <h4>LOGIN</h4>
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
             <input
               className="input-group-text"
@@ -101,6 +101,11 @@ class LoginComponent extends React.Component<Props, any> {
             </button>
             <span className="error-message">{login.error}</span>
           </form>
+          <label>
+            <a>
+              <u>Forgot Password?</u>
+            </a>
+          </label>
           <label>
             Don't have an account?{' '}
             <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>

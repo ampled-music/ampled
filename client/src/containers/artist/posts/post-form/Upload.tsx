@@ -90,8 +90,11 @@ class Upload extends React.Component<UploadProps, UploadState> {
     const { progress } = this.state;
     return (
       <div className="progress-container">
-        <div className="progress-info">
-          <span className="progress-info__name">{this.state.fileName}</span>
+        <div className="progress-info" data-progress={progress}>
+          <div className="progress-info__name">
+            <div className="progress-info__name_mp3">Mp3</div>
+            <div className="progress-info__name_song">{this.state.fileName}</div>
+          </div>
 
           <div className="file-actions" data-progress={progress}>
             <span className="remove-button" title="Remove audio">
@@ -103,10 +106,14 @@ class Upload extends React.Component<UploadProps, UploadState> {
               </span>
             </label>
           </div>
+        </div>
 
-          <span className="progress-info__progress" data-progress={progress}>{progress}%</span>
+        <div className="progress-bar__upload" data-progress={progress}>Upload Progress</div>
+        <div className="progress-bar__container">
+          <span className="progress-bar__progress" style={{width: `${progress}%`}} data-progress={progress}><span>{progress}%</span></span>
         </div>
         <LinearProgress className="progress-bar" variant="determinate" value={progress} style={{ height: 30}} />
+
       </div>
     );
   }

@@ -7,7 +7,7 @@ class UploadsController < ApplicationController
     key = "#{SecureRandom.uuid}.#{file_extension}"
     # redirect_to status: 404 unless file_extension.present?
     url = signer.presigned_url(:put_object,
-                               bucket: "ampled-test",
+                               bucket: ENV["S3_BUCKET"],
                                key: key,
                                acl: "public-read",
                                content_type: content_type)
@@ -16,7 +16,7 @@ class UploadsController < ApplicationController
   end
 
   def playable_url
-    url = signer.presigned_url(:get_object, bucket: "ampled-test", key: params[:key])
+    url = signer.presigned_url(:get_object, bucket: ENV["S3_BUCKET"], key: params[:key])
     render json: { signedUrl: url }
   end
 

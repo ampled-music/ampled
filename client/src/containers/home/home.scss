@@ -155,7 +155,7 @@
     .section {
       height: auto;
       @include mq($tablet) {
-        height: 200px;
+        height: 160px;
       }
       &_3 {
         height: auto;
@@ -188,9 +188,9 @@
         display: block;
         position: relative;
         left: -20px;
-        top: 100px;
+        top: 80px;
         width: 2px;
-        height: 130px;
+        height: 90px;
         background-color: $white;
       }
     }
@@ -204,21 +204,21 @@
 
   &__info {
     width: 100%;
-    min-height: 200px;
+    min-height: 160px;
     order: 3;
 
     @include mq($tablet) {
-      width: 57%;
+      width: 54%;
       order: 2;
     }
 
     .section {
-      height: 200px;
+      height: 160px;
       width: 70%;
       position: absolute;
 
       @include mq($tablet) {
-        height: 200px;
+        height: 160px;
         width: 100%;
         position: relative;
       }

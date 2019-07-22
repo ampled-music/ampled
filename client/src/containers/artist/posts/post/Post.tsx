@@ -26,6 +26,9 @@ class PostComponent extends React.Component<any, any> {
 
   handleExpandClick = () => {
     this.setState((state) => ({ expanded: !state.expanded }));
+    setTimeout(() => {
+      this.props.doReflow && this.props.doReflow();
+    }, 500);
   };
 
   audioPLayer = (audioFile) => {

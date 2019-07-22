@@ -104,6 +104,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
           addComment={this.props.addComment}
           deleteComment={this.props.deleteComment}
           updateArtist={this.props.updateArtist}
+          doReflow={this.updateDimensions}
         />
       </div>
     ));

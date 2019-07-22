@@ -6,13 +6,11 @@ import { withRouter } from 'react-router-dom';
 import { routePaths } from 'src/containers/route-paths';
 import { UserRoles } from 'src/containers/shared/user-roles';
 
-import { faLock, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardActions, Collapse, Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 import { config } from '../../../../config';
@@ -112,6 +110,22 @@ class PostComponent extends React.Component<any, any> {
     }
   };
 
+  renderLock = () => {
+    const { me } = this.props;
+    const authenticated = !!me;
+
+    return (
+      <div className="private-support">
+        <div className="private-support__copy">Unlock this post by supporting</div>
+        <div className="private-support__btn">
+          <button className="btn btn-ampled" onClick={() => this.handlePrivatePostClick(authenticated)}>
+            SUPPORT TO UNLOCK
+          </button>
+        </div>
+      </div>
+    )
+  };
+
   renderPost = () => {
     const { classes, post, accentColor, me } = this.props;
 
@@ -126,7 +140,7 @@ class PostComponent extends React.Component<any, any> {
           title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
         >
           <Card className={classes.card} style={{ border: `2px solid ${accentColor}` }}>
-            <CardContent className={classes.header}>
+            <div className="post__header">
               <div className={classes.postTitle}>
                 {post.authorImage ? (
                   <img className="user-image" src={post.authorImage} />
@@ -136,15 +150,15 @@ class PostComponent extends React.Component<any, any> {
                 <span>{this.returnFirstName(post.author)}</span>
               </div>
               <div className={classes.postDate}>{post.created_ago} ago</div>
-            </CardContent>
+            </div>
             <Divider />
 
             {post.image_url && (
-              <div className="this-image-container">
+              <div className="post__image-container">
                 <div>
                   <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
                 </div>
-                {!allowDetails && <FontAwesomeIcon icon={faLock} />}
+                {!allowDetails && this.renderLock()}
               </div>
             )}
 
@@ -156,27 +170,14 @@ class PostComponent extends React.Component<any, any> {
               />
             )}
 
-            <CardContent>
-              <Typography component="p" className={classes.postTitle}>
-                {post.title}
-              </Typography>
-            </CardContent>
-
-            {!allowDetails && (
-              <div className="private-support-btn">
-                <button className="btn btn-ampled" onClick={() => this.handlePrivatePostClick(authenticated)}>
-                  <FontAwesomeIcon icon={faLock} />
-                  SUPPORT TO UNLOCK
-                </button>
-              </div>
-            )}
+            <div className="post__title">
+              {post.title}
+            </div>
 
             {post.body && (
-              <CardContent>
-                <Typography paragraph className={classes.postBody}>
-                  {post.body}
-                </Typography>
-              </CardContent>
+              <div className="post__body">
+                {post.body}
+              </div>
             )}
           </Card>
         </div>
@@ -192,10 +193,13 @@ class PostComponent extends React.Component<any, any> {
     const allComments = this.sortItemsByCreationDate(post.comments);
     const firstComments = allComments.slice(0, 2).reverse();
     const hasPreviousComments = allComments.length > 2;
+    const hasComments = allComments.length > 0;
 
     return (
       <div className="comments-list">
-        <span>COMMENTS</span>
+        {hasComments && (
+          <span className="comments-list__header">Comments</span>
+        )}
         {!expanded &&
           firstComments.map((comment) => (
             <Comment

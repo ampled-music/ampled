@@ -7,20 +7,23 @@
   &.clickable-post {
     cursor: pointer;
   }
+  
+  &__header {
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  span {
-    font-family: $font-family-sans-serif;
+    .user-image {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 1rem;
+    }
   }
 
-  .user-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 1rem;
-  }
-
-  .this-image-container {
+  &__image-container {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -41,6 +44,18 @@
       margin-top: 8rem;
       color: $white;
     }
+  }
+
+  &__title {
+    font-family: $font-family-monospace;
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+  &__body {
+    font-family: $font-family-monospace;
+    font-size: .8rem;
+    line-height: 1.1rem;
+    padding: 0 1rem 1rem;
   }
 
   .private-support {
@@ -78,18 +93,23 @@
   }
 
   .comments-list {
-    background-color: #f3f3f3;
+    background-color: $gray-lightest;
     padding: 20px;
     margin-bottom: 50px;
-    color: #1e1e1e;
+    color: $black;
     max-width: 500px;
     display: flex;
     flex-direction: column;
     margin: 0 auto 2rem;
 
-    span {
-      font-family: Courier, 'Courier New', monospace;
-      font-size: 14px;
+    &:empty {
+      display: none;
+    }
+
+    &__header {
+      text-transform: uppercase;
+      font-family: $font-family-monospace;
+      font-size: .9rem;
     }
 
     .sendCommentIcon {

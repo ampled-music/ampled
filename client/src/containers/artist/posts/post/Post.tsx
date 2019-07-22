@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { routePaths } from 'src/containers/route-paths';
 import { UserRoles } from 'src/containers/shared/user-roles';
 
-import { faLock, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardActions, Collapse, Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
@@ -112,6 +112,22 @@ class PostComponent extends React.Component<any, any> {
     }
   };
 
+  renderLock = () => {
+    const { me } = this.props;
+    const authenticated = !!me;
+
+    return (
+      <div className="private-support">
+        <div className="private-support__copy">Unlock this post by supporting</div>
+        <div className="private-support__btn">
+          <button className="btn btn-ampled" onClick={() => this.handlePrivatePostClick(authenticated)}>
+            SUPPORT TO UNLOCK
+          </button>
+        </div>
+      </div>
+    )
+  };
+
   renderPost = () => {
     const { classes, post, accentColor, me } = this.props;
 
@@ -144,7 +160,7 @@ class PostComponent extends React.Component<any, any> {
                 <div>
                   <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
                 </div>
-                {!allowDetails && <FontAwesomeIcon icon={faLock} />}
+                {!allowDetails && this.renderLock()}
               </div>
             )}
 
@@ -161,15 +177,6 @@ class PostComponent extends React.Component<any, any> {
                 {post.title}
               </Typography>
             </CardContent>
-
-            {!allowDetails && (
-              <div className="private-support-btn">
-                <button className="btn btn-ampled" onClick={() => this.handlePrivatePostClick(authenticated)}>
-                  <FontAwesomeIcon icon={faLock} />
-                  SUPPORT TO UNLOCK
-                </button>
-              </div>
-            )}
 
             {post.body && (
               <CardContent>

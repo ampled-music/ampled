@@ -43,18 +43,37 @@
     }
   }
 
-  .private-support-btn {
-    display: flex;
-    justify-content: center;
-    margin: 1rem 0;
+  .private-support {
+    width: 100%;
+    position: absolute;
+    bottom: 60px;
+    
+    &__copy {
+      font-family: $font-family-sans-serif;
+      text-transform: uppercase;
+      text-align: center;
+      color: $white;
+      background: url(../../../../images/lock_icon.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+      padding: 54px 0 0;
+      font-size: 14px;
+      height: 100px;
+    }  
 
-    svg {
-      margin-right: 0.5rem;
-    }
+    &__btn {
+      display: flex;
+      justify-content: center;
+      margin: 1rem 0;
 
-    button {
-      width: 240px;
-      text-transform: capitalize;
+      svg {
+        margin-right: 0.5rem;
+      }
+
+      button {
+        width: 240px;
+        text-transform: capitalize;
+      }
     }
   }
 

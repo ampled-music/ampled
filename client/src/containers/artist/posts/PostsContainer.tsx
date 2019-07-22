@@ -8,6 +8,8 @@ import { createCommentAction } from 'src/redux/comments/create';
 import { deleteCommentAction } from 'src/redux/comments/delete';
 import { Store } from 'src/redux/configure-store';
 
+import StackGrid, { transitions } from "react-stack-grid";
+
 import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as commentsInitialState } from '../../../redux/comments/initial-state';
 import { Post } from './post/Post';
@@ -43,6 +45,8 @@ interface PostsProps {
   artistId: number;
 }
 
+const { scaleDown } = transitions;
+
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
 type Props = PostsProps & Dispatchers;
@@ -55,6 +59,30 @@ class PostsContainerComponent extends React.Component<Props, any> {
   sortItemsByCreationDate(items) {
     return items.sort((a, b) => b.created_at - a.created_at);
   }
+  
+  constructor(props) {
+    super(props);
+    this.state = { 
+      height: window.innerHeight, 
+      width: window.innerWidth
+    };
+    this.updateDimensions = this.updateDimensions.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
+  }
+
+  updateDimensions() {
+    this.setState({
+      height: window.innerHeight, 
+      width: window.innerWidth
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
 
   renderPosts = () => {
     const { posts, accentColor, artistName, me, openAuthModal, artistId, loggedUserAccess } = this.props;
@@ -64,7 +92,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
     }
 
     return this.sortItemsByCreationDate(posts).map((post) => (
-      <div key={`post-${post.id}`} id={`post-${post.id}`} className="col-md-4">
+      <div key={`post-${post.id}`} id={`post-${post.id}`}>
         <Post
           me={me}
           post={post}
@@ -81,11 +109,29 @@ class PostsContainerComponent extends React.Component<Props, any> {
     ));
   };
 
+  renderStackedPosts = () => {
+    
+    return (
+      <StackGrid
+        columnWidth={this.state.width <= 768 ? '100%' : '33.33%'}
+        appear={scaleDown.appear}
+        appeared={scaleDown.appeared}
+        enter={scaleDown.enter}
+        entered={scaleDown.entered}
+        leaved={scaleDown.leaved}
+        gutterWidth={15}
+        gutterHeight={15}
+      >
+        {this.renderPosts()}
+      </StackGrid>
+    );
+  };
+
   render() {
     return (
       <div className="post-container">
-        <div className="container ">
-          <div className="row justify-content-center justify-content-md-start">{this.renderPosts()}</div>
+        <div className="container">
+          {this.renderStackedPosts()}
         </div>
       </div>
     );

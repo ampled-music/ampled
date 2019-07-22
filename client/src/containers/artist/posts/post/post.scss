@@ -3,7 +3,11 @@
 
 .post {
   max-width: 500px;
-  margin: auto;
+  margin-bottom: 2rem;  
+
+  @include mq($tablet) {
+    margin-bottom: auto;
+  }
   &.clickable-post {
     cursor: pointer;
   }
@@ -101,7 +105,11 @@
     max-width: 500px;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    margin: -2rem auto 0rem;
+
+    @include mq($tablet) {
+      margin: 0 auto 2rem;
+    }
 
     &:empty {
       display: none;

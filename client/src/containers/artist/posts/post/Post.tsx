@@ -116,7 +116,7 @@ class PostComponent extends React.Component<any, any> {
 
     return (
       <div className="private-support">
-        <div className="private-support__copy">Unlock this post by supporting</div>
+        <div className="private-support__copy">Supporter Only</div>
         <div className="private-support__btn">
           <button className="btn btn-ampled" onClick={() => this.handlePrivatePostClick(authenticated)}>
             SUPPORT TO UNLOCK

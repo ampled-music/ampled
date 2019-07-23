@@ -10,9 +10,9 @@ import { getArtistAction } from 'src/redux/artists/get-details';
 import { Store } from 'src/redux/configure-store';
 import { createPostAction } from 'src/redux/posts/create';
 
-import { faSpinner, faSync, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
+import { Button, DialogActions, DialogContent, TextField, CircularProgress } from '@material-ui/core';
+
+import tear from '../../../../images/background_tear.png';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
@@ -31,7 +31,9 @@ class PostFormComponent extends React.Component<Props, any> {
     title: '',
     body: '',
     audioFile: '',
+    imageName: '',
     isPublic: false,
+    isPinned: false,
     imageUrl: undefined,
     deleteToken: undefined,
     hasUnsavedChanges: false,
@@ -63,7 +65,7 @@ class PostFormComponent extends React.Component<Props, any> {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const { title, body, audioFile, imageUrl, isPublic } = this.state;
+    const { title, body, audioFile, imageUrl, isPublic, isPinned } = this.state;
 
     const post = {
       title,
@@ -71,6 +73,7 @@ class PostFormComponent extends React.Component<Props, any> {
       audio_file: audioFile,
       image_url: imageUrl,
       is_private: !isPublic,
+      is_pinned: isPinned,
       artist_page_id: this.props.artist.id,
     };
 
@@ -94,14 +97,17 @@ class PostFormComponent extends React.Component<Props, any> {
     if (this.state.deleteToken) {
       this.removeImage();
     }
+    
 
     const fileInfo = await uploadFileToCloudinary(imageFile);
+    const fileName = imageFile.name;
 
     this.setState({
       imageUrl: fileInfo.secure_url,
       deleteToken: fileInfo.delete_token,
       hasUnsavedChanges: true,
       loadingImage: false,
+      imageName: fileName,
     });
   };
 
@@ -128,7 +134,7 @@ class PostFormComponent extends React.Component<Props, any> {
     return (
       <div className="uploader">
         {this.state.loadingImage ? (
-          <FontAwesomeIcon className="loading-icon" icon={faSpinner} spin />
+          <CircularProgress />
         ) : (
           this.renderUploadButton()
         )}
@@ -139,14 +145,17 @@ class PostFormComponent extends React.Component<Props, any> {
   renderPreview(): React.ReactNode {
     return (
       <div className="post-image">
-        <img className="preview" src={this.state.imageUrl} />
-        <div className="image-actions">
-          <span title="Remove image" onClick={this.removeImage}>
-            <FontAwesomeIcon className="action-icon" icon={faTrashAlt} />
+        <div className="preview">
+          <img className="preview__image" src={this.state.imageUrl} />
+          <span className="preview__name">{this.state.imageName}</span>
+        </div>
+        <div className="file-actions">
+          <span className="remove-button" title="Remove image" onClick={this.removeImage}>
+            Remove
           </span>
           <label htmlFor="image-file">
-            <span title="Change image">
-              <FontAwesomeIcon className="action-icon" icon={faSync} />
+            <span  className="replace-button" title="Change image">
+              Replace
             </span>
           </label>
         </div>
@@ -157,7 +166,7 @@ class PostFormComponent extends React.Component<Props, any> {
   renderUploadButton(): React.ReactNode {
     return (
       <label htmlFor="image-file">
-        <Button className="image-button" variant="contained" component="span">
+        <Button className="btn btn-ampled image-button" component="span">
           Add Image
         </Button>
       </label>
@@ -170,38 +179,18 @@ class PostFormComponent extends React.Component<Props, any> {
     const isSaveEnabled = this.isSaveEnabled();
 
     return (
-      <div className="post-form">
-        <DialogContent>
-          <h1>NEW POST</h1>
-          <form onSubmit={this.handleSubmit}>
-            <Upload onComplete={this.updateAudioFile} />
+      <div>
+        <img className="tear__topper" src={tear} />
+        <div className="post-form">
+          <DialogContent>
+            <h4>NEW POST</h4>
+            <form onSubmit={this.handleSubmit}>
 
-            <div className="instructions">
-              <p>
-                Upload as MP3 audio file to provide the best audio quality. Learn more <a href="">here</a>.
-              </p>
-              <p>
-                By uploading, you confirm that your sounds comply with our <a href="">Terms of Use</a> and you don't
-                infringe anyone else's rights.
-              </p>
-            </div>
-
-            <div className="post-info">
-              <input
-                style={{ display: 'none' }}
-                id="image-file"
-                type="file"
-                accept="image/*"
-                onChange={this.processImage}
-              />
-
-              {imageUrl ? this.renderPreview() : this.renderUploader()}
-
-              <div className="post-description">
+              <div className="post-form__description">
                 <TextField
                   autoFocus
                   name="title"
-                  label="Post Title"
+                  placeholder="Post title"
                   type="text"
                   fullWidth
                   InputLabelProps={{
@@ -213,12 +202,11 @@ class PostFormComponent extends React.Component<Props, any> {
                 />
                 <TextField
                   name="body"
-                  label="Caption"
                   type="text"
-                  helperText="3000 character limit"
+                  placeholder="Text (3000 character limit)"
                   fullWidth
                   multiline
-                  rows="3"
+                  rows="10"
                   variant="outlined"
                   inputProps={{
                     maxLength: 3000,
@@ -231,32 +219,67 @@ class PostFormComponent extends React.Component<Props, any> {
                   onChange={this.handleChange}
                 />
               </div>
-            </div>
-            <div className="form-bottom">
-              <DialogActions className="action-buttons">
-                <label className="make-public-label" htmlFor="make-public">
-                  <input
-                    name="make-public"
-                    type="checkbox"
-                    onChange={this.handleMakePublicChange}
-                    checked={this.state.isPublic}
-                  />
-                  Make public
-                </label>
-                <Button className="cancel-button" onClick={() => this.props.close(hasUnsavedChanges)}>
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  className={cx('post-button', { disabled: !isSaveEnabled })}
-                  disabled={!isSaveEnabled}
-                >
-                  Save Post
-                </Button>
-              </DialogActions>
-            </div>
-          </form>
-        </DialogContent>
+              <div className="post-form__audio">
+                <Upload onComplete={this.updateAudioFile} />
+              </div>
+              <div className="post-form__image">
+                <input
+                  style={{ display: 'none' }}
+                  id="image-file"
+                  type="file"
+                  accept="image/*"
+                  onChange={this.processImage}
+                />
+
+                {imageUrl ? this.renderPreview() : this.renderUploader()}
+              </div>
+
+              <div className="post-form__checkboxes">
+                <div className="row justify-content-between">
+                  <div className="col-auto">
+                    <label className="make-public-label" htmlFor="make-public">
+                      <input
+                        name="make-public"   
+                        id="make-public"
+                        type="checkbox"
+                        onChange={this.handleMakePublicChange}
+                        checked={this.state.isPublic}
+                      />
+                      Make public
+                    </label>
+                  </div>
+                  <div className="col-auto">
+                    <label className="pin-post-label" htmlFor="pin-post">
+                      <input
+                        name="pin-post"
+                        id="pin-post"
+                        type="checkbox"
+                        // onChange={this.state.isPinned}
+                        checked={this.state.isPinned}
+                      />
+                      Pin post
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="post-form__actions">
+                <DialogActions className="action-buttons">
+                  <Button className="cancel-button" style={{ textAlign: 'left' }} onClick={() => this.props.close(hasUnsavedChanges)}>
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    className={cx('post-button finished-button', { disabled: !isSaveEnabled })}
+                    disabled={!isSaveEnabled}
+                  >
+                    Finished
+                  </Button>
+                </DialogActions>
+              </div>
+            </form>
+          </DialogContent>
+        </div>
       </div>
     );
   }

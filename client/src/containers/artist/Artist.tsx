@@ -190,7 +190,7 @@ class ArtistComponent extends React.Component<Props, any> {
         <style
           dangerouslySetInnerHTML={{
           __html: `
-            .btn.btn-support, .private-support-btn > .btn {
+            .btn.btn-support, .private-support__btn > .btn {
               border-width: 0px;
               background-color: ${artist.accent_color};
               color: white;
@@ -199,7 +199,7 @@ class ArtistComponent extends React.Component<Props, any> {
               background-color: ${artist.accent_color};
             }
             .btn.btn-support:hover,
-            .private-support-btn > .btn:hover,
+            .private-support__btn > .btn:hover,
             .new-post button:hover {
               background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
             }
@@ -210,6 +210,7 @@ class ArtistComponent extends React.Component<Props, any> {
           `
           }}
         />
+        
         <Texture 
           positionTop25={false}
           positionTop50={false}

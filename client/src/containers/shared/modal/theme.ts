@@ -33,9 +33,32 @@ export const theme = createMuiTheme({
     MuiLinearProgress: {
       colorPrimary: {
         backgroundColor: '#eeeeee',
+        marginBottom: '1rem',
       },
-      barColorPrimary: {
-        backgroundColor: '$brand-primary',
+    },
+    MuiInputBase: {
+      input: {
+        fontFamily: 'LL Replica Light Web, sans-serif'
+      },
+    },
+    MuiButton: {
+      root: {
+        color: 'black',
+        backgroundColor: 'white',
+        width: '100%',
+        borderRadius: '0',
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        borderColor: 'black',
+        transition: 'all .25s ease-in-out',
+        maxWidth: '500px',
+        textTransform: 'initial',
+      },
+    },
+    MuiDialogActions: {
+      root: {
+        justifyContent: 'center',
+        padding: '0px',
       },
     },
   },

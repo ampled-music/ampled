@@ -7,33 +7,177 @@
   text-align: center;
   background-color: $white;
 
-  h1 {
-    font-size: 1em;
-    letter-spacing: 0.7px;
-    align-self: center;
+  &__checkboxes {
+    font-family: $font-family-monospace;
     font-weight: bold;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-bottom: 1rem;
+
+    input[type="checkbox"] {
+      width: 15px;
+      margin-right: .5rem;
+    }
+  }
+
+  &__image {
+    min-height: 40px;
+
+    .post-image {
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+      margin-bottom: 1rem;
+
+      .preview {
+        font-size: .8rem;
+
+        &__image {
+          width: 40px;
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+
+  .file-actions {
+    font-family: $font-family-monospace;
+    color: $brand-primary;
+    font-size: .8rem;
+    display: flex;
+    align-content: center;
+
+    &[data-progress] {
+      display: none;
+    }
+    &[data-progress="100"] {
+      display: inherit;
+    }
+    
+    .remove-button {
+      text-decoration: underline;
+      cursor: pointer;
+      margin-right: 1rem;
+      align-self: center;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    label {
+      align-self: center;
+      margin: 0;
+    }
+    .replace-button {
+      text-decoration: underline;
+      cursor: pointer;
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
 
   .upload {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-top: 1rem;
 
     label {
       text-align: left;
+      margin: 0px;
     }
-
+    .progress-container {
+      width: 100%;
+    }
     .progress-info {
       display: flex;
-      font-family: Courier, 'Courier New', monospace;
+      font-family: $font-family-monospace;
       font-size: 13px;
       justify-content: space-between;
+
+      &[data-progress] {
+        display: none;
+      }
+      &[data-progress="100"] {
+        display: flex;
+      }
+
+      &__name {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &_mp3 {
+          width: 40px;
+          height: 40px;
+          background-color: $brand-primary;
+          color: $white;
+          line-height: 40px;
+          text-transform: uppercase;
+          margin-right: 1rem;
+        }
+        &_song {
+          max-width: 220px;
+        }
+      }
+    }
+    .progress-bar[aria-valuenow="100"],
+    .progress-info__progress[data-progress="100"],
+    .progress-bar__upload[data-progress="100"],
+    .progress-bar__progress[data-progress="100"] {
+      display: none;
+    }
+    .progress-bar__container {
+      display: block;
+      position: relative;
+      width: 100%;
+    }
+    .progress-bar__upload {
+      font-family: $font-family-monospace;
+      font-size: .8rem;
+      text-align: left;
+    }
+    .progress-bar__progress {
+      position: absolute;
+      left: -0px;
+      transition: width .4s linear;
+      span {
+        position: absolute;
+        font-size: .8rem;
+        background-color: $white;
+        border-radius: 3px;
+        padding: 2px 3px;
+        z-index: 10;
+        right: -23px;
+        top: -20px;
+        width: 50px;
+        box-shadow: 1px 1px 3px $black;
+        &:after {
+          content: '';
+          width: 8px;
+          height: 8px;
+          background-color: $white;
+          position: absolute;
+          display: block;
+          right: 20px;
+          bottom: -4px;
+          transform: rotate(45deg);
+          box-shadow: 1px 1px 3px $black;
+          z-index: -1;
+        }
+        &:before {
+          content: '';
+          width: 20px;
+          height: 5px;
+          background-color: $white;
+          position: absolute;
+          display: block;
+          right: 10px;
+          bottom: 0px;
+        }
+      }
     }
 
     .upload-error {
-      color: #d8000c;
+      color: $brand-danger;
       h5 {
         padding-top: 20px;
       }
@@ -53,109 +197,52 @@
     }
   }
 
-  .instructions {
+  .uploader {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 15px 0;
-    font-family: Courier, 'Courier New', monospace;
-    font-size: 13px;
-    text-align: left;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
 
-    a {
-      color: $brand-primary;
-      text-decoration: underline;
+    label {
+      width: 100%;
     }
 
-    p {
-      max-width: 280px;
+    .loading-icon {
+      margin-bottom: 15px;
+      width: 25px;
+      height: 25px;
     }
-
-    p:first-of-type {
-      margin-right: 25px;
-    }
-  }
-
-  .post-info {
-    display: flex;
-    justify-content: space-between;
-
-    .uploader {
-      width: 190px;
-      height: 190px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      background: url(../../../../images/post_image.svg) no-repeat;
-
-      .loading-icon {
-        margin-bottom: 15px;
-        width: 25px;
-        height: 25px;
-      }
-    }
-
-    .post-image {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      max-width: 190px;
-      height: 190px;
-
-      .preview {
-        max-width: 190px;
-        max-height: 190px;
-        margin-bottom: 10px;
-      }
-
-      .image-actions {
-        display: flex;
-        justify-content: space-between;
-
-        span {
-          display: flex;
-          border: 1px solid $brand-primary;
-          cursor: pointer;
-          width: 25px;
-          height: 25px;
-          justify-content: center;
-          align-items: center;
-          z-index: 1;
-        }
-
-        label {
-          cursor: pointer;
-          z-index: 2;
-        }
-
-        .action-icon {
-          width: 15px;
-          height: 15px;
-        }
-      }
-    }
-
+    .audio-button,
     .image-button {
-      background-color: $white;
+      text-transform: capitalize;
+      min-height: 55px;
       border: 1px solid $black;
+      background-color: $white;
       border-radius: 0px;
       text-transform: capitalize;
-      margin: 0 auto 15px auto;
+      margin: 0 auto;
       padding: 0 15px;
       outline: none;
-    }
-
-    .post-description {
-      display: flex;
-      flex-direction: column;
-      flex-grow: 2;
-      margin-left: 20px;
-      max-width: 375px;
+      &:hover {
+        color: $white;
+        background-color: $black;
+      }
+      .finished-button {
+        border: 1px solid $black;
+        color: $black;
+        .MuiButton-label {
+          color: $black;
+        }
+        &.disabled {
+          border: 1px solid $gray-light;
+          color: $gray-light;
+        }
+      }
     }
   }
 
   .form-bottom {
-    font-family: Courier, 'Courier New', monospace;
+    font-family: $font-family-monospace;
 
     .make-public-label {
       margin-right: auto;

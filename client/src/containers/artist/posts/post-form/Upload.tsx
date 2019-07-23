@@ -39,7 +39,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
       return;
     }
 
-    const fileExtension = file.name && file.name.split('.').pop();
+    const fileExtension = file.name && file.name.split('.').pop().toLowerCase();
 
     if (fileExtension !== 'mp3') {
       this.setState({ uploadError: 'Upload only accepts mp3 files.' });

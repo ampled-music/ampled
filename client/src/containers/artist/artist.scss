@@ -162,7 +162,6 @@
   &__photo {
     position: absolute;
     display: block;
-    z-index: 1;
     transition: all 0.25s ease-in-out;
     width: 335px;
     @include mq( $layout-m ) {
@@ -170,6 +169,32 @@
     }
     @include mq( $layout-l ) {
       width: 550px;
+    }
+
+
+    &.photo_0 {
+      z-index: 1;
+    }
+    &.photo_1 {
+      z-index: 2;
+    }
+    &.photo_2 {
+      z-index: 3;
+    }
+    &.photo_3 {
+      z-index: 4;
+    }
+    &.photo_4 {
+      z-index: 5;
+    }
+    &.photo_5 {
+      z-index: 6;
+    }
+    &.photo_6 {
+      z-index: 7;
+    }
+    &.photo_7 {
+      z-index: 8;
     }
 
     &:nth-child(1) {

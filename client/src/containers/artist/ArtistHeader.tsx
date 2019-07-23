@@ -90,7 +90,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__photos">
         {artist.images &&
           artist.images.map((image, index) => {
-            return <img key={index} className="artist-header__photo" src={image} />;
+            return <img key={index} className={ `artist-header__photo photo_${index}` }  src={image} />;
           })}
       </div>
     );

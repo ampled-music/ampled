@@ -22,16 +22,15 @@
     }
   }
 
-
-
-  p {
+  &__copy {
     font-family: $font-family-base;
     font-size: 13px;
     margin-top: 10px;
+    white-space: pre-wrap;
   }
 
   .delete-icon {
-    margin-bottom: 10px;
+    margin: .5rem 0;
     cursor: pointer;
   }
 }

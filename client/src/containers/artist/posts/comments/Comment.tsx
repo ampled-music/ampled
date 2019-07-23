@@ -11,7 +11,7 @@ const renderHeader = ({ author, createdDate }) => (
   </div>
 );
 
-const renderBody = (text: string) => <p>{text}</p>;
+const renderBody = (text: string) => <div className="comment__copy">{text}</div>;
 
 const renderDeleteButton = ({ deleteComment, commentId }) => (
   <span onClick={() => deleteComment(commentId)}>

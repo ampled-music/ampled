@@ -208,6 +208,24 @@
     }
   }
 
+  &__banner-icons {
+    margin-top: 1rem;
+    display: flex;
+    align-self: end;
+    bottom: -25px;
+    position: relative;
+    &_icon {
+      width: 15px;
+      height: 15px;
+      border-radius: 100%;
+      background-color: $gray-lighter;
+      margin: 0 5px;
+      &.active {
+        background: $brand-primary;
+      }
+    }
+  }
+
   &__message {
     font-size: 1.25rem;
     margin: 2rem 0;

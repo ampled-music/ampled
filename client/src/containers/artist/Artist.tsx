@@ -203,6 +203,9 @@ class ArtistComponent extends React.Component<Props, any> {
             .new-post button:hover {
               background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
             }
+            .artist-header__banner-icons_icon.active {
+              background-color: ${artist.accent_color};
+            }
             ${isSupporter && `
               .user-image { border: 1px solid ${artist.accent_color}; }
               header .supporter-message { display: inline-block !important; color: ${artist.accent_color}; }

@@ -57,7 +57,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     const bannerImages = document.getElementsByClassName("artist-header__photo");
     const bannerIcons = document.getElementsByClassName("artist-header__banner-icons_icon");
     var index;
-    
+
     for (index = 0; index < bannerImages.length; ++index) {
       if (bannerImages[index].classList.contains('active')) {
         bannerImages[index].classList.toggle('active');
@@ -111,9 +111,9 @@ export class ArtistHeader extends React.Component<Props, any> {
         {artist.images &&
           artist.images.map((image, index) => {
             if (index === 0) {
-              return <img key={index} className="artist-header__photo active"  src={image} />;
-            } else {
-              return <img key={index} className="artist-header__photo"  src={image} />;
+              return <div className="artist-header__photo active"><img key={index} src={image} /></div>;
+            } else {              
+              return <div className="artist-header__photo"><img key={index} src={image} /></div>;
             }
           })
         }

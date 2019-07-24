@@ -162,8 +162,8 @@
   &__photo {
     position: absolute;
     display: block;
-    transition: all 0.25s ease-in-out;
     width: 335px;
+    background-color: $brand-primary;
     z-index: 1;
     @include mq( $layout-m ) {
       width: 450px;
@@ -174,36 +174,45 @@
 
     &.active {
       z-index: 10;
+
+      img {
+        opacity: 1;
+      }
     }
 
-    &:nth-child(1) {
+    img {
+      width: 100%;
+      opacity: .5;
+    }
+
+    &:nth-child(1n) {
       transform: rotate(5deg);
       @include mq( $layout-m ) {
-        transform: scale(1.05) rotate(5deg);
+        transform: rotate(5deg);
       }
     }
-    &:nth-child(2) {
+    &:nth-child(2n) {
       transform: rotate(3deg);
       @include mq( $layout-m ) {
-        transform: scale(1.05) rotate(3deg);
+        transform: rotate(3deg);
       }
     }
-    &:nth-child(3) {
+    &:nth-child(3n) {
       transform: rotate(-5deg);
       @include mq( $layout-m ) {
-        transform: scale(1.05) rotate(-5deg);
+        transform: rotate(-5deg);
       }
     }
-    &:nth-child(4) {
+    &:nth-child(4n) {
       transform: rotate(-3deg);
       @include mq( $layout-m ) {
-        transform: scale(1.05) rotate(-3deg);
+        transform: rotate(-3deg);
       }
     }
-    &:nth-child(5) {
+    &:nth-child(5n) {
       transform: rotate(-7deg);
       @include mq( $layout-m ) {
-        transform: scale(1.05) rotate(-7deg);
+        transform: rotate(-7deg);
       }
     }
   }
@@ -215,8 +224,8 @@
     bottom: -25px;
     position: relative;
     &_icon {
-      width: 15px;
-      height: 15px;
+      width: 10px;
+      height: 10px;
       border-radius: 100%;
       background-color: $gray-lighter;
       margin: 0 5px;

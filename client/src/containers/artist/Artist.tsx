@@ -195,16 +195,15 @@ class ArtistComponent extends React.Component<Props, any> {
               background-color: ${artist.accent_color};
               color: white;
             }
-            .new-post button {
+            .new-post button,
+            .artist-header__photo,
+            .artist-header__banner-icons_icon.active {
               background-color: ${artist.accent_color};
             }
             .btn.btn-support:hover,
             .private-support__btn > .btn:hover,
             .new-post button:hover {
               background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
-            }
-            .artist-header__banner-icons_icon.active {
-              background-color: ${artist.accent_color};
             }
             ${isSupporter && `
               .user-image { border: 1px solid ${artist.accent_color}; }

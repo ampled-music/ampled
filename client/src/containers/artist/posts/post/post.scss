@@ -98,6 +98,18 @@
     }
   }
 
+  &__status {
+    color: $white;
+    text-align: center;
+    font-size: .8rem;
+    font-weight: bold;
+    padding: 5px;
+    background-color: $gray-lighter;
+    .unlock {
+      margin-right: .5rem;
+    }
+  }
+
   .comments-list {
     background-color: $gray-lightest;
     padding: 20px;

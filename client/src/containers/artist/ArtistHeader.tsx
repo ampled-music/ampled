@@ -173,7 +173,7 @@ export class ArtistHeader extends React.Component<Props, any> {
           </div>
           <div className="supporter__hover-card_bands_section">
             <h6>Member of</h6>
-            <div className="supporter__hover-card_bands_name">_project[4]</div>            
+            <div className="supporter__hover-card_bands_name">Fake Dad</div>            
           </div>
         </div>
       </div>

@@ -70,7 +70,6 @@
     max-width: 50px;
     max-height: 50px;
     position: relative;
-    z-index: 10;
     margin: 10px auto;
 
     @include mq( $layout-m ) {
@@ -272,7 +271,7 @@
         position: absolute;
         display: none;
         padding: .5rem 1rem;
-        z-index: 200;
+        z-index: 300;
         box-shadow: 1px 1px 3px $gray-light;
         transform: translate(-42%,-110%);
         &:after {

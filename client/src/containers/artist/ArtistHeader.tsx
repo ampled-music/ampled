@@ -149,8 +149,40 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
   }
 
+  renderSupporterHover = ({supporter}) => {
+    return (
+      <div className="supporter__hover-card">
+        <div className="supporter__hover-card_header">
+          <div className="supporter__hover-card_header_photo">
+            <img
+              className="supporter__hover-card_header_photo_image"
+              src={supporter.profile_image_url}
+              alt={supporter.name}
+            />
+          </div>
+          <div className="supporter__hover-card_header_info">
+            <div className="supporter__hover-card_header_info_name">{supporter.name}</div>
+            <div className="supporter__hover-card_header_info_since">Supporter Since Sepetember 2019</div>
+          </div>
+        </div>
+        <div className="supporter__hover-card_bands">
+          <div className="supporter__hover-card_bands_section">
+            <h6>Also Supports</h6>
+            <div className="supporter__hover-card_bands_name">Dilly Dally</div>
+            <div className="supporter__hover-card_bands_name">Culture Abuse</div>
+          </div>
+          <div className="supporter__hover-card_bands_section">
+            <h6>Member of</h6>
+            <div className="supporter__hover-card_bands_name">_project[4]</div>            
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   renderSupporter = ({ supporter, borderColor, isSmall = false }) => {
     let style = { borderColor, maxWidth: 'auto', maxHeight: 'auto' };
+    const RenderSupporterHover = this.renderSupporterHover;
     if (isSmall) {
       style.maxWidth = '36px';
       style.maxHeight = '36px';
@@ -159,34 +191,11 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div
         key={`supporter-${supporter.id}`}
         id={`supporter-${supporter.id}`}
-        className={isSmall ? 'supporter artist-header__person_small' : 'artist-header__person'}
+        className={isSmall ? 'supporter artist-header__person_small' : 'supporter artist-header__person'}
       >
-        <div className="supporter__hover-card">
-          <div className="supporter__hover-card_header">
-            <div className="supporter__hover-card_header_photo">
-              <img
-                className="supporter__hover-card_header_photo_image"
-                src={supporter.profile_image_url}
-                alt={this.anonymizeSupporterName(supporter.name)}
-              />
-            </div>
-            <div className="supporter__hover-card_header_info">
-              <div className="supporter__hover-card_header_info_name">{supporter.name}</div>
-              <div className="supporter__hover-card_header_info_since">Supporter Since Sepetember 2019</div>
-            </div>
-          </div>
-          <div className="supporter__hover-card_bands">
-            <div className="supporter__hover-card_bands_section">
-              <h6>Also Supports</h6>
-              <div className="supporter__hover-card_bands_name">Dilly Dally</div>
-              <div className="supporter__hover-card_bands_name">Culture Abuse</div>
-            </div>
-            <div className="supporter__hover-card_bands_section">
-              <h6>Member of</h6>
-              <div className="supporter__hover-card_bands_name">_project[4]</div>            
-            </div>
-          </div>
-        </div>
+        <RenderSupporterHover
+          supporter={supporter}
+        />
         {supporter.profile_image_url ? (
           <img
             className="artist-header__person_image"

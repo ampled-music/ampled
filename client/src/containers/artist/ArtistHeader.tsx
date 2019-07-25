@@ -157,11 +157,11 @@ export class ArtistHeader extends React.Component<Props, any> {
             <img
               className="supporter__hover-card_header_photo_image"
               src={supporter.profile_image_url}
-              alt={supporter.name}
+              alt={this.anonymizeSupporterName(supporter.name)}
             />
           </div>
           <div className="supporter__hover-card_header_info">
-            <div className="supporter__hover-card_header_info_name">{supporter.name}</div>
+            <div className="supporter__hover-card_header_info_name">{this.anonymizeSupporterName(supporter.name)}</div>
             <div className="supporter__hover-card_header_info_since">Supporter Since Sepetember 2019</div>
           </div>
         </div>

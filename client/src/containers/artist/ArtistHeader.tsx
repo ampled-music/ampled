@@ -162,20 +162,28 @@ export class ArtistHeader extends React.Component<Props, any> {
           </div>
           <div className="supporter__hover-card_header_info">
             <div className="supporter__hover-card_header_info_name">{this.anonymizeSupporterName(supporter.name)}</div>
-            <div className="supporter__hover-card_header_info_since">Supporter Since Sepetember 2019</div>
+            {supporter.since && (
+              <div className="supporter__hover-card_header_info_since">Supporter since {supporter.since}</div>
+            )}
           </div>
         </div>
-        <div className="supporter__hover-card_bands">
-          <div className="supporter__hover-card_bands_section">
-            <h6>Also Supports</h6>
-            <div className="supporter__hover-card_bands_name">Dilly Dally</div>
-            <div className="supporter__hover-card_bands_name">Culture Abuse</div>
+        {supporter.also_supports || supporter.member_of && (
+          <div className="supporter__hover-card_bands">
+            {supporter.also_supports && (
+              <div className="supporter__hover-card_bands_section">
+                <h6>Also Supports</h6>
+                <div className="supporter__hover-card_bands_name">Dilly Dally</div>
+                <div className="supporter__hover-card_bands_name">Culture Abuse</div>
+              </div>
+            )}
+            {supporter.member_of && (
+              <div className="supporter__hover-card_bands_section">
+                <h6>Member of</h6>
+                <div className="supporter__hover-card_bands_name">Fake Dad</div>   
+              </div>
+            )}    
           </div>
-          <div className="supporter__hover-card_bands_section">
-            <h6>Member of</h6>
-            <div className="supporter__hover-card_bands_name">Fake Dad</div>            
-          </div>
-        </div>
+        )}
       </div>
     );
   };

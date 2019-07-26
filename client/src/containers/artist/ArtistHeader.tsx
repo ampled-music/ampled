@@ -52,6 +52,26 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
     return this.state.screenshotURL;
   }
+
+  cycleBanners = () => {
+    const bannerImages = document.getElementsByClassName("artist-header__photo");
+    const bannerIcons = document.getElementsByClassName("artist-header__banner-icons_icon");
+    var index;
+
+    for (index = 0; index < bannerImages.length; ++index) {
+      if (bannerImages[index].classList.contains('active')) {
+        bannerImages[index].classList.toggle('active');
+        bannerIcons[index].classList.toggle('active');
+        if (index + 1 === bannerImages.length) {
+          index = 0;
+        } else {
+          ++index;
+        }
+        bannerImages[index].classList.add('active');
+        bannerIcons[index].classList.add('active');
+      }
+    }
+  }
   
   renderArtistName = () => <div className="artist-header__title">{this.props.artist.name}</div>;
 
@@ -90,8 +110,31 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__photos">
         {artist.images &&
           artist.images.map((image, index) => {
-            return <img key={index} className="artist-header__photo" src={image} />;
-          })}
+            if (index === 0) {
+              return <div className="artist-header__photo active"><img key={index} src={image} /></div>;
+            } else {              
+              return <div className="artist-header__photo"><img key={index} src={image} /></div>;
+            }
+          })
+        }
+      </div>
+    );
+  };
+
+  renderBannerIcons = () => {
+    const { artist } = this.props;
+
+    return (
+      <div className="artist-header__banner-icons">
+        {artist.images &&
+          artist.images.map((_image, index) => {
+            if (index === 0) {
+              return <span className="artist-header__banner-icons_icon active"></span>
+            } else {
+              return <span className="artist-header__banner-icons_icon"></span>
+            }
+          })
+        }
       </div>
     );
   };
@@ -100,7 +143,8 @@ export class ArtistHeader extends React.Component<Props, any> {
     <div className="artist-header__photo-container" style={{ borderColor: this.props.artist.accent_color }}>
       {this.renderOwners()}
       {this.renderBanners()}
-      <div className="artist-header__photo-container_border" style={{ borderColor: this.props.artist.accent_color }} />
+      <div className="artist-header__photo-container_border" style={{ borderColor: this.props.artist.accent_color }} onClick={this.cycleBanners} />
+      {this.renderBannerIcons()}
     </div>
   );
 

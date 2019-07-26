@@ -385,14 +385,15 @@
     height: 75px;
     width: 75px;
     border-radius: 100%;
-    background-color: rgba(255, 255, 255, 0.4);
-    transition: all 0.25s ease-in-out;
+    border-width: 0px;
+    background-color: rgba( $white, .4 );
+    transition: all $speed;
 
     &:hover {
       height: 85px;
       width: 85px;
-      background-color: rgba(255, 255, 255, 0.6);
-      transition: all 0.25s ease-in-out;
+      background-color: rgba( $white, .6 );
+      transition: all $speed;
       cursor: pointer;
     }
     &_svg {

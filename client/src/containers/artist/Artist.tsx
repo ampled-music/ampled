@@ -196,7 +196,9 @@ class ArtistComponent extends React.Component<Props, any> {
               color: white;
             }
             .new-post button,
-            .post__change button {
+            .post__change button,
+            .artist-header__photo,
+            .artist-header__banner-icons_icon.active {
               background-color: ${artist.accent_color};
             }
             .btn.btn-support:hover,

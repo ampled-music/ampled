@@ -33,7 +33,7 @@
       }  
       @include mq( $layout-l ) {
         height: 575px;
-      }  
+      }
     }
   }
 
@@ -70,7 +70,6 @@
     max-width: 50px;
     max-height: 50px;
     position: relative;
-    z-index: 10;
     margin: 10px auto;
 
     @include mq( $layout-m ) {
@@ -162,9 +161,9 @@
   &__photo {
     position: absolute;
     display: block;
-    z-index: 1;
-    transition: all 0.25s ease-in-out;
     width: 335px;
+    background-color: $brand-primary;
+    z-index: 1;
     @include mq( $layout-m ) {
       width: 450px;
     }
@@ -172,34 +171,66 @@
       width: 550px;
     }
 
-    &:nth-child(1) {
+    &.active {
+      z-index: 10;
+
+      img {
+        opacity: 1;
+      }
+    }
+
+    img {
+      width: 100%;
+      opacity: .5;
+    }
+
+    &:nth-child(1n) {
       transform: rotate(5deg);
       @include mq( $layout-m ) {
-        transform: scale(1.05) rotate(5deg);
+        transform: rotate(5deg);
       }
     }
-    &:nth-child(2) {
+    &:nth-child(2n) {
       transform: rotate(3deg);
       @include mq( $layout-m ) {
-        transform: scale(1.05) rotate(3deg);
+        transform: rotate(3deg);
       }
     }
-    &:nth-child(3) {
+    &:nth-child(3n) {
       transform: rotate(-5deg);
       @include mq( $layout-m ) {
-        transform: scale(1.05) rotate(-5deg);
+        transform: rotate(-5deg);
       }
     }
-    &:nth-child(4) {
+    &:nth-child(4n) {
       transform: rotate(-3deg);
       @include mq( $layout-m ) {
-        transform: scale(1.05) rotate(-3deg);
+        transform: rotate(-3deg);
       }
     }
-    &:nth-child(5) {
+    &:nth-child(5n) {
       transform: rotate(-7deg);
       @include mq( $layout-m ) {
-        transform: scale(1.05) rotate(-7deg);
+        transform: rotate(-7deg);
+      }
+    }
+  }
+
+  &__banner-icons {
+    margin-top: 1rem;
+    display: flex;
+    align-self: end;
+    bottom: -20px;
+    left: -20px;
+    position: relative;
+    &_icon {
+      width: 10px;
+      height: 10px;
+      border-radius: 100%;
+      background-color: $gray-lighter;
+      margin: 0 5px;
+      &.active {
+        background: $brand-primary;
       }
     }
   }
@@ -258,6 +289,83 @@
       .artist-header__person_image,
       .artist-header__person_svg {
         border-width:0;
+      }
+    }
+
+    .supporter {
+      &:hover {
+        .supporter__hover-card {
+          display: block;
+        }
+      }
+      &__hover-card {
+        width: 350px;
+        background-color: $white;
+        position: absolute;
+        display: none;
+        padding: .5rem 1rem;
+        z-index: 300;
+        box-shadow: 1px 1px 3px $gray-light;
+        transform: translate(-42%,-110%);
+        &:after {
+          content: '';
+          width: 20px;
+          height: 20px;
+          background-color: $white;
+          position: absolute;
+          display: block;
+          right: 50%;
+          bottom: -10px;
+          transform: rotate(45deg);
+          box-shadow: 1px 1px 3px $gray-light;
+          z-index: -1;
+        }
+        &:before {
+          content: '';
+          width: 50px;
+          height: 15px;
+          background-color: $white;
+          position: absolute;
+          display: block;
+          bottom: 0px;
+          right: 45%;
+        }
+
+        &_header {
+          display: flex;
+          &_photo {
+            margin-right: .5rem;
+            &_image {
+              width: 50px;
+              height: 50px;
+              border-radius: 100%;
+            }
+          }
+          &_info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &_since {
+              font-family: $font-family-monospace;
+              font-size: .8rem;
+            }
+          }
+        }
+        &_bands {
+          margin-top: .5rem;
+          padding-top: .5rem;
+          border-top: 1px solid $gray;
+          &_section {
+            margin-bottom: .5rem;
+            h6 {
+              text-transform: uppercase;
+              color: $gray-light;
+            }
+          }
+          &_name {
+            text-transform: uppercase;
+          }
+        }
       }
     }
   }

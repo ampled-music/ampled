@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { routePaths } from 'src/containers/route-paths';
 import { UserRoles } from 'src/containers/shared/user-roles';
 
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faUnlock, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardActions, Collapse, Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
@@ -42,6 +42,10 @@ class PostComponent extends React.Component<any, any> {
         </audio>
       </div>
     );
+  };
+
+  canLoggedUserPost = () => {
+    return this.props.loggedUserAccess && this.props.loggedUserAccess.role === UserRoles.Owner;
   };
 
   openPrivatePostModal = () => {
@@ -134,6 +138,7 @@ class PostComponent extends React.Component<any, any> {
     const { classes, post, accentColor, me } = this.props;
 
     const allowDetails = post.allow_details;
+    const isPrivate = post.is_private;
     const authenticated = !!me;
 
     return (
@@ -151,11 +156,34 @@ class PostComponent extends React.Component<any, any> {
                 ) : (
                   <FontAwesomeIcon className={classes.userImage} icon={faUserCircle} />
                 )}
-                <span>{this.returnFirstName(post.author)}</span>
+                <span className="post__header_name">{this.returnFirstName(post.author)}</span>
               </div>
               <div className={classes.postDate}>{post.created_ago} ago</div>
             </div>
             <Divider />
+            
+            {this.canLoggedUserPost() && 
+              ( isPrivate ? (
+                <div className="post__status"><FontAwesomeIcon className="unlock" icon={faUnlock} />Subscribers Only</div>
+              ) : (
+                <div className="post__status">Public Post</div>
+              )
+            )}
+            
+            {this.canLoggedUserPost() && ( 
+              <div className="post__change">
+                <div className="post__change_edit">
+                  <button className="disabled">
+                    <FontAwesomeIcon icon={faPen} />
+                  </button>
+                </div>
+                <div className="post__change_delete">
+                  <button className="disabled">
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </div>
+              </div>
+            )}
 
             {post.image_url && (
               <div className="post__image-container">

@@ -149,9 +149,9 @@
     justify-content: center;
     align-items: flex-start;
     align-content: flex-start;
+    margin-left: 3rem;
     @include mq( $layout-m ) {
       height: 475px;
-      margin-left: 55px;
     }
     @include mq( $layout-l ) {
       height: 575px;
@@ -164,6 +164,7 @@
     width: 335px;
     background-color: $brand-primary;
     z-index: 1;
+
     @include mq( $layout-m ) {
       width: 450px;
     }
@@ -185,31 +186,31 @@
     }
 
     &:nth-child(1n) {
-      transform: rotate(5deg);
+      transform: scale(.9) rotate(5deg);
       @include mq( $layout-m ) {
         transform: rotate(5deg);
       }
     }
     &:nth-child(2n) {
-      transform: rotate(3deg);
+      transform: scale(.9) rotate(3deg);
       @include mq( $layout-m ) {
         transform: rotate(3deg);
       }
     }
     &:nth-child(3n) {
-      transform: rotate(-5deg);
+      transform: scale(.9) rotate(-5deg);
       @include mq( $layout-m ) {
         transform: rotate(-5deg);
       }
     }
     &:nth-child(4n) {
-      transform: rotate(-3deg);
+      transform: scale(.9) rotate(-3deg);
       @include mq( $layout-m ) {
         transform: rotate(-3deg);
       }
     }
     &:nth-child(5n) {
-      transform: rotate(-7deg);
+      transform: scale(.9) rotate(-7deg);
       @include mq( $layout-m ) {
         transform: rotate(-7deg);
       }

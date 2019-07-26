@@ -173,12 +173,12 @@ class PostComponent extends React.Component<any, any> {
             {this.canLoggedUserPost() && ( 
               <div className="post__change">
                 <div className="post__change_edit">
-                  <button>
+                  <button className="disabled">
                     <FontAwesomeIcon icon={faPen} />
                   </button>
                 </div>
                 <div className="post__change_delete">
-                  <button>
+                  <button className="disabled">
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </div>

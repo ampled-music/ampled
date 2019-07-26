@@ -146,8 +146,14 @@
       opacity: .7;
       transition: opacity $speed;
       cursor: pointer;
+
       &:hover {
         opacity: 1;
+      }
+      &.disabled {
+        cursor: not-allowed;
+        opacity: .7;
+        background-color: $gray-lighter;
       }
       svg {
         align-self: center;

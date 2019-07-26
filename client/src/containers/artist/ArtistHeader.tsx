@@ -193,8 +193,48 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
   }
 
+  renderSupporterHover = ({supporter}) => {
+    return (
+      <div className="supporter__hover-card">
+        <div className="supporter__hover-card_header">
+          <div className="supporter__hover-card_header_photo">
+            <img
+              className="supporter__hover-card_header_photo_image"
+              src={supporter.profile_image_url}
+              alt={this.anonymizeSupporterName(supporter.name)}
+            />
+          </div>
+          <div className="supporter__hover-card_header_info">
+            <div className="supporter__hover-card_header_info_name">{this.anonymizeSupporterName(supporter.name)}</div>
+            {supporter.since && (
+              <div className="supporter__hover-card_header_info_since">Supporter since {supporter.since}</div>
+            )}
+          </div>
+        </div>
+        {supporter.also_supports || supporter.member_of && (
+          <div className="supporter__hover-card_bands">
+            {supporter.also_supports && (
+              <div className="supporter__hover-card_bands_section">
+                <h6>Also Supports</h6>
+                <div className="supporter__hover-card_bands_name">Dilly Dally</div>
+                <div className="supporter__hover-card_bands_name">Culture Abuse</div>
+              </div>
+            )}
+            {supporter.member_of && (
+              <div className="supporter__hover-card_bands_section">
+                <h6>Member of</h6>
+                <div className="supporter__hover-card_bands_name">Fake Dad</div>   
+              </div>
+            )}    
+          </div>
+        )}
+      </div>
+    );
+  };
+
   renderSupporter = ({ supporter, borderColor, isSmall = false }) => {
     let style = { borderColor, maxWidth: 'auto', maxHeight: 'auto' };
+    const RenderSupporterHover = this.renderSupporterHover;
     if (isSmall) {
       style.maxWidth = '36px';
       style.maxHeight = '36px';
@@ -203,8 +243,11 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div
         key={`supporter-${supporter.id}`}
         id={`supporter-${supporter.id}`}
-        className={isSmall ? 'artist-header__person_small' : 'artist-header__person'}
+        className={isSmall ? 'supporter artist-header__person_small' : 'supporter artist-header__person'}
       >
+        <RenderSupporterHover
+          supporter={supporter}
+        />
         {supporter.profile_image_url ? (
           <img
             className="artist-header__person_image"

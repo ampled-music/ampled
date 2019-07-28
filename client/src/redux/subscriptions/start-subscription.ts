@@ -10,6 +10,7 @@ export const startSubscriptionReducer = {
     ...state,
     artistPageId: payload.artistPageId,
     supportLevelValue: payload.supportLevelValue,
+    subscriptionLevelValue: payload.subscriptionLevelValue,
     status: SubscriptionStep.PaymentDetails,
   }),
 } as Reducer;

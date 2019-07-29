@@ -80,7 +80,7 @@ class PostComponent extends React.Component<any, any> {
     this.props.updateArtist();
   };
 
-  canLoggedUserComment = () => {
+  isUserSubscribed = () => {
     const { loggedUserAccess } = this.props;
 
     return (
@@ -168,6 +168,10 @@ class PostComponent extends React.Component<any, any> {
               ) : (
                 <div className="post__status">Public Post</div>
               )
+            )}
+            
+            {this.isUserSubscribed() && isPrivate && (
+                <div className="post__status"><FontAwesomeIcon className="unlock" icon={faUnlock} />Subscribers Only</div>
             )}
             
             {this.canLoggedUserPost() && ( 
@@ -269,7 +273,7 @@ class PostComponent extends React.Component<any, any> {
             </CardActions>
           </div>
         )}
-        {this.canLoggedUserComment() && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
+        {this.isUserSubscribed() && <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />}
       </div>
     );
   };

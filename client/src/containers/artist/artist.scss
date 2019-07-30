@@ -218,12 +218,9 @@
   }
 
   &__banner-icons {
-    margin-top: 1rem;
     display: flex;
-    align-self: end;
-    bottom: -20px;
-    left: -20px;
-    position: relative;
+    bottom: -1rem;
+    position: absolute;
     &_icon {
       width: 10px;
       height: 10px;

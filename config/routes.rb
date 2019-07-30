@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :posts
     resources :subscriptions
     resources :comments
+    resources :plans
 
     root to: "users#index"
   end

@@ -52,12 +52,32 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
     return this.state.screenshotURL;
   }
+
+  cycleBanners = () => {
+    const bannerImages = document.getElementsByClassName("artist-header__photo");
+    const bannerIcons = document.getElementsByClassName("artist-header__banner-icons_icon");
+    var index;
+
+    for (index = 0; index < bannerImages.length; ++index) {
+      if (bannerImages[index].classList.contains('active')) {
+        bannerImages[index].classList.toggle('active');
+        bannerIcons[index].classList.toggle('active');
+        if (index + 1 === bannerImages.length) {
+          index = 0;
+        } else {
+          ++index;
+        }
+        bannerImages[index].classList.add('active');
+        bannerIcons[index].classList.add('active');
+      }
+    }
+  }
   
   renderArtistName = () => <div className="artist-header__title">{this.props.artist.name}</div>;
 
   renderOwners = () => {
     const { artist } = this.props;
-    console.log(artist);
+    
     return (
       <div className="artist-header__persons">
         {artist.owners &&
@@ -90,8 +110,31 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__photos">
         {artist.images &&
           artist.images.map((image, index) => {
-            return <img key={index} className="artist-header__photo" src={image} />;
-          })}
+            if (index === 0) {
+              return <div className="artist-header__photo active"><img key={index} src={image} /></div>;
+            } else {              
+              return <div className="artist-header__photo"><img key={index} src={image} /></div>;
+            }
+          })
+        }
+      </div>
+    );
+  };
+
+  renderBannerIcons = () => {
+    const { artist } = this.props;
+
+    return (
+      <div className="artist-header__banner-icons">
+        {artist.images &&
+          artist.images.map((_image, index) => {
+            if (index === 0) {
+              return <span className="artist-header__banner-icons_icon active"></span>
+            } else {
+              return <span className="artist-header__banner-icons_icon"></span>
+            }
+          })
+        }
       </div>
     );
   };
@@ -100,7 +143,8 @@ export class ArtistHeader extends React.Component<Props, any> {
     <div className="artist-header__photo-container" style={{ borderColor: this.props.artist.accent_color }}>
       {this.renderOwners()}
       {this.renderBanners()}
-      <div className="artist-header__photo-container_border" style={{ borderColor: this.props.artist.accent_color }} />
+      <div className="artist-header__photo-container_border" style={{ borderColor: this.props.artist.accent_color }} onClick={this.cycleBanners} />
+      {this.renderBannerIcons()}
     </div>
   );
 
@@ -149,8 +193,48 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
   }
 
+  renderSupporterHover = ({supporter}) => {
+    return (
+      <div className="supporter__hover-card">
+        <div className="supporter__hover-card_header">
+          <div className="supporter__hover-card_header_photo">
+            <img
+              className="supporter__hover-card_header_photo_image"
+              src={supporter.profile_image_url}
+              alt={this.anonymizeSupporterName(supporter.name)}
+            />
+          </div>
+          <div className="supporter__hover-card_header_info">
+            <div className="supporter__hover-card_header_info_name">{this.anonymizeSupporterName(supporter.name)}</div>
+            {supporter.since && (
+              <div className="supporter__hover-card_header_info_since">Supporter since {supporter.since}</div>
+            )}
+          </div>
+        </div>
+        {supporter.also_supports || supporter.member_of && (
+          <div className="supporter__hover-card_bands">
+            {supporter.also_supports && (
+              <div className="supporter__hover-card_bands_section">
+                <h6>Also Supports</h6>
+                <div className="supporter__hover-card_bands_name">Dilly Dally</div>
+                <div className="supporter__hover-card_bands_name">Culture Abuse</div>
+              </div>
+            )}
+            {supporter.member_of && (
+              <div className="supporter__hover-card_bands_section">
+                <h6>Member of</h6>
+                <div className="supporter__hover-card_bands_name">Fake Dad</div>   
+              </div>
+            )}    
+          </div>
+        )}
+      </div>
+    );
+  };
+
   renderSupporter = ({ supporter, borderColor, isSmall = false }) => {
     let style = { borderColor, maxWidth: 'auto', maxHeight: 'auto' };
+    const RenderSupporterHover = this.renderSupporterHover;
     if (isSmall) {
       style.maxWidth = '36px';
       style.maxHeight = '36px';
@@ -159,8 +243,11 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div
         key={`supporter-${supporter.id}`}
         id={`supporter-${supporter.id}`}
-        className={isSmall ? 'artist-header__person_small' : 'artist-header__person'}
+        className={isSmall ? 'supporter artist-header__person_small' : 'supporter artist-header__person'}
       >
+        <RenderSupporterHover
+          supporter={supporter}
+        />
         {supporter.profile_image_url ? (
           <img
             className="artist-header__person_image"

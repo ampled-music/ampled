@@ -3,24 +3,41 @@
 
 .post {
   max-width: 500px;
-  margin: auto;
+  margin-bottom: 2rem;  
+
+  @include mq($tablet) {
+    margin-bottom: auto;
+  }
   &.clickable-post {
     cursor: pointer;
   }
 
-  span {
-    font-family: $font-family-sans-serif;
+  &:hover {
+    .post__change {
+      opacity: 1;
+    }
+  }
+  
+  &__header {
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &_name {
+      font-family: $font-family-sans-serif;
+    }
+
+    .user-image {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 1rem;
+    }
   }
 
-  .user-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 1rem;
-  }
-
-  .this-image-container {
+  &__image-container {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -43,34 +60,129 @@
     }
   }
 
-  .private-support-btn {
-    display: flex;
-    justify-content: center;
-    margin: 1rem 0;
+  &__title {
+    font-family: $font-family-sans-serif;
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+  &__body {
+    font-family: $font-family-monospace;
+    font-size: .8rem;
+    line-height: 1.1rem;
+    padding: 0 1rem 1rem;
+    white-space: pre-wrap;
+  }
 
-    svg {
-      margin-right: 0.5rem;
+  .private-support {
+    width: 100%;
+    position: absolute;
+    bottom: 60px;
+    
+    &__copy {
+      font-family: $font-family-sans-serif;
+      text-transform: uppercase;
+      text-align: center;
+      color: $white;
+      background: url(../../../../images/lock_icon.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+      padding: 54px 0 0;
+      font-size: 14px;
+      height: 100px;
+      text-shadow: 0px 0px 3px $gray-light;
+    }  
+
+    &__btn {
+      display: flex;
+      justify-content: center;
+      margin: 1rem 0;
+
+      svg {
+        margin-right: 0.5rem;
+      }
+
+      button {
+        width: 240px;
+        text-transform: capitalize;
+      }
     }
+  }
 
+  &__status {
+    color: $white;
+    text-align: center;
+    font-size: .8rem;
+    font-weight: bold;
+    padding: 5px;
+    background-color: $gray-lighter;
+    .unlock {
+      margin-right: .5rem;
+    }
+  }
+
+  &__change {
+    position: absolute;
+    right: 0;
+    z-index: 10;
+    padding: .5rem .5rem 0 0;
+    opacity: 1;
+    transition: opacity $speed;
+
+    @include mq($tablet) {
+      opacity: 0;
+    }
+    
     button {
-      width: 240px;
-      text-transform: capitalize;
+      width: 40px;
+      height: 40px;
+      background-color: $brand-primary;
+      border-radius: 100%;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      border: 0px;
+      color: $white;
+      margin-bottom: .5rem;
+      opacity: .7;
+      transition: opacity $speed;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+      }
+      &.disabled {
+        cursor: not-allowed;
+        opacity: .7;
+        background-color: $gray-lighter;
+      }
+      svg {
+        align-self: center;
+      }
     }
   }
 
   .comments-list {
-    background-color: #f3f3f3;
+    background-color: $gray-lightest;
     padding: 20px;
     margin-bottom: 50px;
-    color: #1e1e1e;
+    color: $black;
     max-width: 500px;
     display: flex;
     flex-direction: column;
-    margin: 0 auto 2rem;
+    margin: -2rem auto 0rem;
 
-    span {
-      font-family: Courier, 'Courier New', monospace;
-      font-size: 14px;
+    @include mq($tablet) {
+      margin: 0 auto 2rem;
+    }
+
+    &:empty {
+      display: none;
+    }
+
+    &__header {
+      text-transform: uppercase;
+      font-family: $font-family-monospace;
+      font-size: .9rem;
     }
 
     .sendCommentIcon {

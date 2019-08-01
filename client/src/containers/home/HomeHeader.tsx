@@ -19,9 +19,9 @@ class HomeHeader extends React.Component<Props,any> {
       <div className="home-header container-fluid" style={{ backgroundColor: this.props.bgColor }}>
         <div className="row align-items-center justify-content-xl-center">
           <div className="col-lg-4 col-xl-3">
-            <div className="home-header__support">Support for any sound</div>
+            <div className="home-header__support">Own your creative freedom</div>
             <div className="home-header__info">
-              Receive support via direct payments from your community. Own your creative freedom and sustainably continue making art for the people who love it. Join us and become a member-owner of an alternative platform that puts artists first.
+              Any sound or size. Receive support via direct payments from your community and sustainably make music.
             </div>
             <button className="home-header__button btn btn-ampled" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
               Create Your Page

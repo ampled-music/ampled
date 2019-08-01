@@ -25,9 +25,9 @@ class WhyModalComponent extends React.Component<Props, any> {
           open={this.props.open}
           onClose={(e) => this.props.onClose(e)}
         >
-          <img className="tear__topper" src={tear} />
+          <img className="tear tear__topper" src={tear} />
           <div className="why-support">
-            <h1 className="why-support__title">Why Support Through Ampled?</h1>
+            <h5 className="why-support__title">Why Support Through Ampled?</h5>
             <div className="why-support__subheader">Your Money, Directly To Artists</div>
             <div className="why-support__copy">No exploitative intermediaries. Ampled is owned by the artists on the platform.</div>
             <div className="why-support__subheader">Direct Connection & Cool Exclusive Stuff</div>

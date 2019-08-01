@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';
 
 const renderHeader = ({ author, createdDate }) => (
-  <div className="comment-header">
-    <b>{author}</b>
-    <span>{createdDate} ago</span>
+  <div className="comment__header">
+    <span className="comment__header_name" >{author}</span>
+    <span className="comment__header_date">{createdDate}</span>
   </div>
 );
 
-const renderBody = (text: string) => <p>{text}</p>;
+const renderBody = (text: string) => <div className="comment__copy">{text}</div>;
 
 const renderDeleteButton = ({ deleteComment, commentId }) => (
   <span onClick={() => deleteComment(commentId)}>

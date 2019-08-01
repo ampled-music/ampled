@@ -1,27 +1,36 @@
+@import "../../../../theme/vars.scss";
+@import "../../../../theme/mixins.scss";
+
 .comment {
-  margin-top: 15px;
-  margin-bottom: 20px;
+  margin: 1rem 0;
   display: flex;
   flex-direction: column;
 
-  .comment-header {
+  &__header {
     display: flex;
     justify-content: space-between;
+
+    &_name {
+      font-family: $font-family-sans-serif;
+    }
+    &_date {
+      font-family: $font-family-monospace;
+      color: $gray-light;
+      font-size: 12px;
+      align-self: flex-end;
+      text-transform: capitalize;
+    }
   }
 
-  span {
-    color: #aaaaab;
-    font-size: 12px !important;
-    align-self: flex-end;
-  }
-
-  p {
+  &__copy {
+    font-family: $font-family-base;
     font-size: 13px;
     margin-top: 10px;
+    white-space: pre-wrap;
   }
 
   .delete-icon {
-    margin-bottom: 10px;
+    margin: .5rem 0;
     cursor: pointer;
   }
 }

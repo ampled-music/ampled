@@ -136,10 +136,10 @@ class SignupComponent extends React.Component<Props, any> {
     const passwordErrorMessage = 'Passwords do not match.';
 
     return (
-      <div>
-        <img className="tear__topper" src={tear} />
+      <div className="login__container">
+        <img className="tear tear__topper" src={tear} />
         <div className="login">
-          <h2>SIGN UP</h2>
+          <h4>SIGN UP</h4>
           {authentication.showSupportMessage && authentication.showSupportMessage === 'post' && authentication.artistName && (
             <p>This is a private post. Sign up and become a supporter of {authentication.artistName} to access it.</p>
           )}

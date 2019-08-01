@@ -212,6 +212,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
               <div className="extra-info">
                 <div className="owned-info">
                   <div className="column">
+                    {console.log(ownedPage)}
                     <label>
                       <p className="info-title">SUPPORTERS</p>
                       <p className="supporting-at-value">{ownedPage.supportersCount || 0}</p>

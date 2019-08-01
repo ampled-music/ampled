@@ -23,7 +23,6 @@ class HomeHowComponent extends React.Component<Props,any> {
   theLoop = ( activeState ) => {
     const self = this;
     const intervalId = setInterval( function () {
-
       if ( activeState == 'section_1' ) {
         self.openSpeaker();
         activeState = 'section_2';
@@ -34,8 +33,6 @@ class HomeHowComponent extends React.Component<Props,any> {
         self.openMoney();
         activeState = 'section_1';
       }
-
-      console.log(activeState);
     }, 4000);
 
     this.setState({ intervalId });
@@ -116,25 +113,25 @@ class HomeHowComponent extends React.Component<Props,any> {
             <div className="home-how__info">
               <div className="section section_1">
                 <div className={this.setActive(this.state.showSpeaker)}>
-                  <div className="home-how__title">Artists post unique/ unreleased content.</div>
+                  <div className="home-how__title">Artists post unique/ unreleased content</div>
                   <div className="home-how__copy">
-                    Artists on Ampled post things you won’t find anywhere else - like demos, unreleased recordings, access to exclusive merch, discounts, personal notes, announcements - and more.
+                    Demos, unreleased material, exclusive merch, announcements - and more.
                   </div>
                 </div>
               </div>
               <div className="section section_2">
                 <div className={this.setActive(this.state.showCrowd)}>
-                  <div className="home-how__title">Artists are supported directly by their community</div>
+                  <div className="home-how__title">Artists are directly supported by their community</div>
                   <div className="home-how__copy">
-                    Artists can be supported directly for $3 or more per month - unlocking access to their exclusive content.
+                    No tiers and one egalitarian price: $3 per month (or support what you want beyond that)
                   </div>
                 </div>
               </div>
               <div className="section section_3">
                 <div className={this.setActive(this.state.showMoney)}>
-                  <div className="home-how__title">Artists collect monthly recurring revenue</div>
+                  <div className="home-how__title">Artists receive predictable and recurring payments</div>
                   <div className="home-how__copy">
-                    When an artist posts something new, their supporters get a notification. 
+                    When an artist posts something new, their supporters receive a notification.
                   </div>
                 </div>
               </div>

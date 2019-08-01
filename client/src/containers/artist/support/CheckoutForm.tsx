@@ -34,6 +34,9 @@ class CheckoutFormComponent extends React.Component<Props, any> {
     }
   };
 
+  calculateSupportTotal = (supportLevel) =>
+    (Math.round((supportLevel + (supportLevel * 0.029) + .3) * 100) / 100).toFixed(2)
+
   createSubscription = (paymentToken: { id: string }) => {
     const { artistPageId, subscriptionLevelValue } = this.props;
 
@@ -63,6 +66,12 @@ class CheckoutFormComponent extends React.Component<Props, any> {
                   <label>CVC</label>
                   <CardCVCElement />
                 </div>
+              </div>
+              <div className="form-row">
+                <p className="transparency">
+                Your total charge will be<br />
+                <h2>${this.calculateSupportTotal(this.props.subscriptionLevelValue/100)}</h2>
+                </p>
               </div>
               <div className="actions">
                 <button disabled={this.state.disableActions} className="btn btn-secondary" type="button" onClick={this.props.declineStep}>

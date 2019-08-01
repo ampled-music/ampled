@@ -101,7 +101,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def subscription_params
-    params.require(:subscription).permit(:artist_page_id, :amount).merge(user_id: current_user.id)
+    params.permit(:artist_page_id, :amount).merge(user_id: current_user.id)
   end
 
   def current_subscription

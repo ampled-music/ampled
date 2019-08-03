@@ -182,11 +182,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
         <div className="user-content">
           <p className="user-name">{userData.name}</p>
           <p className="joined-at">Joined {this.getFormattedDate(userData.created_at)}</p>
-          {
+          {/*
             monthlyTotal > 0 ?
               (<p className="user-name">${monthlyTotal.toFixed(2)}/Month</p>) :
               ''
-          }
+          */}
         </div>
       </div>
     );

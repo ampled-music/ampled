@@ -170,7 +170,7 @@ class PostComponent extends React.Component<any, any> {
               )
             )}
             
-            {this.isUserSubscribed() && isPrivate && (
+            {this.isUserSubscribed() && ![UserRoles.Owner.toString()].includes(this.props.loggedUserAccess.role) && isPrivate && (
                 <div className="post__status"><FontAwesomeIcon className="unlock" icon={faUnlock} />Subscribers Only</div>
             )}
             

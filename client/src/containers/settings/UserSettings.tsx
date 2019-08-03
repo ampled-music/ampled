@@ -169,13 +169,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   renderUserInfo = () => {
     const { userData } = this.props;
-    const { subscriptions } = userData;
-    let monthlyTotal = 0;
-    if (subscriptions && subscriptions.length) {
-      for (const sub of subscriptions) {
-        monthlyTotal += this.calculateSupportTotalNumber(sub.amount / 100);
-      }
-    }
+    // const { subscriptions } = userData;
+    // let monthlyTotal = 0;
+    // if (subscriptions && subscriptions.length) {
+    //   for (const sub of subscriptions) {
+    //     monthlyTotal += this.calculateSupportTotalNumber(sub.amount / 100);
+    //   }
+    // }
     return (
       <div className="user-info-container col-md-3">
         {this.renderUserImage()}

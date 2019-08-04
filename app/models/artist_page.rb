@@ -64,7 +64,7 @@ class ArtistPage < ApplicationRecord
         nickname: "Ampled Support $5",
         interval: "month",
         currency: "usd",
-        amount: ((amount + 30) / 0.971).round,
+        amount: ((amount + 30) / 0.971).round
       }, stripe_account: stripe_user_id
     )
     plan = Plan.new(stripe_id: stripe_plan.id, amount: amount)

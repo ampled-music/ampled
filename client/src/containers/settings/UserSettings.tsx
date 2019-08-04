@@ -137,6 +137,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   };
 
+  calculateSupportTotal = (supportLevel) =>
+    this.calculateSupportTotalNumber(supportLevel).toFixed(2)
+
+  calculateSupportTotalNumber = (supportLevel) =>
+    (Math.round((supportLevel + (supportLevel * 0.029) + .3) * 100) / 100)
+
+  
   redirectToArtistPage = (pageId) => {
     this.props.history.push(routePaths.artists.replace(':id', pageId));
   };
@@ -162,13 +169,24 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   renderUserInfo = () => {
     const { userData } = this.props;
-
+    // const { subscriptions } = userData;
+    // let monthlyTotal = 0;
+    // if (subscriptions && subscriptions.length) {
+    //   for (const sub of subscriptions) {
+    //     monthlyTotal += this.calculateSupportTotalNumber(sub.amount / 100);
+    //   }
+    // }
     return (
       <div className="user-info-container col-md-3">
         {this.renderUserImage()}
         <div className="user-content">
           <p className="user-name">{userData.name}</p>
           <p className="joined-at">Joined {this.getFormattedDate(userData.created_at)}</p>
+          {/*
+            monthlyTotal > 0 ?
+              (<p className="user-name">${monthlyTotal.toFixed(2)}/Month</p>) :
+              ''
+          */}
         </div>
       </div>
     );
@@ -258,6 +276,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     <label>
                       <p className="info-title">SUPPORTING AT</p>
                       <p className="supporting-at-value">${subscription.amount / 100}/Month</p>
+                      <p className="info-title">${this.calculateSupportTotal(subscription.amount / 100)} incl. fees</p>
                     </label>
                     <button onClick={(event) => this.openCancelModal(event, subscription)}>
                       <FontAwesomeIcon icon={faHeartBroken} />

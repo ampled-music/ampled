@@ -113,9 +113,9 @@ export class ArtistHeader extends React.Component<Props, any> {
         {artist.images &&
           artist.images.map((image, index) => {
             if (index === 0) {
-              return <div className="artist-header__photo active"><img key={index} src={image} /></div>;
+              return <div key={index} className="artist-header__photo active"><img src={image} /></div>;
             } else {              
-              return <div className="artist-header__photo"><img key={index} src={image} /></div>;
+              return <div key={index} className="artist-header__photo"><img src={image} /></div>;
             }
           })
         }
@@ -131,9 +131,9 @@ export class ArtistHeader extends React.Component<Props, any> {
         {artist.images &&
           artist.images.map((_image, index) => {
             if (index === 0) {
-              return <span className="artist-header__banner-icons_icon active"></span>
+              return <span key={index} className="artist-header__banner-icons_icon active"></span>
             } else {
-              return <span className="artist-header__banner-icons_icon"></span>
+              return <span key={index} className="artist-header__banner-icons_icon"></span>
             }
           })
         }

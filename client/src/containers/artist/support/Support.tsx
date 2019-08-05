@@ -43,7 +43,7 @@ type Props = Dispatchers & ArtistProps;
 
 export class SupportComponent extends React.Component<Props, any> {
   state = {
-    supportLevelValue: 3,
+    supportLevelValue: null,
   };
 
   componentDidMount() {
@@ -108,12 +108,12 @@ export class SupportComponent extends React.Component<Props, any> {
 
   handleChange = (event) => {
     const { value } = event.target;
-    this.setState({ supportLevelValue: value });
+    this.setState({ supportLevelValue: Number(value) });
   };
 
   handleSupportClick = () => {
     if (this.state.supportLevelValue < 3) {
-      showToastMessage('Sorry, but you need to insert a value equal or bigger than $ 3.00.', MessageType.ERROR);
+      showToastMessage('Sorry, but you need to insert a value equal or bigger than $3.00.', MessageType.ERROR);
 
       return;
     }
@@ -129,6 +129,7 @@ export class SupportComponent extends React.Component<Props, any> {
     const artistPageId = this.props.match.params.id;
     this.props.startSubscription({
       artistPageId,
+      subscriptionLevelValue: this.state.supportLevelValue * 100,
       supportLevelValue: this.state.supportLevelValue * 100,
     });
   };
@@ -162,6 +163,8 @@ export class SupportComponent extends React.Component<Props, any> {
     </div>
   );
 
+  calculateSupportTotal = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100).toFixed(2);
+
   renderSupportLevelForm = (artistName) => (
     <div className="row justify-content-center">
       <div className="col-md-5">
@@ -176,10 +179,18 @@ export class SupportComponent extends React.Component<Props, any> {
               placeholder="3 min"
             />
           </div>
-          <p className="support__value-description">
-            Support {artistName} directly for $3 (or more) per month to unlock access to all of their posts and get
-            notifications when they post anything new.
-          </p>
+          {
+            this.state.supportLevelValue && this.state.supportLevelValue >= 3 ? 
+            (<p className="support__value-description">
+                Your total charge will be <strong>${this.calculateSupportTotal(this.state.supportLevelValue)}</strong>.<br /><br />
+                This is due to our payment processor's service fee. More details can be found <a href="https://www.ampled.com/transparency" target="_blank">here</a>.
+          </p>) :
+              (<p className="support__value-description">
+              Support {artistName} directly for $3 (or more) per month to unlock access to all of their posts and get
+                  notifications when they post anything new.
+            </p>)
+            }
+          
         </div>
       </div>
     </div>

@@ -66,7 +66,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def stripe_plan
-    current_artist_page.plan_for_amount(subscription_params[:amount].to_i)
+    current_artist_page.plan_for_nominal_amount(subscription_params[:amount].to_i)
   end
 
   def subscribe_stripe
@@ -101,7 +101,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def subscription_params
-    params.require(:subscription).permit(:artist_page_id, :amount).merge(user_id: current_user.id)
+    params.permit(:artist_page_id, :amount).merge(user_id: current_user.id)
   end
 
   def current_subscription

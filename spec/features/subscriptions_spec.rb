@@ -18,18 +18,14 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
   let(:create_params) do
     {
       artist_page_id: artist_page.id,
-      subscription: {
-        amount: 10_000
-      }
+      amount: 10_000
     }
   end
 
   let(:other_create_params) do
     {
       artist_page_id: other_artist_page.id,
-      subscription: {
-        amount: 15_000
-      }
+      amount: 15_000
     }
   end
 
@@ -57,7 +53,14 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
       post url, params: create_params
       subscription = user.subscriptions.active.first
       customer = Stripe::Customer.retrieve(subscription.stripe_customer_id, stripe_account: artist_page.stripe_user_id)
-      expect(customer.subscriptions.count).to eq 1
+      actual_amount = ((create_params[:amount] + 30) / 0.971).round
+
+      expect(customer.subscriptions.first.plan.amount).to eq actual_amount
+    end
+
+    it "creates a local plan with the given nominal amount" do
+      post url, params: create_params
+      expect(Plan.first.nominal_amount).to eq create_params[:amount]
     end
   end
 

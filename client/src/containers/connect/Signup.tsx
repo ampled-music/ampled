@@ -52,7 +52,7 @@ class SignupComponent extends React.Component<Props, any> {
     const { signup, authentication } = this.props;
 
     if (this.state.submitted && !signup.errors && authentication.authModalOpen && !authentication.authenticating) {
-      // showToastMessage("Signed up! Please check your email for a confirmation email.", MessageType.SUCCESS, { timeOut: 8000 });
+      showToastMessage("Signed up! Please wait while we log you in.", MessageType.SUCCESS, { timeOut: 8000 });
       once(this.login)();
     }
   }

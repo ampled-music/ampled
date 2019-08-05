@@ -140,8 +140,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
   calculateSupportTotal = (supportLevel) =>
     this.calculateSupportTotalNumber(supportLevel).toFixed(2)
 
-  calculateSupportTotalNumber = (supportLevel) =>
-    (Math.round((supportLevel + (supportLevel * 0.029) + .3) * 100) / 100)
+  calculateSupportTotalNumber = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100);
 
   
   redirectToArtistPage = (pageId) => {

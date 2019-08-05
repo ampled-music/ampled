@@ -174,7 +174,7 @@ export class SupportComponent extends React.Component<Props, any> {
               type="number"
               name="supportLevelValue"
               onChange={this.handleChange}
-              value={this.state.supportLevelValue}
+              value={this.state.supportLevelValue || ''}
               placeholder="3 min"
             />
           </div>

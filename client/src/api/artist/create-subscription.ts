@@ -11,7 +11,7 @@ export const createSubscription = async (subscription: {
     data: { 
       artist_page_id: subscription.artistPageId,
       token: subscription.paymentToken,
-      nominal_amount: subscription.subscriptionLevelValue,
+      amount: subscription.subscriptionLevelValue,
     },
   });
 

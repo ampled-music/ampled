@@ -25,7 +25,7 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
   let(:other_create_params) do
     {
       artist_page_id: other_artist_page.id,
-      amount: 15_000 
+      amount: 15_000
     }
   end
 

@@ -12,8 +12,10 @@ import { setUserDataAction } from 'src/redux/me/set-me';
 import { updateMeAction } from 'src/redux/me/update-me';
 import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
 
-import { faEdit, faHeartBroken, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faHeartBroken } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import avatar from '../../images/ampled_avatar.svg';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -156,7 +158,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           {userData.image ? (
             <img src={userData.image} className="user-image" />
           ) : (
-            <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+            <img src={avatar} className="user-image" />
           )}
           <b className="tag">
             <FontAwesomeIcon icon={faEdit} />
@@ -221,11 +223,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="pages row no-gutters justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
           <div key={`artist-${ownedPage.id}`} className="artist col-sm-6">
-            <div className="image-border">
-              <img src={ownedPage.image} onClick={() => this.redirectToArtistPage(ownedPage.artistId)} />
-            </div>
+              <img className="artist-image" src={ownedPage.image} />
+              <div className="image-border" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}></div>
             <div className="artist-info">
-              <p className="artist-name">{ownedPage.name}</p>
+              <p className="artist-name" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}>{ownedPage.name}</p>
               <div className="extra-info">
                 <div className="owned-info">
                   <div className="column">
@@ -264,11 +265,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="pages row no-gutters justify-content-center justify-content-md-start">
         {this.props.userData.subscriptions.map((subscription) => (
           <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-6">
-            <div className="image-border">
-              <img src={subscription.image} onClick={() => this.redirectToArtistPage(subscription.artistPageId)} />
-            </div>
+            <img className="artist-image" src={subscription.image} />
+            <div className="image-border" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}></div>
             <div className="artist-info">
-              <p className="artist-name">{subscription.name}</p>
+              <p className="artist-name" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}>{subscription.name}</p>
               <div className="extra-info">
                 <div className="support-info">
                   <div className="supporting-at">
@@ -333,7 +333,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     if (processingImage) {
       return (
         <div className="processing-image">
-          <FontAwesomeIcon className="image-preview" icon={faUserCircle} />
+          <img src={avatar} className="image-preview" />
           <b>Processing image...</b>
         </div>
       );
@@ -342,7 +342,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     const placeholderImage = userData.image ? (
       <img className="image-preview" src={userData.image} />
     ) : (
-      <FontAwesomeIcon className="image-preview" icon={faUserCircle} />
+      <img src={avatar} className="image-preview" />
     );
 
     return photoBody ? <img className="image-preview" src={photoBody} /> : placeholderImage;

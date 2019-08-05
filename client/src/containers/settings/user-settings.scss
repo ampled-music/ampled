@@ -43,7 +43,6 @@
           object-fit: cover;
           margin-bottom: -60px;
           z-index: 1;
-          filter: brightness(70%);
         }
 
         .tag {
@@ -106,34 +105,44 @@
           flex-direction: column;
           width: 320px;
 
+          &:hover {
+            .artist-image {
+              transform: rotate(0deg);  
+            }
+          }
+
           .image-border {
             border: 2px solid $white;
             width: 200px;
             height: 200px;
             align-self: center;
+            cursor: pointer;
             margin-bottom: -90px;
             z-index: 1;
 
             img {
               height: 200px;
               width: 200px;
-              transform: rotate(-4deg);
               left: -2px;
               top: -2px;
               align-self: center;
               position: relative;
-              object-fit: scale-down;
-              cursor: pointer;
-              transition: transform $speed;
             }
 
-            img:hover {
-              transform: rotate(0);
-            }
+          }
+
+          .artist-image {
+            position: absolute;
+            height: 200px;
+            width: 200px;
+            left: 50%;
+            margin-left: -100px;
+            object-fit: scale-down;
+            transition: transform $speed;
+            transform: rotate(-4deg);        
           }
 
           .artist-info {
-            height: 274px;
             display: flex;
             flex-direction: column;
             align-self: center;
@@ -148,18 +157,21 @@
               align-self: center;
               font-size: 18px;
               align-items: flex-end;
-              height: 250px;
               padding-bottom: 1rem;
               border-bottom: 2px solid #fefefe;
               width: 100%;
               justify-content: center;
-              margin: 0;
-              margin-bottom: 1rem;
+              margin: 3rem 0 1rem;
+              cursor: pointer;
+              transition: color $speed;
               font-family: $font-family-sans-serif;
+
+              &:hover {
+                color: rgba($white, .8);
+              }
             }
 
             .extra-info {
-              height: 200px;
               display: flex;
               align-self: center;
               align-items: flex-end;

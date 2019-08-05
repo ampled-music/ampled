@@ -5,9 +5,9 @@ export const config = {
     token: 'token',
   },
   menuUrls: {
-    createArtist: process.env.REACT_APP_URL_CREATE_ARTIST || 'https://www.ampled.com/create-an-artist-page',
-    blog: process.env.REACT_APP_URL_BLOG || 'https://ampled.com/zine',
-    about: process.env.REACT_APP_URL_ABOUT || 'https://ampled.com/about',
+    createArtist: process.env.REACT_APP_URL_CREATE_ARTIST || 'https://app.ampled.com/create-an-artist-page',
+    blog: process.env.REACT_APP_URL_BLOG || 'https://app.ampled.com/zine',
+    about: process.env.REACT_APP_URL_ABOUT || 'https://app.ampled.com/about',
   },
   authUrl: {
     google: process.env.REACT_APP_GOOGLE_AUTH_URL || '/api/auth/google',

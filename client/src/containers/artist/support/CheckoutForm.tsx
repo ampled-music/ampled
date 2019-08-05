@@ -34,8 +34,7 @@ class CheckoutFormComponent extends React.Component<Props, any> {
     }
   };
 
-  calculateSupportTotal = (supportLevel) =>
-    (Math.round((supportLevel + (supportLevel * 0.029) + .3) * 100) / 100).toFixed(2)
+  calculateSupportTotal = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100).toFixed(2);
 
   createSubscription = (paymentToken: { id: string }) => {
     const { artistPageId, subscriptionLevelValue } = this.props;

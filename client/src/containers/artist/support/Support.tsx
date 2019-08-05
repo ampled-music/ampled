@@ -163,8 +163,7 @@ export class SupportComponent extends React.Component<Props, any> {
     </div>
   );
 
-  calculateSupportTotal = (supportLevel) =>
-    (Math.round((supportLevel + (supportLevel * 0.029) + .3) * 100) / 100).toFixed(2)
+  calculateSupportTotal = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100).toFixed(2);
 
   renderSupportLevelForm = (artistName) => (
     <div className="row justify-content-center">

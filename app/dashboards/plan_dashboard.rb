@@ -21,7 +21,7 @@ class PlanDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :id,
-    :amount,
+    :nominal_amount,
     :artist_page_id,
     :stripe_id,
   ].freeze
@@ -30,7 +30,7 @@ class PlanDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :id,
-    :amount,
+    :nominal_amount,
     :artist_page_id,
     :stripe_id,
   ].freeze
@@ -39,7 +39,7 @@ class PlanDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :amount,
+    :nominal_amount,
     :artist_page_id,
     :stripe_id,
   ].freeze

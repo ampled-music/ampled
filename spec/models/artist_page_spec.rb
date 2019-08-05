@@ -12,7 +12,7 @@ RSpec.describe ArtistPage, type: :model do
         create(:subscription, plan: plan_a, user: subscriber_a, artist_page: ap)
         create(:subscription, plan: plan_b, user: subscriber_b, artist_page: ap)
 
-        expect(ap.monthly_total).to eq(plan_a.amount + plan_b.amount)
+        expect(ap.monthly_total).to eq(plan_a.nominal_amount + plan_b.nominal_amount)
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.describe ArtistPage, type: :model do
           stripe_account: ap.stripe_user_id
         )
 
-        expect(ap.last_payout).to eq(Time.new(2019, 5, 28, 0, 0, 0, "+00:00"))
+        expect(ap.last_payout).to eq(Time.new(2019, 8, 5, 1, 56, 36, "+00:00"))
       end
     end
 

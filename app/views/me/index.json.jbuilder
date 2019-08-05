@@ -15,7 +15,7 @@ json.subscriptions @subscriptions do |subscription|
   json.image subscription.artist_page.banner_image_url
   json.last_post_date subscription.artist_page.last_post_date
   json.support_date subscription.created_at
-  json.nominal_amount subscription.plan.nominal_amount
+  json.amount subscription.plan.amount
 end
 json.ownedPages @owned_pages do |page|
   json.artistId page.id

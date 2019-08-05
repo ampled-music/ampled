@@ -8,7 +8,7 @@ class PlanDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    amount: Field::Number,
+    nominal_amount: Field::Number,
     artist_page_id: Field::Number,
     id: Field::Number,
     stripe_id: Field::Text,

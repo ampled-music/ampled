@@ -43,6 +43,17 @@
     text-transform: uppercase;
     font-weight: bolder;
     text-align: center;
+    position: relative;
+
+    &_flair {
+      position: absolute;
+      left: -1rem;
+      bottom: 2px;
+      height: 1rem;
+      width: 5rem;
+      z-index: -1;
+      background-color: $brand-primary;
+    }
 
     @include mq( $layout-m ) {
       text-align: left;

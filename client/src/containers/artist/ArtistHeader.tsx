@@ -74,7 +74,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
   }
   
-  renderArtistName = () => <div className="artist-header__title">{this.props.artist.name}</div>;
+  renderArtistName = () => <div className="artist-header__title"><span className="artist-header__title_flair"></span>{this.props.artist.name}</div>;
 
   renderOwners = () => {
     const { artist } = this.props;

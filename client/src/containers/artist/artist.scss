@@ -244,9 +244,11 @@
 
   &__message {
     font-size: 1.25rem;
-    margin: 2rem 0;
     text-transform: uppercase;
     font-weight: bold;
+    @include mq($layout-m) {
+      margin: 2rem 0;
+    }
   }
 
   &__message-container {

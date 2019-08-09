@@ -36,20 +36,22 @@
 
   &__title {
     font-size: 2rem;
-    margin: 2rem 0 3rem;
+    margin: 2rem auto 3rem;
     text-transform: uppercase;
     font-weight: bolder;
     text-align: center;
     position: relative;
+    display: inline-block;
 
     &_flair {
       position: absolute;
-      left: -1rem;
-      bottom: 2px;
+      display: block;
       height: 1rem;
       width: 5rem;
       z-index: -1;
       background-color: $brand-primary;
+      margin-top: 30px;
+      margin-left: -25px;
     }
 
     @include mq( $layout-m ) {

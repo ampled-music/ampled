@@ -301,41 +301,50 @@
 
     .supporter {
       &:hover {
+        .supporter-image {
+          display: block;
+          position: relative;
+            &:before,
+            &:after {
+              content: '';
+              width: 20px;
+              height: 20px;
+              background-color: $white;
+              position: absolute;
+              display: block;
+              transform: rotate(45deg);
+              top: -20px;
+              left: 8px;
+            }
+            &:before {
+              box-shadow: 1px 1px 3px $gray-light;
+              z-index: 1;
+            }
+            &:after {
+              z-index: 301;
+            }
+          }
+      }
+      &:hover {
         .supporter__hover-card {
           display: block;
         }
       }
       &__hover-card {
-        width: 350px;
         background-color: $white;
         position: absolute;
         display: none;
         padding: .5rem 1rem;
         z-index: 300;
         box-shadow: 1px 1px 3px $gray-light;
+        width: 350px;
         transform: translate(-42%,-110%);
-        &:after {
-          content: '';
-          width: 20px;
-          height: 20px;
-          background-color: $white;
-          position: absolute;
-          display: block;
-          right: 50%;
-          bottom: -10px;
-          transform: rotate(45deg);
-          box-shadow: 1px 1px 3px $gray-light;
-          z-index: -1;
-        }
-        &:before {
-          content: '';
-          width: 50px;
-          height: 15px;
-          background-color: $white;
-          position: absolute;
-          display: block;
-          bottom: 0px;
-          right: 45%;
+
+        @include mq(0,$layout-m) {
+          width: 100%;
+          left: 0px;
+          right: 0px;
+          transform: translate(0%, -110%);
         }
 
         &_header {
@@ -346,6 +355,9 @@
               width: 50px;
               height: 50px;
               border-radius: 100%;
+              display: block;
+              position: relative;
+              z-index: 305;
             }
           }
           &_info {

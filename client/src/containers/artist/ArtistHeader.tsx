@@ -244,29 +244,31 @@ export class ArtistHeader extends React.Component<Props, any> {
       style.maxHeight = '36px';
     }
     return (
-      <div
-        key={`supporter-${supporter.id}`}
-        id={`supporter-${supporter.id}`}
-        className={isSmall ? 'supporter artist-header__person_small' : 'supporter artist-header__person'}
-      >
+      <div className="supporter">
         <RenderSupporterHover
           supporter={supporter}
         />
-        {supporter.profile_image_url ? (
-          <img
-            className="artist-header__person_image"
-            src={supporter.profile_image_url}
-            alt={this.anonymizeSupporterName(supporter.name)}
-            style={style}
-          />
-        ) : (
-          <img
-            className="artist-header__person_svg"
-            src={avatar}
-            alt={this.anonymizeSupporterName(supporter.name)}
-            style={style}
-          />
-        )}
+        <div
+          key={`supporter-${supporter.id}`}
+          id={`supporter-${supporter.id}`}
+          className={isSmall ? 'supporter-image artist-header__person_small' : 'supporter-image artist-header__person'}
+        >
+          {supporter.profile_image_url ? (
+            <img
+              className="artist-header__person_image"
+              src={supporter.profile_image_url}
+              alt={this.anonymizeSupporterName(supporter.name)}
+              style={style}
+            />
+          ) : (
+            <img
+              className="artist-header__person_svg"
+              src={avatar}
+              alt={this.anonymizeSupporterName(supporter.name)}
+              style={style}
+            />
+          )}
+        </div>
       </div>
     );
   };

@@ -198,6 +198,7 @@ class ArtistComponent extends React.Component<Props, any> {
             .new-post button,
             .post__change button,
             .artist-header__photo,
+            .artist-header__title_flair,
             .artist-header__banner-icons_icon.active {
               background-color: ${artist.accent_color};
             }

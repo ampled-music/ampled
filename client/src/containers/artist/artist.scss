@@ -6,18 +6,15 @@
   font-family: $font-family-sans-serif;
   margin-top: 50px;
   
-  @include mq( $layout-m ) {
-    padding: 0 40px;
-  }
   @include mq( $layout-l ) {
-    padding: 0 15px;
+    padding: 0 15px 0 35px;
   }
 
   &__photo-container {
     display: flex;
     justify-content: center;
     margin: 0 2rem;
-    @include mq( $layout-m ) {
+    @include mq( $desktop ) {
       margin: auto;
     }
     &_border {
@@ -39,10 +36,23 @@
 
   &__title {
     font-size: 2rem;
-    margin: 2rem 0 3rem;
+    margin: 2rem auto 3rem;
     text-transform: uppercase;
     font-weight: bolder;
     text-align: center;
+    position: relative;
+    display: inline-block;
+
+    &_flair {
+      position: absolute;
+      display: block;
+      height: 1rem;
+      width: 5rem;
+      z-index: -1;
+      background-color: $brand-primary;
+      margin-top: 30px;
+      margin-left: -25px;
+    }
 
     @include mq( $layout-m ) {
       text-align: left;
@@ -149,7 +159,6 @@
     justify-content: center;
     align-items: flex-start;
     align-content: flex-start;
-    margin-left: 3rem;
     @include mq( $layout-m ) {
       height: 475px;
     }
@@ -235,9 +244,11 @@
 
   &__message {
     font-size: 1.25rem;
-    margin: 2rem 0;
     text-transform: uppercase;
     font-weight: bold;
+    @include mq($layout-m) {
+      margin: 2rem 0;
+    }
   }
 
   &__message-container {
@@ -292,41 +303,58 @@
 
     .supporter {
       &:hover {
+        .supporter-image {
+          display: block;
+          position: relative;
+            &:before,
+            &:after {
+              content: '';
+              width: 20px;
+              height: 20px;
+              background-color: $white;
+              position: absolute;
+              display: block;
+              transform: rotate(45deg);
+              top: -20px;
+              left: 8px;
+            }
+            &:before {
+              box-shadow: 1px 1px 3px $gray-light;
+              z-index: 1;
+            }
+            &:after {
+              z-index: 301;
+              transform: rotate(0deg);
+              top: -8px;
+              left: 7px;
+              background-color: transparent;
+              border-top: 11px solid $white;
+              border-right: 11px solid transparent;
+              border-bottom: 11px solid transparent;
+              border-left: 11px solid transparent;
+            }
+          }
+      }
+      &:hover {
         .supporter__hover-card {
           display: block;
         }
       }
       &__hover-card {
-        width: 350px;
         background-color: $white;
         position: absolute;
         display: none;
         padding: .5rem 1rem;
         z-index: 300;
         box-shadow: 1px 1px 3px $gray-light;
+        width: 350px;
         transform: translate(-42%,-110%);
-        &:after {
-          content: '';
-          width: 20px;
-          height: 20px;
-          background-color: $white;
-          position: absolute;
-          display: block;
-          right: 50%;
-          bottom: -10px;
-          transform: rotate(45deg);
-          box-shadow: 1px 1px 3px $gray-light;
-          z-index: -1;
-        }
-        &:before {
-          content: '';
-          width: 50px;
-          height: 15px;
-          background-color: $white;
-          position: absolute;
-          display: block;
-          bottom: 0px;
-          right: 45%;
+
+        @include mq(0,$layout-m) {
+          width: 100%;
+          left: 0px;
+          right: 0px;
+          transform: translate(0%, -110%);
         }
 
         &_header {
@@ -337,6 +365,9 @@
               width: 50px;
               height: 50px;
               border-radius: 100%;
+              display: block;
+              position: relative;
+              z-index: 305;
             }
           }
           &_info {

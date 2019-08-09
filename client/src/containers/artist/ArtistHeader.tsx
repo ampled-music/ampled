@@ -74,7 +74,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
   }
   
-  renderArtistName = () => <div className="artist-header__title">{this.props.artist.name}</div>;
+  renderArtistName = () => <div className="artist-header__title"><span className="artist-header__title_flair"></span>{this.props.artist.name}</div>;
 
   renderOwners = () => {
     const { artist } = this.props;
@@ -199,13 +199,15 @@ export class ArtistHeader extends React.Component<Props, any> {
     return (
       <div className="supporter__hover-card">
         <div className="supporter__hover-card_header">
-          <div className="supporter__hover-card_header_photo">
-            <img
-              className="supporter__hover-card_header_photo_image"
-              src={supporter.profile_image_url}
-              alt={this.anonymizeSupporterName(supporter.name)}
-            />
-          </div>
+          {supporter.profile_image_url && (
+            <div className="supporter__hover-card_header_photo">
+              <img
+                className="supporter__hover-card_header_photo_image"
+                src={supporter.profile_image_url}
+                alt={this.anonymizeSupporterName(supporter.name)}
+              />
+            </div>
+          )}
           <div className="supporter__hover-card_header_info">
             <div className="supporter__hover-card_header_info_name">{this.anonymizeSupporterName(supporter.name)}</div>
             {supporter.since && (
@@ -242,29 +244,31 @@ export class ArtistHeader extends React.Component<Props, any> {
       style.maxHeight = '36px';
     }
     return (
-      <div
-        key={`supporter-${supporter.id}`}
-        id={`supporter-${supporter.id}`}
-        className={isSmall ? 'supporter artist-header__person_small' : 'supporter artist-header__person'}
-      >
+      <div className="supporter">
         <RenderSupporterHover
           supporter={supporter}
         />
-        {supporter.profile_image_url ? (
-          <img
-            className="artist-header__person_image"
-            src={supporter.profile_image_url}
-            alt={this.anonymizeSupporterName(supporter.name)}
-            style={style}
-          />
-        ) : (
-          <img
-            className="artist-header__person_svg"
-            src={avatar}
-            alt={this.anonymizeSupporterName(supporter.name)}
-            style={style}
-          />
-        )}
+        <div
+          key={`supporter-${supporter.id}`}
+          id={`supporter-${supporter.id}`}
+          className={isSmall ? 'supporter-image artist-header__person_small' : 'supporter-image artist-header__person'}
+        >
+          {supporter.profile_image_url ? (
+            <img
+              className="artist-header__person_image"
+              src={supporter.profile_image_url}
+              alt={this.anonymizeSupporterName(supporter.name)}
+              style={style}
+            />
+          ) : (
+            <img
+              className="artist-header__person_svg"
+              src={avatar}
+              alt={this.anonymizeSupporterName(supporter.name)}
+              style={style}
+            />
+          )}
+        </div>
       </div>
     );
   };
@@ -314,21 +318,26 @@ export class ArtistHeader extends React.Component<Props, any> {
               </div>
             </div>
         )}
-        <div className="artist-header__supporters_title">{artist.supporters.length} Supporter(s)</div>
+        {artist.supporters.length > 0 && (
+          <div>
+            <div className="artist-header__supporters_title">{artist.supporters.length} Supporters</div>
 
-        <div className="artist-header__supporters_all">
-          {artist.supporters
-            .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
-            .map((supporter) => (
-              <div key={`minisupporter-${supporter.id}`}>
-                <RenderSupporter
-                  supporter={supporter}
-                  borderColor
-                  isSmall
-                />
-              </div>
-            ))}
-        </div>
+            <div className="artist-header__supporters_all">
+              {artist.supporters
+                .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
+                .map((supporter) => (
+                  <div key={`minisupporter-${supporter.id}`}>
+                    <RenderSupporter
+                      supporter={supporter}
+                      borderColor
+                      isSmall
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+        
       </div>
     );
   };

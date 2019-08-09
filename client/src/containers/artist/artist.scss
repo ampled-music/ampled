@@ -322,6 +322,14 @@
             }
             &:after {
               z-index: 301;
+              transform: rotate(0deg);
+              top: -8px;
+              left: 7px;
+              background-color: transparent;
+              border-top: 11px solid $white;
+              border-right: 11px solid transparent;
+              border-bottom: 11px solid transparent;
+              border-left: 11px solid transparent;
             }
           }
       }

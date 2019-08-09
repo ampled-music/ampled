@@ -6,18 +6,15 @@
   font-family: $font-family-sans-serif;
   margin-top: 50px;
   
-  @include mq( $layout-m ) {
-    padding: 0 40px;
-  }
   @include mq( $layout-l ) {
-    padding: 0 15px;
+    padding: 0 15px 0 35px;
   }
 
   &__photo-container {
     display: flex;
     justify-content: center;
     margin: 0 2rem;
-    @include mq( $layout-m ) {
+    @include mq( $desktop ) {
       margin: auto;
     }
     &_border {
@@ -160,7 +157,6 @@
     justify-content: center;
     align-items: flex-start;
     align-content: flex-start;
-    margin-left: 3rem;
     @include mq( $layout-m ) {
       height: 475px;
     }

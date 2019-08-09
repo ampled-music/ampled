@@ -199,13 +199,15 @@ export class ArtistHeader extends React.Component<Props, any> {
     return (
       <div className="supporter__hover-card">
         <div className="supporter__hover-card_header">
-          <div className="supporter__hover-card_header_photo">
-            <img
-              className="supporter__hover-card_header_photo_image"
-              src={supporter.profile_image_url}
-              alt={this.anonymizeSupporterName(supporter.name)}
-            />
-          </div>
+          {supporter.profile_image_url && (
+            <div className="supporter__hover-card_header_photo">
+              <img
+                className="supporter__hover-card_header_photo_image"
+                src={supporter.profile_image_url}
+                alt={this.anonymizeSupporterName(supporter.name)}
+              />
+            </div>
+          )}
           <div className="supporter__hover-card_header_info">
             <div className="supporter__hover-card_header_info_name">{this.anonymizeSupporterName(supporter.name)}</div>
             {supporter.since && (
@@ -314,21 +316,26 @@ export class ArtistHeader extends React.Component<Props, any> {
               </div>
             </div>
         )}
-        <div className="artist-header__supporters_title">{artist.supporters.length} Supporter(s)</div>
+        {artist.supporters.length > 0 && (
+          <div>
+            <div className="artist-header__supporters_title">{artist.supporters.length} Supporters</div>
 
-        <div className="artist-header__supporters_all">
-          {artist.supporters
-            .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
-            .map((supporter) => (
-              <div key={`minisupporter-${supporter.id}`}>
-                <RenderSupporter
-                  supporter={supporter}
-                  borderColor
-                  isSmall
-                />
-              </div>
-            ))}
-        </div>
+            <div className="artist-header__supporters_all">
+              {artist.supporters
+                .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
+                .map((supporter) => (
+                  <div key={`minisupporter-${supporter.id}`}>
+                    <RenderSupporter
+                      supporter={supporter}
+                      borderColor
+                      isSmall
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+        
       </div>
     );
   };

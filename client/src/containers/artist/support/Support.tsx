@@ -12,8 +12,7 @@ import { createSubscriptionAction } from 'src/redux/subscriptions/create';
 import { declineStepAction } from 'src/redux/subscriptions/decline-step';
 import { startSubscriptionAction } from 'src/redux/subscriptions/start-subscription';
 
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import avatar from '../../../images/ampled_avatar.svg';
 
 import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast';
 import { initialState as artistsInitialState, ArtistModel } from '../../../redux/artists/initial-state';
@@ -155,7 +154,7 @@ export class SupportComponent extends React.Component<Props, any> {
           {owner.profile_image_url ? (
             <img className="support__artist-info_image" src={owner.profile_image_url} />
           ) : (
-            <FontAwesomeIcon className="support__artist-info_image" icon={faUserCircle} />
+            <img className="support__artist-info_image" src={avatar} />
           )}
           <p>{this.returnFirstName(owner.name)}</p>
         </div>
@@ -163,8 +162,7 @@ export class SupportComponent extends React.Component<Props, any> {
     </div>
   );
 
-  calculateSupportTotal = (supportLevel) =>
-    (Math.round((supportLevel + (supportLevel * 0.029) + .3) * 100) / 100).toFixed(2)
+  calculateSupportTotal = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100).toFixed(2);
 
   renderSupportLevelForm = (artistName) => (
     <div className="row justify-content-center">
@@ -176,7 +174,7 @@ export class SupportComponent extends React.Component<Props, any> {
               type="number"
               name="supportLevelValue"
               onChange={this.handleChange}
-              value={this.state.supportLevelValue}
+              value={this.state.supportLevelValue || ''}
               placeholder="3 min"
             />
           </div>

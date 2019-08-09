@@ -3,12 +3,13 @@ import './artist.scss';
 import * as React from 'react';
 import path from 'ramda/src/path';
 
-import { faPlay, faPlus, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from 'src/redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
 import * as R from 'ramda';
 
+import avatar from '../../images/ampled_avatar.svg';
 import tear from '../../images/paper_header.png';
 
 interface Props {
@@ -91,9 +92,10 @@ export class ArtistHeader extends React.Component<Props, any> {
                   style={{ borderColor: artist.accent_color }}
                 />
               ) : (
-                <FontAwesomeIcon
-                  className="artist-header__person_svg member"
-                  icon={faUserCircle}
+                <img
+                  className="artist-header__person_image member"
+                  src={avatar}
+                  alt={owner.name}
                   style={{ borderColor: artist.accent_color }}
                 />
               )}
@@ -111,9 +113,9 @@ export class ArtistHeader extends React.Component<Props, any> {
         {artist.images &&
           artist.images.map((image, index) => {
             if (index === 0) {
-              return <div className="artist-header__photo active"><img key={index} src={image} /></div>;
+              return <div key={index} className="artist-header__photo active"><img src={image} /></div>;
             } else {              
-              return <div className="artist-header__photo"><img key={index} src={image} /></div>;
+              return <div key={index} className="artist-header__photo"><img src={image} /></div>;
             }
           })
         }
@@ -129,9 +131,9 @@ export class ArtistHeader extends React.Component<Props, any> {
         {artist.images &&
           artist.images.map((_image, index) => {
             if (index === 0) {
-              return <span className="artist-header__banner-icons_icon active"></span>
+              return <span key={index} className="artist-header__banner-icons_icon active"></span>
             } else {
-              return <span className="artist-header__banner-icons_icon"></span>
+              return <span key={index} className="artist-header__banner-icons_icon"></span>
             }
           })
         }
@@ -256,7 +258,12 @@ export class ArtistHeader extends React.Component<Props, any> {
             style={style}
           />
         ) : (
-          <FontAwesomeIcon className="artist-header__person_svg" icon={faUserCircle} style={style} />
+          <img
+            className="artist-header__person_svg"
+            src={avatar}
+            alt={this.anonymizeSupporterName(supporter.name)}
+            style={style}
+          />
         )}
       </div>
     );

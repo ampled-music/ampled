@@ -30,24 +30,24 @@ class Footer extends React.Component<Props,any> {
             </div>
             <div className="col-6 col-md-2">
               <div className="title">Get Started</div>
-              <a href="https://www.ampled.com/about">About Us</a>
-              <a href="https://www.ampled.com/zine">Blog</a>
-              <a href="https://www.ampled.com/coop">The Co-Op</a>
-              <a href="https://www.ampled.com/contact-us">Contact</a>
+              <a href="https://app.ampled.com/about">About Us</a>
+              <a href="https://app.ampled.com/zine">Blog</a>
+              <a href="https://app.ampled.com/coop">The Co-Op</a>
+              <a href="https://app.ampled.com/contact-us">Contact</a>
             </div>
             <div className="col-6 col-md-2">
               <div className="title">Get Involved</div>
-              <a href="https://www.ampled.com/create-an-artist-page">Create An Artist Page</a>
+              <a href="https://app.ampled.com/create-an-artist-page">Create An Artist Page</a>
               <a href="https://ampledmembership.lpages.co/membership/">Become a Member</a>
-              <a href="https://www.ampled.com/jobs">Work at Ampled</a>
-              <a href="https://www.ampled.com/press">Press</a>
+              <a href="https://app.ampled.com/jobs">Work at Ampled</a>
+              <a href="https://app.ampled.com/press">Press</a>
             </div>
             <div className="col-6 col-md-2">
               <div className="title">Get Informed</div>
-              <a href="https://www.ampled.com/transparency">Transparency</a>
-              <a href="https://www.ampled.com/faq">FAQs</a>
-              <a href="https://www.ampled.com/terms-of-use">Terms of Use</a>
-              <a href="https://www.ampled.com/privacy-policy">Privacy Policy</a>
+              <a href="https://app.ampled.com/transparency">Transparency</a>
+              <a href="https://app.ampled.com/faq">FAQs</a>
+              <a href="https://app.ampled.com/terms-of-use">Terms of Use</a>
+              <a href="https://app.ampled.com/privacy-policy">Privacy Policy</a>
             </div>
             <div className="col-6 col-md-2">
               <Link to="/">

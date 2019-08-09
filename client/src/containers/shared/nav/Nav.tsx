@@ -7,10 +7,8 @@ import { bindActionCreators } from 'redux';
 import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
 
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import logo from '../../../images/ampled_logo.svg';
+import avatar from '../../../images/ampled_avatar.svg';
 import { initialState as loginInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import { routePaths } from '../../route-paths';
@@ -73,7 +71,7 @@ class NavComponent extends React.Component<Props, any> {
       </a>
     ) : (
       <a href="/settings">
-        <FontAwesomeIcon className="user-image" icon={faUserCircle} />
+        <img src={avatar} className="user-image" />
       </a>
     );
   };

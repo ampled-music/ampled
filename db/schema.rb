@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_24_234940) do
+ActiveRecord::Schema.define(version: 2019_08_05_012523) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,7 +62,7 @@ ActiveRecord::Schema.define(version: 2019_04_24_234940) do
   end
 
   create_table "plans", force: :cascade do |t|
-    t.integer "amount", null: false
+    t.integer "nominal_amount", null: false
     t.string "stripe_id", null: false
     t.bigint "artist_page_id", null: false
     t.index ["artist_page_id"], name: "index_plans_on_artist_page_id"
@@ -90,7 +91,6 @@ ActiveRecord::Schema.define(version: 2019_04_24_234940) do
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
     t.string "stripe_id"
-
     t.index ["artist_page_id"], name: "index_subscriptions_on_artist_page_id"
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 2019_04_24_234940) do
     t.string "profile_image_url"
     t.string "jti", null: false
     t.string "stripe_customer_id"
+    t.string "login_redirect_url"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true

@@ -6,7 +6,8 @@ import { withRouter } from 'react-router-dom';
 import { routePaths } from 'src/containers/route-paths';
 import { UserRoles } from 'src/containers/shared/user-roles';
 
-import { faUserCircle, faUnlock, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import avatar from '../../../../images/ampled_avatar.svg';
+import { faUnlock, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardActions, Collapse, Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
@@ -154,7 +155,7 @@ class PostComponent extends React.Component<any, any> {
                 {post.authorImage ? (
                   <img className="user-image" src={post.authorImage} />
                 ) : (
-                  <FontAwesomeIcon className={classes.userImage} icon={faUserCircle} />
+                  <img className="user-image" src={avatar} />
                 )}
                 <span className="post__header_name">{this.returnFirstName(post.author)}</span>
               </div>

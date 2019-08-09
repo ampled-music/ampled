@@ -57,23 +57,23 @@ class ArtistPage < ApplicationRecord
     "#{base}?#{params}"
   end
 
-  def create_plan(amount)
+  def create_plan(nominal_amount)
     stripe_plan = Stripe::Plan.create(
       {
         product: stripe_product.id,
         nickname: "Ampled Support $5",
         interval: "month",
         currency: "usd",
-        amount: amount
+        amount: ((nominal_amount + 30) / 0.971).round
       }, stripe_account: stripe_user_id
     )
-    plan = Plan.new(stripe_id: stripe_plan.id, amount: amount)
+    plan = Plan.new(stripe_id: stripe_plan.id, nominal_amount: nominal_amount)
     plans << plan
     plan
   end
 
-  def plan_for_amount(amount)
-    plans.find_by(amount: amount) || create_plan(amount)
+  def plan_for_nominal_amount(nominal_amount)
+    plans.find_by(nominal_amount: nominal_amount) || create_plan(nominal_amount)
   end
 
   def stripe_dashboard_url
@@ -98,7 +98,7 @@ class ArtistPage < ApplicationRecord
 
   def monthly_total
     subscriptions.active.includes(:plan).reduce(0) do |sum, subscription|
-      sum + subscription.plan.amount
+      sum + subscription.plan.nominal_amount
     end
   end
 

@@ -21,6 +21,6 @@ export const config = {
     apiSecret: process.env.CLOUDINARY_API_SECRET || 'vkrV4k_iOlct_pt0Ue-DukQCIXQ',
   },
   aws: {
-    playableBaseUrl: process.env.AWS_BASE_URL || 'https://ampled-test.s3.amazonaws.com/',
+    playableBaseUrl: process.env.REACT_APP_AWS_BASE_URL || 'https://ampled-test.s3.amazonaws.com/',
   },
 };

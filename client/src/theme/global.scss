@@ -86,7 +86,6 @@ h6 {
       border-width: 0px;
       width: 50%;
       transition: all $speed;
-      letter-spacing: .7px;
       &:hover {
         background-color: transparent;
         text-decoration: none;
@@ -106,7 +105,6 @@ h6 {
       text-transform: capitalize;
       width: 50%;
       transition: all $speed;
-      letter-spacing: .7px;
       border-color: $black;
       &:hover {
         color: $black;

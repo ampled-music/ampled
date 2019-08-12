@@ -208,7 +208,7 @@ class PostComponent extends React.Component<any, any> {
                 <div className="post__status"><FontAwesomeIcon className="unlock" icon={faUnlock} />Subscribers Only</div>
             )}
             
-            {/* {this.canLoggedUserPost() && (  */}
+            {this.canLoggedUserPost() && ( 
               <div className="post__change">
                 <div className="post__change_edit">
                   <button className="disabled">
@@ -221,7 +221,7 @@ class PostComponent extends React.Component<any, any> {
                   </button>
                 </div>
               </div>
-            {/* )} */}
+            )}
 
             {post.image_url && (
               <div className="post__image-container">

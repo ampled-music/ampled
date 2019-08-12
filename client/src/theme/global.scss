@@ -66,6 +66,59 @@ h6 {
     }
 }
 
+
+.action-buttons {
+    display: flex;
+    margin-bottom: 1rem;
+    font-size: .9rem;
+    font-family: $font-family-monospace;
+    
+    button {
+        -webkit-appearance: none;
+        cursor: pointer;
+    }
+  
+    .cancel-button,
+    .discard-button {
+      color: $brand-primary;
+      background-color: transparent;
+      text-decoration: underline;
+      border-width: 0px;
+      width: 50%;
+      transition: all $speed;
+      letter-spacing: .7px;
+      &:hover {
+        background-color: transparent;
+        text-decoration: none;
+      }
+      .MuiButton-label {
+        text-align: left;
+      }
+    }
+  
+    .post-button,
+    .continue-button,
+    .delete-button {
+      color: $white;
+      background-color: $black;
+      border-radius: 0px;
+      padding: 8px 20px;
+      text-transform: capitalize;
+      width: 50%;
+      transition: all $speed;
+      letter-spacing: .7px;
+      border-color: $black;
+      &:hover {
+        color: $black;
+        background-color: $white;
+      }
+    }
+  
+    .disabled {
+        border: 1px solid $gray-light;
+    }
+}
+
 .link {
     color: $gray-light;
     cursor: pointer;

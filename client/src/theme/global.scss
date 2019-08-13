@@ -88,7 +88,7 @@ h6 {
 .bg-texture {
     background-image: url('../../images/background_texture.png');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-position: center center;
     &__bottom {
         background-position: left 0 bottom -100%;

@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 2019_08_05_012523) do
     t.string "profile_image_url"
     t.string "jti", null: false
     t.string "stripe_customer_id"
+    t.string "login_redirect_url"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true

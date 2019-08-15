@@ -7,7 +7,7 @@
   align-items: center;
 
   .loginLink {
-    margin-right: 40px;
+    margin-right: 1.5rem;
     display: none;
     @include mq( $layout-m ) {
       display: block;

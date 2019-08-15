@@ -1,0 +1,18 @@
+@import "../../../theme/vars.scss";
+@import "../../../theme/mixins.scss";
+
+.loading-cover {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: $white;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    &.show {
+        display: flex;
+    }
+}

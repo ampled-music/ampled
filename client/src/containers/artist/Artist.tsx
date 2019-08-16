@@ -273,7 +273,6 @@ class ArtistComponent extends React.Component<Props, any> {
         </div>
         <Loading
           artistLoading={artists.loading} 
-          meLoading={this.props.me.loadingMe}
         />
       </div>
     );

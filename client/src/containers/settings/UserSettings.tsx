@@ -1,6 +1,5 @@
 import './user-settings.scss';
 
-import cx from 'classnames';
 import * as loadImage from 'blueimp-load-image';
 import { DateTime } from 'luxon';
 import * as React from 'react';
@@ -330,39 +329,48 @@ class UserSettingsComponent extends React.Component<Props, any> {
     const { photoBody, processingImage } = this.state;
     const { userData } = this.props;
 
-    if (processingImage) {
+    if (processingImage && userData.image) {
       return (
         <div className="processing-image">
-          <img src={avatar} className={cx('image-preview ', { loadingImage: this.props.updating })} />
-          <span className="center">Processing image...</span>
+          <CircularProgress size={80} />
+          <img src={userData.image} className='image-preview loading-image' />
+        </div>
+      );
+    } else if (processingImage) {
+      return (
+        <div className="processing-image">
+          <CircularProgress size={80} />
+          <img src={avatar} className='image-preview loading-image' />
         </div>
       );
     }
 
     const placeholderImage = userData.image ? (
-      <img className="image-preview" src={userData.image} />
+      <img src={userData.image} className='image-preview'/>
     ) : (
       <img src={avatar} className="image-preview" />
     );
 
-    return photoBody ? <img className="image-preview" src={photoBody} /> : placeholderImage;
+    return photoBody ? <img src={photoBody} className="image-preview" /> : placeholderImage;
   };
 
-  renderPhotoSelector = () => (
-    <div className="user-photo-selector-modal">
-      {this.renderPhoto()}
-      {this.props.updating && <CircularProgress size={80} />}
-      {this.renderAddPhotoButton()}
-      <div className="action-buttons">
-        <button disabled={this.props.updating} className="cancel-button" onClick={this.closeUserPhotoModal}>
-          Cancel
-        </button>
-        <button disabled={!this.state.photoContent || this.props.updating} className="continue-button" onClick={this.saveUserPhoto}>
-          Save
-        </button>
+  renderPhotoSelector = () => {
+
+    return (
+      <div className="user-photo-selector-modal">
+        {this.renderPhoto()}
+        {this.renderAddPhotoButton()}
+        <div className="action-buttons">
+          <button disabled={this.props.updating} className="cancel-button" onClick={this.closeUserPhotoModal}>
+            Cancel
+          </button>
+          <button disabled={!this.state.photoContent || this.props.updating} className="continue-button" onClick={this.saveUserPhoto}>
+            Save
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   renderContent = () => (
     <div className="row content">

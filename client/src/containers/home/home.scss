@@ -20,10 +20,18 @@
     text-transform: uppercase;
     letter-spacing: .2rem;
     margin: 2rem 0;
+    text-align: center;
+    @include mq($desktop) {
+      text-align: left;
+    }
   }
 
   &__info {
     font-family: $font-family-monospace;
+    text-align: center;
+    @include mq($desktop) {
+      text-align: left;
+    }
   }
 
   &__image {
@@ -39,8 +47,11 @@
 
   &__button {
     background-color: $white;
-    margin: 2rem 0;
+    margin: 2rem auto;
     color: $black;
+    @include mq($desktop) {
+      margin: 2rem 0;
+    }
   }
 }
 

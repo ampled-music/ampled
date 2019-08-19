@@ -15,7 +15,7 @@
     justify-content: center;
     margin: 0 2rem;
     @include mq( $desktop ) {
-      margin: auto;
+      margin: 0 auto 1rem;
     }
     &_border {
       border: 2px solid $brand-primary;
@@ -92,7 +92,7 @@
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
-      border-width: 1px;  
+      border-width: 2px;  
       border-style: solid;  
       margin: auto;
 
@@ -149,7 +149,7 @@
     }
 
     &_small {
-      margin: 0 3px;
+      margin: 0 6px 0 0;
     }
   }
 
@@ -228,18 +228,22 @@
 
   &__banner-icons {
     display: flex;
-    bottom: -1rem;
+    bottom: 0rem;
     position: absolute;
     &_icon {
       width: 10px;
       height: 10px;
       border-radius: 100%;
       background-color: $gray-lighter;
-      margin: 0 5px;
+      margin: 0 4px;
       &.active {
         background: $brand-primary;
       }
     }
+  }
+
+  &__message-col {
+    margin-top: -11px;
   }
 
   &__message {
@@ -247,7 +251,7 @@
     text-transform: uppercase;
     font-weight: bold;
     @include mq($layout-m) {
-      margin: 2rem 0;
+      margin: 0 0 1rem 0;
     }
   }
 
@@ -255,7 +259,7 @@
     display: flex;
     align-items: center;
     width: 90%;
-    margin: 2rem auto;
+    margin: 1rem auto 2rem;
     border: 2px solid $brand-primary;
     padding: 10px 0px;
   }

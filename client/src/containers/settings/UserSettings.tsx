@@ -1,5 +1,6 @@
 import './user-settings.scss';
 
+import cx from 'classnames';
 import * as loadImage from 'blueimp-load-image';
 import { DateTime } from 'luxon';
 import * as React from 'react';
@@ -207,7 +208,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <p>Are you sure you want to stop supporting {this.state.subscription.name}?</p>
           <div className="actions">
             <button className="btn btn-ampled" onClick={this.cancelSubscription}>
-              yes
+              Yes
             </button>
             <button className="btn btn-ampled" onClick={this.closeCancelModal}>
               OF COURSE NOT!
@@ -314,11 +315,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderAddPhotoButton = () => (
     <div className="add-photo-button-container">
       <UploadFile inputRefId="input-user-photo" uploadFile={this.loadPhotoContent} />
-      <div className="media-button-wrapper">
+      <div className="media-button-wrapper action-buttons">
         <button
           disabled={this.props.updating}
-          className="btn btn-ampled add-media-button"
-          color="purple"
+          className="add-media"
           onClick={() => document.getElementById('input-user-photo').click()}
         >
           {this.state.photoContent || this.props.userData.image ? 'Change photo' : 'Add photo'}
@@ -334,8 +334,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
     if (processingImage) {
       return (
         <div className="processing-image">
-          <img src={avatar} className="image-preview" />
-          <b>Processing image...</b>
+          <img src={avatar} className={cx('image-preview ', { loadingImage: this.props.updating })} />
+          <span className="center">Processing image...</span>
         </div>
       );
     }
@@ -352,14 +352,15 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderPhotoSelector = () => (
     <div className="user-photo-selector-modal">
       {this.renderPhoto()}
+      {console.log(this.props.updating)}
       {this.props.updating && <CircularProgress size={80} />}
       {this.renderAddPhotoButton()}
-      <div className="photo-actions">
-        <button disabled={this.props.updating} className="btn btn-ampled" onClick={this.closeUserPhotoModal}>
-          CANCEL
+      <div className="action-buttons">
+        <button disabled={this.props.updating} className="cancel-button" onClick={this.closeUserPhotoModal}>
+          Cancel
         </button>
-        <button disabled={!this.state.photoContent || this.props.updating} className="btn btn-ampled" onClick={this.saveUserPhoto}>
-          SAVE
+        <button disabled={!this.state.photoContent || this.props.updating} className="continue-button" onClick={this.saveUserPhoto}>
+          Save
         </button>
       </div>
     </div>

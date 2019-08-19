@@ -207,7 +207,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <p>Are you sure you want to stop supporting {this.state.subscription.name}?</p>
           <div className="actions">
             <button className="btn btn-ampled" onClick={this.cancelSubscription}>
-              yes
+              Yes
             </button>
             <button className="btn btn-ampled" onClick={this.closeCancelModal}>
               OF COURSE NOT!
@@ -231,7 +231,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
               <div className="extra-info">
                 <div className="owned-info">
                   <div className="column">
-                    {console.log(ownedPage)}
                     <label>
                       <p className="info-title">SUPPORTERS</p>
                       <p className="supporting-at-value">{ownedPage.supportersCount || 0}</p>
@@ -314,11 +313,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderAddPhotoButton = () => (
     <div className="add-photo-button-container">
       <UploadFile inputRefId="input-user-photo" uploadFile={this.loadPhotoContent} />
-      <div className="media-button-wrapper">
+      <div className="media-button-wrapper action-buttons">
         <button
           disabled={this.props.updating}
-          className="btn btn-ampled add-media-button"
-          color="purple"
+          className="add-media"
           onClick={() => document.getElementById('input-user-photo').click()}
         >
           {this.state.photoContent || this.props.userData.image ? 'Change photo' : 'Add photo'}
@@ -331,39 +329,48 @@ class UserSettingsComponent extends React.Component<Props, any> {
     const { photoBody, processingImage } = this.state;
     const { userData } = this.props;
 
-    if (processingImage) {
+    if (processingImage && userData.image) {
       return (
         <div className="processing-image">
-          <img src={avatar} className="image-preview" />
-          <b>Processing image...</b>
+          <CircularProgress size={80} />
+          <img src={userData.image} className='image-preview loading-image' />
+        </div>
+      );
+    } else if (processingImage) {
+      return (
+        <div className="processing-image">
+          <CircularProgress size={80} />
+          <img src={avatar} className='image-preview loading-image' />
         </div>
       );
     }
 
     const placeholderImage = userData.image ? (
-      <img className="image-preview" src={userData.image} />
+      <img src={userData.image} className='image-preview'/>
     ) : (
       <img src={avatar} className="image-preview" />
     );
 
-    return photoBody ? <img className="image-preview" src={photoBody} /> : placeholderImage;
+    return photoBody ? <img src={photoBody} className="image-preview" /> : placeholderImage;
   };
 
-  renderPhotoSelector = () => (
-    <div className="user-photo-selector-modal">
-      {this.renderPhoto()}
-      {this.props.updating && <CircularProgress size={80} />}
-      {this.renderAddPhotoButton()}
-      <div className="photo-actions">
-        <button disabled={this.props.updating} className="btn btn-ampled" onClick={this.closeUserPhotoModal}>
-          CANCEL
-        </button>
-        <button disabled={!this.state.photoContent || this.props.updating} className="btn btn-ampled" onClick={this.saveUserPhoto}>
-          SAVE
-        </button>
+  renderPhotoSelector = () => {
+
+    return (
+      <div className="user-photo-selector-modal">
+        {this.renderPhoto()}
+        {this.renderAddPhotoButton()}
+        <div className="action-buttons">
+          <button disabled={this.props.updating} className="cancel-button" onClick={this.closeUserPhotoModal}>
+            Cancel
+          </button>
+          <button disabled={!this.state.photoContent || this.props.updating} className="continue-button" onClick={this.saveUserPhoto}>
+            Save
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   renderContent = () => (
     <div className="row content">

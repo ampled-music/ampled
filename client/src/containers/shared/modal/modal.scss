@@ -24,46 +24,6 @@
   }
 }
 
-.action-buttons {
-  display: flex;
-  margin-bottom: 1rem;
-
-  button {
-    text-transform: capitalize;
-    outline: none;
-    font-size: 15px;
-  }
-
-  .cancel-button,
-  .discard-button {
-    color: $brand-primary;
-    text-decoration: underline;
-    letter-spacing: 0.8px;
-    border-width: 0px;
-    &:hover {
-      background-color: transparent;
-    }
-    .MuiButton-label {
-      text-align: left;
-    }
-  }
-
-  .post-button,
-  .continue-button {
-    color: $black;
-    background-color: $white;
-    border-radius: 0px;
-    padding: 8px 20px;
-    margin-left: 25px;
-    letter-spacing: 0.7px;
-    text-transform: capitalize;
-  }
-
-  .disabled {
-      border: 1px solid $gray-light;
-  }
-}
-
 .MuiDialog-paper-7 {
   min-height: 790px;
 }

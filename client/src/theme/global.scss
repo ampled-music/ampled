@@ -24,7 +24,7 @@ h6 {
         color: $black;
         font-family: $font-family-monospace;
         font-weight: 500;
-        text-transform: uppercase;
+        text-transform: capitalize;
         position: relative;
         z-index: 10;
         width: 100%;
@@ -54,7 +54,7 @@ h6 {
     &.btn-support {
         border-radius: 0px;
         border-width: 0px;
-        text-transform: uppercase;
+        text-transform: capitalize;
         background-color: $brand-primary;
         color: $white;
         font-family: $font-family-monospace;
@@ -64,6 +64,66 @@ h6 {
             display: block;
         }
     }
+}
+
+.action-buttons {
+  display: flex;
+  margin: 0 0 1rem 0;
+  width: 100%;
+  font-family: $font-family-monospace;
+
+  button {
+    text-transform: capitalize;
+    outline: none;
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  .cancel-button,
+  .discard-button {
+    color: $brand-primary;
+    text-decoration: underline;
+    letter-spacing: 0.8px;
+    border-width: 0px;
+    width: 50%;
+    background-color: $white;
+    &:hover {
+      background-color: transparent;
+      text-decoration: none;
+    }
+    .MuiButton-label {
+      text-align: left;
+    }
+  }
+
+  .post-button,
+  .continue-button,
+  .add-media {
+    color: $black;
+    background-color: $white;
+    border-radius: 0px;
+    border: 2px solid $black;
+    padding: 8px 20px;
+    margin-left: 25px;
+    letter-spacing: 0.7px;
+    text-transform: capitalize;
+    transition: all $speed;
+    width: 50%;
+    &:hover {
+      color: $white;
+      background-color: $black;
+    }
+  }
+
+  .add-media {
+    margin: 0;
+    border: 1px solid $black;
+    width: 100%;
+  }
+
+  .disabled {
+      border: 1px solid $gray-light;
+  }
 }
 
 .link {

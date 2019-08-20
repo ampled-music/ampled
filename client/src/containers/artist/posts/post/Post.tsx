@@ -22,6 +22,9 @@ import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';
 import { styles } from './post-style';
 
+import { deletePost } from 'src/api/post/delete-post';
+
+
 class PostComponent extends React.Component<any, any> {
   state = {
     showPrivatePostModal: false,
@@ -141,7 +144,7 @@ class PostComponent extends React.Component<any, any> {
           <button className="cancel-button" onClick={this.closeDeletePostModal}>
             Cancel
           </button>
-          <button className="delete-button">
+          <button className="delete-button" onClick={async () => await deletePost(this.props.post.id)}>
             Delete Post
           </button>
         </div>

@@ -14,7 +14,8 @@ class PostsController < ApplicationController
   def destroy
     artist_page_id = @post.artist_page.id
     @post.destroy
-    redirect_to artist_page_path(artist_page_id), notice: "Post removed"
+    200
+    # redirect_to artist_page_path(artist_page_id), notice: "Post removed"
   end
 
   private

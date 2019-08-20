@@ -16,6 +16,7 @@ import { faEdit, faHeartBroken } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import avatar from '../../images/ampled_avatar.svg';
+import { CircularProgress } from '@material-ui/core';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -351,7 +352,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderPhotoSelector = () => (
     <div className="user-photo-selector-modal">
       {this.renderPhoto()}
-      {this.props.updating && <b>Saving image...</b>}
+      {this.props.updating && <CircularProgress size={80} />}
       {this.renderAddPhotoButton()}
       <div className="photo-actions">
         <button disabled={this.props.updating} className="btn btn-ampled" onClick={this.closeUserPhotoModal}>

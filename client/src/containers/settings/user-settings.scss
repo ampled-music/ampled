@@ -278,10 +278,12 @@
     align-items: center;
   }
 
-  b {
-    align-self: center;
+  .MuiCircularProgress-root {
     position: absolute;
-    margin-top: -2rem;
+    left: 50%;
+    margin-left: -40px;
+    top: 50%;  
+    margin-top: -100px;
   }
 
   .image-preview {

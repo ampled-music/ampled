@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    artist_page_id = @post.artist_page.id
+    # artist_page_id = @post.artist_page.id
     @post.destroy
     200
     # redirect_to artist_page_path(artist_page_id), notice: "Post removed"

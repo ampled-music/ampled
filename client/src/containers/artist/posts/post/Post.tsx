@@ -24,7 +24,6 @@ import { styles } from './post-style';
 
 import { deletePost } from 'src/api/post/delete-post';
 
-
 class PostComponent extends React.Component<any, any> {
   state = {
     showPrivatePostModal: false,
@@ -109,8 +108,13 @@ class PostComponent extends React.Component<any, any> {
     return (loggedUserAccess && loggedUserAccess.role === UserRoles.Owner) || (me && commentUserId === me.id);
   };
 
-  deleteComment = async (commentId) => {
+  handleDeleteComment = async (commentId) => {
     await this.props.deleteComment(commentId);
+    this.props.updateArtist();
+  };
+
+  handleDeletePost = async () => {
+    await deletePost(this.props.post.id);
     this.props.updateArtist();
   };
 
@@ -144,7 +148,7 @@ class PostComponent extends React.Component<any, any> {
           <button className="cancel-button" onClick={this.closeDeletePostModal}>
             Cancel
           </button>
-          <button className="delete-button" onClick={async () => await deletePost(this.props.post.id)}>
+          <button className="delete-button" onClick={this.handleDeletePost}>
             Delete Post
           </button>
         </div>
@@ -288,7 +292,7 @@ class PostComponent extends React.Component<any, any> {
               key={comment.id}
               comment={comment}
               canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
-              deleteComment={this.deleteComment}
+              deleteComment={this.handleDeleteComment}
             />
           ))}
         {hasPreviousComments && (
@@ -299,7 +303,7 @@ class PostComponent extends React.Component<any, any> {
                   key={comment.id}
                   comment={comment}
                   canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
-                  deleteComment={this.deleteComment}
+                  deleteComment={this.handleDeleteComment}
                 />
               ))}
             </Collapse>

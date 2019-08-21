@@ -345,12 +345,12 @@ export class ArtistHeader extends React.Component<Props, any> {
   render() {
     return (
       <div className="artist-header container">
+        {this.renderArtistName()}
         <div className="row justify-content-between">
           <div className="col-md-7">
-            {this.renderArtistName()}
             {this.renderPhotoContainer()}
           </div>
-          <div className="col-md-4 artist-header artist-header__message-col">
+          <div className="col-md-4 artist-header__message-col">
             {this.renderMessageContainer()}
             {this.renderFloatingNewPostButton()}
             {this.renderSupportersContainer()}

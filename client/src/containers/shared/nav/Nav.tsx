@@ -116,7 +116,6 @@ class NavComponent extends React.Component<Props, any> {
             You are a supporter
           </div>
           <div className="loginLink">
-            {console.log(this.props)}
             {this.renderNavLink()}
           </div>
           <Menu renderLoginLink={this.renderLoginLink} />

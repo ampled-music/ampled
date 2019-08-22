@@ -265,8 +265,9 @@ h6 {
 }
   
 .fullscreen-close {
-    position: absolute;
-    right: 1.5rem;
-    top: 1.5rem;
-    cursor: pointer;
+    position: absolute !important;
+    right: 1rem;
+    top: 1rem;
+    height: 50px;
+    width: 50px;
 }

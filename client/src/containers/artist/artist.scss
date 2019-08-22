@@ -13,18 +13,18 @@
   &__photo-container {
     display: flex;
     justify-content: center;
-    margin: 0 2rem;
+    margin: 0 0 2rem 0;
     @include mq( $desktop ) {
       margin: 0 auto 1rem;
     }
     &_border {
-      border: 2px solid $brand-primary;
       z-index: 100;
       width: calc(100% - 85px);
       height: 339px;
       position: absolute;
       margin: -2px 0;
       @include mq( $layout-m ) {
+        border: 2px solid $brand-primary;
         height: 475px;
         width: calc(100% - 30px);
       }  
@@ -67,7 +67,7 @@
     flex-wrap: wrap;
     flex-direction: column;
     position: absolute;
-    left: 20px;
+    left: -5px;
 
     @include mq( $layout-m ) {
       padding-top: 20px;
@@ -195,31 +195,26 @@
     }
 
     &:nth-child(1n) {
-      transform: scale(.9) rotate(5deg);
       @include mq( $layout-m ) {
         transform: rotate(5deg);
       }
     }
     &:nth-child(2n) {
-      transform: scale(.9) rotate(3deg);
       @include mq( $layout-m ) {
         transform: rotate(3deg);
       }
     }
     &:nth-child(3n) {
-      transform: scale(.9) rotate(-5deg);
       @include mq( $layout-m ) {
         transform: rotate(-5deg);
       }
     }
     &:nth-child(4n) {
-      transform: scale(.9) rotate(-3deg);
       @include mq( $layout-m ) {
         transform: rotate(-3deg);
       }
     }
     &:nth-child(5n) {
-      transform: scale(.9) rotate(-7deg);
       @include mq( $layout-m ) {
         transform: rotate(-7deg);
       }
@@ -243,15 +238,20 @@
   }
 
   &__message-col {
-    margin-top: -11px;
+    margin-top: 1rem;
+    @include mq($layout-m) {
+      margin-top: -11px;
+    }
   }
 
   &__message {
     font-size: 1.25rem;
     text-transform: uppercase;
     font-weight: bold;
+    text-align: center;
     @include mq($layout-m) {
       margin: 0 0 1rem 0;
+      text-align: left;
     }
   }
 

@@ -210,7 +210,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
               Yes
             </button>
             <button className="btn btn-ampled" onClick={this.closeCancelModal}>
-              OF COURSE NOT!
+              Of Course Not!
             </button>
           </div>
         </div>

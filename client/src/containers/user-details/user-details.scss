@@ -6,18 +6,20 @@
 
   .basic-info,
   .address {
-    margin: 2rem auto;
-    padding: 2rem 0;
+    margin: 1rem auto;
+    padding: 1rem 0;
     border-top: 1px solid $black;
+    @include mq($layout-m) {
+      margin: 2rem auto;
+      padding: 2rem 0;
+    }
   }
 
   .row {
-    margin-bottom: 2rem;
-  }
-
-  h5 {
-    font-family: $font-family-sans-serif;
-    max-width: 0;
+    margin-bottom: .5rem;
+    @include mq($layout-m) {
+      margin-bottom: 2rem;
+    }
   }
 
   h6 {
@@ -25,6 +27,13 @@
     color: $gray-light;
   }
 
+  &__subtitle {
+    font-family: $font-family-sans-serif;
+    font-size: 1rem;
+    @include mq($layout-m) {
+      font-size: 1.3rem;
+    }
+  }
   &__title {
     font-family: $font-family-sans-serif;
     text-transform: uppercase;
@@ -32,8 +41,18 @@
     line-height: 1.6rem;
   }
 
+  &__side {
+    margin-bottom: 1rem;
+  }
+
   &__info {
     font-family: $font-family-monospace;
     font-size: .9rem;
+    margin-bottom: 1rem;
+  }
+  .action-buttons {
+    width: 100%;
+    max-width: 600px;
+    float: right;
   }
 }

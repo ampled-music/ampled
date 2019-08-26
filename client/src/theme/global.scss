@@ -105,7 +105,8 @@ h6 {
   .post-button,
   .continue-button,
   .add-media,
-  .delete-button {
+  .delete-button,
+  .finished-button {
     color: $black;
     background-color: $white;
     border-radius: 0px;
@@ -231,6 +232,9 @@ h6 {
     text-align: center;
     display: block;
     margin: auto;
+}
+.no-padding {
+    padding: 0 !important;
 }
 
 .confetti-overlay {

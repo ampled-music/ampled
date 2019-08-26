@@ -1,11 +1,8 @@
 import './user-details.scss';
 
 import * as React from 'react';
-
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import { Button, DialogActions, Select, MenuItem, Input } from '@material-ui/core';
 
 import { theme } from './theme';
 
@@ -16,56 +13,61 @@ class UserDetails extends React.Component<any, any> {
 
   renderBasicInfo = () => (
     <div className="basic-info">
-        <div className="container">
-            <div className="row">
-                <div className="col-2">
-                    <div className="user-details__title">Basic Info</div>
-                </div>
-                <div className="col-10">
-                    <div className="row">
-                        <div className="col-2">
-                            <h5>Name</h5>
-                            <h6>Required</h6>
-                        </div>
-                        <div className="col-md-5">
+        <div className="row">
+            <div className="col-md-2 user-details__side">
+                <div className="user-details__title">Basic Info</div>
+            </div>
+            <div className="col-md-10">
+                <div className="row no-gutters">
+                    <div className="col-2 col-md-3">
+                        <div className="user-details__subtitle">Name</div>
+                        <h6>Required</h6>
+                    </div>
+                    <div className="row col-10 col-md-9">
+                        <div className="col-md-6">
                             <Input
                                 placeholder="First name"
                                 fullWidth
                             />
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-6">
                             <Input
                                 placeholder="Last name (Optional)"
                                 fullWidth
                             />
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-2">
-                            <h5>Location</h5>
-                            <h6>Required</h6>
-                        </div>
-                        <div className="col-md-5">
+                    
+                </div>
+                <div className="row no-gutters">
+                    <div className="col-2 col-md-3">
+                        <div className="user-details__subtitle">Location</div>
+                        <h6>Required</h6>
+                    </div>
+                    <div className="row col-10 col-md-9">
+                        <div className="col-md-6">
                             <Input
                                 placeholder="City"
                                 fullWidth
                             />
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-6">
                             <Input
                                 placeholder="Country"
                                 fullWidth
                             />
                         </div>
                     </div>
-                    <div className="row">
+                </div>
+                <div className="row no-gutters">
+                    <div className="col-md-3">
+                        <div className="user-details__subtitle">Photo</div>
+                    </div>
+                    <div className="row col-md-9">
                         <div className="col-2">
-                            <h5>Photo</h5>
+                            <div className="user-details__subtitle">Social</div>
                         </div>
-                        <div className="col-1">
-                            <h5>Social</h5>
-                        </div>
-                        <div className="col-9">
+                        <div className="col-10">
                             <Input
                                 placeholder="twitter"
                                 fullWidth
@@ -80,6 +82,7 @@ class UserDetails extends React.Component<any, any> {
                             />
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -88,30 +91,33 @@ class UserDetails extends React.Component<any, any> {
 
   renderAddress = () => (
     <div className="address">
-        <div className="container">
-            <div className="row">
-                <div className="col-2">
-                    <div className="user-details__title">Address</div>
-                    <h6>Optional</h6>
-                    <div className="user-details__info">This is only to allow the artists you support the ability to send you things.</div>
-                </div>
-                <div className="col-10">
-                    <div className="row">
-                        <div className="col-2">
-                            <h5>Country</h5>
-                        </div>
-                        <div className="col-md-10">
+        <div className="row">
+            <div className="col-md-2 user-details__side">
+                <div className="user-details__title">Address</div>
+                <h6>Optional</h6>
+                <div className="user-details__info">This is only to allow the artists you support the ability to send you things.</div>
+            </div>
+
+            <div className="col-md-10">
+                <div className="row no-gutters">
+                    <div className="col-2 col-md-3">
+                        <div className="user-details__subtitle">Country</div>
+                    </div>
+                    <div className="row col-10 col-md-9">
+                        <div className="col-12">
                             <Input
                                 defaultValue="United States"
                                 fullWidth
                             />
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-2">
-                            <h5>Street</h5>
-                        </div>
-                        <div className="col-md-10">
+                </div>
+                <div className="row no-gutters">
+                    <div className="col-2 col-md-3">
+                        <div className="user-details__subtitle">Street</div>
+                    </div>
+                    <div className="row col-10 col-md-9">
+                        <div className="col-12">
                             <Input
                                 placeholder="123 Fake St"
                                 fullWidth
@@ -122,17 +128,20 @@ class UserDetails extends React.Component<any, any> {
                             />
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-2">
-                            <h5>City State Zip</h5>
-                        </div>
-                        <div className="col-4">
+                </div>
+                <div className="row no-gutters">
+                    <div className="col-2 col-md-3">
+                        <div className="user-details__subtitle">City / State / Zip</div>
+                    </div>
+
+                    <div className="row col-10 col-md-9">
+                        <div className="col-md-5">
                             <Input
                                 placeholder="Anytown"
                                 fullWidth
                             />
                         </div>
-                        <div className="col-4">
+                        <div className="col-md-4">
                             <Select
                                 fullWidth
                             >
@@ -189,17 +198,34 @@ class UserDetails extends React.Component<any, any> {
                                 <MenuItem value="Wyoming">Wyoming</MenuItem>
                             </Select>
                         </div>
-                        <div className="col-2">
+                        <div className="col-md-3">
                             <Input
                                 placeholder="Zip code"
                                 fullWidth
                             />
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
     </div>
+  );
+
+
+  renderButtons = () => ( 
+    <DialogActions className="action-buttons">
+      <Button className="cancel-button">
+        Back
+      </Button>
+      <Button
+        type="submit"
+        className="finished-button"
+        disabled
+      >
+        Finished
+      </Button>
+    </DialogActions>
   );
 
 
@@ -210,6 +236,7 @@ class UserDetails extends React.Component<any, any> {
             <div className="container user-details">
                 {this.renderBasicInfo()}
                 {this.renderAddress()}
+                {this.renderButtons()}
             </div>
         </MuiThemeProvider>
     );

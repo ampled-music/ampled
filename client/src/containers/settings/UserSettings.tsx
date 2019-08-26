@@ -159,12 +159,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <Modal open={this.state.showCancelModal} onClose={this.closeCancelModal}>
         <div className="user-settings-cancel-modal">
           <p>Are you sure you want to stop supporting {this.state.subscription.name}?</p>
-          <div className="actions">
-            <button className="btn btn-ampled" onClick={this.cancelSubscription}>
-              Yes
-            </button>
-            <button className="btn btn-ampled" onClick={this.closeCancelModal}>
+          <div className="action-buttons">
+            <button className="cancel-button" onClick={this.closeCancelModal}>
               Of Course Not!
+            </button>
+            <button className="delete-button" onClick={this.cancelSubscription}>
+              Yes
             </button>
           </div>
         </div>

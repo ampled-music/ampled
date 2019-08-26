@@ -1,19 +1,72 @@
 import './user-details.scss';
 
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Store } from 'src/redux/configure-store';
+
+import { getMeAction } from 'src/redux/me/get-me';
+// import { setUserDataAction } from 'src/redux/me/set-me';
+// import { updateMeAction } from 'src/redux/me/update-me';
+
+import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
+import { initialState as meInitialState } from '../../redux/me/initial-state';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Button, DialogActions, Select, MenuItem, Input, TextField, InputAdornment } from '@material-ui/core';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Loading } from '../shared/loading/Loading';
+
+import avatar from '../../images/ampled_avatar.svg';
 
 import { theme } from './theme';
 
-class UserDetails extends React.Component<any, any> {
+
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+
+type Props = typeof loginInitialState &
+  typeof meInitialState &
+  Dispatchers & { history: any; };
+
+class UserDetailsComponent extends React.Component<Props, any> {
   state = {
+    showUserPhotoModal: false,
   };
+  componentDidMount() {
+    this.props.getMe();
+  }
+
+  componentDidUpdate() {
+    if (this.props.token && !this.props.error && !this.props.userData && !this.props.loadingMe) {
+      this.props.getMe();
+    }
+  }
   
+  renderUserImage = () => {
+
+    const { userData } = this.props;
+
+    return (
+      <div className="user-image-container">
+        <button onClick={this.showUserPhotoModal}>
+          {userData.image ? (
+            <img src={userData.image} className="user-image" />
+          ) : (
+            <img src={avatar} className="user-image" />
+          )}
+          <b className="tag">
+            <FontAwesomeIcon icon={faEdit} />
+          </b>
+        </button>
+      </div>
+    );
+  };
+
+  showUserPhotoModal = () => this.setState({ showUserPhotoModal: true });
+  closeUserPhotoModal = () => this.setState({ showUserPhotoModal: false });
 
   renderBasicInfo = () => (
     <div className="basic-info">
@@ -66,6 +119,7 @@ class UserDetails extends React.Component<any, any> {
                 <div className="row no-gutters">
                     <div className="col-md-3">
                         <div className="user-details__subtitle">Photo</div>
+                        {this.renderUserImage()}
                     </div>
                     <div className="row col-md-9">
                         <div className="col-2">
@@ -228,7 +282,6 @@ class UserDetails extends React.Component<any, any> {
     </div>
   );
 
-
   renderButtons = () => ( 
     <DialogActions className="action-buttons">
       <Button className="cancel-button">
@@ -244,19 +297,48 @@ class UserDetails extends React.Component<any, any> {
     </DialogActions>
   );
 
+  renderContent = () => ( 
+    <MuiThemeProvider theme={theme}>
+        {this.renderBasicInfo()}
+        {this.renderAddress()}
+        {this.renderButtons()}
+    </MuiThemeProvider>
+  );
+
+
+  
+
 
 
   render() {
+    const { userData } = this.props;
     return (
-        <MuiThemeProvider theme={theme}>
-            <div className="container user-details">
-                {this.renderBasicInfo()}
-                {this.renderAddress()}
-                {this.renderButtons()}
-            </div>
-        </MuiThemeProvider>
+      <div className="container user-details">
+        <Loading
+          artistLoading={this.props.loadingMe} 
+        />
+        {userData && this.renderContent()}
+      </div>
     );
   }
 }
+
+
+const mapStateToProps = (state: Store) => ({
+    ...state.authentication,
+    ...state.me,
+    subscriptions: state.subscriptions,
+  });
+  
+const mapDispatchToProps = (dispatch) => ({
+    getMe: bindActionCreators(getMeAction, dispatch),
+    // setMe: bindActionCreators(setUserDataAction, dispatch),
+    // updateMe: bindActionCreators(updateMeAction, dispatch),
+});
+
+const UserDetails = connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(UserDetailsComponent);
 
 export { UserDetails };

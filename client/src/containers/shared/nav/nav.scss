@@ -7,7 +7,7 @@
   align-items: center;
 
   .loginLink {
-    margin-right: 40px;
+    margin-right: 1.5rem;
     display: none;
     @include mq( $layout-m ) {
       display: block;
@@ -27,6 +27,7 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
+    border-width: 0;
     object-fit: cover;
   }
 }

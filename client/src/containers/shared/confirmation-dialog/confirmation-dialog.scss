@@ -1,25 +1,25 @@
 @import "../../../theme/vars.scss";
 @import "../../../theme/mixins.scss";
 
-.action-buttons {
-  button {
-    text-transform: capitalize;
-    outline: none;
-  }
+// .action-buttons {
+//   button {
+//     text-transform: capitalize;
+//     outline: none;
+//   }
 
-  .discard-button {
-    color: $brand-primary;
-    text-decoration: underline;
-    letter-spacing: 0.8px;
-  }
+//   .discard-button {
+//     color: $brand-primary;
+//     text-decoration: underline;
+//     letter-spacing: 0.8px;
+//   }
 
-  .continue-button {
-    background-color: $brand-primary;
-    color: $white;
-    border-radius: 0px;
-    padding: 8px 20px;
-    margin-left: 25px;
-    letter-spacing: 0.7px;
-    text-transform: capitalize;
-  }
-}
+//   .continue-button {
+//     background-color: $brand-primary;
+//     color: $white;
+//     border-radius: 0px;
+//     padding: 8px 20px;
+//     margin-left: 25px;
+//     letter-spacing: 0.7px;
+//     text-transform: capitalize;
+//   }
+// }

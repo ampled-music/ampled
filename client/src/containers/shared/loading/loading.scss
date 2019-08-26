@@ -2,17 +2,21 @@
 @import "../../../theme/mixins.scss";
 
 .loading-cover {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
+    position: fixed;
+    height: 100%;
+    width: 100%;
     background: $white;
     top: 0;
     left: 0;
-    z-index: 100000;
+    right: 0;
+    bottom: 0;
+    z-index: 1000000;
     display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    overflow: visible;
+    margin: auto;
     &.show {
         display: flex;
     }

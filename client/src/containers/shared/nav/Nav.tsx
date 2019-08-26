@@ -88,6 +88,18 @@ class NavComponent extends React.Component<Props, any> {
     </div>
   );
 
+  renderNavLink = () => {
+    if (this.props.userData) {
+      return (
+        this.renderUserImage()
+      )
+    } else if (!this.props.userData && !this.props.loadingMe) {
+      return (
+        this.renderLoginLink()
+      )
+    }
+  }
+
   render() {
     return (
       <header className="header">
@@ -104,8 +116,7 @@ class NavComponent extends React.Component<Props, any> {
             You are a supporter
           </div>
           <div className="loginLink">
-            {this.props.userData && this.renderUserImage()}
-            {!this.props.userData && this.renderLoginLink()}
+            {this.renderNavLink()}
           </div>
           <Menu renderLoginLink={this.renderLoginLink} />
         </div>

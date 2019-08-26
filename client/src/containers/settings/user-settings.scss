@@ -278,10 +278,12 @@
     align-items: center;
   }
 
-  b {
-    align-self: center;
+  .MuiCircularProgress-root {
     position: absolute;
-    margin-top: -2rem;
+    left: 50%;
+    margin-left: -40px;
+    top: 50%;  
+    margin-top: -110px;
   }
 
   .image-preview {
@@ -290,6 +292,10 @@
     width: 120px;
     border-radius: 50%;
     object-fit: cover;
+    opacity: 1;
+    &.loading-image {
+      opacity: .5;
+    }
   }
 
   .add-photo-button-container {

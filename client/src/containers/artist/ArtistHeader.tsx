@@ -42,7 +42,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   getThumbnailURLFromVideoURL = async (videoURL: string) => {
     if (/vimeo/i.test(videoURL)) {
       const vimeoId = videoURL.match(/vimeo.com\/([\d\w]+)/)[1];
-      const vimeoJSON = await (await fetch(`http://vimeo.com/api/v2/video/${vimeoId}.json`)).json();
+      const vimeoJSON = await (await fetch(`//vimeo.com/api/v2/video/${vimeoId}.json`)).json();
       const vimeoURL = path([0, 'thumbnail_large'], vimeoJSON);
       if (vimeoURL) {
         return vimeoURL;

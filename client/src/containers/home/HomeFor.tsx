@@ -24,7 +24,7 @@ export const HomeFor = () => (
           <p className="home-for__copy">
             100% owned by artists, workers, and community - not reptilian overlords.
           </p>
-          <a href="http://app.ampled.com/coop"><button className="home-for__button btn btn-app.ampled">Read More</button></a>
+          <a href="http://app.ampled.com/coop"><button className="home-for__button btn btn-ampled">Read More</button></a>
         </div>
         <div className="col-md-4">
           <img className="home-for__image" src={transparent} />

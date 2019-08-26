@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   resources :artist_pages
   resources :posts, only: %i[destroy]
 
+  resources :posts, only: %i[destroy]
+
   resources :artist_pages, only: [] do
     resources :posts, only: %i[create index]
   end

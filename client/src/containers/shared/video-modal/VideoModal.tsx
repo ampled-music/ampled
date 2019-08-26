@@ -3,6 +3,9 @@ import * as React from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Dialog } from '@material-ui/core';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
+import IconButton from '@material-ui/core/IconButton';
+import { faTimes} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import ReactPlayer from 'react-player';
 
@@ -41,13 +44,11 @@ class VideoModalComponent extends React.Component<Props, any> {
           </div>
           {
             this.props.fullScreen && 
-            (<span
-              onClick={(e) => this.props.onClose(e)}
-              aria-label="Close"
-              className="fullscreen-close"
-            >
-              x
-            </span>)  
+            (<IconButton className="fullscreen-close" aria-label="close" color="primary" onClick={(e) => this.props.onClose(e)}>
+              <FontAwesomeIcon
+                icon={faTimes}
+              />
+            </IconButton>)  
           }
         </Dialog>
       </MuiThemeProvider>

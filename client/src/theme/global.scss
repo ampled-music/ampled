@@ -98,7 +98,8 @@ h6 {
 
   .post-button,
   .continue-button,
-  .add-media {
+  .add-media,
+  .delete-button {
     color: $black;
     background-color: $white;
     border-radius: 0px;
@@ -252,7 +253,8 @@ h6 {
     .supporter-message {
         display: none;
         font-family: $font-family-sans-serif;
-        padding-right: 48px;
+        margin-right: 2rem;
+        line-height: 1rem;
     }
 }
   
@@ -265,8 +267,9 @@ h6 {
 }
   
 .fullscreen-close {
-    position: absolute;
-    right: 1.5rem;
-    top: 1.5rem;
-    cursor: pointer;
+    position: absolute !important;
+    right: 1rem;
+    top: 1rem;
+    height: 50px;
+    width: 50px;
 }

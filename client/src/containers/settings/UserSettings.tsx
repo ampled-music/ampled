@@ -221,7 +221,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderOwnedPages = () => (
     <div>
       {this.renderPagesTitle('MY ARTIST PAGES')}
-      <div className="pages row no-gutters justify-content-center justify-content-md-start">
+      <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
           <div key={`artist-${ownedPage.id}`} className="artist col-sm-6">
               <img className="artist-image" src={ownedPage.image} />
@@ -243,7 +243,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                   <div className="column">
                     <label>
                       <p className="info-title">MONTHLY TOTAL</p>
-                      <p className="info-value">$ {this.formatMoney(ownedPage.monthlyTotal)}</p>
+                      <p className="info-value">$ {this.formatMoney(ownedPage.monthlyTotal / 100)}</p>
                     </label>
                     <label>
                       <p className="info-title">LAST PAYOUT</p>
@@ -262,7 +262,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderSupportedArtists = () => (
     <div>
       {this.renderPagesTitle('SUPPORTED ARTISTS')}
-      <div className="pages row no-gutters justify-content-center justify-content-md-start">
+      <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.subscriptions.map((subscription) => (
           <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-6">
             <img className="artist-image" src={subscription.image} />
@@ -304,7 +304,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderEmptyArtists = () => (
     <div>
       {this.renderPagesTitle('SUPPORTED ARTISTS')}
-      <div className="pages row no-gutters justify-content-center justify-content-md-start">
+      <div className="pages row justify-content-center justify-content-md-start">
         <div className="center col-md-8">You currently don't support any artists.</div>
       </div>
     </div>

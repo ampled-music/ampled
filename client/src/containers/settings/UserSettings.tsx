@@ -23,6 +23,7 @@ import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
 import { routePaths } from '../route-paths';
 import { Modal } from '../shared/modal/Modal';
+import { Loading } from '../shared/loading/Loading';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { UploadFile } from '../shared/upload/UploadFile';
 
@@ -393,11 +394,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <div className="container user-settings-container">
-        <Modal open={!userData}>
-          <div className="user-settings-loading-modal">
-            <h1>LOADING...</h1>
-          </div>
-        </Modal>
+        <Loading
+          artistLoading={this.props.loadingMe} 
+        />
         {userData && this.renderContent()}
         {this.renderCancelSubscriptionModal()}
       </div>

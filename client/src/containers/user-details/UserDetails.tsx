@@ -127,7 +127,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                         </div>
                         <div className="col-10">
                             <Input
-                                placeholder="twitter"
+                                placeholder="Twitter"
                                 fullWidth
                                 startAdornment={
                                     <InputAdornment position="start">
@@ -136,7 +136,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                                 }
                             />
                             <Input
-                                placeholder="instagram"
+                                placeholder="Instagram"
                                 fullWidth
                                 startAdornment={
                                     <InputAdornment position="start">
@@ -305,15 +305,11 @@ class UserDetailsComponent extends React.Component<Props, any> {
     </MuiThemeProvider>
   );
 
-
-  
-
-
-
   render() {
     const { userData } = this.props;
     return (
       <div className="container user-details">
+        {console.log(userData)}
         <Loading
           artistLoading={this.props.loadingMe} 
         />

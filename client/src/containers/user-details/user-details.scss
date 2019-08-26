@@ -24,7 +24,7 @@
 
   .user-image-container {
     position: relative;
-    margin-top: 1rem;
+    margin: 1rem auto 3rem;
 
     button {
       display: flex;
@@ -33,6 +33,9 @@
       outline: none;
       border: 0;
       background: transparent;
+      @include mq(0, $layout-m) {
+        margin-left: 16.66667%;
+      }
     }
 
     .user-image {

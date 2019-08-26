@@ -41,6 +41,11 @@
       border-radius: 50%;
       object-fit: cover;
       z-index: 1;
+      opacity: 1;
+      transition: opacity $speed;
+      &:hover {
+        opacity: .7;
+      }
     }
 
     .tag {

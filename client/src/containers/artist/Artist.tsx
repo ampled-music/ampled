@@ -13,6 +13,7 @@ import { initialState as subscriptionsInitialState, SubscriptionStep } from '../
 import { PostsContainer } from '../artist/posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { Modal } from '../shared/modal/Modal';
+import { Loading } from '../shared/loading/Loading';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { VideoModal } from '../shared/video-modal/VideoModal';
 import { WhyModal } from '../shared/why-modal/WhyModal';
@@ -22,7 +23,6 @@ import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
 import { PostForm } from './posts/post-form/PostForm';
 import { routePaths } from '../route-paths';
-
 
 interface ArtistProps {
   match: {
@@ -267,10 +267,13 @@ class ArtistComponent extends React.Component<Props, any> {
         />
         <div className="confetti-overlay">
           <Confetti
-            active={ this.state.successfulSupport } 
-            config={ this.getConfettiConfig() } 
+            active={this.state.successfulSupport} 
+            config={this.getConfettiConfig()} 
           />
         </div>
+        <Loading
+          artistLoading={artists.loading} 
+        />
       </div>
     );
   }

@@ -3,7 +3,6 @@ export interface ArtistModel {
   id: number;
   accent_color: string;
   video_url: string;
-  video_screenshot_url: string;
   location: string;
   twitter_handle: string;
   instagram_handle: string;

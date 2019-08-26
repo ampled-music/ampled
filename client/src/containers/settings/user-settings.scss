@@ -26,14 +26,24 @@
 
       .user-image-container {
         position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        opacity: 1;
+        transition: opacity $speed;
+        &:hover {
+          opacity: .7;
+        }
 
-        button {
+        .user-edit-profile {
           display: flex;
-          flex-direction: column;
-          cursor: pointer;
-          outline: none;
-          border: 0;
-          background: transparent;
+          color: $link-color;
+          font-size: .8rem;
+          margin-top: .5rem;
+          text-align: center;
+          svg {
+            margin-right: .5rem;
+          }
         }
 
         .user-image {
@@ -41,19 +51,7 @@
           width: 120px;
           border-radius: 50%;
           object-fit: cover;
-          margin-bottom: -60px;
           z-index: 1;
-        }
-
-        .tag {
-          font-size: 1rem;
-          color: $black;
-          text-transform: capitalize;
-          align-self: center;
-          z-index: 3;
-          position: absolute;
-          top: 110%;
-          right: -20px;
         }
       }
 
@@ -65,7 +63,8 @@
         max-width: 350px;
         background-image: url(../../images/background_post.svg);
         align-items: center;
-        padding: 4rem 1rem 1rem;
+        padding: 5rem 1rem 1rem;
+        margin-top: -4rem;
 
         .user-name {
           font-size: 20px;

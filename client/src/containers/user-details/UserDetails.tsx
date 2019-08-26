@@ -1,8 +1,12 @@
 import './user-details.scss';
 
 import * as React from 'react';
+
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { Button, DialogActions, Select, MenuItem, Input } from '@material-ui/core';
+import { Button, DialogActions, Select, MenuItem, Input, TextField, InputAdornment } from '@material-ui/core';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { theme } from './theme';
 
@@ -71,14 +75,26 @@ class UserDetails extends React.Component<any, any> {
                             <Input
                                 placeholder="twitter"
                                 fullWidth
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <FontAwesomeIcon className="icon" icon={faTwitter} />
+                                    </InputAdornment>
+                                }
                             />
                             <Input
                                 placeholder="instagram"
                                 fullWidth
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <FontAwesomeIcon className="icon" icon={faInstagram} />
+                                    </InputAdornment>
+                                }
                             />
-                            <Input
+                            <TextField
                                 multiline
+                                rows="5"
                                 fullWidth
+                                variant="outlined"
                             />
                         </div>
                     </div>

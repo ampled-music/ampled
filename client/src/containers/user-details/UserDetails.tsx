@@ -8,9 +8,25 @@ import Select from '@material-ui/core/Select';
 
 
 class UserDetails extends React.Component<any, any> {
-  state = {
-  };
-  
+    state = {
+        first_name: '',
+        last_name: '',
+        address: '',
+        address2: '',
+        city: '',
+        state_name: '',
+        zip_code: '',
+        country: '',
+        twitter: '',
+        instagram: ''
+    };
+
+    handleSubmit( event ){
+        event.preventDefault();
+        console.log( 'this is the event!', event )
+        console.log( 'this is the this!', this.state )
+    }
+
 
   renderBasicInfo = () => (
     <div>
@@ -27,12 +43,20 @@ class UserDetails extends React.Component<any, any> {
                     <Input
                         placeholder="First name"
                         fullWidth
+                        onChange={(event) => {
+                            this.setState({ first_name: event.target.value })
+                        }}
+                        value={this.state.first_name}
                     />
                 </div>
                 <div className="col-md-5">
                     <Input
                         placeholder="Last name (Optional)"
                         fullWidth
+                        onChange={(event) => {
+                            this.setState({ last_name: event.target.value })
+                        }}
+                        value={this.state.last_name}
                     />
                 </div>
             </div>
@@ -45,12 +69,20 @@ class UserDetails extends React.Component<any, any> {
                     <Input
                         placeholder="City"
                         fullWidth
+                        onChange={(event) => {
+                            this.setState({ city: event.target.value })
+                        }}
+                        value={this.state.city}
                     />
                 </div>
                 <div className="col-md-5">
                     <Input
                         placeholder="Country"
                         fullWidth
+                        onChange={(event) => {
+                            this.setState({ country: event.target.value })
+                        }}
+                        value={this.state.country}
                     />
                 </div>
             </div>
@@ -65,14 +97,18 @@ class UserDetails extends React.Component<any, any> {
                     <Input
                         placeholder="twitter"
                         fullWidth
+                        onChange={(event) => {
+                            this.setState({ twitter: event.target.value })
+                        }}
+                        value={this.state.twitter}
                     />
                     <Input
                         placeholder="instagram"
                         fullWidth
-                    />
-                    <Input
-                        multiline
-                        fullWidth
+                        onChange={(event) => {
+                            this.setState({ instagram: event.target.value })
+                        }}
+                        value={this.state.instagram}
                     />
                 </div>
             </div>
@@ -93,8 +129,11 @@ class UserDetails extends React.Component<any, any> {
                 </div>
                 <div className="col-md-10">
                     <Input
-                        defaultValue="United States"
                         fullWidth
+                        onChange={(event) => {
+                            this.setState({ country: event.target.value })
+                        }}
+                        value={this.state.country}
                     />
                 </div>
             </div>
@@ -106,10 +145,18 @@ class UserDetails extends React.Component<any, any> {
                     <Input
                         placeholder="123 Fake St"
                         fullWidth
+                        onChange={(event) => {
+                            this.setState({ address: event.target.value })
+                        }}
+                        value={this.state.address}
                     />
                     <Input
                         placeholder="Apt #123"
                         fullWidth
+                        onChange={(event) => {
+                            this.setState({ address2: event.target.value })
+                        }}
+                        value={this.state.address2}
                     />
                 </div>
             </div>
@@ -121,11 +168,19 @@ class UserDetails extends React.Component<any, any> {
                     <Input
                         placeholder="Anytown"
                         fullWidth
+                        onChange={(event) => {
+                            this.setState({ city: event.target.value })
+                        }}
+                        value={this.state.city}
                     />
                 </div>
                 <div className="col-4">
                     <Select
                         fullWidth
+                        onChange={(event) => {
+                            this.setState({ state_name: event.target.value })
+                        }}
+                        value={this.state.state_name}
                     >
                         <MenuItem value="State"><em>State</em></MenuItem>
                         <MenuItem value="Alabama">Alabama</MenuItem>
@@ -184,6 +239,10 @@ class UserDetails extends React.Component<any, any> {
                     <Input
                         placeholder="Zip code"
                         fullWidth
+                        onChange={(event) => {
+                            this.setState({ zip_code: event.target.value })
+                        }}
+                        value={this.state.zip_code}
                     />
                 </div>
             </div>
@@ -196,8 +255,14 @@ class UserDetails extends React.Component<any, any> {
   render() {
     return (
       <div className="container user-details">
-          {this.renderBasicInfo()}
-          {this.renderAddress()}
+            <form onSubmit={this.handleSubmit.bind(this)}>
+                {this.renderBasicInfo()}
+                {this.renderAddress()}
+                <Input
+                    type="submit"
+                    value="Save Changes"
+                />
+            </form>
       </div>
     );
   }

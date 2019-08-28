@@ -15,7 +15,11 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { withStyles } from '@material-ui/core/styles';
 import { Modal } from '../../../shared/modal/Modal';
+
+import ReactPlayer from 'react-player';
 import Linkify from 'react-linkify';
+
+import { Duration } from './controls/Duration';
 
 import { config } from '../../../../config';
 import { Comment } from '../comments/Comment';
@@ -29,23 +33,65 @@ class PostComponent extends React.Component<any, any> {
     showPrivatePostModal: false,
     showDeletePostModal: false,
     expanded: false,
+    url: null,
+    playing: false,
+    controls: false,
+    volume: 0.8,
+    played: 0,
+    loaded: 0,
+    duration: 0,
+    playbackRate: 1.0,
+    loop: false
   };
 
   handleExpandClick = () => {
     this.setState((state) => ({ expanded: !state.expanded }));
-    setTimeout(() => {
-      this.props.doReflow && this.props.doReflow();
-    }, 500);
+    // setTimeout(() => {
+    //   this.props.doReflow && this.props.doReflow();
+    // }, 500);
   };
 
-  audioPLayer = (audioFile) => {
-    const playableUrl = `${config.aws.playableBaseUrl}${audioFile}`;
+  handlePlayPause = () => {
+    console.log('onPlayPause')
+    this.setState({ playing: !this.state.playing })
+  }
+  // handlePlay = () => {
+  //   console.log('onPlayPause')
+  //   this.setState({ playing: true })
+  // }
+  // handlePause = () => {
+  //   this.setState({ playing: false })
+  // }
+  // handleDuration = (duration) => {
+  //   this.setState({ duration })
+  // }
 
+
+  audioPLayer = (audioFile) => {
+
+    const { playing, played, duration, loaded, controls, volume, loop } = this.state;
+    const playableUrl = `${config.aws.playableBaseUrl}${audioFile}`;
+    
     return (
-      <div>
-        <audio controls>
-          <source src={playableUrl} type="audio/mp3" />
-        </audio>
+      <div className="post__audio">
+        <ReactPlayer
+          url={playableUrl}
+          className='react-player'
+          controls={controls}
+          loop={loop}
+          volume={volume}
+          playing={playing}
+          config={{
+            file: {
+              forceAudio: true
+            }
+          }}
+        />
+        <button onClick={this.handlePlayPause}>{playing ? 'Pause' : 'Play'}</button>
+        <div>{played.toFixed(3)}</div>
+        <div>{loaded.toFixed(3)}</div>
+        <div>duration <Duration seconds={duration} /></div>
+        <div>elapsed <Duration seconds={duration * played} /></div>
       </div>
     );
   };

@@ -15,6 +15,7 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { withStyles } from '@material-ui/core/styles';
 import { Modal } from '../../../shared/modal/Modal';
+import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
 import Linkify from 'react-linkify';
 
 import { Comment } from '../comments/Comment';
@@ -236,11 +237,15 @@ class PostComponent extends React.Component<any, any> {
             )}
 
             {post.audio_file && (
-              <CardMedia
-                className={classes.media}
-                image={post.image_url}
-                component={() => this.audioPLayer(post.audio_file)}
-              />
+              <div>
+                <CardMedia
+                  className={classes.media}
+                  image={post.image_url}
+                />
+                <AudioPlayer
+                  url={post.audio_file}
+                />
+              </div>
             )}
 
             <div className="post__title">

@@ -3,10 +3,17 @@ import './audio-player.scss';
 import * as React from 'react';
 
 import ReactPlayer from 'react-player';
-import { Duration } from './controls/Duration';
+// import { Duration } from './controls/Duration';
+
+// import { withStyles, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import Slider from '@material-ui/core/Slider';
+import IconButton from '@material-ui/core/IconButton';
+import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface Props {
     url: string;
+    accentColor: string;
 }
 
 class AudioPlayer extends React.Component<Props, any> {
@@ -17,11 +24,13 @@ class AudioPlayer extends React.Component<Props, any> {
         controls: false,
         volume: 0.8,
         played: 0,
+        playedSeconds: 0,
         loaded: 0,
+        loadedSeconds: 0,
         duration: 0,
         loop: false,
     };
-    
+
     load = () => {
         this.setState({
             url: this.props.url,
@@ -72,11 +81,20 @@ class AudioPlayer extends React.Component<Props, any> {
 
     renderAudioPlayer = () => {
 
-        const { url, playing, played, duration, loaded, controls, volume, loop } = this.state;
+        const { url, playing, played, loaded, controls, volume, loop, playedSeconds, loadedSeconds } = this.state;
+        // const BorderLinearProgress = withStyles({
+        //     root: {
+        //         height: 30,
+        //         backgroundColor: lighten(this.props.accentColor, 0.2),
+        //     },
+        //     bar: {
+        //         backgroundColor: this.props.accentColor,
+        //     },
+        // })(LinearProgress);
 
         return (
             <div className="audio-player">
-            {console.log(this.state) }
+                {console.log(this.state)}
                 <ReactPlayer
                     url={url}
                     height="100%"
@@ -103,18 +121,15 @@ class AudioPlayer extends React.Component<Props, any> {
                         }
                     }}
                 />
-                <button onClick={this.handlePlayPause}>{playing ? 'Pause' : 'Play'}</button>
-                <div>{played.toFixed(3)}</div>
-                <div>{loaded.toFixed(3)}</div>
-                <div>duration <Duration seconds={duration} /></div>
-                <div>elapsed <Duration seconds={duration * played} /></div>
-                <div>
-                </div>
-                <div>
-                    <progress max={1} value={played} />
-                    <br />
-                    <progress max={1} value={loaded} />
-                </div>
+                <IconButton onClick={this.handlePlayPause}>
+                    {playing ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
+                </IconButton>
+                <Slider
+                    min={0}
+                    max={loadedSeconds}
+                    value={playedSeconds}
+                />
+
             </div>
         );
     };

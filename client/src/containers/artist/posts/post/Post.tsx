@@ -30,15 +30,6 @@ class PostComponent extends React.Component<any, any> {
     showPrivatePostModal: false,
     showDeletePostModal: false,
     expanded: false,
-    url: null,
-    playing: false,
-    controls: false,
-    volume: 0.8,
-    played: 0,
-    loaded: 0,
-    duration: 0,
-    playbackRate: 1.0,
-    loop: false
   };
 
   handleExpandClick = () => {
@@ -246,6 +237,7 @@ class PostComponent extends React.Component<any, any> {
             {post.audio_file && (
               <AudioPlayer
                 url={this.returnPlayableUrl()}
+                accentColor={accentColor}
               />
             )}
 

@@ -6,4 +6,12 @@
         top: 210px;
         width: 100%;
     }
+    &__slider {
+        .MuiSlider-thumb {
+            span {
+                width: 60px;
+                background-color: transparent;
+            }
+        }
+    }
 }

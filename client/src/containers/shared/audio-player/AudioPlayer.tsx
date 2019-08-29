@@ -80,6 +80,25 @@ class AudioPlayer extends React.Component<Props, any> {
         this.setState({ duration })
     }
 
+
+    formatTime = (seconds) => {
+        const date = new Date(seconds * 1000)
+        const hh = date.getUTCHours()
+        const mm = date.getUTCMinutes()
+        const ss = this.padSec(date.getUTCSeconds())
+        if (hh) {
+            return `${hh}:${this.padSec(mm)}:${ss}`
+        }
+        return `${mm}:${ss}`
+    }
+    padSec = (string) => {
+        return ('0' + string).slice(-2)
+    }
+
+    valueLabelFormat = (value) => {
+        return this.formatTime(value) + ` / ` + this.formatTime(this.state.loadedSeconds)
+    }
+
     renderAudioPlayer = () => {
 
         const { url, playing, played, loaded, controls, volume, loop, playedSeconds, loadedSeconds } = this.state;
@@ -100,24 +119,33 @@ class AudioPlayer extends React.Component<Props, any> {
             root: {
                 color: this.props.accentColor,
                 height: 20,
+                padding: 0,
             },
             thumb: {
-                height: 30,
-                width: 4,
+                height: 45,
+                width: 2,
                 backgroundColor: '#fff',
                 borderRadius: 0,
-                marginTop: -10,
-                marginLeft: -2,
+                marginTop: -15,
+                marginLeft: -1,
                 '&:focus,&:hover,&$active': {
                     boxShadow: 'inherit',
                 },
             },
+            valueLabel: {
+                backgroundColor: '#fff',
+                width: 'auto',
+                fontSize: '.7rem',
+                top: 0,
+                left: '1px',
+                paddingLeft: '.5rem',
+            },
             active: {},
             track: {
-                height: 20,
+                height: 30,
             },
             rail: {
-                height: 20,
+                height: 30,
             },
         })(Slider);
 
@@ -156,9 +184,12 @@ class AudioPlayer extends React.Component<Props, any> {
                     </PlayButton>
                 </div>
                 <AudioSlider
+                    className="audio-player__slider"
                     min={0}
                     max={loadedSeconds}
                     value={playedSeconds}
+                    valueLabelDisplay="on"
+                    valueLabelFormat={this.valueLabelFormat}
                 />
 
             </div>

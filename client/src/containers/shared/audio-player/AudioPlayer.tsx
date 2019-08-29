@@ -5,7 +5,7 @@ import * as React from 'react';
 import ReactPlayer from 'react-player';
 // import { Duration } from './controls/Duration';
 
-// import { withStyles, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import IconButton from '@material-ui/core/IconButton';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface Props {
     url: string;
+    image: string;
     accentColor: string;
 }
 
@@ -82,15 +83,43 @@ class AudioPlayer extends React.Component<Props, any> {
     renderAudioPlayer = () => {
 
         const { url, playing, played, loaded, controls, volume, loop, playedSeconds, loadedSeconds } = this.state;
-        // const BorderLinearProgress = withStyles({
-        //     root: {
-        //         height: 30,
-        //         backgroundColor: lighten(this.props.accentColor, 0.2),
-        //     },
-        //     bar: {
-        //         backgroundColor: this.props.accentColor,
-        //     },
-        // })(LinearProgress);
+        const PlayButton = withStyles({
+            root: {
+                color: this.props.accentColor,
+                width: '70px',
+                height: '70px',
+                '&:hover': {
+                },
+                '&:active': {
+                },
+                '&:focus': {
+                },
+            },
+        })(IconButton);
+        const AudioSlider = withStyles({
+            root: {
+                color: this.props.accentColor,
+                height: 20,
+            },
+            thumb: {
+                height: 30,
+                width: 4,
+                backgroundColor: '#fff',
+                borderRadius: 0,
+                marginTop: -10,
+                marginLeft: -2,
+                '&:focus,&:hover,&$active': {
+                    boxShadow: 'inherit',
+                },
+            },
+            active: {},
+            track: {
+                height: 20,
+            },
+            rail: {
+                height: 20,
+            },
+        })(Slider);
 
         return (
             <div className="audio-player">
@@ -121,10 +150,12 @@ class AudioPlayer extends React.Component<Props, any> {
                         }
                     }}
                 />
-                <IconButton onClick={this.handlePlayPause}>
-                    {playing ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
-                </IconButton>
-                <Slider
+                <div className="audio-player__play-pause">
+                    <PlayButton onClick={this.handlePlayPause} size="medium">
+                        {playing ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
+                    </PlayButton>
+                </div>
+                <AudioSlider
                     min={0}
                     max={loadedSeconds}
                     value={playedSeconds}

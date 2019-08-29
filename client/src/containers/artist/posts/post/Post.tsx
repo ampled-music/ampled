@@ -225,20 +225,27 @@ class PostComponent extends React.Component<any, any> {
               </div>
             )}
 
-            {post.image_url && (
+            {post.image_url && !post.audio_file && (
               <div className="post__image-container">
-                <div>
-                  <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
-                </div>
+                <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
                 {!allowDetails && this.renderLock()}
               </div>
             )}
 
             {post.audio_file && (
-              <AudioPlayer
-                url={this.returnPlayableUrl()}
-                accentColor={accentColor}
-              />
+              <div className="post__audio-container">
+                {post.image_url && (
+                  <div className="post__image-container">
+                    <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
+                    {!allowDetails && this.renderLock()}
+                  </div>
+                )}
+                <AudioPlayer
+                  url={this.returnPlayableUrl()}
+                  image={post.image_url}
+                  accentColor={accentColor}
+                />
+              </div>
             )}
 
             <div className="post__title">

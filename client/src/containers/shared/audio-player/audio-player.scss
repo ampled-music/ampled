@@ -1,3 +1,9 @@
 .audio-player {
-    
+    &__play-pause {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        top: 210px;
+        width: 100%;
+    }
 }

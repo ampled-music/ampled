@@ -1,9 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "DELETE /posts", type: :request do
-  
   context "when user is unauthenticated" do
-    let(:post){ create(:post) }
+    let(:post) { create(:post) }
     before { delete "/posts/#{post.id}" }
 
     it "returns 400" do
@@ -17,8 +16,8 @@ RSpec.describe "DELETE /posts", type: :request do
 
   context "when user owns the post" do
     let(:user) { create(:user) }
-    let(:post){ create(:post, user: user) }
-    
+    let(:post) { create(:post, user: user) }
+
     before(:each) do
       sign_in user
     end
@@ -35,10 +34,10 @@ RSpec.describe "DELETE /posts", type: :request do
   end
 
   context "when the user owns the artist page where the post lives" do
-    let(:user){ create(:user) }
-    let(:artist_page){ create(:artist_page) }
-    let(:post){ create(:post, artist_page: artist_page) }
-    
+    let(:user) { create(:user) }
+    let(:artist_page) { create(:artist_page) }
+    let(:post) { create(:post, artist_page: artist_page) }
+
     before do
       user.owned_pages << artist_page
     end
@@ -60,8 +59,8 @@ RSpec.describe "DELETE /posts", type: :request do
 
   context "when attempting to delete another users' post" do
     let(:user) { create(:user) }
-    let(:post){ create(:post) }
-    
+    let(:post) { create(:post) }
+
     before(:each) do
       sign_in user
     end
@@ -76,5 +75,4 @@ RSpec.describe "DELETE /posts", type: :request do
       expect(Post.find(post.id)).to eq post
     end
   end
-
 end

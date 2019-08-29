@@ -5,6 +5,7 @@ import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import { routePaths } from 'src/containers/route-paths';
 import { UserRoles } from 'src/containers/shared/user-roles';
+import { config } from '../../../../config';
 
 import avatar from '../../../../images/ampled_avatar.svg';
 import tear from '../../../../images/background_tear.png';
@@ -125,6 +126,12 @@ class PostComponent extends React.Component<any, any> {
     }
   };
 
+  returnPlayableUrl = () => {
+    const { post } = this.props;
+    const playableUrl = `${config.aws.playableBaseUrl}${post.audio_file}`;
+    return playableUrl;
+  }
+
   returnFirstName = (name) => {
     let spacePosition = name.indexOf(' ');
     if (spacePosition === -1) {
@@ -237,15 +244,9 @@ class PostComponent extends React.Component<any, any> {
             )}
 
             {post.audio_file && (
-              <div>
-                <CardMedia
-                  className={classes.media}
-                  image={post.image_url}
-                />
-                <AudioPlayer
-                  url={post.audio_file}
-                />
-              </div>
+              <AudioPlayer
+                url={this.returnPlayableUrl()}
+              />
             )}
 
             <div className="post__title">

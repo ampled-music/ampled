@@ -72,6 +72,10 @@ class ArtistPage < ApplicationRecord
     plan
   end
 
+  def cover_url
+    images&.first&.url
+  end
+
   def plan_for_nominal_amount(nominal_amount)
     plans.find_by(nominal_amount: nominal_amount) || create_plan(nominal_amount)
   end

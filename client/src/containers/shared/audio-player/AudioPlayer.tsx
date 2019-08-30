@@ -3,8 +3,6 @@ import './audio-player.scss';
 import * as React from 'react';
 
 import ReactPlayer from 'react-player';
-// import { Duration } from './controls/Duration';
-
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
@@ -44,6 +42,7 @@ class AudioPlayer extends React.Component<Props, any> {
         })
     }
 
+    // Actions for handling audio
     handlePlayPause = () => {
         this.setState({ playing: !this.state.playing, durationShow: 'on' })
         this.load();
@@ -57,32 +56,38 @@ class AudioPlayer extends React.Component<Props, any> {
     handleStop = () => {
         this.setState({ url: null, playing: false })
     }
+    handleEnded = () => {
+        this.setState({ playing: this.state.loop, durationShow: null })
+    }
+
+    // @todo: Add a volume adjuster
     handleVolumeChange = e => {
         this.setState({ volume: parseFloat(e.target.value) })
     }
+
+    // @todo: figure out way to seek
     handleSeekChange = e => {
         this.setState({ played: parseFloat(e.target.value) })
     }
     handleSeekMouseDown = e => {
         this.setState({ seeking: true })
-      }
+    }
     handleSeekMouseUp = e => {
         this.setState({ seeking: false })
     }
+
+    // Progress updates state
     handleProgress = state => {
         // We only want to update time slider if we are not currently seeking
         if (!this.state.seeking) {
             this.setState(state)
         }
     }
-    handleEnded = () => {
-        this.setState({ playing: this.state.loop,  durationShow: null })
-    }
+
+    // Show duration and total time on play
     handleDuration = (duration) => {
         this.setState({ duration })
     }
-
-
     formatTime = (seconds) => {
         const date = new Date(seconds * 1000)
         const hh = date.getUTCHours()
@@ -101,7 +106,6 @@ class AudioPlayer extends React.Component<Props, any> {
     }
 
     renderAudioPlayer = () => {
-
         const { url, playing, played, loaded, controls, volume, loop, playedSeconds, loadedSeconds, durationShow } = this.state;
         const PlayButton = withStyles({
             root: {

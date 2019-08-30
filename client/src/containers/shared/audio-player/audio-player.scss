@@ -1,9 +1,13 @@
 .audio-player {
+    &.with-image {
+        .audio-player__play-pause {
+            top: 210px;
+        }
+    }
     &__play-pause {
         display: flex;
         justify-content: center;
         position: absolute;
-        top: 210px;
         width: 100%;
     }
     &__slider {
@@ -13,8 +17,5 @@
                 background-color: transparent;
             }
         }
-    }
-    &__range {
-        width: 100%;
     }
 }

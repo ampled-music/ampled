@@ -1,6 +1,7 @@
 import './audio-player.scss';
 
 import * as React from 'react';
+import cx from 'classnames';
 
 import ReactPlayer from 'react-player';
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -109,18 +110,39 @@ class AudioPlayer extends React.Component<Props, any> {
         const { url, playing, played, loaded, controls, volume, loop, playedSeconds, loadedSeconds, durationShow } = this.state;
         const PlayButton = withStyles({
             root: {
-                color: this.props.accentColor,
+                color: '#fff',
+                width: this.props.image ? '70px' : '40px',
+                height: this.props.image ? '70px' : '40px',
+                zIndex: 10,
+                marginTop: this.props.image ? '0' : '5px',
             }
         })(IconButton);
         const AudioSlider = withStyles({
             root: {
                 color: this.props.accentColor,
-            }
+                height: this.props.image ? '20px' : '50px',
+            },
+            thumb: {
+                height: this.props.image ? '35px' : '50px',
+                marginTop: this.props.image ? '-15px' : '0px',
+            },
+            valueLabel: {
+                paddingTop: this.props.image ? '0' : '3px',
+            },
+            track: {
+                height: this.props.image ? '20px' : '50px',
+            },
+            rail: {
+                height: this.props.image ? '20px' : '50px',
+            },
         })(Slider);
+
+        console.log(this.props.image);
 
         return (
             <MuiThemeProvider theme={theme}>
-                <div className="audio-player">
+             
+                <div className={cx('audio-player ', { 'with-image': this.props.image })}>
                     <ReactPlayer
                         url={url}
                         height="100%"
@@ -148,7 +170,7 @@ class AudioPlayer extends React.Component<Props, any> {
                         }}
                     />
                     <div className="audio-player__play-pause">
-                        <PlayButton onClick={this.handlePlayPause} size="medium">
+                        <PlayButton onClick={this.handlePlayPause} size={this.props.image ? 'medium' : 'small'}>
                             {playing ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
                         </PlayButton>
                     </div>

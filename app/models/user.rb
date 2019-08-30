@@ -2,22 +2,33 @@
 #
 # Table name: users
 #
+#  ad_address             :string
+#  ad_address2            :string
+#  ad_city                :string
+#  ad_country             :string
+#  ad_state               :string
+#  ad_zip                 :string
+#  bio                    :string
+#  city                   :string
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
+#  country                :string
 #  created_at             :datetime         not null
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  id                     :bigint(8)        not null, primary key
+#  instagram              :string
 #  jti                    :string           not null
+#  last_name              :string
 #  locked_at              :datetime
-#  login_redirect_url     :string
 #  name                   :string           not null
 #  profile_image_url      :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  stripe_customer_id     :string
+#  twitter                :string
 #  updated_at             :datetime         not null
 #
 # Indexes

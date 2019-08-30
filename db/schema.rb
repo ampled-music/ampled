@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_05_012523) do
+ActiveRecord::Schema.define(version: 2019_08_30_162614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,7 +112,18 @@ ActiveRecord::Schema.define(version: 2019_08_05_012523) do
     t.string "profile_image_url"
     t.string "jti", null: false
     t.string "stripe_customer_id"
-    t.string "login_redirect_url"
+    t.string "last_name"
+    t.string "city"
+    t.string "country"
+    t.string "twitter"
+    t.string "instagram"
+    t.string "bio"
+    t.string "ad_address"
+    t.string "ad_address2"
+    t.string "ad_city"
+    t.string "ad_state"
+    t.string "ad_zip"
+    t.string "ad_country"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true

@@ -3,12 +3,14 @@ namespace :dummy do
 
   task users: [:environment] do
     (1..10).map do |_|
+      first = Faker::Name.first_name
+      last = Faker::Name.last_name
       password = Faker::Internet.password
-      name = Faker::StarWars.character
       user = User.create(
-        name: name,
+        name: first,
+        last_name: last,
         email: Faker::Internet.email,
-        profile_image_url: "https://robohash.org/#{ERB::Util.url_encode name}.jpg?set=set1&size=100x100",
+        profile_image_url: "https://robohash.org/#{ERB::Util.url_encode first}_#{ERB::Util.url_encode last}.jpg?set=set1&size=100x100",
         password: password,
         password_confirmation: password
       )

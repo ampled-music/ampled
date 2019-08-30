@@ -8,7 +8,7 @@ export const theme = createMuiTheme({
                 padding: 0,
             },
             thumb: {
-                height: 45,
+                height: 35,
                 width: 2,
                 backgroundColor: '#fff',
                 borderRadius: 0,
@@ -27,10 +27,10 @@ export const theme = createMuiTheme({
                 paddingLeft: '.5rem',
             },
             track: {
-                height: 30,
+                height: 20,
             },
             rail: {
-                height: 30,
+                height: 20,
             },
         },
         MuiIconButton: {

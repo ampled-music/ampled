@@ -272,11 +272,16 @@
   }
   &__message-image {
     width: 100%;
+    transform: scale(1.2);
+    &_container {
+      overflow: hidden;
+    }
   }
   &__message-tear {
     width: 102%;
     left: -2px;
     top: -2px;
+    z-index: 2;
     position: absolute;    
   }
 

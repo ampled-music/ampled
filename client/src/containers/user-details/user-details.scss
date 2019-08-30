@@ -2,5 +2,97 @@
 @import "../../theme/mixins.scss";
 
 .user-details {
-  
+  margin-top: calc(2rem + 50px);
+
+  .basic-info,
+  .address {
+    margin: 1rem auto;
+    padding: 1rem 0;
+    border-top: 1px solid $black;
+    @include mq($layout-m) {
+      margin: 2rem auto;
+      padding: 2rem 0;
+    }
+  }
+
+  .row {
+    margin-bottom: .5rem;
+    @include mq($layout-m) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  .user-image-container {
+    position: relative;
+    margin: 1rem auto 3rem;
+
+    button {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      outline: none;
+      border: 0;
+      background: transparent;
+      @include mq(0, $layout-m) {
+        margin-left: 16.66667%;
+      }
+    }
+
+    .user-image {
+      height: 90px;
+      width: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      z-index: 1;
+      opacity: 1;
+      transition: opacity $speed;
+      &:hover {
+        opacity: .7;
+      }
+    }
+
+    .tag {
+      font-size: 1rem;
+      color: $black;
+      text-transform: capitalize;
+      align-self: center;
+      z-index: 3;
+      position: absolute;
+      top: 90px;
+    }
+  }
+
+  h6 {
+    font-family: $font-family-monospace;
+    color: $gray-light;
+  }
+
+  &__subtitle {
+    font-family: $font-family-sans-serif;
+    font-size: 1rem;
+    @include mq($layout-m) {
+      font-size: 1.3rem;
+    }
+  }
+  &__title {
+    font-family: $font-family-sans-serif;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+  }
+
+  &__side {
+    margin-bottom: 1rem;
+  }
+
+  &__info {
+    font-family: $font-family-monospace;
+    font-size: .9rem;
+    margin-bottom: 1rem;
+  }
+  .action-buttons {
+    width: 100%;
+    max-width: 600px;
+    float: right;
+  }
 }

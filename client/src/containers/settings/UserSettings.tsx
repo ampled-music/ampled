@@ -1,6 +1,5 @@
 import './user-settings.scss';
 
-import * as loadImage from 'blueimp-load-image';
 import { DateTime } from 'luxon';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -16,15 +15,14 @@ import { faEdit, faHeartBroken } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import avatar from '../../images/ampled_avatar.svg';
-import { CircularProgress } from '@material-ui/core';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
 import { routePaths } from '../route-paths';
 import { Modal } from '../shared/modal/Modal';
+import { Loading } from '../shared/loading/Loading';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
-import { UploadFile } from '../shared/upload/UploadFile';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
@@ -36,10 +34,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
   state = {
     showCancelModal: false,
     subscription: undefined,
-    showUserPhotoModal: false,
-    photoContent: undefined,
-    photoBody: undefined,
-    processingImage: false,
   };
 
   componentDidMount() {
@@ -49,10 +43,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
   componentDidUpdate() {
     if (this.props.token && !this.props.error && !this.props.userData && !this.props.loadingMe) {
       this.props.getMe();
-    }
-
-    if (this.state.showUserPhotoModal && this.props.updated) {
-      this.updateUserPhoto();
     }
 
     if (this.props.subscriptions.cancelled && !this.props.loadingMe) {
@@ -72,12 +62,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     );
   };
 
-  updateUserPhoto = () => {
-    this.closeUserPhotoModal();
-    this.props.setMe({ image: this.props.updatedData.profileImageUrl });
-    showToastMessage('User photo updated!', MessageType.SUCCESS);
-  };
-
   getFormattedDate = (date: string) => {
     if (!date) {
       return '-';
@@ -94,11 +78,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   closeCancelModal = () => this.setState({ showCancelModal: false, subscription: undefined });
 
-  showUserPhotoModal = () => this.setState({ showUserPhotoModal: true });
-
-  closeUserPhotoModal = () =>
-    this.setState({ showUserPhotoModal: false, photoBody: undefined, photoContent: undefined });
-
   cancelSubscription = () => {
     this.props.cancelSubscription({
       subscriptionId: this.state.subscription.subscriptionId,
@@ -106,30 +85,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
       artistName: this.state.subscription.name,
     });
     this.closeCancelModal();
-  };
-
-  loadPhotoContent = (photoContent) => {
-    this.setState({ processingImage: true });
-
-    loadImage(
-      photoContent.body,
-      (canvas) => {
-        this.setState({
-          processingImage: false,
-          photoBody: canvas.toDataURL(),
-          photoContent,
-        });
-      },
-      { orientation: true },
-    );
-  };
-
-  saveUserPhoto = () => {
-    const me = {
-      file: this.state.photoContent.file,
-    };
-
-    this.props.updateMe(me);
   };
 
   formatMoney = (value) => {
@@ -144,7 +99,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     this.calculateSupportTotalNumber(supportLevel).toFixed(2)
 
   calculateSupportTotalNumber = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100);
-
   
   redirectToArtistPage = (pageId) => {
     this.props.history.push(routePaths.artists.replace(':id', pageId));
@@ -155,16 +109,16 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <div className="user-image-container">
-        <button onClick={this.showUserPhotoModal}>
+        <a href="/user-details">
           {userData.image ? (
             <img src={userData.image} className="user-image" />
           ) : (
             <img src={avatar} className="user-image" />
           )}
-          <b className="tag">
-            <FontAwesomeIcon icon={faEdit} />
-          </b>
-        </button>
+          <div className="user-edit-profile">
+            <FontAwesomeIcon icon={faEdit} /> Edit Profile
+          </div>
+        </a>
       </div>
     );
   };
@@ -205,12 +159,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <Modal open={this.state.showCancelModal} onClose={this.closeCancelModal}>
         <div className="user-settings-cancel-modal">
           <p>Are you sure you want to stop supporting {this.state.subscription.name}?</p>
-          <div className="actions">
-            <button className="btn btn-ampled" onClick={this.cancelSubscription}>
-              Yes
-            </button>
-            <button className="btn btn-ampled" onClick={this.closeCancelModal}>
+          <div className="action-buttons">
+            <button className="cancel-button" onClick={this.closeCancelModal}>
               Of Course Not!
+            </button>
+            <button className="delete-button" onClick={this.cancelSubscription}>
+              Yes
             </button>
           </div>
         </div>
@@ -310,73 +264,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
     </div>
   );
 
-  renderAddPhotoButton = () => (
-    <div className="add-photo-button-container">
-      <UploadFile inputRefId="input-user-photo" uploadFile={this.loadPhotoContent} />
-      <div className="media-button-wrapper action-buttons">
-        <button
-          disabled={this.props.updating}
-          className="add-media"
-          onClick={() => document.getElementById('input-user-photo').click()}
-        >
-          {this.state.photoContent || this.props.userData.image ? 'Change photo' : 'Add photo'}
-        </button>
-      </div>
-    </div>
-  );
-
-  renderPhoto = () => {
-    const { photoBody, processingImage } = this.state;
-    const { userData } = this.props;
-
-    if (processingImage && userData.image) {
-      return (
-        <div className="processing-image">
-          <CircularProgress size={80} />
-          <img src={userData.image} className='image-preview loading-image' />
-        </div>
-      );
-    } else if (processingImage) {
-      return (
-        <div className="processing-image">
-          <CircularProgress size={80} />
-          <img src={avatar} className='image-preview loading-image' />
-        </div>
-      );
-    }
-
-    const placeholderImage = userData.image ? (
-      <img src={userData.image} className='image-preview'/>
-    ) : (
-      <img src={avatar} className="image-preview" />
-    );
-
-    return photoBody ? <img src={photoBody} className="image-preview" /> : placeholderImage;
-  };
-
-  renderPhotoSelector = () => {
-
-    return (
-      <div className="user-photo-selector-modal">
-        {this.renderPhoto()}
-        {this.renderAddPhotoButton()}
-        <div className="action-buttons">
-          <button disabled={this.props.updating} className="cancel-button" onClick={this.closeUserPhotoModal}>
-            Cancel
-          </button>
-          <button disabled={!this.state.photoContent || this.props.updating} className="continue-button" onClick={this.saveUserPhoto}>
-            Save
-          </button>
-        </div>
-      </div>
-    );
-  };
-
   renderContent = () => (
     <div className="row content">
-      <Modal open={this.state.showUserPhotoModal} onClose={!this.props.updating && this.closeUserPhotoModal}>
-        {this.renderPhotoSelector()}
-      </Modal>
       {this.renderUserInfo()}
       <div className="pages-container col-md-9">
         { this.props.userData.ownedPages.length > 0 ?
@@ -393,11 +282,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <div className="container user-settings-container">
-        <Modal open={!userData}>
-          <div className="user-settings-loading-modal">
-            <h1>LOADING...</h1>
-          </div>
-        </Modal>
+        <Loading
+          artistLoading={this.props.loadingMe} 
+        />
         {userData && this.renderContent()}
         {this.renderCancelSubscriptionModal()}
       </div>

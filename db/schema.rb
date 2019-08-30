@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_05_012523) do
+ActiveRecord::Schema.define(version: 2019_08_30_000656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 2019_08_05_012523) do
     t.string "stripe_user_id"
     t.string "stripe_access_token"
     t.string "stripe_product_id"
+    t.string "slug"
+    t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 
   create_table "comments", force: :cascade do |t|

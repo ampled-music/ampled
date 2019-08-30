@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :posts, only: %i[create index]
   end
 
+  get "slug/:slug", to: 'artist_pages#show'
+
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"
   get "/me", to: "me#index"

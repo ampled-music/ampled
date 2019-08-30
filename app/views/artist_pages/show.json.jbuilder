@@ -1,5 +1,6 @@
 json.id @artist_page.id
 json.name @artist_page.name
+json.slug @artist_page.slug
 json.location @artist_page.location
 json.accent_color @artist_page.accent_color
 json.video_screenshot_url @artist_page.video_screenshot_url

@@ -137,8 +137,6 @@ class AudioPlayer extends React.Component<Props, any> {
             },
         })(Slider);
 
-        console.log(this.props.image);
-
         return (
             <MuiThemeProvider theme={theme}>
              

@@ -51,11 +51,11 @@ class ArtistPagesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_artist_page
-    if params[:slug]
-      @artist_page = ArtistPage.find_by(slug: params[:slug])
-    else
-      @artist_page = ArtistPage.find(params[:id])
-    end
+    @artist_page = if params[:slug]
+        ArtistPage.find_by(slug: params[:slug])
+      else
+        ArtistPage.find(params[:id])
+      end
   end
 
   def set_page_ownership

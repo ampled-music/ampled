@@ -4,7 +4,7 @@ RSpec.describe ArtistPagesController, type: :request do
   let(:user) { create(:user, confirmed_at: Time.current) }
   let(:supporter) { create(:user, confirmed_at: Time.current) }
 
-  let(:artist_page) { create(:artist_page) }
+  let(:artist_page) { create(:artist_page, slug: "test") }
 
   before(:each) do
     sign_in user
@@ -12,6 +12,7 @@ RSpec.describe ArtistPagesController, type: :request do
 
   context "when loading artist_page data" do
     let(:url) { "/artist_pages/#{artist_page.id}.json" }
+    let(:slugurl) { "/slug/#{artist_page.slug}.json" }
 
     it "returns 200" do
       get url
@@ -23,6 +24,12 @@ RSpec.describe ArtistPagesController, type: :request do
       get url
 
       expect(JSON.parse(response.body)["id"]).to eq artist_page.id
+    end
+
+    xit "responds with JSON including the artist_page slug" do
+      get slugurl
+
+      expect(JSON.parse(response.body)["slug"]).to eq artist_page.slug
     end
 
     xit "includes active supporter data" do

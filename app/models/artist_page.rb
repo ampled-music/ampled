@@ -10,6 +10,7 @@
 #  instagram_handle     :string
 #  location             :string
 #  name                 :string
+#  slug                 :string
 #  state_token          :string
 #  stripe_access_token  :string
 #  stripe_product_id    :string
@@ -18,6 +19,10 @@
 #  updated_at           :datetime         not null
 #  video_screenshot_url :string
 #  video_url            :string
+#
+# Indexes
+#
+#  index_artist_pages_on_slug  (slug) UNIQUE
 #
 
 class ArtistPage < ApplicationRecord
@@ -32,6 +37,14 @@ class ArtistPage < ApplicationRecord
   has_many :subscribers, through: :subscriptions, source: :user
 
   has_many :plans, dependent: :destroy
+
+  validate :sluggy_slug
+
+  def sluggy_slug
+    return unless slug
+
+    errors.add(:slug, "can only contain lowercase letters and dashes") unless slug.match?(/^[a-z-]+$/)
+  end
 
   def active_subscribers
     subscribers.merge(Subscription.active)

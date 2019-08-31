@@ -1,10 +1,9 @@
 import { apiAxios } from '../setup-axios';
 
 export const getArtist = async (artistId: string, slug?: string) => {
-  console.log('\n\n\n**SLUG');
   console.log(artistId, slug);
   let url;
-  if (slug) {
+  if (slug && !artistId) {
     url = `/slug/${slug}.json`;
   } else {
     url = `/artist_pages/${artistId}.json`;

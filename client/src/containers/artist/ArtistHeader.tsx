@@ -3,6 +3,9 @@ import './artist.scss';
 import * as React from 'react';
 import path from 'ramda/src/path';
 
+// import ReactDOM from 'react-dom';
+import Swipe from 'react-easy-swipe';
+
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from 'src/redux/artists/initial-state';
@@ -54,7 +57,21 @@ export class ArtistHeader extends React.Component<Props, any> {
     return this.state.screenshotURL;
   }
 
+  onSwipeStart = (event) => {
+    console.log('Start swiping...', event);
+  }
+
+  onSwipeMove = (position, event) => {
+    console.log(`Moved ${position.x} pixels horizontally`, event);
+    console.log(`Moved ${position.y} pixels vertically`, event);
+  }
+
+  onSwipeEnd = (event) => {
+    console.log('End swiping...', event);
+  }
+
   cycleBanners = () => {
+
     const bannerImages = document.getElementsByClassName("artist-header__photo");
     const bannerIcons = document.getElementsByClassName("artist-header__banner-icons_icon");
     var index;
@@ -145,7 +162,13 @@ export class ArtistHeader extends React.Component<Props, any> {
     <div className="artist-header__photo-container" style={{ borderColor: this.props.artist.accent_color }}>
       {this.renderOwners()}
       {this.renderBanners()}
-      <div className="artist-header__photo-container_border" style={{ borderColor: this.props.artist.accent_color }} onClick={this.cycleBanners} />
+      <Swipe
+        onSwipeStart={this.onSwipeStart}
+        onSwipeMove={this.onSwipeMove}
+        onSwipeEnd={this.onSwipeEnd}
+      >
+        <div className="artist-header__photo-container_border" style={{ borderColor: this.props.artist.accent_color }} onClick={this.cycleBanners} />
+      </Swipe>
       {this.renderBannerIcons()}
     </div>
   );
@@ -177,7 +200,9 @@ export class ArtistHeader extends React.Component<Props, any> {
             </button>
             <div className="artist-header__message-video">
               <img className="artist-header__message-tear" src={tear} />
-              <img className="artist-header__message-image" src={this.state.screenshotURL} />
+              <div className="artist-header__message-image_container">
+                <img className="artist-header__message-image" src={this.state.screenshotURL} />
+              </div>
             </div>
           </div>
         </div>

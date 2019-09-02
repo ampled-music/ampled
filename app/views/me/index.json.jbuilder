@@ -2,6 +2,17 @@ json.userInfo do
   json.id current_user&.id
   json.name current_user&.name
   json.last_name current_user&.last_name
+  json.city current_user&.city
+  json.country current_user&.country
+  json.twitter current_user&.twitter
+  json.instagram current_user&.instagram
+  json.bio current_user&.bio
+  json.ad_address current_user&.ad_address
+  json.ad_address2 current_user&.ad_address2
+  json.ad_city current_user&.ad_city
+  json.ad_state current_user&.ad_state
+  json.ad_zip current_user&.ad_zip
+  json.ad_country current_user&.ad_country
   json.image current_user&.profile_image_url
   json.created_at current_user&.created_at
 end

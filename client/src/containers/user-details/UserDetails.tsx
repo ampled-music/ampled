@@ -54,9 +54,36 @@ class UserDetailsComponent extends React.Component<Props, any> {
     ad_country: '',
     ad_zip: ''
   };
-  componentDidMount() {
-    this.props.getMe();
-  }
+
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // const canSubmit = await this.validateFields();
+
+    // if (!canSubmit) {
+    //   return;
+    // }
+
+    // const {  name, last_name } = this.state;
+
+    // const submitResult = await this.props.signup(email, password, confirmPassword, name, last_name);
+
+    // if (submitResult) {
+    //   this.setState({ submitted: true });
+    //   // this.checkErrors();
+    // } else {
+    //   showToastMessage("Error signing up. Maybe you already have an account?", MessageType.ERROR, {timeOut: 8000});
+    // }
+  };
+
+  // componentDidMount() {
+  //   this.props.getMe();
+  // }
 
   componentDidUpdate() {
     if (this.props.token && !this.props.error && !this.props.userData && !this.props.loadingMe) {
@@ -196,6 +223,9 @@ class UserDetailsComponent extends React.Component<Props, any> {
                 <Input
                   placeholder="First name"
                   fullWidth
+                  name="name"
+                  onChange={this.handleChange}
+                  value={this.state.name}
                 />
               </div>
               <div className="col-md-6">
@@ -423,11 +453,13 @@ class UserDetailsComponent extends React.Component<Props, any> {
     const { userData } = this.props;
     return (
       <div className="container user-details">
-        {console.log(userData)}
-        <Loading
-          artistLoading={this.props.loadingMe}
-        />
-        {userData && this.renderContent()}
+        <form onSubmit={this.handleSubmit}>
+          {console.log('this.state', this.state)}
+          <Loading
+            artistLoading={this.props.loadingMe}
+          />
+          {userData && this.renderContent()}
+        </form>
       </div>
     );
   }

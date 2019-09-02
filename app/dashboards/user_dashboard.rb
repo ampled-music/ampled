@@ -22,7 +22,18 @@ class UserDashboard < Administrate::BaseDashboard
     name: Field::String,
     last_name: Field::String,
     profile_image_url: Field::String,
-    password: Field::String
+    password: Field::String,
+    city: Field::String,
+    country: Field::String,
+    twitter: Field::String,
+    instagram: Field::String,
+    bio: Field::String,
+    ad_address: Field::String,
+    ad_address2: Field::String,
+    ad_city: Field::String,
+    ad_state: Field::String,
+    ad_country: Field::String,
+    ad_zip: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -50,6 +61,17 @@ class UserDashboard < Administrate::BaseDashboard
     :updated_at,
     :name,
     :last_name,
+    :city,
+    :country,
+    :twitter,
+    :instagram,
+    :bio,
+    :ad_address,
+    :ad_address2,
+    :ad_city,
+    :ad_state,
+    :ad_zip,
+    :ad_country
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -59,7 +81,18 @@ class UserDashboard < Administrate::BaseDashboard
     :email,
     :password,
     :name,
-    :last_name
+    :last_name,
+    :city,
+    :country,
+    :twitter,
+    :instagram,
+    :bio,
+    :ad_address,
+    :ad_address2,
+    :ad_city,
+    :ad_state,
+    :ad_zip,
+    :ad_country
   ].freeze
 
   # Overwrite this method to customize how users are displayed

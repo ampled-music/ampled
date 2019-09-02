@@ -19,8 +19,6 @@ interface AudioPlayerProps {
 interface AudioPlayerState {
     url: string,
     playing: boolean,
-    seeking: boolean,
-    controls: boolean,
     volume: number,
     played: number,
     playedSeconds: number,
@@ -31,12 +29,10 @@ interface AudioPlayerState {
     loop: boolean,
 }
 
-class AudioPlayer extends React.Component<AudioPlayerProps,AudioPlayerState> {
+class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     state = {
         url: null,
         playing: false,
-        seeking: false,
-        controls: false,
         volume: 0.8,
         played: 0,
         playedSeconds: 0,
@@ -151,7 +147,6 @@ class AudioPlayer extends React.Component<AudioPlayerProps,AudioPlayerState> {
 
         return (
             <MuiThemeProvider theme={theme}>
-             
                 <div className={cx('audio-player ', { 'with-image': this.props.image })}>
                     <ReactPlayer
                         url={url}
@@ -186,7 +181,6 @@ class AudioPlayer extends React.Component<AudioPlayerProps,AudioPlayerState> {
                         valueLabelDisplay={durationShow}
                         valueLabelFormat={this.valueLabelFormat}
                     />
-
                 </div>
             </MuiThemeProvider>
         );

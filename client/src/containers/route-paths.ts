@@ -8,4 +8,5 @@ export const routePaths = {
   home: '/home',
   upload: '/upload',
   settings: '/settings',
+  noArtist: '/no_artist',
 };

@@ -4,22 +4,34 @@ import * as React from 'react';
 import cx from 'classnames';
 
 import ReactPlayer from 'react-player';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
-import Slider from '@material-ui/core/Slider';
-import IconButton from '@material-ui/core/IconButton';
+import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import { IconButton, Slider } from '@material-ui/core/';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { theme } from './theme';
 
-interface Props {
+interface AudioPlayerProps {
     url: string;
     image: string;
     accentColor: string;
 }
+interface AudioPlayerState {
+    url: string,
+    playing: boolean,
+    seeking: boolean,
+    controls: boolean,
+    volume: number,
+    played: number,
+    playedSeconds: number,
+    loaded: number,
+    loadedSeconds: number,
+    duration: number,
+    durationShow: string,
+    loop: boolean,
+}
 
-class AudioPlayer extends React.Component<Props, any> {
+class AudioPlayer extends React.Component<AudioPlayerProps,AudioPlayerState> {
     state = {
         url: null,
         playing: false,
@@ -145,20 +157,14 @@ class AudioPlayer extends React.Component<Props, any> {
                         url={url}
                         height="100%"
                         width="100%"
-                        controls={controls}
                         loop={loop}
                         volume={volume}
                         playing={playing}
                         played={played}
                         loaded={loaded}
-                        onReady={() => console.log('onReady')}
-                        onStart={() => console.log('onStart')}
                         onPause={this.handlePause}
                         onPlay={this.handlePlay}
-                        onBuffer={() => console.log('onBuffer')}
-                        onSeek={e => console.log('onSeek', e)}
                         onEnded={this.handleEnded}
-                        onError={e => console.log('onError', e)}
                         onProgress={this.handleProgress}
                         onDuration={this.handleDuration}
                         config={{

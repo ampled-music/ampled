@@ -58,17 +58,20 @@
           font-family: $font-family-base;
           margin-bottom: 1rem;
         }
+
         &__hr {
           border-top: 2px solid $gray-light;
           width: 100%;
           margin: 1rem auto;
         }
+
         &__edit-profile {
           display: flex;
           color: $link-color;
           font-size: .7rem;
           margin-top: .5rem;
           text-align: center;
+
           svg {
             margin-right: .5rem;
           }
@@ -85,6 +88,7 @@
         margin: 0;
         font-weight: bold;
         text-align: center;
+
         @include mq($tablet) {
           text-align: left;
         }
@@ -94,145 +98,147 @@
         padding-top: 1rem;
         width: 100%;
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: wrap
+      }
+    }
 
-        .artist {
+    .artist {
+      display: flex;
+      flex-direction: column;
+      width: 320px;
+      margin-bottom: 2rem;
+
+      &:hover {
+        .artist__image {
+          transform: rotate(0deg);  
+        }
+      }
+
+      &__image {
+        position: absolute;
+        height: 200px;
+        width: 200px;
+        left: 50%;
+        z-index: 1;
+        margin-left: -100px;
+        object-fit: scale-down;
+        transition: transform $speed;
+        transform: rotate(-4deg);        
+      }
+      &__image-border {
+        border: 2px solid $white;
+        width: 200px;
+        height: 200px;
+        align-self: center;
+        cursor: pointer;
+        z-index: 1;
+
+        img {
+          height: 200px;
+          width: 200px;
+          left: -2px;
+          top: -2px;
+          align-self: center;
+          position: relative;
+        }
+      }
+      .tear__topper {
+        position: relative;
+        top: -100px;
+        z-index: 0;
+      }
+      &__info {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        background-color: $black;
+        color: $white;
+        margin-top: -100px;
+        padding: 100px 1rem .5rem;
+        width: 100%;
+
+        &_name {
           display: flex;
-          flex-direction: column;
-          width: 320px;
+          font-weight: bold;
+          align-self: center;
+          font-size: 18px;
+          align-items: flex-end;
+          padding-bottom: 1rem;
+          border-bottom: 2px solid $white;
+          width: 100%;
+          justify-content: center;
+          margin: 0 0 1rem;
+          cursor: pointer;
+          transition: color $speed;
+          font-family: $font-family-sans-serif;
 
           &:hover {
-            .artist-image {
-              transform: rotate(0deg);  
-            }
+            color: rgba($white, .8);
           }
+        }
 
-          .image-border {
-            border: 2px solid $white;
-            width: 200px;
-            height: 200px;
-            align-self: center;
-            cursor: pointer;
-            margin-bottom: -90px;
-            z-index: 1;
-
-            img {
-              height: 200px;
-              width: 200px;
-              left: -2px;
-              top: -2px;
-              align-self: center;
-              position: relative;
+        .details {
+          &__info {
+            &_title {
+              font-weight: 700;
+              font-size: 10px;
+              font-family: $font-family-base;
+              text-transform: uppercase;
+            }
+            &_value {
+              font-size: 13px;
+              margin-bottom: .5rem;
             }
 
-          }
+            .column {
+              display: flex;
+              flex-direction: column;
+            }
 
-          .artist-image {
-            position: absolute;
-            height: 200px;
-            width: 200px;
-            left: 50%;
-            margin-left: -100px;
-            object-fit: scale-down;
-            transition: transform $speed;
-            transform: rotate(-4deg);        
+            .column:not(:last-child) {
+              margin-right: 1rem;
+            }
           }
+        &__stripe {
+          border-top: 2px solid $white;
+          &_icon {
+            width: 100%;
+            height: 40px;
+          }
+          &_link {
+            line-height: 40px;
+            font-size: 13px;
+            color: $white;
+            text-decoration: underline;
+          }
+        }
 
-          .artist-info {
+          .support-info {
             display: flex;
             flex-direction: column;
-            align-self: center;
-            background-color: #1e1e1e;
-            color: #fefefe;
-            padding: 1.5rem;
-            padding-bottom: 0.5rem;
 
-            .artist-name {
-              display: flex;
-              font-weight: bold;
-              align-self: center;
-              font-size: 18px;
-              align-items: flex-end;
-              padding-bottom: 1rem;
-              border-bottom: 2px solid #fefefe;
-              width: 100%;
-              justify-content: center;
-              margin: 3rem 0 1rem;
-              cursor: pointer;
-              transition: color $speed;
-              font-family: $font-family-sans-serif;
+            .supporting-at {
+              margin-bottom: 1rem;
 
-              &:hover {
-                color: rgba($white, .8);
-              }
-            }
-
-            .extra-info {
-              display: flex;
-              align-self: center;
-              align-items: flex-end;
-              font-size: 13px;
-              font-weight: normal;
-
-              p {
-                margin: 0;
+              .supporting-at-value {
+                font-size: 21px;
               }
 
-              label:not(:last-child) {
-                margin-right: 2rem;
+              svg {
+                margin-right: 5px;
               }
 
-              .info-title {
-                font-weight: 700;
+              button {
                 font-size: 11px;
-              }
-
-              .info-value {
-                font-size: 14px;
-              }
-
-              .owned-info {
-                display: flex;
-                justify-content: space-between;
-
-                .column {
-                  display: flex;
-                  flex-direction: column;
-                }
-
-                .column:not(:last-child) {
-                  margin-right: 1rem;
-                }
-              }
-
-              .support-info {
-                display: flex;
-                flex-direction: column;
-
-                .supporting-at {
-                  margin-bottom: 1rem;
-
-                  .supporting-at-value {
-                    font-size: 21px;
-                  }
-
-                  svg {
-                    margin-right: 5px;
-                  }
-
-                  button {
-                    font-size: 11px;
-                    cursor: pointer;
-                    outline: none;
-                    color: $gray-light;
-                    letter-spacing: 1px;
-                    border: 0;
-                    background: transparent;
-                    transition: color $speed;
-                    &:hover {
-                      color: $brand-danger;
-                    }
-                  }
+                cursor: pointer;
+                outline: none;
+                color: $gray-light;
+                letter-spacing: 1px;
+                border: 0;
+                background: transparent;
+                transition: color $speed;
+                &:hover {
+                  color: $brand-danger;
                 }
               }
             }
@@ -278,7 +284,7 @@
     position: absolute;
     left: 50%;
     margin-left: -40px;
-    top: 50%;  
+    top: 50%;
     margin-top: -110px;
   }
 
@@ -289,6 +295,7 @@
     border-radius: 50%;
     object-fit: cover;
     opacity: 1;
+
     &.loading-image {
       opacity: .5;
     }

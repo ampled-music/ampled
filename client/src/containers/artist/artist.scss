@@ -19,7 +19,7 @@
     }
     &_border {
       z-index: 100;
-      width: calc(100% - 85px);
+      width: 100%;
       height: 339px;
       position: absolute;
       margin: -2px 0;
@@ -30,6 +30,10 @@
       }  
       @include mq( $layout-l ) {
         height: 575px;
+      }
+      &_swipe {
+        width: 500px;
+        height: 400px;
       }
     }
   }

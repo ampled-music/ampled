@@ -57,20 +57,15 @@ export class ArtistHeader extends React.Component<Props, any> {
     return this.state.screenshotURL;
   }
 
-  onSwipeStart = (event) => {
-    console.log('Start swiping...', event);
+  onSwipeLeft = () => {
+    this.cycleBanners('backwards')
   }
 
-  onSwipeMove = (position, event) => {
-    console.log(`Moved ${position.x} pixels horizontally`, event);
-    console.log(`Moved ${position.y} pixels vertically`, event);
+  onSwipeRight = () => {
+    this.cycleBanners('forwards')
   }
 
-  onSwipeEnd = (event) => {
-    console.log('End swiping...', event);
-  }
-
-  cycleBanners = () => {
+  cycleBanners = (direction) => {
 
     const bannerImages = document.getElementsByClassName("artist-header__photo");
     const bannerIcons = document.getElementsByClassName("artist-header__banner-icons_icon");
@@ -80,7 +75,12 @@ export class ArtistHeader extends React.Component<Props, any> {
       if (bannerImages[index].classList.contains('active')) {
         bannerImages[index].classList.toggle('active');
         bannerIcons[index].classList.toggle('active');
-        if (index + 1 === bannerImages.length) {
+        if (direction === 'backwards') {
+          index = index - 1;
+          if ( index === -1 ) {
+            index = bannerImages.length - 1;
+          }
+        } else if (index + 1 === bannerImages.length) {
           index = 0;
         } else {
           ++index;
@@ -162,13 +162,18 @@ export class ArtistHeader extends React.Component<Props, any> {
     <div className="artist-header__photo-container" style={{ borderColor: this.props.artist.accent_color }}>
       {this.renderOwners()}
       {this.renderBanners()}
-      <Swipe
-        onSwipeStart={this.onSwipeStart}
-        onSwipeMove={this.onSwipeMove}
-        onSwipeEnd={this.onSwipeEnd}
-      >
-        <div className="artist-header__photo-container_border" style={{ borderColor: this.props.artist.accent_color }} onClick={this.cycleBanners} />
-      </Swipe>
+      <div
+        onClick={this.cycleBanners}
+        className="artist-header__photo-container_border"
+        style={{ borderColor: this.props.artist.accent_color }}>
+        <Swipe
+          onSwipeLeft={this.onSwipeLeft}
+          onSwipeRight={this.onSwipeRight}
+          allowMouseEvents={true}
+          className="artist-header__photo-container_border_swipe"
+        >
+        </Swipe>
+      </div>
       {this.renderBannerIcons()}
     </div>
   );

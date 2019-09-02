@@ -243,3 +243,15 @@
     align-self: flex-end;
   }
 }
+
+.delete-post-modal {
+  padding: 2rem;
+  background-color: $white;
+
+
+  &__title {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 1rem auto 3rem; 
+  }
+}

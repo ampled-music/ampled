@@ -243,7 +243,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                   <div className="column">
                     <label>
                       <p className="info-title">MONTHLY TOTAL</p>
-                      <p className="info-value">$ {this.formatMoney(ownedPage.monthlyTotal)}</p>
+                      <p className="info-value">$ {this.formatMoney(ownedPage.monthlyTotal / 100)}</p>
                     </label>
                     <label>
                       <p className="info-title">LAST PAYOUT</p>

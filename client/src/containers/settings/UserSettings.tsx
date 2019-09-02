@@ -11,8 +11,10 @@ import { setUserDataAction } from 'src/redux/me/set-me';
 import { updateMeAction } from 'src/redux/me/update-me';
 import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
 
-import { faEdit, faHeartBroken } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faHeartBroken, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import tear from '../../images/background_tear.png';
 
 import avatar from '../../images/ampled_avatar.svg';
 
@@ -115,9 +117,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
           ) : (
             <img src={avatar} className="user-image" />
           )}
-          <div className="user-edit-profile">
-            <FontAwesomeIcon icon={faEdit} /> Edit Profile
-          </div>
         </a>
       </div>
     );
@@ -134,15 +133,40 @@ class UserSettingsComponent extends React.Component<Props, any> {
     // }
     return (
       <div className="user-info-container col-md-3">
-        {this.renderUserImage()}
+        <img className="tear__topper" src={tear} />
         <div className="user-content">
-          <p className="user-name">{userData.name}</p>
-          <p className="joined-at">Joined {this.getFormattedDate(userData.created_at)}</p>
+          {this.renderUserImage()}
+          <div className="user-content__name">{userData.name}</div>
+          <div className="user-content__joined-at">Joined {this.getFormattedDate(userData.created_at)}</div>
+          { userData.location && (
+            <div className="user-content__location"><FontAwesomeIcon className="icon" icon={faMapMarkerAlt} /> {userData.location}</div>
+          )}
+          { userData.bio && (
+            <div>
+              <div className="user-content__hr"></div>
+              <div className="user-content__bio">{userData.bio}</div>
+            </div>
+          )}
+          { userData.twitter || userData.instagram && (
+            <div>
+              <div className="user-content__hr"></div>
+              {userData.twitter && (
+                <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faTwitter} /> {userData.twitter}</div>
+              )}
+              {userData.twitter && (
+                <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faInstagram} /> {userData.instagram}</div>
+              )}
+            </div>
+          )}
           {/*
             monthlyTotal > 0 ?
               (<p className="user-name">${monthlyTotal.toFixed(2)}/Month</p>) :
               ''
           */}
+          
+          <a href="/user-details" className="user-content__edit-profile">
+            <FontAwesomeIcon icon={faEdit} /> Edit Profile
+          </a>
         </div>
       </div>
     );
@@ -177,7 +201,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('MY ARTIST PAGES')}
       <div className="pages row no-gutters justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
-          <div key={`artist-${ownedPage.id}`} className="artist col-sm-6">
+          <div key={`artist-${ownedPage.id}`} className="artist col-sm-4">
               <img className="artist-image" src={ownedPage.image} />
               <div className="image-border" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}></div>
             <div className="artist-info">
@@ -218,7 +242,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('SUPPORTED ARTISTS')}
       <div className="pages row no-gutters justify-content-center justify-content-md-start">
         {this.props.userData.subscriptions.map((subscription) => (
-          <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-6">
+          <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-4">
             <img className="artist-image" src={subscription.image} />
             <div className="image-border" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}></div>
             <div className="artist-info">

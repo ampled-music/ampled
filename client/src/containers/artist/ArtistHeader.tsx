@@ -90,6 +90,21 @@ export class ArtistHeader extends React.Component<Props, any> {
       }
     }
   }
+
+  selectBanner = (currentIndex) => {
+
+    const bannerImages = document.getElementsByClassName("artist-header__photo");
+    const bannerIcons = document.getElementsByClassName("artist-header__banner-icons_icon");
+
+    for (var index = 0; index < bannerImages.length; ++index) {
+      if (bannerImages[index].classList.contains('active')) {
+        bannerImages[index].classList.toggle('active');
+        bannerIcons[index].classList.toggle('active');
+      }
+    }
+    bannerImages[currentIndex].classList.add('active');
+    bannerIcons[currentIndex].classList.add('active');
+  }
   
   renderArtistName = () => <div className="artist-header__title"><span className="artist-header__title_flair"></span>{this.props.artist.name}</div>;
 
@@ -148,9 +163,9 @@ export class ArtistHeader extends React.Component<Props, any> {
         {artist.images &&
           artist.images.map((_image, index) => {
             if (index === 0) {
-              return <span key={index} className="artist-header__banner-icons_icon active"></span>
+              return <span key={index} className="artist-header__banner-icons_icon active" onClick={() => this.selectBanner(index)}></span>
             } else {
-              return <span key={index} className="artist-header__banner-icons_icon"></span>
+              return <span key={index} className="artist-header__banner-icons_icon" onClick={() => this.selectBanner(index)}></span>
             }
           })
         }

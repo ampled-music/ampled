@@ -232,12 +232,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
                   </div>
                 </div>
                 <div className="details__stripe">
-                  <div className="row no-gutter">
+                  <div className="row no-gutter align-items-center">
                     <div className="col-4">
                       <FontAwesomeIcon className="icon details__stripe_icon" icon={faStripe} />
                     </div>
+                    {console.log(ownedPage)}
                     <div className="col-8">
-                      <a href="" className="details__stripe_link">Edit Payout Details</a>
+                      <a href={ownedPage.stripeSignup ? ownedPage.stripeSignup : ownedPage.stripeDashboard} className="details__stripe_link" target="_blank">Edit Payout Details</a>
                     </div>
                   </div>
                 </div>

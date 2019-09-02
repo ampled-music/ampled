@@ -26,4 +26,6 @@ json.ownedPages @owned_pages do |page|
   json.monthlyTotal page.monthly_total
   json.lastPost page.last_post_date
   json.lastPayout page.last_payout
+  json.stripeSignup page.stripe_signup_url
+  json.stripeDashboard page.stripe_dashboard_url
 end

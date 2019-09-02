@@ -107,6 +107,7 @@
       flex-direction: column;
       width: 320px;
       margin-bottom: 2rem;
+      padding: 0 .5rem;
 
       &:hover {
         .artist__image {
@@ -169,12 +170,7 @@
           justify-content: center;
           margin: 0 0 1rem;
           cursor: pointer;
-          transition: color $speed;
           font-family: $font-family-sans-serif;
-
-          &:hover {
-            color: rgba($white, .8);
-          }
         }
 
         .details {
@@ -206,10 +202,15 @@
             height: 40px;
           }
           &_link {
-            line-height: 40px;
-            font-size: 13px;
+            font-size: 11px;
+            text-align: right;
             color: $white;
             text-decoration: underline;
+            line-height: 16px;
+            display: block;
+            &:hover {
+              text-decoration: none;
+            }
           }
         }
 

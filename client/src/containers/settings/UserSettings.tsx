@@ -11,8 +11,11 @@ import { setUserDataAction } from 'src/redux/me/set-me';
 import { updateMeAction } from 'src/redux/me/update-me';
 import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
 
-import { faEdit, faHeartBroken } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faHeartBroken, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTwitter, faInstagram, faStripe } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import tear from '../../images/background_tear.png';
+import tear_black from '../../images/background_tear_black.png';
 
 import avatar from '../../images/ampled_avatar.svg';
 
@@ -115,9 +118,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
           ) : (
             <img src={avatar} className="user-image" />
           )}
-          <div className="user-edit-profile">
-            <FontAwesomeIcon icon={faEdit} /> Edit Profile
-          </div>
         </a>
       </div>
     );
@@ -134,15 +134,40 @@ class UserSettingsComponent extends React.Component<Props, any> {
     // }
     return (
       <div className="user-info-container col-md-3">
-        {this.renderUserImage()}
+        <img className="tear__topper" src={tear} />
         <div className="user-content">
-          <p className="user-name">{userData.name}</p>
-          <p className="joined-at">Joined {this.getFormattedDate(userData.created_at)}</p>
+          {this.renderUserImage()}
+          <div className="user-content__name">{userData.name}</div>
+          <div className="user-content__joined-at">Joined {this.getFormattedDate(userData.created_at)}</div>
+          { userData.location && (
+            <div className="user-content__location"><FontAwesomeIcon className="icon" icon={faMapMarkerAlt} /> {userData.location}</div>
+          )}
+          { userData.bio && (
+            <div>
+              <div className="user-content__hr"></div>
+              <div className="user-content__bio">{userData.bio}</div>
+            </div>
+          )}
+          { userData.twitter || userData.instagram && (
+            <div>
+              <div className="user-content__hr"></div>
+              {userData.twitter && (
+                <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faTwitter} /> {userData.twitter}</div>
+              )}
+              {userData.twitter && (
+                <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faInstagram} /> {userData.instagram}</div>
+              )}
+            </div>
+          )}
           {/*
             monthlyTotal > 0 ?
               (<p className="user-name">${monthlyTotal.toFixed(2)}/Month</p>) :
               ''
           */}
+          
+          <a href="/user-details" className="user-content__edit-profile">
+            <FontAwesomeIcon icon={faEdit} /> Edit Profile
+          </a>
         </div>
       </div>
     );
@@ -177,32 +202,44 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('MY ARTIST PAGES')}
       <div className="pages row no-gutters justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
-          <div key={`artist-${ownedPage.id}`} className="artist col-sm-6">
-              <img className="artist-image" src={ownedPage.image} />
-              <div className="image-border" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}></div>
-            <div className="artist-info">
-              <p className="artist-name" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}>{ownedPage.name}</p>
-              <div className="extra-info">
-                <div className="owned-info">
-                  <div className="column">
-                    <label>
-                      <p className="info-title">SUPPORTERS</p>
-                      <p className="supporting-at-value">{ownedPage.supportersCount || 0}</p>
-                    </label>
-                    <label>
-                      <p className="info-title">LAST POST</p>
-                      <p className="info-value">{this.getFormattedDate(ownedPage.lastPost)}</p>
-                    </label>
+          <div key={`artist-${ownedPage.id}`} className="artist col-sm-4">
+            <img className="artist__image" src={ownedPage.image} />
+            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}></div>
+            <img className="tear__topper" src={tear_black} />
+            <div className="artist__info">
+              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}>{ownedPage.name}</p>
+              <div className="details">
+                <div className="details__info">
+                  <div className="row no-gutter">
+                    <div className="col-6">
+                      <div className="details__info_title">Supporters</div>
+                      <div className="details__info_value">{ownedPage.supportersCount || 0}</div>
+                    </div>
+                    <div className="col-6">
+                      <div className="details__info_title">Monthly Total</div>
+                      <div className="details__info_value">$ {this.formatMoney(ownedPage.monthlyTotal / 100)}</div>
+                    </div>
                   </div>
-                  <div className="column">
-                    <label>
-                      <p className="info-title">MONTHLY TOTAL</p>
-                      <p className="info-value">$ {this.formatMoney(ownedPage.monthlyTotal / 100)}</p>
-                    </label>
-                    <label>
-                      <p className="info-title">LAST PAYOUT</p>
-                      <p className="info-value">{this.getFormattedDate(ownedPage.lastPayout)}</p>
-                    </label>
+                  <div className="row no-gutter">
+                    <div className="col-6">
+                      <div className="details__info_title">Last Post</div>
+                      <div className="details__info_value">{this.getFormattedDate(ownedPage.lastPost)}</div>
+                    </div>
+                    <div className="col-6">
+                      <div className="details__info_title">Last Payout</div>
+                      <div className="details__info_value">{this.getFormattedDate(ownedPage.lastPayout)}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="details__stripe">
+                  <div className="row no-gutter align-items-center">
+                    <div className="col-4">
+                      <FontAwesomeIcon className="icon details__stripe_icon" icon={faStripe} />
+                    </div>
+                    {console.log(ownedPage)}
+                    <div className="col-8">
+                      <a href={ownedPage.stripeSignup ? ownedPage.stripeSignup : ownedPage.stripeDashboard} className="details__stripe_link" target="_blank">Edit Payout Details</a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -218,12 +255,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('SUPPORTED ARTISTS')}
       <div className="pages row no-gutters justify-content-center justify-content-md-start">
         {this.props.userData.subscriptions.map((subscription) => (
-          <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-6">
-            <img className="artist-image" src={subscription.image} />
-            <div className="image-border" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}></div>
-            <div className="artist-info">
-              <p className="artist-name" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}>{subscription.name}</p>
-              <div className="extra-info">
+          <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-4">
+            <img className="artist__image" src={subscription.image} />
+            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}></div>
+            <div className="artist__info">
+              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}>{subscription.name}</p>
+              <div className="details">
                 <div className="support-info">
                   <div className="supporting-at">
                     <label>

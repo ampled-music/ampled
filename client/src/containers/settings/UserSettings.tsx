@@ -11,7 +11,7 @@ import { setUserDataAction } from 'src/redux/me/set-me';
 import { updateMeAction } from 'src/redux/me/update-me';
 import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
 
-import { faEdit, faHeartBroken, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faInstagram, faStripe } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import tear from '../../images/background_tear.png';
@@ -254,30 +254,32 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-4">
             <img className="artist__image" src={subscription.image} />
             <div className="artist__image-border" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}></div>
+            <img className="tear__topper" src={tear_black} />
             <div className="artist__info">
               <p className="artist__info_name" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}>{subscription.name}</p>
               <div className="details">
-                <div className="support-info">
-                  <div className="supporting-at">
-                    <label>
-                      <p className="info-title">SUPPORTING AT</p>
-                      <p className="supporting-at-value">${subscription.amount / 100}/Month</p>
-                      <p className="info-title">${this.calculateSupportTotal(subscription.amount / 100)} incl. fees</p>
-                    </label>
-                    <button onClick={(event) => this.openCancelModal(event, subscription)}>
-                      <FontAwesomeIcon icon={faHeartBroken} />
-                      CANCEL
-                    </button>
+                <div className="details__info">
+                  <div className="row no-gutter">
+                    <div className="col-8">
+                      <div className="details__info_title">Supporting At</div>
+                      <div className="details__info_value details__info_value_large">${subscription.amount / 100}/Month</div>
+                      <div className="details__info_value details__info_value_small">${this.calculateSupportTotal(subscription.amount / 100)} incl. fees</div>
+                    </div>
+                    <div className="col-4">
+                      <a className="details__info_value details__info_value_cancel" onClick={(event) => this.openCancelModal(event, subscription)}>
+                        Cancel
+                      </a>
+                    </div>
                   </div>
-                  <div>
-                    <label>
-                      <p className="info-title">LAST POST</p>
-                      <p className="info-value">{this.getFormattedDate(subscription.last_post_date)}</p>
-                    </label>
-                    <label>
-                      <p className="info-title">SUPPORT DATE</p>
-                      <p className="info-value">{this.getFormattedDate(subscription.support_date)}</p>
-                    </label>
+                  <div className="row no-gutter">
+                    <div className="col-6">
+                      <div className="details__info_title">Support Date</div>
+                      <div className="details__info_value">{this.getFormattedDate(subscription.support_date)}</div>
+                    </div>
+                    <div className="col-6">
+                      <div className="details__info_title">Last Post</div>
+                      <div className="details__info_value">{this.getFormattedDate(subscription.last_post_date)}</div>
+                    </div>
                   </div>
                 </div>
               </div>

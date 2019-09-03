@@ -64,6 +64,7 @@
           width: 100%;
           margin: 1rem auto;
         }
+
         &__bio {
           width: 100%;
           text-align: center;
@@ -115,7 +116,7 @@
 
       &:hover {
         .artist__image {
-          transform: rotate(0deg);  
+          transform: rotate(0deg);
         }
       }
 
@@ -128,8 +129,9 @@
         margin-left: -100px;
         object-fit: scale-down;
         transition: transform $speed;
-        transform: rotate(-4deg);        
+        transform: rotate(-4deg);
       }
+
       &__image-border {
         border: 2px solid $white;
         width: 200px;
@@ -147,11 +149,13 @@
           position: relative;
         }
       }
+
       .tear__topper {
         position: relative;
         top: -100px;
         z-index: 0;
       }
+
       &__info {
         display: flex;
         flex-direction: column;
@@ -185,66 +189,49 @@
               font-family: $font-family-base;
               text-transform: uppercase;
             }
+
             &_value {
               font-size: 13px;
               margin-bottom: .5rem;
-            }
-
-            .column {
-              display: flex;
-              flex-direction: column;
-            }
-
-            .column:not(:last-child) {
-              margin-right: 1rem;
-            }
-          }
-        &__stripe {
-          border-top: 2px solid $white;
-          &_icon {
-            width: 100%;
-            height: 40px;
-          }
-          &_link {
-            font-size: 11px;
-            text-align: right;
-            color: $white;
-            text-decoration: underline;
-            line-height: 16px;
-            display: block;
-            &:hover {
-              text-decoration: none;
-            }
-          }
-        }
-
-          .support-info {
-            display: flex;
-            flex-direction: column;
-
-            .supporting-at {
-              margin-bottom: 1rem;
-
-              .supporting-at-value {
-                font-size: 21px;
+              &_large {
+                font-size: 24px;
+                margin-bottom: 0;
               }
-
-              svg {
-                margin-right: 5px;
-              }
-
-              button {
+              &_small {
                 font-size: 11px;
+              }
+              &_cancel {
                 cursor: pointer;
-                outline: none;
                 color: $gray-light;
-                letter-spacing: 1px;
-                border: 0;
-                background: transparent;
                 transition: color $speed;
+                text-decoration: underline;
                 &:hover {
+                  text-decoration: none;
                   color: $brand-danger;
                 }
+              }
+            }
+
+          }
+
+          &__stripe {
+            border-top: 2px solid $white;
+
+            &_icon {
+              width: 100%;
+              height: 40px;
+            }
+
+            &_link {
+              font-size: 11px;
+              text-align: right;
+              color: $white;
+              text-decoration: underline;
+              line-height: 16px;
+              display: block;
+
+              &:hover {
+                text-decoration: none;
               }
             }
           }

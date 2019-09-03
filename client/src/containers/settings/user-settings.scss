@@ -64,12 +64,16 @@
           width: 100%;
           margin: 1rem auto;
         }
+        &__bio {
+          width: 100%;
+          text-align: center;
+        }
 
         &__edit-profile {
           display: flex;
           color: $link-color;
           font-size: .7rem;
-          margin-top: .5rem;
+          margin-top: 1rem;
           text-align: center;
 
           svg {

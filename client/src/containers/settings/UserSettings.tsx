@@ -139,25 +139,22 @@ class UserSettingsComponent extends React.Component<Props, any> {
           {this.renderUserImage()}
           <div className="user-content__name">{userData.name}</div>
           <div className="user-content__joined-at">Joined {this.getFormattedDate(userData.created_at)}</div>
-          { userData.location && (
-            <div className="user-content__location"><FontAwesomeIcon className="icon" icon={faMapMarkerAlt} /> {userData.location}</div>
+          { userData.city && (
+            <div className="user-content__city"><FontAwesomeIcon className="icon" icon={faMapMarkerAlt} /> {userData.city}</div>
           )}
           { userData.bio && (
             <div>
               <div className="user-content__hr"></div>
               <div className="user-content__bio">{userData.bio}</div>
+              <div className="user-content__hr"></div>
             </div>
           )}
-          { userData.twitter || userData.instagram && (
-            <div>
-              <div className="user-content__hr"></div>
-              {userData.twitter && (
-                <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faTwitter} /> {userData.twitter}</div>
-              )}
-              {userData.twitter && (
-                <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faInstagram} /> {userData.instagram}</div>
-              )}
-            </div>
+          {console.log(userData)}
+          { userData.twitter && (
+              <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faTwitter} /> {userData.twitter}</div>
+          )}
+          { userData.instagram && (
+              <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faInstagram} /> {userData.instagram}</div>
           )}
           {/*
             monthlyTotal > 0 ?
@@ -236,7 +233,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     <div className="col-4">
                       <FontAwesomeIcon className="icon details__stripe_icon" icon={faStripe} />
                     </div>
-                    {console.log(ownedPage)}
                     <div className="col-8">
                       <a href={ownedPage.stripeSignup ? ownedPage.stripeSignup : ownedPage.stripeDashboard} className="details__stripe_link" target="_blank">Edit Payout Details</a>
                     </div>

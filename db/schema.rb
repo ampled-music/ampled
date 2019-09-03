@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 2019_08_30_162614) do
     t.string "stripe_user_id"
     t.string "stripe_access_token"
     t.string "stripe_product_id"
+    t.string "slug"
+    t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 
   create_table "comments", force: :cascade do |t|

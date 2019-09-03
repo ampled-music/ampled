@@ -3,7 +3,7 @@ import { createActionThunk } from 'redux-thunk-actions';
 import { getArtist } from '../../api/artist/get-artist';
 import { actions } from './actions';
 
-export const getArtistAction = createActionThunk(actions.getArtist, (id: string) => getArtist(id));
+export const getArtistAction = createActionThunk(actions.getArtist, (id: string, slug?: string) => getArtist(id, slug));
 
 export const getArtistReducer = {
   [getArtistAction.STARTED]: (state) => ({

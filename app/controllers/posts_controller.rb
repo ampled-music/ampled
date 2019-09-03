@@ -4,18 +4,19 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
 
-    if @post.save
-      redirect_to @post.artist_page, notice: "Post added"
+    if PostPolicy.new(current_user, @post).create? && @post.save
+      render json: :ok
     else
-      render :new
+      render json: {}, status: :bad_request
     end
   end
 
   def destroy
-    # artist_page_id = @post.artist_page.id
-    @post.destroy
-    200
-    # redirect_to artist_page_path(artist_page_id), notice: "Post removed"
+    if PostPolicy.new(current_user, @post).destroy? && @post.destroy
+      render json: :ok
+    else
+      render json: {}, status: :bad_request
+    end
   end
 
   private

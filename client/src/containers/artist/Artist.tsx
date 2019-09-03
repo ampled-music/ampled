@@ -28,6 +28,7 @@ interface ArtistProps {
   match: {
     params: {
       id: string;
+      slug: string;
     };
     path: string;
   };
@@ -87,7 +88,12 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   getArtistInfo = () => {
-    this.props.getArtist(this.props.match.params.id);
+    if (this.props.match.params.slug) {
+      console.log(`Have slug: ${this.props.match.params.slug}`);
+      this.props.getArtist(null, this.props.match.params.slug);
+    } else {
+      this.props.getArtist(this.props.match.params.id);
+    }
   };
 
   getUserConfirmation = (hasUnsavedChanges) => {
@@ -132,9 +138,9 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   getLoggedUserPageAccess = () => {
-    const { me, match } = this.props;
+    const { me } = this.props;
 
-    return me.userData && me.userData.artistPages.find((page) => page.artistId === +match.params.id);
+    return me.userData && me.userData.artistPages.find((page) => page.artistId === +this.props.artists.artist.id);
   };
 
   ColorLuminance = (hex, lum) => {
@@ -158,13 +164,13 @@ class ArtistComponent extends React.Component<Props, any> {
 
   handleSupportClick = () => {
     if (this.props.me && this.props.me.userData) {
-      this.props.history.push(routePaths.support.replace(':id', this.props.match.params.id));
+      this.props.history.push(routePaths.support.replace(':id', String(this.props.artists.artist.id)));
     } else {
       this.props.openAuthModal({
         modalPage: 'signup',
         showSupportMessage: 'artist',
         artistName: this.props.artists.artist.name,
-        redirectTo: routePaths.support.replace(':id', this.props.match.params.id),
+        redirectTo: routePaths.support.replace(':id', String(this.props.artists.artist.id)),
       });
       this.setState({ openWhyModal: false });
     }

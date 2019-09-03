@@ -16,6 +16,7 @@ const Routes = () => {
     <Switch>
       <PublicRoute exact path={routePaths.home} component={Home} />
       <PublicRoute exact path={routePaths.artists} component={Artist} />
+      <PublicRoute exact path={routePaths.slugs} component={Artist} />
       <PublicRoute exact path={routePaths.support} component={Support} />
       <PublicRoute exact path={routePaths.createPost} component={PostForm} />
       <PublicRoute exact path={routePaths.root} component={Home} />

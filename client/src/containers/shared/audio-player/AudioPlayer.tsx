@@ -117,7 +117,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     }
 
     renderAudioPlayer = () => {
-        const { url, playing, played, loaded, controls, volume, loop, playedSeconds, loadedSeconds, durationShow } = this.state;
+        const { url, playing, played, loaded, /* controls, */ volume, loop, playedSeconds, loadedSeconds, durationShow } = this.state;
         const PlayButton = withStyles({
             root: {
                 color: '#fff',

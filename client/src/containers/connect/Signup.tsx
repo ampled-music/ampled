@@ -162,7 +162,6 @@ class SignupComponent extends React.Component<Props, any> {
               placeholder="Last Name (Optional)"
               name="last_name"
               onChange={this.handleChange}
-              required
             />
 
             <input

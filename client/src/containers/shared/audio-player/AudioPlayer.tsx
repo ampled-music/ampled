@@ -19,6 +19,7 @@ interface AudioPlayerProps {
 interface AudioPlayerState {
     url: string,
     playing: boolean,
+    seeking: boolean,
     volume: number,
     played: number,
     playedSeconds: number,
@@ -33,6 +34,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     state = {
         url: null,
         playing: false,
+        seeking: false,
         volume: 0.8,
         played: 0,
         playedSeconds: 0,

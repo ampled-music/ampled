@@ -78,6 +78,10 @@ h6 {
   width: 100%;
   font-family: $font-family-monospace;
 
+  &.single-button {
+    justify-content: center;
+  }
+
   button {
     text-transform: capitalize;
     outline: none;
@@ -117,9 +121,17 @@ h6 {
     text-transform: capitalize;
     transition: all $speed;
     width: 50%;
+    max-width: 250px;
     &:hover {
       color: $white;
       background-color: $black;
+    }
+    &:only-child {
+        width: 100%;
+        margin-left: 0px;
+        @include mq(0,$layout-m) {
+            margin: auto;
+        }
     }
   }
 

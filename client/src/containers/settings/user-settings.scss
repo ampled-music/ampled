@@ -262,7 +262,8 @@
 .user-photo-selector-modal {
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 100%;
+  min-width: 400px;
   padding: 1rem;
   background-color: $white;
 

@@ -130,7 +130,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
   renderAddPhotoButton = () => (
     <div className="add-photo-button-container">
       <UploadFile inputRefId="input-user-photo" uploadFile={this.loadPhotoContent} />
-      <div className="media-button-wrapper action-buttons">
+      <div className="action-buttons single-button">
         <button
           disabled={this.props.updating}
           className="add-media"
@@ -261,6 +261,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     placeholder="First name"
                     value={this.state.name}
                     onChange={this.handleChange}
+                    fullWidth
                     required
                   />
                 </div>
@@ -270,6 +271,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     placeholder="Last name (Optional)"
                     value={this.state.last_name}
                     onChange={this.handleChange}
+                    fullWidth
                   />
                 </div>
               </div>
@@ -501,9 +503,6 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   renderButtons = () => (
     <DialogActions className="action-buttons">
-      <Button className="cancel-button">
-        Back
-      </Button>
       <Button
         type="submit"
         className="finished-button"

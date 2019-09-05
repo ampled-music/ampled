@@ -105,17 +105,25 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
   };
 
+  renderPhoto = (image, crop) => {
+    if (image.includes('https://res.cloudinary')) {
+      const croppedImage = image.replace('upload/','upload/w_'+crop+',h_'+crop+',c_fill/');
+      return croppedImage;
+    } else {
+      return image;
+    }
+  }
+
   renderBanners = () => {
     const { artist } = this.props;
-
     return (
       <div className="artist-header__photos">
         {artist.images &&
           artist.images.map((image, index) => {
             if (index === 0) {
-              return <div key={index} className="artist-header__photo active"><img src={image} /></div>;
+              return <div key={index} className="artist-header__photo active"><img src={this.renderPhoto(image,800)} /></div>;
             } else {              
-              return <div key={index} className="artist-header__photo"><img src={image} /></div>;
+              return <div key={index} className="artist-header__photo"><img src={this.renderPhoto(image,800)} /></div>;
             }
           })
         }

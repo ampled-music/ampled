@@ -19,6 +19,7 @@ interface NavComponentProps {
   match: {
     params: {
       id: string;
+      slug: string;
     };
     path: string;
   };
@@ -40,7 +41,7 @@ class NavComponent extends React.Component<Props, any> {
   showSupportButton = () => {
     const loggedUserAccess = this.getLoggedUserPageAccess();
 
-    if (this.props.match.path.indexOf(routePaths.artists) === -1) {
+    if (this.props.match.path.indexOf(routePaths.artists) === -1 && this.props.match.path.indexOf(routePaths.slugs) === -1) {
       return false;
     }
 
@@ -51,7 +52,11 @@ class NavComponent extends React.Component<Props, any> {
 
   handleSupportClick = () => {
     if (this.props.userData) {
-      this.props.history.push(routePaths.support.replace(':id', this.props.match.params.id));
+      if (this.props.match.params.slug) {
+        this.props.history.push(routePaths.support.replace(':id', this.props.artist.id));
+      } else {
+        this.props.history.push(routePaths.support.replace(':id', this.props.match.params.id));
+      }
     } else {
       this.props.openAuthModal({
         modalPage: 'signup',

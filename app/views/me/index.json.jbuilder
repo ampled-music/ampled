@@ -12,7 +12,7 @@ json.subscriptions @subscriptions do |subscription|
   json.subscriptionId subscription.id
   json.artistPageId subscription.artist_page.id
   json.name subscription.artist_page.name
-  json.image subscription.artist_page.images.first.url
+  json.image subscription.artist_page.cover_url
   json.last_post_date subscription.artist_page.last_post_date
   json.support_date subscription.created_at
   json.amount subscription.plan.nominal_amount
@@ -20,7 +20,7 @@ end
 json.ownedPages @owned_pages do |page|
   json.artistId page.id
   json.name page.name
-  json.image page.images.first.url
+  json.image page.cover_url
   json.supportersCount page.subscriber_count
   json.monthlyTotal page.monthly_total
   json.lastPost page.last_post_date

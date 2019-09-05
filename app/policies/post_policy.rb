@@ -11,7 +11,7 @@ class PostPolicy
   end
 
   def destroy?
-    owner?
+    owner? || author?
   end
 
   def comment?
@@ -23,6 +23,10 @@ class PostPolicy
   end
 
   private
+
+  def author?
+    @post.user == @user
+  end
 
   def owner?
     @user&.owned_pages&.include?(@post.artist_page)

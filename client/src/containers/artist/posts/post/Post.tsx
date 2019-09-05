@@ -7,12 +7,14 @@ import { routePaths } from 'src/containers/route-paths';
 import { UserRoles } from 'src/containers/shared/user-roles';
 
 import avatar from '../../../../images/ampled_avatar.svg';
+import tear from '../../../../images/background_tear.png';
 import { faUnlock, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardActions, Collapse, Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { withStyles } from '@material-ui/core/styles';
+import { Modal } from '../../../shared/modal/Modal';
 import Linkify from 'react-linkify';
 
 import { config } from '../../../../config';
@@ -20,9 +22,12 @@ import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';
 import { styles } from './post-style';
 
+import { deletePost } from 'src/api/post/delete-post';
+
 class PostComponent extends React.Component<any, any> {
   state = {
     showPrivatePostModal: false,
+    showDeletePostModal: false,
     expanded: false,
   };
 
@@ -55,6 +60,14 @@ class PostComponent extends React.Component<any, any> {
 
   closePrivatePostModal = () => {
     this.setState({ showPrivatePostModal: false });
+  };
+
+  openDeletePostModal = () => {
+    this.setState({ showDeletePostModal: true });
+  };
+
+  closeDeletePostModal = () => {
+    this.setState({ showDeletePostModal: false });
   };
 
   openSignupModal = () => {
@@ -95,8 +108,13 @@ class PostComponent extends React.Component<any, any> {
     return (loggedUserAccess && loggedUserAccess.role === UserRoles.Owner) || (me && commentUserId === me.id);
   };
 
-  deleteComment = async (commentId) => {
+  handleDeleteComment = async (commentId) => {
     await this.props.deleteComment(commentId);
+    this.props.updateArtist();
+  };
+
+  handleDeletePost = async () => {
+    await deletePost(this.props.post.id);
     this.props.updateArtist();
   };
 
@@ -118,6 +136,25 @@ class PostComponent extends React.Component<any, any> {
       return name.substr(0, spacePosition);
     }
   };
+
+  renderDeleteModal = () => (
+    <div>
+      <img className="tear__topper" src={tear} />
+      <div className="delete-post-modal">
+        <div className="delete-post-modal__title">
+          <h4>Are you sure?</h4>
+        </div>
+        <div className="delete-post-modal__actions action-buttons">
+          <button className="cancel-button" onClick={this.closeDeletePostModal}>
+            Cancel
+          </button>
+          <button className="delete-button" onClick={this.handleDeletePost}>
+            Delete Post
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 
   renderLock = () => {
     const { me } = this.props;
@@ -144,6 +181,9 @@ class PostComponent extends React.Component<any, any> {
 
     return (
       <div className="post">
+        <Modal open={this.state.showDeletePostModal} onClose={this.closeDeletePostModal}>
+          {this.renderDeleteModal()}
+        </Modal>
         <div
           className={cx('post', { 'clickable-post': !allowDetails })}
           onClick={() => this.handlePrivatePostClick(authenticated)}
@@ -155,27 +195,33 @@ class PostComponent extends React.Component<any, any> {
                 {post.authorImage ? (
                   <img className="user-image" src={post.authorImage} />
                 ) : (
-                  <img className="user-image" src={avatar} />
-                )}
+                    <img className="user-image" src={avatar} />
+                  )}
                 <span className="post__header_name">{this.returnFirstName(post.author)}</span>
               </div>
-              <div className={classes.postDate}>{post.created_ago} ago</div>
+              <div className={classes.postDate}>
+                {post.created_ago === 'less than a minute' ? (
+                  <div className={classes.postDate}>Just Now</div>
+                ) : (
+                    <div className={classes.postDate}>{post.created_ago} ago</div>
+                  )}
+              </div>
             </div>
             <Divider />
-            
-            {this.canLoggedUserPost() && 
-              ( isPrivate ? (
+
+            {this.canLoggedUserPost() &&
+              (isPrivate ? (
                 <div className="post__status"><FontAwesomeIcon className="unlock" icon={faUnlock} />Subscribers Only</div>
               ) : (
-                <div className="post__status">Public Post</div>
-              )
-            )}
-            
+                  <div className="post__status">Public Post</div>
+                )
+              )}
+
             {this.isUserSubscribed() && ![UserRoles.Owner.toString()].includes(this.props.loggedUserAccess.role) && isPrivate && (
-                <div className="post__status"><FontAwesomeIcon className="unlock" icon={faUnlock} />Subscribers Only</div>
+              <div className="post__status"><FontAwesomeIcon className="unlock" icon={faUnlock} />Subscribers Only</div>
             )}
-            
-            {this.canLoggedUserPost() && ( 
+
+            {this.canLoggedUserPost() && (
               <div className="post__change">
                 <div className="post__change_edit">
                   <button className="disabled">
@@ -183,7 +229,7 @@ class PostComponent extends React.Component<any, any> {
                   </button>
                 </div>
                 <div className="post__change_delete">
-                  <button className="disabled">
+                  <button onClick={this.openDeletePostModal}>
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </div>
@@ -216,9 +262,9 @@ class PostComponent extends React.Component<any, any> {
                 <Linkify
                   componentDecorator={
                     (decoratedHref: string, decoratedText: string, key: number) =>
-                    (<a href={decoratedHref} key={key} target="_blank">
-                      {decoratedText}
-                    </a>)
+                      (<a href={decoratedHref} key={key} target="_blank">
+                        {decoratedText}
+                      </a>)
                   }
                 >
                   {post.body}
@@ -252,7 +298,7 @@ class PostComponent extends React.Component<any, any> {
               key={comment.id}
               comment={comment}
               canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
-              deleteComment={this.deleteComment}
+              deleteComment={this.handleDeleteComment}
             />
           ))}
         {hasPreviousComments && (
@@ -263,7 +309,7 @@ class PostComponent extends React.Component<any, any> {
                   key={comment.id}
                   comment={comment}
                   canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
-                  deleteComment={this.deleteComment}
+                  deleteComment={this.handleDeleteComment}
                 />
               ))}
             </Collapse>

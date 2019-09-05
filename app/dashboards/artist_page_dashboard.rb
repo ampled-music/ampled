@@ -16,6 +16,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     images: Field::HasMany.with_options(show: %i[url]),
     id: Field::Number,
     name: Field::String,
+    slug: Field::String,
     location: Field::String,
     bio: Field::String,
     accent_color: Field::String,
@@ -45,6 +46,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :name,
     :id,
+    :slug,
     :owners,
     :location,
     :bio,
@@ -64,6 +66,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :owners,
     :name,
+    :slug,
     :location,
     :bio,
     :accent_color,

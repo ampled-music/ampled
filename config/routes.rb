@@ -20,10 +20,15 @@ Rails.application.routes.draw do
   resources :comments, only: %i[create destroy]
   resources :subscriptions
   resources :artist_pages
+  resources :posts, only: %i[destroy]
+
+  resources :posts, only: %i[destroy]
 
   resources :artist_pages, only: [] do
     resources :posts, only: %i[create index]
   end
+
+  get "slug/:slug", to: "artist_pages#show"
 
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"

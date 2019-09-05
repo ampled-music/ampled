@@ -103,7 +103,6 @@
         .artist {
           display: flex;
           flex-direction: column;
-          width: 320px;
 
           &:hover {
             .artist-image {
@@ -146,10 +145,12 @@
             display: flex;
             flex-direction: column;
             align-self: center;
-            background-color: #1e1e1e;
-            color: #fefefe;
+            background-color: $black;
+            color: $white;
             padding: 1.5rem;
             padding-bottom: 0.5rem;
+            width: 100%;
+            max-width: 500px;
 
             .artist-name {
               display: flex;
@@ -158,7 +159,7 @@
               font-size: 18px;
               align-items: flex-end;
               padding-bottom: 1rem;
-              border-bottom: 2px solid #fefefe;
+              border-bottom: 2px solid $white;
               width: 100%;
               justify-content: center;
               margin: 3rem 0 1rem;

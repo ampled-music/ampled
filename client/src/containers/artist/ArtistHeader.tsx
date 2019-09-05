@@ -60,7 +60,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   }
 
   onSwipeRight = () => {
-    this.cycleBanners('forwards')
+    this.cycleBanners('forewords')
   }
 
   cycleBanners = (direction) => {
@@ -69,21 +69,17 @@ export class ArtistHeader extends React.Component<Props, any> {
     const bannerIcons = document.getElementsByClassName("artist-header__banner-icons_icon");
     var index;
 
-    console.log(index);
-
     for (index = 0; index < bannerImages.length; ++index) {
-      const change = direction === 'backwards' ? -1 : 1;
-      index += change;
-      index = index < 0 ? bannerImages.length - 1 : index = index % bannerImages.length;
-
+      
       if (bannerImages[index].classList.contains('active')) {
+
         bannerImages[index].classList.toggle('active');
         bannerIcons[index].classList.toggle('active');
-        if (index + 1 === bannerImages.length) {
-          index = 0;
-        } else {
-          ++index;
-        }
+
+        const change = direction === 'backwards' ? -1 : 1;
+        index += change;
+        index = index < 0 ? bannerImages.length - 1 : index = index % bannerImages.length;
+        
         bannerImages[index].classList.add('active');
         bannerIcons[index].classList.add('active');
       }

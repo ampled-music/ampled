@@ -87,7 +87,7 @@ export class ArtistHeader extends React.Component<Props, any> {
               {owner.profile_image_url ? (
                 <img
                   className="artist-header__person_image member"
-                  src={owner.profile_image_url}
+                  src={this.renderPhoto(owner.profile_image_url,150)}
                   alt={owner.name}
                   style={{ borderColor: artist.accent_color }}
                 />
@@ -105,7 +105,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
   };
 
-  renderPhoto = (image, crop) => {
+  renderPhoto = (image: string, crop: number) => {
     if (image.includes('https://res.cloudinary')) {
       const croppedImage = image.replace('upload/','upload/w_'+crop+',h_'+crop+',c_fill/');
       return croppedImage;
@@ -213,7 +213,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             <div className="supporter__hover-card_header_photo">
               <img
                 className="supporter__hover-card_header_photo_image"
-                src={supporter.profile_image_url}
+                src={this.renderPhoto(supporter.profile_image_url,150)}
                 alt={this.anonymizeSupporterName(supporter.name)}
               />
             </div>
@@ -266,7 +266,7 @@ export class ArtistHeader extends React.Component<Props, any> {
           {supporter.profile_image_url ? (
             <img
               className="artist-header__person_image"
-              src={supporter.profile_image_url}
+              src={this.renderPhoto(supporter.profile_image_url,200)}
               alt={this.anonymizeSupporterName(supporter.name)}
               style={style}
             />

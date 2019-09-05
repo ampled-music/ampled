@@ -42,7 +42,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   getThumbnailURLFromVideoURL = async (videoURL: string) => {
     if (/vimeo/i.test(videoURL)) {
       const vimeoId = videoURL.match(/vimeo.com\/([\d\w]+)/)[1];
-      const vimeoJSON = await (await fetch(`http://vimeo.com/api/v2/video/${vimeoId}.json`)).json();
+      const vimeoJSON = await (await fetch(`//vimeo.com/api/v2/video/${vimeoId}.json`)).json();
       const vimeoURL = path([0, 'thumbnail_large'], vimeoJSON);
       if (vimeoURL) {
         return vimeoURL;
@@ -177,7 +177,9 @@ export class ArtistHeader extends React.Component<Props, any> {
             </button>
             <div className="artist-header__message-video">
               <img className="artist-header__message-tear" src={tear} />
-              <img className="artist-header__message-image" src={this.state.screenshotURL} />
+              <div className="artist-header__message-image_container">
+                <img className="artist-header__message-image" src={this.state.screenshotURL} />
+              </div>
             </div>
           </div>
         </div>
@@ -345,12 +347,12 @@ export class ArtistHeader extends React.Component<Props, any> {
   render() {
     return (
       <div className="artist-header container">
+        {this.renderArtistName()}
         <div className="row justify-content-between">
           <div className="col-md-7">
-            {this.renderArtistName()}
             {this.renderPhotoContainer()}
           </div>
-          <div className="col-md-4 artist-header artist-header__message-col">
+          <div className="col-md-4 artist-header__message-col">
             {this.renderMessageContainer()}
             {this.renderFloatingNewPostButton()}
             {this.renderSupportersContainer()}

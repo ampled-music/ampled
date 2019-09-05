@@ -182,7 +182,7 @@ export class SupportComponent extends React.Component<Props, any> {
             this.state.supportLevelValue && this.state.supportLevelValue >= 3 ? 
             (<p className="support__value-description">
                 Your total charge will be <strong>${this.calculateSupportTotal(this.state.supportLevelValue)}</strong>.<br /><br />
-                This is due to our payment processor's service fee. More details can be found <a href="https://www.ampled.com/transparency" target="_blank">here</a>.
+                This is due to our payment processor's service fee. More details can be found <a href="https://app.ampled.com/payment-processing" target="_blank">here</a>.
           </p>) :
               (<p className="support__value-description">
               Support {artistName} directly for $3 (or more) per month to unlock access to all of their posts and get

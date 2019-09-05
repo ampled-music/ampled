@@ -13,18 +13,18 @@
   &__photo-container {
     display: flex;
     justify-content: center;
-    margin: 0 2rem;
+    margin: 0 0 2rem 0;
     @include mq( $desktop ) {
-      margin: auto;
+      margin: 0 auto 1rem;
     }
     &_border {
-      border: 2px solid $brand-primary;
       z-index: 100;
       width: calc(100% - 85px);
       height: 339px;
       position: absolute;
       margin: -2px 0;
       @include mq( $layout-m ) {
+        border: 2px solid $brand-primary;
         height: 475px;
         width: calc(100% - 30px);
       }  
@@ -67,7 +67,7 @@
     flex-wrap: wrap;
     flex-direction: column;
     position: absolute;
-    left: 20px;
+    left: -5px;
 
     @include mq( $layout-m ) {
       padding-top: 20px;
@@ -92,7 +92,7 @@
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
-      border-width: 1px;  
+      border-width: 2px;  
       border-style: solid;  
       margin: auto;
 
@@ -149,7 +149,7 @@
     }
 
     &_small {
-      margin: 0 3px;
+      margin: 0 6px 0 0;
     }
   }
 
@@ -195,31 +195,26 @@
     }
 
     &:nth-child(1n) {
-      transform: scale(.9) rotate(5deg);
       @include mq( $layout-m ) {
         transform: rotate(5deg);
       }
     }
     &:nth-child(2n) {
-      transform: scale(.9) rotate(3deg);
       @include mq( $layout-m ) {
         transform: rotate(3deg);
       }
     }
     &:nth-child(3n) {
-      transform: scale(.9) rotate(-5deg);
       @include mq( $layout-m ) {
         transform: rotate(-5deg);
       }
     }
     &:nth-child(4n) {
-      transform: scale(.9) rotate(-3deg);
       @include mq( $layout-m ) {
         transform: rotate(-3deg);
       }
     }
     &:nth-child(5n) {
-      transform: scale(.9) rotate(-7deg);
       @include mq( $layout-m ) {
         transform: rotate(-7deg);
       }
@@ -228,17 +223,24 @@
 
   &__banner-icons {
     display: flex;
-    bottom: -1rem;
+    bottom: 0rem;
     position: absolute;
     &_icon {
       width: 10px;
       height: 10px;
       border-radius: 100%;
       background-color: $gray-lighter;
-      margin: 0 5px;
+      margin: 0 4px;
       &.active {
         background: $brand-primary;
       }
+    }
+  }
+
+  &__message-col {
+    margin-top: 1rem;
+    @include mq($layout-m) {
+      margin-top: -11px;
     }
   }
 
@@ -246,8 +248,10 @@
     font-size: 1.25rem;
     text-transform: uppercase;
     font-weight: bold;
+    text-align: center;
     @include mq($layout-m) {
-      margin: 2rem 0;
+      margin: 0 0 1rem 0;
+      text-align: left;
     }
   }
 
@@ -255,7 +259,7 @@
     display: flex;
     align-items: center;
     width: 90%;
-    margin: 2rem auto;
+    margin: 1rem auto 2rem;
     border: 2px solid $brand-primary;
     padding: 10px 0px;
   }
@@ -268,11 +272,16 @@
   }
   &__message-image {
     width: 100%;
+    transform: scale(1.35);
+    &_container {
+      overflow: hidden;
+    }
   }
   &__message-tear {
     width: 102%;
     left: -2px;
     top: -2px;
+    z-index: 2;
     position: absolute;    
   }
 

@@ -3,7 +3,6 @@ json.name @artist_page.name
 json.slug @artist_page.slug
 json.location @artist_page.location
 json.accent_color @artist_page.accent_color
-json.video_screenshot_url @artist_page.video_screenshot_url
 json.video_url @artist_page.video_url
 json.twitter_handle @artist_page.twitter_handle
 json.instagram_handle @artist_page.instagram_handle

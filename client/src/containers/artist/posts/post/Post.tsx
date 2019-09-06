@@ -5,6 +5,7 @@ import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import { routePaths } from 'src/containers/route-paths';
 import { UserRoles } from 'src/containers/shared/user-roles';
+import { config } from '../../../../config';
 
 import avatar from '../../../../images/ampled_avatar.svg';
 import tear from '../../../../images/background_tear.png';
@@ -15,9 +16,9 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { withStyles } from '@material-ui/core/styles';
 import { Modal } from '../../../shared/modal/Modal';
+import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
 import Linkify from 'react-linkify';
 
-import { config } from '../../../../config';
 import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';
 import { styles } from './post-style';
@@ -36,18 +37,6 @@ class PostComponent extends React.Component<any, any> {
     setTimeout(() => {
       this.props.doReflow && this.props.doReflow();
     }, 500);
-  };
-
-  audioPLayer = (audioFile) => {
-    const playableUrl = `${config.aws.playableBaseUrl}${audioFile}`;
-
-    return (
-      <div>
-        <audio controls>
-          <source src={playableUrl} type="audio/mp3" />
-        </audio>
-      </div>
-    );
   };
 
   canLoggedUserPost = () => {
@@ -127,6 +116,12 @@ class PostComponent extends React.Component<any, any> {
       this.redirectToSupport();
     }
   };
+
+  returnPlayableUrl = () => {
+    const { post } = this.props;
+    const playableUrl = `${config.aws.playableBaseUrl}${post.audio_file}`;
+    return playableUrl;
+  }
 
   returnFirstName = (name) => {
     let spacePosition = name.indexOf(' ');
@@ -236,21 +231,27 @@ class PostComponent extends React.Component<any, any> {
               </div>
             )}
 
-            {post.image_url && (
+            {post.image_url && !post.audio_file && (
               <div className="post__image-container">
-                <div>
-                  <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
-                </div>
+                <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
                 {!allowDetails && this.renderLock()}
               </div>
             )}
 
             {post.audio_file && (
-              <CardMedia
-                className={classes.media}
-                image={post.image_url}
-                component={() => this.audioPLayer(post.audio_file)}
-              />
+              <div className="post__audio-container">
+                {post.image_url && (
+                  <div className="post__image-container">
+                    <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
+                    {!allowDetails && this.renderLock()}
+                  </div>
+                )}
+                <AudioPlayer
+                  url={this.returnPlayableUrl()}
+                  image={post.image_url}
+                  accentColor={accentColor}
+                />
+              </div>
             )}
 
             <div className="post__title">

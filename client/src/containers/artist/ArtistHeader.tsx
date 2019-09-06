@@ -110,7 +110,8 @@ export class ArtistHeader extends React.Component<Props, any> {
       const croppedImage = image.replace('upload/','upload/w_'+crop+',h_'+crop+',c_fill/');
       return croppedImage;
     } else {
-      return image;
+      const croppedImage = 'https://res.cloudinary.com/demo/image/fetch/w_'+crop+',h_'+crop+',c_fill/'+image;
+      return croppedImage;
     }
   }
 

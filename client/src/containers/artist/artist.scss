@@ -19,7 +19,7 @@
     }
     &_border {
       z-index: 100;
-      width: calc(100% - 85px);
+      width: 100%;
       height: 339px;
       position: absolute;
       margin: -2px 0;
@@ -30,6 +30,10 @@
       }  
       @include mq( $layout-l ) {
         height: 575px;
+      }
+      &_swipe {
+        width: 100%;
+        height: 100%;
       }
     }
   }
@@ -272,11 +276,16 @@
   }
   &__message-image {
     width: 100%;
+    transform: scale(1.35);
+    &_container {
+      overflow: hidden;
+    }
   }
   &__message-tear {
     width: 102%;
     left: -2px;
     top: -2px;
+    z-index: 2;
     position: absolute;    
   }
 

@@ -190,27 +190,33 @@ class PostComponent extends React.Component<any, any> {
                 {post.authorImage ? (
                   <img className="user-image" src={post.authorImage} />
                 ) : (
-                  <img className="user-image" src={avatar} />
-                )}
+                    <img className="user-image" src={avatar} />
+                  )}
                 <span className="post__header_name">{this.returnFirstName(post.author)}</span>
               </div>
-              <div className={classes.postDate}>{post.created_ago} ago</div>
+              <div className={classes.postDate}>
+                {post.created_ago === 'less than a minute' ? (
+                  <div className={classes.postDate}>Just Now</div>
+                ) : (
+                    <div className={classes.postDate}>{post.created_ago} ago</div>
+                  )}
+              </div>
             </div>
             <Divider />
-            
-            {this.canLoggedUserPost() && 
-              ( isPrivate ? (
+
+            {this.canLoggedUserPost() &&
+              (isPrivate ? (
                 <div className="post__status"><FontAwesomeIcon className="unlock" icon={faUnlock} />Subscribers Only</div>
               ) : (
-                <div className="post__status">Public Post</div>
-              )
-            )}
-            
+                  <div className="post__status">Public Post</div>
+                )
+              )}
+
             {this.isUserSubscribed() && ![UserRoles.Owner.toString()].includes(this.props.loggedUserAccess.role) && isPrivate && (
-                <div className="post__status"><FontAwesomeIcon className="unlock" icon={faUnlock} />Subscribers Only</div>
+              <div className="post__status"><FontAwesomeIcon className="unlock" icon={faUnlock} />Subscribers Only</div>
             )}
-            
-            {this.canLoggedUserPost() && ( 
+
+            {this.canLoggedUserPost() && (
               <div className="post__change">
                 <div className="post__change_edit">
                   <button className="disabled">
@@ -257,9 +263,9 @@ class PostComponent extends React.Component<any, any> {
                 <Linkify
                   componentDecorator={
                     (decoratedHref: string, decoratedText: string, key: number) =>
-                    (<a href={decoratedHref} key={key} target="_blank">
-                      {decoratedText}
-                    </a>)
+                      (<a href={decoratedHref} key={key} target="_blank">
+                        {decoratedText}
+                      </a>)
                   }
                 >
                   {post.body}

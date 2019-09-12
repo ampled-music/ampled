@@ -27,7 +27,6 @@ namespace :dummy do
         location: Faker::GameOfThrones.city,
         twitter_handle: Faker::Twitter.screen_name,
         instagram_handle: Faker::Twitter.screen_name,
-        video_screenshot_url: "https://dummyimage.com/400x225/#{Faker::Color.hex_color[1..-1]}/fff",
         video_url: "https://www.youtube.com/watch?v=4nsKDJlpUbA",
         bio: Faker::Dune.quote,
         accent_color: Faker::Color.hex_color

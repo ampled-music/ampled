@@ -145,6 +145,9 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   ColorLuminance = (hex, lum) => {
+    if (!hex) {
+      return '#fff';
+    }
     // validate hex string
     hex = String(hex).replace(/[^0-9a-f]/gi, '');
     if (hex.length < 6) {

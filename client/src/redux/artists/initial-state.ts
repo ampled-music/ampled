@@ -26,5 +26,6 @@ interface SupportersProps {
 
 export const initialState = {
   loading: false,
+  error: undefined,
   artist: {} as ArtistModel,
 };

@@ -20,7 +20,20 @@ class UserDashboard < Administrate::BaseDashboard
     updated_at: Field::DateTime,
     locked_at: Field::DateTime,
     name: Field::String,
-    profile_image_url: Field::String
+    last_name: Field::String,
+    profile_image_url: Field::String,
+    password: Field::String,
+    city: Field::String,
+    country: Field::String,
+    twitter: Field::String,
+    instagram: Field::String,
+    bio: Field::String,
+    ship_address: Field::String,
+    ship_address2: Field::String,
+    ship_city: Field::String,
+    ship_state: Field::String,
+    ship_country: Field::String,
+    ship_zip: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -31,7 +44,8 @@ class UserDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :id,
     :email,
-    :reset_password_token,
+    :name,
+    :last_name,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -46,6 +60,18 @@ class UserDashboard < Administrate::BaseDashboard
     :created_at,
     :updated_at,
     :name,
+    :last_name,
+    :city,
+    :country,
+    :twitter,
+    :instagram,
+    :bio,
+    :ship_address,
+    :ship_address2,
+    :ship_city,
+    :ship_state,
+    :ship_zip,
+    :ship_country
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -53,10 +79,19 @@ class UserDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :email,
-    :reset_password_sent_at,
-    :remember_created_at,
-    :locked_at,
     :name,
+    :last_name,
+    :city,
+    :country,
+    :twitter,
+    :instagram,
+    :bio,
+    :ship_address,
+    :ship_address2,
+    :ship_city,
+    :ship_state,
+    :ship_zip,
+    :ship_country
   ].freeze
 
   # Overwrite this method to customize how users are displayed

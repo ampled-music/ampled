@@ -1,13 +1,13 @@
 import { apiAxios } from '../setup-axios';
 
-export const signUp = async (username: string, password: string, passwordConfirmation: string, name: string) => {
+export const signUp = async (username: string, password: string, passwordConfirmation: string, name: string, last_name: string) => {
   const { data } = await apiAxios({
     method: 'post',
     url: '/users.json',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: { user: { email: username, password, passwordConfirmation, name } },
+    data: { user: { email: username, password, passwordConfirmation, name, last_name } },
   });
 
   return { data };

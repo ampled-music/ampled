@@ -10,6 +10,7 @@ import { Home } from './home/Home';
 import { NoArtist } from './shared/no-artist/NoArtist';
 import { routePaths } from './route-paths';
 import { UserSettings } from './settings/UserSettings';
+import { UserDetails } from './user-details/UserDetails';
 
 const Routes = () => {
   return (
@@ -22,6 +23,7 @@ const Routes = () => {
       <PublicRoute exact path={routePaths.root} component={Home} />
       <PublicRoute exact path={routePaths.noArtist} component={NoArtist} />
       <ProtectedRoute exact path={routePaths.settings} component={UserSettings} />
+      <ProtectedRoute exact path={routePaths.userDetails} component={UserDetails} />
       <PublicRoute path={'*'} component={Home} />
     </Switch>
   );

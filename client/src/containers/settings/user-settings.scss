@@ -17,65 +17,69 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      margin-bottom: 2rem;
-
-      p {
-        font-weight: bold;
-        margin: 0;
-      }
+      margin: 60px auto 2rem;
 
       .user-image-container {
-        position: relative;
-
-        button {
-          display: flex;
-          flex-direction: column;
-          cursor: pointer;
-          outline: none;
-          border: 0;
-          background: transparent;
-        }
+        position: absolute;
+        top: -60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        transition: opacity $speed;
 
         .user-image {
           height: 120px;
           width: 120px;
           border-radius: 50%;
           object-fit: cover;
-          margin-bottom: -60px;
           z-index: 1;
-        }
-
-        .tag {
-          font-size: 1rem;
-          color: $black;
-          text-transform: capitalize;
-          align-self: center;
-          z-index: 3;
-          position: absolute;
-          top: 110%;
-          right: -20px;
         }
       }
 
       .user-content {
         display: flex;
         flex-direction: column;
-        height: 150px;
         width: 100%;
         max-width: 350px;
         background-image: url(../../images/background_post.svg);
         align-items: center;
-        padding: 4rem 1rem 1rem;
+        padding: 30px 1rem 1rem;
+        font-size: .9rem;
 
-        .user-name {
-          font-size: 20px;
+        &__name {
+          font-size: 1.3rem;
           font-weight: bold;
           font-family: $font-family-sans-serif;
+          margin: 1rem auto 0;
         }
 
-        .joined-at {
-          font-size: 13px;
-          font-weight: 100;
+        &__joined-at {
+          font-size: .7rem;
+          font-family: $font-family-base;
+          margin-bottom: 1rem;
+        }
+
+        &__hr {
+          border-top: 2px solid $gray-light;
+          width: 100%;
+          margin: 1rem auto;
+        }
+
+        &__bio {
+          width: 100%;
+          text-align: center;
+        }
+
+        &__edit-profile {
+          display: flex;
+          color: $link-color;
+          font-size: .7rem;
+          margin-top: 1rem;
+          text-align: center;
+
+          svg {
+            margin-right: .5rem;
+          }
         }
       }
     }
@@ -89,6 +93,7 @@
         margin: 0;
         font-weight: bold;
         text-align: center;
+
         @include mq($tablet) {
           text-align: left;
         }
@@ -98,147 +103,135 @@
         padding-top: 1rem;
         width: 100%;
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: wrap
+      }
+    }
+    
+    .artist {
+      display: flex;
+      flex-direction: column;
+      width: 320px;
+      margin-bottom: 2rem;
+      padding: 0 .5rem;
 
-        .artist {
+      &:hover {
+        .artist__image {
+          transform: rotate(0deg);
+        }
+      }
+
+      &__image {
+        position: absolute;
+        height: 200px;
+        width: 200px;
+        left: 50%;
+        z-index: 1;
+        margin-left: -100px;
+        object-fit: scale-down;
+        transition: transform $speed;
+        transform: rotate(-4deg);
+      }
+
+      &__image-border {
+        border: 2px solid $white;
+        width: 200px;
+        height: 200px;
+        align-self: center;
+        cursor: pointer;
+        z-index: 1;
+
+        img {
+          height: 200px;
+          width: 200px;
+          left: -2px;
+          top: -2px;
+          align-self: center;
+          position: relative;
+        }
+      }
+
+      .tear__topper {
+        position: relative;
+        top: -100px;
+        z-index: 0;
+      }
+
+      &__info {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        background-color: $black;
+        color: $white;
+        margin-top: -100px;
+        padding: 100px 1rem .5rem;
+        width: 100%;
+
+        &_name {
           display: flex;
-          flex-direction: column;
+          font-weight: bold;
+          align-self: center;
+          font-size: 18px;
+          align-items: flex-end;
+          padding-bottom: 1rem;
+          border-bottom: 2px solid $white;
+          width: 100%;
+          justify-content: center;
+          margin: 0 0 1rem;
+          cursor: pointer;
+          font-family: $font-family-sans-serif;
+        }
 
-          &:hover {
-            .artist-image {
-              transform: rotate(0deg);  
-            }
-          }
-
-          .image-border {
-            border: 2px solid $white;
-            width: 200px;
-            height: 200px;
-            align-self: center;
-            cursor: pointer;
-            margin-bottom: -90px;
-            z-index: 1;
-
-            img {
-              height: 200px;
-              width: 200px;
-              left: -2px;
-              top: -2px;
-              align-self: center;
-              position: relative;
+        .details {
+          &__info {
+            &_title {
+              font-weight: 700;
+              font-size: 10px;
+              font-family: $font-family-base;
+              text-transform: uppercase;
             }
 
-          }
-
-          .artist-image {
-            position: absolute;
-            height: 200px;
-            width: 200px;
-            left: 50%;
-            margin-left: -100px;
-            object-fit: scale-down;
-            transition: transform $speed;
-            transform: rotate(-4deg);        
-          }
-
-          .artist-info {
-            display: flex;
-            flex-direction: column;
-            align-self: center;
-            background-color: $black;
-            color: $white;
-            padding: 1.5rem;
-            padding-bottom: 0.5rem;
-            width: 100%;
-            max-width: 500px;
-
-            .artist-name {
-              display: flex;
-              font-weight: bold;
-              align-self: center;
-              font-size: 18px;
-              align-items: flex-end;
-              padding-bottom: 1rem;
-              border-bottom: 2px solid $white;
-              width: 100%;
-              justify-content: center;
-              margin: 3rem 0 1rem;
-              cursor: pointer;
-              transition: color $speed;
-              font-family: $font-family-sans-serif;
-
-              &:hover {
-                color: rgba($white, .8);
-              }
-            }
-
-            .extra-info {
-              display: flex;
-              align-self: center;
-              align-items: flex-end;
+            &_value {
               font-size: 13px;
-              font-weight: normal;
-
-              p {
-                margin: 0;
+              margin-bottom: .5rem;
+              &_large {
+                font-size: 24px;
+                margin-bottom: 0;
               }
-
-              label:not(:last-child) {
-                margin-right: 2rem;
-              }
-
-              .info-title {
-                font-weight: 700;
+              &_small {
                 font-size: 11px;
               }
-
-              .info-value {
-                font-size: 14px;
-              }
-
-              .owned-info {
-                display: flex;
-                justify-content: space-between;
-
-                .column {
-                  display: flex;
-                  flex-direction: column;
-                }
-
-                .column:not(:last-child) {
-                  margin-right: 1rem;
+              &_cancel {
+                cursor: pointer;
+                color: $gray-light;
+                transition: color $speed;
+                text-decoration: underline;
+                &:hover {
+                  text-decoration: none;
+                  color: $brand-danger;
                 }
               }
+            }
 
-              .support-info {
-                display: flex;
-                flex-direction: column;
+          }
 
-                .supporting-at {
-                  margin-bottom: 1rem;
+          &__stripe {
+            border-top: 2px solid $white;
 
-                  .supporting-at-value {
-                    font-size: 21px;
-                  }
+            &_icon {
+              width: 100%;
+              height: 40px;
+            }
 
-                  svg {
-                    margin-right: 5px;
-                  }
+            &_link {
+              font-size: 11px;
+              text-align: right;
+              color: $white;
+              text-decoration: underline;
+              line-height: 16px;
+              display: block;
 
-                  button {
-                    font-size: 11px;
-                    cursor: pointer;
-                    outline: none;
-                    color: $gray-light;
-                    letter-spacing: 1px;
-                    border: 0;
-                    background: transparent;
-                    transition: color $speed;
-                    &:hover {
-                      color: $brand-danger;
-                    }
-                  }
-                }
+              &:hover {
+                text-decoration: none;
               }
             }
           }
@@ -269,7 +262,8 @@
 .user-photo-selector-modal {
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 100%;
+  min-width: 400px;
   padding: 1rem;
   background-color: $white;
 
@@ -283,7 +277,7 @@
     position: absolute;
     left: 50%;
     margin-left: -40px;
-    top: 50%;  
+    top: 50%;
     margin-top: -110px;
   }
 
@@ -294,6 +288,7 @@
     border-radius: 50%;
     object-fit: cover;
     opacity: 1;
+
     &.loading-image {
       opacity: .5;
     }

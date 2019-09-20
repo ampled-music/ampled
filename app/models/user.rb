@@ -2,12 +2,12 @@
 #
 # Table name: users
 #
-#  ad_address             :string
-#  ad_address2            :string
-#  ad_city                :string
-#  ad_country             :string
-#  ad_state               :string
-#  ad_zip                 :string
+#  ship_address             :string
+#  ship_address2            :string
+#  ship_city                :string
+#  ship_country             :string
+#  ship_state               :string
+#  ship_zip                 :string
 #  bio                    :string
 #  city                   :string
 #  confirmation_sent_at   :datetime

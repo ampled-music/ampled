@@ -47,12 +47,12 @@ class UserDetailsComponent extends React.Component<Props, any> {
     twitter: '',
     instagram: '',
     bio: '',
-    ad_address: '',
-    ad_address2: '',
-    ad_city: '',
-    ad_state: '',
-    ad_country: '',
-    ad_zip: '',
+    ship_address: '',
+    ship_address2: '',
+    ship_city: '',
+    ship_state: '',
+    ship_country: '',
+    ship_zip: '',
     name_error: false,
     city_error: false,
     country_error: false,
@@ -197,12 +197,12 @@ class UserDetailsComponent extends React.Component<Props, any> {
       twitter: userData.twitter || '',
       instagram: userData.instagram || '',
       bio: userData.bio || '',
-      ad_address: userData.ad_address || '',
-      ad_address2: userData.ad_address2 || '',
-      ad_city: userData.ad_city || '',
-      ad_state: userData.ad_state || '',
-      ad_country: userData.ad_country || 'United States',
-      ad_zip: userData.ad_zip || '',
+      ship_address: userData.ship_address || '',
+      ship_address2: userData.ship_address2 || '',
+      ship_city: userData.ship_city || '',
+      ship_state: userData.ship_state || '',
+      ship_country: userData.ship_country || 'United States',
+      ship_zip: userData.ship_zip || '',
     });
   }
 
@@ -377,8 +377,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
               <div className="row col-10 col-md-9">
                 <div className="col-12">
                   <Input
-                    name="ad_country"
-                    value={this.state.ad_country}
+                    name="ship_country"
+                    value={this.state.ship_country}
                     onChange={this.handleChange}
                     fullWidth
                   />
@@ -392,16 +392,16 @@ class UserDetailsComponent extends React.Component<Props, any> {
               <div className="row col-10 col-md-9">
                 <div className="col-12">
                   <Input
-                    name="ad_address"
+                    name="ship_address"
                     placeholder="123 Fake St"
-                    value={this.state.ad_address}
+                    value={this.state.ship_address}
                     onChange={this.handleChange}
                     fullWidth
                   />
                   <Input
-                    name="ad_address2"
+                    name="ship_address2"
                     placeholder="Apt #123"
-                    value={this.state.ad_address2}
+                    value={this.state.ship_address2}
                     onChange={this.handleChange}
                     fullWidth
                   />
@@ -416,17 +416,17 @@ class UserDetailsComponent extends React.Component<Props, any> {
               <div className="row col-10 col-md-9">
                 <div className="col-md-5">
                   <Input
-                    name="ad_city"
+                    name="ship_city"
                     placeholder="Anytown"
-                    value={this.state.ad_city}
+                    value={this.state.ship_city}
                     onChange={this.handleChange}
                     fullWidth
                   />
                 </div>
                 <div className="col-md-4">
                   <Select
-                    name="ad_state"
-                    value={this.state.ad_state}
+                    name="ship_state"
+                    value={this.state.ship_state}
                     onChange={this.handleChange}
                     fullWidth
                   >
@@ -485,9 +485,9 @@ class UserDetailsComponent extends React.Component<Props, any> {
                 </div>
                 <div className="col-md-3">
                   <Input
-                    name="ad_zip"
+                    name="ship_zip"
                     placeholder="Zip code"
-                    value={this.state.ad_zip}
+                    value={this.state.ship_zip}
                     onChange={this.handleChange}
                     fullWidth
                   />

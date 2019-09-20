@@ -16,6 +16,6 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def user_params
-    params.permit(:profile_image_url, :name, :last_name, :city, :country, :twitter, :instagram, :bio, :ad_address, :ad_address2, :ad_city, :ad_state, :ad_country, :ad_zip )
+    params.permit(:profile_image_url, :name, :last_name, :city, :country, :twitter, :instagram, :bio, :ship_address, :ship_address2, :ship_city, :ship_state, :ship_country, :ship_zip )
   end
 end

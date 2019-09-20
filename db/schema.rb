@@ -119,12 +119,12 @@ ActiveRecord::Schema.define(version: 2019_08_30_162614) do
     t.string "twitter"
     t.string "instagram"
     t.string "bio"
-    t.string "ad_address"
-    t.string "ad_address2"
-    t.string "ad_city"
-    t.string "ad_state"
-    t.string "ad_zip"
-    t.string "ad_country"
+    t.string "ship_address"
+    t.string "ship_address2"
+    t.string "ship_city"
+    t.string "ship_state"
+    t.string "ship_zip"
+    t.string "ship_country"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true

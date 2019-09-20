@@ -20,12 +20,12 @@ export const updateMeAction = createActionThunk(actions.updateMe, async (updated
     twitter: updatedMe.twitter,
     instagram: updatedMe.instagram,
     bio: updatedMe.bio,
-    ad_address: updatedMe.ad_address,
-    ad_address2: updatedMe.ad_address2,
-    ad_city: updatedMe.ad_city,
-    ad_state: updatedMe.ad_state,
-    ad_country: updatedMe.ad_country,
-    ad_zip: updatedMe.ad_zip
+    ship_address: updatedMe.ship_address,
+    ship_address2: updatedMe.ship_address2,
+    ship_city: updatedMe.ship_city,
+    ship_state: updatedMe.ship_state,
+    ship_country: updatedMe.ship_country,
+    ship_zip: updatedMe.ship_zip
   });
 
 

@@ -7,12 +7,12 @@ json.userInfo do
   json.twitter current_user&.twitter
   json.instagram current_user&.instagram
   json.bio current_user&.bio
-  json.ad_address current_user&.ad_address
-  json.ad_address2 current_user&.ad_address2
-  json.ad_city current_user&.ad_city
-  json.ad_state current_user&.ad_state
-  json.ad_zip current_user&.ad_zip
-  json.ad_country current_user&.ad_country
+  json.ship_address current_user&.ship_address
+  json.ship_address2 current_user&.ship_address2
+  json.ship_city current_user&.ship_city
+  json.ship_state current_user&.ship_state
+  json.ship_zip current_user&.ship_zip
+  json.ship_country current_user&.ship_country
   json.image current_user&.profile_image_url
   json.created_at current_user&.created_at
 end

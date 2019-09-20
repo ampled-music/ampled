@@ -130,10 +130,12 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__banner-icons">
         {artist.images &&
           artist.images.map((_image, index) => {
-            if (index === 0) {
-              return <span key={index} className="artist-header__banner-icons_icon active"></span>
-            } else {
-              return <span key={index} className="artist-header__banner-icons_icon"></span>
+            if (artist.images.length > 1) {
+              if (index === 0) {
+                return <span key={index} className="artist-header__banner-icons_icon active"></span>
+              } else {
+                return <span key={index} className="artist-header__banner-icons_icon"></span>
+              }
             }
           })
         }

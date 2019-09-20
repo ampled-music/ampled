@@ -114,7 +114,7 @@ export class ArtistHeader extends React.Component<Props, any> {
               {owner.profile_image_url ? (
                 <img
                   className="artist-header__person_image member"
-                  src={owner.profile_image_url}
+                  src={this.renderPhoto(owner.profile_image_url,150)}
                   alt={owner.name}
                   style={{ borderColor: artist.accent_color }}
                 />
@@ -132,17 +132,25 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
   };
 
+  renderPhoto = (image: string, crop: number) => {
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
+    if (image.includes('https://res.cloudinary')) {
+      return image.replace('upload/',`upload/${crop_url_path}/`);
+    } else {
+      return `https://res.cloudinary.com/demo/image/fetch/${crop_url_path}/`+image;
+    }
+  }
+
   renderBanners = () => {
     const { artist } = this.props;
-
     return (
       <div className="artist-header__photos">
         {artist.images &&
           artist.images.map((image, index) => {
             if (index === 0) {
-              return <div key={index} className="artist-header__photo active"><img src={image} /></div>;
+              return <div key={index} className="artist-header__photo active"><img src={this.renderPhoto(image,800)} /></div>;
             } else {              
-              return <div key={index} className="artist-header__photo"><img src={image} /></div>;
+              return <div key={index} className="artist-header__photo"><img src={this.renderPhoto(image,800)} /></div>;
             }
           })
         }
@@ -245,7 +253,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             <div className="supporter__hover-card_header_photo">
               <img
                 className="supporter__hover-card_header_photo_image"
-                src={supporter.profile_image_url}
+                src={this.renderPhoto(supporter.profile_image_url,150)}
                 alt={this.anonymizeSupporterName(supporter.name)}
               />
             </div>
@@ -298,7 +306,7 @@ export class ArtistHeader extends React.Component<Props, any> {
           {supporter.profile_image_url ? (
             <img
               className="artist-header__person_image"
-              src={supporter.profile_image_url}
+              src={this.renderPhoto(supporter.profile_image_url,200)}
               alt={this.anonymizeSupporterName(supporter.name)}
               style={style}
             />

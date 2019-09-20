@@ -17,7 +17,6 @@
 #  stripe_user_id       :string
 #  twitter_handle       :string
 #  updated_at           :datetime         not null
-#  video_screenshot_url :string
 #  video_url            :string
 #
 # Indexes

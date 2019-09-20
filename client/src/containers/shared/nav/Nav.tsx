@@ -25,6 +25,7 @@ interface NavComponentProps {
   };
   history: any;
   artist: any;
+  artistError: any;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -42,6 +43,8 @@ class NavComponent extends React.Component<Props, any> {
     const loggedUserAccess = this.getLoggedUserPageAccess();
 
     if (this.props.match.path.indexOf(routePaths.artists) === -1 && this.props.match.path.indexOf(routePaths.slugs) === -1) {
+      return false;
+    } else if (this.props.artistError) {
       return false;
     }
 
@@ -141,6 +144,7 @@ const mapStateToProps = (state: Store) => ({
   ...state.authentication,
   ...state.me,
   artist: state.artists.artist,
+  artistError: state.artists.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -22,6 +22,7 @@ import { Texture } from '../shared/texture/Texture';
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
 import { PostForm } from './posts/post-form/PostForm';
+import { NoArtist } from '../shared/no-artist/NoArtist';
 import { routePaths } from '../route-paths';
 
 interface ArtistProps {
@@ -144,6 +145,9 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   ColorLuminance = (hex, lum) => {
+    if (!hex) {
+      return '#fff';
+    }
     // validate hex string
     hex = String(hex).replace(/[^0-9a-f]/gi, '');
     if (hex.length < 6) {
@@ -188,6 +192,10 @@ class ArtistComponent extends React.Component<Props, any> {
           break;
         }
       }
+    }
+
+    if (artists && !artists.loading && artists.error) {
+      return (<NoArtist />);
     }
   
 

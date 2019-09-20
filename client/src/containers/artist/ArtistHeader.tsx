@@ -106,12 +106,11 @@ export class ArtistHeader extends React.Component<Props, any> {
   };
 
   renderPhoto = (image: string, crop: number) => {
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
     if (image.includes('https://res.cloudinary')) {
-      const croppedImage = image.replace('upload/','upload/w_'+crop+',h_'+crop+',c_fill/');
-      return croppedImage;
+      return image.replace('upload/',`upload/${crop_url_path}/`);
     } else {
-      const croppedImage = 'https://res.cloudinary.com/demo/image/fetch/w_'+crop+',h_'+crop+',c_fill/'+image;
-      return croppedImage;
+      return `https://res.cloudinary.com/demo/image/fetch/${crop_url_path}/`+image;
     }
   }
 

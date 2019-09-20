@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 2019_08_30_162614) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "video_url"
-    t.string "video_screenshot_url"
     t.string "state_token"
     t.string "stripe_user_id"
     t.string "stripe_access_token"

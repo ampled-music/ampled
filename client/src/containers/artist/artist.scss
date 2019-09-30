@@ -159,10 +159,9 @@
 
   &__photos {
     height: 335px;
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    align-content: flex-start;
     @include mq( $layout-m ) {
       height: 475px;
     }

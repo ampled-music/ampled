@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_30_162614) do
+ActiveRecord::Schema.define(version: 2019_09_30_162614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2019_08_30_162614) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "video_url"
+    t.string "video_screenshot_url"
     t.string "state_token"
     t.string "stripe_user_id"
     t.string "stripe_access_token"
@@ -113,6 +114,7 @@ ActiveRecord::Schema.define(version: 2019_08_30_162614) do
     t.string "profile_image_url"
     t.string "jti", null: false
     t.string "stripe_customer_id"
+    t.string "login_redirect_url"
     t.string "last_name"
     t.string "city"
     t.string "country"

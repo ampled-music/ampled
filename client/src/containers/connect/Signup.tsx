@@ -33,6 +33,7 @@ class SignupComponent extends React.Component<Props, any> {
     email: '',
     password: '',
     name: '',
+    last_name: '',
     confirmPassword: '',
 
     matchPasswordsError: false,
@@ -96,10 +97,10 @@ class SignupComponent extends React.Component<Props, any> {
       return;
     }
 
-    const { email, password, confirmPassword, name } = this.state;
+    const { email, password, confirmPassword, name, last_name } = this.state;
     this.emailPass = { email, password };
 
-    const submitResult = await this.props.signup(email, password, confirmPassword, name);
+    const submitResult = await this.props.signup(email, password, confirmPassword, name, last_name);
 
     if (submitResult) {
       this.setState({ submitted: true });
@@ -150,10 +151,17 @@ class SignupComponent extends React.Component<Props, any> {
             <input
               className="input-group-text"
               type="text"
-              placeholder="Full Name"
+              placeholder="First Name"
               name="name"
               onChange={this.handleChange}
               required
+            />
+            <input
+              className="input-group-text"
+              type="text"
+              placeholder="Last Name (Optional)"
+              name="last_name"
+              onChange={this.handleChange}
             />
 
             <input

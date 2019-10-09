@@ -53,9 +53,9 @@ Back in the root directory migrate the database
 
 Then populate database with faker data.
 
+    $ bundle exec rake dummy:users
     $ bundle exec rake dummy:artist_pages
     $ bundle exec rake dummy:posts
-    $ bundle exec rake dummy:users
 
 Once your database is set up and filled with data simply run the following command and give it a moment to spin up a local test environment.
 
@@ -164,4 +164,3 @@ Several common features and operational parameters can be set using environment 
 
 * Heroku for hosting.
 * CircleCI for continuous integration.
-

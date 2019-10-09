@@ -113,7 +113,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
         return ('0' + string).slice(-2)
     }
     valueLabelFormat = (value) => {
-        return this.formatTime(value) + ` / ` + this.formatTime(this.state.loadedSeconds)
+        return this.formatTime(value) + ` / ` + this.formatTime(this.state.duration)
     }
 
     renderAudioPlayer = () => {

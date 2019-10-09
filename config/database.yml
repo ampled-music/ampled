@@ -13,7 +13,9 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV["DATABASE_URL"] || 'ampled_web_development' %> 
+  database: <%= ENV["DATABASE_URL"] || 'ampled_web_development' %>
+  username: user
+  password: password
   # database: api-db
 
 # Warning: The database defined as "test" will be erased and

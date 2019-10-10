@@ -3,6 +3,7 @@ import './artist.scss';
 import * as React from 'react';
 import path from 'ramda/src/path';
 import Swipe from 'react-easy-swipe';
+import { isMobile } from 'react-device-detect';
 
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -183,7 +184,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       {this.renderOwners()}
       {this.renderBanners()}
       <div
-        onClick={this.cycleBanners}
+        onClick={!isMobile && (this.cycleBanners)}
         className="artist-header__photo-container_border"
         style={{ borderColor: this.props.artist.accent_color }}>
         <Swipe

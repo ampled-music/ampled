@@ -10,6 +10,8 @@ class RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
 
     resource.save
+    FanWelcomeMailer.fan_welcome(resource).deliver_later
+    
     render_resource(resource)
   end
 

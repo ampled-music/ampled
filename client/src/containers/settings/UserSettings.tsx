@@ -1,6 +1,5 @@
 import './user-settings.scss';
 
-import * as loadImage from 'blueimp-load-image';
 import { DateTime } from 'luxon';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -12,19 +11,21 @@ import { setUserDataAction } from 'src/redux/me/set-me';
 import { updateMeAction } from 'src/redux/me/update-me';
 import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
 
-import { faEdit, faHeartBroken } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTwitter, faInstagram, faStripe } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import tear from '../../images/background_tear.png';
+import tear_black from '../../images/background_tear_black.png';
 
 import avatar from '../../images/ampled_avatar.svg';
-import { CircularProgress } from '@material-ui/core';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
 import { routePaths } from '../route-paths';
 import { Modal } from '../shared/modal/Modal';
+import { Loading } from '../shared/loading/Loading';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
-import { UploadFile } from '../shared/upload/UploadFile';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
@@ -36,10 +37,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
   state = {
     showCancelModal: false,
     subscription: undefined,
-    showUserPhotoModal: false,
-    photoContent: undefined,
-    photoBody: undefined,
-    processingImage: false,
   };
 
   componentDidMount() {
@@ -49,10 +46,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
   componentDidUpdate() {
     if (this.props.token && !this.props.error && !this.props.userData && !this.props.loadingMe) {
       this.props.getMe();
-    }
-
-    if (this.state.showUserPhotoModal && this.props.updated) {
-      this.updateUserPhoto();
     }
 
     if (this.props.subscriptions.cancelled && !this.props.loadingMe) {
@@ -72,12 +65,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     );
   };
 
-  updateUserPhoto = () => {
-    this.closeUserPhotoModal();
-    this.props.setMe({ image: this.props.updatedData.profileImageUrl });
-    showToastMessage('User photo updated!', MessageType.SUCCESS);
-  };
-
   getFormattedDate = (date: string) => {
     if (!date) {
       return '-';
@@ -94,11 +81,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   closeCancelModal = () => this.setState({ showCancelModal: false, subscription: undefined });
 
-  showUserPhotoModal = () => this.setState({ showUserPhotoModal: true });
-
-  closeUserPhotoModal = () =>
-    this.setState({ showUserPhotoModal: false, photoBody: undefined, photoContent: undefined });
-
   cancelSubscription = () => {
     this.props.cancelSubscription({
       subscriptionId: this.state.subscription.subscriptionId,
@@ -106,30 +88,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
       artistName: this.state.subscription.name,
     });
     this.closeCancelModal();
-  };
-
-  loadPhotoContent = (photoContent) => {
-    this.setState({ processingImage: true });
-
-    loadImage(
-      photoContent.body,
-      (canvas) => {
-        this.setState({
-          processingImage: false,
-          photoBody: canvas.toDataURL(),
-          photoContent,
-        });
-      },
-      { orientation: true },
-    );
-  };
-
-  saveUserPhoto = () => {
-    const me = {
-      file: this.state.photoContent.file,
-    };
-
-    this.props.updateMe(me);
   };
 
   formatMoney = (value) => {
@@ -144,7 +102,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     this.calculateSupportTotalNumber(supportLevel).toFixed(2)
 
   calculateSupportTotalNumber = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100);
-
   
   redirectToArtistPage = (pageId) => {
     this.props.history.push(routePaths.artists.replace(':id', pageId));
@@ -155,16 +112,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <div className="user-image-container">
-        <button onClick={this.showUserPhotoModal}>
+        <a href="/user-details">
           {userData.image ? (
             <img src={userData.image} className="user-image" />
           ) : (
             <img src={avatar} className="user-image" />
           )}
-          <b className="tag">
-            <FontAwesomeIcon icon={faEdit} />
-          </b>
-        </button>
+        </a>
       </div>
     );
   };
@@ -180,15 +134,37 @@ class UserSettingsComponent extends React.Component<Props, any> {
     // }
     return (
       <div className="user-info-container col-md-3">
-        {this.renderUserImage()}
+        <img className="tear__topper" src={tear} />
         <div className="user-content">
-          <p className="user-name">{userData.name}</p>
-          <p className="joined-at">Joined {this.getFormattedDate(userData.created_at)}</p>
+          {this.renderUserImage()}
+          <div className="user-content__name">{userData.name}</div>
+          <div className="user-content__joined-at">Joined {this.getFormattedDate(userData.created_at)}</div>
+          { userData.city && (
+            <div className="user-content__city"><FontAwesomeIcon className="icon" icon={faMapMarkerAlt} /> {userData.city}</div>
+          )}
+          { userData.bio && (
+            <div>
+              <div className="user-content__hr"></div>
+              <div className="user-content__bio">{userData.bio}</div>
+              <div className="user-content__hr"></div>
+            </div>
+          )}
+          {console.log(userData)}
+          { userData.twitter && (
+              <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faTwitter} /> {userData.twitter}</div>
+          )}
+          { userData.instagram && (
+              <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faInstagram} /> {userData.instagram}</div>
+          )}
           {/*
             monthlyTotal > 0 ?
               (<p className="user-name">${monthlyTotal.toFixed(2)}/Month</p>) :
               ''
           */}
+          
+          <a href="/user-details" className="user-content__edit-profile">
+            <FontAwesomeIcon icon={faEdit} /> Edit Profile
+          </a>
         </div>
       </div>
     );
@@ -205,12 +181,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <Modal open={this.state.showCancelModal} onClose={this.closeCancelModal}>
         <div className="user-settings-cancel-modal">
           <p>Are you sure you want to stop supporting {this.state.subscription.name}?</p>
-          <div className="actions">
-            <button className="btn btn-ampled" onClick={this.cancelSubscription}>
-              Yes
+          <div className="action-buttons">
+            <button className="cancel-button" onClick={this.closeCancelModal}>
+              Of Course Not!
             </button>
-            <button className="btn btn-ampled" onClick={this.closeCancelModal}>
-              OF COURSE NOT!
+            <button className="delete-button" onClick={this.cancelSubscription}>
+              Yes
             </button>
           </div>
         </div>
@@ -223,32 +199,43 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('MY ARTIST PAGES')}
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
-          <div key={`artist-${ownedPage.id}`} className="artist col-sm-6">
-              <img className="artist-image" src={ownedPage.image} />
-              <div className="image-border" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}></div>
-            <div className="artist-info">
-              <p className="artist-name" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}>{ownedPage.name}</p>
-              <div className="extra-info">
-                <div className="owned-info">
-                  <div className="column">
-                    <label>
-                      <p className="info-title">SUPPORTERS</p>
-                      <p className="supporting-at-value">{ownedPage.supportersCount || 0}</p>
-                    </label>
-                    <label>
-                      <p className="info-title">LAST POST</p>
-                      <p className="info-value">{this.getFormattedDate(ownedPage.lastPost)}</p>
-                    </label>
+          <div key={`artist-${ownedPage.id}`} className="artist col-sm-4">
+            <img className="artist__image" src={ownedPage.image} />
+            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}></div>
+            <img className="tear__topper" src={tear_black} />
+            <div className="artist__info">
+              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}>{ownedPage.name}</p>
+              <div className="details">
+                <div className="details__info">
+                  <div className="row no-gutter">
+                    <div className="col-6">
+                      <div className="details__info_title">Supporters</div>
+                      <div className="details__info_value">{ownedPage.supportersCount || 0}</div>
+                    </div>
+                    <div className="col-6">
+                      <div className="details__info_title">Monthly Total</div>
+                      <div className="details__info_value">$ {this.formatMoney(ownedPage.monthlyTotal / 100)}</div>
+                    </div>
                   </div>
-                  <div className="column">
-                    <label>
-                      <p className="info-title">MONTHLY TOTAL</p>
-                      <p className="info-value">$ {this.formatMoney(ownedPage.monthlyTotal / 100)}</p>
-                    </label>
-                    <label>
-                      <p className="info-title">LAST PAYOUT</p>
-                      <p className="info-value">{this.getFormattedDate(ownedPage.lastPayout)}</p>
-                    </label>
+                  <div className="row no-gutter">
+                    <div className="col-6">
+                      <div className="details__info_title">Last Post</div>
+                      <div className="details__info_value">{this.getFormattedDate(ownedPage.lastPost)}</div>
+                    </div>
+                    <div className="col-6">
+                      <div className="details__info_title">Last Payout</div>
+                      <div className="details__info_value">{this.getFormattedDate(ownedPage.lastPayout)}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="details__stripe">
+                  <div className="row no-gutter align-items-center">
+                    <div className="col-4">
+                      <FontAwesomeIcon className="icon details__stripe_icon" icon={faStripe} />
+                    </div>
+                    <div className="col-8">
+                      <a href={ownedPage.stripeSignup ? ownedPage.stripeSignup : ownedPage.stripeDashboard} className="details__stripe_link" target="_blank">Edit Payout Details</a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -264,33 +251,35 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('SUPPORTED ARTISTS')}
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.subscriptions.map((subscription) => (
-          <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-6">
-            <img className="artist-image" src={subscription.image} />
-            <div className="image-border" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}></div>
-            <div className="artist-info">
-              <p className="artist-name" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}>{subscription.name}</p>
-              <div className="extra-info">
-                <div className="support-info">
-                  <div className="supporting-at">
-                    <label>
-                      <p className="info-title">SUPPORTING AT</p>
-                      <p className="supporting-at-value">${subscription.amount / 100}/Month</p>
-                      <p className="info-title">${this.calculateSupportTotal(subscription.amount / 100)} incl. fees</p>
-                    </label>
-                    <button onClick={(event) => this.openCancelModal(event, subscription)}>
-                      <FontAwesomeIcon icon={faHeartBroken} />
-                      CANCEL
-                    </button>
+          <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-4">
+            <img className="artist__image" src={subscription.image} />
+            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}></div>
+            <img className="tear__topper" src={tear_black} />
+            <div className="artist__info">
+              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}>{subscription.name}</p>
+              <div className="details">
+                <div className="details__info">
+                  <div className="row no-gutter">
+                    <div className="col-8">
+                      <div className="details__info_title">Supporting At</div>
+                      <div className="details__info_value details__info_value_large">${subscription.amount / 100}/Month</div>
+                      <div className="details__info_value details__info_value_small">${this.calculateSupportTotal(subscription.amount / 100)} incl. fees</div>
+                    </div>
+                    <div className="col-4">
+                      <a className="details__info_value details__info_value_cancel" onClick={(event) => this.openCancelModal(event, subscription)}>
+                        Cancel
+                      </a>
+                    </div>
                   </div>
-                  <div>
-                    <label>
-                      <p className="info-title">LAST POST</p>
-                      <p className="info-value">{this.getFormattedDate(subscription.last_post_date)}</p>
-                    </label>
-                    <label>
-                      <p className="info-title">SUPPORT DATE</p>
-                      <p className="info-value">{this.getFormattedDate(subscription.support_date)}</p>
-                    </label>
+                  <div className="row no-gutter">
+                    <div className="col-6">
+                      <div className="details__info_title">Support Date</div>
+                      <div className="details__info_value">{this.getFormattedDate(subscription.support_date)}</div>
+                    </div>
+                    <div className="col-6">
+                      <div className="details__info_title">Last Post</div>
+                      <div className="details__info_value">{this.getFormattedDate(subscription.last_post_date)}</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -310,73 +299,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
     </div>
   );
 
-  renderAddPhotoButton = () => (
-    <div className="add-photo-button-container">
-      <UploadFile inputRefId="input-user-photo" uploadFile={this.loadPhotoContent} />
-      <div className="media-button-wrapper action-buttons">
-        <button
-          disabled={this.props.updating}
-          className="add-media"
-          onClick={() => document.getElementById('input-user-photo').click()}
-        >
-          {this.state.photoContent || this.props.userData.image ? 'Change photo' : 'Add photo'}
-        </button>
-      </div>
-    </div>
-  );
-
-  renderPhoto = () => {
-    const { photoBody, processingImage } = this.state;
-    const { userData } = this.props;
-
-    if (processingImage && userData.image) {
-      return (
-        <div className="processing-image">
-          <CircularProgress size={80} />
-          <img src={userData.image} className='image-preview loading-image' />
-        </div>
-      );
-    } else if (processingImage) {
-      return (
-        <div className="processing-image">
-          <CircularProgress size={80} />
-          <img src={avatar} className='image-preview loading-image' />
-        </div>
-      );
-    }
-
-    const placeholderImage = userData.image ? (
-      <img src={userData.image} className='image-preview'/>
-    ) : (
-      <img src={avatar} className="image-preview" />
-    );
-
-    return photoBody ? <img src={photoBody} className="image-preview" /> : placeholderImage;
-  };
-
-  renderPhotoSelector = () => {
-
-    return (
-      <div className="user-photo-selector-modal">
-        {this.renderPhoto()}
-        {this.renderAddPhotoButton()}
-        <div className="action-buttons">
-          <button disabled={this.props.updating} className="cancel-button" onClick={this.closeUserPhotoModal}>
-            Cancel
-          </button>
-          <button disabled={!this.state.photoContent || this.props.updating} className="continue-button" onClick={this.saveUserPhoto}>
-            Save
-          </button>
-        </div>
-      </div>
-    );
-  };
-
   renderContent = () => (
     <div className="row content">
-      <Modal open={this.state.showUserPhotoModal} onClose={!this.props.updating && this.closeUserPhotoModal}>
-        {this.renderPhotoSelector()}
-      </Modal>
       {this.renderUserInfo()}
       <div className="pages-container col-md-9">
         { this.props.userData.ownedPages.length > 0 ?
@@ -393,11 +317,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <div className="container user-settings-container">
-        <Modal open={!userData}>
-          <div className="user-settings-loading-modal">
-            <h1>LOADING...</h1>
-          </div>
-        </Modal>
+        <Loading
+          artistLoading={this.props.loadingMe} 
+        />
         {userData && this.renderContent()}
         {this.renderCancelSubscriptionModal()}
       </div>

@@ -19,7 +19,7 @@
     }
     &_border {
       z-index: 100;
-      width: calc(100% - 85px);
+      width: 100%;
       height: 339px;
       position: absolute;
       margin: -2px 0;
@@ -30,6 +30,10 @@
       }  
       @include mq( $layout-l ) {
         height: 575px;
+      }
+      &_swipe {
+        width: 100%;
+        height: 100%;
       }
     }
   }
@@ -155,10 +159,9 @@
 
   &__photos {
     height: 335px;
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    align-content: flex-start;
     @include mq( $layout-m ) {
       height: 475px;
     }

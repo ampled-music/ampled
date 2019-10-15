@@ -2,6 +2,7 @@ import './artist.scss';
 
 import * as React from 'react';
 import path from 'ramda/src/path';
+import Swipe from 'react-easy-swipe';
 
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -54,24 +55,50 @@ export class ArtistHeader extends React.Component<Props, any> {
     return this.state.screenshotURL;
   }
 
-  cycleBanners = () => {
+  onSwipeLeft = () => {
+    this.cycleBanners('backwards')
+  }
+
+  onSwipeRight = () => {
+    this.cycleBanners('forewords')
+  }
+
+  cycleBanners = (direction) => {
+
     const bannerImages = document.getElementsByClassName("artist-header__photo");
     const bannerIcons = document.getElementsByClassName("artist-header__banner-icons_icon");
     var index;
 
     for (index = 0; index < bannerImages.length; ++index) {
+      
       if (bannerImages[index].classList.contains('active')) {
+
         bannerImages[index].classList.toggle('active');
         bannerIcons[index].classList.toggle('active');
-        if (index + 1 === bannerImages.length) {
-          index = 0;
-        } else {
-          ++index;
-        }
+
+        const change = direction === 'backwards' ? -1 : 1;
+        index += change;
+        index = index < 0 ? bannerImages.length - 1 : index = index % bannerImages.length;
+        
         bannerImages[index].classList.add('active');
         bannerIcons[index].classList.add('active');
       }
     }
+  }
+
+  selectBanner = (currentIndex) => {
+
+    const bannerImages = document.getElementsByClassName("artist-header__photo");
+    const bannerIcons = document.getElementsByClassName("artist-header__banner-icons_icon");
+
+    for (var index = 0; index < bannerImages.length; ++index) {
+      if (bannerImages[index].classList.contains('active')) {
+        bannerImages[index].classList.toggle('active');
+        bannerIcons[index].classList.toggle('active');
+      }
+    }
+    bannerImages[currentIndex].classList.add('active');
+    bannerIcons[currentIndex].classList.add('active');
   }
   
   renderArtistName = () => <div className="artist-header__title"><span className="artist-header__title_flair"></span>{this.props.artist.name}</div>;
@@ -138,10 +165,12 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__banner-icons">
         {artist.images &&
           artist.images.map((_image, index) => {
-            if (index === 0) {
-              return <span key={index} className="artist-header__banner-icons_icon active"></span>
-            } else {
-              return <span key={index} className="artist-header__banner-icons_icon"></span>
+            if (artist.images.length > 1) {
+              if (index === 0) {
+                return <span key={index} className="artist-header__banner-icons_icon active" onClick={() => this.selectBanner(index)}></span>
+              } else {
+                return <span key={index} className="artist-header__banner-icons_icon" onClick={() => this.selectBanner(index)}></span>
+              }
             }
           })
         }
@@ -153,7 +182,18 @@ export class ArtistHeader extends React.Component<Props, any> {
     <div className="artist-header__photo-container" style={{ borderColor: this.props.artist.accent_color }}>
       {this.renderOwners()}
       {this.renderBanners()}
-      <div className="artist-header__photo-container_border" style={{ borderColor: this.props.artist.accent_color }} onClick={this.cycleBanners} />
+      <div
+        onClick={this.cycleBanners}
+        className="artist-header__photo-container_border"
+        style={{ borderColor: this.props.artist.accent_color }}>
+        <Swipe
+          onSwipeLeft={this.onSwipeLeft}
+          onSwipeRight={this.onSwipeRight}
+          allowMouseEvents={true}
+          className="artist-header__photo-container_border_swipe"
+        >
+        </Swipe>
+      </div>
       {this.renderBannerIcons()}
     </div>
   );

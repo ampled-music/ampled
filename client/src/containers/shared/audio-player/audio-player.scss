@@ -1,0 +1,21 @@
+.audio-player {
+    &.with-image {
+        .audio-player__play-pause {
+            top: 210px;
+        }
+    }
+    &__play-pause {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        width: 100%;
+    }
+    &__slider {
+        .MuiSlider-thumb {
+            span {
+                width: 60px;
+                background-color: transparent;
+            }
+        }
+    }
+}

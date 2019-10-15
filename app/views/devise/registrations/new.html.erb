@@ -8,6 +8,10 @@
                 required: true,
                 autofocus: true,
                 input_html: { autocomplete: "name"} %>
+    <%= f.input :last_name,
+                required: false,
+                autofocus: true,
+                input_html: { autocomplete: "last_name"} %>
     <%= f.input :email,
                 required: true,
                 input_html: { autocomplete: "email" } %>

@@ -25,6 +25,7 @@ interface NavComponentProps {
   };
   history: any;
   artist: any;
+  artistError: any;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -43,6 +44,8 @@ class NavComponent extends React.Component<Props, any> {
 
     if (this.props.match.path.indexOf(routePaths.artists) === -1 && this.props.match.path.indexOf(routePaths.slugs) === -1) {
       return false;
+    } else if (this.props.artistError) {
+      return false;
     }
 
     return (
@@ -51,18 +54,23 @@ class NavComponent extends React.Component<Props, any> {
   };
 
   handleSupportClick = () => {
+    let artistId;
+
+    if (this.props.match.params.slug) {
+      artistId = this.props.artist.id;
+    } else {
+      artistId = this.props.match.params.id;
+    }
+
+
     if (this.props.userData) {
-      if (this.props.match.params.slug) {
-        this.props.history.push(routePaths.support.replace(':id', this.props.artist.id));
-      } else {
-        this.props.history.push(routePaths.support.replace(':id', this.props.match.params.id));
-      }
+      this.props.history.push(routePaths.support.replace(':id', artistId));
     } else {
       this.props.openAuthModal({
         modalPage: 'signup',
         showSupportMessage: 'artist',
         artistName: this.props.artist.name,
-        redirectTo: routePaths.support.replace(':id', this.props.match.params.id),
+        redirectTo: routePaths.support.replace(':id', artistId),
       });
     }
   };
@@ -141,6 +149,7 @@ const mapStateToProps = (state: Store) => ({
   ...state.authentication,
   ...state.me,
   artist: state.artists.artist,
+  artistError: state.artists.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,6 +1,18 @@
 json.userInfo do
   json.id current_user&.id
   json.name current_user&.name
+  json.last_name current_user&.last_name
+  json.city current_user&.city
+  json.country current_user&.country
+  json.twitter current_user&.twitter
+  json.instagram current_user&.instagram
+  json.bio current_user&.bio
+  json.ship_address current_user&.ship_address
+  json.ship_address2 current_user&.ship_address2
+  json.ship_city current_user&.ship_city
+  json.ship_state current_user&.ship_state
+  json.ship_zip current_user&.ship_zip
+  json.ship_country current_user&.ship_country
   json.image current_user&.profile_image_url
   json.created_at current_user&.created_at
 end
@@ -25,4 +37,6 @@ json.ownedPages @owned_pages do |page|
   json.monthlyTotal page.monthly_total
   json.lastPost page.last_post_date
   json.lastPayout page.last_payout
+  json.stripeSignup page.stripe_signup_url
+  json.stripeDashboard page.stripe_dashboard_url
 end

@@ -60,11 +60,19 @@ class PostComponent extends React.Component<any, any> {
   };
 
   openSignupModal = () => {
+    let artistId;
+
+    if (this.props.match.params.slug) {
+      artistId = this.props.artist.id;
+    } else {
+      artistId = this.props.match.params.id;
+    }
+
     this.props.openAuthModal({
       modalPage: 'signup',
       showSupportMessage: 'post',
       artistName: this.props.artistName,
-      redirectTo: routePaths.support.replace(':id', this.props.match.params.id),
+      redirectTo: routePaths.support.replace(':id', artistId),
     });
   };
 

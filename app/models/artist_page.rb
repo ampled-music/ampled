@@ -47,8 +47,7 @@ class ArtistPage < ApplicationRecord
   end
 
   def active_subscribers
-    User.all
-    # subscribers.merge(Subscription.active)
+    subscribers.merge(Subscription.active)
   end
 
   def stripe_state_token

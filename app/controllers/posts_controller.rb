@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[destroy]
+  before_action :set_post, only: %i[destroy update]
 
   def create
     @post = Post.new(post_params)
@@ -22,7 +22,7 @@ class PostsController < ApplicationController
     if PostPolicy.new(current_user, @post).destroy? && @post.update(post_update_params)
       render json: :ok
     else
-      render json: { errors: @post.errors }
+      render json: { errors: @post.errors }, status: :bad_request
     end
   end
 

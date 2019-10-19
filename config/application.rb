@@ -42,7 +42,7 @@ module AmpledWeb
       end
     end
 
-    config.action_mailer.postmark_settings = { api_token: ENV['POSTMARK_API_TOKEN'] }
+    config.action_mailer.postmark_settings = { api_token: ENV["POSTMARK_API_TOKEN"] }
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

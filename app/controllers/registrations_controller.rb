@@ -9,9 +9,8 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
 
-    resource.save
-    FanWelcomeMailer.fan_welcome(resource).deliver_later
-    
+    FanWelcomeMailer.fan_welcome(resource).deliver_later if resource.save
+
     render_resource(resource)
   end
 

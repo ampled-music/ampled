@@ -5,7 +5,7 @@ class FanWelcomeMailer < PostmarkMailer
       homepage_url: "http://ampled.com",
       login_url: "http://ampled.com",
       fan_email_address: user.email,
-      support_email: "support@ampled.com",
+      support_email: ENV["POSTMARK_FROM_EMAIL"],
       ampled_membership_url: "http://ampled.com"
     }
 

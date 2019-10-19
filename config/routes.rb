@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     confirmations: "confirmations",
     registrations: "registrations",
-    sessions: "sessions"
+    sessions: "sessions",
+    passwords: "passwords"
   }
 
   resources :comments, only: %i[create destroy]

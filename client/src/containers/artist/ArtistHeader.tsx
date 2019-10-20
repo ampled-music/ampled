@@ -4,6 +4,7 @@ import * as React from 'react';
 import path from 'ramda/src/path';
 import Swipe from 'react-easy-swipe';
 
+import { Image, Transformation, CloudinaryContext } from 'cloudinary-react';
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from 'src/redux/artists/initial-state';
@@ -137,9 +138,24 @@ export class ArtistHeader extends React.Component<Props, any> {
     if (image.includes('https://res.cloudinary')) {
       return image.replace('upload/',`upload/${crop_url_path}/`);
     } else {
-      return `https://res.cloudinary.com/demo/image/fetch/${crop_url_path}/`+image;
+      return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
     }
-  }
+  };
+
+  renderCloudinaryPhoto = (image: string, crop: number,) => {
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
+    const cloudinary_id = image.substring(image.lastIndexOf("/") + 1, image.lastIndexOf("."));
+    if (image.includes('https://res.cloudinary')) {
+      return (
+        <Image publicId={cloudinary_id}>
+          <Transformation crop="fill" width={crop} height={crop} responsive_placeholder="blank" />
+        </Image>
+      )
+    } else {
+      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+      return <img src={img_src} />;
+    }
+  };
 
   renderBanners = () => {
     const { artist } = this.props;
@@ -147,10 +163,10 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__photos">
         {artist.images &&
           artist.images.map((image, index) => {
-            if (index === 0) {
-              return <div key={index} className="artist-header__photo active"><img src={this.renderPhoto(image,800)} /></div>;
+            if (index === 0) { 
+              return <div key={index} className="artist-header__photo active">{this.renderCloudinaryPhoto(image,800)}</div>;
             } else {              
-              return <div key={index} className="artist-header__photo"><img src={this.renderPhoto(image,800)} /></div>;
+              return <div key={index} className="artist-header__photo">{this.renderCloudinaryPhoto(image,800)}</div>;
             }
           })
         }
@@ -395,18 +411,20 @@ export class ArtistHeader extends React.Component<Props, any> {
   render() {
     return (
       <div className="artist-header container">
-        {this.renderArtistName()}
-        <div className="row justify-content-between">
-          <div className="col-md-7">
-            {this.renderPhotoContainer()}
+        <CloudinaryContext cloudName="ampled-web">
+          {this.renderArtistName()}
+          <div className="row justify-content-between">
+            <div className="col-md-7">
+              {this.renderPhotoContainer()}
+            </div>
+            <div className="col-md-4 artist-header__message-col">
+              {this.renderMessageContainer()}
+              {this.renderFloatingNewPostButton()}
+              {this.renderSupportersContainer()}
+              {!this.props.isSupporter && !this.canLoggedUserPost() && this.renderSupportButton()}
+            </div>
           </div>
-          <div className="col-md-4 artist-header__message-col">
-            {this.renderMessageContainer()}
-            {this.renderFloatingNewPostButton()}
-            {this.renderSupportersContainer()}
-            {!this.props.isSupporter && !this.canLoggedUserPost() && this.renderSupportButton()}
-          </div>
-        </div>
+        </CloudinaryContext>
       </div>
     );
   }

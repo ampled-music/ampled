@@ -7,7 +7,7 @@ class SendEmailBatchJob
     users_to_notify = post.artist_page.active_subscribers
     artist = post.artist_page
 
-    client = Postmark::ApiClient.new(ENV["POSTMARK_API_TOKEN"])
+    client = Postmark::ApiClient.new(ENV["POSTMARK_API_KEY"])
 
     messages = users_to_notify.map do |user|
       {

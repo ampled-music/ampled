@@ -2,5 +2,13 @@
 @import "../../theme/mixins.scss";
 
 .create-artist {
-  margin-top: calc(2rem + 50px);
+  margin-top: 50px;
+
+  &__header {
+    background-color: #baddac;
+
+    &_tear {
+      width: 100%;
+    }
+  }
 }

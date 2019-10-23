@@ -11,6 +11,7 @@ import { NoArtist } from './shared/no-artist/NoArtist';
 import { routePaths } from './route-paths';
 import { UserSettings } from './settings/UserSettings';
 import { UserDetails } from './user-details/UserDetails';
+import { CreateArtist } from './create-artist/CreateArtist';
 
 const Routes = () => {
   return (
@@ -24,6 +25,7 @@ const Routes = () => {
       <PublicRoute exact path={routePaths.noArtist} component={NoArtist} />
       <ProtectedRoute exact path={routePaths.settings} component={UserSettings} />
       <ProtectedRoute exact path={routePaths.userDetails} component={UserDetails} />
+      <ProtectedRoute exact path={routePaths.createArtist} component={CreateArtist} />
       <PublicRoute path={'*'} component={Home} />
     </Switch>
   );

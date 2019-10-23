@@ -21,6 +21,8 @@ import { Upload } from './Upload';
 interface PostFormProps {
   close: (hasUnsavedChanges: any) => void;
   discardChanges: () => void;
+  isEdit?: Boolean;
+  post?: any;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -41,7 +43,19 @@ class PostFormComponent extends React.Component<Props, any> {
     savingPost: false,
   };
 
-  state = this.initialState;
+  constructor(props) {
+    super(props);
+    if (props.post) {
+      this.state = {
+        ...this.initialState,
+        ...props.post,
+        audioFile: props.post.audio_file,
+        imageUrl: props.post.image_url
+      };
+    } else {
+      this.state = this.initialState;
+    }
+  }
 
   componentDidUpdate() {
     if (!this.props.postCreated && !this.state.savingPost) {
@@ -175,6 +189,7 @@ class PostFormComponent extends React.Component<Props, any> {
 
   render() {
     const { hasUnsavedChanges, title, body, imageUrl } = this.state;
+    const { isEdit } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
 
@@ -183,7 +198,7 @@ class PostFormComponent extends React.Component<Props, any> {
         <img className="tear__topper" src={tear} />
         <div className="post-form">
           <DialogContent>
-            <h4>NEW POST</h4>
+            <h4>{isEdit ? 'EDIT POST' : 'NEW POST'}</h4>
             <form onSubmit={this.handleSubmit}>
 
               <div className="post-form__description">

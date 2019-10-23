@@ -4,8 +4,19 @@
 .create-artist {
   margin-top: 50px;
 
+  h1 {
+    font-family: $font-family-sans-serif;
+    text-transform: uppercase;
+    margin: 2rem auto;
+  }
+
   &__header {
     background-color: #baddac;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 6rem;
+    justify-content: space-between;
 
     &_tear {
       width: 100%;

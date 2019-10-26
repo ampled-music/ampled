@@ -273,7 +273,7 @@ class PostFormComponent extends React.Component<Props, any> {
                         id="pin-post"
                         type="checkbox"
                         // onChange={this.state.isPinned}
-                        checked={this.state.isPinned}
+                        // checked={this.state.isPinned}
                       />
                       Pin post
                     </label>

@@ -9,6 +9,7 @@ import { uploadFileToCloudinary } from 'src/api/cloudinary/upload-image';
 import { getArtistAction } from 'src/redux/artists/get-details';
 import { Store } from 'src/redux/configure-store';
 import { createPostAction } from 'src/redux/posts/create';
+import { editPostAction } from 'src/redux/posts/edit';
 
 import { Button, DialogActions, DialogContent, TextField, CircularProgress } from '@material-ui/core';
 
@@ -36,7 +37,7 @@ class PostFormComponent extends React.Component<Props, any> {
     imageName: '',
     isPublic: false,
     isPinned: false,
-    imageUrl: undefined,
+    imageUrl: null,
     deleteToken: undefined,
     hasUnsavedChanges: false,
     loadingImage: false,
@@ -80,6 +81,7 @@ class PostFormComponent extends React.Component<Props, any> {
     event.preventDefault();
 
     const { title, body, audioFile, imageUrl, isPublic, isPinned } = this.state;
+    const { isEdit } = this.props;
 
     const post = {
       title,
@@ -89,10 +91,11 @@ class PostFormComponent extends React.Component<Props, any> {
       is_private: !isPublic,
       is_pinned: isPinned,
       artist_page_id: this.props.artist.id,
+      id: this.state.id,
     };
 
     this.setState({ savingPost: true });
-    this.props.createPost(post);
+    isEdit ? this.props.editPost(post) : this.props.createPost(post);
   };
 
   updateAudioFile = (audioFile) => {
@@ -127,7 +130,7 @@ class PostFormComponent extends React.Component<Props, any> {
 
   removeImage = () => {
     deleteFileFromCloudinary(this.state.deleteToken);
-    this.setState({ imageUrl: undefined, deleteToken: undefined, hasUnsavedChanges: false });
+    this.setState({ imageUrl: null, deleteToken: undefined, hasUnsavedChanges: false });
   };
 
   handleMakePublicChange = (event) => {
@@ -308,6 +311,7 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     createPost: bindActionCreators(createPostAction, dispatch),
+    editPost: bindActionCreators(editPostAction, dispatch),
     getArtist: bindActionCreators(getArtistAction, dispatch),
   };
 };

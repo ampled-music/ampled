@@ -19,7 +19,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    if PostPolicy.new(current_user, @post).destroy? && @post.update(post_update_params)
+    if PostPolicy.new(current_user, @post).update? && @post.update(post_update_params)
       render json: :ok
     else
       render json: { errors: @post.errors }, status: :bad_request

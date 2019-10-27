@@ -51,7 +51,7 @@ class PostFormComponent extends React.Component<Props, any> {
         ...this.initialState,
         ...props.post,
         audioFile: props.post.audio_file,
-        imageUrl: props.post.image_url
+        imageUrl: props.post.image_url,
       };
     } else {
       this.state = this.initialState;
@@ -67,8 +67,8 @@ class PostFormComponent extends React.Component<Props, any> {
   }
 
   refreshArtist = () => {
-    this.setState(this.initialState);
-    this.props.getArtist(this.props.artist.id);
+    // this.setState(this.initialState);
+    window.setTimeout(() => this.props.getArtist(this.props.artist.id), 1000);
     this.props.discardChanges();
   };
 
@@ -114,7 +114,6 @@ class PostFormComponent extends React.Component<Props, any> {
     if (this.state.deleteToken) {
       this.removeImage();
     }
-    
 
     const fileInfo = await uploadFileToCloudinary(imageFile);
     const fileName = imageFile.name;
@@ -148,15 +147,7 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   renderUploader(): React.ReactNode {
-    return (
-      <div className="uploader">
-        {this.state.loadingImage ? (
-          <CircularProgress />
-        ) : (
-          this.renderUploadButton()
-        )}
-      </div>
-    );
+    return <div className="uploader">{this.state.loadingImage ? <CircularProgress /> : this.renderUploadButton()}</div>;
   }
 
   renderPreview(): React.ReactNode {
@@ -171,7 +162,7 @@ class PostFormComponent extends React.Component<Props, any> {
             Remove
           </span>
           <label htmlFor="image-file">
-            <span  className="replace-button" title="Change image">
+            <span className="replace-button" title="Change image">
               Replace
             </span>
           </label>
@@ -190,6 +181,36 @@ class PostFormComponent extends React.Component<Props, any> {
     );
   }
 
+  renderExistingAudio(): React.ReactNode {
+    return (
+      <div className="upload">
+        <div className="progress-container">
+          <div className="progress-info">
+            <div className="progress-info__name">
+              <div className="progress-info__name_mp3">Mp3</div>
+              <div className="progress-info__name_song">{this.props.post.audio_file}</div>
+            </div>
+
+            <div className="file-actions">
+              <span
+                className="remove-button"
+                title="Remove audio"
+                onClick={() => this.updateAudioFile(null)}
+              >
+                Remove
+              </span>
+              {/* <label htmlFor="audio-file">
+                <span className="replace-button" title="Change audio">
+                  Replace
+                </span>
+              </label> */}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { hasUnsavedChanges, title, body, imageUrl } = this.state;
     const { isEdit } = this.props;
@@ -203,7 +224,6 @@ class PostFormComponent extends React.Component<Props, any> {
           <DialogContent>
             <h4>{isEdit ? 'EDIT POST' : 'NEW POST'}</h4>
             <form onSubmit={this.handleSubmit}>
-
               <div className="post-form__description">
                 <TextField
                   autoFocus
@@ -238,7 +258,16 @@ class PostFormComponent extends React.Component<Props, any> {
                 />
               </div>
               <div className="post-form__audio">
-                <Upload onComplete={this.updateAudioFile} />
+                {isEdit &&
+                this.props.post &&
+                this.props.post.audio_file &&
+                this.state.audioFile &&
+                this.state.audio_file &&
+                this.state.audioFile === this.state.audio_file ? (
+                  this.renderExistingAudio()
+                ) : (
+                  <Upload onComplete={this.updateAudioFile} />
+                )}
               </div>
               <div className="post-form__image">
                 <input
@@ -257,7 +286,7 @@ class PostFormComponent extends React.Component<Props, any> {
                   <div className="col-auto">
                     <label className="make-public-label" htmlFor="make-public">
                       <input
-                        name="make-public"   
+                        name="make-public"
                         id="make-public"
                         type="checkbox"
                         onChange={this.handleMakePublicChange}
@@ -283,7 +312,11 @@ class PostFormComponent extends React.Component<Props, any> {
 
               <div className="post-form__actions">
                 <DialogActions className="action-buttons">
-                  <Button className="cancel-button" style={{ textAlign: 'left' }} onClick={() => this.props.close(hasUnsavedChanges)}>
+                  <Button
+                    className="cancel-button"
+                    style={{ textAlign: 'left' }}
+                    onClick={() => this.props.close(hasUnsavedChanges)}
+                  >
                     Cancel
                   </Button>
                   <Button

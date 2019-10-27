@@ -9,25 +9,45 @@ import { getMeAction } from 'src/redux/me/get-me';
 import { setUserDataAction } from 'src/redux/me/set-me';
 import { updateMeAction } from 'src/redux/me/update-me';
 
-import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
-import { initialState as meInitialState } from '../../redux/me/initial-state';
-
 import { MuiThemeProvider } from '@material-ui/core/styles';
-// import { Loading } from '../shared/loading/Loading';
-import tear from '../../images/full_page_tear.png';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 import { theme } from './theme';
+import tear from '../../images/full_page_tear.png';
 
-type Dispatchers = ReturnType<typeof mapDispatchToProps>;
-
-type Props = typeof loginInitialState &
-  typeof meInitialState &
-  Dispatchers & { history: any; };
+interface Props {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
 
 class CreateArtistComponent extends React.Component<Props, any> {
   state = {
 
   };
+
+
+  TabPanel = () => {
+
+    const { children, value, index, ...other } = this.props;
+
+    return (
+      <Typography
+        component="div"
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        <Box p={3}>{children}</Box>
+      </Typography>
+    );
+  }
 
   renderHeader = () => {
     return (
@@ -40,9 +60,33 @@ class CreateArtistComponent extends React.Component<Props, any> {
     );
   };
 
+  renderNav = () => {
+    return (
+      <div className="create-artist__header">
+        <AppBar position="static">
+          <Tabs value="1" aria-label="simple tabs example">
+            <Tab label="Item One" />
+            <Tab label="Item Two" />
+            <Tab label="Item Three" />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0}>
+          Item One
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          Item Two
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          Item Three
+        </TabPanel>
+      </div>
+    );
+  };
+
   renderContent = () => (
     <MuiThemeProvider theme={theme}>
       {this.renderHeader()}
+      {this.renderNav()}
     </MuiThemeProvider>
   );
 

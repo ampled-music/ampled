@@ -23,7 +23,7 @@ class AppComponent extends React.Component<Props, any> {
   }
 
   componentDidUpdate() {
-    if (this.props.token && !this.props.error && !this.props.userData) {
+    if (this.props.token && !this.props.error && !this.props.userData && !this.props.loadingMe) {
       this.props.getMe();
     }
   }

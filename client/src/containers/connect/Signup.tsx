@@ -54,7 +54,7 @@ class SignupComponent extends React.Component<Props, any> {
 
     if (this.state.submitted && !signup.errors && authentication.authModalOpen && !authentication.authenticating) {
       showToastMessage("Signed up! Please wait while we log you in.", MessageType.SUCCESS, { timeOut: 8000 });
-      once(this.login)();
+      this.doLogin();
     }
   }
 
@@ -68,6 +68,8 @@ class SignupComponent extends React.Component<Props, any> {
       }
     }
   }
+
+  doLogin = once(this.login)
 
   passwordsMatch(): boolean {
     const { password, confirmPassword } = this.state;

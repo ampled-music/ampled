@@ -1,15 +1,21 @@
-class SendEmailBatchJob
+class PostNotificationEmailJob
   include Sidekiq::Worker
+  attr_accessor :post, :artist, :users
+
   def perform(post_id)
-    post = Post.find(post_id)
+    @post = Post.find(post_id)
     return if post.blank?
 
-    users_to_notify = post.artist_page.active_subscribers
-    artist = post.artist_page
+    @users = post.artist_page.active_subscribers
+    @artist = post.artist_page
 
-    client = Postmark::ApiClient.new(ENV["POSTMARK_API_KEY"])
+    SendBatchEmail.call(messages)
+  end
 
-    messages = users_to_notify.map do |user|
+  private
+
+  def messages
+    users.map do |user|
       {
         from: ENV["POSTMARK_FROM_EMAIL"],
         to: user.email,
@@ -21,7 +27,5 @@ class SendEmailBatchJob
         }
       }
     end
-
-    client.deliver_in_batches_with_templates(messages)
   end
 end

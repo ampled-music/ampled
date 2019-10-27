@@ -21,5 +21,6 @@
 
 FactoryBot.define do
   factory :artist_page do
+    name { Faker::Music::RockBand.name }
   end
 end

@@ -17,6 +17,7 @@ class SubscriptionsController < ApplicationController
 
   def create
     subscription = subscribe_stripe
+    NewSupporterEmailJob.perform_async(subscription.id)
     render json: subscription
   end
 

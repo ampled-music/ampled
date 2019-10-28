@@ -34,6 +34,10 @@ class AppComponent extends React.Component<Props, any> {
       <div className="page">
         <Helmet>
           <title>Ampled | Direct Community Support For Music Artists</title>
+          {
+            process.env.NODE_ENV === 'development' &&
+            (<meta name="robots" content="noindex, nofollow"/>)
+          }
         </Helmet>
         <Routes />
         <Modal open={this.props.authModalOpen} onClose={this.props.closeAuthModal}>

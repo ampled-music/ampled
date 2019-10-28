@@ -71,7 +71,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     var index;
 
     for (index = 0; index < bannerImages.length; ++index) {
-      
+
       if (bannerImages[index].classList.contains('active')) {
 
         bannerImages[index].classList.toggle('active');
@@ -80,7 +80,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         const change = direction === 'backwards' ? -1 : 1;
         index += change;
         index = index < 0 ? bannerImages.length - 1 : index = index % bannerImages.length;
-        
+
         bannerImages[index].classList.add('active');
         bannerIcons[index].classList.add('active');
       }
@@ -101,12 +101,12 @@ export class ArtistHeader extends React.Component<Props, any> {
     bannerImages[currentIndex].classList.add('active');
     bannerIcons[currentIndex].classList.add('active');
   }
-  
+
   renderArtistName = () => <div className="artist-header__title"><span className="artist-header__title_flair"></span>{this.props.artist.name}</div>;
 
   renderOwners = () => {
     const { artist } = this.props;
-    
+
     return (
       <div className="artist-header__persons">
         {artist.owners &&
@@ -115,18 +115,18 @@ export class ArtistHeader extends React.Component<Props, any> {
               {owner.profile_image_url ? (
                 <img
                   className="artist-header__person_image member"
-                  src={this.renderPhoto(owner.profile_image_url,150)}
+                  src={this.renderPhoto(owner.profile_image_url, 150)}
                   alt={owner.name}
                   style={{ borderColor: artist.accent_color }}
                 />
               ) : (
-                <img
-                  className="artist-header__person_image member"
-                  src={avatar}
-                  alt={owner.name}
-                  style={{ borderColor: artist.accent_color }}
-                />
-              )}
+                  <img
+                    className="artist-header__person_image member"
+                    src={avatar}
+                    alt={owner.name}
+                    style={{ borderColor: artist.accent_color }}
+                  />
+                )}
             </div>
           ))}
       </div>
@@ -136,9 +136,9 @@ export class ArtistHeader extends React.Component<Props, any> {
   renderPhoto = (image: string, crop: number) => {
     const crop_url_path = `w_${crop},h_${crop},c_fill`;
     if (image.includes('https://res.cloudinary')) {
-      return image.replace('upload/',`upload/${crop_url_path}/`);
+      return image.replace('upload/', `upload/${crop_url_path}/`);
     } else {
-      return `https://res.cloudinary.com/demo/image/fetch/${crop_url_path}/`+image;
+      return `https://res.cloudinary.com/demo/image/fetch/${crop_url_path}/` + image;
     }
   }
 
@@ -149,9 +149,9 @@ export class ArtistHeader extends React.Component<Props, any> {
         {artist.images &&
           artist.images.map((image, index) => {
             if (index === 0) {
-              return <div key={index} className="artist-header__photo active"><img src={this.renderPhoto(image,800)} /></div>;
-            } else {              
-              return <div key={index} className="artist-header__photo"><img src={this.renderPhoto(image,800)} /></div>;
+              return <div key={index} className="artist-header__photo active"><img src={this.renderPhoto(image, 800)} /></div>;
+            } else {
+              return <div key={index} className="artist-header__photo"><img src={this.renderPhoto(image, 800)} /></div>;
             }
           })
         }
@@ -246,7 +246,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
   }
 
-  renderSupporterHover = ({supporter}) => {
+  renderSupporterHover = ({ supporter }) => {
     return (
       <div className="supporter__hover-card">
         <div className="supporter__hover-card_header">
@@ -254,7 +254,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             <div className="supporter__hover-card_header_photo">
               <img
                 className="supporter__hover-card_header_photo_image"
-                src={this.renderPhoto(supporter.profile_image_url,150)}
+                src={this.renderPhoto(supporter.profile_image_url, 150)}
                 alt={this.anonymizeSupporterName(supporter.name)}
               />
             </div>
@@ -278,9 +278,9 @@ export class ArtistHeader extends React.Component<Props, any> {
             {supporter.member_of && (
               <div className="supporter__hover-card_bands_section">
                 <h6>Member of</h6>
-                <div className="supporter__hover-card_bands_name">Fake Dad</div>   
+                <div className="supporter__hover-card_bands_name">Fake Dad</div>
               </div>
-            )}    
+            )}
           </div>
         )}
       </div>
@@ -307,18 +307,18 @@ export class ArtistHeader extends React.Component<Props, any> {
           {supporter.profile_image_url ? (
             <img
               className="artist-header__person_image"
-              src={this.renderPhoto(supporter.profile_image_url,200)}
+              src={this.renderPhoto(supporter.profile_image_url, 200)}
               alt={this.anonymizeSupporterName(supporter.name)}
               style={style}
             />
           ) : (
-            <img
-              className="artist-header__person_svg"
-              src={avatar}
-              alt={this.anonymizeSupporterName(supporter.name)}
-              style={style}
-            />
-          )}
+              <img
+                className="artist-header__person_svg"
+                src={avatar}
+                alt={this.anonymizeSupporterName(supporter.name)}
+                style={style}
+              />
+            )}
         </div>
       </div>
     );
@@ -328,11 +328,11 @@ export class ArtistHeader extends React.Component<Props, any> {
 
     const { artist } = this.props;
     const borderColor = artist.accent_color;
-    
+
     return (
       <div>
-        <button className="btn btn-ampled btn-support" style={{ borderColor }} onClick={(e) => this.props.handleSupportClick()}> 
-          Become a Supporter 
+        <button className="btn btn-ampled btn-support" style={{ borderColor }} onClick={(e) => this.props.handleSupportClick()}>
+          Become a Supporter
         </button>
         <button onClick={this.props.openWhyModal} className="link link__why">
           Why support?
@@ -366,8 +366,8 @@ export class ArtistHeader extends React.Component<Props, any> {
               <div className="artist-header__person_info">
                 <div className="artist-header__person_name">{this.anonymizeSupporterName(mostRecentSupporter.name)}</div>
                 <div className="artist-header__person_quote" /></div>
-              </div>
             </div>
+          </div>
         )}
         {artist.supporters.length > 0 && (
           <div>
@@ -375,7 +375,7 @@ export class ArtistHeader extends React.Component<Props, any> {
 
             <div className="artist-header__supporters_all">
               {artist.supporters
-                .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
+                .filter((supporter) => !R.equals(R.path('most_recent_supporter', 'id', artist), +supporter.id))
                 .map((supporter) => (
                   <div key={`minisupporter-${supporter.id}`}>
                     <RenderSupporter
@@ -388,7 +388,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             </div>
           </div>
         )}
-        
+
       </div>
     );
   };

@@ -15,7 +15,7 @@ import { UserDetails } from './user-details/UserDetails';
 const Routes = () => {
   return (
     <Switch>
-      <PublicRoute exact path={routePaths.home} component={Home} />
+      {/* <PublicRoute exact path={routePaths.home} component={Home} /> */}
       <PublicRoute exact path={routePaths.artists} component={Artist} />
       <PublicRoute exact path={routePaths.slugs} component={Artist} />
       <PublicRoute exact path={routePaths.support} component={Support} />

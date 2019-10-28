@@ -131,6 +131,12 @@ This project is configured for continuous integration with CircleCI, see [.circl
 On successful builds, Heroku will trigger a deployment via its
 [GitHub Integration](https://devcenter.heroku.com/articles/github-integration#automatic-deploys).
 
+# Deploy to Acceptance/Production
+1. Pull Request into Acceptance/Production and run merge will trigger CI
+2. If there are pending migrations, run them locally with the appropriate `DATABASE_URL`
+    * ie: `DATABASE_URL=postgres://ACCEPTANCE/PRODUCTION_URL rails db:migrate`
+3. Trigger a restart in Heroku
+
 # Server Environments
 
 ### Hosting

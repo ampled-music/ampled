@@ -1,13 +1,13 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[destroy]
+  before_action :set_post, only: %i[destroy update]
 
   def create
     @post = Post.new(post_params)
-
     if PostPolicy.new(current_user, @post).create? && @post.save
+      SendEmailBatchJob.perform_async(@post.id)
       render json: :ok
     else
-      render json: {}, status: :bad_request
+      render json: { errors: @post.errors }, status: :bad_request
     end
   end
 
@@ -16,6 +16,14 @@ class PostsController < ApplicationController
       render json: :ok
     else
       render json: {}, status: :bad_request
+    end
+  end
+
+  def update
+    if PostPolicy.new(current_user, @post).update? && @post.update(post_update_params)
+      render json: :ok
+    else
+      render json: { errors: @post.errors }, status: :bad_request
     end
   end
 
@@ -34,5 +42,15 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.find(params[:id])
+  end
+
+  def post_update_params
+    params.require(:post).permit(
+      :title,
+      :body,
+      :image_url,
+      :audio_file,
+      :is_private
+    )
   end
 end

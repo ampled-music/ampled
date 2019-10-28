@@ -21,6 +21,7 @@ import Linkify from 'react-linkify';
 
 import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';
+import { PostForm } from '../post-form/PostForm';
 import { styles } from './post-style';
 
 import { deletePost } from 'src/api/post/delete-post';
@@ -29,6 +30,7 @@ class PostComponent extends React.Component<any, any> {
   state = {
     showPrivatePostModal: false,
     showDeletePostModal: false,
+    showEditPostModal: false,
     expanded: false,
   };
 
@@ -59,12 +61,29 @@ class PostComponent extends React.Component<any, any> {
     this.setState({ showDeletePostModal: false });
   };
 
+  openEditPostModal = () => {
+    this.setState({ showEditPostModal: true });
+  };
+
+  closeEditPostModal = () => {
+    this.setState({ showEditPostModal: false });
+  };
+
+
   openSignupModal = () => {
+    let artistId;
+
+    if (this.props.match.params.slug) {
+      artistId = this.props.artist.id;
+    } else {
+      artistId = this.props.match.params.id;
+    }
+
     this.props.openAuthModal({
       modalPage: 'signup',
       showSupportMessage: 'post',
       artistName: this.props.artistName,
-      redirectTo: routePaths.support.replace(':id', this.props.match.params.id),
+      redirectTo: routePaths.support.replace(':id', artistId),
     });
   };
 
@@ -179,6 +198,14 @@ class PostComponent extends React.Component<any, any> {
         <Modal open={this.state.showDeletePostModal} onClose={this.closeDeletePostModal}>
           {this.renderDeleteModal()}
         </Modal>
+        <Modal open={this.state.showEditPostModal}>
+          <PostForm
+            close={this.closeEditPostModal}
+            discardChanges={this.closeEditPostModal}
+            isEdit
+            post={post}
+          />
+        </Modal>
         <div
           className={cx('post', { 'clickable-post': !allowDetails })}
           onClick={() => this.handlePrivatePostClick(authenticated)}
@@ -219,7 +246,7 @@ class PostComponent extends React.Component<any, any> {
             {this.canLoggedUserPost() && (
               <div className="post__change">
                 <div className="post__change_edit">
-                  <button className="disabled">
+                  <button onClick={this.openEditPostModal}>
                     <FontAwesomeIcon icon={faPen} />
                   </button>
                 </div>

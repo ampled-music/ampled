@@ -11,18 +11,20 @@ Rails.application.routes.draw do
     root to: "users#index"
   end
 
+  get "/users/password/edit", to: "react#index"
+
   devise_for :users, controllers: {
     confirmations: "confirmations",
     registrations: "registrations",
-    sessions: "sessions"
+    sessions: "sessions",
+    passwords: "passwords"
   }
 
   resources :comments, only: %i[create destroy]
   resources :subscriptions
   resources :artist_pages
-  resources :posts, only: %i[destroy]
 
-  resources :posts, only: %i[destroy]
+  resources :posts, only: %i[destroy update]
 
   resources :artist_pages, only: [] do
     resources :posts, only: %i[create index]

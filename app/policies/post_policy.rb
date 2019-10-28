@@ -18,6 +18,10 @@ class PostPolicy
     subscriber? || owner?
   end
 
+  def update?
+    owner? || author?
+  end
+
   def view_details?
     !post.is_private || owner? || subscriber?
   end

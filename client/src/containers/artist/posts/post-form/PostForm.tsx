@@ -9,6 +9,7 @@ import { uploadFileToCloudinary } from 'src/api/cloudinary/upload-image';
 import { getArtistAction } from 'src/redux/artists/get-details';
 import { Store } from 'src/redux/configure-store';
 import { createPostAction } from 'src/redux/posts/create';
+import { editPostAction } from 'src/redux/posts/edit';
 
 import { Button, DialogActions, DialogContent, TextField, CircularProgress } from '@material-ui/core';
 
@@ -21,6 +22,8 @@ import { Upload } from './Upload';
 interface PostFormProps {
   close: (hasUnsavedChanges: any) => void;
   discardChanges: () => void;
+  isEdit?: Boolean;
+  post?: any;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -34,14 +37,26 @@ class PostFormComponent extends React.Component<Props, any> {
     imageName: '',
     isPublic: false,
     isPinned: false,
-    imageUrl: undefined,
+    imageUrl: null,
     deleteToken: undefined,
     hasUnsavedChanges: false,
     loadingImage: false,
     savingPost: false,
   };
 
-  state = this.initialState;
+  constructor(props) {
+    super(props);
+    if (props.post) {
+      this.state = {
+        ...this.initialState,
+        ...props.post,
+        audioFile: props.post.audio_file,
+        imageUrl: props.post.image_url,
+      };
+    } else {
+      this.state = this.initialState;
+    }
+  }
 
   componentDidUpdate() {
     if (!this.props.postCreated && !this.state.savingPost) {
@@ -52,8 +67,8 @@ class PostFormComponent extends React.Component<Props, any> {
   }
 
   refreshArtist = () => {
-    this.setState(this.initialState);
-    this.props.getArtist(this.props.artist.id);
+    // this.setState(this.initialState);
+    window.setTimeout(() => this.props.getArtist(this.props.artist.id), 1000);
     this.props.discardChanges();
   };
 
@@ -66,6 +81,7 @@ class PostFormComponent extends React.Component<Props, any> {
     event.preventDefault();
 
     const { title, body, audioFile, imageUrl, isPublic, isPinned } = this.state;
+    const { isEdit } = this.props;
 
     const post = {
       title,
@@ -75,10 +91,11 @@ class PostFormComponent extends React.Component<Props, any> {
       is_private: !isPublic,
       is_pinned: isPinned,
       artist_page_id: this.props.artist.id,
+      id: this.state.id,
     };
 
     this.setState({ savingPost: true });
-    this.props.createPost(post);
+    isEdit ? this.props.editPost(post) : this.props.createPost(post);
   };
 
   updateAudioFile = (audioFile) => {
@@ -97,7 +114,6 @@ class PostFormComponent extends React.Component<Props, any> {
     if (this.state.deleteToken) {
       this.removeImage();
     }
-    
 
     const fileInfo = await uploadFileToCloudinary(imageFile);
     const fileName = imageFile.name;
@@ -113,7 +129,7 @@ class PostFormComponent extends React.Component<Props, any> {
 
   removeImage = () => {
     deleteFileFromCloudinary(this.state.deleteToken);
-    this.setState({ imageUrl: undefined, deleteToken: undefined, hasUnsavedChanges: false });
+    this.setState({ imageUrl: null, deleteToken: undefined, hasUnsavedChanges: false });
   };
 
   handleMakePublicChange = (event) => {
@@ -131,15 +147,7 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   renderUploader(): React.ReactNode {
-    return (
-      <div className="uploader">
-        {this.state.loadingImage ? (
-          <CircularProgress />
-        ) : (
-          this.renderUploadButton()
-        )}
-      </div>
-    );
+    return <div className="uploader">{this.state.loadingImage ? <CircularProgress /> : this.renderUploadButton()}</div>;
   }
 
   renderPreview(): React.ReactNode {
@@ -154,7 +162,7 @@ class PostFormComponent extends React.Component<Props, any> {
             Remove
           </span>
           <label htmlFor="image-file">
-            <span  className="replace-button" title="Change image">
+            <span className="replace-button" title="Change image">
               Replace
             </span>
           </label>
@@ -173,8 +181,39 @@ class PostFormComponent extends React.Component<Props, any> {
     );
   }
 
+  renderExistingAudio(): React.ReactNode {
+    return (
+      <div className="upload">
+        <div className="progress-container">
+          <div className="progress-info">
+            <div className="progress-info__name">
+              <div className="progress-info__name_mp3">Mp3</div>
+              <div className="progress-info__name_song">{this.props.post.audio_file}</div>
+            </div>
+
+            <div className="file-actions">
+              <span
+                className="remove-button"
+                title="Remove audio"
+                onClick={() => this.updateAudioFile(null)}
+              >
+                Remove
+              </span>
+              {/* <label htmlFor="audio-file">
+                <span className="replace-button" title="Change audio">
+                  Replace
+                </span>
+              </label> */}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { hasUnsavedChanges, title, body, imageUrl } = this.state;
+    const { isEdit } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
 
@@ -183,9 +222,8 @@ class PostFormComponent extends React.Component<Props, any> {
         <img className="tear__topper" src={tear} />
         <div className="post-form">
           <DialogContent>
-            <h4>NEW POST</h4>
+            <h4>{isEdit ? 'EDIT POST' : 'NEW POST'}</h4>
             <form onSubmit={this.handleSubmit}>
-
               <div className="post-form__description">
                 <TextField
                   autoFocus
@@ -220,7 +258,16 @@ class PostFormComponent extends React.Component<Props, any> {
                 />
               </div>
               <div className="post-form__audio">
-                <Upload onComplete={this.updateAudioFile} />
+                {isEdit &&
+                this.props.post &&
+                this.props.post.audio_file &&
+                this.state.audioFile &&
+                this.state.audio_file &&
+                this.state.audioFile === this.state.audio_file ? (
+                  this.renderExistingAudio()
+                ) : (
+                  <Upload onComplete={this.updateAudioFile} />
+                )}
               </div>
               <div className="post-form__image">
                 <input
@@ -239,7 +286,7 @@ class PostFormComponent extends React.Component<Props, any> {
                   <div className="col-auto">
                     <label className="make-public-label" htmlFor="make-public">
                       <input
-                        name="make-public"   
+                        name="make-public"
                         id="make-public"
                         type="checkbox"
                         onChange={this.handleMakePublicChange}
@@ -255,7 +302,7 @@ class PostFormComponent extends React.Component<Props, any> {
                         id="pin-post"
                         type="checkbox"
                         // onChange={this.state.isPinned}
-                        checked={this.state.isPinned}
+                        // checked={this.state.isPinned}
                       />
                       Pin post
                     </label>
@@ -265,7 +312,11 @@ class PostFormComponent extends React.Component<Props, any> {
 
               <div className="post-form__actions">
                 <DialogActions className="action-buttons">
-                  <Button className="cancel-button" style={{ textAlign: 'left' }} onClick={() => this.props.close(hasUnsavedChanges)}>
+                  <Button
+                    className="cancel-button"
+                    style={{ textAlign: 'left' }}
+                    onClick={() => this.props.close(hasUnsavedChanges)}
+                  >
                     Cancel
                   </Button>
                   <Button
@@ -293,6 +344,7 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     createPost: bindActionCreators(createPostAction, dispatch),
+    editPost: bindActionCreators(editPostAction, dispatch),
     getArtist: bindActionCreators(getArtistAction, dispatch),
   };
 };

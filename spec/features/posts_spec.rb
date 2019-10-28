@@ -76,3 +76,37 @@ RSpec.describe "DELETE /posts", type: :request do
     end
   end
 end
+
+RSpec.describe "PUT /posts", type: :request do
+  context "when user is unauthenticated" do
+    let(:post) { create(:post, title: "old title") }
+    before { put "/posts/#{post.id}", params: { post: { title: "new title" } } }
+
+    it "returns 400" do
+      expect(response.status).to eq 400
+    end
+
+    it "does not update the post" do
+      expect(Post.find(post.id).title).to eq "old title"
+    end
+  end
+
+  context "when user owns the post" do
+    let(:user) { create(:user) }
+    let(:post) { create(:post, user: user, title: "my old title") }
+
+    before(:each) do
+      sign_in user
+    end
+
+    before { put "/posts/#{post.id}", params: { post: { title: "my new title" } } }
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+
+    it "updates the post" do
+      expect(Post.find_by(id: post.id).title).to eq "my new title"
+    end
+  end
+end

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
 import { config } from 'src/config';
@@ -48,10 +48,11 @@ class HomeArtistsComponent extends React.Component<Props, State> {
 
     return (
       <div className="home-artists">
-        {/* <h1 className="home-artists__title">Artists on Ampled</h1> */}
+        <h1 className="home-artists__title">Artists on Ampled</h1>
         <div className="container">
-          <div className="row">
+          <div className="row justify-content-center">
             {/* {this.getArtistsList(artistsPages)} */}
+            {this.getArtistHardcoreLuxury()}
           </div>
           <div className="row">
             <button className="home-artists__button btn btn-ampled center" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
@@ -82,6 +83,20 @@ class HomeArtistsComponent extends React.Component<Props, State> {
   //     })
   //   );
   // }
+
+  private getArtistHardcoreLuxury() {
+    return (
+      <div className="col-sm-6 col-md-4 home-artists__item">
+        <Link to={`/artist/hardcoreluxury`}>
+          <div className="home-artists__item_title">Hardcore Luxury</div>
+          <div className="home-artists__item_image_hover" style={{ backgroundColor: '#4c3269' }}>
+            <img className="home-artists__item_image" src="https://res.cloudinary.com/dpbdxxw6o/image/upload/v1566160100/Screen_Shot_2019-08-18_at_4.26.55_PM_tpsmbi.png" />
+          </div>
+          <div className="home-artists__item_border" style={{ borderColor: '#4c3269' }} ></div>
+        </Link>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = (state) => {

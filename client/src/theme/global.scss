@@ -224,14 +224,8 @@ h6 {
   width: 100%;
   position: relative;
 
-  &.tear_1 {
-    bottom: -30px;
-    margin-top: -30px;
-  }
-
   &.tear_2 {
     background-color: $white;
-    margin-bottom: -44px;
   }
 
   &__topper {

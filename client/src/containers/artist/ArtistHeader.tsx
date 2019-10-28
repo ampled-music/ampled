@@ -3,8 +3,9 @@ import './artist.scss';
 import * as React from 'react';
 import path from 'ramda/src/path';
 import Swipe from 'react-easy-swipe';
+import cx from 'classnames';
 
-import { Image, Transformation, CloudinaryContext } from 'cloudinary-react';
+import { Image, Transformation } from 'cloudinary-react';
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from 'src/redux/artists/initial-state';
@@ -71,7 +72,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     var index;
 
     for (index = 0; index < bannerImages.length; ++index) {
-      
+
       if (bannerImages[index].classList.contains('active')) {
 
         bannerImages[index].classList.toggle('active');
@@ -80,7 +81,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         const change = direction === 'backwards' ? -1 : 1;
         index += change;
         index = index < 0 ? bannerImages.length - 1 : index = index % bannerImages.length;
-        
+
         bannerImages[index].classList.add('active');
         bannerIcons[index].classList.add('active');
       }
@@ -101,12 +102,12 @@ export class ArtistHeader extends React.Component<Props, any> {
     bannerImages[currentIndex].classList.add('active');
     bannerIcons[currentIndex].classList.add('active');
   }
-  
+
   renderArtistName = () => <div className="artist-header__title"><span className="artist-header__title_flair"></span>{this.props.artist.name}</div>;
 
   renderOwners = () => {
     const { artist } = this.props;
-    
+
     return (
       <div className="artist-header__persons">
         {artist.owners &&
@@ -115,18 +116,18 @@ export class ArtistHeader extends React.Component<Props, any> {
               {owner.profile_image_url ? (
                 <img
                   className="artist-header__person_image member"
-                  src={this.renderPhoto(owner.profile_image_url,150)}
+                  src={this.renderPhoto(owner.profile_image_url, 150)}
                   alt={owner.name}
                   style={{ borderColor: artist.accent_color }}
                 />
               ) : (
-                <img
-                  className="artist-header__person_image member"
-                  src={avatar}
-                  alt={owner.name}
-                  style={{ borderColor: artist.accent_color }}
-                />
-              )}
+                  <img
+                    className="artist-header__person_image member"
+                    src={avatar}
+                    alt={owner.name}
+                    style={{ borderColor: artist.accent_color }}
+                  />
+                )}
             </div>
           ))}
       </div>
@@ -136,13 +137,13 @@ export class ArtistHeader extends React.Component<Props, any> {
   renderPhoto = (image: string, crop: number) => {
     const crop_url_path = `w_${crop},h_${crop},c_fill`;
     if (image.includes('https://res.cloudinary')) {
-      return image.replace('upload/',`upload/${crop_url_path}/`);
+      return image.replace('upload/', `upload/${crop_url_path}/`);
     } else {
       return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
     }
   };
 
-  renderCloudinaryPhoto = (image: string, crop: number,) => {
+  renderCloudinaryPhoto = (image: string, crop: number, ) => {
     const crop_url_path = `w_${crop},h_${crop},c_fill`;
     const cloudinary_id = image.substring(image.lastIndexOf("/") + 1, image.lastIndexOf("."));
     if (image.includes('https://res.cloudinary')) {
@@ -163,11 +164,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__photos">
         {artist.images &&
           artist.images.map((image, index) => {
-            if (index === 0) { 
-              return <div key={index} className="artist-header__photo active">{this.renderCloudinaryPhoto(image,800)}</div>;
-            } else {              
-              return <div key={index} className="artist-header__photo">{this.renderCloudinaryPhoto(image,800)}</div>;
-            }
+            return <div key={index} className={cx('artist-header__photo', { 'active': index === 0 })}>{this.renderCloudinaryPhoto(image, 800)}</div>;
           })
         }
       </div>
@@ -182,11 +179,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         {artist.images &&
           artist.images.map((_image, index) => {
             if (artist.images.length > 1) {
-              if (index === 0) {
-                return <span key={index} className="artist-header__banner-icons_icon active" onClick={() => this.selectBanner(index)}></span>
-              } else {
-                return <span key={index} className="artist-header__banner-icons_icon" onClick={() => this.selectBanner(index)}></span>
-              }
+              return <span key={index} className={cx('artist-header__banner-icons_icon', { 'active': index === 0 })} onClick={() => this.selectBanner(index)}></span>
             }
           })
         }
@@ -261,7 +254,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
   }
 
-  renderSupporterHover = ({supporter}) => {
+  renderSupporterHover = ({ supporter }) => {
     return (
       <div className="supporter__hover-card">
         <div className="supporter__hover-card_header">
@@ -269,7 +262,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             <div className="supporter__hover-card_header_photo">
               <img
                 className="supporter__hover-card_header_photo_image"
-                src={this.renderPhoto(supporter.profile_image_url,150)}
+                src={this.renderPhoto(supporter.profile_image_url, 150)}
                 alt={this.anonymizeSupporterName(supporter.name)}
               />
             </div>
@@ -293,9 +286,9 @@ export class ArtistHeader extends React.Component<Props, any> {
             {supporter.member_of && (
               <div className="supporter__hover-card_bands_section">
                 <h6>Member of</h6>
-                <div className="supporter__hover-card_bands_name">Fake Dad</div>   
+                <div className="supporter__hover-card_bands_name">Fake Dad</div>
               </div>
-            )}    
+            )}
           </div>
         )}
       </div>
@@ -322,18 +315,18 @@ export class ArtistHeader extends React.Component<Props, any> {
           {supporter.profile_image_url ? (
             <img
               className="artist-header__person_image"
-              src={this.renderPhoto(supporter.profile_image_url,200)}
+              src={this.renderPhoto(supporter.profile_image_url, 200)}
               alt={this.anonymizeSupporterName(supporter.name)}
               style={style}
             />
           ) : (
-            <img
-              className="artist-header__person_svg"
-              src={avatar}
-              alt={this.anonymizeSupporterName(supporter.name)}
-              style={style}
-            />
-          )}
+              <img
+                className="artist-header__person_svg"
+                src={avatar}
+                alt={this.anonymizeSupporterName(supporter.name)}
+                style={style}
+              />
+            )}
         </div>
       </div>
     );
@@ -343,11 +336,11 @@ export class ArtistHeader extends React.Component<Props, any> {
 
     const { artist } = this.props;
     const borderColor = artist.accent_color;
-    
+
     return (
       <div>
-        <button className="btn btn-ampled btn-support" style={{ borderColor }} onClick={(e) => this.props.handleSupportClick()}> 
-          Become a Supporter 
+        <button className="btn btn-ampled btn-support" style={{ borderColor }} onClick={(e) => this.props.handleSupportClick()}>
+          Become a Supporter
         </button>
         <button onClick={this.props.openWhyModal} className="link link__why">
           Why support?
@@ -381,8 +374,8 @@ export class ArtistHeader extends React.Component<Props, any> {
               <div className="artist-header__person_info">
                 <div className="artist-header__person_name">{this.anonymizeSupporterName(mostRecentSupporter.name)}</div>
                 <div className="artist-header__person_quote" /></div>
-              </div>
             </div>
+          </div>
         )}
         {artist.supporters.length > 0 && (
           <div>
@@ -390,7 +383,7 @@ export class ArtistHeader extends React.Component<Props, any> {
 
             <div className="artist-header__supporters_all">
               {artist.supporters
-                .filter((supporter) => !R.equals(R.path('most_recent_supporter','id', artist), +supporter.id))
+                .filter((supporter) => !R.equals(R.path('most_recent_supporter', 'id', artist), +supporter.id))
                 .map((supporter) => (
                   <div key={`minisupporter-${supporter.id}`}>
                     <RenderSupporter
@@ -403,7 +396,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             </div>
           </div>
         )}
-        
+
       </div>
     );
   };
@@ -411,20 +404,18 @@ export class ArtistHeader extends React.Component<Props, any> {
   render() {
     return (
       <div className="artist-header container">
-        <CloudinaryContext cloudName="ampled-web">
-          {this.renderArtistName()}
-          <div className="row justify-content-between">
-            <div className="col-md-7">
-              {this.renderPhotoContainer()}
-            </div>
-            <div className="col-md-4 artist-header__message-col">
-              {this.renderMessageContainer()}
-              {this.renderFloatingNewPostButton()}
-              {this.renderSupportersContainer()}
-              {!this.props.isSupporter && !this.canLoggedUserPost() && this.renderSupportButton()}
-            </div>
+        {this.renderArtistName()}
+        <div className="row justify-content-between">
+          <div className="col-md-7">
+            {this.renderPhotoContainer()}
           </div>
-        </CloudinaryContext>
+          <div className="col-md-4 artist-header__message-col">
+            {this.renderMessageContainer()}
+            {this.renderFloatingNewPostButton()}
+            {this.renderSupportersContainer()}
+            {!this.props.isSupporter && !this.canLoggedUserPost() && this.renderSupportButton()}
+          </div>
+        </div>
       </div>
     );
   }

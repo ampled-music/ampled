@@ -24,7 +24,7 @@ const Routes = () => {
       <PublicRoute exact path={routePaths.noArtist} component={NoArtist} />
       <ProtectedRoute exact path={routePaths.settings} component={UserSettings} />
       <ProtectedRoute exact path={routePaths.userDetails} component={UserDetails} />
-      <PublicRoute path={'*'} component={Home} />
+      <PublicRoute path={'*'} component={NoArtist} />
     </Switch>
   );
 };

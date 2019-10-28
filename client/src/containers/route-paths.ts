@@ -6,6 +6,7 @@ export const routePaths = {
   createPost: '/create_post/:id',
   connect: '/connect',
   home: '/home',
+  passwordReset: '/users/password/edit',
   upload: '/upload',
   settings: '/settings',
   userDetails: '/user-details',

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     root to: "users#index"
   end
 
+  get "/users/password/edit", to: "react#index"
+
   devise_for :users, controllers: {
     confirmations: "confirmations",
     registrations: "registrations",

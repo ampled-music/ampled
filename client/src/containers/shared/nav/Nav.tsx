@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
 
-import logo from '../../../images/ampled_logo.svg';
+import logo from '../../../images/ampled_logo_beta.svg';
 import avatar from '../../../images/ampled_avatar.svg';
 import { initialState as loginInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
@@ -78,10 +78,10 @@ class NavComponent extends React.Component<Props, any> {
         <img src={userData.image} className="user-image" />
       </a>
     ) : (
-      <a href="/settings">
-        <img src={avatar} className="user-image" />
-      </a>
-    );
+        <a href="/settings">
+          <img src={avatar} className="user-image" />
+        </a>
+      );
   };
 
   renderLoginLink = () => (
@@ -89,10 +89,10 @@ class NavComponent extends React.Component<Props, any> {
       <a onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>
         <b>Login</b>
       </a>{' '}
-      or{' '}
+      {/* or{' '}
       <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
         <b>Sign Up</b>
-      </a>
+      </a> */}
     </div>
   );
 

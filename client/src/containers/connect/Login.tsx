@@ -102,7 +102,7 @@ class LoginComponent extends React.Component<Props, any> {
             <span className="error-message">{login.error}</span>
           </form>
           <label>
-            <a>
+            <a onClick={() => this.props.openAuthModal({ modalPage: 'forgotPassword' })}>
               <u>Forgot Password?</u>
             </a>
           </label>

@@ -8,7 +8,7 @@ import { Nav } from './shared/nav/Nav';
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
   const isLoggedIn = !!store.get(config.localStorageKeys.token);
-  const redirectComponent = <Redirect to={{ pathname: routePaths.home }} />;
+  const redirectComponent = <Redirect to={{ pathname: routePaths.root }} />;
 
   const renderComponent = (props) => {
     if (props.location.pathname === routePaths.settings) {

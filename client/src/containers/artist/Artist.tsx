@@ -5,6 +5,7 @@ import Confetti from 'react-dom-confetti';
 import { getArtistAction } from 'src/redux/artists/get-details';
 import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
+import { Helmet } from 'react-helmet';
 
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../redux/authentication/initial-state';
@@ -236,6 +237,12 @@ class ArtistComponent extends React.Component<Props, any> {
             positionTop50={false}
             positionFlip={false}
           />
+          {
+            artist && artist.name &&
+            (<Helmet>
+              <title>{artist.name} | Ampled | Direct Community Support For Music Artists</title>
+            </Helmet>)
+          }
           <ArtistHeader
             artist={artist}
             openVideoModal={this.openVideoModal}

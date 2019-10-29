@@ -11,6 +11,7 @@ import { getMeAction } from 'src/redux/me/get-me';
 import { createSubscriptionAction } from 'src/redux/subscriptions/create';
 import { declineStepAction } from 'src/redux/subscriptions/decline-step';
 import { startSubscriptionAction } from 'src/redux/subscriptions/start-subscription';
+import { Helmet } from 'react-helmet';
 
 import avatar from '../../../images/ampled_avatar.svg';
 
@@ -246,6 +247,12 @@ export class SupportComponent extends React.Component<Props, any> {
 
     return (
       <div className="container support__container">
+        {
+          artist && artist.name &&
+          (<Helmet>
+            <title>Support {artist.name} on Ampled | Direct Community Support For Music Artists</title>
+          </Helmet>)
+        }
         <style
           dangerouslySetInnerHTML={{
           __html: `

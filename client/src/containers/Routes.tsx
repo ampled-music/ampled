@@ -16,7 +16,7 @@ import { ResetPassword } from './connect/ResetPassword';
 const Routes = () => {
   return (
     <Switch>
-      <PublicRoute exact path={routePaths.home} component={Home} />
+      {/* <PublicRoute exact path={routePaths.home} component={Home} /> */}
       <PublicRoute exact path={routePaths.artists} component={Artist} />
       <PublicRoute exact path={routePaths.slugs} component={Artist} />
       <PublicRoute exact path={routePaths.support} component={Support} />
@@ -26,7 +26,7 @@ const Routes = () => {
       <PublicRoute exact path={routePaths.noArtist} component={NoArtist} />
       <ProtectedRoute exact path={routePaths.settings} component={UserSettings} />
       <ProtectedRoute exact path={routePaths.userDetails} component={UserDetails} />
-      <PublicRoute path={'*'} component={Home} />
+      <PublicRoute path={'*'} component={NoArtist} />
     </Switch>
   );
 };

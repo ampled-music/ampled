@@ -47,12 +47,12 @@ class HomeArtistsComponent extends React.Component<Props, State> {
     }
 
     return (
-      <div className="home-artists">
-        <h1 className="home-artists__title">Artists on Ampled</h1>
+      <div className="home-artists" style={{ backgroundColor: this.props.bgColor }}>
+        <h1 className="home-artists__title">Featured Artist</h1>
         <div className="container">
           <div className="row justify-content-center">
             {/* {this.getArtistsList(artistsPages)} */}
-            {this.getArtistHardcoreLuxury()}
+            {this.getFeaturedArtist()}
           </div>
           <div className="row">
             <button className="home-artists__button btn btn-ampled center" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
@@ -84,16 +84,24 @@ class HomeArtistsComponent extends React.Component<Props, State> {
   //   );
   // }
 
-  private getArtistHardcoreLuxury() {
+  private getFeaturedArtist() {
     return (
-      <div className="col-sm-6 col-md-4 home-artists__item">
-        <Link to={`/artist/hardcoreluxury`}>
-          <div className="home-artists__item_title">Hardcore Luxury</div>
-          <div className="home-artists__item_image_hover" style={{ backgroundColor: '#4c3269' }}>
-            <img className="home-artists__item_image" src="https://res.cloudinary.com/dpbdxxw6o/image/upload/v1566160100/Screen_Shot_2019-08-18_at_4.26.55_PM_tpsmbi.png" />
+      <div className="row justify-content-center home-artists__featured">
+        <div className="col-md-5">
+          <Link to={`/artist/hardcoreluxury`} className="home-artists__featured_left">
+            <div className="home-artists__featured_title">Hardcore Luxury</div>
+            <img className="home-artists__featured_image" src="https://res.cloudinary.com/dpbdxxw6o/image/upload/v1566160100/Screen_Shot_2019-08-18_at_4.26.55_PM_tpsmbi.png" />
+            <div className="home-artists__featured_border"></div>
+          </Link>
+        </div>
+        <div className="col-md-5 home-artists__featured_right">
+          <div className="home-artists__featured_info">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           </div>
-          <div className="home-artists__item_border" style={{ borderColor: '#4c3269' }} ></div>
-        </Link>
+          <Link to={`/artist/hardcoreluxury`} className="home-artists__featured_link">
+            Explore Their Page
+          </Link> &#10142;
+        </div>
       </div>
     );
   }

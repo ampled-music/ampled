@@ -15,7 +15,7 @@ class Home extends React.Component<any> {
     const bgColor = ['#e9c7c6', '#eddfbd', '#baddac', '#cae4e7'];
     return bgColor[Math.floor(Math.random() * bgColor.length)];
   };
-  
+
   render() {
     const randomColor = this.randomColor();
 
@@ -24,26 +24,24 @@ class Home extends React.Component<any> {
         <HomeHeader
           bgColor={randomColor}
         />
-        <Texture 
+        <Texture
           positionTop25={false}
           positionTop50={true}
           positionFlip={false}
         />
         <HomeFor />
-        <HomeHow 
+        <HomeHow
           bgColor={randomColor}
         />
-        {/* <Texture 
+        <Texture
           positionTop25={true}
           positionTop50={false}
           positionFlip={true}
-        /> */}
-        <HomeArtists 
+        />
+        <HomeArtists
           bgColor={randomColor}
         />
-        <Footer 
-          bgColor={randomColor}
-        />
+        <Footer />
       </div>
     )
   };

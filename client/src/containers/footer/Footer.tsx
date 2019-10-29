@@ -7,14 +7,13 @@ import { Link } from 'react-router-dom';
 import logo from '../../images/ampled_logo.svg';
 
 interface Props {
-  bgColor: string;
 }
 
 class Footer extends React.Component<Props, any> {
 
   render() {
     return (
-      <footer className="footer" style={{ backgroundColor: this.props.bgColor }}>
+      <footer className="footer">
         <div className="container">
           <div className="row">
             <div className="col-12 col-md-4">

@@ -361,7 +361,7 @@
 }
 
 .home-artists {
-  padding: 2rem;
+  padding: 0 0 2rem;
   background-color: $white;
 
   h1 {
@@ -453,6 +453,61 @@
     &:nth-child(6n) {
       .home-artists__item_image_hover {
         transform: translate(9px, -25px);
+      }
+    }
+  }
+
+  &__featured {
+    margin-bottom: 2rem;
+
+    &_border {
+      border: 2px solid $black;
+      width: 90%;
+      height: 90%;
+      position: absolute;
+      border-width: 2px;
+      border-style: solid;
+      margin: -2px 0px;
+      top: 5%;
+      left: 5%;
+      z-index: 5;
+    }
+
+    &_title {
+      font-family: $font-family-monospace;
+      color: white;
+      background-color: $black;
+      display: inline;
+      padding: 5px 10px;
+      position: absolute;
+      right: 0px;
+      top: 10%;
+      z-index: 10;
+    }
+
+    &_image {
+      width: 100%;
+      position: relative;
+    }
+
+    &_info {
+      font-family: $font-family-monospace;
+      font-size: .9rem;
+      line-height: 1.9rem;
+      margin: 1rem auto 2rem;
+    }
+
+    &_link {
+      font-family: $font-family-monospace;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-decoration: underline;
+      color: $black;
+      transition: color $speed;
+
+      &:hover {
+        color: $white;
+        text-decoration: underline;
       }
     }
   }

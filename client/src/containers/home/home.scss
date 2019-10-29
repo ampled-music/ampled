@@ -17,6 +17,7 @@
 }
 
 .home-header {
+
   &__support {
     width: 100%;
     display: block;
@@ -65,6 +66,28 @@
 
     @include mq($desktop) {
       margin: 2rem 0;
+    }
+  }
+
+  &__link {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    text-transform: uppercase;
+    text-decoration: underline;
+    font-family: $font-family-monospace;
+    font-weight: bold;
+    text-align: center;
+    color: $black;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: color $speed;
+
+    &:hover {
+      color: $white;
+      text-decoration: underline;
     }
   }
 }

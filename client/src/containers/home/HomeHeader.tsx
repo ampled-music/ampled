@@ -26,6 +26,7 @@ class HomeHeader extends React.Component<Props, any> {
             <button className="home-header__button btn btn-ampled" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
               Create Your Page
             </button>
+            <a href="" className="home-header__link">Stay Updated on our Journey</a>
           </div>
           <div className="col-lg-8 col-xl-6">
             <img className="home-header__image" src={header_collage} />

@@ -5,9 +5,9 @@ class ReactController < ActionController::Base
 
   def render_404
     render {
-      file: "public/index.html",
-      layout: false,
-      status: :not_found
+      file => "public/index.html",
+      layout => false,
+      status => :not_found
   }
   end
 end

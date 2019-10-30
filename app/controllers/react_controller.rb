@@ -4,7 +4,10 @@ class ReactController < ActionController::Base
   end
 
   def render_404
-    puts params[:path]
-    render file: "public/index.html", layout: false, :status => 404
+    render {
+      file: "public/index.html",
+      layout: false,
+      status: :not_found
+  }
   end
 end

@@ -12,7 +12,7 @@ interface Props {
   bgColor: string;
 }
 
-class HomeHeader extends React.Component<Props,any> {
+class HomeHeader extends React.Component<Props, any> {
 
   render() {
     return (
@@ -21,11 +21,12 @@ class HomeHeader extends React.Component<Props,any> {
           <div className="col-lg-4 col-xl-3">
             <div className="home-header__support">Own your creative freedom</div>
             <div className="home-header__info">
-              Any sound or size. Receive support via direct payments from your community and sustainably make music.
+              For artists of any sound or size. Receive support via direct payments from your community and sustainably make music.
             </div>
             <button className="home-header__button btn btn-ampled" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
               Create Your Page
             </button>
+            <a href="" className="home-header__link">Stay Updated on our Journey</a>
           </div>
           <div className="col-lg-8 col-xl-6">
             <img className="home-header__image" src={header_collage} />

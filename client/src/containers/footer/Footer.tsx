@@ -7,14 +7,13 @@ import { Link } from 'react-router-dom';
 import logo from '../../images/ampled_logo.svg';
 
 interface Props {
-  bgColor: string;
 }
 
-class Footer extends React.Component<Props,any> {
+class Footer extends React.Component<Props, any> {
 
   render() {
     return (
-      <footer className="footer" style={{ backgroundColor: this.props.bgColor }}>
+      <footer className="footer">
         <div className="container">
           <div className="row">
             <div className="col-12 col-md-4">
@@ -38,7 +37,7 @@ class Footer extends React.Component<Props,any> {
             <div className="col-6 col-md-2">
               <div className="title">Get Involved</div>
               <a href="https://app.ampled.com/create-an-artist-page">Create An Artist Page</a>
-              <a href="https://ampledmembership.lpages.co/membership/">Become a Member</a>
+              <a href="https://app.ampled.com/membership">Become a Member</a>
               <a href="https://app.ampled.com/jobs">Work at Ampled</a>
               <a href="https://app.ampled.com/press">Press</a>
             </div>

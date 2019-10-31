@@ -11,13 +11,25 @@ import { Texture } from '../shared/texture/Texture';
 
 class Home extends React.Component<any> {
 
+  state = {
+    randomColor: undefined
+  }
+
   randomColor = () => {
     const bgColor = ['#e9c7c6', '#eddfbd', '#baddac', '#cae4e7'];
     return bgColor[Math.floor(Math.random() * bgColor.length)];
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      randomColor: this.randomColor()
+    };
+  }
+
+
   render() {
-    const randomColor = this.randomColor();
+    const { randomColor } = this.state;
 
     return (
       <div className="home-section">

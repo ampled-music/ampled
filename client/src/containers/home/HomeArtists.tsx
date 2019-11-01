@@ -96,7 +96,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
         </div>
         <div className="col-md-5 home-artists__featured_right">
           <div className="home-artists__featured_info">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            Hardcore Luxury is a rock band from Brooklyn, NY — a new project from Austin Robey and Sean Adams, both founding-members of Ampled. Hardcore Luxury is using Ampled to give their supporters an intimate behind-the-scenes insight into their demo writing and recording process, with colorful commentary, stories, and context.
           </div>
           <Link to={`/artist/hardcoreluxury`} className="home-artists__featured_link">
             Explore Their Page

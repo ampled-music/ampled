@@ -200,6 +200,7 @@ export class ArtistHeader extends React.Component<Props, any> {
           onSwipeLeft={this.onSwipeLeft}
           onSwipeRight={this.onSwipeRight}
           allowMouseEvents={true}
+          tolerance={50}
           className="artist-header__photo-container_border_swipe"
         >
         </Swipe>

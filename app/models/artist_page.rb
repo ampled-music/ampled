@@ -110,7 +110,7 @@ class ArtistPage < ApplicationRecord
   end
 
   def subscriber_count
-    subscribers.count
+    active_subscribers.count
   end
 
   def monthly_total

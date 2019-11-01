@@ -110,7 +110,7 @@ class ArtistPage < ApplicationRecord
   end
 
   def subscriber_count
-    subscribers.count
+    active_subscribers.count
   end
 
   def monthly_total
@@ -134,7 +134,7 @@ class ArtistPage < ApplicationRecord
   end
 
   def most_recent_supporter
-    subscriptions.order(created_at: :desc).first&.user
+    subscriptions.active.order(created_at: :desc).first&.user
   end
 
   private

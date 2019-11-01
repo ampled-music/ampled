@@ -41,7 +41,7 @@ class HomeHeader extends React.Component<Props, any> {
               <div className="footer input-group mb-3" style={{
                 zIndex: 999999,
                 borderTop: 'unset',
-                padding: 0
+                paddingTop: 0
               }}>
                 <form
                   action="https://ampled.us19.list-manage.com/subscribe/post?u=514372f571f3cb5abdf8a2637&amp;id=50f2ab4389"

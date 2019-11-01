@@ -23,9 +23,9 @@ const Routes = () => {
       <PublicRoute exact path={routePaths.createPost} component={PostForm} />
       <PublicRoute exact path={routePaths.root} component={Home} />
       <PublicRoute exact path={routePaths.noArtist} component={NoArtist} />
+      <PublicRoute exact path={routePaths.createArtist} component={CreateArtist} />
       <ProtectedRoute exact path={routePaths.settings} component={UserSettings} />
       <ProtectedRoute exact path={routePaths.userDetails} component={UserDetails} />
-      <ProtectedRoute exact path={routePaths.createArtist} component={CreateArtist} />
       <PublicRoute path={'*'} component={Home} />
     </Switch>
   );

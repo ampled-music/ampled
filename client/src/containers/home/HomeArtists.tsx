@@ -90,7 +90,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
         <div className="col-md-5">
           <Link to={`/artist/hardcoreluxury`} className="home-artists__featured_left">
             <div className="home-artists__featured_title">Hardcore Luxury</div>
-            <img className="home-artists__featured_image" src="https://res.cloudinary.com/dpbdxxw6o/image/upload/v1566160100/Screen_Shot_2019-08-18_at_4.26.55_PM_tpsmbi.png" />
+            <img className="home-artists__featured_image" src="https://res.cloudinary.com/ampled-web/image/upload/v1572662519/Screen_Shot_2019-10-30_at_6.08.53_PM_v0ymgv.png" />
             <div className="home-artists__featured_border"></div>
           </Link>
         </div>

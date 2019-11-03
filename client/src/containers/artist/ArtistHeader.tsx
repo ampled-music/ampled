@@ -229,7 +229,6 @@ export class ArtistHeader extends React.Component<Props, any> {
     if (artist.video_url) {
       return (
         <div>
-          <div className="artist-header__message">Message from the Artist</div>
           <div className="artist-header__message-container" style={{ borderColor: artist.accent_color }}>
             <button onClick={this.props.openVideoModal} className="artist-header__play">
               <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />

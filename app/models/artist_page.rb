@@ -72,7 +72,8 @@ class ArtistPage < ApplicationRecord
 
   def is_stripe_ready
     return true if stripe_user_id.present?
-    return false
+
+    false
   end
 
   def create_plan(nominal_amount)

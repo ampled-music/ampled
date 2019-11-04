@@ -74,7 +74,7 @@ class PostComponent extends React.Component<any, any> {
     let artistId;
 
     if (this.props.match.params.slug) {
-      artistId = this.props.artist.id;
+      artistId = this.props.artistId;
     } else {
       artistId = this.props.match.params.id;
     }

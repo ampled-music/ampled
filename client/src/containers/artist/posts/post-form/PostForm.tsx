@@ -56,6 +56,13 @@ class PostFormComponent extends React.Component<Props, any> {
     } else {
       this.state = this.initialState;
     }
+
+    if (props.artist && !props.artist.isStripeSetup) {
+      this.state = {
+        ...this.state,
+        isPublic: true
+      };
+    }
   }
 
   componentDidUpdate() {
@@ -133,7 +140,10 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   handleMakePublicChange = (event) => {
-    this.setState({ isPublic: event.target.checked });
+    const { artist } = this.props;
+    if (artist.isStripeSetup) {
+      this.setState({ isPublic: event.target.checked });
+    }
   };
 
   isSaveEnabled = () => {
@@ -214,6 +224,7 @@ class PostFormComponent extends React.Component<Props, any> {
   render() {
     const { hasUnsavedChanges, title, body, imageUrl } = this.state;
     const { isEdit } = this.props;
+    const { artist: { isStripeSetup } } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
 
@@ -308,6 +319,10 @@ class PostFormComponent extends React.Component<Props, any> {
                     </label>
                   </div>
                 </div>
+                {
+                  !isStripeSetup &&
+                  (<small><br/>You need to set up your payout destination to make private posts.</small>)
+                }
               </div>
 
               <div className="post-form__actions">

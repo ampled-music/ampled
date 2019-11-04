@@ -403,6 +403,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   };
 
   render() {
+    const { isStripeSetup } = this.props.artist;
     return (
       <div className="artist-header container">
         {this.renderArtistName()}
@@ -414,7 +415,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderMessageContainer()}
             {this.renderFloatingNewPostButton()}
             {this.renderSupportersContainer()}
-            {!this.props.isSupporter && !this.canLoggedUserPost() && this.renderSupportButton()}
+            {!this.props.isSupporter && !this.canLoggedUserPost() && isStripeSetup && this.renderSupportButton()}
           </div>
         </div>
       </div>

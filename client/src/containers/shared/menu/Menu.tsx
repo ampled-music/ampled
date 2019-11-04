@@ -94,9 +94,9 @@ class MenuListComposition extends React.Component<Props, State> {
     return (
       <div className="menu-items">
         <div className={this.props.classes.hideDesktop}>
-        {
-          !this.props.userData && this.props.renderLoginLink()
-        }
+          {
+            !this.props.userData && this.props.renderLoginLink()
+          }
         </div>
         <a href={config.menuUrls.createArtist} target="_blank">
           <b>Create an artist page</b>
@@ -116,7 +116,7 @@ class MenuListComposition extends React.Component<Props, State> {
     return (
       <div className="menu-items">
         <Link to={routePaths.settings}>
-          <FontAwesomeIcon icon={faCog} /> <b>Account Settings</b>
+          <FontAwesomeIcon icon={faCog} /> <b>My Profile</b>
         </Link>
         <Divider />
         <a onClick={this.logout}>Logout</a>

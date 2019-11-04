@@ -200,6 +200,7 @@ export class ArtistHeader extends React.Component<Props, any> {
           onSwipeLeft={this.onSwipeLeft}
           onSwipeRight={this.onSwipeRight}
           allowMouseEvents={true}
+          tolerance={100}
           className="artist-header__photo-container_border_swipe"
         >
         </Swipe>
@@ -228,7 +229,6 @@ export class ArtistHeader extends React.Component<Props, any> {
     if (artist.video_url) {
       return (
         <div>
-          <div className="artist-header__message">Message from the Artist</div>
           <div className="artist-header__message-container" style={{ borderColor: artist.accent_color }}>
             <button onClick={this.props.openVideoModal} className="artist-header__play">
               <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />
@@ -403,6 +403,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   };
 
   render() {
+    const { isStripeSetup } = this.props.artist;
     return (
       <div className="artist-header container">
         {this.renderArtistName()}
@@ -414,7 +415,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderMessageContainer()}
             {this.renderFloatingNewPostButton()}
             {this.renderSupportersContainer()}
-            {!this.props.isSupporter && !this.canLoggedUserPost() && this.renderSupportButton()}
+            {!this.props.isSupporter && !this.canLoggedUserPost() && isStripeSetup && this.renderSupportButton()}
           </div>
         </div>
       </div>

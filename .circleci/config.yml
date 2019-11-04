@@ -12,6 +12,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_DB: ampled_web_test
           POSTGRES_PASSWORD: ""
+      - image: circleci/redis
     working_directory: ~/circleci-demo-workflows
     steps:
       - checkout

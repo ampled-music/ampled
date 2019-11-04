@@ -12,6 +12,7 @@ import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { Routes } from '../Routes';
 import { AuthModal } from '../connect/AuthModal';
 import { Modal } from '../shared/modal/Modal';
+import { Helmet } from 'react-helmet';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
@@ -31,6 +32,13 @@ class AppComponent extends React.Component<Props, any> {
   render() {
     return (
       <div className="page">
+        <Helmet>
+          <title>Ampled | Direct Community Support For Music Artists</title>
+          {
+            process.env.NODE_ENV === 'development' &&
+            (<meta name="robots" content="noindex, nofollow"/>)
+          }
+        </Helmet>
         <Routes />
         <Modal open={this.props.authModalOpen} onClose={this.props.closeAuthModal}>
           <AuthModal history={this.props.history} />

@@ -70,6 +70,12 @@ class ArtistPage < ApplicationRecord
     "#{base}?#{params}"
   end
 
+  def is_stripe_ready
+    return true if stripe_user_id.present?
+
+    false
+  end
+
   def create_plan(nominal_amount)
     stripe_plan = Stripe::Plan.create(
       {

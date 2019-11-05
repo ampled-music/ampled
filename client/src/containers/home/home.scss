@@ -69,25 +69,31 @@
     }
   }
 
-  &__link {
+  &__cta {
     display: block;
     position: relative;
     width: 100%;
     max-width: 350px;
     text-transform: uppercase;
-    text-decoration: underline;
     font-family: $font-family-monospace;
     font-weight: bold;
     text-align: center;
-    color: $black;
-    margin-bottom: 2rem;
-    cursor: pointer;
-    z-index: 10;
-    transition: color $speed;
+    margin: 0 auto 2rem;
 
-    &:hover {
-      color: $white;
+    &_link {
+      display: block;
+      position: relative;
+      color: $black;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      z-index: 50;
       text-decoration: underline;
+      transition: color $speed;
+
+      &:hover {
+        color: $white;
+        text-decoration: underline;
+      }
     }
   }
 }

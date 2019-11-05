@@ -60,10 +60,15 @@ class HomeHeader extends React.Component<Props, any> {
                 </form>
               </div>
             ) : (
-              <a href="#" onClick={this.toggleNewsletter} className="home-header__link">
-                Stay Updated on our Journey
-              </a>
-            )}
+                <div className="home-header__cta" onClick={this.toggleNewsletter}>
+                  <div className="home-header__cta_title ">We're launching soon!</div>
+                  <div>
+                    <a className="home-header__cta_link" href="#">
+                      Join our mailing list
+                    </a>
+                  </div>
+                </div>
+              )}
           </div>
           <div className="col-lg-8 col-xl-6">
             <img className="home-header__image" src={header_collage} />

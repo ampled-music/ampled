@@ -229,8 +229,8 @@ class PostFormComponent extends React.Component<Props, any> {
     const isSaveEnabled = this.isSaveEnabled();
 
     return (
-      <div>
-        <img className="tear__topper" src={tear} />
+      <div className="post-form__container">
+        <img className="tear tear__topper" src={tear} />
         <div className="post-form">
           <DialogContent>
             <h4>{isEdit ? 'EDIT POST' : 'NEW POST'}</h4>
@@ -270,15 +270,15 @@ class PostFormComponent extends React.Component<Props, any> {
               </div>
               <div className="post-form__audio">
                 {isEdit &&
-                this.props.post &&
-                this.props.post.audio_file &&
-                this.state.audioFile &&
-                this.state.audio_file &&
-                this.state.audioFile === this.state.audio_file ? (
-                  this.renderExistingAudio()
-                ) : (
-                  <Upload onComplete={this.updateAudioFile} />
-                )}
+                  this.props.post &&
+                  this.props.post.audio_file &&
+                  this.state.audioFile &&
+                  this.state.audio_file &&
+                  this.state.audioFile === this.state.audio_file ? (
+                    this.renderExistingAudio()
+                  ) : (
+                    <Upload onComplete={this.updateAudioFile} />
+                  )}
               </div>
               <div className="post-form__image">
                 <input
@@ -312,8 +312,8 @@ class PostFormComponent extends React.Component<Props, any> {
                         name="pin-post"
                         id="pin-post"
                         type="checkbox"
-                        // onChange={this.state.isPinned}
-                        // checked={this.state.isPinned}
+                      // onChange={this.state.isPinned}
+                      // checked={this.state.isPinned}
                       />
                       Pin post
                     </label>
@@ -321,7 +321,7 @@ class PostFormComponent extends React.Component<Props, any> {
                 </div>
                 {
                   !isStripeSetup &&
-                  (<small><br/>You need to set up your payout destination to make private posts.</small>)
+                  (<small><br />You need to set up your payout destination to make private posts.</small>)
                 }
               </div>
 

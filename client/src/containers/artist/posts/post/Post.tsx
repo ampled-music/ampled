@@ -152,8 +152,8 @@ class PostComponent extends React.Component<any, any> {
   };
 
   renderDeleteModal = () => (
-    <div>
-      <img className="tear__topper" src={tear} />
+    <div className="delete-post-modal__container">
+      <img className="tear tear__topper" src={tear} />
       <div className="delete-post-modal">
         <div className="delete-post-modal__title">
           <h4>Are you sure?</h4>
@@ -198,7 +198,7 @@ class PostComponent extends React.Component<any, any> {
         <Modal open={this.state.showDeletePostModal} onClose={this.closeDeletePostModal}>
           {this.renderDeleteModal()}
         </Modal>
-        <Modal open={this.state.showEditPostModal}>
+        <Modal open={this.state.showEditPostModal} onClose={this.closeEditPostModal}>
           <PostForm
             close={this.closeEditPostModal}
             discardChanges={this.closeEditPostModal}

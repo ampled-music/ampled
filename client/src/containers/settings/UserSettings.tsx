@@ -207,7 +207,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('MY ARTIST PAGES')}
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
-          <div key={`artist-${ownedPage.id}`} className="artist col-sm-4">
+          <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
             <img className="artist__image" src={ownedPage.image} />
             <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}></div>
             <img className="tear__topper" src={tear_black} />

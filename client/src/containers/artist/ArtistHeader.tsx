@@ -59,11 +59,11 @@ export class ArtistHeader extends React.Component<Props, any> {
   }
 
   onSwipeLeft = () => {
-    this.cycleBanners('backwards')
+    this.cycleBanners('forewords')
   }
 
   onSwipeRight = () => {
-    this.cycleBanners('forewords')
+    this.cycleBanners('backwards')
   }
 
   cycleBanners = (direction) => {

@@ -44,7 +44,7 @@ class LoginComponent extends React.Component<Props, any> {
       if (this.props.redirectTo) {
         window.location = this.props.redirectTo;
       }
-      this.props.closeAuthModal();  
+      this.props.closeAuthModal();
     })();
   }
 
@@ -106,13 +106,13 @@ class LoginComponent extends React.Component<Props, any> {
               <u>Forgot Password?</u>
             </a>
           </label>
-          <label>
+          {/* <label>
             Don't have an account?{' '}
             <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
               <u>Sign up</u>
             </a>
             .
-          </label>
+          </label> */}
         </div>
       </div>
     );

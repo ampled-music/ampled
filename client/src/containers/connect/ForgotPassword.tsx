@@ -30,9 +30,9 @@ class ForgotPasswordComponent extends React.Component<any> {
         },
         data: { user: { email: this.state.email } },
       });
-  
+
       console.log(data);
-    
+
       showToastMessage('Please check your email for next steps.', MessageType.SUCCESS);
       this.props.closeAuthModal();
     } catch (e) {
@@ -73,13 +73,13 @@ class ForgotPasswordComponent extends React.Component<any> {
               <u>Back to login</u>
             </a>
           </label>
-          <label>
+          {/* <label>
             Don't have an account?{' '}
             <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
               <u>Sign up</u>
             </a>
             .
-          </label>
+          </label> */}
         </div>
       </div>
     );

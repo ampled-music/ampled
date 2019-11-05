@@ -5,6 +5,7 @@ export const theme = createMuiTheme({
     MuiPaper: {
       root: {
         backgroundColor: 'transparent',
+        margin: '0px',
       },
       elevation24: {
         boxShadow: 'none',
@@ -14,9 +15,13 @@ export const theme = createMuiTheme({
       },
     },
     MuiDialog: {
-      paperWidthSm: {
-        maxWidth: '450px',
+      paper: {
+        margin: '0px',
+        maxHeight: '100%',
       },
-    }
-  }
+      paperScrollPaper: {
+        maxHeight: '100%',
+      },
+    },
+  },
 });

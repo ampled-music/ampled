@@ -242,7 +242,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       <FontAwesomeIcon className="icon details__stripe_icon" icon={faStripe} />
                     </div>
                     <div className="col-8">
-                      <a href={ownedPage.stripeSignup ? ownedPage.stripeSignup : ownedPage.stripeDashboard} className="details__stripe_link" target="_blank">Edit Payout Details</a>
+                      {
+                        ownedPage.isStripeSetup ? 
+                          (<a href={ownedPage.stripeDashboard} className="details__stripe_link" target="_blank">Edit Payout Details</a>) :
+                          (<a href={ownedPage.stripeSignup} className="details__stripe_link" target="_blank">Set Up Payouts</a>)
+                      }
+                      
                     </div>
                   </div>
                 </div>

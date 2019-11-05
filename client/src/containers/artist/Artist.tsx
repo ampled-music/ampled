@@ -267,7 +267,7 @@ class ArtistComponent extends React.Component<Props, any> {
             updateArtist={this.getArtistInfo}
             loggedUserAccess={loggedUserAccess}
           />
-          <Modal open={this.state.openPostModal}>
+          <Modal open={this.state.openPostModal} onClose={this.closePostModal}>
             <PostForm
               close={this.getUserConfirmation}
               discardChanges={this.discardChanges}

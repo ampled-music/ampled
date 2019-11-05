@@ -31,7 +31,7 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
 type Props = typeof loginInitialState &
   typeof meInitialState &
-  Dispatchers & { history: any; subscriptions: typeof subscriptionsInitialState };
+  Dispatchers & { history: any; location: any; subscriptions: typeof subscriptionsInitialState };
 
 class UserSettingsComponent extends React.Component<Props, any> {
   state = {
@@ -41,6 +41,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   componentDidMount() {
     this.props.getMe();
+    const { location: { search } } = this.props;
+
+    if (/stripesuccess=true/ig.test(search)) {
+      showToastMessage(
+        'Great! You\'re all set up for payments.',
+        MessageType.SUCCESS,
+      );
+    }
   }
 
   componentDidUpdate() {

@@ -57,17 +57,26 @@ class ResetPasswordComponent extends React.Component<any> {
             reset_password_token: token,
             password,
             password_confirmation: confirmPassword,
-          }
+          },
         },
       });
-  
+
       console.log(data);
-    
+
       showToastMessage('Password changed! Please log in with your new password.', MessageType.SUCCESS);
       window.location.href = routePaths.root;
     } catch (e) {
       console.log(e);
-      this.setState({ error: 'Something went wrong.' });
+      if (
+        e.response &&
+        e.response.data &&
+        e.response.data.error &&
+        e.response.data.error === 'You have to confirm your email address before continuing.'
+      ) {
+        this.setState({ error: 'You have to confirm your email address before continuing.' });
+      } else {
+        this.setState({ error: 'Something went wrong.' });
+      }
     }
   };
 
@@ -94,7 +103,7 @@ class ResetPasswordComponent extends React.Component<any> {
         <div className="login">
           <h4>RESET PASSWORD</h4>
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
-          <input
+            <input
               className="input-group-text"
               type="password"
               placeholder="Password"

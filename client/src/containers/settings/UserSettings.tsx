@@ -31,7 +31,7 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
 type Props = typeof loginInitialState &
   typeof meInitialState &
-  Dispatchers & { history: any; subscriptions: typeof subscriptionsInitialState };
+  Dispatchers & { history: any; location: any; subscriptions: typeof subscriptionsInitialState };
 
 class UserSettingsComponent extends React.Component<Props, any> {
   state = {
@@ -41,6 +41,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   componentDidMount() {
     this.props.getMe();
+    const { location: { search } } = this.props;
+
+    if (/stripesuccess=true/ig.test(search)) {
+      showToastMessage(
+        'Great! You\'re all set up for payments.',
+        MessageType.SUCCESS,
+      );
+    }
   }
 
   componentDidUpdate() {
@@ -199,7 +207,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('MY ARTIST PAGES')}
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
-          <div key={`artist-${ownedPage.id}`} className="artist col-sm-4">
+          <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
             <img className="artist__image" src={ownedPage.image} />
             <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}></div>
             <img className="tear__topper" src={tear_black} />
@@ -234,7 +242,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       <FontAwesomeIcon className="icon details__stripe_icon" icon={faStripe} />
                     </div>
                     <div className="col-8">
-                      <a href={ownedPage.stripeSignup ? ownedPage.stripeSignup : ownedPage.stripeDashboard} className="details__stripe_link" target="_blank">Edit Payout Details</a>
+                      {
+                        ownedPage.isStripeSetup ? 
+                          (<a href={ownedPage.stripeDashboard} className="details__stripe_link" target="_blank">Edit Payout Details</a>) :
+                          (<a href={ownedPage.stripeSignup} className="details__stripe_link" target="_blank">Set Up Payouts</a>)
+                      }
+                      
                     </div>
                   </div>
                 </div>

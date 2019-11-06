@@ -39,4 +39,5 @@ json.ownedPages @owned_pages do |page|
   json.lastPayout page.last_payout
   json.stripeSignup page.stripe_signup_url
   json.stripeDashboard page.stripe_dashboard_url
+  json.isStripeSetup page.is_stripe_ready
 end

@@ -92,7 +92,7 @@ class ResetPasswordComponent extends React.Component<any> {
       <div className="login__container">
         <img className="tear tear__topper" src={tear} />
         <div className="login">
-          <h4>FORGOT PASSWORD</h4>
+          <h4>RESET PASSWORD</h4>
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
           <input
               className="input-group-text"

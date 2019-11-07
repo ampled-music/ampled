@@ -8,7 +8,7 @@ class StripeController < ApplicationController
     # File.open('other_stripe_account_stub.json','w'){ |f| f.write(stripe_account.to_json) }
     ap = ArtistPage.find_by(state_token: params[:state])
     ap.update(stripe_user_id: stripe_account["stripe_user_id"])
-    redirect_to "/stripe_success"
+    redirect_to "/settings?stripesuccess=true"
   end
 
   private

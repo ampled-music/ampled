@@ -169,14 +169,22 @@ class ArtistComponent extends React.Component<Props, any> {
   }
 
   handleSupportClick = () => {
+    let supportUrl;
+    if (this.props.artists.artist.slug) {
+      supportUrl = routePaths.support.replace(':id', this.props.artists.artist.slug);
+    } else {
+      supportUrl = routePaths.support.replace(':id', String(this.props.artists.artist.id));
+    }
+
+
     if (this.props.me && this.props.me.userData) {
-      this.props.history.push(routePaths.support.replace(':id', String(this.props.artists.artist.id)));
+      this.props.history.push(supportUrl);
     } else {
       this.props.openAuthModal({
         modalPage: 'signup',
         showSupportMessage: 'artist',
         artistName: this.props.artists.artist.name,
-        redirectTo: routePaths.support.replace(':id', String(this.props.artists.artist.id)),
+        redirectTo: supportUrl,
       });
       this.setState({ openWhyModal: false });
     }
@@ -263,6 +271,7 @@ class ArtistComponent extends React.Component<Props, any> {
             posts={artist.posts}
             artistName={artist.name}
             artistId={artist.id}
+            artistSlug={artist.slug}
             accentColor={artist.accent_color}
             updateArtist={this.getArtistInfo}
             loggedUserAccess={loggedUserAccess}

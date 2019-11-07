@@ -106,13 +106,13 @@ class LoginComponent extends React.Component<Props, any> {
               <u>Forgot Password?</u>
             </a>
           </label>
-          {/* <label>
+          { process.env.NODE_ENV === 'development' && (<label>
             Don't have an account?{' '}
             <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
               <u>Sign up</u>
             </a>
             .
-          </label> */}
+          </label>)}
         </div>
       </div>
     );

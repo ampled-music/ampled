@@ -40,4 +40,10 @@ class Post < ApplicationRecord
   def author_image
     user.profile_image_url
   end
+
+  def has_audio
+    return true if audio_file.present?
+
+    false
+  end
 end

@@ -88,9 +88,9 @@ class PostComponent extends React.Component<any, any> {
   };
 
   redirectToSupport = () => {
-    const { history, artistId } = this.props;
-
-    history.push(routePaths.support.replace(':id', artistId));
+    const { history, artistId, artistSlug } = this.props;
+    
+    history.push(routePaths.support.replace(':id', artistSlug && artistSlug.length > 0 ? artistSlug : artistId));
   };
 
   sortItemsByCreationDate(items) {
@@ -258,26 +258,46 @@ class PostComponent extends React.Component<any, any> {
               </div>
             )}
 
-            {post.image_url && !post.audio_file && (
+            {post.image_url && !post.has_audio && (
               <div className="post__image-container">
                 <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
                 {!allowDetails && this.renderLock()}
               </div>
             )}
 
-            {post.audio_file && (
+            {post.has_audio && (
               <div className="post__audio-container">
-                {post.image_url && (
                   <div className="post__image-container">
+                {post.image_url && (
                     <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
+                  )}
+                  {!post.image_url && !allowDetails && (
+                    <div
+                      style={{
+                        height: '340px',
+                        background:
+                          'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
+                      }}
+                    />
+                  )}
                     {!allowDetails && this.renderLock()}
                   </div>
+                {allowDetails && (
+                  <AudioPlayer url={this.returnPlayableUrl()} image={post.image_url} accentColor={accentColor} />
                 )}
-                <AudioPlayer
-                  url={this.returnPlayableUrl()}
-                  image={post.image_url}
-                  accentColor={accentColor}
+              </div>
+                )}
+
+            {!post.has_audio && !post.image_url && !allowDetails && (
+              <div className="post__image-container">
+                <div
+                  style={{
+                    height: '340px',
+                    background:
+                      'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
+                  }}
                 />
+                {this.renderLock()}
               </div>
             )}
 

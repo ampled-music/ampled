@@ -1,4 +1,5 @@
 export interface ArtistModel {
+  slug: string;
   name: string;
   id: number;
   accent_color: string;

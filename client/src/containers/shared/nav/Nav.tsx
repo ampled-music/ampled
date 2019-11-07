@@ -61,7 +61,7 @@ class NavComponent extends React.Component<Props, any> {
     let artistId;
 
     if (this.props.match.params.slug) {
-      artistId = this.props.artist.id;
+      artistId = this.props.match.params.slug;
     } else {
       artistId = this.props.match.params.id;
     }

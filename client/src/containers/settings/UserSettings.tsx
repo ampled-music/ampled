@@ -107,8 +107,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   calculateSupportTotalNumber = (supportLevel) => Math.round((supportLevel * 100 + 30) / 0.971) / 100;
 
-  redirectToArtistPage = (pageId) => {
-    this.props.history.push(routePaths.artists.replace(':id', pageId));
+  redirectToArtistPage = (artist) => {
+    if (artist.artistSlug && artist.artistSlug.length > 0) {
+      this.props.history.push(routePaths.slugs.replace(':slug', artist.artistSlug));
+    } else if (artist.artistId) {
+      this.props.history.push(routePaths.artists.replace(':id', artist.artistId));
+    } else if (artist.artistPageId) {
+      this.props.history.push(routePaths.artists.replace(':id', artist.artistPageId));
+    }
   };
 
   renderUserImage = () => {
@@ -211,10 +217,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
         {this.props.userData.ownedPages.map((ownedPage) => (
           <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
             <img className="artist__image" src={ownedPage.image} />
-            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}></div>
+            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage)}></div>
             <img className="tear__topper" src={tear_black} />
             <div className="artist__info">
-              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}>
+              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(ownedPage)}>
                 {ownedPage.name}
               </p>
               <div className="details">
@@ -280,11 +286,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
             <img className="artist__image" src={subscription.image} />
             <div
               className="artist__image-border"
-              onClick={() => this.redirectToArtistPage(subscription.artistPageId)}
+              onClick={() => this.redirectToArtistPage(subscription)}
             ></div>
             <img className="tear__topper" src={tear_black} />
             <div className="artist__info">
-              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}>
+              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(subscription)}>
                 {subscription.name}
               </p>
               <div className="details">

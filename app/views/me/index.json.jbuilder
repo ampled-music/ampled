@@ -23,6 +23,7 @@ end
 json.subscriptions @subscriptions do |subscription|
   json.subscriptionId subscription.id
   json.artistPageId subscription.artist_page.id
+  json.artistSlug subscription.artist_page.slug
   json.name subscription.artist_page.name
   json.image subscription.artist_page.cover_url
   json.last_post_date subscription.artist_page.last_post_date
@@ -31,6 +32,7 @@ json.subscriptions @subscriptions do |subscription|
 end
 json.ownedPages @owned_pages do |page|
   json.artistId page.id
+  json.artistSlug page.slug
   json.name page.name
   json.image page.cover_url
   json.supportersCount page.subscriber_count

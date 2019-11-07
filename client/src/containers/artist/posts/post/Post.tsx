@@ -88,9 +88,9 @@ class PostComponent extends React.Component<any, any> {
   };
 
   redirectToSupport = () => {
-    const { history, artistId } = this.props;
-
-    history.push(routePaths.support.replace(':id', artistId));
+    const { history, artistId, artistSlug } = this.props;
+    
+    history.push(routePaths.support.replace(':id', artistSlug && artistSlug.length > 0 ? artistSlug : artistId));
   };
 
   sortItemsByCreationDate(items) {

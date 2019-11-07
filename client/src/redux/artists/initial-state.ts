@@ -5,6 +5,7 @@ export interface ArtistModel {
   accent_color: string;
   video_url: string;
   location: string;
+  bio: string;
   twitter_handle: string;
   instagram_handle: string;
   isStripeSetup: boolean;

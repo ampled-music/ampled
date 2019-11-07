@@ -49,6 +49,7 @@ class ArtistComponent extends React.Component<Props, any> {
   state = {
     openPostModal: false,
     openVideoModal: false,
+    openMessageModal: false,
     openWhyModal: false,
     showConfirmationDialog: false,
     successfulSupport: false,
@@ -138,6 +139,14 @@ class ArtistComponent extends React.Component<Props, any> {
 
   closeWhyModal = () => {
     this.setState({ openWhyModal: false });
+  };
+
+  openMessageModal = () => {
+    this.setState({ openMessageModal: true });
+  };
+
+  closeMessageModal = () => {
+    this.setState({ openMessageModal: false });
   };
 
   getLoggedUserPageAccess = () => {
@@ -254,6 +263,7 @@ class ArtistComponent extends React.Component<Props, any> {
           <ArtistHeader
             artist={artist}
             openVideoModal={this.openVideoModal}
+            openMessageModal={this.openMessageModal}
             openPostModal={this.openPostModal}
             openWhyModal={this.openWhyModal}
             loggedUserAccess={loggedUserAccess}
@@ -292,6 +302,10 @@ class ArtistComponent extends React.Component<Props, any> {
             onClose={this.closeWhyModal}
             handleSupportClick={this.handleSupportClick}
           />
+          {/* <MessageModal
+            open={this.state.openMessageModal}
+            onClose={this.closeMessageModal}
+          /> */}
           <ConfirmationDialog
             open={this.state.showConfirmationDialog}
             closeConfirmationDialog={this.closeConfirmationDialog}

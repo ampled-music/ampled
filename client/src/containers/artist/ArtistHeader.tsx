@@ -20,6 +20,7 @@ interface Props {
   openVideoModal: React.MouseEventHandler;
   openPostModal: React.MouseEventHandler;
   openWhyModal: React.MouseEventHandler;
+  openMessageModal: React.MouseEventHandler;
   artist: ArtistModel;
   loggedUserAccess: { role: string; artistId: number };
   isSupporter: Boolean;
@@ -223,7 +224,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       </div>
     );
 
-  renderMessageContainer = () => {
+  renderVideoContainer = () => {
     const { artist } = this.props;
 
     if (artist.video_url) {
@@ -238,6 +239,22 @@ export class ArtistHeader extends React.Component<Props, any> {
               <div className="artist-header__message-image_container">
                 <img className="artist-header__message-image" src={this.state.screenshotURL} />
               </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  };
+
+  renderMessageContainer = () => {
+    const { artist } = this.props;
+
+    if (artist.bio) {
+      return (
+        <div>
+          <div className="artist-header__message-container" style={{ borderColor: artist.accent_color }}>
+            <div className="artist-header__message-text">
+              {artist.bio}
             </div>
           </div>
         </div>
@@ -412,6 +429,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderPhotoContainer()}
           </div>
           <div className="col-md-4 artist-header__message-col">
+            {this.renderVideoContainer()}
             {this.renderMessageContainer()}
             {this.renderFloatingNewPostButton()}
             {this.renderSupportersContainer()}

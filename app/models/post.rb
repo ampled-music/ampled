@@ -46,5 +46,4 @@ class Post < ApplicationRecord
 
     false
   end
-
 end

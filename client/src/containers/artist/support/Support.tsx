@@ -97,9 +97,14 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   redirectToArtistsPage = () => {
-    const { history, match } = this.props;
+    const { history, artists: { artist } } = this.props;
 
-    history.push(routePaths.artists.replace(':id', match.params.id));
+    if (artist.slug && artist.slug.length > 0) {
+      history.push(routePaths.slugs.replace(':slug', artist.slug));
+    } else {
+      history.push(routePaths.artists.replace(':id', String(artist.id)));
+    }
+    
   };
 
   getArtistInfo = () => {

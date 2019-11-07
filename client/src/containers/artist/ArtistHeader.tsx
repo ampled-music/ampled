@@ -11,6 +11,7 @@ import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from 'src/redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
+import TextTruncate from 'react-text-truncate';
 import * as R from 'ramda';
 
 import avatar from '../../images/ampled_avatar.svg';
@@ -254,7 +255,12 @@ export class ArtistHeader extends React.Component<Props, any> {
         <div>
           <div className="artist-header__message-container" style={{ borderColor: artist.accent_color }}>
             <div className="artist-header__message-text">
-              {artist.bio}
+              <TextTruncate
+                line={4}
+                element="span"
+                truncateText="…"
+                text={artist.bio}
+              />
             </div>
           </div>
         </div>

@@ -256,9 +256,9 @@ export class ArtistHeader extends React.Component<Props, any> {
           <div className="artist-header__message-container" style={{ borderColor: artist.accent_color }}>
             <div className="artist-header__message-text">
               <TextTruncate
-                line={4}
+                line={artist.video_url ? 5 : 8}
                 element="span"
-                truncateText="…"
+                truncateText="&#8230;"
                 text={artist.bio}
               />
             </div>

@@ -25,6 +25,8 @@
       height: 339px;
       position: absolute;
       margin: -2px 0;
+      display: flex;
+      justify-content: center;
 
       @include mq($layout-m) {
         border: 2px solid $brand-primary;
@@ -422,7 +424,7 @@
       transform: translate(-42%, -110%);
 
       @include mq(0, $layout-m) {
-        width: 100%;
+        width: min-content;
         left: 0px;
         right: 0px;
         transform: translate(0%, -110%);

@@ -231,14 +231,14 @@ export class ArtistHeader extends React.Component<Props, any> {
     if (artist.video_url) {
       return (
         <div>
-          <div className="artist-header__message-container" style={{ borderColor: artist.accent_color }}>
+          <div className="artist-header__message_container" style={{ borderColor: artist.accent_color }}>
             <button onClick={this.props.openVideoModal} className="artist-header__play">
               <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />
             </button>
-            <div className="artist-header__message-video">
-              <img className="artist-header__message-tear" src={tear} />
-              <div className="artist-header__message-image_container">
-                <img className="artist-header__message-image" src={this.state.screenshotURL} />
+            <div className="artist-header__message_video">
+              <img className="artist-header__message_tear" src={tear} />
+              <div className="artist-header__message_image_container">
+                <img className="artist-header__message_image" src={this.state.screenshotURL} />
               </div>
             </div>
           </div>
@@ -249,19 +249,23 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   renderMessageContainer = () => {
     const { artist } = this.props;
+    const borderColor = artist.accent_color;
 
     if (artist.bio) {
       return (
         <div>
-          <div className="artist-header__message-container" style={{ borderColor: artist.accent_color }}>
-            <div className="artist-header__message-text">
+          <div className="artist-header__message_container" style={{ borderColor: artist.accent_color }}>
+            <div className="artist-header__message_text">
               <TextTruncate
-                line={artist.video_url ? 5 : 8}
+                line={artist.video_url ? 5 : 10}
                 element="span"
                 truncateText="&#8230;"
                 text={artist.bio}
               />
             </div>
+            <button className="btn btn-ampled btn-read-more" style={{ borderColor }} onClick={this.props.openMessageModal}>
+              Read More
+            </button>
           </div>
         </div>
       );

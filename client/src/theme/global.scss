@@ -63,7 +63,8 @@ h6 {
     }
   }
 
-  &.btn-support {
+  &.btn-support,
+  &.btn-read-more {
     border-radius: 0px;
     border-width: 0px;
     text-transform: capitalize;
@@ -76,6 +77,10 @@ h6 {
     @include mq($layout-m) {
       display: block;
     }
+  }
+
+  &.btn-read-more {
+    max-width: max-content;
   }
 }
 

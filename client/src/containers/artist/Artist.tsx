@@ -50,7 +50,7 @@ class ArtistComponent extends React.Component<Props, any> {
   state = {
     openPostModal: false,
     openVideoModal: false,
-    openMessageModal: true,
+    openMessageModal: false,
     openWhyModal: false,
     showConfirmationDialog: false,
     successfulSupport: false,

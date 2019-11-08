@@ -387,40 +387,36 @@ export class ArtistHeader extends React.Component<Props, any> {
 
     return (
       <div className="artist-header__supporters">
-        {mostRecentSupporter && (
-          <div>
-            <div className="artist-header__supporters_title">Most Recent Supporter</div>
-            <div className="artist-header__supporters_recent">
-              <RenderSupporter
-                supporter={mostRecentSupporter}
-                borderColor={borderColor}
-              />
-              <div className="artist-header__person_info">
-                <div className="artist-header__person_name">{this.anonymizeSupporterName(mostRecentSupporter.name)}</div>
-                <div className="artist-header__person_quote" /></div>
-            </div>
-          </div>
-        )}
         {artist.supporters.length > 0 && (
           <div>
             <div className="artist-header__supporters_title">{artist.supporters.length} Supporters</div>
-
-            <div className="artist-header__supporters_all">
-              {artist.supporters
-                .filter((supporter) => !R.equals(R.path('most_recent_supporter', 'id', artist), +supporter.id))
-                .map((supporter) => (
-                  <div key={`minisupporter-${supporter.id}`}>
-                    <RenderSupporter
-                      supporter={supporter}
-                      borderColor
-                      isSmall
-                    />
-                  </div>
-                ))}
+            <div className="row">
+              <div className="artist-header__supporters_recent col-4">
+                <RenderSupporter
+                  supporter={mostRecentSupporter}
+                  borderColor={borderColor}
+                />
+                <div className="artist-header__person_info">
+                  <div className="artist-header__person_name">{this.anonymizeSupporterName(mostRecentSupporter.name)}</div>
+                  <div className="artist-header__person_mr">Most Recent</div>
+                </div>
+              </div>
+              <div className="artist-header__supporters_all col-8">
+                {artist.supporters
+                  .filter((supporter) => !R.equals(R.path('most_recent_supporter', 'id', artist), +supporter.id))
+                  .map((supporter) => (
+                    <div key={`minisupporter-${supporter.id}`}>
+                      <RenderSupporter
+                        supporter={supporter}
+                        borderColor
+                        isSmall
+                      />
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         )}
-
       </div>
     );
   };

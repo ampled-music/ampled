@@ -155,11 +155,6 @@
       font-size: 1.0rem;
     }
 
-    &_quote {
-      font-size: 0.8rem;
-      font-family: $font-family-monospace;
-    }
-
     &_small {
       margin: 0 6px 0 0;
     }
@@ -317,6 +312,8 @@
   }
 
   &__supporters {
+    margin-bottom: 1rem;
+
     &_title {
       font-size: 1.2rem;
       margin: 1rem 0 0.5rem 0;
@@ -326,10 +323,20 @@
 
     &_recent {
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
 
       .artist-header__person {
-        margin: 0 1rem 0 0;
+        margin-top: 0px;
+
+        &_mr {
+          font-size: .7rem;
+          font-family: $font-family-monospace;
+        }
       }
+
     }
 
     &_all {
@@ -394,7 +401,7 @@
         padding: .5rem 1rem;
         z-index: 300;
         box-shadow: 1px 1px 3px $gray-light;
-        width: 350px;
+        // width: 350px;
         transform: translate(-42%, -110%);
 
         @include mq(0, $layout-m) {

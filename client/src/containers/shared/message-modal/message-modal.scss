@@ -4,8 +4,11 @@
 .message-modal {
   overflow: hidden;
   height: 100vh;
-  padding: 2rem 1rem 1rem 3rem;
-  transform: rotateX(-3deg);
+
+  &_bio {
+    padding: 2rem 1rem 1rem 3rem;
+    font-family: $font-family-monospace;
+  }
 
   @include mq($layout-m) {
     height: auto;

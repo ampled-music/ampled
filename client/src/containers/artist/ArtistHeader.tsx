@@ -108,29 +108,55 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   renderArtistName = () => <div className="artist-header__title"><span className="artist-header__title_flair"></span>{this.props.artist.name}</div>;
 
+  renderOwnerHover = ({ owner }) => {
+    return (
+      <div className="supporter__hover-card">
+        <div className="supporter__hover-card_header">
+          <div className="supporter__hover-card_header_info">
+            <div className="supporter__hover-card_header_info_name">{owner.name}</div>
+          </div>
+        </div>
+        {owner.also_supports && (
+          <div className="supporter__hover-card_bands">
+            <div className="supporter__hover-card_bands_section">
+              <h6>Also Supports</h6>
+              <div className="supporter__hover-card_bands_name">Dilly Dally</div>
+              <div className="supporter__hover-card_bands_name">Culture Abuse</div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
   renderOwners = () => {
     const { artist } = this.props;
+    const RenderOwnerHover = this.renderOwnerHover;
 
     return (
       <div className="artist-header__persons">
         {artist.owners &&
           artist.owners.map((owner) => (
-            <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person">
-              {owner.profile_image_url ? (
-                <img
-                  className="artist-header__person_image member"
-                  src={this.renderPhoto(owner.profile_image_url, 150)}
-                  alt={owner.name}
-                  style={{ borderColor: artist.accent_color }}
+            <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person supporter">
+              <div className="member-image">
+                <RenderOwnerHover
+                  owner={owner}
                 />
-              ) : (
+                {owner.profile_image_url ? (
                   <img
                     className="artist-header__person_image member"
-                    src={avatar}
+                    src={this.renderPhoto(owner.profile_image_url, 150)}
                     alt={owner.name}
                     style={{ borderColor: artist.accent_color }}
                   />
-                )}
+                ) : (
+                    <img
+                      className="artist-header__person_image member"
+                      src={avatar}
+                      alt={owner.name}
+                      style={{ borderColor: artist.accent_color }}
+                    />
+                  )}
+              </div>
             </div>
           ))}
       </div>
@@ -272,16 +298,6 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
   };
 
-  anonymizeSupporterName = name => {
-    const nameParts = name.split(' ');
-    if (nameParts.length < 2) {
-      return name;
-    } else {
-      nameParts[nameParts.length - 1] = nameParts[nameParts.length - 1].slice(0, 1);
-      return nameParts.join(' ') + '.';
-    }
-  }
-
   renderSupporterHover = ({ supporter }) => {
     return (
       <div className="supporter__hover-card">
@@ -291,12 +307,12 @@ export class ArtistHeader extends React.Component<Props, any> {
               <img
                 className="supporter__hover-card_header_photo_image"
                 src={this.renderPhoto(supporter.profile_image_url, 150)}
-                alt={this.anonymizeSupporterName(supporter.name)}
+                alt={supporter.name}
               />
             </div>
           )}
           <div className="supporter__hover-card_header_info">
-            <div className="supporter__hover-card_header_info_name">{this.anonymizeSupporterName(supporter.name)}</div>
+            <div className="supporter__hover-card_header_info_name">{supporter.name}</div>
             {supporter.since && (
               <div className="supporter__hover-card_header_info_since">Supporter since {supporter.since}</div>
             )}
@@ -344,14 +360,14 @@ export class ArtistHeader extends React.Component<Props, any> {
             <img
               className="artist-header__person_image"
               src={this.renderPhoto(supporter.profile_image_url, 200)}
-              alt={this.anonymizeSupporterName(supporter.name)}
+              alt={supporter.name}
               style={style}
             />
           ) : (
               <img
                 className="artist-header__person_svg"
                 src={avatar}
-                alt={this.anonymizeSupporterName(supporter.name)}
+                alt={supporter.name}
                 style={style}
               />
             )}
@@ -401,7 +417,7 @@ export class ArtistHeader extends React.Component<Props, any> {
                   borderColor={borderColor}
                 />
                 <div className="artist-header__person_info">
-                  <div className="artist-header__person_name">{this.anonymizeSupporterName(mostRecentSupporter.name)}</div>
+                  <div className="artist-header__person_name">{mostRecentSupporter.name}</div>
                   <div className="artist-header__person_mr">Most Recent</div>
                 </div>
               </div>

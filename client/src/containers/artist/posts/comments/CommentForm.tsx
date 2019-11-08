@@ -2,9 +2,9 @@ import './comment.scss';
 
 import * as React from 'react';
 
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconButton, InputAdornment, InputBase } from '@material-ui/core';
+import { InputAdornment, InputBase, Button } from '@material-ui/core';
 
 interface Props {
   handleSubmit: Function;
@@ -53,9 +53,9 @@ class CommentForm extends React.Component<Props, any> {
           required
           endAdornment={
             <InputAdornment className="sendCommentIcon" position="end">
-              <IconButton type="submit" aria-label="Send comment" title="Send comment">
-                <FontAwesomeIcon icon={faPaperPlane} />
-              </IconButton>
+              <Button type="submit" aria-label="Send comment" title="Send comment" className="comment-input-button">
+                Post <FontAwesomeIcon icon={faArrowRight} />
+              </Button>
             </InputAdornment>
           }
         />

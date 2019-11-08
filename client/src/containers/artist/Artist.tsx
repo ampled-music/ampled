@@ -19,6 +19,7 @@ import { Loading } from '../shared/loading/Loading';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { VideoModal } from '../shared/video-modal/VideoModal';
 import { WhyModal } from '../shared/why-modal/WhyModal';
+import { MessageModal } from '../shared/message-modal/MessageModal';
 import { Texture } from '../shared/texture/Texture';
 
 import { ArtistHeader } from './ArtistHeader';
@@ -49,7 +50,7 @@ class ArtistComponent extends React.Component<Props, any> {
   state = {
     openPostModal: false,
     openVideoModal: false,
-    openMessageModal: false,
+    openMessageModal: true,
     openWhyModal: false,
     showConfirmationDialog: false,
     successfulSupport: false,
@@ -305,10 +306,11 @@ class ArtistComponent extends React.Component<Props, any> {
             onClose={this.closeWhyModal}
             handleSupportClick={this.handleSupportClick}
           />
-          {/* <MessageModal
+          <MessageModal
+            artistBio={artist.bio}
             open={this.state.openMessageModal}
             onClose={this.closeMessageModal}
-          /> */}
+          />
           <ConfirmationDialog
             open={this.state.showConfirmationDialog}
             closeConfirmationDialog={this.closeConfirmationDialog}

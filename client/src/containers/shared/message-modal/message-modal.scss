@@ -1,0 +1,13 @@
+@import "../../../theme/vars.scss";
+@import "../../../theme/mixins.scss";
+
+.message-modal {
+  overflow: hidden;
+  height: 100vh;
+  padding: 2rem 1rem 1rem 3rem;
+  transform: rotateX(-3deg);
+
+  @include mq($layout-m) {
+    height: auto;
+  }
+}

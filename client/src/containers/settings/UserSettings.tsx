@@ -201,7 +201,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
             <button className="cancel-button" onClick={this.closeCancelModal}>
               Of Course Not!
             </button>
-            <button className="delete-button" onClick={this.cancelSubscription}>
+            <button className="delete-button" onClick={this.cancelSubscription} style={{ marginLeft: 0 }}>
               Yes
             </button>
           </div>

@@ -250,6 +250,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   background-color: $white;
   padding: 1rem;
   height: 100vh;
@@ -276,7 +277,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-width: 400px;
   align-items: center;
   justify-content: center;
   background-color: $white;
@@ -284,6 +284,7 @@
   height: 100vh;
 
   @include mq($tablet) {
+    min-width: 400px;
     height: auto;
   }
 

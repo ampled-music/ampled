@@ -6,29 +6,42 @@
 .home-section {
   overflow: hidden;
   margin-top: 50px;
+
+  h1 {
+    font-size: 1.8rem;
+
+    @include mq($desktop) {
+      font-size: 2.5rem;
+    }
+  }
 }
 
 .home-header {
+
   &__support {
     width: 100%;
     display: block;
     position: relative;
     z-index: 0;
     font-family: $font-family-sans-serif;
-    font-size: 3rem;
-    line-height: 3.5rem;
+    font-size: 2rem;
+    line-height: 2.5rem;
     text-transform: uppercase;
     letter-spacing: .2rem;
     margin: 2rem 0;
     text-align: center;
+
     @include mq($desktop) {
       text-align: left;
+      font-size: 3rem;
+      line-height: 3.5rem;
     }
   }
 
   &__info {
     font-family: $font-family-monospace;
     text-align: center;
+
     @include mq($desktop) {
       text-align: left;
     }
@@ -38,8 +51,9 @@
     width: 100%;
     display: block;
     position: relative;
+
     @include mq($desktop) {
-      left: -15%; 
+      left: -15%;
       width: 115%;
       min-width: 800px;
     }
@@ -49,8 +63,40 @@
     background-color: $white;
     margin: 2rem auto;
     color: $black;
+
     @include mq($desktop) {
       margin: 2rem 0;
+    }
+  }
+
+  &__cta {
+    display: block;
+    @include mq($desktop) {
+      display: inline-block;
+    }
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    text-transform: uppercase;
+    font-family: $font-family-monospace;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto 2rem;
+
+    &_link {
+      display: block;
+      position: relative;
+      color: $black;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      z-index: 50;
+      text-decoration: underline;
+      transition: color $speed;
+
+      &:hover {
+        color: $white;
+        text-decoration: underline;
+      }
     }
   }
 }
@@ -71,7 +117,7 @@
     text-align: center;
     width: 100%;
     margin: 1rem auto;
-   
+
     @include mq($tablet) {
       margin: 2rem auto;
       width: 50%;
@@ -108,7 +154,7 @@
   position: relative;
   overflow: hidden;
   margin: 2rem auto 0;
-  padding: 0 0 2rem;
+  padding: 0;
 
   @include mq($tablet) {
     margin: 0;
@@ -119,7 +165,7 @@
     font-family: $font-family-sans-serif;
     text-align: center;
     text-transform: uppercase;
-    margin: 2rem auto;
+    margin: 0 auto 2rem;
     position: relative;
     z-index: 10;
   }
@@ -130,8 +176,9 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    @include mq($tablet) {  
-      padding: 3rem;  
+
+    @include mq($tablet) {
+      padding: 3rem;
     }
   }
 
@@ -141,10 +188,11 @@
         background: $white;
         color: $black;
       }
+
       .home-how__title,
       .home-how__copy,
       .home-how__image {
-          opacity: 1;
+        opacity: 1;
       }
     }
   }
@@ -165,14 +213,17 @@
 
     .section {
       height: auto;
+
       @include mq($tablet) {
         height: 160px;
       }
+
       &_3 {
         height: auto;
       }
     }
   }
+
   &__number {
     background-color: $black;
     color: $white;
@@ -194,6 +245,7 @@
       width: 70px;
       font-size: 2rem;
       margin: auto;
+
       &:after {
         content: '';
         display: block;
@@ -205,6 +257,7 @@
         background-color: $white;
       }
     }
+
     &.no-tail {
       &:after {
         height: 0px;
@@ -233,6 +286,7 @@
         width: 100%;
         position: relative;
       }
+
       &_3 {
         height: auto;
       }
@@ -242,11 +296,13 @@
   &__images {
     width: 50%;
     order: 2;
+
     @include mq($tablet) {
       width: 29%;
       order: 3;
     }
   }
+
   &__image {
     position: absolute;
     z-index: 1;
@@ -257,10 +313,12 @@
       width: 40%;
       transform: translate(70px, -60px);
     }
+
     &.crowd {
       width: 60%;
       transform: translate(20px, -60px) rotate(5deg);
     }
+
     &.money {
       width: 50%;
       transform: translate(50px, -70px)
@@ -271,17 +329,19 @@
         width: 460px;
         transform: translate(0px, 0px);
       }
+
       &.crowd {
         width: 790px;
         transform: translate(-280px, 20px) rotate(-5deg);
       }
+
       &.money {
         width: 560px;
         transform: translate(-90px, -60px);
       }
     }
   }
-  
+
   &__title {
     font-family: $font-family-sans-serif;
     font-size: 1.5rem;
@@ -290,6 +350,7 @@
     position: relative;
     z-index: 5;
     opacity: 0;
+
     @include mq($tablet) {
       opacity: 1;
     }
@@ -301,6 +362,7 @@
     z-index: 5;
     opacity: 0;
     font-family: $font-family-monospace;
+
     @include mq($tablet) {
       opacity: 1;
     }
@@ -308,14 +370,14 @@
 }
 
 .home-artists {
-  padding: 2rem;
+  padding: 0 0 2rem;
   background-color: $white;
 
   h1 {
     font-family: $font-family-sans-serif;
     text-align: center;
     text-transform: uppercase;
-    margin: 2rem auto;
+    margin: 0 auto 2rem;
   }
 
   &__item {
@@ -323,7 +385,7 @@
 
     a {
       text-decoration: none !important;
-      
+
       &:hover {
         .home-artists__item_image {
           opacity: .75;
@@ -352,12 +414,14 @@
       padding: 5px 10px;
       position: relative;
       left: 1rem;
-      top:1rem;
+      top: 1rem;
       z-index: 2;
     }
+
     &_image {
       width: 100%;
       position: relative;
+
       &_hover {
         width: 100%;
         position: relative;
@@ -370,29 +434,89 @@
         transform: translate(7px, -30px);
       }
     }
+
     &:nth-child(2n) {
       .home-artists__item_image_hover {
         transform: translate(13px, -10px);
       }
     }
+
     &:nth-child(3n) {
       .home-artists__item_image_hover {
-        transform: translate(-10px,-5px);
+        transform: translate(-10px, -5px);
       }
     }
+
     &:nth-child(4n) {
       .home-artists__item_image_hover {
-        transform: translate(10px,-3px);
+        transform: translate(10px, -3px);
       }
     }
+
     &:nth-child(5n) {
       .home-artists__item_image_hover {
-        transform: translate(-5px,-10px);
+        transform: translate(-5px, -10px);
       }
     }
+
     &:nth-child(6n) {
       .home-artists__item_image_hover {
-        transform: translate(9px,-25px);
+        transform: translate(9px, -25px);
+      }
+    }
+  }
+
+  &__featured {
+    margin-bottom: 2rem;
+
+    &_border {
+      border: 2px solid $black;
+      width: 90%;
+      height: 90%;
+      position: absolute;
+      border-width: 2px;
+      border-style: solid;
+      margin: -2px 0px;
+      top: 5%;
+      left: 5%;
+      z-index: 5;
+    }
+
+    &_title {
+      font-family: $font-family-monospace;
+      color: white;
+      background-color: $black;
+      display: inline;
+      padding: 5px 10px;
+      position: absolute;
+      right: 0px;
+      top: 10%;
+      z-index: 10;
+    }
+
+    &_image {
+      width: 100%;
+      position: relative;
+    }
+
+    &_info {
+      font-family: $font-family-monospace;
+      font-size: .9rem;
+      line-height: 1.9rem;
+      margin: 1rem auto 2rem;
+    }
+
+    &_link {
+      font-family: $font-family-monospace;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-decoration: underline;
+      color: $black;
+      transition: color $speed;
+
+      &:hover {
+        color: $white;
+        text-decoration: underline;
       }
     }
   }
@@ -402,12 +526,14 @@
   padding: 2rem;
   font-family: $font-family-monospace;
   text-align: center;
+
   h1 {
     font-family: $font-family-sans-serif;
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;
   }
+
   &__button {
     margin: 2rem auto;
   }

@@ -39,7 +39,12 @@ class Upload extends React.Component<UploadProps, UploadState> {
       return;
     }
 
-    const fileExtension = file.name && file.name.split('.').pop().toLowerCase();
+    const fileExtension =
+      file.name &&
+      file.name
+        .split('.')
+        .pop()
+        .toLowerCase();
 
     if (fileExtension !== 'mp3') {
       this.setState({ uploadError: 'Upload only accepts mp3 files.' });
@@ -86,6 +91,16 @@ class Upload extends React.Component<UploadProps, UploadState> {
     return axios.get(`/uploads/sign?contentType=${file.type}`);
   }
 
+  removeFile = () =>
+    this.setState({
+      progress: 0,
+      complete: false,
+      completedUrl: undefined,
+      key: undefined,
+      fileName: undefined,
+      uploadError: undefined,
+    });
+
   renderPreview(): React.ReactNode {
     const { progress } = this.state;
     return (
@@ -97,23 +112,26 @@ class Upload extends React.Component<UploadProps, UploadState> {
           </div>
 
           <div className="file-actions" data-progress={progress}>
-            <span className="remove-button" title="Remove audio">
+            <span className="remove-button" title="Remove audio" onClick={this.removeFile}>
               Remove
             </span>
-            <label htmlFor="audio-file">
-              <span  className="replace-button" title="Change audio">
+            <label htmlFor="raised-button-file">
+              <span className="replace-button" title="Change audio">
                 Replace
               </span>
             </label>
           </div>
         </div>
 
-        <div className="progress-bar__upload" data-progress={progress}>Upload Progress</div>
-        <div className="progress-bar__container">
-          <span className="progress-bar__progress" style={{width: `${progress}%`}} data-progress={progress}><span>{progress}%</span></span>
+        <div className="progress-bar__upload" data-progress={progress}>
+          Upload Progress
         </div>
-        <LinearProgress className="progress-bar" variant="determinate" value={progress} style={{ height: 30}} />
-
+        <div className="progress-bar__container">
+          <span className="progress-bar__progress" style={{ width: `${progress}%` }} data-progress={progress}>
+            <span>{progress}%</span>
+          </span>
+        </div>
+        <LinearProgress className="progress-bar" variant="determinate" value={progress} style={{ height: 30 }} />
       </div>
     );
   }
@@ -133,7 +151,6 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
     return (
       <div className="upload">
-
         <div className="upload-error">{this.state.uploadError && <h5>{this.state.uploadError}</h5>}</div>
 
         <input
@@ -143,9 +160,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
           accept=".mp3"
           onChange={this.processFile}
         />
-        <div className="uploader">
-          {fileName ? this.renderPreview() : this.renderUploadButton()}
-        </div>
+        <div className="uploader">{fileName ? this.renderPreview() : this.renderUploadButton()}</div>
       </div>
     );
   }

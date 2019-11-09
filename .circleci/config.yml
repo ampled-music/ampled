@@ -12,6 +12,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_DB: ampled_web_test
           POSTGRES_PASSWORD: ""
+      - image: circleci/redis
     working_directory: ~/circleci-demo-workflows
     steps:
       - checkout
@@ -47,7 +48,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Deploy Master to Heroku
+          name: Deploy Development to Staging/Acceptance
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git development:master
   
@@ -60,7 +61,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Deploy Master to Heroku
+          name: Deploy Master to Production
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master:master
 

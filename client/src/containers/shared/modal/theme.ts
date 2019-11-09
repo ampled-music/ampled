@@ -58,6 +58,11 @@ export const theme = createMuiTheme({
         textTransform: 'initial',
       },
     },
+    MuiIconButton: {
+      root: {
+        zIndex: 10,
+      },
+    },
     MuiDialogActions: {
       root: {
         justifyContent: 'center',

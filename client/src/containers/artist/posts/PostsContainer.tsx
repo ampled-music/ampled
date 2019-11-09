@@ -43,6 +43,7 @@ interface PostsProps {
   loggedUserAccess: { role: string; artistId: number };
   artistName: string;
   artistId: number;
+  artistSlug: string;
 }
 
 const { scaleDown } = transitions;
@@ -85,7 +86,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
   }
 
   renderPosts = () => {
-    const { posts, accentColor, artistName, me, openAuthModal, artistId, loggedUserAccess } = this.props;
+    const { posts, accentColor, artistName, artistSlug, me, openAuthModal, artistId, loggedUserAccess } = this.props;
 
     if (!posts) {
       return null;
@@ -99,6 +100,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
           accentColor={accentColor}
           artistName={artistName}
           artistId={artistId}
+          artistSlug={artistSlug}
           loggedUserAccess={loggedUserAccess}
           openAuthModal={openAuthModal}
           addComment={this.props.addComment}

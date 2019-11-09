@@ -5,11 +5,13 @@ import Confetti from 'react-dom-confetti';
 import { getArtistAction } from 'src/redux/artists/get-details';
 import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
 import { Store } from 'src/redux/configure-store';
+import { Helmet } from 'react-helmet';
 
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState, SubscriptionStep } from '../../redux/subscriptions/initial-state';
+import { CloudinaryContext } from 'cloudinary-react';
 import { PostsContainer } from '../artist/posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { Modal } from '../shared/modal/Modal';
@@ -151,37 +153,45 @@ class ArtistComponent extends React.Component<Props, any> {
     // validate hex string
     hex = String(hex).replace(/[^0-9a-f]/gi, '');
     if (hex.length < 6) {
-      hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
     }
     lum = lum || 0;
-  
+
     // convert to decimal and change luminosity
     var rgb = "#", c, i;
     for (i = 0; i < 3; i++) {
-      c = parseInt(hex.substr(i*2,2), 16);
+      c = parseInt(hex.substr(i * 2, 2), 16);
       c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-      rgb += ("00"+c).substr(c.length);
+      rgb += ("00" + c).substr(c.length);
     }
-  
+
     return rgb;
   }
 
   handleSupportClick = () => {
+    let supportUrl;
+    if (this.props.artists.artist.slug) {
+      supportUrl = routePaths.support.replace(':id', this.props.artists.artist.slug);
+    } else {
+      supportUrl = routePaths.support.replace(':id', String(this.props.artists.artist.id));
+    }
+
+
     if (this.props.me && this.props.me.userData) {
-      this.props.history.push(routePaths.support.replace(':id', String(this.props.artists.artist.id)));
+      this.props.history.push(supportUrl);
     } else {
       this.props.openAuthModal({
         modalPage: 'signup',
         showSupportMessage: 'artist',
         artistName: this.props.artists.artist.name,
-        redirectTo: routePaths.support.replace(':id', String(this.props.artists.artist.id)),
+        redirectTo: supportUrl,
       });
       this.setState({ openWhyModal: false });
     }
   };
 
   render() {
-    const { artists, me: { userData } } = this.props;
+    const { artists, me: { userData, loadingMe } } = this.props;
     const artist = artists.artist;
     const loggedUserAccess = this.getLoggedUserPageAccess();
     let isSupporter = false;
@@ -197,97 +207,106 @@ class ArtistComponent extends React.Component<Props, any> {
     if (artists && !artists.loading && artists.error) {
       return (<NoArtist />);
     }
-  
+
 
     return (
       <div className="App">
-        <style
-          dangerouslySetInnerHTML={{
-          __html: `
-            .btn.btn-support, .private-support__btn > .btn {
-              border-width: 0px;
-              background-color: ${artist.accent_color};
-              color: white;
-            }
-            .new-post button,
-            .post__change button,
-            .artist-header__photo,
-            .artist-header__title_flair,
-            .artist-header__banner-icons_icon.active {
-              background-color: ${artist.accent_color};
-            }
-            .btn.btn-support:hover,
-            .private-support__btn > .btn:hover,
-            .new-post button:hover {
-              background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
-            }
-            ${isSupporter && `
-              .user-image { border: 1px solid ${artist.accent_color}; }
-              header .supporter-message { display: inline-block !important; color: ${artist.accent_color}; }
-            `}
-          `
-          }}
-        />
-        
-        <Texture 
-          positionTop25={false}
-          positionTop50={false}
-          positionFlip={false}
-        />
-        <ArtistHeader
-          artist={artist}
-          openVideoModal={this.openVideoModal}
-          openPostModal={this.openPostModal}
-          openWhyModal={this.openWhyModal}
-          loggedUserAccess={loggedUserAccess}
-          isSupporter={isSupporter}
-          handleSupportClick={this.handleSupportClick}
-        />
-        <ArtistInfo
-          location={artist.location}
-          accentColor={artist.accent_color}
-          twitterHandle={artist.twitter_handle}
-          instagramHandle={artist.instagram_handle}
-        />
-        <PostsContainer
-          match={this.props.match}
-          posts={artist.posts}
-          artistName={artist.name}
-          artistId={artist.id}
-          accentColor={artist.accent_color}
-          updateArtist={this.getArtistInfo}
-          loggedUserAccess={loggedUserAccess}
-        />
-        <Modal open={this.state.openPostModal}>
-          <PostForm 
-            close={this.getUserConfirmation}
+        <CloudinaryContext cloudName="ampled-web">
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
+              .btn.btn-support, .private-support__btn > .btn {
+                border-width: 0px;
+                background-color: ${artist.accent_color};
+                color: white;
+              }
+              .new-post button,
+              .post__change button,
+              .artist-header__photo,
+              .artist-header__title_flair,
+              .artist-header__banner-icons_icon.active {
+                background-color: ${artist.accent_color};
+              }
+              .btn.btn-support:hover,
+              .private-support__btn > .btn:hover,
+              .new-post button:hover {
+                background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
+              }
+              ${isSupporter && `
+                .user-image { border: 1px solid ${artist.accent_color}; }
+                header .supporter-message { display: inline-block !important; color: ${artist.accent_color}; }
+              `}
+            `
+            }}
+          />
+
+          <Texture
+            positionTop25={false}
+            positionTop50={false}
+            positionFlip={false}
+          />
+          {
+            artist && artist.name &&
+            (<Helmet>
+              <title>{artist.name} | Ampled | Direct Community Support For Music Artists</title>
+            </Helmet>)
+          }
+          <ArtistHeader
+            artist={artist}
+            openVideoModal={this.openVideoModal}
+            openPostModal={this.openPostModal}
+            openWhyModal={this.openWhyModal}
+            loggedUserAccess={loggedUserAccess}
+            isSupporter={isSupporter}
+            handleSupportClick={this.handleSupportClick}
+          />
+          <ArtistInfo
+            location={artist.location}
+            accentColor={artist.accent_color}
+            twitterHandle={artist.twitter_handle}
+            instagramHandle={artist.instagram_handle}
+          />
+          <PostsContainer
+            match={this.props.match}
+            posts={artist.posts}
+            artistName={artist.name}
+            artistId={artist.id}
+            artistSlug={artist.slug}
+            accentColor={artist.accent_color}
+            updateArtist={this.getArtistInfo}
+            loggedUserAccess={loggedUserAccess}
+          />
+          <Modal open={this.state.openPostModal} onClose={this.closePostModal}>
+            <PostForm
+              close={this.getUserConfirmation}
+              discardChanges={this.discardChanges}
+            />
+          </Modal>
+          <VideoModal
+            open={this.state.openVideoModal}
+            videoUrl={artist.video_url}
+            onClose={this.closeVideoModal}
+          />
+          <WhyModal
+            open={this.state.openWhyModal}
+            onClose={this.closeWhyModal}
+            handleSupportClick={this.handleSupportClick}
+          />
+          <ConfirmationDialog
+            open={this.state.showConfirmationDialog}
+            closeConfirmationDialog={this.closeConfirmationDialog}
             discardChanges={this.discardChanges}
           />
-        </Modal>
-        <VideoModal 
-          open={this.state.openVideoModal} 
-          videoUrl={artist.video_url} 
-          onClose={this.closeVideoModal} 
-        />
-        <WhyModal 
-          open={this.state.openWhyModal}
-          onClose={this.closeWhyModal} 
-          handleSupportClick={this.handleSupportClick}
-        />
-        <ConfirmationDialog
-          open={this.state.showConfirmationDialog}
-          closeConfirmationDialog={this.closeConfirmationDialog}
-          discardChanges={this.discardChanges}
-        />
-        <div className="confetti-overlay">
-          <Confetti
-            active={this.state.successfulSupport} 
-            config={this.getConfettiConfig()} 
+          <div className="confetti-overlay">
+            <Confetti
+              active={this.state.successfulSupport}
+              config={this.getConfettiConfig()}
+            />
+          </div>
+          <Loading
+            artistLoading={artists.loading || loadingMe}
           />
-        </div>
-        <Loading
-          artistLoading={artists.loading} 
-        />
+        </CloudinaryContext>
       </div>
     );
   }

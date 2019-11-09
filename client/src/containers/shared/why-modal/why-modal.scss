@@ -2,9 +2,33 @@
 @import "../../../theme/mixins.scss";
 
 .why-support {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 1rem;
   background-color: $white;
+  height: 100vh;
+
+  @include mq($tablet) {
+    height: auto;
+  }
+
+  &__container {
+    width: 100%;
+
+    @include mq($tablet) {
+      width: 450px;
+      padding: 2rem 1.5rem;
+      margin: auto;
+    }
+
+    @include mq(0, $tablet) {
+      .tear {
+        display: none;
+      }
+    }
+  }
 
   &__title {
     font-family: $font-family-sans-serif;
@@ -16,11 +40,12 @@
   &__subheader {
     font-weight: bold;
   }
+
   &__copy {
     font-family: $font-family-monospace;
     margin-bottom: 1.5rem;
   }
-  
+
   .link__why {
     text-decoration: underline;
   }

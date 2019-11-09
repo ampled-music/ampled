@@ -201,7 +201,7 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { artists, me: { userData } } = this.props;
+    const { artists, me: { userData, loadingMe } } = this.props;
     const artist = artists.artist;
     const loggedUserAccess = this.getLoggedUserPageAccess();
     let isSupporter = false;
@@ -323,7 +323,7 @@ class ArtistComponent extends React.Component<Props, any> {
             />
           </div>
           <Loading
-            artistLoading={artists.loading}
+            artistLoading={artists.loading || loadingMe}
           />
         </CloudinaryContext>
       </div>

@@ -34,9 +34,9 @@ type Props = typeof loginInitialState & typeof meInitialState & NavComponentProp
 
 class NavComponent extends React.Component<Props, any> {
   getLoggedUserPageAccess = () => {
-    const { userData, match } = this.props;
+    const { userData, artist } = this.props;
 
-    return userData && userData.artistPages.find((page) => page.artistId === +match.params.id);
+    return userData && userData.artistPages.find((page) => page.artistId === +artist.id);
   };
 
   showSupportButton = () => {

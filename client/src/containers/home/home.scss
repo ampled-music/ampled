@@ -71,6 +71,9 @@
 
   &__cta {
     display: block;
+    @include mq($desktop) {
+      display: inline-block;
+    }
     position: relative;
     width: 100%;
     max-width: 350px;

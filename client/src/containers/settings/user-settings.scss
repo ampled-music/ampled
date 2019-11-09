@@ -254,6 +254,7 @@
   background-color: $white;
   padding: 1rem;
   height: 100vh;
+  font-family: $font-family-sans-serif;
 
   @include mq($tablet) {
     height: auto;

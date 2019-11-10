@@ -74,6 +74,14 @@ class PostsContainerComponent extends React.Component<Props, any> {
     window.addEventListener("resize", this.updateDimensions);
   }
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.me && this.props.me) {
+      setTimeout(() => {
+        this.updateDimensions();
+      }, 500);
+    }
+  }
+
   updateDimensions() {
     this.setState({
       height: window.innerHeight, 

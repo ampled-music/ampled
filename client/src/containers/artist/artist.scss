@@ -290,6 +290,10 @@
       border: 2px solid $brand-primary;
       padding: 10px 0px;
 
+      &.paper { 
+        background-image: url(../../images/background_paper_sm.png);
+      }
+
       .btn-read-more {
         position: absolute;
         bottom: -18px;

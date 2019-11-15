@@ -280,7 +280,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     if (artist.bio) {
       return (
         <div>
-          <div className="artist-header__message_container" style={{ borderColor: artist.accent_color }}>
+          <div className="artist-header__message_container paper" style={{ borderColor: artist.accent_color }}>
             <div className="artist-header__message_text">
               <TextTruncate
                 line={artist.video_url ? 5 : 10}

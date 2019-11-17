@@ -190,6 +190,33 @@ export class SupportComponent extends React.Component<Props, any> {
 
   calculateSupportTotal = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100).toFixed(2);
 
+  renderSupportBreakdown = (supportLevel) => {
+    const ampledShare = Number(supportLevel) * 0.15;
+    const artistShare = Number(supportLevel) * 0.85;
+    const stripeShare = Number(this.calculateSupportTotal(supportLevel)) - Number(supportLevel);
+    const total = ampledShare + artistShare + stripeShare;
+    return (
+      <div style={{fontSize: '10px' }}>
+        <div style={{ width: '100%', maxHeight: '24px' }}>
+          <div style={{ backgroundColor: '#faa', float: 'left', width: `${(artistShare / total) * 100}%` }}>
+            ${artistShare.toFixed(2)}
+          </div>
+          <div style={{ backgroundColor: '#afa', float: 'left', width: `${(ampledShare / total) * 100}%` }}>
+            ${ampledShare.toFixed(2)}
+          </div>
+          <div style={{ backgroundColor: '#aaf', float: 'left', width: `${(stripeShare / total) * 100}%` }}>
+            ${stripeShare.toFixed(2)}
+          </div>
+        </div>
+        <div style={{ width: '100%', maxHeight: '24px' }}>
+          <div style={{ backgroundColor: '#faa', float: 'left', width: `${(artistShare / total) * 100}%` }}>Artist</div>
+          <div style={{ backgroundColor: '#afa', float: 'left', width: `${(ampledShare / total) * 100}%` }}>Ampled</div>
+          <div style={{ backgroundColor: '#aaf', float: 'left', width: `${(stripeShare / total) * 100}%` }}>Stripe</div>
+        </div>
+      </div>
+    );
+  };
+
   renderSupportLevelForm = (artistName) => (
     <div className="row justify-content-center">
       <div className="col-md-5">
@@ -206,10 +233,13 @@ export class SupportComponent extends React.Component<Props, any> {
           </div>
           {
             this.state.supportLevelValue && this.state.supportLevelValue >= 3 ? 
-            (<p className="support__value-description">
+              (<div>
+                {this.renderSupportBreakdown(this.state.supportLevelValue)}
+                <p className="support__value-description">
                 Your total charge will be <strong>${this.calculateSupportTotal(this.state.supportLevelValue)}</strong>.<br /><br />
+                
                 This is due to our payment processor's service fee. More details can be found <a href="https://app.ampled.com/payment-processing" target="_blank">here</a>.
-          </p>) :
+          </p></div>) :
               (<p className="support__value-description">
               Support {artistName} directly for $3 (or more) per month to unlock access to all of their posts and get
                   notifications when they post anything new.

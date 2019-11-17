@@ -6,8 +6,12 @@
   height: 100vh;
 
   &_bio {
-    padding: 2rem 3rem 1rem 5rem;
+    padding: 100px 55px 20px 105px;
     font-family: $font-family-monospace;
+    background-image: url(../../../images/background_paper_lg.png);
+    background-repeat: repeat-y;
+    background-size: contain;
+    background-attachment: fixed;
   }
 
   @include mq($layout-m) {

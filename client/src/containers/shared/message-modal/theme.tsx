@@ -8,7 +8,6 @@ export const theme = createMuiTheme({
     MuiPaper: {
       root: {
         backgroundColor: 'transparent',
-        transform: 'rotate(-2deg)',
       },
       elevation24: {
         boxShadow: '0 0 0 transparent',

@@ -16,7 +16,8 @@ import * as R from 'ramda';
 
 import avatar from '../../images/ampled_avatar.svg';
 import tear from '../../images/paper_header.png';
-import paper from '../../images/background_paper_sm.png';
+import paper_sm from '../../images/background_paper_sm.png';
+import paper_md from '../../images/background_paper_md.png';
 
 interface Props {
   openVideoModal: React.MouseEventHandler;
@@ -129,6 +130,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       </div>
     );
   };
+  
   renderOwners = () => {
     const { artist } = this.props;
     const RenderOwnerHover = this.renderOwnerHover;
@@ -283,7 +285,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         <div>
           <div className="artist-header__message_container paper" style={{ borderColor: artist.accent_color }}>
             <div className="artist-header__message_text">
-              <img className="artist-header__message_paper-bg" src={paper} />
+              <img className="artist-header__message_paper-bg" src={artist.video_url ? paper_sm : paper_md} />
               <TextTruncate
                 line={artist.video_url ? 5 : 10}
                 element="span"

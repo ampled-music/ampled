@@ -16,6 +16,7 @@ import * as R from 'ramda';
 
 import avatar from '../../images/ampled_avatar.svg';
 import tear from '../../images/paper_header.png';
+import paper from '../../images/background_paper_sm.png';
 
 interface Props {
   openVideoModal: React.MouseEventHandler;
@@ -282,6 +283,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         <div>
           <div className="artist-header__message_container paper" style={{ borderColor: artist.accent_color }}>
             <div className="artist-header__message_text">
+              <img className="artist-header__message_paper-bg" src={paper} />
               <TextTruncate
                 line={artist.video_url ? 5 : 10}
                 element="span"

@@ -290,14 +290,18 @@
       border: 2px solid $brand-primary;
       padding: 10px 0px;
 
-      &.paper { 
-        background-image: url(../../images/background_paper_sm.png);
-      }
-
       .btn-read-more {
         position: absolute;
         bottom: -18px;
       }
+    }
+
+    &_paper-bg { 
+      width: 110%;
+      left: -5%;
+      top: 5%;
+      z-index: -1;
+      position: absolute;
     }
 
     &_video {

@@ -19,6 +19,7 @@ import { Loading } from '../shared/loading/Loading';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { VideoModal } from '../shared/video-modal/VideoModal';
 import { WhyModal } from '../shared/why-modal/WhyModal';
+import { MessageModal } from '../shared/message-modal/MessageModal';
 import { Texture } from '../shared/texture/Texture';
 
 import { ArtistHeader } from './ArtistHeader';
@@ -49,6 +50,7 @@ class ArtistComponent extends React.Component<Props, any> {
   state = {
     openPostModal: false,
     openVideoModal: false,
+    openMessageModal: false,
     openWhyModal: false,
     showConfirmationDialog: false,
     successfulSupport: false,
@@ -140,6 +142,14 @@ class ArtistComponent extends React.Component<Props, any> {
     this.setState({ openWhyModal: false });
   };
 
+  openMessageModal = () => {
+    this.setState({ openMessageModal: true });
+  };
+
+  closeMessageModal = () => {
+    this.setState({ openMessageModal: false });
+  };
+
   getLoggedUserPageAccess = () => {
     const { me } = this.props;
 
@@ -215,7 +225,9 @@ class ArtistComponent extends React.Component<Props, any> {
           <style
             dangerouslySetInnerHTML={{
               __html: `
-              .btn.btn-support, .private-support__btn > .btn {
+              .btn.btn-read-more,
+              .btn.btn-support,
+              .private-support__btn > .btn {
                 border-width: 0px;
                 background-color: ${artist.accent_color};
                 color: white;
@@ -227,6 +239,7 @@ class ArtistComponent extends React.Component<Props, any> {
               .artist-header__banner-icons_icon.active {
                 background-color: ${artist.accent_color};
               }
+              .btn.btn-read-more:hover,
               .btn.btn-support:hover,
               .private-support__btn > .btn:hover,
               .new-post button:hover {
@@ -254,6 +267,7 @@ class ArtistComponent extends React.Component<Props, any> {
           <ArtistHeader
             artist={artist}
             openVideoModal={this.openVideoModal}
+            openMessageModal={this.openMessageModal}
             openPostModal={this.openPostModal}
             openWhyModal={this.openWhyModal}
             loggedUserAccess={loggedUserAccess}
@@ -291,6 +305,11 @@ class ArtistComponent extends React.Component<Props, any> {
             open={this.state.openWhyModal}
             onClose={this.closeWhyModal}
             handleSupportClick={this.handleSupportClick}
+          />
+          <MessageModal
+            artistBio={artist.bio}
+            open={this.state.openMessageModal}
+            onClose={this.closeMessageModal}
           />
           <ConfirmationDialog
             open={this.state.showConfirmationDialog}

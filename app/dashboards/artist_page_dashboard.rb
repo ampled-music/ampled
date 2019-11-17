@@ -18,7 +18,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     name: Field::String,
     slug: Field::String,
     location: Field::String,
-    bio: Field::String,
+    bio: Field::Text,
     accent_color: Field::String,
     video_url: Field::String,
     twitter_handle: Field::String,

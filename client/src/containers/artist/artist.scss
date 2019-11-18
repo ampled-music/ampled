@@ -291,6 +291,10 @@
       padding: 10px 0px;
       min-height: 140px;
 
+      &.paper_md {
+        min-height: 210px;
+      }
+
       .btn-read-more {
         position: absolute;
         bottom: -18px;

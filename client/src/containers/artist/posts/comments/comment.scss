@@ -25,8 +25,19 @@
   &__copy {
     font-family: $font-family-monospace;
     font-size: 13px;
-    margin-top: 10px;
+    margin: 10px 0px 15px;
     white-space: pre-wrap;
+    margin-right: 20px;
+  }
+  &__delete {
+    position: absolute;
+    right: 20px;
+    margin-top: 23px;
+    opacity: .7;
+    transition: opacity $speed;
+    &:hover {
+      opacity: 1;
+    }
   }
 
   .delete-icon {

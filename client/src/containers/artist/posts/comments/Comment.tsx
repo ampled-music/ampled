@@ -14,7 +14,7 @@ const renderHeader = ({ author, createdDate }) => (
 const renderBody = (text: string) => <div className="comment__copy">{text}</div>;
 
 const renderDeleteButton = ({ deleteComment, commentId }) => (
-  <span onClick={() => deleteComment(commentId)}>
+  <span onClick={() => deleteComment(commentId)} className="comment__delete">
     <FontAwesomeIcon className="delete-icon" icon={faTrashAlt} title="Delete comment" />
   </span>
 );

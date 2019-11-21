@@ -62,10 +62,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
   }
 
   showCancelledSuccessMessage = () => {
-    const artistPageLink = routePaths.support.replace(':id', this.props.subscriptions.artistPageId.toString());
+    const { artistSlug, artistPageId, artistName } = this.props.subscriptions;
+    const artistPageLink = routePaths.support.replace(':id', artistSlug && artistSlug.length ? artistSlug : artistPageId.toString());
 
     showToastMessage(
-      `We are sad to see you leaving. Remember that you can always support <a href="${artistPageLink}">${this.props.subscriptions.artistName}</a> with a different value!`,
+      `We are sad to see you leaving. Remember that you can always support <a href="${artistPageLink}">${artistName}</a> with a different value!`,
       MessageType.SUCCESS,
     );
   };
@@ -90,6 +91,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     this.props.cancelSubscription({
       subscriptionId: this.state.subscription.subscriptionId,
       artistPageId: this.state.subscription.artistPageId,
+      artistSlug: this.state.subscription.artistSlug,
       artistName: this.state.subscription.name,
     });
     this.closeCancelModal();

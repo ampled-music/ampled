@@ -282,12 +282,14 @@ class ArtistComponent extends React.Component<Props, any> {
           />
           <PostsContainer
             match={this.props.match}
+            hash={this.props.history.location.hash}
             posts={artist.posts}
             artistName={artist.name}
             artistId={artist.id}
             artistSlug={artist.slug}
             accentColor={artist.accent_color}
             updateArtist={this.getArtistInfo}
+            loading={artists.loading || loadingMe}
             loggedUserAccess={loggedUserAccess}
           />
           <Modal open={this.state.openPostModal} onClose={this.closePostModal}>

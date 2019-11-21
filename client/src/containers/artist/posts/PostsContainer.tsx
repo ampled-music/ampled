@@ -37,9 +37,11 @@ interface PostsProps {
   accentColor: string;
   authentication: typeof authenticationInitialState;
   updateArtist: Function;
+  loading: boolean;
   comments: typeof commentsInitialState;
   me: { id: number; artistPages: any[] };
   match: any;
+  hash: string;
   loggedUserAccess: { role: string; artistId: number };
   artistName: string;
   artistId: number;
@@ -79,6 +81,15 @@ class PostsContainerComponent extends React.Component<Props, any> {
       setTimeout(() => {
         this.updateDimensions();
       }, 500);
+    }
+    if (prevProps.loading && !this.props.loading) {
+      setTimeout(() => {
+        const { hash } = this.props;
+        if (hash && hash.length) {
+          console.log(`scroll to post ${hash}`);
+          document.getElementById(hash.replace('#', '')).scrollIntoView();
+        }
+      }, 100);
     }
   }
 

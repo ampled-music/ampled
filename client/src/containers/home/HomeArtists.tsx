@@ -96,7 +96,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
         </div>
         <div className="col-md-5 home-artists__featured_right">
           <div className="home-artists__featured_info">
-            Hardcore Luxury is a rock band from Brooklyn, NY — a new project from Austin Robey and Sean Adams, both founding-members of Ampled. Hardcore Luxury is using Ampled to give their supporters an intimate behind-the-scenes insight into their demo writing and recording process, with colorful commentary, stories, and context.
+            Thanks Light… is tough to pin down with a few sentences; our sound has evolved over the years but has always kept good songwriting and psychedelia at the fore-front of the creative process. Our cast of wild and talented characters has grown as well, however with each new transformation Thanks Light… finds new sonic ground to cultivate.
           </div>
           <Link to={`/artist/thanks-light`} className="home-artists__featured_link">
             Explore Their Page

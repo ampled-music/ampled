@@ -374,7 +374,7 @@ class PostComponent extends React.Component<any, any> {
   };
 
   render() {
-    return <div>{this.renderPost()}</div>;
+    return <div id={`post-${this.props.post.id}`}>{this.renderPost()}</div>;
   }
 }
 

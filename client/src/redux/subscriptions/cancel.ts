@@ -16,6 +16,7 @@ export const cancelSubscriptionReducer = {
     processing: true,
     artistPageId: payload.artistPageId,
     artistName: payload.artistName,
+    artistSlug: payload.artistSlug,
   }),
   [cancelSubscriptionAction.SUCCEEDED]: (state: typeof initialState) => ({
     ...state,
@@ -30,5 +31,6 @@ export const cancelSubscriptionReducer = {
     processing: initialState.processing,
     cancelled: initialState.cancelled,
     artistName: undefined,
+    artistSlug: undefined,
   }),
 };

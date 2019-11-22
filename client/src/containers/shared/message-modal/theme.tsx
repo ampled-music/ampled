@@ -6,15 +6,6 @@ export const theme = createMuiTheme({
   },
   overrides: {
     MuiPaper: {
-      root: {
-        backgroundColor: 'transparent',
-      },
-      elevation24: {
-        boxShadow: '0 0 0 transparent',
-      },
-      rounded: {
-        borderRadius: '0px',
-      }
     },
   },
 });

@@ -6,32 +6,20 @@
   height: 100vh;
 
   &_bio {
-    padding: 50px 20px 20px 20px;
     font-family: $font-family-monospace;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-attachment: fixed;
-    overflow: scroll;
+    white-space: pre-wrap;
+    padding: 2rem;
   }
   .MuiPaper-root {
-    transform: rotate(0deg);
     max-height: 100%;
     margin: 0px;
-    overflow: hidden;
-    background-color: white;
   }
 
   @include mq($layout-m) {
     height: auto;
     .MuiPaper-root {
-      transform: rotate(-2deg);
       margin: 40px;
       max-height: 510px;
-      background-color: transparent;
-    }
-    &_bio {
-      padding: 100px 55px 20px 105px;
-      background-image: url(../../../images/background_paper_lg.png);
     }
   }
 }

@@ -88,17 +88,17 @@ class HomeArtistsComponent extends React.Component<Props, State> {
     return (
       <div className="row justify-content-center home-artists__featured">
         <div className="col-md-5">
-          <Link to={`/artist/hardcoreluxury`} className="home-artists__featured_left">
-            <div className="home-artists__featured_title">Hardcore Luxury</div>
-            <img className="home-artists__featured_image" src="https://res.cloudinary.com/ampled-web/image/upload/v1572662519/Screen_Shot_2019-10-30_at_6.08.53_PM_v0ymgv.png" />
+          <Link to={`/artist/thankslight`} className="home-artists__featured_left">
+            <div className="home-artists__featured_title">Thanks Light...</div>
+            <img className="home-artists__featured_image" src="https://res.cloudinary.com/ampled-web/image/upload/v1574456240/Zane6.png" />
             <div className="home-artists__featured_border"></div>
           </Link>
         </div>
         <div className="col-md-5 home-artists__featured_right">
           <div className="home-artists__featured_info">
-            Hardcore Luxury is a rock band from Brooklyn, NY — a new project from Austin Robey and Sean Adams, both founding-members of Ampled. Hardcore Luxury is using Ampled to give their supporters an intimate behind-the-scenes insight into their demo writing and recording process, with colorful commentary, stories, and context.
+          Grown under a moontower, deep in the heart of Austin, Texas, Thanks Light is a mutant country, graveyard stomp, and drunken gospel group exploring the microcosms of psychedelic music. On Ampled, Thanks Light... are sharing demos of unreleased songs, alternate versions of album art, first dibs on exclusive merch, and behind the scenes footage.
           </div>
-          <Link to={`/artist/hardcoreluxury`} className="home-artists__featured_link">
+          <Link to={`/artist/thankslight`} className="home-artists__featured_link">
             Explore Their Page
           </Link> &#10142;
         </div>

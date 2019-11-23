@@ -1,0 +1,25 @@
+@import "../../../theme/vars.scss";
+@import "../../../theme/mixins.scss";
+
+.message-modal {
+  overflow: hidden;
+  height: 100vh;
+
+  &_bio {
+    font-family: $font-family-monospace;
+    white-space: pre-wrap;
+    padding: 2rem;
+  }
+  .MuiPaper-root {
+    max-height: 100%;
+    margin: 0px;
+  }
+
+  @include mq($layout-m) {
+    height: auto;
+    .MuiPaper-root {
+      margin: 40px;
+      max-height: 510px;
+    }
+  }
+}

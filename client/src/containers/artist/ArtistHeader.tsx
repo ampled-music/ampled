@@ -11,15 +11,19 @@ import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from 'src/redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
+import TextTruncate from 'react-text-truncate';
 import * as R from 'ramda';
 
 import avatar from '../../images/ampled_avatar.svg';
 import tear from '../../images/paper_header.png';
+import paper_sm from '../../images/background_paper_sm.png';
+import paper_md from '../../images/background_paper_md.png';
 
 interface Props {
   openVideoModal: React.MouseEventHandler;
   openPostModal: React.MouseEventHandler;
   openWhyModal: React.MouseEventHandler;
+  openMessageModal: React.MouseEventHandler;
   artist: ArtistModel;
   loggedUserAccess: { role: string; artistId: number };
   isSupporter: Boolean;
@@ -106,29 +110,56 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   renderArtistName = () => <div className="artist-header__title"><span className="artist-header__title_flair"></span>{this.props.artist.name}</div>;
 
+  renderOwnerHover = ({ owner }) => {
+    return (
+      <div className="supporter__hover-card">
+        <div className="supporter__hover-card_header">
+          <div className="supporter__hover-card_header_info">
+            <div className="supporter__hover-card_header_info_name">{owner.name}</div>
+          </div>
+        </div>
+        {owner.also_supports && (
+          <div className="supporter__hover-card_bands">
+            <div className="supporter__hover-card_bands_section">
+              <h6>Also Supports</h6>
+              <div className="supporter__hover-card_bands_name">Dilly Dally</div>
+              <div className="supporter__hover-card_bands_name">Culture Abuse</div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+  
   renderOwners = () => {
     const { artist } = this.props;
+    const RenderOwnerHover = this.renderOwnerHover;
 
     return (
       <div className="artist-header__persons">
         {artist.owners &&
           artist.owners.map((owner) => (
-            <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person">
-              {owner.profile_image_url ? (
-                <img
-                  className="artist-header__person_image member"
-                  src={this.renderPhoto(owner.profile_image_url, 150)}
-                  alt={owner.name}
-                  style={{ borderColor: artist.accent_color }}
+            <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person supporter">
+              <div className="member-image">
+                <RenderOwnerHover
+                  owner={owner}
                 />
-              ) : (
+                {owner.profile_image_url ? (
                   <img
                     className="artist-header__person_image member"
-                    src={avatar}
+                    src={this.renderPhoto(owner.profile_image_url, 150)}
                     alt={owner.name}
                     style={{ borderColor: artist.accent_color }}
                   />
-                )}
+                ) : (
+                    <img
+                      className="artist-header__person_image member"
+                      src={avatar}
+                      alt={owner.name}
+                      style={{ borderColor: artist.accent_color }}
+                    />
+                  )}
+              </div>
             </div>
           ))}
       </div>
@@ -223,20 +254,20 @@ export class ArtistHeader extends React.Component<Props, any> {
       </div>
     );
 
-  renderMessageContainer = () => {
+  renderVideoContainer = () => {
     const { artist } = this.props;
 
     if (artist.video_url) {
       return (
         <div>
-          <div className="artist-header__message-container" style={{ borderColor: artist.accent_color }}>
+          <div className="artist-header__message_container" style={{ borderColor: artist.accent_color }}>
             <button onClick={this.props.openVideoModal} className="artist-header__play">
               <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />
             </button>
-            <div className="artist-header__message-video">
-              <img className="artist-header__message-tear" src={tear} />
-              <div className="artist-header__message-image_container">
-                <img className="artist-header__message-image" src={this.state.screenshotURL} />
+            <div className="artist-header__message_video">
+              <img className="artist-header__message_tear" src={tear} />
+              <div className="artist-header__message_image_container">
+                <img className="artist-header__message_image" src={this.state.screenshotURL} />
               </div>
             </div>
           </div>
@@ -245,15 +276,31 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
   };
 
-  anonymizeSupporterName = name => {
-    const nameParts = name.split(' ');
-    if (nameParts.length < 2) {
-      return name;
-    } else {
-      nameParts[nameParts.length - 1] = nameParts[nameParts.length - 1].slice(0, 1);
-      return nameParts.join(' ') + '.';
+  renderMessageContainer = () => {
+    const { artist } = this.props;
+    const borderColor = artist.accent_color;
+
+    if (artist.bio) {
+      return (
+        <div>
+          <div className={cx('artist-header__message_container', { 'paper_md': !artist.video_url })} style={{ borderColor: artist.accent_color }}>
+            <div className="artist-header__message_text">
+              <img className="artist-header__message_paper-bg" src={artist.video_url ? paper_sm : paper_md} />
+              <TextTruncate
+                line={artist.video_url ? 5 : 9}
+                element="span"
+                truncateText="&#8230;"
+                text={artist.bio}
+              />
+            </div>
+            <button className="btn btn-ampled btn-read-more" style={{ borderColor }} onClick={this.props.openMessageModal}>
+              Read More
+            </button>
+          </div>
+        </div>
+      );
     }
-  }
+  };
 
   renderSupporterHover = ({ supporter }) => {
     return (
@@ -264,12 +311,12 @@ export class ArtistHeader extends React.Component<Props, any> {
               <img
                 className="supporter__hover-card_header_photo_image"
                 src={this.renderPhoto(supporter.profile_image_url, 150)}
-                alt={this.anonymizeSupporterName(supporter.name)}
+                alt={supporter.name}
               />
             </div>
           )}
           <div className="supporter__hover-card_header_info">
-            <div className="supporter__hover-card_header_info_name">{this.anonymizeSupporterName(supporter.name)}</div>
+            <div className="supporter__hover-card_header_info_name">{supporter.name}</div>
             {supporter.since && (
               <div className="supporter__hover-card_header_info_since">Supporter since {supporter.since}</div>
             )}
@@ -317,14 +364,14 @@ export class ArtistHeader extends React.Component<Props, any> {
             <img
               className="artist-header__person_image"
               src={this.renderPhoto(supporter.profile_image_url, 200)}
-              alt={this.anonymizeSupporterName(supporter.name)}
+              alt={supporter.name}
               style={style}
             />
           ) : (
               <img
                 className="artist-header__person_svg"
                 src={avatar}
-                alt={this.anonymizeSupporterName(supporter.name)}
+                alt={supporter.name}
                 style={style}
               />
             )}
@@ -364,40 +411,36 @@ export class ArtistHeader extends React.Component<Props, any> {
 
     return (
       <div className="artist-header__supporters">
-        {mostRecentSupporter && (
-          <div>
-            <div className="artist-header__supporters_title">Most Recent Supporter</div>
-            <div className="artist-header__supporters_recent">
-              <RenderSupporter
-                supporter={mostRecentSupporter}
-                borderColor={borderColor}
-              />
-              <div className="artist-header__person_info">
-                <div className="artist-header__person_name">{this.anonymizeSupporterName(mostRecentSupporter.name)}</div>
-                <div className="artist-header__person_quote" /></div>
-            </div>
-          </div>
-        )}
         {artist.supporters.length > 0 && (
           <div>
             <div className="artist-header__supporters_title">{artist.supporters.length} Supporters</div>
-
-            <div className="artist-header__supporters_all">
-              {artist.supporters
-                .filter((supporter) => !R.equals(R.path('most_recent_supporter', 'id', artist), +supporter.id))
-                .map((supporter) => (
-                  <div key={`minisupporter-${supporter.id}`}>
-                    <RenderSupporter
-                      supporter={supporter}
-                      borderColor
-                      isSmall
-                    />
-                  </div>
-                ))}
+            <div className="row">
+              <div className="artist-header__supporters_recent col-4">
+                <RenderSupporter
+                  supporter={mostRecentSupporter}
+                  borderColor={borderColor}
+                />
+                <div className="artist-header__person_info">
+                  <div className="artist-header__person_name">{mostRecentSupporter.name}</div>
+                  <div className="artist-header__person_mr">Most Recent</div>
+                </div>
+              </div>
+              <div className="artist-header__supporters_all col-8">
+                {artist.supporters
+                  .filter((supporter) => !R.equals(R.path('most_recent_supporter', 'id', artist), +supporter.id))
+                  .map((supporter) => (
+                    <div key={`minisupporter-${supporter.id}`}>
+                      <RenderSupporter
+                        supporter={supporter}
+                        borderColor
+                        isSmall
+                      />
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         )}
-
       </div>
     );
   };
@@ -412,6 +455,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderPhotoContainer()}
           </div>
           <div className="col-md-4 artist-header__message-col">
+            {this.renderVideoContainer()}
             {this.renderMessageContainer()}
             {this.renderFloatingNewPostButton()}
             {this.renderSupportersContainer()}

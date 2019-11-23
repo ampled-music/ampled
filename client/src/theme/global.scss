@@ -63,7 +63,8 @@ h6 {
     }
   }
 
-  &.btn-support {
+  &.btn-support,
+  &.btn-read-more {
     border-radius: 0px;
     border-width: 0px;
     text-transform: capitalize;
@@ -76,6 +77,11 @@ h6 {
     @include mq($layout-m) {
       display: block;
     }
+  }
+
+  &.btn-read-more {
+    display: block;
+    max-width: 120px;
   }
 }
 
@@ -198,12 +204,12 @@ h6 {
 
   &__absolute {
     position: absolute;
-    z-index: 0;
+    z-index: -3;
     width: 100%;
     height: 100vh;
 
     &_25 {
-      z-index: 0;
+      z-index: -3;
       width: 100%;
       height: 100vh;
       position: absolute;
@@ -211,7 +217,7 @@ h6 {
     }
 
     &_50 {
-      z-index: 0;
+      z-index: -3;
       width: 100%;
       height: 100vh;
       position: absolute;
@@ -302,7 +308,8 @@ h6 {
   }
 }
 
-.fullscreen-close {
+.fullscreen-close,
+.close-x {
   position: absolute !important;
   right: 1rem;
   top: 1rem;

@@ -24,7 +24,7 @@ class PostNotificationEmailJob
           artist_name: artist.name,
           post_title: post.title,
           post_id: post.id,
-          post_url: "https://ampled.com/artist/#{artist.slug}"
+          post_url: "https://ampled.com/artist/#{artist.slug}#post-#{post.id}"
         }
       }
     end

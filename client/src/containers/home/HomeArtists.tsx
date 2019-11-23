@@ -88,7 +88,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
     return (
       <div className="row justify-content-center home-artists__featured">
         <div className="col-md-5">
-          <Link to={`/artist/thanks-light`} className="home-artists__featured_left">
+          <Link to={`/artist/thankslight`} className="home-artists__featured_left">
             <div className="home-artists__featured_title">Thanks Light...</div>
             <img className="home-artists__featured_image" src="https://res.cloudinary.com/ampled-web/image/upload/v1574456240/Zane6.png" />
             <div className="home-artists__featured_border"></div>
@@ -98,7 +98,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
           <div className="home-artists__featured_info">
             Thanks Light… is tough to pin down with a few sentences; our sound has evolved over the years but has always kept good songwriting and psychedelia at the fore-front of the creative process. Our cast of wild and talented characters has grown as well, however with each new transformation Thanks Light… finds new sonic ground to cultivate.
           </div>
-          <Link to={`/artist/thanks-light`} className="home-artists__featured_link">
+          <Link to={`/artist/thankslight`} className="home-artists__featured_link">
             Explore Their Page
           </Link> &#10142;
         </div>

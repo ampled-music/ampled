@@ -96,7 +96,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
         </div>
         <div className="col-md-5 home-artists__featured_right">
           <div className="home-artists__featured_info">
-            Thanks Light… is tough to pin down with a few sentences; our sound has evolved over the years but has always kept good songwriting and psychedelia at the fore-front of the creative process. Our cast of wild and talented characters has grown as well, however with each new transformation Thanks Light… finds new sonic ground to cultivate.
+          Grown under a moontower, deep in the heart of Austin, Texas, Thanks Light is a mutant country, graveyard stomp, and drunken gospel group exploring the microcosms of psychedelic music. On Ampled, Thanks Light... are sharing demos of unreleased songs, alternate versions of album art, first dibs on exclusive merch, and behind the scenes footage.
           </div>
           <Link to={`/artist/thankslight`} className="home-artists__featured_link">
             Explore Their Page

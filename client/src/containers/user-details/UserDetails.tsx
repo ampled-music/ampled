@@ -56,6 +56,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     name_error: false,
     city_error: false,
     country_error: false,
+    social_error: false,
   };
 
   handleChange = (e) => {
@@ -64,24 +65,40 @@ class UserDetailsComponent extends React.Component<Props, any> {
   };
 
   validateForm = () => {
+    let ok = true;
     if ( ! this.state.name.length ){
+      ok = false;
       this.setState({ name_error: true });
+    } else {
+      this.setState({ name_error: false });
     }
     if ( ! this.state.city.length ){
+      ok = false;
       this.setState({ city_error: true });
+    } else {
+      this.setState({ city_error: false });
     }
     if ( ! this.state.country.length ){
+      ok = false;
       this.setState({ country_error: true });
+    } else {
+      this.setState({ country_error: false });
     }
+    if (/[@:\/]/ig.test(this.state.twitter) || /[@:\/]/ig.test(this.state.instagram)) {
+      ok = false;
+      this.setState({ social_error: true });
+    } else {
+      this.setState({ social_error: false });
+    }
+    return ok;
   };
 
   handleSubmit = async (e) => {
 
     e.preventDefault();
 
-    this.validateForm();
-
-    if ( this.state.name_error || this.state.city_error || this.state.country_error ){
+    if ( !this.validateForm() ){
+      showToastMessage("There was an error with your fields.", MessageType.ERROR, {timeOut: 4000});
       return;
     }
 
@@ -275,7 +292,6 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   />
                 </div>
               </div>
-
             </div>
             <div className="row no-gutters">
               <div className="col-2 col-md-3">
@@ -339,6 +355,14 @@ class UserDetailsComponent extends React.Component<Props, any> {
                       </InputAdornment>
                     }
                   />
+                  {this.state.social_error && (
+                    <span style={{ color: 'red', fontStyle: 'italic' }}>
+                      Don't include @ or the full URL.
+                      <br />
+                      e.g. 'ampl3d' not '@ampl3d' or 'twitter.com/ampl3d'.
+                      <br /><br />
+                    </span>
+                  )}
                   <TextField
                     name="bio"
                     value={this.state.bio}
@@ -350,7 +374,6 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   />
                 </div>
               </div>
-
             </div>
           </div>
         </div>

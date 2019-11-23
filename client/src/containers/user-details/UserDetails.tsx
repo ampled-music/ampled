@@ -71,7 +71,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       this.setState({ city_error: true });
     }
     if ( ! this.state.country.length ){
-      this.setState({ country: true });
+      this.setState({ country_error: true });
     }
   };
 

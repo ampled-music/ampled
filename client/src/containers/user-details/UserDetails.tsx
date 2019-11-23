@@ -259,6 +259,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <Input
                     name="name"
                     placeholder="First name"
+                    aria-label="First name" 
                     value={this.state.name}
                     onChange={this.handleChange}
                     fullWidth
@@ -269,6 +270,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <Input
                     name="last_name"
                     placeholder="Last name (Optional)"
+                    aria-label="Last name (optional)" 
                     value={this.state.last_name}
                     onChange={this.handleChange}
                     fullWidth
@@ -287,6 +289,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <Input
                     name="city"
                     placeholder="City"
+                    aria-label="City" 
                     value={this.state.city}
                     onChange={this.handleChange}
                     fullWidth
@@ -297,6 +300,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <Input
                     name="country"
                     placeholder="Country"
+                    aria-label="Country" 
                     value={this.state.country}
                     onChange={this.handleChange}
                     fullWidth
@@ -318,6 +322,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <Input
                     name="twitter"
                     placeholder="Twitter"
+                    aria-label="Twitter" 
                     value={this.state.twitter}
                     onChange={this.handleChange}
                     fullWidth
@@ -330,6 +335,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <Input
                     name="instagram"
                     placeholder="Instagram"
+                    aria-label="Instagram" 
                     value={this.state.instagram}
                     onChange={this.handleChange}
                     fullWidth
@@ -378,6 +384,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                 <div className="col-12">
                   <Input
                     name="ship_country"
+                    aria-label="Shipping country"
                     value={this.state.ship_country}
                     onChange={this.handleChange}
                     fullWidth
@@ -393,6 +400,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                 <div className="col-12">
                   <Input
                     name="ship_address"
+                    aria-label="Shipping address"
                     placeholder="123 Fake St"
                     value={this.state.ship_address}
                     onChange={this.handleChange}
@@ -401,6 +409,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <Input
                     name="ship_address2"
                     placeholder="Apt #123"
+                    aria-label="Shipping address line 2"
                     value={this.state.ship_address2}
                     onChange={this.handleChange}
                     fullWidth
@@ -418,6 +427,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <Input
                     name="ship_city"
                     placeholder="Anytown"
+                    aria-label="Shipping city"
                     value={this.state.ship_city}
                     onChange={this.handleChange}
                     fullWidth
@@ -487,6 +497,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <Input
                     name="ship_zip"
                     placeholder="Zip code"
+                    aria-label="Shipping ZIP code"
                     value={this.state.ship_zip}
                     onChange={this.handleChange}
                     fullWidth

@@ -47,7 +47,7 @@ class HomeHeader extends React.Component<Props, any> {
                   action="https://ampled.us19.list-manage.com/subscribe/post?u=514372f571f3cb5abdf8a2637&amp;id=50f2ab4389"
                   method="post"
                 >
-                  <input className="form-control" type="email" name="EMAIL" placeholder="Email Address" />
+                  <input className="form-control" type="email" name="EMAIL" aria-label="Email Address" placeholder="Email Address" />
                   <div className="input-group-append">
                     <input
                       type="submit"
@@ -71,7 +71,7 @@ class HomeHeader extends React.Component<Props, any> {
               )}
           </div>
           <div className="col-lg-8 col-xl-6">
-            <img className="home-header__image" src={header_collage} />
+            <img className="home-header__image" src={header_collage} alt="Ampled" />
           </div>
         </div>
       </div>

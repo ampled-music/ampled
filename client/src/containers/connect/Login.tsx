@@ -85,6 +85,7 @@ class LoginComponent extends React.Component<Props, any> {
               type="email"
               placeholder="Email"
               name="email"
+              aria-label="Email Address"
               onChange={this.handleChange}
               required
             />
@@ -93,6 +94,7 @@ class LoginComponent extends React.Component<Props, any> {
               type="password"
               placeholder="Password"
               name="password"
+              aria-label="Password" 
               onChange={this.handleChange}
               required
             />

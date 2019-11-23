@@ -20,7 +20,7 @@ class Footer extends React.Component<Props, any> {
               <div className="title">Join Our Mailing List</div>
               <div className="input-group mb-3">
                 <form action="https://ampled.us19.list-manage.com/subscribe/post?u=514372f571f3cb5abdf8a2637&amp;id=50f2ab4389" method="post" >
-                  <input className="form-control" type="email" name="EMAIL" placeholder="Email Address" />
+                  <input className="form-control" type="email" name="EMAIL" aria-label="Email Address" placeholder="Email Address" />
                   <div className="input-group-append">
                     <input type="submit" value="Gimme &rarr;" name="subscribe" id="mc-embedded-subscribe" className="btn btn__dark" />
                   </div>

@@ -197,6 +197,7 @@ export class SupportComponent extends React.Component<Props, any> {
           <h3>Support What You Want</h3>
           <div className="support__value-field">
             <input
+              aria-label="Support level" 
               type="number"
               name="supportLevelValue"
               onChange={this.handleChange}

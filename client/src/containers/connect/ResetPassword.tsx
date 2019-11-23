@@ -108,6 +108,7 @@ class ResetPasswordComponent extends React.Component<any> {
               type="password"
               placeholder="Password"
               name="password"
+              aria-label="Password" 
               onChange={this.handleChange}
               required
               minLength={6}
@@ -118,6 +119,7 @@ class ResetPasswordComponent extends React.Component<any> {
               type="password"
               placeholder="Confirm Password"
               name="confirmPassword"
+              aria-label="Confirm password" 
               onChange={this.handleChange}
               required
               minLength={6}

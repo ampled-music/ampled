@@ -155,6 +155,7 @@ class SignupComponent extends React.Component<Props, any> {
               type="text"
               placeholder="First Name"
               name="name"
+              aria-label="First name" 
               onChange={this.handleChange}
               required
             />
@@ -163,6 +164,7 @@ class SignupComponent extends React.Component<Props, any> {
               type="text"
               placeholder="Last Name (Optional)"
               name="last_name"
+              aria-label="Last name (optional)" 
               onChange={this.handleChange}
             />
 
@@ -171,6 +173,7 @@ class SignupComponent extends React.Component<Props, any> {
               type="email"
               placeholder="Email"
               name="email"
+              aria-label="Email Address"
               onChange={this.handleChange}
               required
             />
@@ -181,6 +184,7 @@ class SignupComponent extends React.Component<Props, any> {
               type="password"
               placeholder="Password"
               name="password"
+              aria-label="Password"
               onChange={this.handleChange}
               required
               minLength={6}
@@ -192,6 +196,7 @@ class SignupComponent extends React.Component<Props, any> {
               type="password"
               placeholder="Confirm Password"
               name="confirmPassword"
+              aria-label="Confirm password"
               onChange={this.handleChange}
               required
               minLength={6}
@@ -199,7 +204,7 @@ class SignupComponent extends React.Component<Props, any> {
             <span className="error-message">{(matchPasswordsError && passwordErrorMessage) || passwordError}</span>
 
             <label className="terms">
-              <input type="checkbox" name="terms" onChange={this.toggle} required />
+              <input type="checkbox" name="terms" onChange={this.toggle} required aria-label="Accept terms of service" />
               You agree to our{' '}
               <a href="">
                 <u>Terms of Service</u>

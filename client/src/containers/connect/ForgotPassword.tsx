@@ -59,6 +59,7 @@ class ForgotPasswordComponent extends React.Component<any> {
               className="input-group-text"
               type="email"
               placeholder="Email"
+              aria-label="Email Address" 
               name="email"
               onChange={this.handleChange}
               required

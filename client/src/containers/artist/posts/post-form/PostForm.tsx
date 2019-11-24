@@ -285,6 +285,7 @@ class PostFormComponent extends React.Component<Props, any> {
                   style={{ display: 'none' }}
                   id="image-file"
                   type="file"
+                  aria-label="Image file" 
                   accept="image/*"
                   onChange={this.processImage}
                 />
@@ -297,6 +298,7 @@ class PostFormComponent extends React.Component<Props, any> {
                   <div className="col-auto">
                     <label className="make-public-label" htmlFor="make-public">
                       <input
+                        aria-label="Make public" 
                         name="make-public"
                         id="make-public"
                         type="checkbox"
@@ -312,6 +314,7 @@ class PostFormComponent extends React.Component<Props, any> {
                         name="pin-post"
                         id="pin-post"
                         type="checkbox"
+                        aria-label="Pin post" 
                       // onChange={this.state.isPinned}
                       // checked={this.state.isPinned}
                       />

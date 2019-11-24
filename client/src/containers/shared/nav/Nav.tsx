@@ -83,14 +83,14 @@ class NavComponent extends React.Component<Props, any> {
     const { userData } = this.props;
 
     return userData.image ? (
-      <a href="/settings">
-        <img src={userData.image} className="user-image" />
-      </a>
+      <Link to="/settings">
+        <img src={userData.image} className="user-image" alt="Your avatar" />
+      </Link>
     ) : (
-        <a href="/settings">
-          <img src={avatar} className="user-image" />
-        </a>
-      );
+      <Link to="/settings">
+        <img src={avatar} className="user-image" alt="Your avatar" />
+      </Link>
+    );
   };
 
   renderLoginLink = () => (

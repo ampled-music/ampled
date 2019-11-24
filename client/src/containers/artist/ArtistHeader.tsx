@@ -261,13 +261,13 @@ export class ArtistHeader extends React.Component<Props, any> {
       return (
         <div>
           <div className="artist-header__message_container" style={{ borderColor: artist.accent_color }}>
-            <button onClick={this.props.openVideoModal} className="artist-header__play">
+            <button onClick={this.props.openVideoModal} className="artist-header__play" aria-label="Play video message">
               <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />
             </button>
             <div className="artist-header__message_video">
-              <img className="artist-header__message_tear" src={tear} />
+              <img className="artist-header__message_tear" src={tear} alt=""/>
               <div className="artist-header__message_image_container">
-                <img className="artist-header__message_image" src={this.state.screenshotURL} />
+                <img className="artist-header__message_image" src={this.state.screenshotURL} alt="Video message thumbnail"/>
               </div>
             </div>
           </div>

@@ -158,6 +158,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
           id="raised-button-file"
           type="file"
           accept=".mp3"
+          aria-label="Audio file" 
           onChange={this.processFile}
         />
         <div className="uploader">{fileName ? this.renderPreview() : this.renderUploadButton()}</div>

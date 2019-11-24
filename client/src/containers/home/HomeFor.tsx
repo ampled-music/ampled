@@ -19,7 +19,7 @@ export const HomeFor = () => (
 
       <div className="row justify-content-center">
         <div className="col-md-4">
-          <img className="home-for__image" src={owned_by} />
+          <img className="home-for__image" src={owned_by} alt="Artist Owned Co-op"/>
           <h3 className="home-for__sub-title">Artist Owned Co-op</h3>
           <p className="home-for__copy">
             100% owned by artists, workers, and community - not vulture capitalists.
@@ -27,7 +27,7 @@ export const HomeFor = () => (
           <a href="http://app.ampled.com/coop"><button className="home-for__button btn btn-ampled">Read More</button></a>
         </div>
         <div className="col-md-4">
-          <img className="home-for__image" src={transparent} />
+          <img className="home-for__image" src={transparent} alt="Transparent"/>
           <h3 className="home-for__sub-title">Transparent</h3>
           <p className="home-for__copy">
             We’ve opened up our books to stay accountable to our members.
@@ -35,7 +35,7 @@ export const HomeFor = () => (
           <a href="http://app.ampled.com/transparency"><button className="home-for__button btn btn-ampled">Learn More</button></a>
         </div>
         <div className="col-md-4">
-          <img className="home-for__image" src={mission} />
+          <img className="home-for__image" src={mission} alt="Mission-Driven"/>
           <h3 className="home-for__sub-title">Mission-Driven</h3>
           <p className="home-for__copy">
             We’re making music more equitable for artists in an ethical and transparent way.

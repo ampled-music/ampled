@@ -84,17 +84,25 @@ class HomeArtistsComponent extends React.Component<Props, State> {
         <div className="col-md-5">
           <Link to={`/artist/thankslight`} className="home-artists__featured_left">
             <div className="home-artists__featured_title">Thanks Light...</div>
-            <img className="home-artists__featured_image" src="https://res.cloudinary.com/ampled-web/image/upload/v1574456240/Zane6.png" />
+            <img
+              className="home-artists__featured_image"
+              src="https://res.cloudinary.com/ampled-web/image/upload/v1574456240/Zane6.png"
+              alt="Thanks Light..."
+            />
             <div className="home-artists__featured_border"></div>
           </Link>
         </div>
         <div className="col-md-5 home-artists__featured_right">
           <div className="home-artists__featured_info">
-          Grown under a moontower, deep in the heart of Austin, Texas, Thanks Light is a mutant country, graveyard stomp, and drunken gospel group exploring the microcosms of psychedelic music. On Ampled, Thanks Light... are sharing demos of unreleased songs, alternate versions of album art, first dibs on exclusive merch, and behind the scenes footage.
+            Grown under a moontower, deep in the heart of Austin, Texas, Thanks Light is a mutant country, graveyard
+            stomp, and drunken gospel group exploring the microcosms of psychedelic music. On Ampled, Thanks Light...
+            are sharing demos of unreleased songs, alternate versions of album art, first dibs on exclusive merch, and
+            behind the scenes footage.
           </div>
           <Link to={`/artist/thankslight`} className="home-artists__featured_link">
             Explore Their Page
-          </Link> &#10142;
+          </Link>{' '}
+          &#10142;
         </div>
       </div>
     );

@@ -38,6 +38,7 @@ export class UploadFile extends React.Component<UploadFileProps, any> {
         <input
           style={{ display: 'none' }}
           type="file"
+          aria-label="Upload file" 
           accept={this.props.acceptedFileTypes || 'image/*'}
           id={this.props.inputRefId || 'input-upload-file'}
           onChange={this.uploadFile}

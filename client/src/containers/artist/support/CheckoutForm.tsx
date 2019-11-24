@@ -66,14 +66,22 @@ class CheckoutFormComponent extends React.Component<Props, any> {
                   <CardCVCElement />
                 </div>
               </div>
-              <div className="form-row">
+              <div className="form-row" style={{ display: 'inline-block' }}>
                 <p className="transparency">
-                Your total charge will be<br />
-                <h2>${this.calculateSupportTotal(this.props.subscriptionLevelValue/100)}</h2>
+                  Your total charge will be
+                  <br />
                 </p>
+                <h2 className="transparency">
+                  ${this.calculateSupportTotal(this.props.subscriptionLevelValue / 100)}
+                </h2>
               </div>
               <div className="actions">
-                <button disabled={this.state.disableActions} className="btn btn-secondary" type="button" onClick={this.props.declineStep}>
+                <button
+                  disabled={this.state.disableActions}
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={this.props.declineStep}
+                >
                   Change amount
                 </button>
                 <button disabled={this.state.disableActions} className="btn btn-primary" type="submit">

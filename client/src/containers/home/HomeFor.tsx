@@ -22,7 +22,7 @@ export const HomeFor = () => (
           <img className="home-for__image" src={owned_by} />
           <h3 className="home-for__sub-title">Artist Owned Co-op</h3>
           <p className="home-for__copy">
-            100% owned by artists, workers, and community - not reptilian overlords.
+            100% owned by artists, workers, and community - not vulture capitalists.
           </p>
           <a href="http://app.ampled.com/coop"><button className="home-for__button btn btn-ampled">Read More</button></a>
         </div>

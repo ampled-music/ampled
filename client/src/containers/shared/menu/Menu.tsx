@@ -98,14 +98,14 @@ class MenuListComposition extends React.Component<Props, State> {
             !this.props.userData && this.props.renderLoginLink()
           }
         </div>
-        <a href={config.menuUrls.createArtist} target="_blank">
+        <a href={config.menuUrls.createArtist}>
           <b>Create an artist page</b>
         </a>
         <div className="divider" />
-        <a href={config.menuUrls.blog} target="_blank">
+        <a href={config.menuUrls.blog}>
           Blog
         </a>
-        <a href={config.menuUrls.about} target="_blank">
+        <a href={config.menuUrls.about}>
           About us
         </a>
       </div>

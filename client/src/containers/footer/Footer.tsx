@@ -6,11 +6,6 @@ import { Link } from 'react-router-dom';
 
 import logo from '../../images/ampled_logo.svg';
 
-const openInNewTab = (url: string) => {
-  var win = window.open(url, '_blank');
-  win.focus();
-};
-
 interface Props {
 }
 
@@ -60,7 +55,7 @@ class Footer extends React.Component<Props, any> {
               </Link>
               <div className="copyright">©{moment().year()} Ampled</div>
               <div className="own-it">We Own It! ✊</div>
-              <button className="btn btn-ampled" onClick={() => openInNewTab('https://fundraising.fracturedatlas.org/ampled-co-op/general_support')}>Donate Now</button>
+              <button className="btn btn-ampled" onClick={() => window.open('https://fundraising.fracturedatlas.org/ampled-co-op/general_support')}>Donate Now</button>
             </div>
           </div>
         </div>

@@ -153,7 +153,7 @@ class PostComponent extends React.Component<any, any> {
 
   renderDeleteModal = () => (
     <div className="delete-post-modal__container">
-      <img className="tear tear__topper" src={tear} />
+      <img className="tear tear__topper" src={tear} alt=""/>
       <div className="delete-post-modal">
         <div className="delete-post-modal__title">
           <h4>Are you sure?</h4>
@@ -215,9 +215,9 @@ class PostComponent extends React.Component<any, any> {
             <div className="post__header">
               <div className={classes.postTitle}>
                 {post.authorImage ? (
-                  <img className="user-image" src={post.authorImage} />
+                  <img className="user-image" src={post.authorImage} alt={`${this.returnFirstName(post.author)}'s avatar`}/>
                 ) : (
-                    <img className="user-image" src={avatar} />
+                    <img className="user-image" src={avatar} alt="Avatar"/>
                   )}
                 <span className="post__header_name">{this.returnFirstName(post.author)}</span>
               </div>

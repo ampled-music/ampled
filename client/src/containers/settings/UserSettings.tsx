@@ -128,9 +128,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="user-image-container">
         <Link to="/user-details">
           {userData.image ? (
-            <img src={userData.image} className="user-image" />
+            <img src={userData.image} className="user-image" alt="Your avatar" />
           ) : (
-            <img src={avatar} className="user-image" />
+            <img src={avatar} className="user-image" alt="Your avatar" />
           )}
         </Link>
       </div>
@@ -148,7 +148,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     // }
     return (
       <div className="user-info-container col-md-3">
-        <img className="tear__topper" src={tear} />
+        <img className="tear__topper" src={tear} alt="" />
         <div className="user-content">
           {this.renderUserImage()}
           <div className="user-content__name">{userData.name}</div>
@@ -220,9 +220,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
           <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
-            <img className="artist__image" src={ownedPage.image} />
+            <img className="artist__image" src={ownedPage.image} alt={ownedPage.name}/>
             <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage)}></div>
-            <img className="tear__topper" src={tear_black} />
+            <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
               <p className="artist__info_name" onClick={() => this.redirectToArtistPage(ownedPage)}>
                 {ownedPage.name}
@@ -287,12 +287,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.subscriptions.map((subscription) => (
           <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-4">
-            <img className="artist__image" src={subscription.image} />
+            <img className="artist__image" src={subscription.image} alt={subscription.name} />
             <div
               className="artist__image-border"
               onClick={() => this.redirectToArtistPage(subscription)}
             ></div>
-            <img className="tear__topper" src={tear_black} />
+            <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
               <p className="artist__info_name" onClick={() => this.redirectToArtistPage(subscription)}>
                 {subscription.name}

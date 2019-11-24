@@ -265,6 +265,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     onChange={this.handleChange}
                     fullWidth
                     required
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
                 <div className="col-md-6">
@@ -275,6 +276,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     value={this.state.last_name}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
               </div>
@@ -295,6 +297,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     onChange={this.handleChange}
                     fullWidth
                     required
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
                 <div className="col-md-6">
@@ -306,6 +309,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     onChange={this.handleChange}
                     fullWidth
                     required
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
               </div>
@@ -323,7 +327,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <TextField
                     name="twitter"
                     label="Twitter"
-                    id="twitter" 
+                    id="twitter"
+                    placeholder="Twitter"
                     value={this.state.twitter}
                     onChange={this.handleChange}
                     fullWidth
@@ -333,11 +338,13 @@ class UserDetailsComponent extends React.Component<Props, any> {
                           <FontAwesomeIcon className="icon" icon={faTwitter} />
                         </InputAdornment>)
                     }}
+                    InputLabelProps={{ shrink: true }}
                   />
                   <TextField
                     name="instagram"
                     label="Instagram"
-                    id="instagram" 
+                    id="instagram"
+                    placeholder="Instagram"
                     value={this.state.instagram}
                     onChange={this.handleChange}
                     fullWidth
@@ -347,6 +354,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                           <FontAwesomeIcon className="icon" icon={faInstagram} />
                         </InputAdornment>)
                     }}
+                    InputLabelProps={{ shrink: true }}
                   />
                   <TextField
                     name="bio"
@@ -358,6 +366,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     rows="5"
                     fullWidth
                     variant="outlined"
+                    // InputLabelProps={{ shrink: true, variant: 'standard' }}
                   />
                 </div>
               </div>
@@ -394,6 +403,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     value={this.state.ship_country}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
               </div>
@@ -412,6 +422,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     value={this.state.ship_address}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                   <TextField
                     name="ship_address2"
@@ -421,6 +432,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     value={this.state.ship_address2}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
               </div>
@@ -440,6 +452,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     value={this.state.ship_city}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
                 <div className="col-md-4">
@@ -451,6 +464,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     value={this.state.ship_state}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   >
                     <MenuItem value="Alabama">Alabama</MenuItem>
                     <MenuItem value="Alaska">Alaska</MenuItem>
@@ -507,12 +521,13 @@ class UserDetailsComponent extends React.Component<Props, any> {
                 <div className="col-md-3">
                   <TextField
                     name="ship_zip"
-                    placeholder="ZIP code"
+                    placeholder="00000"
                     id="ship-zip"
                     label="ZIP code"
                     value={this.state.ship_zip}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
               </div>

@@ -40,7 +40,7 @@ class Footer extends React.Component<Props, any> {
               <a href="https://app.ampled.com/membership">Become a Member</a>
               <a href="https://app.ampled.com/jobs">Jobs</a>
               <a href="https://app.ampled.com/press">Press</a>
-              <a href="https://app.ampled.com/members">Members Only</a>
+              <a href="https://app.ampled.com/members">Members Only 🔒</a>
             </div>
             <div className="col-6 col-md-2">
               <div className="title">Get Informed</div>

@@ -3,11 +3,6 @@ import * as React from 'react';
 import { config } from 'src/config';
 import header_collage from '../../images/home/home_header_collage_4.png';
 
-const openInNewTab = (url: string) => {
-  var win = window.open(url, '_blank');
-  win.focus();
-};
-
 interface Props {
   bgColor: string;
 }
@@ -31,12 +26,12 @@ class HomeHeader extends React.Component<Props, any> {
               For artists of any sound or size. Receive support via direct payments from your community and sustainably
               make music.
             </div>
-            <button
+            <a
               className="home-header__button btn btn-ampled"
-              onClick={() => openInNewTab(config.menuUrls.createArtist)}
+              href={config.menuUrls.createArtist}
             >
               Create Your Page
-            </button>
+            </a>
             {this.state.showNewsletter ? (
               <div className="footer input-group mb-3" style={{
                 zIndex: 999999,

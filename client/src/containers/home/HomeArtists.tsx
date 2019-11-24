@@ -49,9 +49,9 @@ class HomeArtistsComponent extends React.Component<Props, State> {
             {this.getFeaturedArtist()}
           </div>
           <div className="row">
-            <button className="home-artists__button btn btn-ampled center" onClick={() => window.open(config.menuUrls.createArtist)}>
+            <a href={config.menuUrls.createArtist} className="home-artists__button btn btn-ampled center">
               Create Your Artist Page
-            </button>
+            </a>
           </div>
         </div>
       </div>

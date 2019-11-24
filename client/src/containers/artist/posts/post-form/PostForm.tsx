@@ -307,7 +307,7 @@ class PostFormComponent extends React.Component<Props, any> {
                     </label>
                   </div>
                   <div className="col-auto">
-                    <label className="pin-post-label" htmlFor="pin-post">
+                    {/* <label className="pin-post-label" htmlFor="pin-post">
                       <input
                         name="pin-post"
                         id="pin-post"
@@ -316,7 +316,7 @@ class PostFormComponent extends React.Component<Props, any> {
                       // checked={this.state.isPinned}
                       />
                       Pin post
-                    </label>
+                    </label> */}
                   </div>
                 </div>
                 {

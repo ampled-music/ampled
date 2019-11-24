@@ -179,9 +179,9 @@ export class SupportComponent extends React.Component<Props, any> {
       {owners.map((owner, index) => (
         <div key={index} className="support__artist-info">
           {owner.profile_image_url ? (
-            <img className="support__artist-info_image" src={owner.profile_image_url} />
+            <img className="support__artist-info_image" src={owner.profile_image_url} alt={`${this.returnFirstName(owner.name)}'s avatar`} />
           ) : (
-            <img className="support__artist-info_image" src={avatar} />
+            <img className="support__artist-info_image" src={avatar} alt="Avatar" />
           )}
           <p>{this.returnFirstName(owner.name)}</p>
         </div>

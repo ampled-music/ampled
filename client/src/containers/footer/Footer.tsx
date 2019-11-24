@@ -36,23 +36,26 @@ class Footer extends React.Component<Props, any> {
             </div>
             <div className="col-6 col-md-2">
               <div className="title">Get Involved</div>
-              <a href="https://app.ampled.com/create-an-artist-page">Create An Artist Page</a>
+              <a href="https://app.ampled.com/create-an-artist-page">Create Artist Page</a>
               <a href="https://app.ampled.com/membership">Become a Member</a>
-              <a href="https://app.ampled.com/jobs">Work at Ampled</a>
+              <a href="https://app.ampled.com/jobs">Jobs</a>
               <a href="https://app.ampled.com/press">Press</a>
+              <a href="https://app.ampled.com/members">Members Only 🔒</a>
             </div>
             <div className="col-6 col-md-2">
               <div className="title">Get Informed</div>
               <a href="https://app.ampled.com/transparency">Transparency</a>
               <a href="https://app.ampled.com/faq">FAQs</a>
               <a href="https://app.ampled.com/terms-of-use">Terms of Use</a>
-              <a href="https://app.ampled.com/privacy-policy">Privacy Policy</a>
+              <a href="https://app.ampled.com/policy">Policy</a>
             </div>
             <div className="col-6 col-md-2">
               <Link to="/">
                 <img src={logo} alt="logo" className="logo" />
               </Link>
               <div className="copyright">©{moment().year()} Ampled</div>
+              <div className="own-it">We Own It! ✊</div>
+              <button className="btn btn-ampled" onClick={() => window.open('https://fundraising.fracturedatlas.org/ampled-co-op/general_support')}>Donate Now</button>
             </div>
           </div>
         </div>

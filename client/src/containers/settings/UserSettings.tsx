@@ -3,6 +3,7 @@ import './user-settings.scss';
 
 import { DateTime } from 'luxon';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
@@ -125,13 +126,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <div className="user-image-container">
-        <a href="/user-details">
+        <Link to="/user-details">
           {userData.image ? (
             <img src={userData.image} className="user-image" />
           ) : (
             <img src={avatar} className="user-image" />
           )}
-        </a>
+        </Link>
       </div>
     );
   };
@@ -181,9 +182,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
               ''
           */}
 
-          <a href="/user-details" className="user-content__edit-profile">
+          <Link to="/user-details" className="user-content__edit-profile">
             <FontAwesomeIcon icon={faEdit} /> Edit Profile
-          </a>
+          </Link>
         </div>
       </div>
     );

@@ -20,12 +20,6 @@ interface State {
   artistPages: [];
 }
 
-
-const openInNewTab = (url: string) => {
-  var win = window.open(url, '_blank');
-  win.focus();
-};
-
 class HomeArtistsComponent extends React.Component<Props, State> {
   constructor(props) {
     super(props);
@@ -55,9 +49,9 @@ class HomeArtistsComponent extends React.Component<Props, State> {
             {this.getFeaturedArtist()}
           </div>
           <div className="row">
-            <button className="home-artists__button btn btn-ampled center" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
+            <a href={config.menuUrls.createArtist} className="home-artists__button btn btn-ampled center">
               Create Your Artist Page
-            </button>
+            </a>
           </div>
         </div>
       </div>

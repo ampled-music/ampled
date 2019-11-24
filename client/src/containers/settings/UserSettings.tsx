@@ -1,3 +1,4 @@
+import './../artist/artist.scss';
 import './user-settings.scss';
 
 import { DateTime } from 'luxon';

@@ -1,3 +1,4 @@
+import './../artist.scss';
 import './support.scss';
 
 import * as React from 'react';

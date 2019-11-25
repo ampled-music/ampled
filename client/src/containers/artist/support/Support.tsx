@@ -254,6 +254,7 @@ export class SupportComponent extends React.Component<Props, any> {
             subscriptionLevelValue={subscriptionLevelValue}
             createSubscription={createSubscription}
             declineStep={declineStep}
+            formType="checkout"
           />
         );
       default:

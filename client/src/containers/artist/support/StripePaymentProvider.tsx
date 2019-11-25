@@ -11,6 +11,7 @@ interface Props {
   declineStep: any;
   artistPageId: any;
   subscriptionLevelValue: any;
+  formType: String;
 }
 
 declare global {
@@ -36,17 +37,19 @@ export class StripePaymentProvider extends React.Component<Props, any> {
     }
   }
   render() {
-    const { createSubscription, declineStep, artistPageId, subscriptionLevelValue } = this.props;
+    const { createSubscription, declineStep, artistPageId, subscriptionLevelValue, formType } = this.props;
 
     return (
       <StripeProvider stripe={this.state.stripe}>
         <Elements>
-          <CheckoutForm
-            artistPageId={artistPageId}
-            subscriptionLevelValue={subscriptionLevelValue}
-            createSubscription={createSubscription}
-            declineStep={declineStep}
-          />
+          {
+            formType === 'checkout' && (<CheckoutForm
+              artistPageId={artistPageId}
+              subscriptionLevelValue={subscriptionLevelValue}
+              createSubscription={createSubscription}
+              declineStep={declineStep}
+            />)
+          }
         </Elements>
       </StripeProvider>
     );

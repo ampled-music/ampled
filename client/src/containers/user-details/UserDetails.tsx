@@ -16,8 +16,7 @@ import { initialState as meInitialState } from '../../redux/me/initial-state';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Button, DialogActions, MenuItem, TextField, InputAdornment, CircularProgress } from '@material-ui/core';
-import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faTwitter, faInstagram, faCcAmex, faCcDiscover, faCcMastercard, faCcVisa, faCcStripe } from '@fortawesome/free-brands-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from '../shared/modal/Modal';
@@ -401,6 +400,57 @@ class UserDetailsComponent extends React.Component<Props, any> {
     );
   }
 
+  pickCardIcon = (brand) => {
+    switch (brand.toLowerCase()) {
+      case 'visa':
+        return faCcVisa;
+      case 'american express':
+        return faCcAmex;
+      case 'mastercard':
+        return faCcMastercard;
+      case 'discover':
+        return faCcDiscover;
+      default:
+        return faCcStripe;
+    }
+  }
+
+  renderPayments = () => {
+    const { userData: { cardInfo } } = this.props;
+    return (
+      <div className="basic-info">
+        <div className="row">
+          <div className="col-md-2 user-details__side">
+            <div className="user-details__title">Payments</div>
+          </div>
+          <div className="col-md-10">
+            <div className="row no-gutters">
+              <div className="col-2 col-md-3">
+                <div className="user-details__subtitle">Card</div>
+              </div>
+              <div className="row col-10 col-md-9">
+                <div className="col-md-12">
+                  {cardInfo ? (
+                    <>
+                      {<FontAwesomeIcon className="icon" icon={this.pickCardIcon(cardInfo.brand)} />}
+                      &nbsp;ending in {cardInfo.last4}
+                      <br />
+                      Expires {cardInfo.exp_month}/{cardInfo.exp_year}
+                      <br />
+                      (Edit card)
+                    </>
+                  ) : (
+                    'No card on file'
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderAddress = () => {
 
     return (
@@ -580,6 +630,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       </Modal>
       <form onSubmit={this.handleSubmit}>
         {this.renderBasicInfo()}
+        {this.renderPayments()}
         {this.renderAddress()}
         {this.renderButtons()}
       </form>

@@ -15,6 +15,16 @@ json.userInfo do
   json.ship_country current_user&.ship_country
   json.image current_user&.profile_image_url
   json.created_at current_user&.created_at
+  json.cardInfo do
+    if @stripeInfo.present?
+      json.exp_month @stripeInfo.exp_month
+      json.exp_year @stripeInfo.exp_year
+      json.last4 @stripeInfo.last4
+      json.brand @stripeInfo.brand
+    else
+      json.null!
+    end
+  end
 end
 json.artistPages @owned&.concat(@supported) do |page|
   json.artistId page.id

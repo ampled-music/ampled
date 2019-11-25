@@ -5,6 +5,6 @@ class MeController < ApplicationController
     @supported = current_user&.supported_artists&.map { |page| OpenStruct.new(id: page.id, role: "supporter") }
     @subscriptions = current_user&.subscriptions&.active
     @stripe_info = current_user.stripe_customer_id? &&
-      Stripe::Customer.retrieve(current_user.stripe_customer_id).sources.data[0]
+                   Stripe::Customer.retrieve(current_user.stripe_customer_id).sources.data[0]
   end
 end

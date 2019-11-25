@@ -5,6 +5,7 @@ import { Elements, StripeProvider } from 'react-stripe-elements';
 
 import { config } from 'src/config';
 import { CheckoutForm } from './CheckoutForm';
+import { EditCardForm } from './EditCard';
 
 interface Props {
   createSubscription: Function;
@@ -39,17 +40,24 @@ export class StripePaymentProvider extends React.Component<Props, any> {
   render() {
     const { createSubscription, declineStep, artistPageId, subscriptionLevelValue, formType } = this.props;
 
+    let element;
+    if (formType === 'checkout') {
+      element = (<CheckoutForm
+        artistPageId={artistPageId}
+        subscriptionLevelValue={subscriptionLevelValue}
+        createSubscription={createSubscription}
+        declineStep={declineStep}
+      />);
+    } else if (formType === 'editcard') {
+      element = (<EditCardForm
+        createSubscription={createSubscription}
+      />);
+    }
+
     return (
       <StripeProvider stripe={this.state.stripe}>
         <Elements>
-          {
-            formType === 'checkout' && (<CheckoutForm
-              artistPageId={artistPageId}
-              subscriptionLevelValue={subscriptionLevelValue}
-              createSubscription={createSubscription}
-              declineStep={declineStep}
-            />)
-          }
+          { element }
         </Elements>
       </StripeProvider>
     );

@@ -22,6 +22,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
 import { UploadFile } from '../shared/upload/UploadFile';
+import { StripePaymentProvider } from '../artist/support/StripePaymentProvider';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 
 import avatar from '../../images/ampled_avatar.svg';
@@ -43,8 +44,8 @@ interface CardInfoProps {
 
 class CardInfo extends React.Component<CardInfoProps> {
   state = {
-    showEditForm: false
-  }
+    showEditForm: false,
+  };
 
   pickCardIcon = (brand) => {
     switch (brand.toLowerCase()) {
@@ -72,9 +73,19 @@ class CardInfo extends React.Component<CardInfoProps> {
           <br />
           Expires {exp_month}/{exp_year}
           <br />
-          (Edit card)
+          <button onClick={() => this.setState({ showEditForm: !showEditForm })}>
+            Edit card
+          </button>
         </>
-      );  
+      );
+    } else {
+      return <StripePaymentProvider
+        formType="editcard"
+        artistPageId={null}
+        subscriptionLevelValue={null}
+        declineStep={null}
+        createSubscription={() => null}
+      />;
     }
   }
 }

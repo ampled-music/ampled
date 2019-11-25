@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_30_162614) do
+ActiveRecord::Schema.define(version: 2019_11_25_222256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,10 @@ ActiveRecord::Schema.define(version: 2019_09_30_162614) do
     t.string "ship_state"
     t.string "ship_zip"
     t.string "ship_country"
+    t.string "card_last4"
+    t.string "card_brand"
+    t.string "card_exp_month"
+    t.string "card_exp_year"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true

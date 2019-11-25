@@ -16,11 +16,11 @@ json.userInfo do
   json.image current_user&.profile_image_url
   json.created_at current_user&.created_at
   json.cardInfo do
-    if @stripeInfo.present?
-      json.exp_month @stripeInfo.exp_month
-      json.exp_year @stripeInfo.exp_year
-      json.last4 @stripeInfo.last4
-      json.brand @stripeInfo.brand
+    if @stripe_info.present?
+      json.exp_month @stripe_info.exp_month
+      json.exp_year @stripe_info.exp_year
+      json.last4 @stripe_info.last4
+      json.brand @stripe_info.brand
     else
       json.null!
     end

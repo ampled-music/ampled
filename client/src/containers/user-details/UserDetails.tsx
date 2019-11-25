@@ -34,6 +34,51 @@ type Props = typeof loginInitialState &
   typeof meInitialState &
   Dispatchers & { history: any; };
 
+interface CardInfoProps {
+  brand: String;
+  last4: String;
+  exp_month: String;
+  exp_year: String;
+}
+
+class CardInfo extends React.Component<CardInfoProps> {
+  state = {
+    showEditForm: false
+  }
+
+  pickCardIcon = (brand) => {
+    switch (brand.toLowerCase()) {
+      case 'visa':
+        return faCcVisa;
+      case 'american express':
+        return faCcAmex;
+      case 'mastercard':
+        return faCcMastercard;
+      case 'discover':
+        return faCcDiscover;
+      default:
+        return faCcStripe;
+    }
+  };
+
+  render() {
+    const { last4, exp_month, exp_year, brand } = this.props;
+    const { showEditForm } = this.state;
+    if (!showEditForm) {
+      return (
+        <>
+          {<FontAwesomeIcon className="icon" icon={this.pickCardIcon(brand)} />}
+          &nbsp;ending in {last4}
+          <br />
+          Expires {exp_month}/{exp_year}
+          <br />
+          (Edit card)
+        </>
+      );  
+    }
+  }
+}
+
 class UserDetailsComponent extends React.Component<Props, any> {
   state = {
     showUserPhotoModal: false,
@@ -400,21 +445,6 @@ class UserDetailsComponent extends React.Component<Props, any> {
     );
   }
 
-  pickCardIcon = (brand) => {
-    switch (brand.toLowerCase()) {
-      case 'visa':
-        return faCcVisa;
-      case 'american express':
-        return faCcAmex;
-      case 'mastercard':
-        return faCcMastercard;
-      case 'discover':
-        return faCcDiscover;
-      default:
-        return faCcStripe;
-    }
-  }
-
   renderPayments = () => {
     const { userData: { cardInfo } } = this.props;
     return (
@@ -430,18 +460,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
               </div>
               <div className="row col-10 col-md-9">
                 <div className="col-md-12">
-                  {cardInfo ? (
-                    <>
-                      {<FontAwesomeIcon className="icon" icon={this.pickCardIcon(cardInfo.brand)} />}
-                      &nbsp;ending in {cardInfo.last4}
-                      <br />
-                      Expires {cardInfo.exp_month}/{cardInfo.exp_year}
-                      <br />
-                      (Edit card)
-                    </>
-                  ) : (
-                    'No card on file'
-                  )}
+                  { cardInfo ? (<CardInfo {...cardInfo} />) : 'No card on file' }
                 </div>
               </div>
             </div>

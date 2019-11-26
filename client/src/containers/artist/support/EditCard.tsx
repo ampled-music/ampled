@@ -6,9 +6,7 @@ import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast
 
 interface Props {
   stripe: any;
-  createSubscription: (
-    subscription: { artistPageId: number; subscriptionLevelValue: number; paymentToken: string },
-  ) => void;
+  updateCard: Function;
 }
 
 class EditCardFormComponent extends React.Component<Props, any> {
@@ -27,24 +25,17 @@ class EditCardFormComponent extends React.Component<Props, any> {
       showToastMessage(error.message, MessageType.ERROR);
       this.setState({ disableActions: false });
     } else {
-      this.createSubscription(paymentToken);
+      this.props.updateCard(paymentToken.id);
     }
   };
 
   calculateSupportTotal = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100).toFixed(2);
 
-  createSubscription = (paymentToken: { id: string }) => {
-    // const { artistPageId, subscriptionLevelValue } = this.props;
-
-    // paymentToken &&
-    //   this.props.createSubscription({ paymentToken: paymentToken.id, artistPageId, subscriptionLevelValue });
-  };
-
   render() {
     return (
       <div className="container checkout-form-container">
         <div className="row justify-content-center">
-          <div className="col-md-5">
+          <div className="col-md-12">
             <form className="form-group support__level-form" onSubmit={this.submit}>
               <h3>Enter your payment details</h3>
               <div className="form-row">

@@ -10,6 +10,7 @@ import { Store } from 'src/redux/configure-store';
 import { getMeAction } from 'src/redux/me/get-me';
 import { setUserDataAction } from 'src/redux/me/set-me';
 import { updateMeAction } from 'src/redux/me/update-me';
+import { updateCardAction } from 'src/redux/me/update-card';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -40,12 +41,20 @@ interface CardInfoProps {
   last4: String;
   exp_month: String;
   exp_year: String;
+  updateCard: Function;
+  updatedCard: Boolean;
 }
 
 class CardInfo extends React.Component<CardInfoProps> {
   state = {
     showEditForm: false,
   };
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.updatedCard && this.props.updatedCard) {
+      this.setState({ showEditForm: false });
+    }
+  }
 
   pickCardIcon = (brand) => {
     switch (brand.toLowerCase()) {
@@ -63,7 +72,7 @@ class CardInfo extends React.Component<CardInfoProps> {
   };
 
   render() {
-    const { last4, exp_month, exp_year, brand } = this.props;
+    const { last4, exp_month, exp_year, brand, updateCard } = this.props;
     const { showEditForm } = this.state;
     if (!showEditForm) {
       return (
@@ -85,6 +94,7 @@ class CardInfo extends React.Component<CardInfoProps> {
         subscriptionLevelValue={null}
         declineStep={null}
         createSubscription={() => null}
+        updateCard={updateCard}
       />;
     }
   }
@@ -457,7 +467,11 @@ class UserDetailsComponent extends React.Component<Props, any> {
   }
 
   renderPayments = () => {
-    const { userData: { cardInfo } } = this.props;
+    const {
+      userData: { cardInfo },
+      updatedCard,
+      updateCard
+    } = this.props;
     return (
       <div className="basic-info">
         <div className="row">
@@ -471,7 +485,11 @@ class UserDetailsComponent extends React.Component<Props, any> {
               </div>
               <div className="row col-10 col-md-9">
                 <div className="col-md-12">
-                  { cardInfo ? (<CardInfo {...cardInfo} />) : 'No card on file' }
+                  {cardInfo ? (
+                    <CardInfo {...cardInfo} updatedCard={updatedCard} updateCard={updateCard} />
+                  ) : (
+                    'No card on file'
+                  )}
                 </div>
               </div>
             </div>
@@ -690,6 +708,7 @@ const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
   setMe: bindActionCreators(setUserDataAction, dispatch),
   updateMe: bindActionCreators(updateMeAction, dispatch),
+  updateCard: bindActionCreators(updateCardAction, dispatch),
 });
 
 const UserDetails = connect(

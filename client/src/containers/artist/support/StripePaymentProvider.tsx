@@ -13,6 +13,7 @@ interface Props {
   artistPageId: any;
   subscriptionLevelValue: any;
   formType: String;
+  updateCard?: Function;
 }
 
 declare global {
@@ -38,7 +39,7 @@ export class StripePaymentProvider extends React.Component<Props, any> {
     }
   }
   render() {
-    const { createSubscription, declineStep, artistPageId, subscriptionLevelValue, formType } = this.props;
+    const { createSubscription, declineStep, artistPageId, subscriptionLevelValue, formType, updateCard } = this.props;
 
     let element;
     if (formType === 'checkout') {
@@ -50,7 +51,7 @@ export class StripePaymentProvider extends React.Component<Props, any> {
       />);
     } else if (formType === 'editcard') {
       element = (<EditCardForm
-        createSubscription={createSubscription}
+        updateCard={updateCard}
       />);
     }
 

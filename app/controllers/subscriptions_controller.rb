@@ -20,6 +20,7 @@ class SubscriptionsController < ApplicationController
     NewSupporterEmailJob.perform_async(subscription.id)
     render json: subscription
   rescue StandardError => e
+    Raven.capture_exception(e)
     render json: { status: "error", message: e.message }
   end
 

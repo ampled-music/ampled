@@ -240,7 +240,7 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   renderPaymentStep = (artist: ArtistModel) => {
-    const { subscriptions, createSubscription, declineStep } = this.props;
+    const { subscriptions, createSubscription, declineStep, me: { userData } } = this.props;
 
     const { artistPageId, subscriptionLevelValue } = subscriptions;
 
@@ -255,6 +255,7 @@ export class SupportComponent extends React.Component<Props, any> {
             createSubscription={createSubscription}
             declineStep={declineStep}
             formType="checkout"
+            userData={userData}
           />
         );
       default:

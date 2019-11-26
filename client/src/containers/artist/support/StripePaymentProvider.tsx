@@ -14,6 +14,7 @@ interface Props {
   subscriptionLevelValue: any;
   formType: String;
   updateCard?: Function;
+  userData?: any;
 }
 
 declare global {
@@ -39,27 +40,34 @@ export class StripePaymentProvider extends React.Component<Props, any> {
     }
   }
   render() {
-    const { createSubscription, declineStep, artistPageId, subscriptionLevelValue, formType, updateCard } = this.props;
+    const {
+      createSubscription,
+      declineStep,
+      artistPageId,
+      subscriptionLevelValue,
+      formType,
+      updateCard,
+      userData,
+    } = this.props;
 
     let element;
     if (formType === 'checkout') {
-      element = (<CheckoutForm
-        artistPageId={artistPageId}
-        subscriptionLevelValue={subscriptionLevelValue}
-        createSubscription={createSubscription}
-        declineStep={declineStep}
-      />);
+      element = (
+        <CheckoutForm
+          artistPageId={artistPageId}
+          subscriptionLevelValue={subscriptionLevelValue}
+          createSubscription={createSubscription}
+          declineStep={declineStep}
+          userData={userData}
+        />
+      );
     } else if (formType === 'editcard') {
-      element = (<EditCardForm
-        updateCard={updateCard}
-      />);
+      element = <EditCardForm updateCard={updateCard} />;
     }
 
     return (
       <StripeProvider stripe={this.state.stripe}>
-        <Elements>
-          { element }
-        </Elements>
+        <Elements>{element}</Elements>
       </StripeProvider>
     );
   }

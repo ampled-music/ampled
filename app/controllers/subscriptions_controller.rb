@@ -19,7 +19,7 @@ class SubscriptionsController < ApplicationController
     subscription = subscribe_stripe
     NewSupporterEmailJob.perform_async(subscription.id)
     render json: subscription
-  rescue => e
+  rescue Faraday:::ClientError => e
     render json: { status: "error", message: e.message }
   end
 

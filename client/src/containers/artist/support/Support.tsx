@@ -4,19 +4,19 @@ import './support.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { routePaths } from 'src/containers/route-paths';
-import { getArtistAction } from 'src/redux/artists/get-details';
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { Store } from 'src/redux/configure-store';
-import { getMeAction } from 'src/redux/me/get-me';
-import { createSubscriptionAction } from 'src/redux/subscriptions/create';
-import { declineStepAction } from 'src/redux/subscriptions/decline-step';
-import { startSubscriptionAction } from 'src/redux/subscriptions/start-subscription';
+import { routePaths } from '../../route-paths';
+import { getArtistAction } from '../../../redux/artists/get-details';
+import { openAuthModalAction } from '../../../redux/authentication/authentication-modal';
+import { Store } from '../../../redux/configure-store';
+import { getMeAction } from '../../../redux/me/get-me';
+import { createSubscriptionAction } from '../../../redux/subscriptions/create';
+import { declineStepAction } from '../../../redux/subscriptions/decline-step';
+import { startSubscriptionAction } from '../../../redux/subscriptions/start-subscription';
 import { Helmet } from 'react-helmet';
 
 import avatar from '../../../images/ampled_avatar.svg';
 
-import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast';
+import { showToastMessage, MessageType } from '../../shared/toast/toast';
 import { initialState as artistsInitialState, ArtistModel } from '../../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';

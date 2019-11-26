@@ -1,7 +1,7 @@
 import { createActionThunk } from 'redux-thunk-actions';
-import { updateMe } from 'src/api/me/update-me';
+import { updateMe } from '../../api/me/update-me';
 
-import { uploadFileToCloudinary } from 'src/api/cloudinary/upload-image';
+import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
 import { actions } from './actions';
 import { Reducer } from './initial-state';
 

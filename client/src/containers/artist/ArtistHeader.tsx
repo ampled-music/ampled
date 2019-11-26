@@ -9,7 +9,7 @@ import cx from 'classnames';
 import { Image, Transformation } from 'cloudinary-react';
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ArtistModel } from 'src/redux/artists/initial-state';
+import { ArtistModel } from '../../redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
 import TextTruncate from 'react-text-truncate';
 import * as R from 'ramda';
@@ -427,7 +427,7 @@ export class ArtistHeader extends React.Component<Props, any> {
               </div>
               <div className="artist-header__supporters_all col-8">
                 {artist.supporters
-                  .filter((supporter) => !R.equals(R.path('most_recent_supporter', 'id', artist), +supporter.id))
+                  .filter((supporter) => !R.equals(R.path(['most_recent_supporter', 'id'], artist), +supporter.id))
                   .map((supporter) => (
                     <div key={`minisupporter-${supporter.id}`}>
                       <RenderSupporter

@@ -6,12 +6,12 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { Store } from 'src/redux/configure-store';
-import { getMeAction } from 'src/redux/me/get-me';
-import { setUserDataAction } from 'src/redux/me/set-me';
-import { updateMeAction } from 'src/redux/me/update-me';
-import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
+import { closeAuthModalAction, openAuthModalAction } from '../../redux/authentication/authentication-modal';
+import { Store } from '../../redux/configure-store';
+import { getMeAction } from '../../redux/me/get-me';
+import { setUserDataAction } from '../../redux/me/set-me';
+import { updateMeAction } from '../../redux/me/update-me';
+import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 
 import { faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faInstagram, faStripe } from '@fortawesome/free-brands-svg-icons';

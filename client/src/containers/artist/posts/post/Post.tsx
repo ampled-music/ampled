@@ -3,8 +3,8 @@ import './post.scss';
 import cx from 'classnames';
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import { routePaths } from 'src/containers/route-paths';
-import { UserRoles } from 'src/containers/shared/user-roles';
+import { routePaths } from '../../../route-paths';
+import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
 
 import avatar from '../../../../images/ampled_avatar.svg';
@@ -24,7 +24,7 @@ import { CommentForm } from '../comments/CommentForm';
 import { PostForm } from '../post-form/PostForm';
 import { styles } from './post-style';
 
-import { deletePost } from 'src/api/post/delete-post';
+import { deletePost } from '../../../../api/post/delete-post';
 
 class PostComponent extends React.Component<any, any> {
   state = {

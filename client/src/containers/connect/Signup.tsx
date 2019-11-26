@@ -3,11 +3,11 @@ import './login.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { Store } from 'src/redux/configure-store';
+import { closeAuthModalAction, openAuthModalAction } from '../../redux/authentication/authentication-modal';
+import { Store } from '../../redux/configure-store';
 import * as store from 'store';
-import { signupAction } from 'src/redux/signup/signup';
-import { loginAction } from 'src/redux/authentication/login';
+import { signupAction } from '../../redux/signup/signup';
+import { loginAction } from '../../redux/authentication/login';
 
 import { initialState as authenticationInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';

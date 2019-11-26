@@ -1,7 +1,7 @@
 import './footer.scss';
 
 import * as React from 'react';
-import * as moment from 'moment'
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 import logo from '../../images/ampled_logo.svg';

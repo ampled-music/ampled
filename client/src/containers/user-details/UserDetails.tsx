@@ -5,11 +5,11 @@ import * as loadImage from 'blueimp-load-image';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Store } from 'src/redux/configure-store';
+import { Store } from '../../redux/configure-store';
 
-import { getMeAction } from 'src/redux/me/get-me';
-import { setUserDataAction } from 'src/redux/me/set-me';
-import { updateMeAction } from 'src/redux/me/update-me';
+import { getMeAction } from '../../redux/me/get-me';
+import { setUserDataAction } from '../../redux/me/set-me';
+import { updateMeAction } from '../../redux/me/update-me';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';

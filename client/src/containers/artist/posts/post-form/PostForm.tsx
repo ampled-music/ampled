@@ -4,12 +4,12 @@ import cx from 'classnames';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { deleteFileFromCloudinary } from 'src/api/cloudinary/delete-image';
-import { uploadFileToCloudinary } from 'src/api/cloudinary/upload-image';
-import { getArtistAction } from 'src/redux/artists/get-details';
-import { Store } from 'src/redux/configure-store';
-import { createPostAction } from 'src/redux/posts/create';
-import { editPostAction } from 'src/redux/posts/edit';
+import { deleteFileFromCloudinary } from '../../../../api/cloudinary/delete-image';
+import { uploadFileToCloudinary } from '../../../../api/cloudinary/upload-image';
+import { getArtistAction } from '../../../../redux/artists/get-details';
+import { Store } from '../../../../redux/configure-store';
+import { createPostAction } from '../../../../redux/posts/create';
+import { editPostAction } from '../../../../redux/posts/edit';
 
 import { Button, DialogActions, DialogContent, TextField, CircularProgress } from '@material-ui/core';
 

@@ -1,10 +1,10 @@
 import './login.scss';
 
 import * as React from 'react';
-import { Store } from 'src/redux/configure-store';
+import { Store } from '../../redux/configure-store';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { closeAuthModalAction, openAuthModalAction } from '../../redux/authentication/authentication-modal';
 import { routePaths } from './../route-paths';
 
 import { showToastMessage, MessageType } from '../shared/toast/toast';

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
-import { config } from 'src/config';
+import { config } from '../../config';
 
 import { artistsPages } from '../../redux/ducks/get-artists-pages';
 

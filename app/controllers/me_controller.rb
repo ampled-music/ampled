@@ -8,17 +8,16 @@ class MeController < ApplicationController
   end
 
   def stripe_card_info
-    if current_user.stripe_customer_id.present?
-      if current_user.card_last4
-        { brand: current_user.card_brand, exp_month: current_user.card_exp_month,
-          exp_year: current_user.card_exp_year, last4: current_user.card_last4 }
-      else
-        card = Stripe::Customer.retrieve(current_user.stripe_customer_id).sources.data[0]
-        current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
-                            card_exp_year: card.exp_year, card_last4: card.last4)
-        { brand: card.brand, exp_month: card.exp_month,
-          exp_year: card.exp_year, last4: card.last4 }
-      end
+    return unless current_user.stripe_customer_id.present?
+    if current_user.card_last4
+      { brand: current_user.card_brand, exp_month: current_user.card_exp_month,
+        exp_year: current_user.card_exp_year, last4: current_user.card_last4 }
+    else
+      card = Stripe::Customer.retrieve(current_user.stripe_customer_id).sources.data[0]
+      current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
+                          card_exp_year: card.exp_year, card_last4: card.last4)
+      { brand: card.brand, exp_month: card.exp_month,
+        exp_year: card.exp_year, last4: card.last4 }
     end
   end
 end

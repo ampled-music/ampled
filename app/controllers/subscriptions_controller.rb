@@ -16,13 +16,11 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    begin
-      subscription = subscribe_stripe
-      NewSupporterEmailJob.perform_async(subscription.id)
-      render json: subscription
-    rescue => e
-      render json: { status: "error", message: e.message }
-    end
+    subscription = subscribe_stripe
+    NewSupporterEmailJob.perform_async(subscription.id)
+    render json: subscription
+  rescue => e
+    render json: { status: "error", message: e.message }
   end
 
   def update

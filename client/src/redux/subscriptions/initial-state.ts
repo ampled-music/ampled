@@ -13,6 +13,8 @@ export const initialState = {
   cancelled: false,
   artistName: undefined,
   artistSlug: undefined,
+  error: undefined,
+  hasError: false,
 };
 
 export interface Reducer {

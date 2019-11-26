@@ -73,6 +73,10 @@ export class SupportComponent extends React.Component<Props, any> {
       console.log('already support by slug');
       this.redirectToArtistsPage();
     }
+
+    if (subscriptions && subscriptions.hasError) {
+      showToastMessage(subscriptions.error, MessageType.ERROR);
+    }
   }
 
   ColorLuminance = (hex, lum) => {

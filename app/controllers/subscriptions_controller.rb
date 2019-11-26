@@ -36,7 +36,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def update_platform_customer
-    customer = Stripe::Customer.update(current_user.stripe_customer_id, { source: params["token"] })
+    customer = Stripe::Customer.update(current_user.stripe_customer_id, source: params["token"])
     card = customer.sources.data[0]
     current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
                         card_exp_year: card.exp_year, card_last4: card.last4)

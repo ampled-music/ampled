@@ -19,8 +19,6 @@ class MeController < ApplicationController
         { brand: card.brand, exp_month: card.exp_month,
           exp_year: card.exp_year, last4: card.last4 }
       end
-    else
-      null
     end
   end
 end

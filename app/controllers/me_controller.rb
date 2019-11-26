@@ -8,7 +8,8 @@ class MeController < ApplicationController
   end
 
   def stripe_card_info
-    return unless current_user.stripe_customer_id.present?
+    return if current_user.stripe_customer_id.blank?
+
     if current_user.card_last4
       { brand: current_user.card_brand, exp_month: current_user.card_exp_month,
         exp_year: current_user.card_exp_year, last4: current_user.card_last4 }

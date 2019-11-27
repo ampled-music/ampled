@@ -16,7 +16,7 @@ import { initialState as loginInitialState } from '../../redux/authentication/in
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { Button, DialogActions, MenuItem, TextField, InputAdornment, CircularProgress } from '@material-ui/core';
+import { Button, DialogActions, MenuItem, TextField, InputAdornment, CircularProgress, Card, CardContent } from '@material-ui/core';
 import { faTwitter, faInstagram, faCcAmex, faCcDiscover, faCcMastercard, faCcVisa, faCcStripe } from '@fortawesome/free-brands-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -76,16 +76,41 @@ class CardInfo extends React.Component<CardInfoProps> {
     const { showEditForm } = this.state;
     if (!showEditForm) {
       return (
-        <>
-          {<FontAwesomeIcon className="icon" icon={this.pickCardIcon(brand)} />}
-          &nbsp;ending in {last4}
-          <br />
-          Expires {exp_month}/{exp_year}
-          <br />
-          <button onClick={() => this.setState({ showEditForm: !showEditForm })}>
-            Edit card
-          </button>
-        </>
+        <div>
+          {brand ? (
+            <div>
+              <Card className="card">
+                <div className="card-header">
+                  <FontAwesomeIcon className="card-header__icon" icon={this.pickCardIcon(brand)} />
+                  <span>{brand} ending in {last4}</span>
+                </div>
+                <CardContent>
+                  <div className="row">
+                    <div className="col-6">
+                      <h6>Status</h6>
+                    </div>
+                    <div className="col-6">
+                      <h6>Expiration</h6>
+                      {exp_month}/{exp_year}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <button className="btn btn-link btn-edit-card" onClick={() => this.setState({ showEditForm: !showEditForm })}>
+                Replace this card
+              </button>
+            </div>
+          ) : (
+            <Card className="card card-empty">
+              <CardContent>
+                <button className="btn btn-link btn-edit-card" onClick={() => this.setState({ showEditForm: !showEditForm })}>
+                  Add a payment method                
+                </button>
+              </CardContent>
+            </Card>
+          )}
+          
+        </div>
       );
     } else {
       return <StripePaymentProvider
@@ -123,6 +148,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     city_error: false,
     country_error: false,
     social_error: false,
+    showEditForm: false,
   };
 
   handleChange = (e) => {
@@ -472,6 +498,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       updatedCard,
       updateCard
     } = this.props;
+
     return (
       <div className="basic-info">
         <div className="row">
@@ -480,17 +507,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
           </div>
           <div className="col-md-10">
             <div className="row no-gutters">
-              <div className="col-2 col-md-3">
-                <div className="user-details__subtitle">Card</div>
-              </div>
-              <div className="row col-10 col-md-9">
-                <div className="col-md-12">
-                  {cardInfo ? (
-                    <CardInfo {...cardInfo} updatedCard={updatedCard} updateCard={updateCard} />
-                  ) : (
-                    'No card on file'
-                  )}
-                </div>
+              <div className="col-md-5">
+                <CardInfo {...cardInfo} updatedCard={updatedCard} updateCard={updateCard} />
               </div>
             </div>
           </div>

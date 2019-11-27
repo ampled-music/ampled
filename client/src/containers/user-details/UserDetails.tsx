@@ -504,7 +504,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
           </div>
           <div className="col-md-10">
             <div className="row no-gutters">
-              <div className="col-md-5">
+              <div className="col-sm-8 col-md-5">
                 <CardInfo {...cardInfo} updatedCard={updatedCard} updateCard={updateCard} />
               </div>
             </div>

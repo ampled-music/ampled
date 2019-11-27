@@ -14,6 +14,8 @@ import { showToastMessage, MessageType } from '../shared/toast/toast';
 
 import tear from '../../images/background_tear.png';
 
+import { apiAxios } from '../../api/setup-axios';
+
 import { once } from 'ramda';
 
 interface LoginProps {
@@ -27,11 +29,19 @@ class LoginComponent extends React.Component<Props, any> {
   state = {
     email: '',
     password: '',
+    showConfirmationResend: false,
   };
 
-  componentDidUpdate() {
-    if (this.props.error) {
-      showToastMessage(this.props.error, MessageType.ERROR);
+  componentDidUpdate(prevProps) {
+    if (this.props.error && !prevProps.error) {
+      let { error } = this.props;
+      if (/confirm your email/i.test(this.props.error)) {
+        error = `${error}<br>Please use the link in the login form.`
+        this.setState({
+          showConfirmationResend: true,
+        });
+      }
+      showToastMessage(error, MessageType.ERROR);
     }
 
     if (!this.props.token) {
@@ -71,6 +81,27 @@ class LoginComponent extends React.Component<Props, any> {
     this.setState({ [name]: value });
   };
 
+  resendConfirmation = async () => {
+    try {
+      await apiAxios({
+        method: 'post',
+        url: '/users/confirmation.json',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: { user: { email: this.state.email } },
+      });
+
+      showToastMessage(`Confirmation instructions have been sent to ${this.state.email}.`, MessageType.SUCCESS);
+
+      this.setState({
+        showConfirmationResend: false,
+      });
+    } catch (e) {
+      showToastMessage('Something went wrong.', MessageType.ERROR);
+    }
+  }
+
   render() {
     const { login } = this.props;
 
@@ -94,7 +125,7 @@ class LoginComponent extends React.Component<Props, any> {
               type="password"
               placeholder="Password"
               name="password"
-              aria-label="Password" 
+              aria-label="Password"
               onChange={this.handleChange}
               required
             />
@@ -103,18 +134,33 @@ class LoginComponent extends React.Component<Props, any> {
             </button>
             <span className="error-message">{login.error}</span>
           </form>
-          <label>
-            <a onClick={() => this.props.openAuthModal({ modalPage: 'forgotPassword' })}>
-              <u>Forgot Password?</u>
-            </a>
-          </label>
-          { process.env.NODE_ENV === 'development' && (<label>
-            Don't have an account?{' '}
-            <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
-              <u>Sign up</u>
-            </a>
-            .
-          </label>)}
+          {!this.state.showConfirmationResend && (
+            <label>
+              <a onClick={() => this.props.openAuthModal({ modalPage: 'forgotPassword' })}>
+                <u>Forgot Password?</u>
+              </a>
+            </label>
+          )}
+          {this.state.showConfirmationResend && (
+            <label style={{ textAlign: 'center' }}>
+              <a onClick={this.resendConfirmation}>
+                <u>
+                  Re-send confirmation to
+                  <br />
+                  {this.state.email}
+                </u>
+              </a>
+            </label>
+          )}
+          {process.env.NODE_ENV === 'development' && !this.state.showConfirmationResend && (
+            <label>
+              Don't have an account?{' '}
+              <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
+                <u>Sign up</u>
+              </a>
+              .
+            </label>
+          )}
         </div>
       </div>
     );

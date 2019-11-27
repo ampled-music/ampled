@@ -164,7 +164,7 @@ class PostFormComponent extends React.Component<Props, any> {
     return (
       <div className="post-image">
         <div className="preview">
-          <img className="preview__image" src={this.state.imageUrl} />
+          <img className="preview__image" src={this.state.imageUrl} alt="Preview" />
           <span className="preview__name">{this.state.imageName}</span>
         </div>
         <div className="file-actions">
@@ -230,7 +230,7 @@ class PostFormComponent extends React.Component<Props, any> {
 
     return (
       <div className="post-form__container">
-        <img className="tear tear__topper" src={tear} />
+        <img className="tear tear__topper" src={tear} alt="" />
         <div className="post-form">
           <DialogContent>
             <h4>{isEdit ? 'EDIT POST' : 'NEW POST'}</h4>

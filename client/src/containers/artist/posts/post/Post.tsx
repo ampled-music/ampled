@@ -310,7 +310,7 @@ class PostComponent extends React.Component<any, any> {
                 <Linkify
                   componentDecorator={
                     (decoratedHref: string, decoratedText: string, key: number) =>
-                      (<a href={decoratedHref} key={key} target="_blank">
+                      (<a href={decoratedHref} key={key} target="_blank" rel="noopener noreferrer">
                         {decoratedText}
                       </a>)
                   }

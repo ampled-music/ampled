@@ -140,7 +140,7 @@ class SignupComponent extends React.Component<Props, any> {
 
     return (
       <div className="login__container">
-        <img className="tear tear__topper" src={tear} />
+        <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
           <h4>SIGN UP</h4>
           {authentication.showSupportMessage && authentication.showSupportMessage === 'post' && authentication.artistName && (

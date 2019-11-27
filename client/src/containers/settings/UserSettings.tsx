@@ -65,7 +65,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   showCancelledSuccessMessage = () => {
     const { artistSlug, artistPageId, artistName } = this.props.subscriptions;
-    const artistPageLink = routePaths.support.replace(':id', artistSlug && artistSlug.length ? artistSlug : artistPageId.toString());
+    const artistPageLink = routePaths.support.replace(
+      ':id',
+      artistSlug && artistSlug.length ? artistSlug : artistPageId.toString(),
+    );
 
     showToastMessage(
       `We are sad to see you leaving. Remember that you can always support <a href="${artistPageLink}">${artistName}</a> with a different value!`,
@@ -220,7 +223,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
           <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
-            <img className="artist__image" src={ownedPage.image} alt={ownedPage.name}/>
+            <img className="artist__image" src={ownedPage.image} alt={ownedPage.name} />
             <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage)}></div>
             <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
@@ -257,7 +260,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     </div>
                     <div className="col-8">
                       {ownedPage.isStripeSetup ? (
-                        <a href={ownedPage.stripeDashboard} className="details__stripe_link" target="_blank">
+                        <a
+                          href={ownedPage.stripeDashboard}
+                          className="details__stripe_link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           Edit Payout Details
                         </a>
                       ) : (
@@ -265,6 +273,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                           href={ownedPage.stripeSignup}
                           className="details__stripe_link"
                           target="_blank"
+                          rel="noopener noreferrer"
                           style={{ color: '#d9534f' }}
                         >
                           Set Up Payouts
@@ -288,10 +297,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
         {this.props.userData.subscriptions.map((subscription) => (
           <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-4">
             <img className="artist__image" src={subscription.image} alt={subscription.name} />
-            <div
-              className="artist__image-border"
-              onClick={() => this.redirectToArtistPage(subscription)}
-            ></div>
+            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(subscription)}></div>
             <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
               <p className="artist__info_name" onClick={() => this.redirectToArtistPage(subscription)}>

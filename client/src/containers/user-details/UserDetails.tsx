@@ -86,10 +86,7 @@ class CardInfo extends React.Component<CardInfoProps> {
                 </div>
                 <CardContent>
                   <div className="row">
-                    <div className="col-6">
-                      <h6>Status</h6>
-                    </div>
-                    <div className="col-6">
+                    <div className="col-9">
                       <h6>Expiration</h6>
                       {exp_month}/{exp_year}
                     </div>

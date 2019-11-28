@@ -59,7 +59,11 @@ class EditCardFormComponent extends React.Component<Props, any> {
                 <button disabled={this.state.disableActions} className="btn btn-primary" type="submit">
                   Update
                 </button>
-                <button disabled={this.state.disableActions} className="btn btn-secondary" onClick={() => this.props.declineStep()}>
+                <button
+                  disabled={this.state.disableActions}
+                  className="btn btn-secondary"
+                  onClick={() => this.props.declineStep()}
+                >
                   Cancel
                 </button>
               </div>

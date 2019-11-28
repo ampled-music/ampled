@@ -36,6 +36,42 @@ type Props = typeof loginInitialState &
   typeof meInitialState &
   Dispatchers & { history: any; };
 
+const SingleCardDisplay = ({ brand, last4, exp_month, exp_year }) => {
+  let brandIcon = faCcStripe;
+  switch (brand.toLowerCase()) {
+    case 'visa':
+      brandIcon = faCcVisa;
+      break;
+    case 'american express':
+      brandIcon = faCcAmex;
+      break;
+    case 'mastercard':
+      brandIcon = faCcMastercard;
+      break;
+    case 'discover':
+      brandIcon = faCcDiscover;
+      break;
+  }
+  return (
+    <Card className="card single-credit-card">
+      <div className="card-header">
+        <FontAwesomeIcon className="card-header__icon" icon={brandIcon} />
+        <span>
+          {brand} ending in {last4}
+        </span>
+      </div>
+      <CardContent>
+        <div className="row">
+          <div className="col-9">
+            <h6>Expiration</h6>
+            {exp_month}/{exp_year}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
 interface CardInfoProps {
   brand: String;
   last4: String;
@@ -56,43 +92,15 @@ class CardInfo extends React.Component<CardInfoProps> {
     }
   }
 
-  pickCardIcon = (brand) => {
-    switch (brand.toLowerCase()) {
-      case 'visa':
-        return faCcVisa;
-      case 'american express':
-        return faCcAmex;
-      case 'mastercard':
-        return faCcMastercard;
-      case 'discover':
-        return faCcDiscover;
-      default:
-        return faCcStripe;
-    }
-  };
-
   render() {
-    const { last4, exp_month, exp_year, brand, updateCard } = this.props;
+    const { brand, updateCard } = this.props;
     const { showEditForm } = this.state;
     if (!showEditForm) {
       return (
         <div>
           {brand ? (
             <div>
-              <Card className="card">
-                <div className="card-header">
-                  <FontAwesomeIcon className="card-header__icon" icon={this.pickCardIcon(brand)} />
-                  <span>{brand} ending in {last4}</span>
-                </div>
-                <CardContent>
-                  <div className="row">
-                    <div className="col-9">
-                      <h6>Expiration</h6>
-                      {exp_month}/{exp_year}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <SingleCardDisplay {...this.props} />
               <button className="btn btn-link btn-edit-card" onClick={() => this.setState({ showEditForm: !showEditForm })}>
                 Replace this card
               </button>
@@ -735,4 +743,4 @@ const UserDetails = connect(
   mapDispatchToProps,
 )(UserDetailsComponent);
 
-export { UserDetails };
+export { UserDetails, SingleCardDisplay };

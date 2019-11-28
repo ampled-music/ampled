@@ -62,7 +62,7 @@ export class StripePaymentProvider extends React.Component<Props, any> {
         />
       );
     } else if (formType === 'editcard') {
-      element = <EditCardForm updateCard={updateCard} />;
+      element = <EditCardForm updateCard={updateCard} declineStep={declineStep} />;
     }
 
     return (

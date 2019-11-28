@@ -110,14 +110,18 @@ class CardInfo extends React.Component<CardInfoProps> {
         </div>
       );
     } else {
-      return <StripePaymentProvider
-        formType="editcard"
-        artistPageId={null}
-        subscriptionLevelValue={null}
-        declineStep={null}
-        createSubscription={() => null}
-        updateCard={updateCard}
-      />;
+      return (
+        <StripePaymentProvider
+          formType="editcard"
+          artistPageId={null}
+          subscriptionLevelValue={null}
+          declineStep={() => {
+            this.setState({ showEditForm: false });
+          }}
+          createSubscription={() => null}
+          updateCard={updateCard}
+        />
+      );
     }
   }
 }

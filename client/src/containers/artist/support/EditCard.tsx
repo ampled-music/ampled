@@ -7,6 +7,7 @@ import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast
 interface Props {
   stripe: any;
   updateCard: Function;
+  declineStep: Function;
 }
 
 class EditCardFormComponent extends React.Component<Props, any> {
@@ -57,6 +58,9 @@ class EditCardFormComponent extends React.Component<Props, any> {
               <div className="actions">
                 <button disabled={this.state.disableActions} className="btn btn-primary" type="submit">
                   Update
+                </button>
+                <button disabled={this.state.disableActions} className="btn btn-secondary" onClick={() => this.props.declineStep()}>
+                  Cancel
                 </button>
               </div>
             </form>

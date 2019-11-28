@@ -4,6 +4,7 @@ import * as React from 'react';
 import { injectStripe, CardCVCElement, CardExpiryElement, CardNumberElement } from 'react-stripe-elements';
 import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast';
 import { Link } from 'react-router-dom';
+import { SingleCardDisplay } from '../../user-details/UserDetails';
 
 interface Props {
   artistPageId: number;
@@ -95,9 +96,11 @@ class CheckoutFormComponent extends React.Component<Props, any> {
                   <h3>Use your existing card</h3>
                   <div className="form-row">
                     <div className="col">
-                      {cardInfo.brand} ending with {cardInfo.last4}
-                      <br /><br />
-                      <Link to="/user-details">Edit your card</Link>
+                      <div style={{textAlign: 'left'}}>
+                        <SingleCardDisplay {...cardInfo} />
+                      </div>
+                      <br />
+                      <Link to="/user-details" className="btn btn-link btn-edit-card">Edit your card</Link>
                     </div>
                   </div>
                 </>

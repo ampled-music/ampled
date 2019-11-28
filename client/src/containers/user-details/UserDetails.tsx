@@ -108,9 +108,17 @@ class CardInfo extends React.Component<CardInfoProps> {
           ) : (
             <Card className="card card-empty">
               <CardContent>
+                <span
+                  className="btn btn-link btn-edit-card"
+                  style={{ textDecoration: 'none' }}
+                >
+                  No card stored
+                </span>
+                {/*
                 <button className="btn btn-link btn-edit-card" onClick={() => this.setState({ showEditForm: !showEditForm })}>
                   Add a payment method                
                 </button>
+                */}
               </CardContent>
             </Card>
           )}

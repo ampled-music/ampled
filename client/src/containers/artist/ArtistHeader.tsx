@@ -38,9 +38,8 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   componentDidUpdate = async (prevProps) => {
     const { artist: { video_url } } = this.props;
-    if (video_url === prevProps.artist.video_url && this.state.screenshotURL) {
-      return;
-    } else if (video_url) {
+    const { artist: { video_url: prevURL } } = prevProps;
+    if (video_url !== prevURL && !this.state.screenshotURL) {
       this.setState({
         screenshotURL: await this.getThumbnailURLFromVideoURL(video_url)
       });

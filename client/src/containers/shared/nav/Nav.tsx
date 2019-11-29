@@ -4,8 +4,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { Store } from 'src/redux/configure-store';
+import { openAuthModalAction } from '../../../redux/authentication/authentication-modal';
+import { Store } from '../../../redux/configure-store';
 
 import logo from '../../../images/ampled_logo_beta.svg';
 import avatar from '../../../images/ampled_avatar.svg';

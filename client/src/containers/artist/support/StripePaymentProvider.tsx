@@ -3,11 +3,13 @@ import './stripe-payment-provider.scss';
 import * as React from 'react';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 
-import { config } from 'src/config';
+import { config } from '../../../config';
 import { CheckoutForm } from './CheckoutForm';
 
 interface Props {
-  createSubscription: Function;
+  createSubscription: (
+    subscription: { artistPageId: number; subscriptionLevelValue: number; paymentToken: string },
+  ) => void;
   declineStep: any;
   artistPageId: any;
   subscriptionLevelValue: any;
@@ -20,7 +22,7 @@ declare global {
 }
 
 export class StripePaymentProvider extends React.Component<Props, any> {
-  constructor(props) {
+  constructor(props: Readonly<Props>) {
     super(props);
     this.state = { stripe: null };
   }

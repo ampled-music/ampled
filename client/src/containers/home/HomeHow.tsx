@@ -20,16 +20,16 @@ class HomeHowComponent extends React.Component<Props, any> {
     intervalId: undefined,
   };
 
-  theLoop = (activeState) => {
+  theLoop = (activeState: string) => {
     const self = this;
     const intervalId = setInterval(function () {
-      if (activeState == 'section_1') {
+      if (activeState === 'section_1') {
         self.openSpeaker();
         activeState = 'section_2';
-      } else if (activeState == 'section_2') {
+      } else if (activeState === 'section_2') {
         self.openCrowd();
         activeState = 'section_3';
-      } else if (activeState == 'section_3') {
+      } else if (activeState === 'section_3') {
         self.openMoney();
         activeState = 'section_1';
       }
@@ -61,7 +61,7 @@ class HomeHowComponent extends React.Component<Props, any> {
     });
   };
 
-  setActive = (graphic) => {
+  setActive = (graphic: any) => {
     if (graphic) {
       return 'active';
     }

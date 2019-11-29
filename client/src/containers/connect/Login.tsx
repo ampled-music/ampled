@@ -3,9 +3,9 @@ import './login.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { loginAction } from 'src/redux/authentication/login';
-import { Store } from 'src/redux/configure-store';
+import { closeAuthModalAction, openAuthModalAction } from '../../redux/authentication/authentication-modal';
+import { loginAction } from '../../redux/authentication/login';
+import { Store } from '../../redux/configure-store';
 import * as store from 'store';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
@@ -76,7 +76,7 @@ class LoginComponent extends React.Component<Props, any> {
 
     return (
       <div className="login__container">
-        <img className="tear tear__topper" src={tear} />
+        <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
           <h4>LOGIN</h4>
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>

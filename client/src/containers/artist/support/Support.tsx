@@ -4,19 +4,19 @@ import './support.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { routePaths } from 'src/containers/route-paths';
-import { getArtistAction } from 'src/redux/artists/get-details';
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { Store } from 'src/redux/configure-store';
-import { getMeAction } from 'src/redux/me/get-me';
-import { createSubscriptionAction } from 'src/redux/subscriptions/create';
-import { declineStepAction } from 'src/redux/subscriptions/decline-step';
-import { startSubscriptionAction } from 'src/redux/subscriptions/start-subscription';
+import { routePaths } from '../../route-paths';
+import { getArtistAction } from '../../../redux/artists/get-details';
+import { openAuthModalAction } from '../../../redux/authentication/authentication-modal';
+import { Store } from '../../../redux/configure-store';
+import { getMeAction } from '../../../redux/me/get-me';
+import { createSubscriptionAction } from '../../../redux/subscriptions/create';
+import { declineStepAction } from '../../../redux/subscriptions/decline-step';
+import { startSubscriptionAction } from '../../../redux/subscriptions/start-subscription';
 import { Helmet } from 'react-helmet';
 
 import avatar from '../../../images/ampled_avatar.svg';
 
-import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast';
+import { showToastMessage, MessageType } from '../../shared/toast/toast';
 import { initialState as artistsInitialState, ArtistModel } from '../../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
@@ -175,7 +175,7 @@ export class SupportComponent extends React.Component<Props, any> {
     const placeholderImage =
       'https://images.pexels.com/photos/1749822/pexels-photo-1749822.jpeg?cs=srgb&dl=backlit-band-concert-1749822.jpg';
 
-    return <img className="support__artist-image" src={images.length ? images[0] : placeholderImage} />;
+    return <img className="support__artist-image" src={images.length ? images[0] : placeholderImage} alt="Artist" />;
   };
 
   renderArtists = (owners) => (
@@ -213,10 +213,12 @@ export class SupportComponent extends React.Component<Props, any> {
           {
             this.state.supportLevelValue && this.state.supportLevelValue >= 3 ? 
             (<p className="support__value-description">
-                Your total charge will be <strong>${this.calculateSupportTotal(this.state.supportLevelValue)}</strong>.<br /><br />
-                This is due to our payment processor's service fee. More details can be found <a href="https://app.ampled.com/payment-processing" target="_blank">here</a>.
-          </p>) :
-              (<p className="support__value-description">
+              Your total charge will be <strong>${this.calculateSupportTotal(this.state.supportLevelValue)}</strong>.
+              <br /><br />
+              This is due to our payment processor's service fee. More details can be
+              found <a href="https://app.ampled.com/payment-processing" target="_blank" rel="noopener noreferrer">here</a>.
+            </p>) :
+            (<p className="support__value-description">
               Support {artistName} directly for $3 (or more) per month to unlock access to all of their posts and get
                   notifications when they post anything new.
             </p>)

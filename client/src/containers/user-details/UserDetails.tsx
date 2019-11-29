@@ -5,12 +5,12 @@ import * as loadImage from 'blueimp-load-image';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Store } from 'src/redux/configure-store';
+import { Store } from '../../redux/configure-store';
 
-import { getMeAction } from 'src/redux/me/get-me';
-import { setUserDataAction } from 'src/redux/me/set-me';
-import { updateMeAction } from 'src/redux/me/update-me';
-import { updateCardAction } from 'src/redux/me/update-card';
+import { getMeAction } from '../../redux/me/get-me';
+import { setUserDataAction } from '../../redux/me/set-me';
+import { updateMeAction } from '../../redux/me/update-me';
+import { updateCardAction } from '../..//redux/me/update-card';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -193,7 +193,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     } else {
       this.setState({ country_error: false });
     }
-    if (/[@:\/]/ig.test(this.state.twitter) || /[@:\/]/ig.test(this.state.instagram)) {
+    if (/[@:/]/ig.test(this.state.twitter) || /[@:/]/ig.test(this.state.instagram)) {
       ok = false;
       this.setState({ social_error: true });
     } else {
@@ -276,25 +276,25 @@ class UserDetailsComponent extends React.Component<Props, any> {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
-          <img src={userData.image} className='image-preview loading-image' />
+          <img src={userData.image} className='image-preview loading-image' alt="Loading" />
         </div>
       );
     } else if (processingImage) {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
-          <img src={avatar} className='image-preview loading-image' />
+          <img src={avatar} className='image-preview loading-image' alt="Loading" />
         </div>
       );
     }
 
     const placeholderImage = userData.image ? (
-      <img src={userData.image} className='image-preview' />
+      <img src={userData.image} className='image-preview' alt="Avatar" />
     ) : (
-        <img src={avatar} className="image-preview" />
+        <img src={avatar} className="image-preview" alt="Avatar" />
       );
 
-    return photoBody ? <img src={photoBody} className="image-preview" /> : placeholderImage;
+    return photoBody ? <img src={photoBody} className="image-preview" alt="Avatar" /> : placeholderImage;
   };
 
   renderPhotoSelector = () => {

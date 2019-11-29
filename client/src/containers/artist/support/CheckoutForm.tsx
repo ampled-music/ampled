@@ -2,14 +2,14 @@ import './checkout-form.scss';
 
 import * as React from 'react';
 import { injectStripe, CardCVCElement, CardExpiryElement, CardNumberElement } from 'react-stripe-elements';
-import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast';
+import { showToastMessage, MessageType } from '../../shared/toast/toast';
 import { Link } from 'react-router-dom';
 import { SingleCardDisplay } from '../../user-details/UserDetails';
 
 interface Props {
   artistPageId: number;
   subscriptionLevelValue: number;
-  stripe: any;
+  stripe?: any;
   createSubscription: (
     subscription: { artistPageId: number; subscriptionLevelValue: number; paymentToken: string },
   ) => void;

@@ -3,12 +3,12 @@ import './post-container.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { createCommentAction } from 'src/redux/comments/create';
-import { deleteCommentAction } from 'src/redux/comments/delete';
-import { Store } from 'src/redux/configure-store';
+import { openAuthModalAction } from '../../../redux/authentication/authentication-modal';
+import { createCommentAction } from '../../../redux/comments/create';
+import { deleteCommentAction } from '../../../redux/comments/delete';
+import { Store } from '../../../redux/configure-store';
 
-import StackGrid, { transitions } from "react-stack-grid";
+import StackGrid, { transitions } from 'react-stack-grid';
 
 import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as commentsInitialState } from '../../../redux/comments/initial-state';

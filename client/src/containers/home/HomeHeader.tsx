@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { config } from 'src/config';
+import { config } from '../../config';
 import header_collage from '../../images/home/home_header_collage_4.png';
 
 interface Props {

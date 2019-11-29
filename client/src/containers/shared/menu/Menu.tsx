@@ -4,8 +4,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { logoutAction } from 'src/redux/authentication/logout';
-import { Store } from 'src/redux/configure-store';
+import { logoutAction } from '../../../redux/authentication/logout';
+import { Store } from '../../../redux/configure-store';
 import * as store from 'store';
 
 import { faCog } from '@fortawesome/free-solid-svg-icons';

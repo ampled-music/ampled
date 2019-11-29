@@ -9,7 +9,7 @@ import cx from 'classnames';
 import { Image, Transformation } from 'cloudinary-react';
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ArtistModel } from 'src/redux/artists/initial-state';
+import { ArtistModel } from '../../redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
 import TextTruncate from 'react-text-truncate';
 import * as R from 'ramda';
@@ -38,9 +38,8 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   componentDidUpdate = async (prevProps) => {
     const { artist: { video_url } } = this.props;
-    if (video_url === prevProps.artist.video_url && this.state.screenshotURL) {
-      return;
-    } else if (video_url) {
+    const { artist: { video_url: prevURL } } = prevProps;
+    if (video_url !== prevURL && !this.state.screenshotURL) {
       this.setState({
         screenshotURL: await this.getThumbnailURLFromVideoURL(video_url)
       });
@@ -56,7 +55,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         return vimeoURL;
       }
     } else if (/youtu/i.test(videoURL)) {
-      const youtubeId = videoURL.match(/(youtube\.com\/watch\?v\=|youtu.be\/)(.+)/i)[2];
+      const youtubeId = videoURL.match(/(youtube\.com\/watch\?v=|youtu.be\/)(.+)/i)[2];
       return `https://img.youtube.com/vi/${youtubeId}/0.jpg`;
     }
     return this.state.screenshotURL;
@@ -175,7 +174,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
   };
 
-  renderCloudinaryPhoto = (image: string, crop: number, ) => {
+  renderCloudinaryPhoto = (image: string, crop: number, altText: string) => {
     const crop_url_path = `w_${crop},h_${crop},c_fill`;
     const cloudinary_id = image.substring(image.lastIndexOf("/") + 1, image.lastIndexOf("."));
     if (image.includes('https://res.cloudinary')) {
@@ -186,7 +185,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       )
     } else {
       const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-      return <img src={img_src} />;
+      return <img src={img_src} alt={altText} />;
     }
   };
 
@@ -196,7 +195,11 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__photos">
         {artist.images &&
           artist.images.map((image, index) => {
-            return <div key={index} className={cx('artist-header__photo', { 'active': index === 0 })}>{this.renderCloudinaryPhoto(image, 800)}</div>;
+            return (
+              <div key={index} className={cx('artist-header__photo', { active: index === 0 })}>
+                {this.renderCloudinaryPhoto(image, 800, 'Artist header')}
+              </div>
+            );
           })
         }
       </div>
@@ -211,7 +214,15 @@ export class ArtistHeader extends React.Component<Props, any> {
         {artist.images &&
           artist.images.map((_image, index) => {
             if (artist.images.length > 1) {
-              return <span key={index} className={cx('artist-header__banner-icons_icon', { 'active': index === 0 })} onClick={() => this.selectBanner(index)}></span>
+              return (
+                <span
+                  key={index}
+                  className={cx('artist-header__banner-icons_icon', { active: index === 0 })}
+                  onClick={() => this.selectBanner(index)}
+                ></span>
+              );
+            } else {
+              return null;
             }
           })
         }
@@ -283,17 +294,19 @@ export class ArtistHeader extends React.Component<Props, any> {
     if (artist.bio) {
       return (
         <div>
-          <div className={cx('artist-header__message_container', { 'paper_md': !artist.video_url })} style={{ borderColor: artist.accent_color }}>
+          <div
+            className={cx('artist-header__message_container', { paper_md: !artist.video_url })}
+            style={{ borderColor: artist.accent_color }}
+          >
             <div className="artist-header__message_text">
-              <img className="artist-header__message_paper-bg" src={artist.video_url ? paper_sm : paper_md} />
-              <TextTruncate
-                line={artist.video_url ? 5 : 9}
-                element="span"
-                truncateText="&#8230;"
-                text={artist.bio}
-              />
+              <img className="artist-header__message_paper-bg" src={artist.video_url ? paper_sm : paper_md} alt="" />
+              <TextTruncate line={artist.video_url ? 5 : 9} element="span" truncateText="&#8230;" text={artist.bio} />
             </div>
-            <button className="btn btn-ampled btn-read-more" style={{ borderColor }} onClick={this.props.openMessageModal}>
+            <button
+              className="btn btn-ampled btn-read-more"
+              style={{ borderColor }}
+              onClick={this.props.openMessageModal}
+            >
               Read More
             </button>
           </div>
@@ -322,7 +335,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             )}
           </div>
         </div>
-        {supporter.also_supports || supporter.member_of && (
+        {(supporter.also_supports || supporter.member_of) && (
           <div className="supporter__hover-card_bands">
             {supporter.also_supports && (
               <div className="supporter__hover-card_bands_section">
@@ -427,7 +440,7 @@ export class ArtistHeader extends React.Component<Props, any> {
               </div>
               <div className="artist-header__supporters_all col-8">
                 {artist.supporters
-                  .filter((supporter) => !R.equals(R.path('most_recent_supporter', 'id', artist), +supporter.id))
+                  .filter((supporter) => !R.equals(R.path(['most_recent_supporter', 'id'], artist), +supporter.id))
                   .map((supporter) => (
                     <div key={`minisupporter-${supporter.id}`}>
                       <RenderSupporter

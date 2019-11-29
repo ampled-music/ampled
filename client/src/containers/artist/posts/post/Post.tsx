@@ -3,8 +3,8 @@ import './post.scss';
 import cx from 'classnames';
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
-import { routePaths } from 'src/containers/route-paths';
-import { UserRoles } from 'src/containers/shared/user-roles';
+import { routePaths } from '../../../route-paths';
+import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
 
 import avatar from '../../../../images/ampled_avatar.svg';
@@ -24,7 +24,7 @@ import { CommentForm } from '../comments/CommentForm';
 import { PostForm } from '../post-form/PostForm';
 import { styles } from './post-style';
 
-import { deletePost } from 'src/api/post/delete-post';
+import { deletePost } from '../../../../api/post/delete-post';
 
 class PostComponent extends React.Component<any, any> {
   state = {
@@ -186,6 +186,19 @@ class PostComponent extends React.Component<any, any> {
     )
   };
 
+  renderCloudinaryPhoto = (image: string, crop: number, ) => {
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
+    if (image) {
+      if (image.includes('https://res.cloudinary')) {
+        const img_src = image.replace('upload/', `upload/${crop_url_path}/`);
+        return img_src;
+      } else {
+        const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+        return img_src;
+      }
+    }
+  };
+
   renderPost = () => {
     const { classes, post, accentColor, me } = this.props;
 
@@ -260,7 +273,7 @@ class PostComponent extends React.Component<any, any> {
 
             {post.image_url && !post.has_audio && (
               <div className="post__image-container">
-                <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
+                <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={this.renderCloudinaryPhoto(post.image_url, 500)}  />
                 {!allowDetails && this.renderLock()}
               </div>
             )}
@@ -269,7 +282,7 @@ class PostComponent extends React.Component<any, any> {
               <div className="post__audio-container">
                   <div className="post__image-container">
                 {post.image_url && (
-                    <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
+                    <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={this.renderCloudinaryPhoto(post.image_url, 500)}  />
                   )}
                   {!post.image_url && !allowDetails && (
                     <div
@@ -283,7 +296,8 @@ class PostComponent extends React.Component<any, any> {
                     {!allowDetails && this.renderLock()}
                   </div>
                 {allowDetails && (
-                  <AudioPlayer url={this.returnPlayableUrl()} image={post.image_url} accentColor={accentColor} />
+
+                  <AudioPlayer url={this.returnPlayableUrl()} image={this.renderCloudinaryPhoto(post.image_url, 500)} accentColor={accentColor} />
                 )}
               </div>
                 )}
@@ -310,7 +324,7 @@ class PostComponent extends React.Component<any, any> {
                 <Linkify
                   componentDecorator={
                     (decoratedHref: string, decoratedText: string, key: number) =>
-                      (<a href={decoratedHref} key={key} target="_blank">
+                      (<a href={decoratedHref} key={key} target="_blank" rel="noopener noreferrer">
                         {decoratedText}
                       </a>)
                   }

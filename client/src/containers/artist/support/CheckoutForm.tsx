@@ -20,7 +20,30 @@ interface Props {
 class CheckoutFormComponent extends React.Component<Props, any> {
   state = {
     disableActions: false,
+    invalidCard: false,
   };
+
+  componentDidMount = () => {
+    const {
+      userData: { cardInfo },
+    } = this.props;
+
+    if (cardInfo && !cardInfo.is_valid) {
+      this.setState({ disableActions: true, invalidCard: true });
+    }
+  }
+
+  componentDidUpdate = (prevProps) => {
+    const {
+      userData: { cardInfo },
+    } = this.props;
+
+    if (!prevProps.userData && cardInfo) {
+      if (!cardInfo.is_valid) {
+        this.setState({ disableActions: true, invalidCard: true });
+      }
+    }
+  }
 
   submit = async (event) => {
     const {
@@ -65,6 +88,8 @@ class CheckoutFormComponent extends React.Component<Props, any> {
     const {
       userData: { cardInfo },
     } = this.props;
+    const { invalidCard } = this.state;
+
     return (
       <div className="container checkout-form-container">
         <div className="row justify-content-center">
@@ -96,36 +121,52 @@ class CheckoutFormComponent extends React.Component<Props, any> {
                   <h3>Use your existing card</h3>
                   <div className="form-row">
                     <div className="col">
-                      <div style={{textAlign: 'left'}}>
+                      <div style={{ textAlign: 'left' }}>
                         <SingleCardDisplay {...cardInfo} />
                       </div>
                       <br />
-                      <Link to="/user-details" className="btn btn-link btn-edit-card">Edit your card</Link>
+                      {invalidCard && (
+                        <Link to="/user-details" className="btn btn-link btn-edit-card">
+                          Replace your card with
+                          <br />a valid one to proceed
+                        </Link>
+                      )}
+                      {!invalidCard && (
+                        <Link to="/user-details" className="btn btn-link btn-edit-card">
+                          Edit your card
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </>
               )}
 
-              <div className="form-row" style={{ display: 'inline-block' }}>
-                <p className="transparency">
-                  Your total charge will be
-                  <br />
-                </p>
-                <h2 className="transparency">${this.calculateSupportTotal(this.props.subscriptionLevelValue / 100)}</h2>
-              </div>
-              <div className="actions">
-                <button
-                  disabled={this.state.disableActions}
-                  className="btn btn-secondary"
-                  type="button"
-                  onClick={this.props.declineStep}
-                >
-                  Change amount
-                </button>
-                <button disabled={this.state.disableActions} className="btn btn-primary" type="submit">
-                  Support
-                </button>
-              </div>
+              {!invalidCard && (
+                <>
+                  <div className="form-row" style={{ display: 'inline-block' }}>
+                    <p className="transparency">
+                      Your total charge will be
+                      <br />
+                    </p>
+                    <h2 className="transparency">
+                      ${this.calculateSupportTotal(this.props.subscriptionLevelValue / 100)}
+                    </h2>
+                  </div>
+                  <div className="actions">
+                    <button
+                      disabled={this.state.disableActions}
+                      className="btn btn-secondary"
+                      type="button"
+                      onClick={this.props.declineStep}
+                    >
+                      Change amount
+                    </button>
+                    <button disabled={this.state.disableActions} className="btn btn-primary" type="submit">
+                      Support
+                    </button>
+                  </div>
+                </>
+              )}
             </form>
           </div>
         </div>

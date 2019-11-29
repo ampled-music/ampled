@@ -2,10 +2,10 @@ import './checkout-form.scss';
 
 import * as React from 'react';
 import { injectStripe, CardCVCElement, CardExpiryElement, CardNumberElement } from 'react-stripe-elements';
-import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast';
+import { showToastMessage, MessageType } from '../../shared/toast/toast';
 
 interface Props {
-  stripe: any;
+  stripe?: any;
   updateCard: Function;
   declineStep: Function;
 }

@@ -1,5 +1,5 @@
 import { createActionThunk } from 'redux-thunk-actions';
-import { updateCard } from 'src/api/me/update-card';
+import { updateCard } from '../../api/me/update-card';
 
 import { actions } from './actions';
 import { Reducer } from './initial-state';

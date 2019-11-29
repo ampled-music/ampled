@@ -196,7 +196,7 @@ export class SupportComponent extends React.Component<Props, any> {
   calculateSupportTotal = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100).toFixed(2);
 
   renderSupportLevelForm = (artistName) => (
-    <div className="row justify-content-center">
+    <div className="row justify-content-center" key={artistName}>
       <div className="col-md-5">
         <div key="support__level-form" className="support__level-form">
           <h3>Support What You Want</h3>

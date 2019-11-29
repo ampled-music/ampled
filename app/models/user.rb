@@ -6,6 +6,7 @@
 #  card_brand             :string
 #  card_exp_month         :string
 #  card_exp_year          :string
+#  card_is_valid          :boolean
 #  card_last4             :string
 #  city                   :string
 #  confirmation_sent_at   :datetime

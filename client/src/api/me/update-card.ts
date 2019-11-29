@@ -15,6 +15,7 @@ export const updateCard = async (token) => {
       exp_year: data.card_exp_year,
       brand: data.card_brand,
       last4: data.card_last4,
+      is_valid: data.card_is_valid,
     }
   };
 };

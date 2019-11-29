@@ -36,7 +36,7 @@ type Props = typeof loginInitialState &
   typeof meInitialState &
   Dispatchers & { history: any; };
 
-const SingleCardDisplay = ({ brand, last4, exp_month, exp_year }) => {
+const SingleCardDisplay = ({ brand, last4, exp_month, exp_year, is_valid }) => {
   let brandIcon = faCcStripe;
   switch (brand.toLowerCase()) {
     case 'visa':
@@ -62,7 +62,17 @@ const SingleCardDisplay = ({ brand, last4, exp_month, exp_year }) => {
       </div>
       <CardContent>
         <div className="row">
-          <div className="col-9">
+          <div className="col-6">
+            <h6>Status</h6>
+            <span
+              style={{
+                color: is_valid ? '#28a745' : '#dc3545',
+              }}
+            >
+              {is_valid ? 'Valid' : 'Invalid'}
+            </span>
+          </div>
+          <div className="col-6">
             <h6>Expiration</h6>
             {exp_month}/{exp_year}
           </div>
@@ -77,6 +87,7 @@ interface CardInfoProps {
   last4: String;
   exp_month: String;
   exp_year: String;
+  is_valid: Boolean;
   updateCard: Function;
   updatedCard: Boolean;
 }

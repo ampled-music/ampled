@@ -21,6 +21,7 @@ json.userInfo do
       json.exp_year @stripe_info[:exp_year]
       json.last4 @stripe_info[:last4]
       json.brand @stripe_info[:brand]
+      json.is_valid @stripe_info[:is_valid]
     else
       json.null!
     end

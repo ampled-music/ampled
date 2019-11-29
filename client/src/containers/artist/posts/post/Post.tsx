@@ -186,6 +186,19 @@ class PostComponent extends React.Component<any, any> {
     )
   };
 
+  renderCloudinaryPhoto = (image: string, crop: number, ) => {
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
+    if (image) {
+      if (image.includes('https://res.cloudinary')) {
+        const img_src = image.replace('upload/', `upload/${crop_url_path}/`);
+        return img_src;
+      } else {
+        const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+        return img_src;
+      }
+    }
+  };
+
   renderPost = () => {
     const { classes, post, accentColor, me } = this.props;
 
@@ -260,7 +273,7 @@ class PostComponent extends React.Component<any, any> {
 
             {post.image_url && !post.has_audio && (
               <div className="post__image-container">
-                <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
+                <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={this.renderCloudinaryPhoto(post.image_url, 500)}  />
                 {!allowDetails && this.renderLock()}
               </div>
             )}
@@ -269,7 +282,7 @@ class PostComponent extends React.Component<any, any> {
               <div className="post__audio-container">
                   <div className="post__image-container">
                 {post.image_url && (
-                    <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
+                    <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={this.renderCloudinaryPhoto(post.image_url, 500)}  />
                   )}
                   {!post.image_url && !allowDetails && (
                     <div
@@ -283,7 +296,8 @@ class PostComponent extends React.Component<any, any> {
                     {!allowDetails && this.renderLock()}
                   </div>
                 {allowDetails && (
-                  <AudioPlayer url={this.returnPlayableUrl()} image={post.image_url} accentColor={accentColor} />
+
+                  <AudioPlayer url={this.returnPlayableUrl()} image={this.renderCloudinaryPhoto(post.image_url, 500)} accentColor={accentColor} />
                 )}
               </div>
                 )}

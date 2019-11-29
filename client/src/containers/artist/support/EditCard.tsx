@@ -37,7 +37,7 @@ class EditCardFormComponent extends React.Component<Props, any> {
       <div className="container checkout-form-container">
         <div className="row justify-content-center">
           <div className="col-md-12">
-            <form className="form-group support__level-form" onSubmit={this.submit}>
+            <form className="form-group support__level-form">
               <h3>Enter your payment details</h3>
               <div className="form-row">
                 <div className="col">
@@ -56,7 +56,7 @@ class EditCardFormComponent extends React.Component<Props, any> {
                 </div>
               </div>
               <div className="actions">
-                <button disabled={this.state.disableActions} className="btn btn-primary" type="submit">
+                <button disabled={this.state.disableActions} className="btn btn-primary" onClick={this.submit}>
                   Update
                 </button>
                 <button

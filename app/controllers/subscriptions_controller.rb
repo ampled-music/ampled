@@ -39,10 +39,26 @@ class SubscriptionsController < ApplicationController
   end
 
   def update_platform_customer
+    # Update platform customer
     customer = Stripe::Customer.update(current_user.stripe_customer_id, source: params["token"])
     card = customer.sources.data[0]
+    card_id = card.id
     current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
                         card_exp_year: card.exp_year, card_last4: card.last4)
+
+    # Update artist customer(s)
+    @subscriptions = current_user&.subscriptions
+    @subscriptions.map do |sub|
+      customer_id = sub.stripe_customer_id
+      ap_stripe_id = sub.artist_page.stripe_user_id
+      token = Stripe::Token.create(
+        { customer: current_user.stripe_customer_id },
+        stripe_account: ap_stripe_id
+      )
+      Stripe::Customer.update(customer_id, { source: token.id }, stripe_account: ap_stripe_id)
+    end
+
+    # Send back update
     render json: current_user
   end
 

@@ -6,7 +6,7 @@
     "start": "concurrently -k -r npm:start:client npm:start:server",
     "start:client": "cd client && npm-run-all start",
     "start:server": "rails s",
-    "build-client": "cd client && npm i --only=dev && npm i && npm run build",
+    "build-client": "cd client && yarn install --production=false && npm run build",
     "deploy": "cp -a client/build/. public/",
     "heroku-postbuild": "npm run build-client && npm run deploy",
     "compose-up": "docker-compose up",

@@ -26,7 +26,12 @@ export class ArtistInfo extends React.Component<Props, any> {
     if ( twitterHandle ) {
       return (
         <div className="artist-info__social_twitter">
-          <a href={`https://twitter.com/${twitterHandle}`} target="_blank" style={{ color: 'black' }}>
+          <a
+            href={`https://twitter.com/${twitterHandle}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'black' }}
+          >
             <FontAwesomeIcon className="icon" icon={faTwitter} />
             <span>@{twitterHandle}</span>
           </a>
@@ -40,7 +45,12 @@ export class ArtistInfo extends React.Component<Props, any> {
     if ( instagramHandle ) {
       return (
         <div className="artist-info__social_instagram">
-          <a href={`https://instagram.com/${instagramHandle}`} target="_blank" style={{ color: 'black' }}>
+          <a
+            href={`https://instagram.com/${instagramHandle}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'black' }}
+          >
             <FontAwesomeIcon className="icon" icon={faInstagram} />
             <span>@{instagramHandle}</span>
           </a>

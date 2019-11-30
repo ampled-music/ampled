@@ -1,20 +1,21 @@
+import './../artist/artist.scss';
 import './user-details.scss';
 
 import * as loadImage from 'blueimp-load-image';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Store } from 'src/redux/configure-store';
+import { Store } from '../../redux/configure-store';
 
-import { getMeAction } from 'src/redux/me/get-me';
-import { setUserDataAction } from 'src/redux/me/set-me';
-import { updateMeAction } from 'src/redux/me/update-me';
+import { getMeAction } from '../../redux/me/get-me';
+import { setUserDataAction } from '../../redux/me/set-me';
+import { updateMeAction } from '../../redux/me/update-me';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { Button, DialogActions, Select, MenuItem, Input, TextField, InputAdornment, CircularProgress } from '@material-ui/core';
+import { Button, DialogActions, MenuItem, TextField, InputAdornment, CircularProgress } from '@material-ui/core';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -84,7 +85,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     } else {
       this.setState({ country_error: false });
     }
-    if (/[@:\/]/ig.test(this.state.twitter) || /[@:\/]/ig.test(this.state.instagram)) {
+    if (/[@:/]/ig.test(this.state.twitter) || /[@:/]/ig.test(this.state.instagram)) {
       ok = false;
       this.setState({ social_error: true });
     } else {
@@ -130,12 +131,12 @@ class UserDetailsComponent extends React.Component<Props, any> {
     const { userData } = this.props;
     return (
       <div className="user-image-container">
-        <button onClick={this.showUserPhotoModal}>
+        <button onClick={this.showUserPhotoModal} aria-label="Edit avatar">
           {userData.image ? (
-            <img src={userData.image} className="user-image" />
+            <img src={userData.image} className="user-image" alt="Your avatar" />
           ) : (
-              <img src={avatar} className="user-image" />
-            )}
+            <img src={avatar} className="user-image" alt="Your avatar" />
+          )}
           <b className="tag">
             <FontAwesomeIcon icon={faEdit} />
           </b>
@@ -167,25 +168,25 @@ class UserDetailsComponent extends React.Component<Props, any> {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
-          <img src={userData.image} className='image-preview loading-image' />
+          <img src={userData.image} className='image-preview loading-image' alt="Loading" />
         </div>
       );
     } else if (processingImage) {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
-          <img src={avatar} className='image-preview loading-image' />
+          <img src={avatar} className='image-preview loading-image' alt="Loading" />
         </div>
       );
     }
 
     const placeholderImage = userData.image ? (
-      <img src={userData.image} className='image-preview' />
+      <img src={userData.image} className='image-preview' alt="Avatar" />
     ) : (
-        <img src={avatar} className="image-preview" />
+        <img src={avatar} className="image-preview" alt="Avatar" />
       );
 
-    return photoBody ? <img src={photoBody} className="image-preview" /> : placeholderImage;
+    return photoBody ? <img src={photoBody} className="image-preview" alt="Avatar" /> : placeholderImage;
   };
 
   renderPhotoSelector = () => {
@@ -273,22 +274,26 @@ class UserDetailsComponent extends React.Component<Props, any> {
               </div>
               <div className="row col-10 col-md-9">
                 <div className="col-md-6">
-                  <Input
+                  <TextField
                     name="name"
-                    placeholder="First name"
+                    label="First name"
+                    id="first-name" 
                     value={this.state.name}
                     onChange={this.handleChange}
                     fullWidth
                     required
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
                 <div className="col-md-6">
-                  <Input
+                  <TextField
                     name="last_name"
-                    placeholder="Last name (Optional)"
+                    label="Last name (Optional)"
+                    id="last-name" 
                     value={this.state.last_name}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
               </div>
@@ -300,23 +305,27 @@ class UserDetailsComponent extends React.Component<Props, any> {
               </div>
               <div className="row col-10 col-md-9">
                 <div className="col-md-6">
-                  <Input
+                  <TextField
                     name="city"
-                    placeholder="City"
+                    label="City"
+                    id="city"
                     value={this.state.city}
                     onChange={this.handleChange}
                     fullWidth
                     required
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
                 <div className="col-md-6">
-                  <Input
+                  <TextField
                     name="country"
-                    placeholder="Country"
+                    label="Country"
+                    id="country"
                     value={this.state.country}
                     onChange={this.handleChange}
                     fullWidth
                     required
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
               </div>
@@ -331,29 +340,37 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <div className="user-details__subtitle">Social</div>
                 </div>
                 <div className="col-10">
-                  <Input
+                  <TextField
                     name="twitter"
+                    label="Twitter"
+                    id="twitter"
                     placeholder="Twitter"
                     value={this.state.twitter}
                     onChange={this.handleChange}
                     fullWidth
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <FontAwesomeIcon className="icon" icon={faTwitter} />
-                      </InputAdornment>
-                    }
+                    InputProps={{
+                      startAdornment:
+                        (<InputAdornment position="start">
+                          <FontAwesomeIcon className="icon" icon={faTwitter} />
+                        </InputAdornment>)
+                    }}
+                    InputLabelProps={{ shrink: true }}
                   />
-                  <Input
+                  <TextField
                     name="instagram"
+                    label="Instagram"
+                    id="instagram"
                     placeholder="Instagram"
                     value={this.state.instagram}
                     onChange={this.handleChange}
                     fullWidth
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <FontAwesomeIcon className="icon" icon={faInstagram} />
-                      </InputAdornment>
-                    }
+                    InputProps={{
+                      startAdornment:
+                        (<InputAdornment position="start">
+                          <FontAwesomeIcon className="icon" icon={faInstagram} />
+                        </InputAdornment>)
+                    }}
+                    InputLabelProps={{ shrink: true }}
                   />
                   {this.state.social_error && (
                     <span style={{ color: 'red', fontStyle: 'italic' }}>
@@ -365,12 +382,15 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   )}
                   <TextField
                     name="bio"
+                    label="Bio"
+                    id="bio"
                     value={this.state.bio}
                     onChange={this.handleChange}
                     multiline
                     rows="5"
                     fullWidth
                     variant="outlined"
+                    // InputLabelProps={{ shrink: true, variant: 'standard' }}
                   />
                 </div>
               </div>
@@ -399,11 +419,14 @@ class UserDetailsComponent extends React.Component<Props, any> {
               </div>
               <div className="row col-10 col-md-9">
                 <div className="col-12">
-                  <Input
+                  <TextField
                     name="ship_country"
+                    id="ship-country"
+                    label="Shipping country"
                     value={this.state.ship_country}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
               </div>
@@ -414,19 +437,25 @@ class UserDetailsComponent extends React.Component<Props, any> {
               </div>
               <div className="row col-10 col-md-9">
                 <div className="col-12">
-                  <Input
+                  <TextField
                     name="ship_address"
+                    id="ship-address"
+                    label="Shipping address"
                     placeholder="123 Fake St"
                     value={this.state.ship_address}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
-                  <Input
+                  <TextField
                     name="ship_address2"
                     placeholder="Apt #123"
+                    id="ship-address2"
+                    label="Shipping address line 2"
                     value={this.state.ship_address2}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
               </div>
@@ -438,22 +467,28 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
               <div className="row col-10 col-md-9">
                 <div className="col-md-5">
-                  <Input
+                  <TextField
                     name="ship_city"
                     placeholder="Anytown"
+                    id="ship-city"
+                    label="Shipping city"
                     value={this.state.ship_city}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
                 <div className="col-md-4">
-                  <Select
+                  <TextField
+                    select
+                    id="ship-state"
+                    label="State"
                     name="ship_state"
                     value={this.state.ship_state}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   >
-                    <MenuItem value="State"><em>State</em></MenuItem>
                     <MenuItem value="Alabama">Alabama</MenuItem>
                     <MenuItem value="Alaska">Alaska</MenuItem>
                     <MenuItem value="Arizona">Arizona</MenuItem>
@@ -504,15 +539,18 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     <MenuItem value="West Virginia">West Virginia</MenuItem>
                     <MenuItem value="Wisconsin">Wisconsin</MenuItem>
                     <MenuItem value="Wyoming">Wyoming</MenuItem>
-                  </Select>
+                  </TextField>
                 </div>
                 <div className="col-md-3">
-                  <Input
+                  <TextField
                     name="ship_zip"
-                    placeholder="Zip code"
+                    placeholder="00000"
+                    id="ship-zip"
+                    label="ZIP code"
                     value={this.state.ship_zip}
                     onChange={this.handleChange}
                     fullWidth
+                    InputLabelProps={{ shrink: true }}
                   />
                 </div>
               </div>

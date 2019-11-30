@@ -3,11 +3,11 @@ import './login.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { Store } from 'src/redux/configure-store';
+import { closeAuthModalAction, openAuthModalAction } from '../../redux/authentication/authentication-modal';
+import { Store } from '../../redux/configure-store';
 import * as store from 'store';
-import { signupAction } from 'src/redux/signup/signup';
-import { loginAction } from 'src/redux/authentication/login';
+import { signupAction } from '../../redux/signup/signup';
+import { loginAction } from '../../redux/authentication/login';
 
 import { initialState as authenticationInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -140,7 +140,7 @@ class SignupComponent extends React.Component<Props, any> {
 
     return (
       <div className="login__container">
-        <img className="tear tear__topper" src={tear} />
+        <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
           <h4>SIGN UP</h4>
           {authentication.showSupportMessage && authentication.showSupportMessage === 'post' && authentication.artistName && (
@@ -155,6 +155,7 @@ class SignupComponent extends React.Component<Props, any> {
               type="text"
               placeholder="First Name"
               name="name"
+              aria-label="First name" 
               onChange={this.handleChange}
               required
             />
@@ -163,6 +164,7 @@ class SignupComponent extends React.Component<Props, any> {
               type="text"
               placeholder="Last Name (Optional)"
               name="last_name"
+              aria-label="Last name (optional)" 
               onChange={this.handleChange}
             />
 
@@ -171,6 +173,7 @@ class SignupComponent extends React.Component<Props, any> {
               type="email"
               placeholder="Email"
               name="email"
+              aria-label="Email Address"
               onChange={this.handleChange}
               required
             />
@@ -181,6 +184,7 @@ class SignupComponent extends React.Component<Props, any> {
               type="password"
               placeholder="Password"
               name="password"
+              aria-label="Password"
               onChange={this.handleChange}
               required
               minLength={6}
@@ -192,6 +196,7 @@ class SignupComponent extends React.Component<Props, any> {
               type="password"
               placeholder="Confirm Password"
               name="confirmPassword"
+              aria-label="Confirm password"
               onChange={this.handleChange}
               required
               minLength={6}
@@ -199,7 +204,7 @@ class SignupComponent extends React.Component<Props, any> {
             <span className="error-message">{(matchPasswordsError && passwordErrorMessage) || passwordError}</span>
 
             <label className="terms">
-              <input type="checkbox" name="terms" onChange={this.toggle} required />
+              <input type="checkbox" name="terms" onChange={this.toggle} required aria-label="Accept terms of service" />
               You agree to our{' '}
               <a href="">
                 <u>Terms of Service</u>

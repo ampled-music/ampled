@@ -1,12 +1,7 @@
 import * as React from 'react';
 
-import { config } from 'src/config';
+import { config } from '../../config';
 import header_collage from '../../images/home/home_header_collage_4.png';
-
-const openInNewTab = (url: string) => {
-  var win = window.open(url, '_blank');
-  win.focus();
-};
 
 interface Props {
   bgColor: string;
@@ -31,12 +26,12 @@ class HomeHeader extends React.Component<Props, any> {
               For artists of any sound or size. Receive support via direct payments from your community and sustainably
               make music.
             </div>
-            <button
+            <a
               className="home-header__button btn btn-ampled"
-              onClick={() => openInNewTab(config.menuUrls.createArtist)}
+              href={config.menuUrls.createArtist}
             >
               Create Your Page
-            </button>
+            </a>
             {this.state.showNewsletter ? (
               <div className="footer input-group mb-3" style={{
                 zIndex: 999999,
@@ -47,7 +42,7 @@ class HomeHeader extends React.Component<Props, any> {
                   action="https://ampled.us19.list-manage.com/subscribe/post?u=514372f571f3cb5abdf8a2637&amp;id=50f2ab4389"
                   method="post"
                 >
-                  <input className="form-control" type="email" name="EMAIL" placeholder="Email Address" />
+                  <input className="form-control" type="email" name="EMAIL" aria-label="Email Address" placeholder="Email Address" />
                   <div className="input-group-append">
                     <input
                       type="submit"
@@ -71,7 +66,7 @@ class HomeHeader extends React.Component<Props, any> {
               )}
           </div>
           <div className="col-lg-8 col-xl-6">
-            <img className="home-header__image" src={header_collage} />
+            <img className="home-header__image" src={header_collage} alt="Ampled" />
           </div>
         </div>
       </div>

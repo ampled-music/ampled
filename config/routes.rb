@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   end
 
   get "/stripe_success", to: "pages#stripe_success"
+  post "/stripe_hook", to: "stripe#webhook"
 
   root to: "react#index"
   get "/artists/*path", to: "react#index"

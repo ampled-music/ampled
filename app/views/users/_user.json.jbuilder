@@ -1,7 +1,7 @@
 json.id user.id
 json.name user.name
 if user.last_name?
-  json.last_name = user.last_name.first
+  json.last_name user.last_name.first
 else
   json.null!
 end

@@ -114,7 +114,6 @@ ActiveRecord::Schema.define(version: 2019_11_29_230426) do
     t.string "profile_image_url"
     t.string "jti", null: false
     t.string "stripe_customer_id"
-    t.string "login_redirect_url"
     t.string "last_name"
     t.string "city"
     t.string "country"

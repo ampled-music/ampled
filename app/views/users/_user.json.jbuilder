@@ -1,5 +1,6 @@
 json.id user.id
 json.name user.name
+json.bio user.bio
 json.profile_image_url user.profile_image_url
 json.joined_since user.created_at.strftime("%B %Y")
 json.supports(user&.supported_artists) do |artist|

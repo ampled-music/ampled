@@ -245,7 +245,7 @@ class ArtistComponent extends React.Component<Props, any> {
               .new-post button:hover {
                 background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
               }
-              .supporter__hover-card_bands_name:hover {
+              .supporter__hover-card_bands_name a:hover {
                 color: ${artist.accent_color};
               }
               ${isSupporter && `

@@ -133,7 +133,9 @@ export class ArtistHeader extends React.Component<Props, any> {
                 <h6>Also Supports</h6>
                 {owner.supports
                   .map((artist) => (
-                    <a href={artist.slug} className="supporter__hover-card_bands_name">{artist.name}</a>
+                    <div className="supporter__hover-card_bands_name">
+                      <a href={artist.slug}>{artist.name}</a>
+                    </div>
                   ))}
               </div>
           </div>
@@ -366,7 +368,9 @@ export class ArtistHeader extends React.Component<Props, any> {
                 {supporter.supports
                   .filter((artist) => !R.equals(artist.name, artist_name))
                   .map((artist) => (
-                    <a href={artist.slug} className="supporter__hover-card_bands_name">{artist.name}</a>
+                    <div className="supporter__hover-card_bands_name">
+                      <a href={artist.slug}>{artist.name}</a>
+                    </div>
                   ))}
               </div>
             )}
@@ -375,7 +379,9 @@ export class ArtistHeader extends React.Component<Props, any> {
                 <h6>Member of</h6>
                 {supporter.member_of
                   .map((artist) => (
-                    <a href={artist.slug} className="supporter__hover-card_bands_name">{artist.name}</a>
+                    <div className="supporter__hover-card_bands_name">
+                      <a href={artist.slug}>{artist.name}</a>
+                    </div>
                   ))}
               </div>
             )}

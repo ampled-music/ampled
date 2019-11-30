@@ -495,6 +495,8 @@
         &_section {
           margin-bottom: 1rem;
           text-align: left;
+          display: flex;
+          flex-direction: column;
 
           &:last-child {
             margin-bottom: 0;
@@ -509,9 +511,11 @@
         &_name {
           text-transform: uppercase;
           font-size: .9rem;
-          color: $black;
-          display: block;
+          display: inline-block;
           transition: color $speed;
+          a {
+            color: $black;
+          }
         }
       }
     }

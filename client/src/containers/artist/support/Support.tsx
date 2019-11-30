@@ -74,7 +74,8 @@ export class SupportComponent extends React.Component<Props, any> {
       this.redirectToArtistsPage();
     }
 
-    if (subscriptions && subscriptions.hasError) {
+    if (subscriptions && subscriptions.hasError && !prevProps.subscriptions.hasError) {
+      getMe();
       showToastMessage(subscriptions.error, MessageType.ERROR);
     }
   }

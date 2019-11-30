@@ -104,8 +104,14 @@ class SubscriptionsController < ApplicationController
     token = create_token
     artist_customer = create_artist_customer(token)
 
-    stripe_subscription = create_stripe_subscription(plan, artist_customer.id)
-
+    begin
+      stripe_subscription = create_stripe_subscription(plan, artist_customer.id)
+    rescue StandardError => e
+      Raven.capture_exception(e)
+      # if saved card, flag as invalid
+      current_user.update(card_is_valid: false) if current_user.card_last4.present?
+      raise e
+    end
     Subscription.create!(
       user: current_user,
       artist_page: current_artist_page,
@@ -114,6 +120,10 @@ class SubscriptionsController < ApplicationController
       stripe_id: stripe_subscription.id,
       status: :active
     )
+    card = Stripe::Customer.retrieve(current_user.stripe_customer_id).sources.data[0]
+    current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
+                        card_exp_year: card.exp_year, card_last4: card.last4,
+                        card_is_valid: true)
   end
 
   def create_platform_customer

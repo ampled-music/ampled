@@ -1,11 +1,9 @@
 json.id user.id
 json.name user.name
-json.last_name do
-  if user.last_name?
-    json.last_name = user.last_name.first
-  else
-    json.null!
-  end
+if user.last_name?
+  json.last_name = user.last_name.first
+else
+  json.null!
 end
 json.bio user.bio
 json.profile_image_url user.profile_image_url

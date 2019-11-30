@@ -512,8 +512,8 @@
           text-transform: uppercase;
           font-size: .9rem;
           display: inline-block;
-          transition: color $speed;
           a {
+            transition: color $speed;
             color: $black;
           }
         }

@@ -1,10 +1,6 @@
 json.id user.id
 json.name user.name
-if user.last_name?
-  json.last_name user.last_name.first
-else
-  json.null!
-end
+json.last_name user.last_name.first unless user.last_name.nil?
 json.bio user.bio
 json.profile_image_url user.profile_image_url
 json.joined_since user.created_at.strftime("%B %Y")

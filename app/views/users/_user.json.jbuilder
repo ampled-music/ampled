@@ -1,8 +1,8 @@
 json.id user.id
 json.name user.name
-if user.last_name ?
-  json.last_name user.last_name.first
-end
+json.last_name = if user.last_name
+    user.last_name.first
+  end
 json.bio user.bio
 json.profile_image_url user.profile_image_url
 json.joined_since user.created_at.strftime("%B %Y")

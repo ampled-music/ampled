@@ -385,8 +385,6 @@
     display: block;
 
     &:hover {
-
-
       .supporter-image,
       .member-image {
         display: block;
@@ -401,8 +399,8 @@
           position: absolute;
           display: block;
           transform: rotate(45deg);
-          top: -20px;
-          left: 25%;
+          top: -18px;
+          left: 27%;
         }
 
         &:before {
@@ -413,8 +411,8 @@
         &:after {
           z-index: 301;
           transform: rotate(0deg);
-          top: -8px;
-          left: 25%;
+          top: -4px;
+          left: 27%;
           background-color: transparent;
           border-top: 11px solid $white;
           border-right: 11px solid transparent;
@@ -444,7 +442,6 @@
       box-shadow: 1px 1px 3px $gray-light;
       width: 350px;
       bottom: 100%;
-      margin-bottom: 5px;
       left: -150px;
 
       @include mq(0, $layout-m) {

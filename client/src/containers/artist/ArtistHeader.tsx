@@ -123,7 +123,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             )}
           </div>
         </div>
-        {owner.supports && (
+        {owner.supports.length > 0 && (
           <div className="supporter__hover-card_bands">
             <div className="supporter__hover-card_bands_section">
                 <h6>Also Supports</h6>

@@ -386,6 +386,7 @@
 
     &:hover {
 
+
       .supporter-image,
       .member-image {
         display: block;
@@ -424,6 +425,13 @@
 
       .supporter__hover-card {
         display: block;
+      }
+    }
+
+    &.artist-header__person {
+      .supporter__hover-card {
+        left: -20px;
+        width: 300px;
       }
     }
 
@@ -467,7 +475,8 @@
           flex-direction: column;
           text-align: left;
 
-          &_since {
+          &_since,
+          &_bio {
             font-family: $font-family-monospace;
             font-size: .8rem;
             @include mq(0, $layout-m) {
@@ -503,6 +512,9 @@
         &_name {
           text-transform: uppercase;
           font-size: .9rem;
+          color: $black;
+          display: block;
+          transition: color $speed;
         }
       }
     }

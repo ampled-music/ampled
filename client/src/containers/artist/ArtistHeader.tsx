@@ -343,23 +343,23 @@ export class ArtistHeader extends React.Component<Props, any> {
             )}
           </div>
         </div>
-        {(supporter.supports || supporter.memberOf) && (
+        {(supporter.supports || supporter.member_of) && (
           <div className="supporter__hover-card_bands">
-            {supporter.supports && (
+            {supporter.supports.length > 0 && (
               <div className="supporter__hover-card_bands_section">
                 <h6>Also Supports</h6>
                 {supporter.supports
                   .map((artist) => (
-                    <div className="supporter__hover-card_bands_name">{artist.name}</div>
+                    <a href={artist.slug} className="supporter__hover-card_bands_name">{artist.name}</a>
                   ))}
               </div>
             )}
-            {supporter.member_of && (
+            {supporter.member_of.length > 0 && (
               <div className="supporter__hover-card_bands_section">
                 <h6>Member of</h6>
                 {supporter.member_of
                   .map((artist) => (
-                    <div className="supporter__hover-card_bands_name">{artist.name}</div>
+                    <a href={artist.slug} className="supporter__hover-card_bands_name">{artist.name}</a>
                   ))}
               </div>
             )}

@@ -115,8 +115,8 @@ export class ArtistHeader extends React.Component<Props, any> {
         <div className="supporter__hover-card_header">
           <div className="supporter__hover-card_header_info">
             <div className="supporter__hover-card_header_info_name">{owner.name}
-              {owner.last_name && (
-                <span> {owner.last_name}.</span>
+              {owner.last_initial && (
+                <span> {owner.last_initial}.</span>
               )}
             </div>
             {owner.joined_since && (
@@ -345,8 +345,8 @@ export class ArtistHeader extends React.Component<Props, any> {
           )}
           <div className="supporter__hover-card_header_info">
             <div className="supporter__hover-card_header_info_name">{supporter.name}
-              {supporter.last_name && (
-                <span> {supporter.last_name}.</span>
+              {supporter.last_initial && (
+                <span> {supporter.last_initial}.</span>
               )}
             </div>
             {supporter.supports && (

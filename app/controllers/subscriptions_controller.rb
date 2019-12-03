@@ -112,7 +112,7 @@ class SubscriptionsController < ApplicationController
       current_user.update(card_is_valid: false) if current_user.card_last4.present?
       raise e
     end
-    Subscription.create!(
+    subscription = Subscription.create!(
       user: current_user,
       artist_page: current_artist_page,
       plan_id: plan.id,
@@ -124,6 +124,7 @@ class SubscriptionsController < ApplicationController
     current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
                         card_exp_year: card.exp_year, card_last4: card.last4,
                         card_is_valid: true)
+    subscription
   end
 
   def create_platform_customer

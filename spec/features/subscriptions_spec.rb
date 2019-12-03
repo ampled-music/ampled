@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SubscriptionsController, :vcr, type: :request do
   let(:user) do
     # when recording VCR cassettes, use a real (test) customer id
-    create(:user, stripe_customer_id: "cus_Evgqn1glWV1erN", confirmed_at: Time.current)
+    create(:user, stripe_customer_id: "cus_FfMNyx9ktbGwnx", confirmed_at: Time.current)
   end
   let(:artist_page) { create(:artist_page) }
   let(:other_artist_page) { create(:artist_page) }

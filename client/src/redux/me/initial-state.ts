@@ -5,6 +5,10 @@ export const initialState = {
   updating: false,
   updated: false,
   updatedData: undefined,
+  updatedCard: false,
+  updatingCard: false,
+  errorCard: undefined,
+  updatedCardData: undefined,
 };
 
 export interface Reducer {

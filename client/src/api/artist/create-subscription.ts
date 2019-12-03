@@ -15,5 +15,9 @@ export const createSubscription = async (subscription: {
     },
   });
 
+  if (data && data.status && data.status == 'error') {
+    throw data.message;
+  }
+
   return { subscriptionResult: data };
 };

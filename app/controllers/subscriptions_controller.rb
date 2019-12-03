@@ -19,6 +19,9 @@ class SubscriptionsController < ApplicationController
     subscription = subscribe_stripe
     NewSupporterEmailJob.perform_async(subscription.id)
     render json: subscription
+  rescue StandardError => e
+    Raven.capture_exception(e)
+    render json: { status: "error", message: e.message }
   end
 
   def update
@@ -33,6 +36,30 @@ class SubscriptionsController < ApplicationController
     current_subscription.cancel!
     # redirect_to artist_pages_url, notice: "Artist page was successfully destroyed."
     render json: :ok
+  end
+
+  def update_platform_customer
+    # Update platform customer
+    customer = Stripe::Customer.update(current_user.stripe_customer_id, source: params["token"])
+    card = customer.sources.data[0]
+    current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
+                        card_exp_year: card.exp_year, card_last4: card.last4,
+                        card_is_valid: true)
+
+    # Update artist customer(s)
+    @subscriptions = current_user&.subscriptions
+    @subscriptions.map do |sub|
+      customer_id = sub.stripe_customer_id
+      ap_stripe_id = sub.artist_page.stripe_user_id
+      token = Stripe::Token.create(
+        { customer: current_user.stripe_customer_id },
+        stripe_account: ap_stripe_id
+      )
+      Stripe::Customer.update(customer_id, { source: token.id }, stripe_account: ap_stripe_id)
+    end
+
+    # Send back update
+    render json: current_user
   end
 
   private
@@ -77,8 +104,14 @@ class SubscriptionsController < ApplicationController
     token = create_token
     artist_customer = create_artist_customer(token)
 
-    stripe_subscription = create_stripe_subscription(plan, artist_customer.id)
-
+    begin
+      stripe_subscription = create_stripe_subscription(plan, artist_customer.id)
+    rescue StandardError => e
+      Raven.capture_exception(e)
+      # if saved card, flag as invalid
+      current_user.update(card_is_valid: false) if current_user.card_last4.present?
+      raise e
+    end
     Subscription.create!(
       user: current_user,
       artist_page: current_artist_page,
@@ -87,6 +120,10 @@ class SubscriptionsController < ApplicationController
       stripe_id: stripe_subscription.id,
       status: :active
     )
+    card = Stripe::Customer.retrieve(current_user.stripe_customer_id).sources.data[0]
+    current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
+                        card_exp_year: card.exp_year, card_last4: card.last4,
+                        card_is_valid: true)
   end
 
   def create_platform_customer

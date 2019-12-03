@@ -62,6 +62,36 @@
     }
   }
 
+  .card {
+    border: 1px solid $gray-light;
+    box-shadow: none;
+    min-height: 180px;
+    &-empty {
+      justify-content: center;
+    }
+    &-header {
+      background-color: $white;
+      border-color: $gray-light;
+      font-family: $font-family-sans-serif;
+      font-size: .9rem;
+      &__icon {
+        margin-right: .5rem;
+      }
+    }
+    h6 {
+      font-family: $font-family-sans-serif;
+      color: $black;
+    }
+  }
+  .btn-edit-card {
+    margin: auto;
+    display: block;
+    color: $black;
+    text-decoration: underline;
+    font-family: $font-family-monospace;
+    font-size: .8rem;
+  }
+
   h6 {
     font-family: $font-family-monospace;
     color: $gray-light;

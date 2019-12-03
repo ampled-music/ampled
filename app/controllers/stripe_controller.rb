@@ -11,6 +11,27 @@ class StripeController < ApplicationController
     redirect_to "/settings?stripesuccess=true"
   end
 
+  def webhook
+    object = params[:data][:object]
+    event_type = params[:type]
+    logger.info "STRIPE EVENT: #{event_type} (live mode: #{params[:livemode]})"
+    # for 'charge.failed' only
+    # puts object[:customer]
+    # puts object[:source][:last4]
+    if event_type == "invoice.payment_failed"
+      usersub = Subscription.find_by(stripe_customer_id: object[:customer])
+      user = User.find(usersub.user_id)
+      # TODO: send notification to user.email that their payment to ap.name failed
+      # ap = ArtistPage.find_by(stripe_user_id: params[:account])
+
+      # Mark user as having invalid card
+      user.update(card_is_valid: false)
+
+      # TODO: update subscription to mark as failed?
+    end
+    render json: {}
+  end
+
   private
 
   def authorize_stripe_account

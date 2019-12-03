@@ -106,7 +106,7 @@
         flex-wrap: wrap
       }
     }
-    
+
     .artist {
       display: flex;
       flex-direction: column;
@@ -193,18 +193,22 @@
             &_value {
               font-size: 13px;
               margin-bottom: .5rem;
+
               &_large {
                 font-size: 24px;
                 margin-bottom: 0;
               }
+
               &_small {
                 font-size: 11px;
               }
+
               &_cancel {
                 cursor: pointer;
                 color: $gray-light;
                 transition: color $speed;
                 text-decoration: underline;
+
                 &:hover {
                   text-decoration: none;
                   color: $brand-danger;
@@ -242,8 +246,19 @@
 }
 
 .user-settings-cancel-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   background-color: $white;
   padding: 1rem;
+  height: 100vh;
+  font-family: $font-family-sans-serif;
+
+  @include mq($tablet) {
+    height: auto;
+  }
 
   .actions {
     margin-top: 2rem;
@@ -263,9 +278,16 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-width: 400px;
-  padding: 1rem;
+  align-items: center;
+  justify-content: center;
   background-color: $white;
+  padding: 1rem;
+  height: 100vh;
+
+  @include mq($tablet) {
+    min-width: 400px;
+    height: auto;
+  }
 
   .processing-image {
     display: flex;

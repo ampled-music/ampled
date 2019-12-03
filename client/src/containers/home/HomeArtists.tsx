@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
-import { config } from 'src/config';
+import { config } from '../../config';
 
 import { artistsPages } from '../../redux/ducks/get-artists-pages';
 
@@ -19,12 +19,6 @@ interface Props {
 interface State {
   artistPages: [];
 }
-
-
-const openInNewTab = (url: string) => {
-  var win = window.open(url, '_blank');
-  win.focus();
-};
 
 class HomeArtistsComponent extends React.Component<Props, State> {
   constructor(props) {
@@ -47,16 +41,17 @@ class HomeArtistsComponent extends React.Component<Props, State> {
     }
 
     return (
-      <div className="home-artists">
-        {/* <h1 className="home-artists__title">Artists on Ampled</h1> */}
+      <div className="home-artists" style={{ backgroundColor: this.props.bgColor }}>
+        <h1 className="home-artists__title">Featured Artist</h1>
         <div className="container">
-          <div className="row">
+          <div className="row justify-content-center">
             {/* {this.getArtistsList(artistsPages)} */}
+            {this.getFeaturedArtist()}
           </div>
           <div className="row">
-            <button className="home-artists__button btn btn-ampled center" onClick={() => openInNewTab(config.menuUrls.createArtist)}>
+            <a href={config.menuUrls.createArtist} className="home-artists__button btn btn-ampled center">
               Create Your Artist Page
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -82,6 +77,36 @@ class HomeArtistsComponent extends React.Component<Props, State> {
   //     })
   //   );
   // }
+
+  private getFeaturedArtist() {
+    return (
+      <div className="row justify-content-center home-artists__featured">
+        <div className="col-md-5">
+          <Link to={`/artist/thankslight`} className="home-artists__featured_left">
+            <div className="home-artists__featured_title">Thanks Light...</div>
+            <img
+              className="home-artists__featured_image"
+              src="https://res.cloudinary.com/ampled-web/image/upload/v1574456240/Zane6.png"
+              alt="Thanks Light..."
+            />
+            <div className="home-artists__featured_border"></div>
+          </Link>
+        </div>
+        <div className="col-md-5 home-artists__featured_right">
+          <div className="home-artists__featured_info">
+            Grown under a moontower, deep in the heart of Austin, Texas, Thanks Light is a mutant country, graveyard
+            stomp, and drunken gospel group exploring the microcosms of psychedelic music. On Ampled, Thanks Light...
+            are sharing demos of unreleased songs, alternate versions of album art, first dibs on exclusive merch, and
+            behind the scenes footage.
+          </div>
+          <Link to={`/artist/thankslight`} className="home-artists__featured_link">
+            Explore Their Page
+          </Link>{' '}
+          &#10142;
+        </div>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = (state) => {

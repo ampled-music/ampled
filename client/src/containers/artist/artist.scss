@@ -5,8 +5,8 @@
 .artist-header {
   font-family: $font-family-sans-serif;
   margin-top: 50px;
-  
-  @include mq( $layout-l ) {
+
+  @include mq($layout-l) {
     padding: 0 15px 0 35px;
   }
 
@@ -14,23 +14,28 @@
     display: flex;
     justify-content: center;
     margin: 0 0 2rem 0;
-    @include mq( $desktop ) {
+
+    @include mq($desktop) {
       margin: 0 auto 1rem;
     }
+
     &_border {
       z-index: 100;
       width: 100%;
       height: 339px;
       position: absolute;
       margin: -2px 0;
-      @include mq( $layout-m ) {
+
+      @include mq($layout-m) {
         border: 2px solid $brand-primary;
         height: 475px;
         width: calc(100% - 30px);
-      }  
-      @include mq( $layout-l ) {
+      }
+
+      @include mq($layout-l) {
         height: 575px;
       }
+
       &_swipe {
         width: 100%;
         height: 100%;
@@ -58,7 +63,7 @@
       margin-left: -25px;
     }
 
-    @include mq( $layout-m ) {
+    @include mq($layout-m) {
       text-align: left;
     }
   }
@@ -73,7 +78,7 @@
     position: absolute;
     left: -5px;
 
-    @include mq( $layout-m ) {
+    @include mq($layout-m) {
       padding-top: 20px;
       left: -12px;
     }
@@ -86,7 +91,13 @@
     position: relative;
     margin: 10px auto;
 
-    @include mq( $layout-m ) {
+    &:hover {
+      .supporter__hover-card {
+        display: block;
+      }
+    }
+
+    @include mq($layout-m) {
       max-width: 70px;
       max-height: 70px;
     }
@@ -96,41 +107,43 @@
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
-      border-width: 2px;  
-      border-style: solid;  
+      border-width: 2px;
+      border-style: solid;
       margin: auto;
 
-      @include mq( $layout-m ) {
+      @include mq($layout-m) {
         max-width: 70px;
         max-height: 70px;
       }
+
       &.member {
-        @include mq( $layout-m ) {
+        @include mq($layout-m) {
           width: 56px !important;
           height: 56px !important;
         }
       }
     }
+
     &_svg {
       width: 50px !important;
       height: 50px;
       background-color: $white;
       border-radius: 100px;
-      border-width: 1px;  
-      border-style: solid;  
+      border-width: 1px;
+      border-style: solid;
       margin: auto;
-      
+
       path {
         fill: $gray-light;
       }
 
-      @include mq( $layout-m ) {
+      @include mq($layout-m) {
         max-width: 70px;
         max-height: 70px;
       }
 
       &.member {
-        @include mq( $layout-m ) {
+        @include mq($layout-m) {
           width: 56px !important;
           height: 56px !important;
         }
@@ -146,10 +159,7 @@
 
     &_name {
       font-size: 1.0rem;
-    }
-    &_quote {
-      font-size: 0.8rem;
-      font-family: $font-family-monospace;
+      text-transform: capitalize;
     }
 
     &_small {
@@ -162,10 +172,12 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    @include mq( $layout-m ) {
+
+    @include mq($layout-m) {
       height: 475px;
     }
-    @include mq( $layout-l ) {
+
+    @include mq($layout-l) {
       height: 575px;
     }
   }
@@ -177,10 +189,11 @@
     background-color: $brand-primary;
     z-index: 1;
 
-    @include mq( $layout-m ) {
+    @include mq($layout-m) {
       width: 450px;
     }
-    @include mq( $layout-l ) {
+
+    @include mq($layout-l) {
       width: 550px;
     }
 
@@ -198,27 +211,31 @@
     }
 
     &:nth-child(1n) {
-      @include mq( $layout-m ) {
+      @include mq($layout-m) {
         transform: rotate(5deg);
       }
     }
+
     &:nth-child(2n) {
-      @include mq( $layout-m ) {
+      @include mq($layout-m) {
         transform: rotate(3deg);
       }
     }
+
     &:nth-child(3n) {
-      @include mq( $layout-m ) {
+      @include mq($layout-m) {
         transform: rotate(-5deg);
       }
     }
+
     &:nth-child(4n) {
-      @include mq( $layout-m ) {
+      @include mq($layout-m) {
         transform: rotate(-3deg);
       }
     }
+
     &:nth-child(5n) {
-      @include mq( $layout-m ) {
+      @include mq($layout-m) {
         transform: rotate(-7deg);
       }
     }
@@ -228,12 +245,14 @@
     display: flex;
     bottom: 0rem;
     position: absolute;
+
     &_icon {
       width: 10px;
       height: 10px;
       border-radius: 100%;
       background-color: $gray-lighter;
       margin: 0 4px;
+
       &.active {
         background: $brand-primary;
       }
@@ -242,8 +261,9 @@
 
   &__message-col {
     margin-top: 1rem;
+
     @include mq($layout-m) {
-      margin-top: -11px;
+      margin-top: -20px;
     }
   }
 
@@ -252,159 +272,249 @@
     text-transform: uppercase;
     font-weight: bold;
     text-align: center;
+
     @include mq($layout-m) {
       margin: 0 0 1rem 0;
       text-align: left;
     }
-  }
 
-  &__message-container {
-    display: flex;
-    align-items: center;
-    width: 90%;
-    margin: 1rem auto 2rem;
-    border: 2px solid $brand-primary;
-    padding: 10px 0px;
-  }
-
-  &__message-video {
-    width: 100%;
-    transform: scale(1.1) rotate(-2deg);
-    position: relative;
-    z-index: -1;
-  }
-  &__message-image {
-    width: 100%;
-    transform: scale(1.35);
     &_container {
-      overflow: hidden;
+      max-width: 335px;
+      display: flex;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 90%;
+      margin: 1rem auto 2rem;
+      border: 2px solid $brand-primary;
+      padding: 10px 0px;
+      min-height: 140px;
+
+      &.paper_md {
+        min-height: 210px;
+      }
+
+      .btn-read-more {
+        position: absolute;
+        bottom: -18px;
+      }
     }
-  }
-  &__message-tear {
-    width: 102%;
-    left: -2px;
-    top: -2px;
-    z-index: 2;
-    position: absolute;    
+
+    &_paper-bg { 
+      width: 115%;
+      left: -7%;
+      top: 3%;
+      z-index: -1;
+      position: absolute;
+    }
+
+    &_video {
+      width: 100%;
+      transform: scale(1.1) rotate(-2deg);
+      position: relative;
+      z-index: -1;
+    }
+
+    &_text {
+      font-family: $font-family-monospace;
+      padding: 1rem 2rem;
+      font-size: .8rem;
+    }
+
+    &_image {
+      width: 100%;
+      transform: scale(1.35);
+
+      &_container {
+        overflow: hidden;
+      }
+    }
+
+    &_tear {
+      width: 102%;
+      left: -2px;
+      top: -2px;
+      z-index: 2;
+      position: absolute;
+    }
   }
 
   &__supporters {
+    margin-bottom: 1rem;
+
     &_title {
       font-size: 1.2rem;
       margin: 1rem 0 0.5rem 0;
       text-transform: uppercase;
       font-weight: bold;
     }
+
     &_recent {
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
 
       .artist-header__person {
-        margin: 0 1rem 0 0 ;
+        margin-top: 0px;
+
+        &_mr {
+          font-size: .7rem;
+          font-family: $font-family-monospace;
+        }
       }
+
     }
 
     &_all {
       display: flex;
       flex-flow: wrap;
-      margin-bottom:1.5rem;
+      margin-bottom: 1.5rem;
+
       .artist-header__person_image,
       .artist-header__person_svg {
-        border-width:0;
+        border-width: 0;
+      }
+    }
+  }
+
+  .supporter {
+    position: relative;
+    display: block;
+
+    &:hover {
+      .supporter-image,
+      .member-image {
+        display: block;
+        position: relative;
+
+        &:before,
+        &:after {
+          content: '';
+          width: 20px;
+          height: 20px;
+          background-color: $white;
+          position: absolute;
+          display: block;
+          transform: rotate(45deg);
+          top: -18px;
+          left: 27%;
+        }
+
+        &:before {
+          box-shadow: 1px 1px 3px $gray-light;
+          z-index: 1;
+        }
+
+        &:after {
+          z-index: 301;
+          transform: rotate(0deg);
+          top: -4px;
+          left: 27%;
+          background-color: transparent;
+          border-top: 11px solid $white;
+          border-right: 11px solid transparent;
+          border-bottom: 11px solid transparent;
+          border-left: 11px solid transparent;
+        }
+      }
+
+      .supporter__hover-card {
+        display: block;
       }
     }
 
-    .supporter {
-      &:hover {
-        .supporter-image {
-          display: block;
-          position: relative;
-            &:before,
-            &:after {
-              content: '';
-              width: 20px;
-              height: 20px;
-              background-color: $white;
-              position: absolute;
-              display: block;
-              transform: rotate(45deg);
-              top: -20px;
-              left: 8px;
-            }
-            &:before {
-              box-shadow: 1px 1px 3px $gray-light;
-              z-index: 1;
-            }
-            &:after {
-              z-index: 301;
-              transform: rotate(0deg);
-              top: -8px;
-              left: 7px;
-              background-color: transparent;
-              border-top: 11px solid $white;
-              border-right: 11px solid transparent;
-              border-bottom: 11px solid transparent;
-              border-left: 11px solid transparent;
-            }
+    &.artist-header__person {
+      .supporter__hover-card {
+        left: -20px;
+        width: 300px;
+      }
+    }
+
+    &__hover-card {
+      background-color: $white;
+      position: absolute;
+      display: none;
+      padding: .5rem 1rem;
+      z-index: 300;
+      box-shadow: 1px 1px 3px $gray-light;
+      width: 350px;
+      bottom: 100%;
+      left: -150px;
+
+      @include mq(0, $layout-m) {
+        width: 30vw;
+        left: 0px;
+        right: 0px;
+      }
+
+      &_header {
+        display: flex;
+
+        &_photo {
+          margin-right: .5rem;
+
+          &_image {
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            display: block;
+            position: relative;
+            z-index: 305;
           }
-      }
-      &:hover {
-        .supporter__hover-card {
-          display: block;
-        }
-      }
-      &__hover-card {
-        background-color: $white;
-        position: absolute;
-        display: none;
-        padding: .5rem 1rem;
-        z-index: 300;
-        box-shadow: 1px 1px 3px $gray-light;
-        width: 350px;
-        transform: translate(-42%,-110%);
-
-        @include mq(0,$layout-m) {
-          width: 100%;
-          left: 0px;
-          right: 0px;
-          transform: translate(0%, -110%);
         }
 
-        &_header {
+        &_info {
           display: flex;
-          &_photo {
-            margin-right: .5rem;
-            &_image {
-              width: 50px;
-              height: 50px;
-              border-radius: 100%;
-              display: block;
-              position: relative;
-              z-index: 305;
+          justify-content: center;
+          flex-direction: column;
+          text-align: left;
+
+          &_since,
+          &_bio {
+            font-family: $font-family-monospace;
+            font-size: .8rem;
+            @include mq(0, $layout-m) {
+              display: none;
             }
           }
-          &_info {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            &_since {
-              font-family: $font-family-monospace;
-              font-size: .8rem;
-            }
+
+          &_name {
+            text-transform: capitalize;
           }
         }
-        &_bands {
-          margin-top: .5rem;
-          padding-top: .5rem;
-          border-top: 1px solid $gray;
-          &_section {
-            margin-bottom: .5rem;
-            h6 {
-              text-transform: uppercase;
-              color: $gray-light;
-            }
+      }
+
+      &_bands {
+        margin-top: .5rem;
+        padding-top: .5rem;
+        border-top: 1px solid $gray;
+
+        &_section {
+          margin-bottom: 1rem;
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+
+          &:last-child {
+            margin-bottom: 0;
           }
-          &_name {
+
+          h6 {
             text-transform: uppercase;
+            color: $gray-light;
+          }
+        }
+
+        &_name {
+          text-transform: uppercase;
+          font-size: .9rem;
+          display: inline-block;
+          a {
+            transition: color $speed;
+            color: $black;
           }
         }
       }
@@ -426,16 +536,17 @@
     width: 75px;
     border-radius: 100%;
     border-width: 0px;
-    background-color: rgba( $white, .4 );
+    background-color: rgba($white, .4);
     transition: all $speed;
 
     &:hover {
       height: 85px;
       width: 85px;
-      background-color: rgba( $white, .6 );
+      background-color: rgba($white, .6);
       transition: all $speed;
       cursor: pointer;
     }
+
     &_svg {
       color: $brand-primary;
     }
@@ -463,7 +574,8 @@
 
     span {
       display: none;
-      @include mq( $layout-m ) {
+
+      @include mq($layout-m) {
         display: inline;
       }
     }
@@ -471,6 +583,7 @@
     &_twitter,
     &_instagram {
       margin: 0 0 0 .5rem;
+
       @include mq($layout-m) {
         margin: 0 1rem;
       }
@@ -482,7 +595,7 @@
   position: fixed;
   z-index: 100;
 
-  @include mq(0,$layout-m) {
+  @include mq(0, $layout-m) {
     left: 0px;
     bottom: 0px;
     width: 100%;

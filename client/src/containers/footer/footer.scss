@@ -19,6 +19,8 @@
         font-family: $font-family-monospace;
         color: $black;
         text-decoration: underline;
+        font-size: .875rem;
+        margin-bottom: .5rem;
         &:hover {
             text-decoration: none;
         }
@@ -31,6 +33,12 @@
         display: block;
         font-family: $font-family-monospace;
         color: $black;
+    }
+    .own-it {
+        display: block;
+        font-family: $font-family-monospace;
+        color: $black;
+        margin: .5rem auto;
     }
     form {
         width: 100%;

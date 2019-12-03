@@ -4,10 +4,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { Store } from 'src/redux/configure-store';
+import { openAuthModalAction } from '../../../redux/authentication/authentication-modal';
+import { Store } from '../../../redux/configure-store';
 
-import logo from '../../../images/ampled_logo.svg';
+import logo from '../../../images/ampled_logo_beta.svg';
 import avatar from '../../../images/ampled_avatar.svg';
 import { initialState as loginInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
@@ -34,13 +34,17 @@ type Props = typeof loginInitialState & typeof meInitialState & NavComponentProp
 
 class NavComponent extends React.Component<Props, any> {
   getLoggedUserPageAccess = () => {
-    const { userData, match } = this.props;
+    const { userData, artist } = this.props;
 
-    return userData && userData.artistPages.find((page) => page.artistId === +match.params.id);
+    return userData && userData.artistPages.find((page) => page.artistId === +artist.id);
   };
 
   showSupportButton = () => {
     const loggedUserAccess = this.getLoggedUserPageAccess();
+    const { isStripeSetup } = this.props.artist;
+    if (!isStripeSetup) {
+      return false;
+    }
 
     if (this.props.match.path.indexOf(routePaths.artists) === -1 && this.props.match.path.indexOf(routePaths.slugs) === -1) {
       return false;
@@ -57,7 +61,7 @@ class NavComponent extends React.Component<Props, any> {
     let artistId;
 
     if (this.props.match.params.slug) {
-      artistId = this.props.artist.id;
+      artistId = this.props.match.params.slug;
     } else {
       artistId = this.props.match.params.id;
     }
@@ -79,13 +83,13 @@ class NavComponent extends React.Component<Props, any> {
     const { userData } = this.props;
 
     return userData.image ? (
-      <a href="/settings">
-        <img src={userData.image} className="user-image" />
-      </a>
+      <Link to="/settings">
+        <img src={userData.image} className="user-image" alt="Your avatar" />
+      </Link>
     ) : (
-      <a href="/settings">
-        <img src={avatar} className="user-image" />
-      </a>
+      <Link to="/settings">
+        <img src={avatar} className="user-image" alt="Your avatar" />
+      </Link>
     );
   };
 
@@ -94,10 +98,10 @@ class NavComponent extends React.Component<Props, any> {
       <a onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>
         <b>Login</b>
       </a>{' '}
-      or{' '}
+      {/* or{' '}
       <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
         <b>Sign Up</b>
-      </a>
+      </a> */}
     </div>
   );
 

@@ -1,15 +1,17 @@
+import './../artist/artist.scss';
 import './user-settings.scss';
 
 import { DateTime } from 'luxon';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { Store } from 'src/redux/configure-store';
-import { getMeAction } from 'src/redux/me/get-me';
-import { setUserDataAction } from 'src/redux/me/set-me';
-import { updateMeAction } from 'src/redux/me/update-me';
-import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
+import { closeAuthModalAction, openAuthModalAction } from '../../redux/authentication/authentication-modal';
+import { Store } from '../../redux/configure-store';
+import { getMeAction } from '../../redux/me/get-me';
+import { setUserDataAction } from '../../redux/me/set-me';
+import { updateMeAction } from '../../redux/me/update-me';
+import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 
 import { faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faInstagram, faStripe } from '@fortawesome/free-brands-svg-icons';
@@ -31,7 +33,7 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
 type Props = typeof loginInitialState &
   typeof meInitialState &
-  Dispatchers & { history: any; subscriptions: typeof subscriptionsInitialState };
+  Dispatchers & { history: any; location: any; subscriptions: typeof subscriptionsInitialState };
 
 class UserSettingsComponent extends React.Component<Props, any> {
   state = {
@@ -41,6 +43,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   componentDidMount() {
     this.props.getMe();
+    const {
+      location: { search },
+    } = this.props;
+
+    if (/stripesuccess=true/gi.test(search)) {
+      showToastMessage("Great! You're all set up for payments.", MessageType.SUCCESS);
+    }
   }
 
   componentDidUpdate() {
@@ -55,12 +64,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
   }
 
   showCancelledSuccessMessage = () => {
-    const artistPageLink = routePaths.support.replace(':id', this.props.subscriptions.artistPageId.toString());
+    const { artistSlug, artistPageId, artistName } = this.props.subscriptions;
+    const artistPageLink = routePaths.support.replace(
+      ':id',
+      artistSlug && artistSlug.length ? artistSlug : artistPageId.toString(),
+    );
 
     showToastMessage(
-      `We are sad to see you leaving. Remember that you can always support <a href="${artistPageLink}">${
-        this.props.subscriptions.artistName
-      }</a> with a different value!`,
+      `We are sad to see you leaving. Remember that you can always support <a href="${artistPageLink}">${artistName}</a> with a different value!`,
       MessageType.SUCCESS,
     );
   };
@@ -85,6 +96,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     this.props.cancelSubscription({
       subscriptionId: this.state.subscription.subscriptionId,
       artistPageId: this.state.subscription.artistPageId,
+      artistSlug: this.state.subscription.artistSlug,
       artistName: this.state.subscription.name,
     });
     this.closeCancelModal();
@@ -98,13 +110,18 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   };
 
-  calculateSupportTotal = (supportLevel) =>
-    this.calculateSupportTotalNumber(supportLevel).toFixed(2)
+  calculateSupportTotal = (supportLevel) => this.calculateSupportTotalNumber(supportLevel).toFixed(2);
 
-  calculateSupportTotalNumber = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100);
-  
-  redirectToArtistPage = (pageId) => {
-    this.props.history.push(routePaths.artists.replace(':id', pageId));
+  calculateSupportTotalNumber = (supportLevel) => Math.round((supportLevel * 100 + 30) / 0.971) / 100;
+
+  redirectToArtistPage = (artist) => {
+    if (artist.artistSlug && artist.artistSlug.length > 0) {
+      this.props.history.push(routePaths.slugs.replace(':slug', artist.artistSlug));
+    } else if (artist.artistId) {
+      this.props.history.push(routePaths.artists.replace(':id', artist.artistId));
+    } else if (artist.artistPageId) {
+      this.props.history.push(routePaths.artists.replace(':id', artist.artistPageId));
+    }
   };
 
   renderUserImage = () => {
@@ -112,13 +129,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <div className="user-image-container">
-        <a href="/user-details">
+        <Link to="/user-details">
           {userData.image ? (
-            <img src={userData.image} className="user-image" />
+            <img src={userData.image} className="user-image" alt="Your avatar" />
           ) : (
-            <img src={avatar} className="user-image" />
+            <img src={avatar} className="user-image" alt="Your avatar" />
           )}
-        </a>
+        </Link>
       </div>
     );
   };
@@ -134,15 +151,17 @@ class UserSettingsComponent extends React.Component<Props, any> {
     // }
     return (
       <div className="user-info-container col-md-3">
-        <img className="tear__topper" src={tear} />
+        <img className="tear__topper" src={tear} alt="" />
         <div className="user-content">
           {this.renderUserImage()}
           <div className="user-content__name">{userData.name}</div>
           <div className="user-content__joined-at">Joined {this.getFormattedDate(userData.created_at)}</div>
-          { userData.city && (
-            <div className="user-content__city"><FontAwesomeIcon className="icon" icon={faMapMarkerAlt} /> {userData.city}</div>
+          {userData.city && (
+            <div className="user-content__city">
+              <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} /> {userData.city}
+            </div>
           )}
-          { userData.bio && (
+          {userData.bio && (
             <div>
               <div className="user-content__hr"></div>
               <div className="user-content__bio">{userData.bio}</div>
@@ -150,21 +169,25 @@ class UserSettingsComponent extends React.Component<Props, any> {
             </div>
           )}
           {console.log(userData)}
-          { userData.twitter && (
-              <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faTwitter} /> {userData.twitter}</div>
+          {userData.twitter && (
+            <div className="user-content__social">
+              <FontAwesomeIcon className="icon" icon={faTwitter} /> {userData.twitter}
+            </div>
           )}
-          { userData.instagram && (
-              <div className="user-content__social"><FontAwesomeIcon className="icon" icon={faInstagram} /> {userData.instagram}</div>
+          {userData.instagram && (
+            <div className="user-content__social">
+              <FontAwesomeIcon className="icon" icon={faInstagram} /> {userData.instagram}
+            </div>
           )}
           {/*
             monthlyTotal > 0 ?
               (<p className="user-name">${monthlyTotal.toFixed(2)}/Month</p>) :
               ''
           */}
-          
-          <a href="/user-details" className="user-content__edit-profile">
+
+          <Link to="/user-details" className="user-content__edit-profile">
             <FontAwesomeIcon icon={faEdit} /> Edit Profile
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -185,7 +208,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
             <button className="cancel-button" onClick={this.closeCancelModal}>
               Of Course Not!
             </button>
-            <button className="delete-button" onClick={this.cancelSubscription}>
+            <button className="delete-button" onClick={this.cancelSubscription} style={{ marginLeft: 0 }}>
               Yes
             </button>
           </div>
@@ -199,12 +222,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('MY ARTIST PAGES')}
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
-          <div key={`artist-${ownedPage.id}`} className="artist col-sm-4">
-            <img className="artist__image" src={ownedPage.image} />
-            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}></div>
-            <img className="tear__topper" src={tear_black} />
+          <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
+            <img className="artist__image" src={ownedPage.image} alt={ownedPage.name} />
+            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage)}></div>
+            <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
-              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(ownedPage.artistId)}>{ownedPage.name}</p>
+              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(ownedPage)}>
+                {ownedPage.name}
+              </p>
               <div className="details">
                 <div className="details__info">
                   <div className="row no-gutter">
@@ -234,7 +259,26 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       <FontAwesomeIcon className="icon details__stripe_icon" icon={faStripe} />
                     </div>
                     <div className="col-8">
-                      <a href={ownedPage.stripeSignup ? ownedPage.stripeSignup : ownedPage.stripeDashboard} className="details__stripe_link" target="_blank">Edit Payout Details</a>
+                      {ownedPage.isStripeSetup ? (
+                        <a
+                          href={ownedPage.stripeDashboard}
+                          className="details__stripe_link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Edit Payout Details
+                        </a>
+                      ) : (
+                        <a
+                          href={ownedPage.stripeSignup}
+                          className="details__stripe_link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: '#d9534f' }}
+                        >
+                          Set Up Payouts
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -252,21 +296,30 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.subscriptions.map((subscription) => (
           <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-4">
-            <img className="artist__image" src={subscription.image} />
-            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}></div>
-            <img className="tear__topper" src={tear_black} />
+            <img className="artist__image" src={subscription.image} alt={subscription.name} />
+            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(subscription)}></div>
+            <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
-              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(subscription.artistPageId)}>{subscription.name}</p>
+              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(subscription)}>
+                {subscription.name}
+              </p>
               <div className="details">
                 <div className="details__info">
                   <div className="row no-gutter">
                     <div className="col-8">
                       <div className="details__info_title">Supporting At</div>
-                      <div className="details__info_value details__info_value_large">${subscription.amount / 100}/Month</div>
-                      <div className="details__info_value details__info_value_small">${this.calculateSupportTotal(subscription.amount / 100)} incl. fees</div>
+                      <div className="details__info_value details__info_value_large">
+                        ${subscription.amount / 100}/Month
+                      </div>
+                      <div className="details__info_value details__info_value_small">
+                        ${this.calculateSupportTotal(subscription.amount / 100)} incl. fees
+                      </div>
                     </div>
                     <div className="col-4">
-                      <a className="details__info_value details__info_value_cancel" onClick={(event) => this.openCancelModal(event, subscription)}>
+                      <a
+                        className="details__info_value details__info_value_cancel"
+                        onClick={(event) => this.openCancelModal(event, subscription)}
+                      >
                         Cancel
                       </a>
                     </div>
@@ -303,23 +356,18 @@ class UserSettingsComponent extends React.Component<Props, any> {
     <div className="row content">
       {this.renderUserInfo()}
       <div className="pages-container col-md-9">
-        { this.props.userData.ownedPages.length > 0 ?
-          this.renderOwnedPages() : '' }
-        { this.props.userData.subscriptions.length > 0 ?
-          this.renderSupportedArtists() : this.renderEmptyArtists() }
+        {this.props.userData.ownedPages.length > 0 ? this.renderOwnedPages() : ''}
+        {this.props.userData.subscriptions.length > 0 ? this.renderSupportedArtists() : this.renderEmptyArtists()}
       </div>
     </div>
   );
-
 
   render() {
     const { userData } = this.props;
 
     return (
       <div className="container user-settings-container">
-        <Loading
-          artistLoading={this.props.loadingMe} 
-        />
+        <Loading artistLoading={this.props.loadingMe} />
         {userData && this.renderContent()}
         {this.renderCancelSubscriptionModal()}
       </div>

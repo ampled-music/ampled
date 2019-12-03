@@ -12,6 +12,9 @@ export const initialState = {
   status: SubscriptionStep.SupportLevel,
   cancelled: false,
   artistName: undefined,
+  artistSlug: undefined,
+  error: undefined,
+  hasError: false,
 };
 
 export interface Reducer {

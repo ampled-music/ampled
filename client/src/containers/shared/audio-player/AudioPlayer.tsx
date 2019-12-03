@@ -171,7 +171,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
                         }}
                     />
                     <div className="audio-player__play-pause">
-                        <PlayButton onClick={this.handlePlayPause} size={this.props.image ? 'medium' : 'small'}>
+                        <PlayButton onClick={this.handlePlayPause} size={this.props.image ? 'medium' : 'small'} aria-label="Play / Pause">
                             {playing ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
                         </PlayButton>
                     </div>

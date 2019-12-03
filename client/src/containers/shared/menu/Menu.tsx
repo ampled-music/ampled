@@ -4,8 +4,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { logoutAction } from 'src/redux/authentication/logout';
-import { Store } from 'src/redux/configure-store';
+import { logoutAction } from '../../../redux/authentication/logout';
+import { Store } from '../../../redux/configure-store';
 import * as store from 'store';
 
 import { faCog } from '@fortawesome/free-solid-svg-icons';
@@ -94,18 +94,18 @@ class MenuListComposition extends React.Component<Props, State> {
     return (
       <div className="menu-items">
         <div className={this.props.classes.hideDesktop}>
-        {
-          !this.props.userData && this.props.renderLoginLink()
-        }
+          {
+            !this.props.userData && this.props.renderLoginLink()
+          }
         </div>
-        <a href={config.menuUrls.createArtist} target="_blank">
+        <a href={config.menuUrls.createArtist}>
           <b>Create an artist page</b>
         </a>
         <div className="divider" />
-        <a href={config.menuUrls.blog} target="_blank">
+        <a href={config.menuUrls.blog}>
           Blog
         </a>
-        <a href={config.menuUrls.about} target="_blank">
+        <a href={config.menuUrls.about}>
           About us
         </a>
       </div>
@@ -116,7 +116,7 @@ class MenuListComposition extends React.Component<Props, State> {
     return (
       <div className="menu-items">
         <Link to={routePaths.settings}>
-          <FontAwesomeIcon icon={faCog} /> <b>Account Settings</b>
+          <FontAwesomeIcon icon={faCog} /> <b>My Profile</b>
         </Link>
         <Divider />
         <a onClick={this.logout}>Logout</a>

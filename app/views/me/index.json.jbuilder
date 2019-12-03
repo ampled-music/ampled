@@ -15,6 +15,17 @@ json.userInfo do
   json.ship_country current_user&.ship_country
   json.image current_user&.profile_image_url
   json.created_at current_user&.created_at
+  json.cardInfo do
+    if @stripe_info.present?
+      json.exp_month @stripe_info[:exp_month]
+      json.exp_year @stripe_info[:exp_year]
+      json.last4 @stripe_info[:last4]
+      json.brand @stripe_info[:brand]
+      json.is_valid @stripe_info[:is_valid]
+    else
+      json.null!
+    end
+  end
 end
 json.artistPages @owned&.concat(@supported) do |page|
   json.artistId page.id
@@ -23,6 +34,7 @@ end
 json.subscriptions @subscriptions do |subscription|
   json.subscriptionId subscription.id
   json.artistPageId subscription.artist_page.id
+  json.artistSlug subscription.artist_page.slug
   json.name subscription.artist_page.name
   json.image subscription.artist_page.cover_url
   json.last_post_date subscription.artist_page.last_post_date
@@ -31,6 +43,7 @@ json.subscriptions @subscriptions do |subscription|
 end
 json.ownedPages @owned_pages do |page|
   json.artistId page.id
+  json.artistSlug page.slug
   json.name page.name
   json.image page.cover_url
   json.supportersCount page.subscriber_count
@@ -39,4 +52,5 @@ json.ownedPages @owned_pages do |page|
   json.lastPayout page.last_payout
   json.stripeSignup page.stripe_signup_url
   json.stripeDashboard page.stripe_dashboard_url
+  json.isStripeSetup page.is_stripe_ready
 end

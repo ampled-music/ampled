@@ -2,9 +2,9 @@ import './post.scss';
 
 import cx from 'classnames';
 import * as React from 'react';
-import { withRouter } from 'react-router-dom';
-import { routePaths } from 'src/containers/route-paths';
-import { UserRoles } from 'src/containers/shared/user-roles';
+import { Link, withRouter } from 'react-router-dom';
+import { routePaths } from '../../../route-paths';
+import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
 
 import avatar from '../../../../images/ampled_avatar.svg';
@@ -21,14 +21,16 @@ import Linkify from 'react-linkify';
 
 import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';
+import { PostForm } from '../post-form/PostForm';
 import { styles } from './post-style';
 
-import { deletePost } from 'src/api/post/delete-post';
+import { deletePost } from '../../../../api/post/delete-post';
 
 class PostComponent extends React.Component<any, any> {
   state = {
     showPrivatePostModal: false,
     showDeletePostModal: false,
+    showEditPostModal: false,
     expanded: false,
   };
 
@@ -59,11 +61,20 @@ class PostComponent extends React.Component<any, any> {
     this.setState({ showDeletePostModal: false });
   };
 
+  openEditPostModal = () => {
+    this.setState({ showEditPostModal: true });
+  };
+
+  closeEditPostModal = () => {
+    this.setState({ showEditPostModal: false });
+  };
+
+
   openSignupModal = () => {
     let artistId;
 
     if (this.props.match.params.slug) {
-      artistId = this.props.artist.id;
+      artistId = this.props.artistId;
     } else {
       artistId = this.props.match.params.id;
     }
@@ -77,9 +88,9 @@ class PostComponent extends React.Component<any, any> {
   };
 
   redirectToSupport = () => {
-    const { history, artistId } = this.props;
-
-    history.push(routePaths.support.replace(':id', artistId));
+    const { history, artistId, artistSlug } = this.props;
+    
+    history.push(routePaths.support.replace(':id', artistSlug && artistSlug.length > 0 ? artistSlug : artistId));
   };
 
   sortItemsByCreationDate(items) {
@@ -141,8 +152,8 @@ class PostComponent extends React.Component<any, any> {
   };
 
   renderDeleteModal = () => (
-    <div>
-      <img className="tear__topper" src={tear} />
+    <div className="delete-post-modal__container">
+      <img className="tear tear__topper" src={tear} alt=""/>
       <div className="delete-post-modal">
         <div className="delete-post-modal__title">
           <h4>Are you sure?</h4>
@@ -159,24 +170,45 @@ class PostComponent extends React.Component<any, any> {
     </div>
   );
 
-  renderLock = () => {
-    const { me } = this.props;
+  renderLock = (isLapsed: boolean = false) => {
+    const { me, history } = this.props;
     const authenticated = !!me;
 
     return (
       <div className="private-support">
-        <div className="private-support__copy">Supporter Only</div>
+        <div className="private-support__copy">{isLapsed ? 'Support On Hold' : 'Supporter Only'}</div>
         <div className="private-support__btn">
-          <button className="btn btn-ampled" onClick={() => this.handlePrivatePostClick(authenticated)}>
-            SUPPORT TO UNLOCK
-          </button>
+          {isLapsed ? (
+            <Link to={routePaths.userDetails} className="btn btn-ampled">
+              UPDATE YOUR CARD
+            </Link>
+          ) : (
+            <button className="btn btn-ampled" onClick={() => this.handlePrivatePostClick(authenticated)}>
+              SUPPORT TO UNLOCK
+            </button>
+          )}
         </div>
       </div>
-    )
+    );
+  };
+
+  renderCloudinaryPhoto = (image: string, crop: number, ) => {
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
+    if (image) {
+      if (image.includes('https://res.cloudinary')) {
+        const img_src = image.replace('upload/', `upload/${crop_url_path}/`);
+        return img_src;
+      } else {
+        const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+        return img_src;
+      }
+    }
   };
 
   renderPost = () => {
     const { classes, post, accentColor, me } = this.props;
+
+    const deny_details_lapsed = post.deny_details_lapsed || false;
 
     const allowDetails = post.allow_details;
     const isPrivate = post.is_private;
@@ -187,18 +219,26 @@ class PostComponent extends React.Component<any, any> {
         <Modal open={this.state.showDeletePostModal} onClose={this.closeDeletePostModal}>
           {this.renderDeleteModal()}
         </Modal>
+        <Modal open={this.state.showEditPostModal} onClose={this.closeEditPostModal}>
+          <PostForm
+            close={this.closeEditPostModal}
+            discardChanges={this.closeEditPostModal}
+            isEdit
+            post={post}
+          />
+        </Modal>
         <div
           className={cx('post', { 'clickable-post': !allowDetails })}
-          onClick={() => this.handlePrivatePostClick(authenticated)}
+          onClick={() => !deny_details_lapsed && this.handlePrivatePostClick(authenticated)}
           title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
         >
           <Card className={classes.card} style={{ border: `2px solid ${accentColor}` }}>
             <div className="post__header">
               <div className={classes.postTitle}>
                 {post.authorImage ? (
-                  <img className="user-image" src={post.authorImage} />
+                  <img className="user-image" src={post.authorImage} alt={`${this.returnFirstName(post.author)}'s avatar`}/>
                 ) : (
-                    <img className="user-image" src={avatar} />
+                    <img className="user-image" src={avatar} alt="Avatar"/>
                   )}
                 <span className="post__header_name">{this.returnFirstName(post.author)}</span>
               </div>
@@ -227,7 +267,7 @@ class PostComponent extends React.Component<any, any> {
             {this.canLoggedUserPost() && (
               <div className="post__change">
                 <div className="post__change_edit">
-                  <button className="disabled">
+                  <button onClick={this.openEditPostModal}>
                     <FontAwesomeIcon icon={faPen} />
                   </button>
                 </div>
@@ -239,26 +279,47 @@ class PostComponent extends React.Component<any, any> {
               </div>
             )}
 
-            {post.image_url && !post.audio_file && (
+            {post.image_url && !post.has_audio && (
               <div className="post__image-container">
-                <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
-                {!allowDetails && this.renderLock()}
+                <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={this.renderCloudinaryPhoto(post.image_url, 500)}  />
+                {!allowDetails && this.renderLock(deny_details_lapsed)}
               </div>
             )}
 
-            {post.audio_file && (
+            {post.has_audio && (
               <div className="post__audio-container">
-                {post.image_url && (
                   <div className="post__image-container">
-                    <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={post.image_url} />
-                    {!allowDetails && this.renderLock()}
+                {post.image_url && (
+                    <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={this.renderCloudinaryPhoto(post.image_url, 500)}  />
+                  )}
+                  {!post.image_url && !allowDetails && (
+                    <div
+                      style={{
+                        height: '340px',
+                        background:
+                          'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
+                      }}
+                    />
+                  )}
+                    {!allowDetails && this.renderLock(deny_details_lapsed)}
                   </div>
+                {allowDetails && (
+
+                  <AudioPlayer url={this.returnPlayableUrl()} image={this.renderCloudinaryPhoto(post.image_url, 500)} accentColor={accentColor} />
                 )}
-                <AudioPlayer
-                  url={this.returnPlayableUrl()}
-                  image={post.image_url}
-                  accentColor={accentColor}
+              </div>
+                )}
+
+            {!post.has_audio && !post.image_url && !allowDetails && (
+              <div className="post__image-container">
+                <div
+                  style={{
+                    height: '340px',
+                    background:
+                      'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
+                  }}
                 />
+                {this.renderLock(deny_details_lapsed)}
               </div>
             )}
 
@@ -271,7 +332,7 @@ class PostComponent extends React.Component<any, any> {
                 <Linkify
                   componentDecorator={
                     (decoratedHref: string, decoratedText: string, key: number) =>
-                      (<a href={decoratedHref} key={key} target="_blank">
+                      (<a href={decoratedHref} key={key} target="_blank" rel="noopener noreferrer">
                         {decoratedText}
                       </a>)
                   }

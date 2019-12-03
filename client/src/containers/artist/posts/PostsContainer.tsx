@@ -3,12 +3,12 @@ import './post-container.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { createCommentAction } from 'src/redux/comments/create';
-import { deleteCommentAction } from 'src/redux/comments/delete';
-import { Store } from 'src/redux/configure-store';
+import { openAuthModalAction } from '../../../redux/authentication/authentication-modal';
+import { createCommentAction } from '../../../redux/comments/create';
+import { deleteCommentAction } from '../../../redux/comments/delete';
+import { Store } from '../../../redux/configure-store';
 
-import StackGrid, { transitions } from "react-stack-grid";
+import StackGrid, { transitions } from 'react-stack-grid';
 
 import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as commentsInitialState } from '../../../redux/comments/initial-state';
@@ -37,12 +37,15 @@ interface PostsProps {
   accentColor: string;
   authentication: typeof authenticationInitialState;
   updateArtist: Function;
+  loading: boolean;
   comments: typeof commentsInitialState;
   me: { id: number; artistPages: any[] };
   match: any;
+  hash: string;
   loggedUserAccess: { role: string; artistId: number };
   artistName: string;
   artistId: number;
+  artistSlug: string;
 }
 
 const { scaleDown } = transitions;
@@ -73,6 +76,23 @@ class PostsContainerComponent extends React.Component<Props, any> {
     window.addEventListener("resize", this.updateDimensions);
   }
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.me && this.props.me) {
+      setTimeout(() => {
+        this.updateDimensions();
+      }, 500);
+    }
+    if (prevProps.loading && !this.props.loading) {
+      setTimeout(() => {
+        const { hash } = this.props;
+        if (hash && hash.length) {
+          console.log(`scroll to post ${hash}`);
+          document.getElementById(hash.replace('#', '')).scrollIntoView();
+        }
+      }, 100);
+    }
+  }
+
   updateDimensions() {
     this.setState({
       height: window.innerHeight, 
@@ -85,7 +105,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
   }
 
   renderPosts = () => {
-    const { posts, accentColor, artistName, me, openAuthModal, artistId, loggedUserAccess } = this.props;
+    const { posts, accentColor, artistName, artistSlug, me, openAuthModal, artistId, loggedUserAccess } = this.props;
 
     if (!posts) {
       return null;
@@ -99,6 +119,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
           accentColor={accentColor}
           artistName={artistName}
           artistId={artistId}
+          artistSlug={artistSlug}
           loggedUserAccess={loggedUserAccess}
           openAuthModal={openAuthModal}
           addComment={this.props.addComment}

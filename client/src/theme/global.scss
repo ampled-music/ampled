@@ -1,75 +1,88 @@
 .container {
-    max-width: 1140px;
+  max-width: 1140px;
 }
+
 body {
-    color: $black;
+  color: $black;
 }
+
 a {
-    &:hover {
-        text-decoration: none;
-    }
+  &:hover {
+    text-decoration: none;
+  }
 }
+
 h4 {
-    font-family: $font-family-sans-serif;
+  font-family: $font-family-sans-serif;
 }
+
 h6 {
-    font-size: .7rem;
+  font-size: .7rem;
 }
+
 .page {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .btn {
 
-    &-ampled {
-        border-radius: 0px;
-        border-width: 2px;
-        border-style: solid;
-        border-color: $black;
-        background-color: $white;
-        color: $black;
-        font-family: $font-family-monospace;
-        font-weight: 500;
-        text-transform: capitalize;
-        position: relative;
-        z-index: 10;
-        width: 100%;
-        max-width: 350px;
-        margin: auto;
-        display: block;
+  &-ampled {
+    border-radius: 0px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $black;
+    background-color: $white;
+    color: $black;
+    font-family: $font-family-monospace;
+    font-weight: 500;
+    text-transform: capitalize;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 350px;
+    margin: auto;
+    display: block;
 
-        &:hover {
-            background-color: $black;
-            color: $white;
-            text-decoration: none;
-            transition: all $speed;
-        }
+    &:hover {
+      background-color: $black;
+      color: $white;
+      text-decoration: none;
+      transition: all $speed;
     }
+  }
 
-    &__dark {
-        border: 0px;
-        background-color: $black;
-        color: $white;
-        &:hover {
-            background-color: $white;
-            color: $black;
-            transition: all $speed;
-        }
-    }
+  &__dark {
+    border: 0px;
+    background-color: $black;
+    color: $white;
 
-    &.btn-support {
-        border-radius: 0px;
-        border-width: 0px;
-        text-transform: capitalize;
-        background-color: $brand-primary;
-        color: $white;
-        font-family: $font-family-monospace;
-        max-width: 250px;
-        display: none;
-        @include mq( $layout-m ) {
-            display: block;
-        }
+    &:hover {
+      background-color: $white;
+      color: $black;
+      transition: all $speed;
     }
+  }
+
+  &.btn-support,
+  &.btn-read-more {
+    border-radius: 0px;
+    border-width: 0px;
+    text-transform: capitalize;
+    background-color: $brand-primary;
+    color: $white;
+    font-family: $font-family-monospace;
+    max-width: 250px;
+    display: none;
+
+    @include mq($layout-m) {
+      display: block;
+    }
+  }
+
+  &.btn-read-more {
+    display: block;
+    max-width: 120px;
+  }
 }
 
 .action-buttons {
@@ -97,10 +110,12 @@ h6 {
     border-width: 0px;
     width: 50%;
     background-color: $white;
+
     &:hover {
       background-color: transparent;
       text-decoration: none;
     }
+
     .MuiButton-label {
       text-align: left;
     }
@@ -122,16 +137,19 @@ h6 {
     transition: all $speed;
     width: 50%;
     max-width: 250px;
+
     &:hover {
       color: $white;
       background-color: $black;
     }
+
     &:only-child {
-        width: 100%;
-        margin-left: 0px;
-        @include mq(0,$layout-m) {
-            margin: auto;
-        }
+      width: 100%;
+      margin-left: 0px;
+
+      @include mq(0, $layout-m) {
+        margin: auto;
+      }
     }
   }
 
@@ -142,156 +160,159 @@ h6 {
   }
 
   .disabled {
-      border: 1px solid $gray-light;
+    border: 1px solid $gray-light;
   }
 }
 
 .link {
-    color: $gray-light;
-    cursor: pointer;
-    border: 0;
-    background: none;
-    margin: .75rem auto;
-    transition: color $speed;
+  color: $gray-light;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  margin: .75rem auto;
+  transition: color $speed;
 
-    &:hover {
-        color: $black;
-    }
-    &__why {
-        text-align: center;
-        display: block;
-        font-family: $font-family-base;
-        font-size: .9rem;
-    }
+  &:hover {
+    color: $black;
+  }
+
+  &__why {
+    text-align: center;
+    display: block;
+    font-family: $font-family-base;
+    font-size: .9rem;
+  }
 }
 
 .bg-texture {
-    background-image: url('../../images/background_texture.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center;
-    &__bottom {
-        background-position: left 0 bottom -100%;
+  background-image: url('../images/background_texture.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+
+  &__bottom {
+    background-position: left 0 bottom -100%;
+  }
+
+  &__top {
+    background-position: left 0 top -50%;
+  }
+
+  &__flip {
+    background-image: url('../images/background_texture_flip.png');
+  }
+
+  &__absolute {
+    position: absolute;
+    z-index: -3;
+    width: 100%;
+    height: 100vh;
+
+    &_25 {
+      z-index: -3;
+      width: 100%;
+      height: 100vh;
+      position: absolute;
+      transform: translateY(-25%);
     }
-    &__top {
-        background-position: left 0 top -50%;
+
+    &_50 {
+      z-index: -3;
+      width: 100%;
+      height: 100vh;
+      position: absolute;
+      transform: translateY(-50%);
     }
-    &__flip {
-        background-image: url('../../images/background_texture_flip.png');
-    }
-    &__absolute {
-        position: absolute;
-        z-index: 0;
-        width: 100%;
-        height: 100vh;
-        &_25 {
-            z-index: 0;
-            width: 100%;
-            height: 100vh;
-            position: absolute;
-            transform: translateY(-25%);
-        }
-        &_50 {
-            z-index: 0;
-            width: 100%;
-            height: 100vh;
-            position: absolute;
-            transform: translateY(-50%);
-        }
-    }
+  }
 }
 
 .tear {
+  width: 100%;
+  position: relative;
+
+  &.tear_2 {
+    background-color: $white;
+  }
+
+  &__topper {
     width: 100%;
-    position: relative;
-    display: none;
-  
-    &.tear_1 {
-        bottom: -30px;
-        margin-top: -30px;
-    }
-  
-    &.tear_2 {
-        background-color: $white; 
-        margin-bottom: -44px;
-    }
-    &__topper {
-        width: 100%;
-    }
-    @include mq($tablet) {
-        display: block;
-    }
+  }
 }
 
 .hr {
-    &__thick {
-        height: 10px;
-        background: black;
-        width: 50%;
-        @include mq($tablet) {
-            width: 350px;
-        }
+  &__thick {
+    height: 10px;
+    background: black;
+    width: 50%;
+
+    @include mq($tablet) {
+      width: 350px;
     }
+  }
 }
 
 .loading {
-    display: block;
-    margin: 2rem auto;
-    padding: 2rem;
-    text-align: center;
+  display: block;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
 }
+
 .center {
-    text-align: center;
-    display: block;
-    margin: auto;
+  text-align: center;
+  display: block;
+  margin: auto;
 }
+
 .no-padding {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .confetti-overlay {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    z-index: 99999;
-    width: 50%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 99999;
+  width: 50%;
 }
 
 
 .header {
-    display: flex;
-    position: fixed;
-    z-index: 1000;
-    top: 0px;
-    height: 50px;
-    width: 100%;
-    max-width: 100vw;
-    padding: 0 20px;
-    border-bottom: 1px solid $black;
-    background-color: $white;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  position: fixed;
+  z-index: 1000;
+  top: 0px;
+  height: 50px;
+  width: 100%;
+  max-width: 100vw;
+  padding: 0 20px;
+  border-bottom: 1px solid $black;
+  background-color: $white;
+  justify-content: space-between;
+  align-items: center;
 
-    .supporter-message {
-        display: none;
-        font-family: $font-family-sans-serif;
-        margin-right: 2rem;
-        line-height: 1rem;
-    }
+  .supporter-message {
+    display: none;
+    font-family: $font-family-sans-serif;
+    margin-right: 2rem;
+    line-height: 1rem;
+  }
 }
-  
+
 .logo {
-    height: 100%;
-    margin-right: 45px;
-    img {
-        width: 115px;
-    }
+  height: 100%;
+  margin-right: 45px;
+
+  img {
+    width: 160px;
+  }
 }
-  
-.fullscreen-close {
-    position: absolute !important;
-    right: 1rem;
-    top: 1rem;
-    height: 50px;
-    width: 50px;
+
+.fullscreen-close,
+.close-x {
+  position: absolute !important;
+  right: 1rem;
+  top: 1rem;
+  height: 50px;
+  width: 50px;
 }

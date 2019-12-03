@@ -11,22 +11,26 @@ Rails.application.routes.draw do
     root to: "users#index"
   end
 
+  get "/users/password/edit", to: "react#index"
+
   devise_for :users, controllers: {
     confirmations: "confirmations",
     registrations: "registrations",
-    sessions: "sessions"
+    sessions: "sessions",
+    passwords: "passwords"
   }
 
   resources :comments, only: %i[create destroy]
   resources :subscriptions
   resources :artist_pages
-  resources :posts, only: %i[destroy]
 
-  resources :posts, only: %i[destroy]
+  resources :posts, only: %i[destroy update]
 
   resources :artist_pages, only: [] do
     resources :posts, only: %i[create index]
   end
+
+  put "me/updatecard", to: "subscriptions#update_platform_customer"
 
   get "slug/:slug", to: "artist_pages#show"
 
@@ -39,6 +43,18 @@ Rails.application.routes.draw do
   end
 
   get "/stripe_success", to: "pages#stripe_success"
+  post "/stripe_hook", to: "stripe#webhook"
+
   root to: "react#index"
-  get "/*path", to: "react#index"
+  get "/artists/*path", to: "react#index"
+  get "/artist/*path", to: "react#index"
+  get "/support/*path", to: "react#index"
+  get "/create_post/*path", to: "react#index"
+  get "/connect", to: "react#index"
+  get "/upload", to: "react#index"
+  get "/settings", to: "react#index"
+  get "/user-details", to: "react#index"
+
+  get "/no_artist", to: "react#render_404"
+  get "/*path", to: "react#render_404"
 end

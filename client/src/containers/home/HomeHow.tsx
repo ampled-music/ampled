@@ -11,7 +11,7 @@ interface Props {
   bgColor: string;
 }
 
-class HomeHowComponent extends React.Component<Props,any> {
+class HomeHowComponent extends React.Component<Props, any> {
 
   state = {
     showSpeaker: true,
@@ -20,16 +20,16 @@ class HomeHowComponent extends React.Component<Props,any> {
     intervalId: undefined,
   };
 
-  theLoop = ( activeState ) => {
+  theLoop = (activeState: string) => {
     const self = this;
-    const intervalId = setInterval( function () {
-      if ( activeState == 'section_1' ) {
+    const intervalId = setInterval(function () {
+      if (activeState === 'section_1') {
         self.openSpeaker();
         activeState = 'section_2';
-      } else if ( activeState == 'section_2' ) {
+      } else if (activeState === 'section_2') {
         self.openCrowd();
         activeState = 'section_3';
-      } else if ( activeState == 'section_3' ) {
+      } else if (activeState === 'section_3') {
         self.openMoney();
         activeState = 'section_1';
       }
@@ -40,28 +40,28 @@ class HomeHowComponent extends React.Component<Props,any> {
 
 
   openSpeaker = () => {
-    this.setState({ 
+    this.setState({
       showSpeaker: true,
       showMoney: false,
       showCrowd: false
     });
   };
   openMoney = () => {
-    this.setState({ 
+    this.setState({
       showMoney: true,
       showSpeaker: false,
       showCrowd: false
     });
   };
   openCrowd = () => {
-    this.setState({ 
+    this.setState({
       showCrowd: true,
       showMoney: false,
       showSpeaker: false
     });
   };
 
-  setActive = (graphic) => {
+  setActive = (graphic: any) => {
     if (graphic) {
       return 'active';
     }
@@ -79,8 +79,8 @@ class HomeHowComponent extends React.Component<Props,any> {
 
   render() {
     return (
-        <div className="home-how">
-        <img className="tear tear_1" src={tear_1} />
+      <div className="home-how">
+        <img className="tear tear_1" src={tear_1} alt=""/>
 
         <div className="container">
           <div className="row">
@@ -89,9 +89,9 @@ class HomeHowComponent extends React.Component<Props,any> {
             </div>
           </div>
 
-    
+
           <div className="home-how__list">
-            
+
             <div className="home-how__numbers">
               <div className="section section_1">
                 <div className={this.setActive(this.state.showSpeaker)}>
@@ -113,7 +113,7 @@ class HomeHowComponent extends React.Component<Props,any> {
             <div className="home-how__info">
               <div className="section section_1">
                 <div className={this.setActive(this.state.showSpeaker)}>
-                  <div className="home-how__title">Artists post unique/ unreleased content</div>
+                  <div className="home-how__title">Artists post unique / unreleased content</div>
                   <div className="home-how__copy">
                     Demos, unreleased material, exclusive merch, announcements - and more.
                   </div>
@@ -140,17 +140,17 @@ class HomeHowComponent extends React.Component<Props,any> {
             <div className="home-how__images">
               <div className="section section_1">
                 <div className={this.setActive(this.state.showSpeaker)}>
-                  <img className="home-how__image speaker" src={speaker} />
+                  <img className="home-how__image speaker" src={speaker} alt="Artists post unique / unreleased content"/>
                 </div>
               </div>
               <div className="section section_2">
-                <div className={this.setActive(this.state.showCrowd)}>  
-                  <img className="home-how__image crowd" src={crowd} />
+                <div className={this.setActive(this.state.showCrowd)}>
+                  <img className="home-how__image crowd" src={crowd} alt="Artists are directly supported by their community"/>
                 </div>
               </div>
               <div className="section section_3">
-                <div className={this.setActive(this.state.showMoney)}>  
-                  <img className="home-how__image money" src={money} />
+                <div className={this.setActive(this.state.showMoney)}>
+                  <img className="home-how__image money" src={money} alt="Artists receive predictable and recurring payments"/>
                 </div>
               </div>
             </div>
@@ -158,7 +158,7 @@ class HomeHowComponent extends React.Component<Props,any> {
 
           </div>
         </div>
-        <img className="tear tear_2" src={tear_2} />
+        <img className="tear tear_2" src={tear_2} style={{ backgroundColor: this.props.bgColor }} alt=""/>
       </div>
     )
   }

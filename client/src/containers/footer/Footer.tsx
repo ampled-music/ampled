@@ -1,7 +1,7 @@
 import './footer.scss';
 
 import * as React from 'react';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { Link } from 'react-router-dom';
 
 import logo from '../../images/ampled_logo.svg';
@@ -53,7 +53,7 @@ class Footer extends React.Component<Props, any> {
               <Link to="/">
                 <img src={logo} alt="logo" className="logo" />
               </Link>
-              <div className="copyright">©{moment().year()} Ampled</div>
+              <div className="copyright">©{DateTime.local().year} Ampled</div>
               <div className="own-it">We Own It! <span role="img" aria-label="Solidarity">✊</span></div>
               <button className="btn btn-ampled" onClick={() => window.open('https://fundraising.fracturedatlas.org/ampled-co-op/general_support')}>Donate Now</button>
             </div>

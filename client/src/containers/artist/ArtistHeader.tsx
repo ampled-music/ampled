@@ -114,16 +114,30 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="supporter__hover-card">
         <div className="supporter__hover-card_header">
           <div className="supporter__hover-card_header_info">
-            <div className="supporter__hover-card_header_info_name">{owner.name}</div>
+            <div className="supporter__hover-card_header_info_name">{owner.name}
+              {owner.last_initial && (
+                <span> {owner.last_initial}.</span>
+              )}
+            </div>
+            {owner.joined_since && (
+              <div className="supporter__hover-card_header_info_since">Joined Ampled {owner.joined_since}</div>
+            )}
+            {owner.bio && (
+              <div className="supporter__hover-card_header_info_bio">{owner.bio}</div>
+            )}
           </div>
         </div>
-        {owner.also_supports && (
+        {owner.supports.length > 0 && (
           <div className="supporter__hover-card_bands">
             <div className="supporter__hover-card_bands_section">
-              <h6>Also Supports</h6>
-              <div className="supporter__hover-card_bands_name">Dilly Dally</div>
-              <div className="supporter__hover-card_bands_name">Culture Abuse</div>
-            </div>
+                <h6>Also Supports</h6>
+                {owner.supports
+                  .map((artist) => (
+                    <div className="supporter__hover-card_bands_name">
+                      <a href={artist.slug}>{artist.name}</a>
+                    </div>
+                  ))}
+              </div>
           </div>
         )}
       </div>
@@ -316,6 +330,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   };
 
   renderSupporterHover = ({ supporter }) => {
+    const artist_name = this.props.artist.name;
     return (
       <div className="supporter__hover-card">
         <div className="supporter__hover-card_header">
@@ -329,25 +344,45 @@ export class ArtistHeader extends React.Component<Props, any> {
             </div>
           )}
           <div className="supporter__hover-card_header_info">
-            <div className="supporter__hover-card_header_info_name">{supporter.name}</div>
-            {supporter.since && (
-              <div className="supporter__hover-card_header_info_since">Supporter since {supporter.since}</div>
+            <div className="supporter__hover-card_header_info_name">{supporter.name}
+              {supporter.last_initial && (
+                <span> {supporter.last_initial}.</span>
+              )}
+            </div>
+            {supporter.supports && (
+              <div className="supporter__hover-card_header_info_since">Supporter since 
+                {supporter.supports
+                  .filter((artists) => R.equals(artists.name, artist_name))
+                  .map((artists) => (
+                    <span> {artists.supporter_since}</span>
+                  ))}
+              </div>
             )}
           </div>
         </div>
-        {(supporter.also_supports || supporter.member_of) && (
+        {(supporter.supports.length > 1 || supporter.member_of.length > 0 ) && (
           <div className="supporter__hover-card_bands">
-            {supporter.also_supports && (
+            {supporter.supports.length > 1 && (
               <div className="supporter__hover-card_bands_section">
                 <h6>Also Supports</h6>
-                <div className="supporter__hover-card_bands_name">Dilly Dally</div>
-                <div className="supporter__hover-card_bands_name">Culture Abuse</div>
+                {supporter.supports
+                  .filter((artist) => !R.equals(artist.name, artist_name))
+                  .map((artist) => (
+                    <div className="supporter__hover-card_bands_name">
+                      <a href={artist.slug}>{artist.name}</a>
+                    </div>
+                  ))}
               </div>
             )}
-            {supporter.member_of && (
+            {supporter.member_of.length > 0 && (
               <div className="supporter__hover-card_bands_section">
                 <h6>Member of</h6>
-                <div className="supporter__hover-card_bands_name">Fake Dad</div>
+                {supporter.member_of
+                  .map((artist) => (
+                    <div className="supporter__hover-card_bands_name">
+                      <a href={artist.slug}>{artist.name}</a>
+                    </div>
+                  ))}
               </div>
             )}
           </div>

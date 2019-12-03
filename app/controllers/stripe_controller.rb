@@ -37,8 +37,8 @@ class StripeController < ApplicationController
   def authorize_stripe_account
     connection.post("https://connect.stripe.com/oauth/token",
                     client_secret: ENV["STRIPE_SECRET_KEY"],
-    code: params[:code],
-    grant_type: "authorization_code").body
+                    code: params[:code],
+                    grant_type: "authorization_code").body
   end
 
   def connection

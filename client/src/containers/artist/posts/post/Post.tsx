@@ -2,7 +2,7 @@ import './post.scss';
 
 import cx from 'classnames';
 import * as React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { routePaths } from '../../../route-paths';
 import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
@@ -170,20 +170,26 @@ class PostComponent extends React.Component<any, any> {
     </div>
   );
 
-  renderLock = () => {
-    const { me } = this.props;
+  renderLock = (isLapsed: boolean = false) => {
+    const { me, history } = this.props;
     const authenticated = !!me;
 
     return (
       <div className="private-support">
-        <div className="private-support__copy">Supporter Only</div>
+        <div className="private-support__copy">{isLapsed ? 'Support On Hold' : 'Supporter Only'}</div>
         <div className="private-support__btn">
-          <button className="btn btn-ampled" onClick={() => this.handlePrivatePostClick(authenticated)}>
-            SUPPORT TO UNLOCK
-          </button>
+          {isLapsed ? (
+            <Link to={routePaths.userDetails} className="btn btn-ampled">
+              UPDATE YOUR CARD
+            </Link>
+          ) : (
+            <button className="btn btn-ampled" onClick={() => this.handlePrivatePostClick(authenticated)}>
+              SUPPORT TO UNLOCK
+            </button>
+          )}
         </div>
       </div>
-    )
+    );
   };
 
   renderCloudinaryPhoto = (image: string, crop: number, ) => {
@@ -201,6 +207,8 @@ class PostComponent extends React.Component<any, any> {
 
   renderPost = () => {
     const { classes, post, accentColor, me } = this.props;
+
+    const deny_details_lapsed = post.deny_details_lapsed || false;
 
     const allowDetails = post.allow_details;
     const isPrivate = post.is_private;
@@ -221,7 +229,7 @@ class PostComponent extends React.Component<any, any> {
         </Modal>
         <div
           className={cx('post', { 'clickable-post': !allowDetails })}
-          onClick={() => this.handlePrivatePostClick(authenticated)}
+          onClick={() => !deny_details_lapsed && this.handlePrivatePostClick(authenticated)}
           title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
         >
           <Card className={classes.card} style={{ border: `2px solid ${accentColor}` }}>
@@ -274,7 +282,7 @@ class PostComponent extends React.Component<any, any> {
             {post.image_url && !post.has_audio && (
               <div className="post__image-container">
                 <CardMedia className={cx(classes.media, { 'blur-image': !allowDetails })} image={this.renderCloudinaryPhoto(post.image_url, 500)}  />
-                {!allowDetails && this.renderLock()}
+                {!allowDetails && this.renderLock(deny_details_lapsed)}
               </div>
             )}
 
@@ -293,7 +301,7 @@ class PostComponent extends React.Component<any, any> {
                       }}
                     />
                   )}
-                    {!allowDetails && this.renderLock()}
+                    {!allowDetails && this.renderLock(deny_details_lapsed)}
                   </div>
                 {allowDetails && (
 
@@ -311,7 +319,7 @@ class PostComponent extends React.Component<any, any> {
                       'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
                   }}
                 />
-                {this.renderLock()}
+                {this.renderLock(deny_details_lapsed)}
               </div>
             )}
 

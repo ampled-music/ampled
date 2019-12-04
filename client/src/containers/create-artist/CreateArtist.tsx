@@ -9,9 +9,13 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import SwipeableViews from 'react-swipeable-views';
+import { TextField, Radio, RadioGroup, FormControlLabel, InputAdornment, Button } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 import { theme } from './theme';
 import tear from '../../images/full_page_tear.png';
+import polaroid from '../../images/polaroid.png';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -104,10 +108,175 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
     );
   };
 
+  renderAbout = () => {
+    return (
+      <div className="container">
+        <div className="basic-info">
+          <div className="row">
+            <div className="col-6">
+              <div className="create-artist__title">About</div>
+              <div className="create-artist__copy">
+                Let us know a few things about who you are and how, how to address you, and how you want to present
+                yourself.
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-4">
+              <div className="create-artist__subtitle">Artist or Band name</div>
+              <h6>Required</h6>
+            </div>
+            <div className="col-8">
+              <TextField
+                name="name"
+                label="Name"
+                id="name"
+                // value={this.state.name}
+                // onChange={this.handleChange}
+                fullWidth
+                required
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-4">
+              <div className="create-artist__subtitle">What Sounds more Accurate?</div>
+              <h6>Required</h6>
+            </div>
+            <div className="col-8">
+              <RadioGroup
+                aria-label="verb"
+                name="artist_verb"
+                // value={value}
+                // onChange={handleChange}
+              >
+                <FormControlLabel value="are" control={<Radio />} label="Band are recording a new record." />
+                <FormControlLabel value="is" control={<Radio />} label="Band is recording a new record." />
+              </RadioGroup>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-4">
+              <div className="create-artist__subtitle">Location</div>
+            </div>
+            <div className="col-8">
+              <TextField
+                name="location"
+                label="Location"
+                id="location"
+                // value={this.state.location}
+                // onChange={this.handleChange}
+                fullWidth
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-4">
+              <div className="create-artist__subtitle">Social</div>
+            </div>
+            <div className="col-8">
+              <TextField
+                name="twitter"
+                label="Twitter"
+                id="twitter"
+                placeholder="Twitter"
+                // value={this.state.twitter}
+                // onChange={this.handleChange}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FontAwesomeIcon className="icon" icon={faTwitter} />
+                    </InputAdornment>
+                  ),
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
+              <TextField
+                name="instagram"
+                label="Instagram"
+                id="instagram"
+                placeholder="Instagram"
+                // value={this.state.instagram}
+                // onChange={this.handleChange}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FontAwesomeIcon className="icon" icon={faInstagram} />
+                    </InputAdornment>
+                  ),
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-4">
+              <div className="create-artist__subtitle">Artist Video Message</div>
+            </div>
+            <div className="col-8">
+              <TextField
+                name="video-message"
+                label="video URL"
+                id="video-message"
+                // value={this.state.location}
+                // onChange={this.handleChange}
+                fullWidth
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  renderImages = () => {
+    return (
+      <div className="container">
+        <div className="image-upload">
+          <div className="row">
+            <div className="col-6">
+              <div className="create-artist__subtitle">Artist Images</div>
+              <div className="create-artist__copy">
+                You can have several photos for your profile, but there can be only one profile photo, which will be
+                used to identify you to your supporters in certain scenarios. Select your primary photo and then up to
+                two secondary photos for your profile.
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-3">
+              <div className="image-upload__image">
+                <img className="image-upload__image_polaroid" src={polaroid} />
+                <Button className="btn btn-ampled">Upload Primary</Button>
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="image-upload__image">
+                <img className="image-upload__image_polaroid" src={polaroid} />
+                <Button className="btn btn-ampled">Upload Photo #2</Button>
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="image-upload__image">
+                <img className="image-upload__image_polaroid" src={polaroid} />
+                <Button className="btn btn-ampled">Upload Photo #3</Button>
+              </div>
+            </div>
+            <div className="col-3">Minimum resolution: 700 X 700 Maximum size: 5mb</div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   renderContent = () => (
     <MuiThemeProvider theme={theme}>
       {this.renderHeader()}
       {/* {this.renderNav()} */}
+      {this.renderAbout()}
+      {this.renderImages()}
     </MuiThemeProvider>
   );
 

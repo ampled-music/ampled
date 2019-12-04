@@ -3,6 +3,6 @@ Raven.configure do |config|
     config.async = lambda { |event|
       SentryJob.perform_later(event)
     }
-    config.environment = ENV['RAILS_ENV']
+    config.current_environment = ENV['HOSTNAME']
     config.excluded_exceptions = [] #+= ['ActionController::RoutingError']
   end

@@ -120,7 +120,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
   renderAbout = () => {
     return (
       <div className="container">
-        <div className="basic-info">
+        <div className="artist-about">
           <div className="row">
             <div className="col-6">
               <div className="create-artist__title">About</div>
@@ -130,6 +130,15 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    );
+  };
+
+  renderInfo = () => {
+    return (
+      <div className="container">
+        <div className="artist-custom">
           <div className="row">
             <div className="col-4">
               <div className="create-artist__subtitle">Artist or Band name</div>
@@ -329,6 +338,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
       {this.renderHeader()}
       {/* {this.renderNav()} */}
       {this.renderAbout()}
+      {this.renderInfo()}
       {this.renderImages()}
       {this.renderColor()}
     </MuiThemeProvider>

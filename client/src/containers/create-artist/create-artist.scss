@@ -54,6 +54,7 @@
     font-size: 0.9rem;
     margin-bottom: 1rem;
   }
+
   .image-upload {
     &__image {
       display: flex;
@@ -77,6 +78,24 @@
         margin: auto;
         display: block;
       }
+    }
+  }
+  .artist-color {
+    &__info {
+      padding: 1rem;
+      margin: 2rem;
+      background-color: $white;
+    }
+    &__picker {
+      transform: translateY(2rem);
+    }
+    &__opacity {
+      padding: 1rem;
+      margin: 2rem;
+      font-family: $font-family-monospace;
+    }
+    .row {
+      margin-bottom: 0rem;
     }
   }
 }

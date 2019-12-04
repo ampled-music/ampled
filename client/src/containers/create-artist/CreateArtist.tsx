@@ -12,6 +12,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { TextField, Radio, RadioGroup, FormControlLabel, InputAdornment, Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { ChromePicker } from 'react-color';
 
 import { theme } from './theme';
 import tear from '../../images/full_page_tear.png';
@@ -49,7 +50,15 @@ function a11yProps(index: any) {
 }
 
 class CreateArtist extends React.Component<TabPanelProps, any> {
-  state = {};
+  state = {
+    artistColor: '#baddac',
+    artistColorAlpha: '#baddac33',
+  };
+
+  handleChangeComplete = (color) => {
+    this.setState({ artistColor: color.hex });
+    this.setState({ artistColorAlpha: color.hex + '33' });
+  };
 
   renderHeader = () => {
     return (
@@ -271,12 +280,56 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
     );
   };
 
+  renderColor = () => {
+    return (
+      <div className="artist-color">
+        <div className="primary-color" style={{ backgroundColor: this.state.artistColor }}>
+          <div className="container">
+            <div className="row justify-content-between">
+              <div className="col-6">
+                <div className="artist-color__info">
+                  <div className="create-artist__subtitle">Artist Color</div>
+                  <div className="create-artist__copy">
+                    <p>
+                      Select a color for your artist page. This color will be used as accents on both your page and
+                      around the site.
+                    </p>
+                    <p>
+                      The lighter version (20% opacity) of the color is how the will appear in certain rare instances.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-3">
+                <ChromePicker
+                  color={this.state.artistColor}
+                  onChangeComplete={this.handleChangeComplete}
+                  className="artist-color__picker"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="secondary-color" style={{ backgroundColor: this.state.artistColorAlpha }}>
+          <div className="container">
+            <div className="row">
+              <div className="col-6">
+                <div className="artist-color__opacity">20% Opacity</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   renderContent = () => (
     <MuiThemeProvider theme={theme}>
       {this.renderHeader()}
       {/* {this.renderNav()} */}
       {this.renderAbout()}
       {this.renderImages()}
+      {this.renderColor()}
     </MuiThemeProvider>
   );
 

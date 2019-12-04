@@ -40,7 +40,12 @@ class SubscriptionsController < ApplicationController
 
   def update_platform_customer
     # Update platform customer
-    customer = Stripe::Customer.update(current_user.stripe_customer_id, source: params["token"])
+    begin
+      customer = update_single_customer
+    rescue Stripe::CardError => e
+      Raven.capture_exception(e)
+      return render json: { status: "error", message: e.message }, status: :bad_request
+    end
     card = customer.sources.data[0]
     current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
                         card_exp_year: card.exp_year, card_last4: card.last4,
@@ -56,6 +61,9 @@ class SubscriptionsController < ApplicationController
         stripe_account: ap_stripe_id
       )
       Stripe::Customer.update(customer_id, { source: token.id }, stripe_account: ap_stripe_id)
+    rescue StandardError => e
+      Raven.capture_exception(e)
+      render json: { status: "error", message: e.message }, status: :bad_request
     end
 
     # Send back update
@@ -63,6 +71,10 @@ class SubscriptionsController < ApplicationController
   end
 
   private
+
+  def update_single_customer
+    Stripe::Customer.update(current_user.stripe_customer_id, source: params["token"])
+  end
 
   def create_token
     Stripe::Token.create(

@@ -17,6 +17,7 @@ interface Props {
   formType: String;
   updateCard?: Function;
   userData?: any;
+  errorCard?: any;
 }
 
 declare global {
@@ -50,6 +51,7 @@ export class StripePaymentProvider extends React.Component<Props, any> {
       formType,
       updateCard,
       userData,
+      errorCard,
     } = this.props;
 
     let element;
@@ -64,7 +66,7 @@ export class StripePaymentProvider extends React.Component<Props, any> {
         />
       );
     } else if (formType === 'editcard') {
-      element = <EditCardForm updateCard={updateCard} declineStep={declineStep} />;
+      element = <EditCardForm updateCard={updateCard} declineStep={declineStep} errorCard={errorCard} />;
     }
 
     return (

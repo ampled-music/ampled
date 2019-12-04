@@ -34,7 +34,7 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
 type Props = typeof loginInitialState &
   typeof meInitialState &
-  Dispatchers & { history: any; };
+  Dispatchers & { history: any; errorCard: any; };
 
 const SingleCardDisplay = ({ brand, last4, exp_month, exp_year, is_valid }) => {
   let brandIcon = faCcStripe;
@@ -90,6 +90,7 @@ interface CardInfoProps {
   is_valid: Boolean;
   updateCard: Function;
   updatedCard: Boolean;
+  errorCard: any;
 }
 
 class CardInfo extends React.Component<CardInfoProps> {
@@ -104,7 +105,7 @@ class CardInfo extends React.Component<CardInfoProps> {
   }
 
   render() {
-    const { brand, updateCard } = this.props;
+    const { brand, updateCard, errorCard } = this.props;
     const { showEditForm } = this.state;
     if (!showEditForm) {
       return (
@@ -117,22 +118,22 @@ class CardInfo extends React.Component<CardInfoProps> {
               </button>
             </div>
           ) : (
-            <Card className="card card-empty">
-              <CardContent>
-                <span
-                  className="btn btn-link btn-edit-card"
-                  style={{ textDecoration: 'none' }}
-                >
-                  No card stored
+              <Card className="card card-empty">
+                <CardContent>
+                  <span
+                    className="btn btn-link btn-edit-card"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    No card stored
                 </span>
-                {/*
+                  {/*
                 <button className="btn btn-link btn-edit-card" onClick={() => this.setState({ showEditForm: !showEditForm })}>
                   Add a payment method                
                 </button>
                 */}
-              </CardContent>
-            </Card>
-          )}
+                </CardContent>
+              </Card>
+            )}
           
         </div>
       );
@@ -147,6 +148,7 @@ class CardInfo extends React.Component<CardInfoProps> {
           }}
           createSubscription={() => null}
           updateCard={updateCard}
+          errorCard={errorCard}
         />
       );
     }
@@ -524,7 +526,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
     const {
       userData: { cardInfo },
       updatedCard,
-      updateCard
+      updateCard,
+      errorCard,
     } = this.props;
 
     return (
@@ -536,7 +539,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
           <div className="col-md-10">
             <div className="row no-gutters">
               <div className="col-sm-8 col-md-5">
-                <CardInfo {...cardInfo} updatedCard={updatedCard} updateCard={updateCard} />
+                <CardInfo {...cardInfo} updatedCard={updatedCard} updateCard={updateCard} errorCard={errorCard} />
               </div>
             </div>
           </div>

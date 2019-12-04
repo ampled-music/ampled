@@ -12,6 +12,7 @@ export const updateCardReducer = {
   [updateCardAction.STARTED]: (state) => ({
     ...state,
     updatingCard: true,
+    errorCard: undefined,
   }),
   [updateCardAction.SUCCEEDED]: (state, { payload }) => ({
     ...state,

@@ -256,24 +256,25 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
           </div>
           <div className="row">
             <div className="col-3">
-              <div className="image-upload__image">
+              <div className="image-upload__image primary">
                 <img className="image-upload__image_polaroid" src={polaroid} />
-                <Button className="btn btn-ampled">Upload Primary</Button>
+                <Button className="btn btn-upload" variant="outlined">Upload Primary</Button>
               </div>
             </div>
             <div className="col-3">
-              <div className="image-upload__image">
+              <div className="image-upload__image secondary">
                 <img className="image-upload__image_polaroid" src={polaroid} />
-                <Button className="btn btn-ampled">Upload Photo #2</Button>
+                <Button className="btn btn-upload" variant="outlined">Upload Photo #2</Button>
               </div>
             </div>
             <div className="col-3">
-              <div className="image-upload__image">
+              <div className="image-upload__image secondary">
                 <img className="image-upload__image_polaroid" src={polaroid} />
-                <Button className="btn btn-ampled">Upload Photo #3</Button>
+                <Button className="btn btn-upload" variant="outlined">Upload Photo #3</Button>
               </div>
             </div>
-            <div className="col-3">Minimum resolution: 700 X 700 Maximum size: 5mb</div>
+            <div className="col-3"><div className="create-artist__copy">
+              Minimum resolution: 700 X 700 Maximum size: 5mb</div></div>
           </div>
         </div>
       </div>

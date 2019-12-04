@@ -55,27 +55,32 @@
     margin-bottom: 1rem;
   }
 
+  &__copy {
+    font-family: $font-family-monospace;
+  }
+
   .image-upload {
+    .btn-upload {
+      background-color: $white;
+    }
     &__image {
       display: flex;
-      height: 200px;
+      min-height: 200px;
       justify-content: center;
       align-content: center;
       flex-direction: column;
       margin: 1rem;
       padding: 1rem;
-      &:nth-child(1) {
+      
+      &.primary {
         background: $gray-light;
       }
-      &:nth-child(2) {
-        background: $gray-light;
-      }
-      &:nth-child(3) {
-        background: $gray-light;
+      &.secondary {
+        background: $gray-lighter;
       }
       &_polaroid {
         max-width: 130px;
-        margin: auto;
+        margin: 0 auto 1rem;
         display: block;
       }
     }

@@ -112,4 +112,23 @@
       margin-bottom: 0rem;
     }
   }
+  .artist-members {
+    margin: 2rem 0;
+    &__card {
+      border: 1px solid $black;
+      display: flex;
+      justify-content: center;
+      box-shadow: none;
+      &_add {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        span {
+          font-family: $font-family-sans-serif;
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
 }

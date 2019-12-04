@@ -9,8 +9,9 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import SwipeableViews from 'react-swipeable-views';
-import { TextField, Radio, RadioGroup, FormControlLabel, InputAdornment, Button } from '@material-ui/core';
+import { TextField, Radio, RadioGroup, FormControlLabel, InputAdornment, Button, Card, CardContent } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { ChromePicker } from 'react-color';
 
@@ -333,6 +334,58 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
     );
   };
 
+  renderMembers = () => {
+    return (
+      <div className="container">
+        <div className="artist-members">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="create-artist__title">Members</div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <div className="create-artist__copy">
+                This step is optional, but we encourage you to list the members of your project or band to further connect with your audience and give them insight into your own interests. The order in which they will appear can be alterered below.
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="create-artist__copy">
+                All members marked as admins will be notified of payouts, changes, and updates, unless specified otherwise.
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <Card className="artist-members__card">
+                <CardContent>
+                  <div className="row">
+                    <div className="col-6">
+                      <div className="create-artist__copy">
+                        All members marked as admins will be notified of payouts, changes, and updates, unless specified otherwise.
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            <div className="col-md-6">
+              <Card className="artist-members__card">
+                <CardContent>
+                  <div className="artist-members__card_add">
+                    <FontAwesomeIcon className="icon" icon={faPlusCircle} size="3x" />
+                    <span>Add a Member</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   renderContent = () => (
     <MuiThemeProvider theme={theme}>
       {this.renderHeader()}
@@ -341,6 +394,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
       {this.renderInfo()}
       {this.renderImages()}
       {this.renderColor()}
+      {this.renderMembers()}
     </MuiThemeProvider>
   );
 

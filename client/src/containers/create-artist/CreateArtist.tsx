@@ -9,7 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import SwipeableViews from 'react-swipeable-views';
-import { TextField, Radio, RadioGroup, FormControlLabel, InputAdornment, Button, Card, CardContent } from '@material-ui/core';
+import { TextField, Radio, RadioGroup, FormControlLabel, InputAdornment, Button, Card, CardContent, Checkbox } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -54,11 +54,26 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
   state = {
     artistColor: '#baddac',
     artistColorAlpha: '#baddac33',
+    artistName: '',
+    artistVerb: 'are',
+    artistLocation: '',
+    artistMessage: '',
+    artistTwitter: '',
+    artistInstagram: '',
+    artistVideo: '',
+    firstName: '',
+    lastName: '',
+    location: ''
   };
 
   handleChangeComplete = (color) => {
     this.setState({ artistColor: color.hex });
     this.setState({ artistColorAlpha: color.hex + '33' });
+  };
+
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   };
 
   renderHeader = () => {
@@ -147,11 +162,11 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             </div>
             <div className="col-8">
               <TextField
-                name="name"
+                name="artistName"
                 label="Name"
                 id="name"
-                // value={this.state.name}
-                // onChange={this.handleChange}
+                value={this.state.artistName}
+                onChange={this.handleChange}
                 fullWidth
                 required
               />
@@ -164,10 +179,10 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             </div>
             <div className="col-8">
               <RadioGroup
-                aria-label="verb"
+                aria-label="artistVerb"
                 name="artist_verb"
-                // value={value}
-                // onChange={handleChange}
+                value={this.state.artistVerb}
+                onChange={this.handleChange}
               >
                 <FormControlLabel value="are" control={<Radio />} label="Band are recording a new record." />
                 <FormControlLabel value="is" control={<Radio />} label="Band is recording a new record." />
@@ -183,9 +198,27 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                 name="location"
                 label="Location"
                 id="location"
-                // value={this.state.location}
-                // onChange={this.handleChange}
+                value={this.state.artistLocation}
+                onChange={this.handleChange}
                 fullWidth
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-4">
+              <div className="create-artist__subtitle">Message</div>
+            </div>
+            <div className="col-8">
+              <TextField
+                name="message"
+                label="Message from the artist"
+                id="message"
+                value={this.state.artistMessage}
+                onChange={this.handleChange}
+                multiline
+                rows="5"
+                fullWidth
+                variant="outlined"
               />
             </div>
           </div>
@@ -199,8 +232,8 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                 label="Twitter"
                 id="twitter"
                 placeholder="Twitter"
-                // value={this.state.twitter}
-                // onChange={this.handleChange}
+                value={this.state.artistTwitter}
+                onChange={this.handleChange}
                 fullWidth
                 InputProps={{
                   startAdornment: (
@@ -216,8 +249,8 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                 label="Instagram"
                 id="instagram"
                 placeholder="Instagram"
-                // value={this.state.instagram}
-                // onChange={this.handleChange}
+                value={this.state.artistInstagram}
+                onChange={this.handleChange}
                 fullWidth
                 InputProps={{
                   startAdornment: (
@@ -237,10 +270,10 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             <div className="col-8">
               <TextField
                 name="video-message"
-                label="video URL"
+                label="Video URL"
                 id="video-message"
-                // value={this.state.location}
-                // onChange={this.handleChange}
+                value={this.state.artistVideo}
+                onChange={this.handleChange}
                 fullWidth
               />
             </div>
@@ -359,12 +392,114 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
           <div className="row">
             <div className="col-md-6">
               <Card className="artist-members__card">
-                <CardContent>
-                  <div className="row">
-                    <div className="col-6">
-                      <div className="create-artist__copy">
-                        All members marked as admins will be notified of payouts, changes, and updates, unless specified otherwise.
+                <CardContent className="container">
+                  <div className="row justify-content-between">
+                    <div className="col-auto">
+                      <div className="create-artist__title">
+                        Member
                       </div>
+                    </div>
+                    <div className="col-auto">
+                      <div className="artist-members__card_admin">   
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              // onChange={handleChange('checkedB')}
+                              // value="checkedB"
+                            />
+                          }
+                          label="Make Admin"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-3">
+                      <div className="create-artist__subtitle">Name</div>
+                      <h6>Required</h6>
+                    </div>
+                    <div className="col-9">
+                      <TextField
+                        name="firstname"
+                        label="First Name"
+                        id="firstname"
+                        // value={this.state.firstname}
+                        // onChange={this.handleChange}
+                        fullWidth
+                        required
+                      />
+                      <TextField
+                        name="lastname"
+                        label="Last Name"
+                        id="lastname"
+                        // value={this.state.lastname}
+                        // onChange={this.handleChange}
+                        fullWidth
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-3">
+                      <div className="create-artist__subtitle">Role(s)</div>
+                    </div>
+                    <div className="col-9">
+                      <TextField
+                        name="role"
+                        label="Role"
+                        id="role"
+                        // value={this.state.role}
+                        // onChange={this.handleChange}
+                        inputProps={{ maxLength: 50 }}
+                        // onInput={(e) =>{
+                        //   e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,50)
+                        // }}
+                        fullWidth
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-3">
+                      <div className="create-artist__subtitle">Photo</div>
+                    </div>
+                    <div className="col-9"></div>
+                  </div>
+                  <div className="row">
+                    <div className="col-3">
+                      <div className="create-artist__subtitle">Social</div>
+                    </div>
+                    <div className="col-9">
+                      <TextField
+                        name="twitter"
+                        id="twitter"
+                        placeholder="Twitter"
+                        // value={this.state.twitter}
+                        // onChange={this.handleChange}
+                        fullWidth
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <FontAwesomeIcon className="icon" icon={faTwitter} />
+                            </InputAdornment>
+                          ),
+                        }}
+                        InputLabelProps={{ shrink: true }}
+                      />
+                      <TextField
+                        name="instagram"
+                        id="instagram"
+                        placeholder="Instagram"
+                        // value={this.state.instagram}
+                        // onChange={this.handleChange}
+                        fullWidth
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <FontAwesomeIcon className="icon" icon={faInstagram} />
+                            </InputAdornment>
+                          ),
+                        }}
+                        InputLabelProps={{ shrink: true }}
+                      />
                     </div>
                   </div>
                 </CardContent>

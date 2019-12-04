@@ -62,12 +62,21 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
     artistInstagram: '',
     artistVideo: '',
     artistSlug: '',
-    firstName: '',
-    lastName: '',
-    location: ''
+    artistStripe: '',
+    members: {
+      me: {
+        isAdmin: true,
+        firstName: '',
+        lastName: '',
+        role: '',
+        instagram: '',
+        twitter: '',
+        photo: '',
+      }
+    }
   };
 
-  handleChangeComplete = (color) => {
+  handleColorChange = (color) => {
     this.setState({ artistColor: color.hex });
     this.setState({ artistColorAlpha: color.hex + '33' });
   };
@@ -181,7 +190,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             <div className="col-8">
               <RadioGroup
                 aria-label="artistVerb"
-                name="artist_verb"
+                name="artistVerb"
                 value={this.state.artistVerb}
                 onChange={this.handleChange}
               >
@@ -196,7 +205,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             </div>
             <div className="col-8">
               <TextField
-                name="location"
+                name="artistLocation"
                 label="Location"
                 id="location"
                 value={this.state.artistLocation}
@@ -211,7 +220,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             </div>
             <div className="col-8">
               <TextField
-                name="message"
+                name="artistMessage"
                 label="Message from the artist"
                 id="message"
                 value={this.state.artistMessage}
@@ -229,7 +238,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             </div>
             <div className="col-8">
               <TextField
-                name="twitter"
+                name="artistTwitter"
                 label="Twitter"
                 id="twitter"
                 placeholder="Twitter"
@@ -246,7 +255,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                 InputLabelProps={{ shrink: true }}
               />
               <TextField
-                name="instagram"
+                name="artistInstagram"
                 label="Instagram"
                 id="instagram"
                 placeholder="Instagram"
@@ -270,7 +279,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             </div>
             <div className="col-8">
               <TextField
-                name="video-message"
+                name="artistVideo"
                 label="Video URL"
                 id="video-message"
                 value={this.state.artistVideo}
@@ -348,7 +357,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
               <div className="col-3">
                 <ChromePicker
                   color={this.state.artistColor}
-                  onChangeComplete={this.handleChangeComplete}
+                  onChangeComplete={this.handleColorChange}
                   className="artist-color__picker"
                 />
               </div>
@@ -405,8 +414,9 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                         <FormControlLabel
                           control={
                             <Checkbox
-                              // onChange={handleChange('checkedB')}
-                              // value="checkedB"
+                              name="isAdmin"
+                              value={this.state.members.me.isAdmin}
+                              onChange={this.handleChange}
                             />
                           }
                           label="Make Admin"
@@ -421,20 +431,20 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                     </div>
                     <div className="col-9">
                       <TextField
-                        name="firstname"
+                        name="firstName"
                         label="First Name"
-                        id="firstname"
-                        // value={this.state.firstname}
-                        // onChange={this.handleChange}
+                        id="first-name"
+                        value={this.state.members.me.firstName}
+                        onChange={this.handleChange}
                         fullWidth
                         required
                       />
                       <TextField
-                        name="lastname"
+                        name="lastName"
                         label="Last Name"
-                        id="lastname"
-                        // value={this.state.lastname}
-                        // onChange={this.handleChange}
+                        id="last-name"
+                        value={this.state.members.me.lastName}
+                        onChange={this.handleChange}
                         fullWidth
                       />
                     </div>
@@ -448,12 +458,10 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                         name="role"
                         label="Role"
                         id="role"
-                        // value={this.state.role}
-                        // onChange={this.handleChange}
+                        value={this.state.members.me.role}
+                        onChange={this.handleChange}
                         inputProps={{ maxLength: 50 }}
-                        // onInput={(e) =>{
-                        //   e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,50)
-                        // }}
+                        // helperText={`${this.state.members.me.role.length - 50} characters left`}
                         fullWidth
                       />
                     </div>
@@ -473,8 +481,8 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                         name="twitter"
                         id="twitter"
                         placeholder="Twitter"
-                        // value={this.state.twitter}
-                        // onChange={this.handleChange}
+                        value={this.state.members.me.twitter}
+                        onChange={this.handleChange}
                         fullWidth
                         InputProps={{
                           startAdornment: (
@@ -489,8 +497,8 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                         name="instagram"
                         id="instagram"
                         placeholder="Instagram"
-                        // value={this.state.instagram}
-                        // onChange={this.handleChange}
+                        value={this.state.members.me.instagram}
+                        onChange={this.handleChange}
                         fullWidth
                         InputProps={{
                           startAdornment: (

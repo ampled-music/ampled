@@ -27,6 +27,7 @@ class EditCardFormComponent extends React.Component<Props, any> {
     this.setState({ disableActions: true });
 
     event.preventDefault();
+    event.stopPropagation();
 
     let { token: paymentToken, error } = await this.props.stripe.createToken();
 
@@ -45,7 +46,7 @@ class EditCardFormComponent extends React.Component<Props, any> {
       <div className="container checkout-form-container">
         <div className="row justify-content-center">
           <div className="col-md-12">
-            <form className="form-group support__level-form">
+            <form className="form-group support__level-form" onSubmit={this.submit}>
               <h3>Enter your payment details</h3>
               <div className="form-row">
                 <div className="col">
@@ -64,7 +65,7 @@ class EditCardFormComponent extends React.Component<Props, any> {
                 </div>
               </div>
               <div className="actions">
-                <button disabled={this.state.disableActions} className="btn btn-primary" onClick={this.submit}>
+                <button disabled={this.state.disableActions} className="btn btn-primary" type="submit">
                   Update
                 </button>
                 <button

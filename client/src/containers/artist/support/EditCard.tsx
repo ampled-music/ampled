@@ -6,6 +6,7 @@ import { showToastMessage, MessageType } from '../../shared/toast/toast';
 
 interface Props {
   stripe?: any;
+  errorCard?: any;
   updateCard: Function;
   declineStep: Function;
 }
@@ -14,6 +15,13 @@ class EditCardFormComponent extends React.Component<Props, any> {
   state = {
     disableActions: false,
   };
+
+  componentDidUpdate = (prevProps) => {
+    if (!prevProps.errorCard && this.props.errorCard) {
+      this.setState({ disableActions: false });
+      showToastMessage(this.props.errorCard.message, MessageType.ERROR);
+    }
+  }
 
   submit = async (event) => {
     this.setState({ disableActions: true });

@@ -12,15 +12,28 @@ import { routePaths } from './route-paths';
 // import { UserSettings } from './settings/UserSettings';
 // import { UserDetails } from './user-details/UserDetails';
 // import { ResetPassword } from './connect/ResetPassword';
-import { CreateArtist } from './create-artist/CreateArtist';
+// import { CreateArtist } from './create-artist/CreateArtist';
 
-const LazyPostForm = React.lazy(() => import('./artist/posts/post-form/PostForm').then(module => ({ default: module.PostForm })));
-const LazyArtist = React.lazy(() => import('./artist/Artist').then(module => ({ default: module.Artist })));
-const LazyNoArtist = React.lazy(() => import('./shared/no-artist/NoArtist').then(module => ({ default: module.NoArtist })));
-const LazyHome = React.lazy(() => import('./home/Home').then(module => ({ default: module.Home })));
-const LazyResetPassword = React.lazy(() => import('./connect/ResetPassword').then(module => ({ default: module.ResetPassword })));
-const LazyUserSettings = React.lazy(() => import('./settings/UserSettings').then(module => ({ default: module.UserSettings })));
-const LazyUserDetails = React.lazy(() => import('./user-details/UserDetails').then(module => ({ default: module.UserDetails })));
+const LazyPostForm = React.lazy(() =>
+  import('./artist/posts/post-form/PostForm').then((module) => ({ default: module.PostForm })),
+);
+const LazyArtist = React.lazy(() => import('./artist/Artist').then((module) => ({ default: module.Artist })));
+const LazyNoArtist = React.lazy(() =>
+  import('./shared/no-artist/NoArtist').then((module) => ({ default: module.NoArtist })),
+);
+const LazyHome = React.lazy(() => import('./home/Home').then((module) => ({ default: module.Home })));
+const LazyResetPassword = React.lazy(() =>
+  import('./connect/ResetPassword').then((module) => ({ default: module.ResetPassword })),
+);
+const LazyUserSettings = React.lazy(() =>
+  import('./settings/UserSettings').then((module) => ({ default: module.UserSettings })),
+);
+const LazyUserDetails = React.lazy(() =>
+  import('./user-details/UserDetails').then((module) => ({ default: module.UserDetails })),
+);
+const LazyCreateArtist = React.lazy(() =>
+  import('./create-artist/CreateArtist').then((module) => ({ default: module.CreateArtist })),
+);
 
 const Routes = () => {
   return (
@@ -33,6 +46,7 @@ const Routes = () => {
       <PublicRoute exact path={routePaths.root} component={LazyHome} />
       <PublicRoute exact path={routePaths.passwordReset} component={LazyResetPassword} />
       <PublicRoute exact path={routePaths.noArtist} component={LazyNoArtist} />
+      <PublicRoute exact path={routePaths.createArtist} component={LazyCreateArtist} />
       <ProtectedRoute exact path={routePaths.settings} component={LazyUserSettings} />
       <ProtectedRoute exact path={routePaths.userDetails} component={LazyUserDetails} />
       <PublicRoute path={'*'} component={LazyNoArtist} />

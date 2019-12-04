@@ -1,13 +1,6 @@
 import './create-artist.scss';
 
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Store } from 'src/redux/configure-store';
-
-import { getMeAction } from 'src/redux/me/get-me';
-import { setUserDataAction } from 'src/redux/me/set-me';
-import { updateMeAction } from 'src/redux/me/update-me';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -51,10 +44,8 @@ function a11yProps(index: any) {
   };
 }
 
-class CreateArtistComponent extends React.Component<TabPanelProps, any> {
-  state = {
-
-  };
+class CreateArtist extends React.Component<TabPanelProps, any> {
+  state = {};
 
   renderHeader = () => {
     return (
@@ -68,7 +59,6 @@ class CreateArtistComponent extends React.Component<TabPanelProps, any> {
   };
 
   renderNav = () => {
-
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -117,34 +107,13 @@ class CreateArtistComponent extends React.Component<TabPanelProps, any> {
   renderContent = () => (
     <MuiThemeProvider theme={theme}>
       {this.renderHeader()}
-      {this.renderNav()}
+      {/* {this.renderNav()} */}
     </MuiThemeProvider>
   );
 
   render() {
-    return (
-      <div className="create-artist">
-        {this.renderContent()}
-      </div>
-    );
+    return <div className="create-artist">{this.renderContent()}</div>;
   }
 }
-
-const mapStateToProps = (state: Store) => ({
-  ...state.authentication,
-  ...state.me,
-  subscriptions: state.subscriptions,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getMe: bindActionCreators(getMeAction, dispatch),
-  setMe: bindActionCreators(setUserDataAction, dispatch),
-  updateMe: bindActionCreators(updateMeAction, dispatch),
-});
-
-const CreateArtist = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CreateArtistComponent);
 
 export { CreateArtist };

@@ -61,6 +61,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
     artistTwitter: '',
     artistInstagram: '',
     artistVideo: '',
+    artistSlug: '',
     firstName: '',
     lastName: '',
     location: ''
@@ -521,6 +522,41 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
     );
   };
 
+  renderInvite = () => {
+    return (
+      <div className="container">
+        <div className="artist-invite">
+          <div className="row">
+            <div className="col-6">
+              <div className="create-artist__title">Invite</div>
+              <div className="create-artist__copy">
+                Let’s get your fans involved. Share the custom link below with your fans through your email list or social accounts. They’ll then be prompted to sign up and start directly supporting you!
+              </div>
+            </div>
+          </div><div className="row">
+            <div className="col-4">
+              <div className="create-artist__subtitle">Your Custom Link</div>
+              <h6>Required</h6>
+            </div>
+            <div className="col-8">
+              <TextField
+                name="artistSlug"
+                id="artistSlug"
+                value={this.state.artistSlug}
+                onChange={this.handleChange}
+                fullWidth
+                required
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">ampled.com/artist/</InputAdornment>,
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   renderContent = () => (
     <MuiThemeProvider theme={theme}>
       {this.renderHeader()}
@@ -530,6 +566,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
       {this.renderImages()}
       {this.renderColor()}
       {this.renderMembers()}
+      {this.renderInvite()}
     </MuiThemeProvider>
   );
 

@@ -5,7 +5,7 @@ export const config = {
     token: 'token',
   },
   menuUrls: {
-    createArtist: process.env.REACT_APP_URL_CREATE_ARTIST || '/create-artisr',
+    createArtist: process.env.REACT_APP_URL_CREATE_ARTIST || '/create-artist',
     blog: process.env.REACT_APP_URL_BLOG || 'https://app.ampled.com/zine',
     about: process.env.REACT_APP_URL_ABOUT || 'https://app.ampled.com/about',
   },

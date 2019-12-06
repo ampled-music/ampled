@@ -12,7 +12,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { TextField, Radio, RadioGroup, FormControlLabel, InputAdornment, Button, Card, CardContent, Checkbox } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faTwitter, faInstagram, faStripe } from '@fortawesome/free-brands-svg-icons';
 import { ChromePicker } from 'react-color';
 
 import { theme } from './theme';
@@ -530,6 +530,46 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
     );
   };
 
+  renderPaymemt = () => {
+    return (
+      <div className="container">
+        <div className="artist-payment">
+          <div className="row justify-content-between">
+            <div className="col-6">
+              <div className="create-artist__title">Payments</div>
+              <div className="create-artist__copy">
+                All of Ampled payments are handled through Stripe. Create an account and agree to our temrs of use to get started.
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="center">
+                <FontAwesomeIcon className="artist-payment__stripe_icon" icon={faStripe}/>
+                <a href="https://stripe.com/about" target="_blank" className="btn link">Learn more about Stripe</a>
+              </div>
+            </div>
+          </div>
+          <div className="row justify-content-between">
+            <div className="col-6">
+              <FormControlLabel
+                control={
+                  <Checkbox name="StripeTerms" onChange={this.handleChange} />
+                }
+                label="I agree to the Terms of Use."
+              />
+            </div>
+            <div className="col-3">
+              <div className="center">
+                <div className="action-buttons">
+                  <Button href="https://stripe.com/about" target="_blank" className="btn continue-button">Create your account</Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   renderInvite = () => {
     return (
       <div className="container">
@@ -574,6 +614,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
       {this.renderImages()}
       {this.renderColor()}
       {this.renderMembers()}
+      {this.renderPaymemt()}
       {this.renderInvite()}
     </MuiThemeProvider>
   );

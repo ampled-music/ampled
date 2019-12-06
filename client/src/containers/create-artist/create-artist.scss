@@ -1,5 +1,6 @@
 @import '../../theme/vars.scss';
 @import '../../theme/mixins.scss';
+@import "../../theme/global.scss";
 
 .create-artist {
   margin-top: 50px;
@@ -64,8 +65,9 @@
   .artist-about,
   .artist-custom,
   .artist-members,
-  .artist-invite {
-    margin-bottom: 2rem;
+  .artist-invite, 
+  .artist-payment {
+  margin-bottom: 2rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid $black;
   }
@@ -133,6 +135,14 @@
       }
       .row {
         margin-bottom: .5rem;
+      }
+    }
+  }
+  .artist-payment {
+    &__stripe {
+      &_icon {
+        width: 200px;
+        height: 160px;
       }
     }
   }

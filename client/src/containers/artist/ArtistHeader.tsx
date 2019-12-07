@@ -202,8 +202,8 @@ export class ArtistHeader extends React.Component<Props, any> {
     const cloudinary_id = image.substring(image.lastIndexOf("/") + 1, image.lastIndexOf("."));
     if (image.includes('https://res.cloudinary')) {
       return (
-        <Image publicId={cloudinary_id}>
-          <Transformation crop="fill" width={crop} height={crop} responsive_placeholder="blank" />
+        <Image publicId={cloudinary_id} alt={altText} >
+          <Transformation crop="fill" width={crop} height={crop} responsive_placeholder="blank"/>
         </Image>
       )
     } else {

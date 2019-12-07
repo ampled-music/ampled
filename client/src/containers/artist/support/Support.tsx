@@ -1,21 +1,22 @@
+import './../artist.scss';
 import './support.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { routePaths } from 'src/containers/route-paths';
-import { getArtistAction } from 'src/redux/artists/get-details';
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { Store } from 'src/redux/configure-store';
-import { getMeAction } from 'src/redux/me/get-me';
-import { createSubscriptionAction } from 'src/redux/subscriptions/create';
-import { declineStepAction } from 'src/redux/subscriptions/decline-step';
-import { startSubscriptionAction } from 'src/redux/subscriptions/start-subscription';
+import { routePaths } from '../../route-paths';
+import { getArtistAction } from '../../../redux/artists/get-details';
+import { openAuthModalAction } from '../../../redux/authentication/authentication-modal';
+import { Store } from '../../../redux/configure-store';
+import { getMeAction } from '../../../redux/me/get-me';
+import { createSubscriptionAction } from '../../../redux/subscriptions/create';
+import { declineStepAction } from '../../../redux/subscriptions/decline-step';
+import { startSubscriptionAction } from '../../../redux/subscriptions/start-subscription';
 import { Helmet } from 'react-helmet';
 
 import avatar from '../../../images/ampled_avatar.svg';
 
-import { showToastMessage, MessageType } from 'src/containers/shared/toast/toast';
+import { showToastMessage, MessageType } from '../../shared/toast/toast';
 import { initialState as artistsInitialState, ArtistModel } from '../../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
@@ -71,6 +72,11 @@ export class SupportComponent extends React.Component<Props, any> {
     if (me.userData && me.userData && me.userData.subscriptions && me.userData.subscriptions.find(sub => sub.artistSlug === this.props.match.params.id)) {
       console.log('already support by slug');
       this.redirectToArtistsPage();
+    }
+
+    if (subscriptions && subscriptions.hasError && !prevProps.subscriptions.hasError) {
+      getMe();
+      showToastMessage(subscriptions.error, MessageType.ERROR);
     }
   }
 
@@ -170,7 +176,7 @@ export class SupportComponent extends React.Component<Props, any> {
     const placeholderImage =
       'https://images.pexels.com/photos/1749822/pexels-photo-1749822.jpeg?cs=srgb&dl=backlit-band-concert-1749822.jpg';
 
-    return <img className="support__artist-image" src={images.length ? images[0] : placeholderImage} />;
+    return <img className="support__artist-image" src={images.length ? images[0] : placeholderImage} alt="Artist" />;
   };
 
   renderArtists = (owners) => (
@@ -178,9 +184,9 @@ export class SupportComponent extends React.Component<Props, any> {
       {owners.map((owner, index) => (
         <div key={index} className="support__artist-info">
           {owner.profile_image_url ? (
-            <img className="support__artist-info_image" src={owner.profile_image_url} />
+            <img className="support__artist-info_image" src={owner.profile_image_url} alt={`${this.returnFirstName(owner.name)}'s avatar`} />
           ) : (
-            <img className="support__artist-info_image" src={avatar} />
+            <img className="support__artist-info_image" src={avatar} alt="Avatar" />
           )}
           <p>{this.returnFirstName(owner.name)}</p>
         </div>
@@ -191,12 +197,13 @@ export class SupportComponent extends React.Component<Props, any> {
   calculateSupportTotal = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100).toFixed(2);
 
   renderSupportLevelForm = (artistName) => (
-    <div className="row justify-content-center">
+    <div className="row justify-content-center" key={artistName}>
       <div className="col-md-5">
         <div key="support__level-form" className="support__level-form">
           <h3>Support What You Want</h3>
           <div className="support__value-field">
             <input
+              aria-label="Support level" 
               type="number"
               name="supportLevelValue"
               onChange={this.handleChange}
@@ -207,10 +214,12 @@ export class SupportComponent extends React.Component<Props, any> {
           {
             this.state.supportLevelValue && this.state.supportLevelValue >= 3 ? 
             (<p className="support__value-description">
-                Your total charge will be <strong>${this.calculateSupportTotal(this.state.supportLevelValue)}</strong>.<br /><br />
-                This is due to our payment processor's service fee. More details can be found <a href="https://app.ampled.com/payment-processing" target="_blank">here</a>.
-          </p>) :
-              (<p className="support__value-description">
+              Your total charge will be <strong>${this.calculateSupportTotal(this.state.supportLevelValue)}</strong>.
+              <br /><br />
+              This is due to our payment processor's service fee. More details can be
+              found <a href="https://app.ampled.com/payment-processing" target="_blank" rel="noopener noreferrer">here</a>.
+            </p>) :
+            (<p className="support__value-description">
               Support {artistName} directly for $3 (or more) per month to unlock access to all of their posts and get
                   notifications when they post anything new.
             </p>)
@@ -238,7 +247,7 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   renderPaymentStep = (artist: ArtistModel) => {
-    const { subscriptions, createSubscription, declineStep } = this.props;
+    const { subscriptions, createSubscription, declineStep, me: { userData } } = this.props;
 
     const { artistPageId, subscriptionLevelValue } = subscriptions;
 
@@ -252,6 +261,8 @@ export class SupportComponent extends React.Component<Props, any> {
             subscriptionLevelValue={subscriptionLevelValue}
             createSubscription={createSubscription}
             declineStep={declineStep}
+            formType="checkout"
+            userData={userData}
           />
         );
       default:

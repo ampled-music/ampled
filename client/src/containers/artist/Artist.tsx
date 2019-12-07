@@ -2,9 +2,9 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Confetti from 'react-dom-confetti';
-import { getArtistAction } from 'src/redux/artists/get-details';
-import { openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { Store } from 'src/redux/configure-store';
+import { getArtistAction } from '../../redux/artists/get-details';
+import { openAuthModalAction } from '../../redux/authentication/authentication-modal';
+import { Store } from '../../redux/configure-store';
 import { Helmet } from 'react-helmet';
 
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
@@ -85,8 +85,8 @@ class ArtistComponent extends React.Component<Props, any> {
       dragFriction: 0.1,
       duration: 5000,
       stagger: 0,
-      width: "10px",
-      height: "10px",
+      width: 10,
+      height: 10,
       colors: [this.props.artists.artist.accent_color]
     };
     return confettiConfig;
@@ -245,9 +245,17 @@ class ArtistComponent extends React.Component<Props, any> {
               .new-post button:hover {
                 background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
               }
+              .supporter__hover-card_bands_name a:hover {
+                color: ${artist.accent_color};
+              }
               ${isSupporter && `
-                .user-image { border: 1px solid ${artist.accent_color}; }
-                header .supporter-message { display: inline-block !important; color: ${artist.accent_color}; }
+                .user-image { 
+                  border: 1px solid ${artist.accent_color}; 
+                }
+                header .supporter-message { 
+                  display: inline-block !important; 
+                  color: ${artist.accent_color}; 
+                }
               `}
             `
             }}

@@ -1,15 +1,17 @@
+import './../artist/artist.scss';
 import './user-settings.scss';
 
 import { DateTime } from 'luxon';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
-import { Store } from 'src/redux/configure-store';
-import { getMeAction } from 'src/redux/me/get-me';
-import { setUserDataAction } from 'src/redux/me/set-me';
-import { updateMeAction } from 'src/redux/me/update-me';
-import { cancelSubscriptionAction } from 'src/redux/subscriptions/cancel';
+import { closeAuthModalAction, openAuthModalAction } from '../../redux/authentication/authentication-modal';
+import { Store } from '../../redux/configure-store';
+import { getMeAction } from '../../redux/me/get-me';
+import { setUserDataAction } from '../../redux/me/set-me';
+import { updateMeAction } from '../../redux/me/update-me';
+import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 
 import { faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faInstagram, faStripe } from '@fortawesome/free-brands-svg-icons';
@@ -63,7 +65,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   showCancelledSuccessMessage = () => {
     const { artistSlug, artistPageId, artistName } = this.props.subscriptions;
-    const artistPageLink = routePaths.support.replace(':id', artistSlug && artistSlug.length ? artistSlug : artistPageId.toString());
+    const artistPageLink = routePaths.support.replace(
+      ':id',
+      artistSlug && artistSlug.length ? artistSlug : artistPageId.toString(),
+    );
 
     showToastMessage(
       `We are sad to see you leaving. Remember that you can always support <a href="${artistPageLink}">${artistName}</a> with a different value!`,
@@ -124,13 +129,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <div className="user-image-container">
-        <a href="/user-details">
+        <Link to="/user-details">
           {userData.image ? (
-            <img src={userData.image} className="user-image" />
+            <img src={userData.image} className="user-image" alt="Your avatar" />
           ) : (
-            <img src={avatar} className="user-image" />
+            <img src={avatar} className="user-image" alt="Your avatar" />
           )}
-        </a>
+        </Link>
       </div>
     );
   };
@@ -146,7 +151,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     // }
     return (
       <div className="user-info-container col-md-3">
-        <img className="tear__topper" src={tear} />
+        <img className="tear__topper" src={tear} alt="" />
         <div className="user-content">
           {this.renderUserImage()}
           <div className="user-content__name">{userData.name}</div>
@@ -180,9 +185,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
               ''
           */}
 
-          <a href="/user-details" className="user-content__edit-profile">
+          <Link to="/user-details" className="user-content__edit-profile">
             <FontAwesomeIcon icon={faEdit} /> Edit Profile
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -218,9 +223,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
           <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
-            <img className="artist__image" src={ownedPage.image} />
+            <img className="artist__image" src={ownedPage.image} alt={ownedPage.name} />
             <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage)}></div>
-            <img className="tear__topper" src={tear_black} />
+            <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
               <p className="artist__info_name" onClick={() => this.redirectToArtistPage(ownedPage)}>
                 {ownedPage.name}
@@ -255,7 +260,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     </div>
                     <div className="col-8">
                       {ownedPage.isStripeSetup ? (
-                        <a href={ownedPage.stripeDashboard} className="details__stripe_link" target="_blank">
+                        <a
+                          href={ownedPage.stripeDashboard}
+                          className="details__stripe_link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           Edit Payout Details
                         </a>
                       ) : (
@@ -263,6 +273,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                           href={ownedPage.stripeSignup}
                           className="details__stripe_link"
                           target="_blank"
+                          rel="noopener noreferrer"
                           style={{ color: '#d9534f' }}
                         >
                           Set Up Payouts
@@ -285,12 +296,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.subscriptions.map((subscription) => (
           <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-4">
-            <img className="artist__image" src={subscription.image} />
-            <div
-              className="artist__image-border"
-              onClick={() => this.redirectToArtistPage(subscription)}
-            ></div>
-            <img className="tear__topper" src={tear_black} />
+            <img className="artist__image" src={subscription.image} alt={subscription.name} />
+            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(subscription)}></div>
+            <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
               <p className="artist__info_name" onClick={() => this.redirectToArtistPage(subscription)}>
                 {subscription.name}

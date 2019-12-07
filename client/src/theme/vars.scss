@@ -85,7 +85,7 @@ $desktop-jumbo: 2100px;
 // Breakpoint applications
 $nav-desktop: $tablet;
 
-$layout-s: 0;
+$layout-s: $phablet-l;
 $layout-m: $tablet;
 $layout-l: $tablet-xl;
 $layout-xl: $desktop-m;

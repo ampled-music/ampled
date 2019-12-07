@@ -31,7 +31,7 @@ class NoArtist extends React.Component<any> {
           <div className="row justify-content-center">
             <div className="col-md-6">
               <div className="no-artist__title">Artist not found</div>
-              <img src={randomImage} className="no-artist__image" />
+              <img src={randomImage} className="no-artist__image" alt="Artist not found" />
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Store } from 'src/redux/configure-store';
+import { Store } from '../../redux/configure-store';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { Login } from './Login';

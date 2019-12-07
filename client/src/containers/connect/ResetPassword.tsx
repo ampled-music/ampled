@@ -1,10 +1,10 @@
 import './login.scss';
 
 import * as React from 'react';
-import { Store } from 'src/redux/configure-store';
+import { Store } from '../../redux/configure-store';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from 'src/redux/authentication/authentication-modal';
+import { closeAuthModalAction, openAuthModalAction } from '../../redux/authentication/authentication-modal';
 import { routePaths } from './../route-paths';
 
 import { showToastMessage, MessageType } from '../shared/toast/toast';
@@ -99,7 +99,7 @@ class ResetPasswordComponent extends React.Component<any> {
 
     return (
       <div className="login__container">
-        <img className="tear tear__topper" src={tear} />
+        <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
           <h4>RESET PASSWORD</h4>
           <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
@@ -108,6 +108,7 @@ class ResetPasswordComponent extends React.Component<any> {
               type="password"
               placeholder="Password"
               name="password"
+              aria-label="Password" 
               onChange={this.handleChange}
               required
               minLength={6}
@@ -118,6 +119,7 @@ class ResetPasswordComponent extends React.Component<any> {
               type="password"
               placeholder="Confirm Password"
               name="confirmPassword"
+              aria-label="Confirm password" 
               onChange={this.handleChange}
               required
               minLength={6}

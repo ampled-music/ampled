@@ -1,7 +1,7 @@
 import './footer.scss';
 
 import * as React from 'react';
-import * as moment from 'moment'
+import { DateTime } from 'luxon';
 import { Link } from 'react-router-dom';
 
 import logo from '../../images/ampled_logo.svg';
@@ -20,7 +20,7 @@ class Footer extends React.Component<Props, any> {
               <div className="title">Join Our Mailing List</div>
               <div className="input-group mb-3">
                 <form action="https://ampled.us19.list-manage.com/subscribe/post?u=514372f571f3cb5abdf8a2637&amp;id=50f2ab4389" method="post" >
-                  <input className="form-control" type="email" name="EMAIL" placeholder="Email Address" />
+                  <input className="form-control" type="email" name="EMAIL" aria-label="Email Address" placeholder="Email Address" />
                   <div className="input-group-append">
                     <input type="submit" value="Gimme &rarr;" name="subscribe" id="mc-embedded-subscribe" className="btn btn__dark" />
                   </div>
@@ -40,7 +40,7 @@ class Footer extends React.Component<Props, any> {
               <a href="https://app.ampled.com/membership">Become a Member</a>
               <a href="https://app.ampled.com/jobs">Jobs</a>
               <a href="https://app.ampled.com/press">Press</a>
-              <a href="https://app.ampled.com/members">Members Only 🔒</a>
+              <a href="https://app.ampled.com/members">Members Only <span role="img" aria-label="Lock">🔒</span></a>
             </div>
             <div className="col-6 col-md-2">
               <div className="title">Get Informed</div>
@@ -53,8 +53,8 @@ class Footer extends React.Component<Props, any> {
               <Link to="/">
                 <img src={logo} alt="logo" className="logo" />
               </Link>
-              <div className="copyright">©{moment().year()} Ampled</div>
-              <div className="own-it">We Own It! ✊</div>
+              <div className="copyright">©{DateTime.local().year} Ampled</div>
+              <div className="own-it">We Own It! <span role="img" aria-label="Solidarity">✊</span></div>
               <button className="btn btn-ampled" onClick={() => window.open('https://fundraising.fracturedatlas.org/ampled-co-op/general_support')}>Donate Now</button>
             </div>
           </div>

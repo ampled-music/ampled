@@ -185,7 +185,7 @@ h6 {
 }
 
 .bg-texture {
-  background-image: url('../../images/background_texture.png');
+  background-image: url('../images/background_texture.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
@@ -199,7 +199,7 @@ h6 {
   }
 
   &__flip {
-    background-image: url('../../images/background_texture_flip.png');
+    background-image: url('../images/background_texture_flip.png');
   }
 
   &__absolute {

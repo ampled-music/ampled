@@ -22,7 +22,7 @@ class ForgotPasswordComponent extends React.Component<any> {
     e.preventDefault();
     // AXIOS HIT ENDPOINT
     try {
-      const { data } = await apiAxios({
+      await apiAxios({
         method: 'post',
         url: '/users/password.json',
         headers: {

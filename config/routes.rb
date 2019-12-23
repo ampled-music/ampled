@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     resources :posts, only: %i[create index]
   end
 
+  put "me/updatecard", to: "subscriptions#update_platform_customer"
+
   get "slug/:slug", to: "artist_pages#show"
 
   get "uploads/sign", to: "uploads#sign_file"
@@ -41,6 +43,7 @@ Rails.application.routes.draw do
   end
 
   get "/stripe_success", to: "pages#stripe_success"
+  post "/stripe_hook", to: "stripe#webhook"
 
   root to: "react#index"
   get "/artists/*path", to: "react#index"

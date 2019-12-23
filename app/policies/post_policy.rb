@@ -23,7 +23,7 @@ class PostPolicy
   end
 
   def view_details?
-    !post.is_private || owner? || subscriber?
+    !post.is_private || owner? || (subscriber? && card_valid?)
   end
 
   private
@@ -38,5 +38,9 @@ class PostPolicy
 
   def subscriber?
     @user&.subscribed?(@post.artist_page)
+  end
+
+  def card_valid?
+    @user&.card_is_valid?
   end
 end

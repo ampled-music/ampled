@@ -381,8 +381,13 @@
   }
 
   .supporter {
-    &:hover {
 
+    @include mq($layout-m) {
+      position: relative;
+      display: block;
+    }
+
+    &:hover {
       .supporter-image,
       .member-image {
         display: block;
@@ -397,8 +402,8 @@
           position: absolute;
           display: block;
           transform: rotate(45deg);
-          top: -20px;
-          left: 8px;
+          top: -18px;
+          left: 27%;
         }
 
         &:before {
@@ -409,8 +414,8 @@
         &:after {
           z-index: 301;
           transform: rotate(0deg);
-          top: -8px;
-          left: 7px;
+          top: -4px;
+          left: 27%;
           background-color: transparent;
           border-top: 11px solid $white;
           border-right: 11px solid transparent;
@@ -418,11 +423,16 @@
           border-left: 11px solid transparent;
         }
       }
-    }
 
-    &:hover {
       .supporter__hover-card {
         display: block;
+      }
+    }
+
+    &.artist-header__person {
+      .supporter__hover-card {
+        left: -20px;
+        width: 300px;
       }
     }
 
@@ -433,14 +443,20 @@
       padding: .5rem 1rem;
       z-index: 300;
       box-shadow: 1px 1px 3px $gray-light;
-      // width: 350px;
-      transform: translate(-42%, -110%);
+      width: 350px;
+      bottom: 100%;
+      left: -150px;
 
-      @include mq(0, $layout-m) {
-        width: min-content;
+      @include mq($layout-s, $layout-m) {
+        width: 30vw;
         left: 0px;
         right: 0px;
-        transform: translate(0%, -110%);
+      }
+
+      @include mq(0, $layout-s) {
+        width: 60vw;
+        left: 0px;
+        right: 0px;
       }
 
       &_header {
@@ -462,11 +478,16 @@
         &_info {
           display: flex;
           justify-content: center;
-          align-items: center;
+          flex-direction: column;
+          text-align: left;
 
-          &_since {
+          &_since,
+          &_bio {
             font-family: $font-family-monospace;
             font-size: .8rem;
+            @include mq(0, $layout-m) {
+              display: none;
+            }
           }
 
           &_name {
@@ -481,7 +502,14 @@
         border-top: 1px solid $gray;
 
         &_section {
-          margin-bottom: .5rem;
+          margin-bottom: 1rem;
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
 
           h6 {
             text-transform: uppercase;
@@ -491,6 +519,12 @@
 
         &_name {
           text-transform: uppercase;
+          font-size: .9rem;
+          display: inline-block;
+          a {
+            transition: color $speed;
+            color: $black;
+          }
         }
       }
     }

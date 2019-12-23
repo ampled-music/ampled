@@ -10,19 +10,20 @@ import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
 import { updateMeAction } from '../../redux/me/update-me';
+import { updateCardAction } from '../..//redux/me/update-card';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { Button, DialogActions, MenuItem, TextField, InputAdornment, CircularProgress } from '@material-ui/core';
-import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { Button, DialogActions, MenuItem, TextField, InputAdornment, CircularProgress, Card, CardContent } from '@material-ui/core';
+import { faTwitter, faInstagram, faCcAmex, faCcDiscover, faCcMastercard, faCcVisa, faCcStripe } from '@fortawesome/free-brands-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
 import { UploadFile } from '../shared/upload/UploadFile';
+import { StripePaymentProvider } from '../artist/support/StripePaymentProvider';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 
 import avatar from '../../images/ampled_avatar.svg';
@@ -33,7 +34,126 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
 type Props = typeof loginInitialState &
   typeof meInitialState &
-  Dispatchers & { history: any; };
+  Dispatchers & { history: any; errorCard: any; };
+
+const SingleCardDisplay = ({ brand, last4, exp_month, exp_year, is_valid }) => {
+  let brandIcon = faCcStripe;
+  switch (brand.toLowerCase()) {
+    case 'visa':
+      brandIcon = faCcVisa;
+      break;
+    case 'american express':
+      brandIcon = faCcAmex;
+      break;
+    case 'mastercard':
+      brandIcon = faCcMastercard;
+      break;
+    case 'discover':
+      brandIcon = faCcDiscover;
+      break;
+  }
+  return (
+    <Card className="card single-credit-card">
+      <div className="card-header">
+        <FontAwesomeIcon className="card-header__icon" icon={brandIcon} />
+        <span>
+          {brand} ending in {last4}
+        </span>
+      </div>
+      <CardContent>
+        <div className="row">
+          <div className="col-6">
+            <h6>Status</h6>
+            <span
+              style={{
+                color: is_valid ? '#28a745' : '#dc3545',
+              }}
+            >
+              {is_valid ? 'Valid' : 'Invalid'}
+            </span>
+          </div>
+          <div className="col-6">
+            <h6>Expiration</h6>
+            {exp_month}/{exp_year}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+interface CardInfoProps {
+  brand: String;
+  last4: String;
+  exp_month: String;
+  exp_year: String;
+  is_valid: Boolean;
+  updateCard: Function;
+  updatedCard: Boolean;
+  errorCard: any;
+}
+
+class CardInfo extends React.Component<CardInfoProps> {
+  state = {
+    showEditForm: false,
+  };
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.updatedCard && this.props.updatedCard) {
+      this.setState({ showEditForm: false });
+    }
+  }
+
+  render() {
+    const { brand, updateCard, errorCard } = this.props;
+    const { showEditForm } = this.state;
+    if (!showEditForm) {
+      return (
+        <div>
+          {brand ? (
+            <div>
+              <SingleCardDisplay {...this.props} />
+              <button className="btn btn-link btn-edit-card" onClick={() => this.setState({ showEditForm: !showEditForm })}>
+                Replace this card
+              </button>
+            </div>
+          ) : (
+              <Card className="card card-empty">
+                <CardContent>
+                  <span
+                    className="btn btn-link btn-edit-card"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    No card stored
+                </span>
+                  {/*
+                <button className="btn btn-link btn-edit-card" onClick={() => this.setState({ showEditForm: !showEditForm })}>
+                  Add a payment method                
+                </button>
+                */}
+                </CardContent>
+              </Card>
+            )}
+          
+        </div>
+      );
+    } else {
+      return (
+        <StripePaymentProvider
+          formType="editcard"
+          artistPageId={null}
+          subscriptionLevelValue={null}
+          declineStep={() => {
+            this.setState({ showEditForm: false });
+          }}
+          createSubscription={() => null}
+          updateCard={updateCard}
+          errorCard={errorCard}
+        />
+      );
+    }
+  }
+}
 
 class UserDetailsComponent extends React.Component<Props, any> {
   state = {
@@ -58,6 +178,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     city_error: false,
     country_error: false,
     social_error: false,
+    showEditForm: false,
   };
 
   handleChange = (e) => {
@@ -401,6 +522,32 @@ class UserDetailsComponent extends React.Component<Props, any> {
     );
   }
 
+  renderPayments = () => {
+    const {
+      userData: { cardInfo },
+      updatedCard,
+      updateCard,
+      errorCard,
+    } = this.props;
+
+    return (
+      <div className="basic-info">
+        <div className="row">
+          <div className="col-md-2 user-details__side">
+            <div className="user-details__title">Payments</div>
+          </div>
+          <div className="col-md-10">
+            <div className="row no-gutters">
+              <div className="col-sm-8 col-md-5">
+                <CardInfo {...cardInfo} updatedCard={updatedCard} updateCard={updateCard} errorCard={errorCard} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderAddress = () => {
 
     return (
@@ -580,6 +727,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       </Modal>
       <form onSubmit={this.handleSubmit}>
         {this.renderBasicInfo()}
+        {this.renderPayments()}
         {this.renderAddress()}
         {this.renderButtons()}
       </form>
@@ -609,6 +757,7 @@ const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
   setMe: bindActionCreators(setUserDataAction, dispatch),
   updateMe: bindActionCreators(updateMeAction, dispatch),
+  updateCard: bindActionCreators(updateCardAction, dispatch),
 });
 
 const UserDetails = connect(
@@ -616,4 +765,4 @@ const UserDetails = connect(
   mapDispatchToProps,
 )(UserDetailsComponent);
 
-export { UserDetails };
+export { UserDetails, SingleCardDisplay };

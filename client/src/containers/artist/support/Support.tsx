@@ -73,6 +73,11 @@ export class SupportComponent extends React.Component<Props, any> {
       console.log('already support by slug');
       this.redirectToArtistsPage();
     }
+
+    if (subscriptions && subscriptions.hasError && !prevProps.subscriptions.hasError) {
+      getMe();
+      showToastMessage(subscriptions.error, MessageType.ERROR);
+    }
   }
 
   ColorLuminance = (hex, lum) => {
@@ -192,7 +197,7 @@ export class SupportComponent extends React.Component<Props, any> {
   calculateSupportTotal = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100).toFixed(2);
 
   renderSupportLevelForm = (artistName) => (
-    <div className="row justify-content-center">
+    <div className="row justify-content-center" key={artistName}>
       <div className="col-md-5">
         <div key="support__level-form" className="support__level-form">
           <h3>Support What You Want</h3>
@@ -242,7 +247,7 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   renderPaymentStep = (artist: ArtistModel) => {
-    const { subscriptions, createSubscription, declineStep } = this.props;
+    const { subscriptions, createSubscription, declineStep, me: { userData } } = this.props;
 
     const { artistPageId, subscriptionLevelValue } = subscriptions;
 
@@ -256,6 +261,8 @@ export class SupportComponent extends React.Component<Props, any> {
             subscriptionLevelValue={subscriptionLevelValue}
             createSubscription={createSubscription}
             declineStep={declineStep}
+            formType="checkout"
+            userData={userData}
           />
         );
       default:

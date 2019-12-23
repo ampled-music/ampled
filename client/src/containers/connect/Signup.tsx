@@ -204,10 +204,10 @@ class SignupComponent extends React.Component<Props, any> {
             <span className="error-message">{(matchPasswordsError && passwordErrorMessage) || passwordError}</span>
 
             <label className="terms">
-              <input type="checkbox" name="terms" onChange={this.toggle} required aria-label="Accept terms of service" />
+              <input type="checkbox" name="terms" onChange={this.toggle} required aria-label="Accept terms of use" />
               You agree to our{' '}
-              <a href="">
-                <u>Terms of Service</u>
+              <a href="https://app.ampled.com/terms-of-use">
+                <u>Terms of Use</u>
               </a>
               .
             </label>

@@ -26,4 +26,5 @@
   "prettier.singleQuote": true,
   "prettier.tabWidth": 2,
   "prettier.trailingComma": "all"
+  "typescript.tsdk": "./client/node_modules/typescript/lib"
 }

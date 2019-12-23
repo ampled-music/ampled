@@ -381,8 +381,11 @@
   }
 
   .supporter {
-    position: relative;
-    display: block;
+
+    @include mq($layout-m) {
+      position: relative;
+      display: block;
+    }
 
     &:hover {
       .supporter-image,
@@ -444,8 +447,14 @@
       bottom: 100%;
       left: -150px;
 
-      @include mq(0, $layout-m) {
+      @include mq($layout-s, $layout-m) {
         width: 30vw;
+        left: 0px;
+        right: 0px;
+      }
+
+      @include mq(0, $layout-s) {
+        width: 60vw;
         left: 0px;
         right: 0px;
       }

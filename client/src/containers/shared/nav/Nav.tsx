@@ -95,13 +95,13 @@ class NavComponent extends React.Component<Props, any> {
 
   renderLoginLink = () => (
     <div>
-      <a onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>
+      <button className="link" onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>
         <b>Login</b>
-      </a>{' '}
+      </button>{' '}
       {/* or{' '}
-      <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
+      <button className="link" onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
         <b>Sign Up</b>
-      </a> */}
+      </button> */}
     </div>
   );
 

@@ -316,12 +316,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       </div>
                     </div>
                     <div className="col-4">
-                      <a
+                      <button
                         className="details__info_value details__info_value_cancel"
                         onClick={(event) => this.openCancelModal(event, subscription)}
                       >
                         Cancel
-                      </a>
+                      </button>
                     </div>
                   </div>
                   <div className="row no-gutter">

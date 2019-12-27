@@ -9,10 +9,24 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import SwipeableViews from 'react-swipeable-views';
-import { TextField, Radio, RadioGroup, FormControlLabel, InputAdornment, Button, Card, CardContent, Checkbox } from '@material-ui/core';
+import {
+  TextField,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  InputAdornment,
+  Button,
+  Card,
+  CardContent,
+  Checkbox,
+} from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { faTwitter, faInstagram, faStripe } from '@fortawesome/free-brands-svg-icons';
+import {
+  faTwitter,
+  faInstagram,
+  faStripe,
+} from '@fortawesome/free-brands-svg-icons';
 import { ChromePicker } from 'react-color';
 
 import { theme } from './theme';
@@ -72,8 +86,8 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
         instagram: '',
         twitter: '',
         photo: '',
-      }
-    }
+      },
+    },
   };
 
   handleColorChange = (color) => {
@@ -92,7 +106,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
         <div className="container">
           <h1>Create Your Artist Page</h1>
         </div>
-        <img className="create-artist__header_tear" src={tear} />
+        <img className="create-artist__header_tear" src={tear} alt="" />
       </div>
     );
   };
@@ -151,8 +165,8 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             <div className="col-6">
               <div className="create-artist__title">About</div>
               <div className="create-artist__copy">
-                Let us know a few things about who you are and how, how to address you, and how you want to present
-                yourself.
+                Let us know a few things about who you are and how, how to
+                address you, and how you want to present yourself.
               </div>
             </div>
           </div>
@@ -184,7 +198,9 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
           </div>
           <div className="row">
             <div className="col-4">
-              <div className="create-artist__subtitle">What Sounds more Accurate?</div>
+              <div className="create-artist__subtitle">
+                What Sounds more Accurate?
+              </div>
               <h6>Required</h6>
             </div>
             <div className="col-8">
@@ -194,8 +210,16 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                 value={this.state.artistVerb}
                 onChange={this.handleChange}
               >
-                <FormControlLabel value="are" control={<Radio />} label="Band are recording a new record." />
-                <FormControlLabel value="is" control={<Radio />} label="Band is recording a new record." />
+                <FormControlLabel
+                  value="are"
+                  control={<Radio />}
+                  label="Band are recording a new record."
+                />
+                <FormControlLabel
+                  value="is"
+                  control={<Radio />}
+                  label="Band is recording a new record."
+                />
               </RadioGroup>
             </div>
           </div>
@@ -275,7 +299,9 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
           </div>
           <div className="row">
             <div className="col-4">
-              <div className="create-artist__subtitle">Artist Video Message</div>
+              <div className="create-artist__subtitle">
+                Artist Video Message
+              </div>
             </div>
             <div className="col-8">
               <TextField
@@ -301,33 +327,55 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             <div className="col-6">
               <div className="create-artist__subtitle">Artist Images</div>
               <div className="create-artist__copy">
-                You can have several photos for your profile, but there can be only one profile photo, which will be
-                used to identify you to your supporters in certain scenarios. Select your primary photo and then up to
-                two secondary photos for your profile.
+                You can have several photos for your profile, but there can be
+                only one profile photo, which will be used to identify you to
+                your supporters in certain scenarios. Select your primary photo
+                and then up to two secondary photos for your profile.
               </div>
             </div>
           </div>
           <div className="row">
             <div className="col-3">
               <div className="image-upload__image primary">
-                <img className="image-upload__image_polaroid" src={polaroid} />
-                <Button className="btn btn-upload" variant="outlined">Upload Primary</Button>
+                <img
+                  className="image-upload__image_polaroid"
+                  src={polaroid}
+                  alt="Primary"
+                />
+                <Button className="btn btn-upload" variant="outlined">
+                  Upload Primary
+                </Button>
               </div>
             </div>
             <div className="col-3">
               <div className="image-upload__image secondary">
-                <img className="image-upload__image_polaroid" src={polaroid} />
-                <Button className="btn btn-upload" variant="outlined">Upload Photo #2</Button>
+                <img
+                  className="image-upload__image_polaroid"
+                  src={polaroid}
+                  alt="Secondary"
+                />
+                <Button className="btn btn-upload" variant="outlined">
+                  Upload Photo #2
+                </Button>
               </div>
             </div>
             <div className="col-3">
               <div className="image-upload__image secondary">
-                <img className="image-upload__image_polaroid" src={polaroid} />
-                <Button className="btn btn-upload" variant="outlined">Upload Photo #3</Button>
+                <img
+                  className="image-upload__image_polaroid"
+                  src={polaroid}
+                  alt="Tertiary"
+                />
+                <Button className="btn btn-upload" variant="outlined">
+                  Upload Photo #3
+                </Button>
               </div>
             </div>
-            <div className="col-3"><div className="create-artist__copy">
-              Minimum resolution: 700 X 700 Maximum size: 5mb</div></div>
+            <div className="col-3">
+              <div className="create-artist__copy">
+                Minimum resolution: 700 X 700 Maximum size: 5mb
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -337,7 +385,10 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
   renderColor = () => {
     return (
       <div className="artist-color">
-        <div className="primary-color" style={{ backgroundColor: this.state.artistColor }}>
+        <div
+          className="primary-color"
+          style={{ backgroundColor: this.state.artistColor }}
+        >
           <div className="container">
             <div className="row justify-content-between">
               <div className="col-6">
@@ -345,11 +396,12 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                   <div className="create-artist__subtitle">Artist Color</div>
                   <div className="create-artist__copy">
                     <p>
-                      Select a color for your artist page. This color will be used as accents on both your page and
-                      around the site.
+                      Select a color for your artist page. This color will be
+                      used as accents on both your page and around the site.
                     </p>
                     <p>
-                      The lighter version (20% opacity) of the color is how the will appear in certain rare instances.
+                      The lighter version (20% opacity) of the color is how the
+                      will appear in certain rare instances.
                     </p>
                   </div>
                 </div>
@@ -364,7 +416,10 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             </div>
           </div>
         </div>
-        <div className="secondary-color" style={{ backgroundColor: this.state.artistColorAlpha }}>
+        <div
+          className="secondary-color"
+          style={{ backgroundColor: this.state.artistColorAlpha }}
+        >
           <div className="container">
             <div className="row">
               <div className="col-6">
@@ -389,12 +444,16 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
           <div className="row">
             <div className="col-md-6">
               <div className="create-artist__copy">
-                This step is optional, but we encourage you to list the members of your project or band to further connect with your audience and give them insight into your own interests. The order in which they will appear can be alterered below.
+                This step is optional, but we encourage you to list the members
+                of your project or band to further connect with your audience
+                and give them insight into your own interests. The order in
+                which they will appear can be alterered below.
               </div>
             </div>
             <div className="col-md-6">
               <div className="create-artist__copy">
-                All members marked as admins will be notified of payouts, changes, and updates, unless specified otherwise.
+                All members marked as admins will be notified of payouts,
+                changes, and updates, unless specified otherwise.
               </div>
             </div>
           </div>
@@ -405,12 +464,10 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                 <CardContent className="container">
                   <div className="row justify-content-between">
                     <div className="col-auto">
-                      <div className="create-artist__title">
-                        Member
-                      </div>
+                      <div className="create-artist__title">Member</div>
                     </div>
                     <div className="col-auto">
-                      <div className="artist-members__card_admin">   
+                      <div className="artist-members__card_admin">
                         <FormControlLabel
                           control={
                             <Checkbox
@@ -487,7 +544,10 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
-                              <FontAwesomeIcon className="icon" icon={faTwitter} />
+                              <FontAwesomeIcon
+                                className="icon"
+                                icon={faTwitter}
+                              />
                             </InputAdornment>
                           ),
                         }}
@@ -503,7 +563,10 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
-                              <FontAwesomeIcon className="icon" icon={faInstagram} />
+                              <FontAwesomeIcon
+                                className="icon"
+                                icon={faInstagram}
+                              />
                             </InputAdornment>
                           ),
                         }}
@@ -518,7 +581,11 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
               <Card className="artist-members__card">
                 <CardContent>
                   <div className="artist-members__card_add">
-                    <FontAwesomeIcon className="icon" icon={faPlusCircle} size="3x" />
+                    <FontAwesomeIcon
+                      className="icon"
+                      icon={faPlusCircle}
+                      size="3x"
+                    />
                     <span>Add a Member</span>
                   </div>
                 </CardContent>
@@ -538,13 +605,24 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             <div className="col-6">
               <div className="create-artist__title">Payments</div>
               <div className="create-artist__copy">
-                All of Ampled payments are handled through Stripe. Create an account and agree to our temrs of use to get started.
+                All of Ampled payments are handled through Stripe. Create an
+                account and agree to our temrs of use to get started.
               </div>
             </div>
             <div className="col-3">
               <div className="center">
-                <FontAwesomeIcon className="artist-payment__stripe_icon" icon={faStripe}/>
-                <a href="https://stripe.com/about" target="_blank" className="btn link">Learn more about Stripe</a>
+                <FontAwesomeIcon
+                  className="artist-payment__stripe_icon"
+                  icon={faStripe}
+                />
+                <a
+                  href="https://stripe.com/about"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn link"
+                >
+                  Learn more about Stripe
+                </a>
               </div>
             </div>
           </div>
@@ -560,7 +638,13 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             <div className="col-3">
               <div className="center">
                 <div className="action-buttons">
-                  <Button href="https://stripe.com/about" target="_blank" className="btn continue-button">Create your account</Button>
+                  <Button
+                    href="https://stripe.com/about"
+                    target="_blank"
+                    className="btn continue-button"
+                  >
+                    Create your account
+                  </Button>
                 </div>
               </div>
             </div>
@@ -578,10 +662,13 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
             <div className="col-6">
               <div className="create-artist__title">Invite</div>
               <div className="create-artist__copy">
-                Let’s get your fans involved. Share the custom link below with your fans through your email list or social accounts. They’ll then be prompted to sign up and start directly supporting you!
+                Let’s get your fans involved. Share the custom link below with
+                your fans through your email list or social accounts. They’ll
+                then be prompted to sign up and start directly supporting you!
               </div>
             </div>
-          </div><div className="row">
+          </div>
+          <div className="row">
             <div className="col-4">
               <div className="create-artist__subtitle">Your Custom Link</div>
               <h6>Required</h6>
@@ -595,7 +682,11 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                 fullWidth
                 required
                 InputProps={{
-                  startAdornment: <InputAdornment position="start">ampled.com/artist/</InputAdornment>,
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      ampled.com/artist/
+                    </InputAdornment>
+                  ),
                 }}
               />
             </div>

@@ -407,14 +407,15 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
                 </div>
               </div>
               <div className="col-3">
+                <div className="artist-color__picker">
                 <ChromePicker
                   color={this.state.artistColor}
                   onChangeComplete={this.handleColorChange}
-                  className="artist-color__picker"
                 />
               </div>
             </div>
           </div>
+        </div>
         </div>
         <div
           className="secondary-color"

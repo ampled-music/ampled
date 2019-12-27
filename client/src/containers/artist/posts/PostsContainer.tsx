@@ -30,6 +30,7 @@ interface PostProps {
   comments: CommentProps[];
   created_at: number;
   created_ago: string;
+  playerCallback?(action: string, instance: any): void;
 }
 
 interface PostsProps {
@@ -46,6 +47,7 @@ interface PostsProps {
   artistName: string;
   artistId: number;
   artistSlug: string;
+  playerCallback?(action: string, instance: any): void;
 }
 
 const { scaleDown } = transitions;
@@ -135,6 +137,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
           deleteComment={this.props.deleteComment}
           updateArtist={this.props.updateArtist}
           doReflow={this.updateDimensions}
+          playerCallback={this.props.playerCallback}
         />
       </div>
     ));

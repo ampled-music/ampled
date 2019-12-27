@@ -58,10 +58,12 @@ class ArtistComponent extends React.Component<Props, any> {
     showConfirmationDialog: false,
     successfulSupport: false,
   };
+  players: Set<any>;
 
   componentDidMount() {
     window.scrollTo(0, 0);
     this.getArtistInfo();
+    this.players = new Set();
   }
 
   componentDidUpdate(prevProps: Props, prevState) {
@@ -80,6 +82,25 @@ class ArtistComponent extends React.Component<Props, any> {
       }
     }
   }
+
+  playerCallback = (action: string, instance: any) => {
+    const { players } = this;
+    if (action === 'play') {
+      // Pause all active players
+      players.forEach((player) => {
+        // handlePause instance method both pauses audio *and* triggers
+        // the 'pause' callback below
+        player.handlePause();
+      });
+
+      // Add newly active player to set
+      players.add(instance);
+    } else if (action === 'pause') {
+      // Triggered after player has already been paused;
+      // remove paused player from set
+      players.delete(instance);
+    }
+  };
 
   getConfettiConfig = () => {
     const confettiConfig = {
@@ -324,6 +345,7 @@ class ArtistComponent extends React.Component<Props, any> {
             updateArtist={this.getArtistInfo}
             loading={artists.loading || loadingMe}
             loggedUserAccess={loggedUserAccess}
+            playerCallback={this.playerCallback}
           />
           <Modal open={this.state.openPostModal} onClose={this.closePostModal}>
             <PostForm

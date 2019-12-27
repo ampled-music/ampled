@@ -360,6 +360,7 @@ class PostComponent extends React.Component<any, any> {
                     url={this.returnPlayableUrl()}
                     image={this.renderCloudinaryPhoto(post.image_url, 500)}
                     accentColor={accentColor}
+                    callback={this.props.playerCallback}
                   />
                 )}
               </div>

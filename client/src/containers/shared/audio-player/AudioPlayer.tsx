@@ -15,6 +15,7 @@ interface AudioPlayerProps {
   url: string;
   image: string;
   accentColor: string;
+  callback?(action: string, instance: any): void;
 }
 interface AudioPlayerState {
   url: string;
@@ -59,15 +60,19 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     this.load();
   };
   handlePlay = () => {
+    this.props.callback && this.props.callback('play', this);
     this.setState({ playing: true });
   };
   handlePause = () => {
+    this.props.callback && this.props.callback('pause', this);
     this.setState({ playing: false });
   };
   handleStop = () => {
+    this.props.callback && this.props.callback('stop', this);
     this.setState({ url: null, playing: false });
   };
   handleEnded = () => {
+    this.props.callback && this.props.callback('ended', this);
     this.setState({ playing: this.state.loop, durationShow: null });
   };
 
@@ -78,12 +83,15 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
 
   // @todo: figure out way to seek
   handleSeekChange = (e) => {
+    this.props.callback && this.props.callback('seek', this);
     this.setState({ played: parseFloat(e.target.value) });
   };
   handleSeekMouseDown = (e) => {
+    this.props.callback && this.props.callback('seeking', this);
     this.setState({ seeking: true });
   };
   handleSeekMouseUp = (e) => {
+    this.props.callback && this.props.callback('endseek', this);
     this.setState({ seeking: false });
   };
 
@@ -91,6 +99,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   handleProgress = (state) => {
     // We only want to update time slider if we are not currently seeking
     if (!this.state.seeking) {
+      this.props.callback && this.props.callback('progress', this);
       this.setState(state);
     }
   };

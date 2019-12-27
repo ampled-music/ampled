@@ -31,6 +31,7 @@ export class ArtistInfo extends React.Component<Props, any> {
             target="_blank"
             rel="noopener noreferrer"
             style={{ color: 'black' }}
+            aria-label={`${twitterHandle} on Twitter`}
           >
             <FontAwesomeIcon className="icon" icon={faTwitter} />
             <span>@{twitterHandle}</span>
@@ -50,6 +51,7 @@ export class ArtistInfo extends React.Component<Props, any> {
             target="_blank"
             rel="noopener noreferrer"
             style={{ color: 'black' }}
+            aria-label={`${instagramHandle} on Instagram`}
           >
             <FontAwesomeIcon className="icon" icon={faInstagram} />
             <span>@{instagramHandle}</span>

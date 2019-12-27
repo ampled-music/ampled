@@ -22,8 +22,8 @@ class NewSupporterEmailJob
         template_model: {
           supporter_name: subscription.user.name,
           artist_name: artist.name,
-          support_amount: subscription.plan.nominal_amount,
-          total_artist_support_amount: artist.monthly_total
+          support_amount: format("%.2f", subscription.plan.nominal_amount / 100),
+          total_artist_support_amount: format("%.2f", artist.monthly_total / 100)
         }
       }
     end

@@ -206,7 +206,7 @@ class SignupComponent extends React.Component<Props, any> {
             <label className="terms">
               <input type="checkbox" name="terms" onChange={this.toggle} required aria-label="Accept terms of service" />
               You agree to our{' '}
-              <a href="">
+              <a href="https://app.ampled.com/terms-of-use" rel="noopener noreferrer" target="_blank">
                 <u>Terms of Service</u>
               </a>
               .
@@ -217,9 +217,9 @@ class SignupComponent extends React.Component<Props, any> {
           </form>
           <label>
             Already have an account?{' '}
-            <a onClick={() => this.props.openAuthModal({ modalPage: 'login', redirectTo: this.props.authentication.redirectTo })}>
+            <button className="link" onClick={() => this.props.openAuthModal({ modalPage: 'login', redirectTo: this.props.authentication.redirectTo })}>
               <u>Log in</u>
-            </a>
+            </button>
             .
           </label>
         </div>

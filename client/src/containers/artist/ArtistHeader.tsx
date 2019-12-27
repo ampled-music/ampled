@@ -36,10 +36,19 @@ export class ArtistHeader extends React.Component<Props, any> {
     screenshotURL: ''
   };
 
+  componentDidMount = async () => {
+    const { artist: { video_url } } = this.props;
+    if (video_url && video_url.length) {
+      this.setState({
+        screenshotURL: await this.getThumbnailURLFromVideoURL(video_url)
+      });  
+    }
+  }
+
   componentDidUpdate = async (prevProps) => {
     const { artist: { video_url } } = this.props;
     const { artist: { video_url: prevURL } } = prevProps;
-    if (video_url !== prevURL && !this.state.screenshotURL) {
+    if (video_url !== prevURL && (!this.state.screenshotURL || !this.state.screenshotURL.length)) {
       this.setState({
         screenshotURL: await this.getThumbnailURLFromVideoURL(video_url)
       });
@@ -193,8 +202,8 @@ export class ArtistHeader extends React.Component<Props, any> {
     const cloudinary_id = image.substring(image.lastIndexOf("/") + 1, image.lastIndexOf("."));
     if (image.includes('https://res.cloudinary')) {
       return (
-        <Image publicId={cloudinary_id}>
-          <Transformation crop="fill" width={crop} height={crop} responsive_placeholder="blank" />
+        <Image publicId={cloudinary_id} alt={altText} >
+          <Transformation crop="fill" width={crop} height={crop} responsive_placeholder="blank"/>
         </Image>
       )
     } else {

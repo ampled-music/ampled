@@ -113,6 +113,9 @@ class ArtistPage < ApplicationRecord
     create_product if stripe_product_id.nil?
 
     @stripe_product ||= Stripe::Product.retrieve(stripe_product_id, stripe_account: stripe_user_id)
+    return @stripe_product unless @stripe_product.statement_descriptor.nil?
+
+    Stripe::Product.update(stripe_product_id, { statement_descriptor: name }, stripe_account: stripe_user_id)
   end
 
   def subscriber_count
@@ -149,7 +152,8 @@ class ArtistPage < ApplicationRecord
     product = Stripe::Product.create(
       {
         name: "Ampled Support",
-        type: "service"
+        type: "service",
+        statement_descriptor: name
       }, stripe_account: stripe_user_id
     )
     update(stripe_product_id: product.id)

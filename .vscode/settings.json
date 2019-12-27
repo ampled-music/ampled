@@ -2,29 +2,14 @@
   "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "eslint.autoFixOnSave": true,
-  "eslint.validate": [
-    {
-      "language": "typescript",
-      "autoFix": true
-    },
-    {
-      "language": "typescriptreact",
-      "autoFix": true
-    },
-    {
-      "language": "html",
-      "autoFix": true
-    },
-    {
-      "language": "javascript",
-      "autoFix": true
-    }
-  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.esLint": true
+  },
+  "eslint.validate": ["typescript", "typescriptreact", "html", "javascript"],
   "prettier.bracketSpacing": true,
   "prettier.semi": true,
   "prettier.singleQuote": true,
   "prettier.tabWidth": 2,
-  "prettier.trailingComma": "all"
+  "prettier.trailingComma": "all",
   "typescript.tsdk": "./client/node_modules/typescript/lib"
 }

@@ -24,6 +24,7 @@ h6 {
   margin-top: 50px;
 }
 
+
 .btn {
 
   &-ampled {
@@ -165,15 +166,16 @@ h6 {
 }
 
 .link {
-  color: $gray-light;
   cursor: pointer;
   border: 0;
   background: none;
-  margin: .75rem auto;
-  transition: color $speed;
+  margin: 0;
+  padding: 0;
+  opacity: 1;
+  transition: opacity $speed;
 
   &:hover {
-    color: $black;
+    opacity: .8;
   }
 
   &__why {

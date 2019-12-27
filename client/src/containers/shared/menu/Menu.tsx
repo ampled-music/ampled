@@ -119,7 +119,7 @@ class MenuListComposition extends React.Component<Props, State> {
           <FontAwesomeIcon icon={faCog} /> <b>My Profile</b>
         </Link>
         <Divider />
-        <a onClick={this.logout}>Logout</a>
+        <button onClick={this.logout}>Logout</button>
       </div>
     );
   };

@@ -206,7 +206,7 @@ class SignupComponent extends React.Component<Props, any> {
             <label className="terms">
               <input type="checkbox" name="terms" onChange={this.toggle} required aria-label="Accept terms of service" />
               You agree to our{' '}
-              <a href="https://app.ampled.com/terms-of-use">
+              <a href="https://app.ampled.com/terms-of-use" target="_blank">
                 <u>Terms of Service</u>
               </a>
               .

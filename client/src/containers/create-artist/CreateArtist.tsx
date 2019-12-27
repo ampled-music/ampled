@@ -28,6 +28,7 @@ import {
   faStripe,
 } from '@fortawesome/free-brands-svg-icons';
 import { ChromePicker } from 'react-color';
+import { isMobile } from 'react-device-detect';
 
 import { theme } from './theme';
 import tear from '../../images/full_page_tear.png';
@@ -103,6 +104,11 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
   renderHeader = () => {
     return (
       <div className="create-artist__header">
+        {isMobile && (
+          <div style={{ margin: '0 20px' }}>
+            We recommend completing this form on a non-mobile device.
+          </div>
+        )}
         <div className="container">
           <h1>Create Your Artist Page</h1>
         </div>
@@ -408,14 +414,14 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
               </div>
               <div className="col-3">
                 <div className="artist-color__picker">
-                <ChromePicker
-                  color={this.state.artistColor}
-                  onChangeComplete={this.handleColorChange}
-                />
+                  <ChromePicker
+                    color={this.state.artistColor}
+                    onChangeComplete={this.handleColorChange}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
         <div
           className="secondary-color"

@@ -87,11 +87,13 @@
       display: block;
       position: relative;
       color: $black;
-      margin-bottom: 2rem;
+      margin: 0 auto 2rem;
       cursor: pointer;
       z-index: 50;
       text-decoration: underline;
       transition: color $speed;
+      font-weight: bold;
+      text-transform: uppercase;
 
       &:hover {
         color: $white;

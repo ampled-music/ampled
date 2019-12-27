@@ -171,7 +171,7 @@ class PostComponent extends React.Component<any, any> {
   );
 
   renderLock = (isLapsed: boolean = false) => {
-    const { me, history } = this.props;
+    const { me } = this.props;
     const authenticated = !!me;
 
     return (

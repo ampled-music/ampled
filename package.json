@@ -41,8 +41,5 @@
   "cacheDirectories": [
     "node_modules",
     "client/node_modules"
-  ],
-  "dependencies": {
-    "classnames": "^2.2.6"
-  }
+  ]
 }

@@ -613,7 +613,7 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
               <div className="create-artist__title">Payments</div>
               <div className="create-artist__copy">
                 All of Ampled payments are handled through Stripe. Create an
-                account and agree to our temrs of use to get started.
+                account and agree to our terms of use to get started.
               </div>
             </div>
             <div className="col-3">

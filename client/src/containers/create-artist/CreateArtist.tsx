@@ -1,6 +1,7 @@
 import './create-artist.scss';
 
 import * as React from 'react';
+import { connect } from 'react-redux';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -33,6 +34,8 @@ import { isMobile } from 'react-device-detect';
 import { theme } from './theme';
 import tear from '../../images/full_page_tear.png';
 import polaroid from '../../images/polaroid.png';
+
+import { Store } from '../../redux/configure-store';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -722,4 +725,12 @@ class CreateArtist extends React.Component<TabPanelProps, any> {
   }
 }
 
-export { CreateArtist };
+const mapStateToProps = (state: Store) => {
+  return {
+    me: state.me,
+  };
+};
+
+const connectArtist = connect(mapStateToProps)(CreateArtist);
+
+export { connectArtist as CreateArtist };

@@ -498,373 +498,6 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sat, 30 Nov 2019 03:50:03 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '571'
-      Connection:
-      - keep-alive
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Expose-Headers:
-      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
-      Access-Control-Max-Age:
-      - '300'
-      Cache-Control:
-      - no-cache, no-store
-      Request-Id:
-      - req_gMhdKeRRYNVs3s
-      Stripe-Account:
-      - acct_1FA1TnKB00tmjmII
-      Stripe-Version:
-      - '2019-02-11'
-      Strict-Transport-Security:
-      - max-age=31556926; includeSubDomains; preload
-    body:
-      encoding: UTF-8
-      string: |
-        {
-          "id": "po_1FkMy6KB00tmjmIIBjOwMJ3c",
-          "object": "payout",
-          "amount": 1,
-          "arrival_date": 1575244800,
-          "automatic": false,
-          "balance_transaction": "txn_1FkMy6KB00tmjmIII4GYaWuq",
-          "created": 1575085802,
-          "currency": "usd",
-          "description": null,
-          "destination": "ba_1FA1UZKB00tmjmIIDh772GTH",
-          "failure_balance_transaction": null,
-          "failure_code": null,
-          "failure_message": null,
-          "livemode": false,
-          "metadata": {
-          },
-          "method": "standard",
-          "source_type": "card",
-          "statement_descriptor": "Ampled",
-          "status": "pending",
-          "type": "bank_account"
-        }
-    http_version: 
-  recorded_at: Sat, 30 Nov 2019 03:50:03 GMT
-- request:
-    method: post
-    uri: https://api.stripe.com/v1/payouts
-    body:
-      encoding: UTF-8
-      string: amount=1&currency=usd&source_type=card
-    headers:
-      User-Agent:
-      - Stripe/v1 RubyBindings/4.12.0
-      Authorization:
-      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
-      Content-Type:
-      - application/x-www-form-urlencoded
-      X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 5.0.0-36-generic (buildd@lgw01-amd64-060) (gcc version 7.4.0 (Ubuntu
-        7.4.0-1ubuntu1~18.04.1)) #39~18.04.1-Ubuntu SMP Tue Nov 12 11:09:50 UTC 2019","hostname":"x250"}'
-      Stripe-Account:
-      - acct_1FA1TnKB00tmjmII
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      Connection:
-      - keep-alive
-      Keep-Alive:
-      - '30'
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx
-      Date:
-      - Sat, 30 Nov 2019 04:09:47 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '571'
-      Connection:
-      - keep-alive
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Expose-Headers:
-      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
-      Access-Control-Max-Age:
-      - '300'
-      Cache-Control:
-      - no-cache, no-store
-      Request-Id:
-      - req_TIf7YXD7IJlXNR
-      Stripe-Account:
-      - acct_1FA1TnKB00tmjmII
-      Stripe-Version:
-      - '2019-02-11'
-      Strict-Transport-Security:
-      - max-age=31556926; includeSubDomains; preload
-    body:
-      encoding: UTF-8
-      string: |
-        {
-          "id": "po_1FkNHDKB00tmjmIIsNBlUUoj",
-          "object": "payout",
-          "amount": 1,
-          "arrival_date": 1575244800,
-          "automatic": false,
-          "balance_transaction": "txn_1FkNHDKB00tmjmIIHEuwu1A0",
-          "created": 1575086987,
-          "currency": "usd",
-          "description": null,
-          "destination": "ba_1FA1UZKB00tmjmIIDh772GTH",
-          "failure_balance_transaction": null,
-          "failure_code": null,
-          "failure_message": null,
-          "livemode": false,
-          "metadata": {
-          },
-          "method": "standard",
-          "source_type": "card",
-          "statement_descriptor": "Ampled",
-          "status": "pending",
-          "type": "bank_account"
-        }
-    http_version: 
-  recorded_at: Sat, 30 Nov 2019 04:09:47 GMT
-- request:
-    method: post
-    uri: https://api.stripe.com/v1/charges
-    body:
-      encoding: UTF-8
-      string: amount=50000&currency=usd&source=tok_bypassPending&transfer_data[destination]=acct_1FA1TnKB00tmjmII
-    headers:
-      User-Agent:
-      - Stripe/v1 RubyBindings/4.12.0
-      Authorization:
-      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
-      Content-Type:
-      - application/x-www-form-urlencoded
-      X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 5.0.0-36-generic (buildd@lgw01-amd64-060) (gcc version 7.4.0 (Ubuntu
-        7.4.0-1ubuntu1~18.04.1)) #39~18.04.1-Ubuntu SMP Tue Nov 12 11:09:50 UTC 2019","hostname":"x250"}'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      Connection:
-      - keep-alive
-      Keep-Alive:
-      - '30'
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx
-      Date:
-      - Sat, 30 Nov 2019 04:13:33 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '3010'
-      Connection:
-      - keep-alive
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Expose-Headers:
-      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
-      Access-Control-Max-Age:
-      - '300'
-      Cache-Control:
-      - no-cache, no-store
-      Request-Id:
-      - req_lQZezkoD9VzKnu
-      Stripe-Version:
-      - '2019-02-11'
-      Strict-Transport-Security:
-      - max-age=31556926; includeSubDomains; preload
-    body:
-      encoding: UTF-8
-      string: |
-        {
-          "id": "ch_1FkNKqCNj1cfz4PUxlCmbHye",
-          "object": "charge",
-          "amount": 50000,
-          "amount_refunded": 0,
-          "application": null,
-          "application_fee": null,
-          "application_fee_amount": null,
-          "balance_transaction": "txn_1FkNKqCNj1cfz4PU4Hs7Ann0",
-          "billing_details": {
-            "address": {
-              "city": null,
-              "country": null,
-              "line1": null,
-              "line2": null,
-              "postal_code": null,
-              "state": null
-            },
-            "email": null,
-            "name": null,
-            "phone": null
-          },
-          "captured": true,
-          "created": 1575087212,
-          "currency": "usd",
-          "customer": null,
-          "description": null,
-          "destination": "acct_1FA1TnKB00tmjmII",
-          "dispute": null,
-          "disputed": false,
-          "failure_code": null,
-          "failure_message": null,
-          "fraud_details": {
-          },
-          "invoice": null,
-          "livemode": false,
-          "metadata": {
-          },
-          "on_behalf_of": null,
-          "order": null,
-          "outcome": {
-            "network_status": "approved_by_network",
-            "reason": null,
-            "risk_level": "normal",
-            "risk_score": 64,
-            "seller_message": "Payment complete.",
-            "type": "authorized"
-          },
-          "paid": true,
-          "payment_intent": null,
-          "payment_method": "card_1FkNKqCNj1cfz4PUKgGSdA80",
-          "payment_method_details": {
-            "card": {
-              "brand": "visa",
-              "checks": {
-                "address_line1_check": null,
-                "address_postal_code_check": null,
-                "cvc_check": null
-              },
-              "country": "US",
-              "exp_month": 11,
-              "exp_year": 2020,
-              "fingerprint": "rIkL5X5IinEetfnD",
-              "funding": "credit",
-              "installments": null,
-              "last4": "0077",
-              "network": "visa",
-              "three_d_secure": null,
-              "wallet": null
-            },
-            "type": "card"
-          },
-          "receipt_email": null,
-          "receipt_number": null,
-          "receipt_url": "https://pay.stripe.com/receipts/acct_1E3X3XCNj1cfz4PU/ch_1FkNKqCNj1cfz4PUxlCmbHye/rcpt_GGvBuhR1OyWardZ5uxEL8RJdfAtuU26",
-          "refunded": false,
-          "refunds": {
-            "object": "list",
-            "data": [
-
-            ],
-            "has_more": false,
-            "total_count": 0,
-            "url": "/v1/charges/ch_1FkNKqCNj1cfz4PUxlCmbHye/refunds"
-          },
-          "review": null,
-          "shipping": null,
-          "source": {
-            "id": "card_1FkNKqCNj1cfz4PUKgGSdA80",
-            "object": "card",
-            "address_city": null,
-            "address_country": null,
-            "address_line1": null,
-            "address_line1_check": null,
-            "address_line2": null,
-            "address_state": null,
-            "address_zip": null,
-            "address_zip_check": null,
-            "brand": "Visa",
-            "country": "US",
-            "customer": null,
-            "cvc_check": null,
-            "dynamic_last4": null,
-            "exp_month": 11,
-            "exp_year": 2020,
-            "fingerprint": "rIkL5X5IinEetfnD",
-            "funding": "credit",
-            "last4": "0077",
-            "metadata": {
-            },
-            "name": null,
-            "tokenization_method": null
-          },
-          "source_transfer": null,
-          "statement_descriptor": null,
-          "statement_descriptor_suffix": null,
-          "status": "succeeded",
-          "transfer": "tr_1FkNKqCNj1cfz4PUw8L64X8x",
-          "transfer_data": {
-            "amount": null,
-            "destination": "acct_1FA1TnKB00tmjmII"
-          },
-          "transfer_group": "group_ch_1FkNKqCNj1cfz4PUxlCmbHye"
-        }
-    http_version: 
-  recorded_at: Sat, 30 Nov 2019 04:13:33 GMT
-- request:
-    method: post
-    uri: https://api.stripe.com/v1/payouts
-    body:
-      encoding: UTF-8
-      string: amount=1&currency=usd&source_type=card
-    headers:
-      User-Agent:
-      - Stripe/v1 RubyBindings/4.12.0
-      Authorization:
-      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
-      Content-Type:
-      - application/x-www-form-urlencoded
-      X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 5.0.0-36-generic (buildd@lgw01-amd64-060) (gcc version 7.4.0 (Ubuntu
-        7.4.0-1ubuntu1~18.04.1)) #39~18.04.1-Ubuntu SMP Tue Nov 12 11:09:50 UTC 2019","hostname":"x250"}'
-      Stripe-Account:
-      - acct_1FA1TnKB00tmjmII
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      Connection:
-      - keep-alive
-      Keep-Alive:
-      - '30'
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx
-      Date:
       - Sat, 30 Nov 2019 04:13:33 GMT
       Content-Type:
       - application/json
@@ -921,11 +554,11 @@ http_interactions:
     http_version: 
   recorded_at: Sat, 30 Nov 2019 04:13:33 GMT
 - request:
-    method: get
-    uri: https://api.stripe.com/v1/payouts?limit=1
+    method: post
+    uri: https://api.stripe.com/v1/payouts
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: amount=1&currency=usd&source_type=card
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/4.12.0
@@ -935,8 +568,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 5.0.0-36-generic (buildd@lgw01-amd64-060) (gcc version 7.4.0 (Ubuntu
-        7.4.0-1ubuntu1~18.04.1)) #39~18.04.1-Ubuntu SMP Tue Nov 12 11:09:50 UTC 2019","hostname":"x250"}'
+        version 5.0.0-37-generic (buildd@lcy01-amd64-023) (gcc version 7.4.0 (Ubuntu
+        7.4.0-1ubuntu1~18.04.1)) #40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019","hostname":"x250"}'
       Stripe-Account:
       - acct_1FA1TnKB00tmjmII
       Accept-Encoding:
@@ -955,7 +588,374 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sat, 30 Nov 2019 04:13:34 GMT
+      - Sat, 28 Dec 2019 00:07:00 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '571'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_LZGSzrCkirpuqo
+      Stripe-Account:
+      - acct_1FA1TnKB00tmjmII
+      Stripe-Version:
+      - '2019-02-11'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "po_1FuSpbKB00tmjmIISQmYdRl7",
+          "object": "payout",
+          "amount": 1,
+          "arrival_date": 1577664000,
+          "automatic": false,
+          "balance_transaction": "txn_1FuSpbKB00tmjmIIZ6QQSRwC",
+          "created": 1577491619,
+          "currency": "usd",
+          "description": null,
+          "destination": "ba_1FA1UZKB00tmjmIIDh772GTH",
+          "failure_balance_transaction": null,
+          "failure_code": null,
+          "failure_message": null,
+          "livemode": false,
+          "metadata": {
+          },
+          "method": "standard",
+          "source_type": "card",
+          "statement_descriptor": "Ampled",
+          "status": "pending",
+          "type": "bank_account"
+        }
+    http_version: 
+  recorded_at: Sat, 28 Dec 2019 00:07:00 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: UTF-8
+      string: amount=50000&currency=usd&source=tok_bypassPending&transfer_data[destination]=acct_1FA1TnKB00tmjmII
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/4.12.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 5.0.0-37-generic (buildd@lcy01-amd64-023) (gcc version 7.4.0 (Ubuntu
+        7.4.0-1ubuntu1~18.04.1)) #40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019","hostname":"x250"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - '30'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Dec 2019 00:16:04 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3010'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_TmIyfdEZj2UHUL
+      Stripe-Version:
+      - '2019-02-11'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "ch_1FuSyNCNj1cfz4PUmAAT5Itn",
+          "object": "charge",
+          "amount": 50000,
+          "amount_refunded": 0,
+          "application": null,
+          "application_fee": null,
+          "application_fee_amount": null,
+          "balance_transaction": "txn_1FuSyOCNj1cfz4PUSQ7nIyMc",
+          "billing_details": {
+            "address": {
+              "city": null,
+              "country": null,
+              "line1": null,
+              "line2": null,
+              "postal_code": null,
+              "state": null
+            },
+            "email": null,
+            "name": null,
+            "phone": null
+          },
+          "captured": true,
+          "created": 1577492163,
+          "currency": "usd",
+          "customer": null,
+          "description": null,
+          "destination": "acct_1FA1TnKB00tmjmII",
+          "dispute": null,
+          "disputed": false,
+          "failure_code": null,
+          "failure_message": null,
+          "fraud_details": {
+          },
+          "invoice": null,
+          "livemode": false,
+          "metadata": {
+          },
+          "on_behalf_of": null,
+          "order": null,
+          "outcome": {
+            "network_status": "approved_by_network",
+            "reason": null,
+            "risk_level": "normal",
+            "risk_score": 57,
+            "seller_message": "Payment complete.",
+            "type": "authorized"
+          },
+          "paid": true,
+          "payment_intent": null,
+          "payment_method": "card_1FuSyNCNj1cfz4PU39PFygwG",
+          "payment_method_details": {
+            "card": {
+              "brand": "visa",
+              "checks": {
+                "address_line1_check": null,
+                "address_postal_code_check": null,
+                "cvc_check": null
+              },
+              "country": "US",
+              "exp_month": 12,
+              "exp_year": 2020,
+              "fingerprint": "rIkL5X5IinEetfnD",
+              "funding": "credit",
+              "installments": null,
+              "last4": "0077",
+              "network": "visa",
+              "three_d_secure": null,
+              "wallet": null
+            },
+            "type": "card"
+          },
+          "receipt_email": null,
+          "receipt_number": null,
+          "receipt_url": "https://pay.stripe.com/receipts/acct_1E3X3XCNj1cfz4PU/ch_1FuSyNCNj1cfz4PUmAAT5Itn/rcpt_GRLfyyxgVnQRflrJfqx7co5Yq9vOWJL",
+          "refunded": false,
+          "refunds": {
+            "object": "list",
+            "data": [
+
+            ],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/charges/ch_1FuSyNCNj1cfz4PUmAAT5Itn/refunds"
+          },
+          "review": null,
+          "shipping": null,
+          "source": {
+            "id": "card_1FuSyNCNj1cfz4PU39PFygwG",
+            "object": "card",
+            "address_city": null,
+            "address_country": null,
+            "address_line1": null,
+            "address_line1_check": null,
+            "address_line2": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_zip_check": null,
+            "brand": "Visa",
+            "country": "US",
+            "customer": null,
+            "cvc_check": null,
+            "dynamic_last4": null,
+            "exp_month": 12,
+            "exp_year": 2020,
+            "fingerprint": "rIkL5X5IinEetfnD",
+            "funding": "credit",
+            "last4": "0077",
+            "metadata": {
+            },
+            "name": null,
+            "tokenization_method": null
+          },
+          "source_transfer": null,
+          "statement_descriptor": null,
+          "statement_descriptor_suffix": null,
+          "status": "succeeded",
+          "transfer": "tr_1FuSyNCNj1cfz4PUgmDyaNUh",
+          "transfer_data": {
+            "amount": null,
+            "destination": "acct_1FA1TnKB00tmjmII"
+          },
+          "transfer_group": "group_ch_1FuSyNCNj1cfz4PUmAAT5Itn"
+        }
+    http_version: 
+  recorded_at: Sat, 28 Dec 2019 00:16:04 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/payouts
+    body:
+      encoding: UTF-8
+      string: amount=1&currency=usd&source_type=card
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/4.12.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 5.0.0-37-generic (buildd@lcy01-amd64-023) (gcc version 7.4.0 (Ubuntu
+        7.4.0-1ubuntu1~18.04.1)) #40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019","hostname":"x250"}'
+      Stripe-Account:
+      - acct_1FA1TnKB00tmjmII
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - '30'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Dec 2019 00:16:05 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '571'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_wIqVJK3mpDYzix
+      Stripe-Account:
+      - acct_1FA1TnKB00tmjmII
+      Stripe-Version:
+      - '2019-02-11'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "po_1FuSyPKB00tmjmIINnKGLJSg",
+          "object": "payout",
+          "amount": 1,
+          "arrival_date": 1577664000,
+          "automatic": false,
+          "balance_transaction": "txn_1FuSyPKB00tmjmIIIb7isltR",
+          "created": 1577492164,
+          "currency": "usd",
+          "description": null,
+          "destination": "ba_1FA1UZKB00tmjmIIDh772GTH",
+          "failure_balance_transaction": null,
+          "failure_code": null,
+          "failure_message": null,
+          "livemode": false,
+          "metadata": {
+          },
+          "method": "standard",
+          "source_type": "card",
+          "statement_descriptor": "Ampled",
+          "status": "pending",
+          "type": "bank_account"
+        }
+    http_version: 
+  recorded_at: Sat, 28 Dec 2019 00:16:05 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/payouts?limit=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/4.12.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 5.0.0-37-generic (buildd@lcy01-amd64-023) (gcc version 7.4.0 (Ubuntu
+        7.4.0-1ubuntu1~18.04.1)) #40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019","hostname":"x250"}'
+      Stripe-Account:
+      - acct_1FA1TnKB00tmjmII
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - '30'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 28 Dec 2019 00:16:05 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -975,7 +975,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_n8tRlv7ZRJ39e5
+      - req_z2r1ZTWuGd9pl1
       Stripe-Account:
       - acct_1FA1TnKB00tmjmII
       Stripe-Version:
@@ -989,13 +989,13 @@ http_interactions:
           "object": "list",
           "data": [
             {
-              "id": "po_1FkNKrKB00tmjmIIKXWy5nFC",
+              "id": "po_1FuSyPKB00tmjmIINnKGLJSg",
               "object": "payout",
               "amount": 1,
-              "arrival_date": 1575244800,
+              "arrival_date": 1577664000,
               "automatic": false,
-              "balance_transaction": "txn_1FkNKrKB00tmjmIIxDzJijTx",
-              "created": 1575087213,
+              "balance_transaction": "txn_1FuSyPKB00tmjmIIIb7isltR",
+              "created": 1577492164,
               "currency": "usd",
               "description": null,
               "destination": "ba_1FA1UZKB00tmjmIIDh772GTH",
@@ -1016,5 +1016,5 @@ http_interactions:
           "url": "/v1/payouts"
         }
     http_version: 
-  recorded_at: Sat, 30 Nov 2019 04:13:34 GMT
+  recorded_at: Sat, 28 Dec 2019 00:16:05 GMT
 recorded_with: VCR 4.0.0

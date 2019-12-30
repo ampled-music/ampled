@@ -72,6 +72,56 @@ function a11yProps(index: any) {
   };
 }
 
+const Members = ({ members, addMember, handleChange }) => {
+  return (
+    <div className="container">
+      <div className="artist-members">
+        <div className="row">
+          <div className="col-md-6">
+            <div className="create-artist__title">Members</div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <div className="create-artist__copy">
+              This step is optional, but we encourage you to list the members of
+              your project or band to further connect with your audience and
+              give them insight into your own interests. The order in which they
+              will appear can be altered below.
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="create-artist__copy">
+              All members marked as admins will be notified of payouts, changes,
+              and updates, unless specified otherwise.
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          {members.map((v, i) => (
+            <Member key={i} handleChange={handleChange} index={i} {...v} />
+          ))}
+          <div className="col-md-6">
+            <Card className="artist-members__card">
+              <CardContent>
+                <div className="artist-members__card_add" onClick={addMember}>
+                  <FontAwesomeIcon
+                    className="icon"
+                    icon={faPlusCircle}
+                    size="3x"
+                  />
+                  <span>Add a Member</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Member = ({
   isAdmin,
   firstName,
@@ -613,64 +663,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     });
   };
 
-  renderMembers = () => {
-    return (
-      <div className="container">
-        <div className="artist-members">
-          <div className="row">
-            <div className="col-md-6">
-              <div className="create-artist__title">Members</div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <div className="create-artist__copy">
-                This step is optional, but we encourage you to list the members
-                of your project or band to further connect with your audience
-                and give them insight into your own interests. The order in
-                which they will appear can be alterered below.
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="create-artist__copy">
-                All members marked as admins will be notified of payouts,
-                changes, and updates, unless specified otherwise.
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            {this.state.members.map((v, i) => (
-              <Member
-                key={i}
-                handleChange={this.handleChange}
-                index={i}
-                {...v}
-              />
-            ))}
-            <div className="col-md-6">
-              <Card className="artist-members__card">
-                <CardContent>
-                  <div
-                    className="artist-members__card_add"
-                    onClick={this.addMember}
-                  >
-                    <FontAwesomeIcon
-                      className="icon"
-                      icon={faPlusCircle}
-                      size="3x"
-                    />
-                    <span>Add a Member</span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   renderPayment = () => {
     return (
       <div className="container">
@@ -778,7 +770,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       {this.renderInfo()}
       {this.renderImages()}
       {this.renderColor()}
-      {this.renderMembers()}
+      <Members
+        members={this.state.members}
+        handleChange={this.handleChange}
+        addMember={this.addMember}
+      />
       {/* {this.renderPayment()} */}
       {this.renderInvite()}
     </MuiThemeProvider>

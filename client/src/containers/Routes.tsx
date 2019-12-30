@@ -70,7 +70,7 @@ const Routes = () => {
         component={LazyResetPassword}
       />
       <PublicRoute exact path={routePaths.noArtist} component={LazyNoArtist} />
-      <PublicRoute
+      <ProtectedRoute
         exact
         path={routePaths.createArtist}
         component={LazyCreateArtist}

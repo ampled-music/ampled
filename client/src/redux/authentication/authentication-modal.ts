@@ -12,6 +12,7 @@ export const authModalReducer = {
     authModalOpen: true,
     modalPage: payload.modalPage,
     showSupportMessage: payload.showSupportMessage,
+    customLoginMessage: payload.customLoginMessage,
     artistName: payload.artistName,
     redirectTo: payload.redirectTo,
   }),

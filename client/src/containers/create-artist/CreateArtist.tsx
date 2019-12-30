@@ -189,6 +189,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   renderInfo = () => {
+    const { artistName } = this.state;
+    const displayName = artistName || 'Band';
     return (
       <div className="container">
         <div className="artist-custom">
@@ -226,12 +228,12 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 <FormControlLabel
                   value="are"
                   control={<Radio />}
-                  label="Band are recording a new record."
+                  label={`${displayName} are recording a new record.`}
                 />
                 <FormControlLabel
                   value="is"
                   control={<Radio />}
-                  label="Band is recording a new record."
+                  label={`${displayName} is recording a new record.`}
                 />
               </RadioGroup>
             </div>

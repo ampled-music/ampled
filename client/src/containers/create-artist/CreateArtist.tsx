@@ -72,6 +72,134 @@ function a11yProps(index: any) {
   };
 }
 
+const Member = ({
+  isAdmin,
+  firstName,
+  lastName,
+  role,
+  instagram,
+  twitter,
+  photo,
+  index,
+  handleChange,
+}) => {
+  const isMe = index === 0;
+  return (
+    <div className="col-md-6">
+      <Card className="artist-members__card">
+        <CardContent className="container">
+          <div className="row justify-content-between">
+            <div className="col-auto">
+              <div className="create-artist__title">Member</div>
+            </div>
+            <div className="col-auto">
+              <div className="artist-members__card_admin">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="isAdmin"
+                      checked={isAdmin}
+                      onChange={handleChange}
+                    />
+                  }
+                  label="Make Admin"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-3">
+              <div className="create-artist__subtitle">Name</div>
+              <h6>Required</h6>
+            </div>
+            <div className="col-9">
+              <TextField
+                name="firstName"
+                label="First Name"
+                id="first-name"
+                value={firstName}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+              <TextField
+                name="lastName"
+                label="Last Name"
+                id="last-name"
+                value={lastName}
+                onChange={handleChange}
+                fullWidth
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-3">
+              <div className="create-artist__subtitle">Role(s)</div>
+            </div>
+            <div className="col-9">
+              <TextField
+                name="role"
+                label="Role"
+                id="role"
+                value={role}
+                onChange={handleChange}
+                inputProps={{ maxLength: 50 }}
+                // helperText={`${role.length - 50} characters left`}
+                fullWidth
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-3">
+              <div className="create-artist__subtitle">Photo</div>
+            </div>
+            <div className="col-9"></div>
+          </div>
+          <div className="row">
+            <div className="col-3">
+              <div className="create-artist__subtitle">Social</div>
+            </div>
+            <div className="col-9">
+              <TextField
+                name="twitter"
+                id="twitter"
+                placeholder="Twitter"
+                value={twitter}
+                onChange={handleChange}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FontAwesomeIcon className="icon" icon={faTwitter} />
+                    </InputAdornment>
+                  ),
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
+              <TextField
+                name="instagram"
+                id="instagram"
+                placeholder="Instagram"
+                value={instagram}
+                onChange={handleChange}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FontAwesomeIcon className="icon" icon={faInstagram} />
+                    </InputAdornment>
+                  ),
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
 class CreateArtist extends React.Component<CreateArtistProps, any> {
   state = {
     artistColor: '#baddac',
@@ -85,17 +213,29 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     artistVideo: '',
     artistSlug: '',
     artistStripe: '',
-    members: {
-      me: {
-        isAdmin: true,
-        firstName: '',
-        lastName: '',
-        role: '',
-        instagram: '',
-        twitter: '',
-        photo: '',
-      },
-    },
+    members: [],
+  };
+
+  componentDidUpdate = (prevProps) => {
+    const {
+      me: { userData },
+    } = this.props;
+    if (userData && !prevProps?.me?.userData) {
+      const { name, last_name, instagram, twitter, image } = userData;
+      this.setState({
+        members: [
+          {
+            isAdmin: true,
+            firstName: name,
+            lastName: last_name,
+            role: '',
+            instagram,
+            twitter,
+            photo: image,
+          },
+        ],
+      });
+    }
   };
 
   handleColorChange = (color) => {
@@ -448,6 +588,23 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     );
   };
 
+  addMember = () => {
+    this.setState({
+      members: [
+        ...this.state.members,
+        {
+          isAdmin: false,
+          firstName: '',
+          lastName: '',
+          role: '',
+          instagram: '',
+          twitter: '',
+          photo: '',
+        },
+      ],
+    });
+  };
+
   renderMembers = () => {
     return (
       <div className="container">
@@ -475,128 +632,21 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           </div>
 
           <div className="row">
-            <div className="col-md-6">
-              <Card className="artist-members__card">
-                <CardContent className="container">
-                  <div className="row justify-content-between">
-                    <div className="col-auto">
-                      <div className="create-artist__title">Member</div>
-                    </div>
-                    <div className="col-auto">
-                      <div className="artist-members__card_admin">
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              name="isAdmin"
-                              value={this.state.members.me.isAdmin}
-                              onChange={this.handleChange}
-                            />
-                          }
-                          label="Make Admin"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-3">
-                      <div className="create-artist__subtitle">Name</div>
-                      <h6>Required</h6>
-                    </div>
-                    <div className="col-9">
-                      <TextField
-                        name="firstName"
-                        label="First Name"
-                        id="first-name"
-                        value={this.state.members.me.firstName}
-                        onChange={this.handleChange}
-                        fullWidth
-                        required
-                      />
-                      <TextField
-                        name="lastName"
-                        label="Last Name"
-                        id="last-name"
-                        value={this.state.members.me.lastName}
-                        onChange={this.handleChange}
-                        fullWidth
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-3">
-                      <div className="create-artist__subtitle">Role(s)</div>
-                    </div>
-                    <div className="col-9">
-                      <TextField
-                        name="role"
-                        label="Role"
-                        id="role"
-                        value={this.state.members.me.role}
-                        onChange={this.handleChange}
-                        inputProps={{ maxLength: 50 }}
-                        // helperText={`${this.state.members.me.role.length - 50} characters left`}
-                        fullWidth
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-3">
-                      <div className="create-artist__subtitle">Photo</div>
-                    </div>
-                    <div className="col-9"></div>
-                  </div>
-                  <div className="row">
-                    <div className="col-3">
-                      <div className="create-artist__subtitle">Social</div>
-                    </div>
-                    <div className="col-9">
-                      <TextField
-                        name="twitter"
-                        id="twitter"
-                        placeholder="Twitter"
-                        value={this.state.members.me.twitter}
-                        onChange={this.handleChange}
-                        fullWidth
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <FontAwesomeIcon
-                                className="icon"
-                                icon={faTwitter}
-                              />
-                            </InputAdornment>
-                          ),
-                        }}
-                        InputLabelProps={{ shrink: true }}
-                      />
-                      <TextField
-                        name="instagram"
-                        id="instagram"
-                        placeholder="Instagram"
-                        value={this.state.members.me.instagram}
-                        onChange={this.handleChange}
-                        fullWidth
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <FontAwesomeIcon
-                                className="icon"
-                                icon={faInstagram}
-                              />
-                            </InputAdornment>
-                          ),
-                        }}
-                        InputLabelProps={{ shrink: true }}
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+            {this.state.members.map((v, i) => (
+              <Member
+                key={i}
+                handleChange={this.handleChange}
+                index={i}
+                {...v}
+              />
+            ))}
             <div className="col-md-6">
               <Card className="artist-members__card">
                 <CardContent>
-                  <div className="artist-members__card_add">
+                  <div
+                    className="artist-members__card_add"
+                    onClick={this.addMember}
+                  >
                     <FontAwesomeIcon
                       className="icon"
                       icon={faPlusCircle}
@@ -613,7 +663,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     );
   };
 
-  renderPaymemt = () => {
+  renderPayment = () => {
     return (
       <div className="container">
         <div className="artist-payment">
@@ -721,7 +771,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       {this.renderImages()}
       {this.renderColor()}
       {this.renderMembers()}
-      {this.renderPaymemt()}
+      {this.renderPayment()}
       {this.renderInvite()}
     </MuiThemeProvider>
   );

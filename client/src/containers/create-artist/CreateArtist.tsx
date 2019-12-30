@@ -37,6 +37,10 @@ import polaroid from '../../images/polaroid.png';
 
 import { Store } from '../../redux/configure-store';
 
+interface CreateArtistProps {
+  me: any;
+}
+
 interface TabPanelProps {
   children?: React.ReactNode;
   dir?: string;
@@ -68,7 +72,7 @@ function a11yProps(index: any) {
   };
 }
 
-class CreateArtist extends React.Component<TabPanelProps, any> {
+class CreateArtist extends React.Component<CreateArtistProps, any> {
   state = {
     artistColor: '#baddac',
     artistColorAlpha: '#baddac33',

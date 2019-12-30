@@ -30,6 +30,7 @@ interface PostProps {
   comments: CommentProps[];
   created_at: number;
   created_ago: string;
+  playerCallback?(action: string, instance: any): void;
 }
 
 interface PostsProps {
@@ -46,6 +47,7 @@ interface PostsProps {
   artistName: string;
   artistId: number;
   artistSlug: string;
+  playerCallback?(action: string, instance: any): void;
 }
 
 const { scaleDown } = transitions;
@@ -62,18 +64,18 @@ class PostsContainerComponent extends React.Component<Props, any> {
   sortItemsByCreationDate(items) {
     return items.sort((a, b) => b.created_at - a.created_at);
   }
-  
+
   constructor(props) {
     super(props);
-    this.state = { 
-      height: window.innerHeight, 
-      width: window.innerWidth
+    this.state = {
+      height: window.innerHeight,
+      width: window.innerWidth,
     };
     this.updateDimensions = this.updateDimensions.bind(this);
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.updateDimensions);
+    window.addEventListener('resize', this.updateDimensions);
   }
 
   componentDidUpdate(prevProps) {
@@ -95,17 +97,26 @@ class PostsContainerComponent extends React.Component<Props, any> {
 
   updateDimensions() {
     this.setState({
-      height: window.innerHeight, 
-      width: window.innerWidth
+      height: window.innerHeight,
+      width: window.innerWidth,
     });
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
+    window.removeEventListener('resize', this.updateDimensions);
   }
 
   renderPosts = () => {
-    const { posts, accentColor, artistName, artistSlug, me, openAuthModal, artistId, loggedUserAccess } = this.props;
+    const {
+      posts,
+      accentColor,
+      artistName,
+      artistSlug,
+      me,
+      openAuthModal,
+      artistId,
+      loggedUserAccess,
+    } = this.props;
 
     if (!posts) {
       return null;
@@ -126,13 +137,13 @@ class PostsContainerComponent extends React.Component<Props, any> {
           deleteComment={this.props.deleteComment}
           updateArtist={this.props.updateArtist}
           doReflow={this.updateDimensions}
+          playerCallback={this.props.playerCallback}
         />
       </div>
     ));
   };
 
   renderStackedPosts = () => {
-    
     return (
       <StackGrid
         columnWidth={this.state.width <= 768 ? '100%' : '33.33%'}
@@ -152,9 +163,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
   render() {
     return (
       <div className="post-container">
-        <div className="container">
-          {this.renderStackedPosts()}
-        </div>
+        <div className="container">{this.renderStackedPosts()}</div>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Redirect, Route } from 'react-router-dom';
 
 import { ProtectedRoute } from './ProtectedRoute';
 import { PublicRoute } from './PublicRoute';
@@ -55,6 +55,15 @@ const Routes = () => {
   return (
     <Switch>
       {/* <PublicRoute exact path={routePaths.home} component={Home} /> */}
+      <Route
+        exact
+        sensitive
+        path={routePaths.capsSlugs}
+        render={(props) => {
+          console.log('capsslugs');
+          return <Redirect to={`${props.location.pathname.toLowerCase()}`} />;
+        }}
+      />
       <PublicRoute exact path={routePaths.artists} component={LazyArtist} />
       <PublicRoute exact path={routePaths.slugs} component={LazyArtist} />
       <PublicRoute exact path={routePaths.support} component={Support} />

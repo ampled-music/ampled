@@ -90,7 +90,9 @@ const Member = ({
         <CardContent className="container">
           <div className="row justify-content-between">
             <div className="col-auto">
-              <div className="create-artist__title">Member</div>
+              <div className="create-artist__title">
+                {isMe ? 'You' : 'Member'}
+              </div>
             </div>
             <div className="col-auto">
               <div className="artist-members__card_admin">
@@ -99,6 +101,7 @@ const Member = ({
                     <Checkbox
                       name="isAdmin"
                       checked={isAdmin}
+                      disabled={isMe}
                       onChange={handleChange}
                     />
                   }
@@ -120,6 +123,7 @@ const Member = ({
                 value={firstName}
                 onChange={handleChange}
                 fullWidth
+                disabled={isMe}
                 required
               />
               <TextField
@@ -128,6 +132,7 @@ const Member = ({
                 id="last-name"
                 value={lastName}
                 onChange={handleChange}
+                disabled={isMe}
                 fullWidth
               />
             </div>
@@ -144,6 +149,7 @@ const Member = ({
                 value={role}
                 onChange={handleChange}
                 inputProps={{ maxLength: 50 }}
+                disabled={isMe}
                 // helperText={`${role.length - 50} characters left`}
                 fullWidth
               />
@@ -167,6 +173,7 @@ const Member = ({
                 value={twitter}
                 onChange={handleChange}
                 fullWidth
+                disabled={isMe}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -183,6 +190,7 @@ const Member = ({
                 value={instagram}
                 onChange={handleChange}
                 fullWidth
+                disabled={isMe}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

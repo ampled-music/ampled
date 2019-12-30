@@ -771,7 +771,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       {this.renderImages()}
       {this.renderColor()}
       {this.renderMembers()}
-      {this.renderPayment()}
+      {/* {this.renderPayment()} */}
       {this.renderInvite()}
     </MuiThemeProvider>
   );

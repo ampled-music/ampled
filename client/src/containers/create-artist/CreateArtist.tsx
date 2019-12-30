@@ -252,6 +252,14 @@ const Member = ({
               />
             </div>
           </div>
+          {isMe && (
+            <div className="row">
+              <div className="col-12 create-artist__copy">
+                You can edit these values in your{' '}
+                <Link to="/user-details">user details</Link>.
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

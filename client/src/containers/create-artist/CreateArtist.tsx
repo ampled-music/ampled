@@ -318,8 +318,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-6">
               <div className="create-artist__title">About</div>
               <div className="create-artist__copy">
-                Let us know a few things about who you are and how, how to
-                address you, and how you want to present yourself.
+                Let us know a few things about who you are and how you want to
+                present yourself.
               </div>
             </div>
           </div>

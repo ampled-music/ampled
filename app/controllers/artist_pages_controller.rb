@@ -25,13 +25,24 @@ class ArtistPagesController < ApplicationController
   end
 
   def create
-    @artist_page = ArtistPage.new(artist_page_params)
+    # Only logged-in users who have confirmed their emails may create artist pages.
+    if current_user&.confirmed_at.nil?
+      return render json: { status: "error", message: "Confirm your email address first." }
+    end
+
+    # TODO
+    # - set artist page to approved: false
+    # - create new users for members, where needed
+    @artist_page = ArtistPage.new(create_artist_page_params)
 
     if @artist_page.save
       redirect_to @artist_page, notice: "Artist page was successfully created."
     else
       render :new
     end
+  rescue StandardError => e
+    Raven.capture_exception(e)
+    render json: { status: "error", message: e.message }
   end
 
   def update
@@ -64,6 +75,10 @@ class ArtistPagesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def artist_page_params
-    params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :banner_image_url)
+    params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :banner_image_url, :slug)
+  end
+
+  def create_artist_page_params
+    params.require(:name).permit(:name, :bio, :twitter_handle, :instagram_handle, :banner_image_url, :slug)
   end
 end

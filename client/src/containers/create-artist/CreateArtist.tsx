@@ -36,6 +36,12 @@ import tear from '../../images/full_page_tear.png';
 import polaroid from '../../images/polaroid.png';
 
 import { Store } from '../../redux/configure-store';
+import { Link } from 'react-router-dom';
+
+import { apiAxios } from '../../api/setup-axios';
+import { Loading } from '../shared/loading/Loading';
+
+import { showToastMessage, MessageType } from '../shared/toast/toast';
 
 interface CreateArtistProps {
   me: any;
@@ -280,6 +286,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     artistSlug: '',
     artistStripe: '',
     members: [],
+    validationError: '',
+    loading: true,
   };
 
   componentDidUpdate = (prevProps) => {
@@ -289,6 +297,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     if (userData && !prevProps?.me?.userData) {
       const { name, last_name, instagram, twitter, image } = userData;
       this.setState({
+        loading: false,
         members: [
           {
             isAdmin: true,
@@ -770,26 +779,65 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     );
   };
 
-  renderContent = () => (
-    <MuiThemeProvider theme={theme}>
-      {this.renderHeader()}
-      {/* {this.renderNav()} */}
-      {this.renderAbout()}
-      {this.renderInfo()}
-      {this.renderImages()}
-      {this.renderColor()}
-      <Members
-        members={this.state.members}
-        handleChange={this.handleChange}
-        addMember={this.addMember}
-      />
-      {/* {this.renderPayment()} */}
-      {this.renderInvite()}
-    </MuiThemeProvider>
-  );
+  onSubmit = async () => {
+    // TODO: validate fields
+
+    // create page
+    this.setState({
+      loading: true,
+    });
+    const { data } = await apiAxios({
+      method: 'post',
+      url: '/artist_pages',
+      data: {
+        // artist_page_id: subscription.artistPageId,
+        // token: subscription.paymentToken,
+        // amount: subscription.subscriptionLevelValue,
+      },
+    });
+
+    this.setState({
+      loading: false,
+    });
+    if (data.status && data.status === 'error') {
+      showToastMessage(data.message, MessageType.ERROR);
+    }
+  };
 
   render() {
-    return <div className="create-artist">{this.renderContent()}</div>;
+    if (this.state.loading) {
+      return <Loading artistLoading={true} />;
+    }
+    return (
+      <div className="create-artist">
+        <MuiThemeProvider theme={theme}>
+          {this.renderHeader()}
+          {/* {this.renderNav()} */}
+          {this.renderAbout()}
+          {this.renderInfo()}
+          {this.renderImages()}
+          {this.renderColor()}
+          <Members
+            members={this.state.members}
+            handleChange={this.handleChange}
+            addMember={this.addMember}
+          />
+          {/* {this.renderPayment()} */}
+          {this.renderInvite()}
+          <div className="container">
+            <div className="row">
+              <div className="col-3"></div>
+              <div className="col-6">
+                <button onClick={this.onSubmit} className="btn btn-ampled">
+                  Create your page
+                </button>
+              </div>
+              <div className="col-3"></div>
+            </div>
+          </div>
+        </MuiThemeProvider>
+      </div>
+    );
   }
 }
 

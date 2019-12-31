@@ -291,7 +291,7 @@ class PostComponent extends React.Component<any, any> {
               (isPrivate ? (
                 <div className="post__status">
                   <FontAwesomeIcon className="unlock" icon={faUnlock} />
-                  Subscribers Only
+                  Supporters Only
                 </div>
               ) : (
                 <div className="post__status">Public Post</div>
@@ -304,7 +304,7 @@ class PostComponent extends React.Component<any, any> {
               isPrivate && (
                 <div className="post__status">
                   <FontAwesomeIcon className="unlock" icon={faUnlock} />
-                  Subscribers Only
+                  Supporters Only
                 </div>
               )}
 

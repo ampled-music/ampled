@@ -144,9 +144,19 @@ class PostsContainerComponent extends React.Component<Props, any> {
   };
 
   renderStackedPosts = () => {
+    let columnWidth;
+
+    if (this.state.width <= 768) {
+      columnWidth = '100%';
+    } else if (this.state.width <= 1024) {
+      columnWidth = '50%';
+    } else {
+      columnWidth = '33.33%';
+    }
+
     return (
       <StackGrid
-        columnWidth={this.state.width <= 768 ? '100%' : '33.33%'}
+        columnWidth={columnWidth}
         appear={scaleDown.appear}
         appeared={scaleDown.appeared}
         enter={scaleDown.enter}

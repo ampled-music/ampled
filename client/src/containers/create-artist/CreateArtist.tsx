@@ -29,7 +29,6 @@ import {
   faStripe,
 } from '@fortawesome/free-brands-svg-icons';
 import { ChromePicker } from 'react-color';
-import { isMobile } from 'react-device-detect';
 
 import { theme } from './theme';
 import tear from '../../images/full_page_tear.png';
@@ -325,11 +324,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   renderHeader = () => {
     return (
       <div className="create-artist__header">
-        {isMobile && (
-          <div style={{ margin: '0 20px' }}>
-            We recommend completing this form on a non-mobile device.
-          </div>
-        )}
         <div className="container">
           <h1>Create Your Artist Page</h1>
         </div>
@@ -389,7 +383,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="container">
         <div className="artist-about">
           <div className="row">
-            <div className="col-6">
+            <div className="col-md-6 col-sm-12">
               <div className="create-artist__title">About</div>
               <div className="create-artist__copy">
                 Let us know a few things about who you are and how you want to
@@ -409,11 +403,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="container">
         <div className="artist-custom">
           <div className="row">
-            <div className="col-4">
+            <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Artist or Band name</div>
               <h6>Required</h6>
             </div>
-            <div className="col-8">
+            <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistName"
                 label="Name"
@@ -426,12 +420,12 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
           <div className="row">
-            <div className="col-4">
+            <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Your Custom Link</div>
               <h6>Required</h6>
               <h6>Letters and dashes only</h6>
             </div>
-            <div className="col-8">
+            <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistSlug"
                 id="artistSlug"
@@ -450,13 +444,13 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
           <div className="row">
-            <div className="col-4">
+            <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">
                 What Sounds more Accurate?
               </div>
               <h6>Required</h6>
             </div>
-            <div className="col-8">
+            <div className="col-md-8 col-sm-12">
               <RadioGroup
                 aria-label="artistVerb"
                 name="artistVerb"
@@ -477,10 +471,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
           <div className="row">
-            <div className="col-4">
+            <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Location</div>
             </div>
-            <div className="col-8">
+            <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistLocation"
                 label="Location"
@@ -492,10 +486,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
           <div className="row">
-            <div className="col-4">
+            <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Message</div>
             </div>
-            <div className="col-8">
+            <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistMessage"
                 label="Message from the artist"
@@ -510,10 +504,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
           <div className="row">
-            <div className="col-4">
+            <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Social</div>
             </div>
-            <div className="col-8">
+            <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistTwitter"
                 label="Twitter"
@@ -551,12 +545,12 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
           <div className="row">
-            <div className="col-4">
+            <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">
                 Artist Video Message
               </div>
             </div>
-            <div className="col-8">
+            <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistVideo"
                 label="Video URL (Vimeo or YouTube)"
@@ -577,7 +571,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="container">
         <div className="image-upload">
           <div className="row">
-            <div className="col-6">
+            <div className="col-md-6 col-sm-12">
               <div className="create-artist__subtitle">Artist Images</div>
               <div className="create-artist__copy">
                 You can have several photos for your profile, but there can be
@@ -588,7 +582,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
           <div className="row">
-            <div className="col-3">
+            <div className="col-md-3 col-sm-12">
               <div className="image-upload__image primary">
                 <img
                   className="image-upload__image_polaroid"
@@ -600,7 +594,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 </Button>
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-md-3 col-sm-12">
               <div className="image-upload__image secondary">
                 <img
                   className="image-upload__image_polaroid"
@@ -612,7 +606,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 </Button>
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-md-3 col-sm-12">
               <div className="image-upload__image secondary">
                 <img
                   className="image-upload__image_polaroid"
@@ -624,7 +618,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 </Button>
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-md-3 col-sm-12">
               <div className="create-artist__copy">
                 Minimum resolution: 700 X 700 Maximum size: 5mb
               </div>
@@ -644,7 +638,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         >
           <div className="container">
             <div className="row justify-content-between">
-              <div className="col-6">
+              <div className="col-md-6 col-sm-12">
                 <div className="artist-color__info">
                   <div className="create-artist__subtitle">Artist Color</div>
                   <div className="create-artist__copy">
@@ -659,7 +653,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                   </div>
                 </div>
               </div>
-              <div className="col-3">
+              <div className="col-md-3 col-sm-12">
                 <div className="artist-color__picker">
                   <ChromePicker
                     color={this.state.artistColor}
@@ -676,7 +670,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         >
           <div className="container">
             <div className="row">
-              <div className="col-6">
+              <div className="col-12">
                 <div className="artist-color__opacity">20% Opacity</div>
               </div>
             </div>
@@ -839,13 +833,13 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           {/* {this.renderPayment()} */}
           <div className="container">
             <div className="row">
-              <div className="col-3"></div>
-              <div className="col-6">
+              <div className="col-md-3 col-sm-1"></div>
+              <div className="col-md-6 col-sm-10">
                 <button onClick={this.onSubmit} className="btn btn-ampled">
                   Create your page
                 </button>
               </div>
-              <div className="col-3"></div>
+              <div className="col-md-3 col-sm-1"></div>
             </div>
           </div>
         </MuiThemeProvider>

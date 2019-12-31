@@ -529,10 +529,10 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div>
         <button
           className="btn btn-ampled btn-support"
-          style={{ borderColor }}
+          style={{ borderColor, maxWidth: '100%' }}
           onClick={(e) => this.props.handleSupportClick()}
         >
-          Become a Supporter
+          Support What You Want
         </button>
         <button onClick={this.props.openWhyModal} className="link link__why">
           Why support?

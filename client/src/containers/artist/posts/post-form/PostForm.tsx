@@ -11,7 +11,13 @@ import { Store } from '../../../../redux/configure-store';
 import { createPostAction } from '../../../../redux/posts/create';
 import { editPostAction } from '../../../../redux/posts/edit';
 
-import { Button, DialogActions, DialogContent, TextField, CircularProgress } from '@material-ui/core';
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  TextField,
+  CircularProgress,
+} from '@material-ui/core';
 
 import tear from '../../../../images/background_tear.png';
 
@@ -27,7 +33,10 @@ interface PostFormProps {
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
-type Props = typeof postsInitialState & typeof artistsInitialState & Dispatchers & PostFormProps;
+type Props = typeof postsInitialState &
+  typeof artistsInitialState &
+  Dispatchers &
+  PostFormProps;
 
 class PostFormComponent extends React.Component<Props, any> {
   initialState = {
@@ -52,6 +61,7 @@ class PostFormComponent extends React.Component<Props, any> {
         ...props.post,
         audioFile: props.post.audio_file,
         imageUrl: props.post.image_url,
+        isPublic: !props.post.is_private,
       };
     } else {
       this.state = this.initialState;
@@ -60,7 +70,7 @@ class PostFormComponent extends React.Component<Props, any> {
     if (props.artist && !props.artist.isStripeSetup) {
       this.state = {
         ...this.state,
-        isPublic: true
+        isPublic: true,
       };
     }
   }
@@ -136,7 +146,11 @@ class PostFormComponent extends React.Component<Props, any> {
 
   removeImage = () => {
     deleteFileFromCloudinary(this.state.deleteToken);
-    this.setState({ imageUrl: null, deleteToken: undefined, hasUnsavedChanges: false });
+    this.setState({
+      imageUrl: null,
+      deleteToken: undefined,
+      hasUnsavedChanges: false,
+    });
   };
 
   handleMakePublicChange = (event) => {
@@ -152,23 +166,41 @@ class PostFormComponent extends React.Component<Props, any> {
     return (
       title &&
       title.length > 0 &&
-      ((audioFile && audioFile.length > 0) || (imageUrl && imageUrl.length > 0) || (body && body.length > 0))
+      ((audioFile && audioFile.length > 0) ||
+        (imageUrl && imageUrl.length > 0) ||
+        (body && body.length > 0))
     );
   };
 
   renderUploader(): React.ReactNode {
-    return <div className="uploader">{this.state.loadingImage ? <CircularProgress /> : this.renderUploadButton()}</div>;
+    return (
+      <div className="uploader">
+        {this.state.loadingImage ? (
+          <CircularProgress />
+        ) : (
+          this.renderUploadButton()
+        )}
+      </div>
+    );
   }
 
   renderPreview(): React.ReactNode {
     return (
       <div className="post-image">
         <div className="preview">
-          <img className="preview__image" src={this.state.imageUrl} alt="Preview" />
+          <img
+            className="preview__image"
+            src={this.state.imageUrl}
+            alt="Preview"
+          />
           <span className="preview__name">{this.state.imageName}</span>
         </div>
         <div className="file-actions">
-          <span className="remove-button" title="Remove image" onClick={this.removeImage}>
+          <span
+            className="remove-button"
+            title="Remove image"
+            onClick={this.removeImage}
+          >
             Remove
           </span>
           <label htmlFor="image-file">
@@ -198,7 +230,9 @@ class PostFormComponent extends React.Component<Props, any> {
           <div className="progress-info">
             <div className="progress-info__name">
               <div className="progress-info__name_mp3">Mp3</div>
-              <div className="progress-info__name_song">{this.props.post.audio_file}</div>
+              <div className="progress-info__name_song">
+                {this.props.post.audio_file}
+              </div>
             </div>
 
             <div className="file-actions">
@@ -224,7 +258,9 @@ class PostFormComponent extends React.Component<Props, any> {
   render() {
     const { hasUnsavedChanges, title, body, imageUrl } = this.state;
     const { isEdit } = this.props;
-    const { artist: { isStripeSetup } } = this.props;
+    const {
+      artist: { isStripeSetup },
+    } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
 
@@ -270,22 +306,22 @@ class PostFormComponent extends React.Component<Props, any> {
               </div>
               <div className="post-form__audio">
                 {isEdit &&
-                  this.props.post &&
-                  this.props.post.audio_file &&
-                  this.state.audioFile &&
-                  this.state.audio_file &&
-                  this.state.audioFile === this.state.audio_file ? (
-                    this.renderExistingAudio()
-                  ) : (
-                    <Upload onComplete={this.updateAudioFile} />
-                  )}
+                this.props.post &&
+                this.props.post.audio_file &&
+                this.state.audioFile &&
+                this.state.audio_file &&
+                this.state.audioFile === this.state.audio_file ? (
+                  this.renderExistingAudio()
+                ) : (
+                  <Upload onComplete={this.updateAudioFile} />
+                )}
               </div>
               <div className="post-form__image">
                 <input
                   style={{ display: 'none' }}
                   id="image-file"
                   type="file"
-                  aria-label="Image file" 
+                  aria-label="Image file"
                   accept="image/*"
                   onChange={this.processImage}
                 />
@@ -298,7 +334,7 @@ class PostFormComponent extends React.Component<Props, any> {
                   <div className="col-auto">
                     <label className="make-public-label" htmlFor="make-public">
                       <input
-                        aria-label="Make public" 
+                        aria-label="Make public"
                         name="make-public"
                         id="make-public"
                         type="checkbox"
@@ -322,10 +358,13 @@ class PostFormComponent extends React.Component<Props, any> {
                     </label> */}
                   </div>
                 </div>
-                {
-                  !isStripeSetup &&
-                  (<small><br />You need to set up your payout destination to make private posts.</small>)
-                }
+                {!isStripeSetup && (
+                  <small>
+                    <br />
+                    You need to set up your payout destination to make private
+                    posts.
+                  </small>
+                )}
               </div>
 
               <div className="post-form__actions">
@@ -339,7 +378,9 @@ class PostFormComponent extends React.Component<Props, any> {
                   </Button>
                   <Button
                     type="submit"
-                    className={cx('post-button finished-button', { disabled: !isSaveEnabled })}
+                    className={cx('post-button finished-button', {
+                      disabled: !isSaveEnabled,
+                    })}
                     disabled={!isSaveEnabled}
                   >
                     Finished

@@ -170,7 +170,7 @@ const Member = ({
                 name="firstName"
                 label="First Name"
                 id="first-name"
-                value={firstName}
+                value={firstName || ''}
                 onChange={handleChange}
                 fullWidth
                 disabled={isMe}
@@ -180,7 +180,7 @@ const Member = ({
                 name="lastName"
                 label="Last Name"
                 id="last-name"
-                value={lastName}
+                value={lastName || ''}
                 onChange={handleChange}
                 disabled={isMe}
                 fullWidth
@@ -196,7 +196,7 @@ const Member = ({
                 name="role"
                 label="Role"
                 id="role"
-                value={role}
+                value={role || ''}
                 onChange={handleChange}
                 inputProps={{ maxLength: 50 }}
                 disabled={isMe}
@@ -220,7 +220,7 @@ const Member = ({
                 name="twitter"
                 id="twitter"
                 placeholder="Twitter"
-                value={twitter}
+                value={twitter || ''}
                 onChange={handleChange}
                 fullWidth
                 disabled={isMe}
@@ -237,7 +237,7 @@ const Member = ({
                 name="instagram"
                 id="instagram"
                 placeholder="Instagram"
-                value={instagram}
+                value={instagram || ''}
                 onChange={handleChange}
                 fullWidth
                 disabled={isMe}
@@ -410,7 +410,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 name="artistName"
                 label="Name"
                 id="name"
-                value={this.state.artistName}
+                value={this.state.artistName || ''}
                 onChange={this.handleChange}
                 fullWidth
                 required
@@ -428,7 +428,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               <RadioGroup
                 aria-label="artistVerb"
                 name="artistVerb"
-                value={this.state.artistVerb}
+                value={this.state.artistVerb || ''}
                 onChange={this.handleChange}
               >
                 <FormControlLabel
@@ -453,7 +453,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 name="artistLocation"
                 label="Location"
                 id="location"
-                value={this.state.artistLocation}
+                value={this.state.artistLocation || ''}
                 onChange={this.handleChange}
                 fullWidth
               />
@@ -468,7 +468,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 name="artistMessage"
                 label="Message from the artist"
                 id="message"
-                value={this.state.artistMessage}
+                value={this.state.artistMessage || ''}
                 onChange={this.handleChange}
                 multiline
                 rows="5"
@@ -487,7 +487,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 label="Twitter"
                 id="twitter"
                 placeholder="Twitter"
-                value={this.state.artistTwitter}
+                value={this.state.artistTwitter || ''}
                 onChange={this.handleChange}
                 fullWidth
                 InputProps={{
@@ -504,7 +504,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 label="Instagram"
                 id="instagram"
                 placeholder="Instagram"
-                value={this.state.artistInstagram}
+                value={this.state.artistInstagram || ''}
                 onChange={this.handleChange}
                 fullWidth
                 InputProps={{
@@ -529,7 +529,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 name="artistVideo"
                 label="Video URL"
                 id="video-message"
-                value={this.state.artistVideo}
+                value={this.state.artistVideo || ''}
                 onChange={this.handleChange}
                 fullWidth
               />
@@ -751,7 +751,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               <TextField
                 name="artistSlug"
                 id="artistSlug"
-                value={this.state.artistSlug}
+                value={this.state.artistSlug || ''}
                 onChange={this.handleChange}
                 fullWidth
                 required

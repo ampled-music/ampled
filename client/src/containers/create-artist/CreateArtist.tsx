@@ -286,7 +286,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     artistSlug: '',
     artistStripe: '',
     members: [],
-    validationError: '',
     loading: true,
   };
 
@@ -428,6 +427,30 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           </div>
           <div className="row">
             <div className="col-4">
+              <div className="create-artist__subtitle">Your Custom Link</div>
+              <h6>Required</h6>
+              <h6>Letters and dashes only</h6>
+            </div>
+            <div className="col-8">
+              <TextField
+                name="artistSlug"
+                id="artistSlug"
+                value={this.state.artistSlug || ''}
+                onChange={this.handleChange}
+                fullWidth
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      ampled.com/artist/
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-4">
               <div className="create-artist__subtitle">
                 What Sounds more Accurate?
               </div>
@@ -536,7 +559,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-8">
               <TextField
                 name="artistVideo"
-                label="Video URL"
+                label="Video URL (Vimeo or YouTube)"
                 id="video-message"
                 value={this.state.artistVideo || ''}
                 onChange={this.handleChange}
@@ -737,50 +760,31 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     );
   };
 
-  renderInvite = () => {
-    return (
-      <div className="container">
-        <div className="artist-invite">
-          <div className="row">
-            <div className="col-6">
-              <div className="create-artist__title">Invite</div>
-              <div className="create-artist__copy">
-                Let’s get your fans involved. Share the custom link below with
-                your fans through your email list or social accounts. They’ll
-                then be prompted to sign up and start directly supporting you!
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-4">
-              <div className="create-artist__subtitle">Your Custom Link</div>
-              <h6>Required</h6>
-            </div>
-            <div className="col-8">
-              <TextField
-                name="artistSlug"
-                id="artistSlug"
-                value={this.state.artistSlug || ''}
-                onChange={this.handleChange}
-                fullWidth
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      ampled.com/artist/
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   onSubmit = async () => {
-    // TODO: validate fields
+    const {
+      artistName,
+      artistColor,
+      artistInstagram,
+      artistTwitter,
+      artistLocation,
+      artistMessage,
+      artistSlug,
+      artistVerb,
+      artistVideo,
+    } = this.state;
+
+    // validate fields
+    if (
+      !artistName ||
+      !artistSlug ||
+      !artistColor ||
+      !/^[a-z-]+$/.test(artistSlug)
+    ) {
+      return showToastMessage(
+        'Please check required fields.',
+        MessageType.ERROR,
+      );
+    }
 
     // create page
     this.setState({
@@ -790,17 +794,27 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       method: 'post',
       url: '/artist_pages',
       data: {
-        // artist_page_id: subscription.artistPageId,
-        // token: subscription.paymentToken,
-        // amount: subscription.subscriptionLevelValue,
+        name: artistName,
+        bio: artistMessage,
+        location: artistLocation,
+        accent_color: artistColor,
+        slug: artistSlug.toLowerCase(),
+        video_url: artistVideo,
+        instagram_handle: artistInstagram,
+        twitter_handle: artistTwitter,
+        verb_plural: artistVerb !== 'is',
       },
     });
 
     this.setState({
       loading: false,
     });
+
     if (data.status && data.status === 'error') {
       showToastMessage(data.message, MessageType.ERROR);
+    } else if (data.status && data.status === 'ok') {
+      showToastMessage(data.message, MessageType.SUCCESS);
+      window.location.href = `/artist/${artistSlug}`;
     }
   };
 
@@ -823,7 +837,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             addMember={this.addMember}
           />
           {/* {this.renderPayment()} */}
-          {this.renderInvite()}
           <div className="container">
             <div className="row">
               <div className="col-3"></div>

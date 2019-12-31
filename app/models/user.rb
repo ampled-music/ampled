@@ -21,7 +21,6 @@
 #  jti                    :string           not null
 #  last_name              :string
 #  locked_at              :datetime
-#  login_redirect_url     :string
 #  name                   :string           not null
 #  profile_image_url      :string
 #  remember_created_at    :datetime

@@ -34,6 +34,7 @@ class ArtistPagesController < ApplicationController
     # - create new users for members, where needed
 
     @artist_page = ArtistPage.new(artist_page_params)
+    @artist_page.owners << current_user
 
     return render json: { status: "error", message: "Something went wrong." } unless @artist_page.save
 

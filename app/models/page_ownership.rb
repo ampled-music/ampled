@@ -5,6 +5,7 @@
 #  artist_page_id :integer
 #  created_at     :datetime         not null
 #  id             :bigint(8)        not null, primary key
+#  role           :string           default("member")
 #  updated_at     :datetime         not null
 #  user_id        :integer
 #

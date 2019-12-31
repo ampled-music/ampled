@@ -28,8 +28,6 @@ class ProtectModal extends React.Component<any> {
 }
 
 const ProtectedRoute = ({ component: Component, openAuthModal, ...rest }) => {
-  const redirectComponent = <Redirect to={{ pathname: routePaths.root }} />;
-
   const renderComponent = (props) => {
     const isLoggedIn = !!store.get(config.localStorageKeys.token);
 

@@ -38,6 +38,11 @@ class ArtistPagesController < ApplicationController
 
     return render json: { status: "error", message: "Something went wrong." } unless @artist_page.save
 
+    # - create new images based on uploads
+    params[:images].map.with_index do |image_url, index|
+      @artist_page.images.create(url: image_url, order: index)
+    end
+
     render json: { status: "ok", message: "Your page has been created!" }
   rescue ActiveRecord::RecordNotUnique => e
     Raven.capture_exception(e)
@@ -78,6 +83,6 @@ class ArtistPagesController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def artist_page_params
     params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :banner_image_url,
-                                        :slug, :location, :accent_color, :video_url, :verb_plural)
+                                        :slug, :location, :accent_color, :video_url, :verb_plural, :images)
   end
 end

@@ -19,6 +19,7 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
   Checkbox,
 } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -41,6 +42,8 @@ import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
 
 import { showToastMessage, MessageType } from '../shared/toast/toast';
+import { deleteFileFromCloudinary } from '../../api/cloudinary/delete-image';
+import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
 
 interface CreateArtistProps {
   me: any;
@@ -75,6 +78,130 @@ function a11yProps(index: any) {
     id: `full-width-tab-${index}`,
     'aria-controls': `full-width-tabpanel-${index}`,
   };
+}
+
+interface ImageUploaderProps {
+  altText: string;
+  imageURL?: string;
+  setURL: Function;
+}
+
+class ImageUploader extends React.Component<ImageUploaderProps> {
+  state = {
+    loadingImage: false,
+    deleteToken: undefined,
+  };
+
+  processImage = async (e) => {
+    const imageFile = e.target.files[0];
+
+    if (!imageFile) {
+      return;
+    }
+
+    this.setState({ loadingImage: true });
+
+    if (this.state.deleteToken) {
+      this.removeImage();
+    }
+
+    const fileInfo = await uploadFileToCloudinary(imageFile);
+    // const fileName = imageFile.name;
+
+    this.setState({
+      deleteToken: fileInfo.delete_token,
+      loadingImage: false,
+    });
+    this.props.setURL(fileInfo.secure_url);
+  };
+
+  removeImage = async () => {
+    deleteFileFromCloudinary(this.state.deleteToken);
+    this.setState({ imageUrl: null, deleteToken: undefined });
+    this.props.setURL(null);
+  };
+
+  render() {
+    const { altText, imageURL } = this.props;
+    const { loadingImage } = this.state;
+
+    let body: {};
+    if (imageURL) {
+      body = (
+        <>
+          <img
+            className="image-upload__image_polaroid"
+            src={imageURL}
+            alt={altText}
+          />
+          {/* <span className="preview__name">{altText}</span> */}
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <label>
+              <Button
+                className="btn btn-upload"
+                variant="outlined"
+                component="span"
+                onClick={this.removeImage}
+              >
+                Remove
+              </Button>
+            </label>
+            <label htmlFor={`image-file-${altText}`}>
+              <Button
+                className="btn btn-upload"
+                variant="outlined"
+                component="span"
+              >
+                Replace
+              </Button>
+            </label>
+          </div>
+        </>
+      );
+    } else if (loadingImage) {
+      body = <CircularProgress />;
+    } else {
+      body = (
+        <>
+          <img
+            className="image-upload__image_polaroid"
+            src={polaroid}
+            alt={altText}
+          />
+          <label
+            htmlFor={`image-file-${altText}`}
+            style={{ display: 'flex', justifyContent: 'center' }}
+          >
+            <Button
+              className="btn btn-upload"
+              variant="outlined"
+              component="span"
+            >
+              Upload {altText}
+            </Button>
+          </label>
+        </>
+      );
+    }
+
+    return (
+      <div
+        className={`image-upload__image ${
+          altText === 'Primary' ? 'primary' : 'secondary'
+        }`}
+      >
+        <input
+          style={{ display: 'none' }}
+          id={`image-file-${altText}`}
+          type="file"
+          aria-label="Image file"
+          accept="image/*"
+          onChange={this.processImage}
+        />
+        {body}
+      </div>
+    );
+  }
 }
 
 const Members = ({ members, addMember, handleChange }) => {
@@ -285,6 +412,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     artistSlug: '',
     artistStripe: '',
     members: [],
+    images: [],
     loading: true,
   };
 
@@ -567,6 +695,15 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   renderImages = () => {
+    const { images } = this.state;
+    const imageSetter = (index) => (url) => {
+      const { images } = this.state;
+      images[index] = url;
+      this.setState({ images });
+    };
+
+    const imageTypes = ['Primary', 'Photo #2', 'Photo #3'];
+
     return (
       <div className="container">
         <div className="image-upload">
@@ -582,42 +719,15 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-3 col-sm-12">
-              <div className="image-upload__image primary">
-                <img
-                  className="image-upload__image_polaroid"
-                  src={polaroid}
-                  alt="Primary"
+            {imageTypes.map((type, index) => (
+              <div className="col-md-3 col-sm-12" key={index}>
+                <ImageUploader
+                  altText={type}
+                  setURL={imageSetter(index)}
+                  imageURL={images[index]}
                 />
-                <Button className="btn btn-upload" variant="outlined">
-                  Upload Primary
-                </Button>
               </div>
-            </div>
-            <div className="col-md-3 col-sm-12">
-              <div className="image-upload__image secondary">
-                <img
-                  className="image-upload__image_polaroid"
-                  src={polaroid}
-                  alt="Secondary"
-                />
-                <Button className="btn btn-upload" variant="outlined">
-                  Upload Photo #2
-                </Button>
-              </div>
-            </div>
-            <div className="col-md-3 col-sm-12">
-              <div className="image-upload__image secondary">
-                <img
-                  className="image-upload__image_polaroid"
-                  src={polaroid}
-                  alt="Tertiary"
-                />
-                <Button className="btn btn-upload" variant="outlined">
-                  Upload Photo #3
-                </Button>
-              </div>
-            </div>
+            ))}
             <div className="col-md-3 col-sm-12">
               <div className="create-artist__copy">
                 Minimum resolution: 700 X 700 Maximum size: 5mb
@@ -765,6 +875,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       artistSlug,
       artistVerb,
       artistVideo,
+      images,
     } = this.state;
 
     // validate fields
@@ -796,6 +907,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         video_url: artistVideo,
         instagram_handle: artistInstagram,
         twitter_handle: artistTwitter,
+        images,
         verb_plural: artistVerb !== 'is',
       },
     });

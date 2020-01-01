@@ -973,6 +973,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         (member) =>
           member.email &&
           member.email.length &&
+          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+            member.email,
+          ) &&
           member.firstName &&
           member.firstName.length,
       ).length !== members.length

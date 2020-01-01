@@ -4,7 +4,10 @@ import * as React from 'react';
 import { Store } from '../../redux/configure-store';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from '../../redux/authentication/authentication-modal';
+import {
+  closeAuthModalAction,
+  openAuthModalAction,
+} from '../../redux/authentication/authentication-modal';
 import { routePaths } from './../route-paths';
 
 import { showToastMessage, MessageType } from '../shared/toast/toast';
@@ -63,7 +66,10 @@ class ResetPasswordComponent extends React.Component<any> {
 
       console.log(data);
 
-      showToastMessage('Password changed! Please log in with your new password.', MessageType.SUCCESS);
+      showToastMessage(
+        'Password changed! Please log in with your new password.',
+        MessageType.SUCCESS,
+      );
       window.location.href = routePaths.root;
     } catch (e) {
       console.log(e);
@@ -71,9 +77,12 @@ class ResetPasswordComponent extends React.Component<any> {
         e.response &&
         e.response.data &&
         e.response.data.error &&
-        e.response.data.error === 'You have to confirm your email address before continuing.'
+        e.response.data.error ===
+          'You have to confirm your email address before continuing.'
       ) {
-        this.setState({ error: 'You have to confirm your email address before continuing.' });
+        this.setState({
+          error: 'You have to confirm your email address before continuing.',
+        });
       } else {
         this.setState({ error: 'Something went wrong.' });
       }
@@ -102,13 +111,17 @@ class ResetPasswordComponent extends React.Component<any> {
         <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
           <h4>RESET PASSWORD</h4>
-          <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
+          <form
+            className="form-container form-control flex-column"
+            name="login"
+            onSubmit={this.handleSubmit}
+          >
             <input
               className="input-group-text"
               type="password"
               placeholder="Password"
               name="password"
-              aria-label="Password" 
+              aria-label="Password"
               onChange={this.handleChange}
               required
               minLength={6}
@@ -119,7 +132,7 @@ class ResetPasswordComponent extends React.Component<any> {
               type="password"
               placeholder="Confirm Password"
               name="confirmPassword"
-              aria-label="Confirm password" 
+              aria-label="Confirm password"
               onChange={this.handleChange}
               required
               minLength={6}

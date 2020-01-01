@@ -364,9 +364,12 @@ class ArtistComponent extends React.Component<Props, any> {
             handleSupportClick={this.handleSupportClick}
           />
           <MessageModal
+            accentColor={artist.accent_color}
             artistBio={artist.bio}
             open={this.state.openMessageModal}
+            handleSupportClick={this.handleSupportClick}
             onClose={this.closeMessageModal}
+            showSupport={!isSupporter}
           />
           <ConfirmationDialog
             open={this.state.showConfirmationDialog}

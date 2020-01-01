@@ -1,7 +1,6 @@
 import './artist.scss';
 
 import * as React from 'react';
-import path from 'ramda/src/path';
 import Swipe from 'react-easy-swipe';
 import { isMobile } from 'react-device-detect';
 import cx from 'classnames';
@@ -33,54 +32,6 @@ interface Props {
 export class ArtistHeader extends React.Component<Props, any> {
   state = {
     showConfirmationDialog: false,
-    screenshotURL: '',
-  };
-
-  componentDidMount = async () => {
-    const {
-      artist: { video_url },
-    } = this.props;
-    if (video_url && video_url.length) {
-      this.setState({
-        screenshotURL: await this.getThumbnailURLFromVideoURL(video_url),
-      });
-    }
-  };
-
-  componentDidUpdate = async (prevProps) => {
-    const {
-      artist: { video_url },
-    } = this.props;
-    const {
-      artist: { video_url: prevURL },
-    } = prevProps;
-    if (
-      video_url !== prevURL &&
-      (!this.state.screenshotURL || !this.state.screenshotURL.length)
-    ) {
-      this.setState({
-        screenshotURL: await this.getThumbnailURLFromVideoURL(video_url),
-      });
-    }
-  };
-
-  getThumbnailURLFromVideoURL = async (videoURL: string) => {
-    if (/vimeo/i.test(videoURL)) {
-      const vimeoId = videoURL.match(/vimeo.com\/([\d\w]+)/)[1];
-      const vimeoJSON = await (
-        await fetch(`//vimeo.com/api/v2/video/${vimeoId}.json`)
-      ).json();
-      const vimeoURL = path([0, 'thumbnail_large'], vimeoJSON);
-      if (vimeoURL) {
-        return vimeoURL;
-      }
-    } else if (/youtu/i.test(videoURL)) {
-      const youtubeId = videoURL.match(
-        /(youtube\.com\/watch\?v=|youtu.be\/)(.+)/i,
-      )[2];
-      return `https://img.youtube.com/vi/${youtubeId}/0.jpg`;
-    }
-    return this.state.screenshotURL;
   };
 
   onSwipeLeft = () => {
@@ -363,7 +314,7 @@ export class ArtistHeader extends React.Component<Props, any> {
               <div className="artist-header__message_image_container">
                 <img
                   className="artist-header__message_image"
-                  src={this.state.screenshotURL}
+                  src={artist.video_screenshot_url}
                   alt="Video message thumbnail"
                 />
               </div>

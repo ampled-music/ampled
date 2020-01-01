@@ -304,7 +304,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       {this.renderOwners()}
       {this.renderBanners()}
       <div
-        onClick={!isMobile && this.cycleBanners}
+        onClick={!isMobile ? this.cycleBanners : undefined}
         className="artist-header__photo-container_border"
         style={{ borderColor: this.props.artist.accent_color }}
       >

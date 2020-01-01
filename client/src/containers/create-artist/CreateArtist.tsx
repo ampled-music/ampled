@@ -241,7 +241,7 @@ const Members = ({ members, addMember, removeMember, handleChange }) => {
               {...v}
             />
           ))}
-          <div className="col-md-6">
+          <div className="col-md-6 col-sm-12" style={{ marginBottom: '8px' }}>
             <Card className="artist-members__card">
               <CardContent>
                 <div className="artist-members__card_add" onClick={addMember}>
@@ -276,7 +276,7 @@ const Member = ({
 }) => {
   const isMe = index === 0;
   return (
-    <div className="col-md-6 col-sm-12">
+    <div className="col-md-6 col-sm-12" style={{ marginBottom: '8px' }}>
       <Card className="artist-members__card">
         <CardContent className="container">
           <div

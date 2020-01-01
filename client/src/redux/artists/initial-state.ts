@@ -4,6 +4,7 @@ export interface ArtistModel {
   id: number;
   accent_color: string;
   video_url: string;
+  video_screenshot_url: string;
   location: string;
   bio: string;
   twitter_handle: string;

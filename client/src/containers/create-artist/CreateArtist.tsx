@@ -21,9 +21,10 @@ import {
   CardContent,
   CircularProgress,
   Checkbox,
+  IconButton,
 } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
   faTwitter,
   faInstagram,
@@ -204,7 +205,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
   }
 }
 
-const Members = ({ members, addMember, handleChange }) => {
+const Members = ({ members, addMember, removeMember, handleChange }) => {
   return (
     <div className="container">
       <div className="artist-members">
@@ -232,7 +233,13 @@ const Members = ({ members, addMember, handleChange }) => {
 
         <div className="row">
           {members.map((v, i) => (
-            <Member key={i} handleChange={handleChange} index={i} {...v} />
+            <Member
+              key={i}
+              handleChange={handleChange}
+              removeMember={removeMember}
+              index={i}
+              {...v}
+            />
           ))}
           <div className="col-md-6">
             <Card className="artist-members__card">
@@ -259,24 +266,46 @@ const Member = ({
   firstName,
   lastName,
   role,
+  email,
   instagram,
   twitter,
   photo,
   index,
   handleChange,
+  removeMember,
 }) => {
   const isMe = index === 0;
   return (
-    <div className="col-md-6">
+    <div className="col-md-6 col-sm-12">
       <Card className="artist-members__card">
         <CardContent className="container">
-          <div className="row justify-content-between">
-            <div className="col-auto">
+          <div
+            style={{
+              position: 'absolute',
+              right: '16px',
+              top: '0px',
+              cursor: 'pointer',
+            }}
+          >
+            {!isMe && (
+              <IconButton
+                // className="close-x"
+                aria-label="close"
+                color="primary"
+                // style={{}}
+                onClick={(e) => removeMember(index)}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </IconButton>
+            )}
+          </div>
+          <div className="row">
+            <div className="col-md-7 col-sm-12">
               <div className="create-artist__title">
                 {isMe ? 'You' : 'Member'}
               </div>
             </div>
-            <div className="col-auto">
+            <div className="col-md-4 col-sm-12">
               <div className="artist-members__card_admin">
                 <FormControlLabel
                   control={
@@ -284,7 +313,7 @@ const Member = ({
                       name="isAdmin"
                       checked={isAdmin}
                       disabled={isMe}
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(e, index)}
                     />
                   }
                   label="Make Admin"
@@ -293,17 +322,17 @@ const Member = ({
             </div>
           </div>
           <div className="row">
-            <div className="col-3">
+            <div className="col-md-3 col-sm-12">
               <div className="create-artist__subtitle">Name</div>
               <h6>Required</h6>
             </div>
-            <div className="col-9">
+            <div className="col-md-9 col-sm-12">
               <TextField
                 name="firstName"
                 label="First Name"
                 id="first-name"
                 value={firstName || ''}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, index)}
                 fullWidth
                 disabled={isMe}
                 required
@@ -313,37 +342,57 @@ const Member = ({
                 label="Last Name"
                 id="last-name"
                 value={lastName || ''}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, index)}
                 disabled={isMe}
                 fullWidth
               />
             </div>
           </div>
           <div className="row">
-            <div className="col-3">
-              <div className="create-artist__subtitle">Role(s)</div>
+            <div className="col-md-3 col-sm-12">
+              <div className="create-artist__subtitle">Email</div>
+              <h6>Required</h6>
             </div>
-            <div className="col-9">
+            <div className="col-md-9 col-sm-12">
               <TextField
-                name="role"
-                label="Role"
-                id="role"
-                value={role || ''}
-                onChange={handleChange}
+                name="email"
+                label="Email"
+                id="email"
+                value={email || ''}
+                onChange={(e) => handleChange(e, index)}
                 inputProps={{ maxLength: 50 }}
                 disabled={isMe}
+                // helperText={`${role.length - 50} characters left`}
+                fullWidth
+                required
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-3 col-sm-12">
+              <div className="create-artist__subtitle">Role</div>
+            </div>
+            <div className="col-md-9 col-sm-12">
+              <TextField
+                name="role"
+                label={'e.g. "singer", "drums"'}
+                id="role"
+                value={role || ''}
+                onChange={(e) => handleChange(e, index)}
+                inputProps={{ maxLength: 50 }}
+                // disabled={isMe}
                 // helperText={`${role.length - 50} characters left`}
                 fullWidth
               />
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-3">
               <div className="create-artist__subtitle">Photo</div>
             </div>
             <div className="col-9"></div>
-          </div>
-          <div className="row">
+          </div> */}
+          {/* <div className="row">
             <div className="col-3">
               <div className="create-artist__subtitle">Social</div>
             </div>
@@ -383,15 +432,15 @@ const Member = ({
                 InputLabelProps={{ shrink: true }}
               />
             </div>
-          </div>
-          {isMe && (
-            <div className="row">
-              <div className="col-12 create-artist__copy">
-                You can edit these values in your{' '}
-                <Link to="/user-details">user details</Link>.
-              </div>
+          </div> */}
+          <div className="row">
+            <div className="col-12 create-artist__copy">
+              {isMe ? 'You' : 'Members'} can edit {isMe ? 'your ' : 'their '}
+              name, photo, social handles, etc. in {isMe ? 'your ' : 'their '}
+              <Link to="/user-details">user details</Link>
+              {isMe ? '' : ' after they register'}.
             </div>
-          )}
+          </div>
         </CardContent>
       </Card>
     </div>
@@ -421,7 +470,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       me: { userData },
     } = this.props;
     if (userData && !prevProps?.me?.userData) {
-      const { name, last_name, instagram, twitter, image } = userData;
+      const { name, last_name, instagram, twitter, image, email } = userData;
       this.setState({
         loading: false,
         members: [
@@ -429,6 +478,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             isAdmin: true,
             firstName: name,
             lastName: last_name,
+            email,
             role: '',
             instagram,
             twitter,
@@ -796,6 +846,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         ...this.state.members,
         {
           isAdmin: false,
+          email: '',
           firstName: '',
           lastName: '',
           role: '',
@@ -803,6 +854,15 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           twitter: '',
           photo: '',
         },
+      ],
+    });
+  };
+
+  removeMember = (index) => {
+    this.setState({
+      members: [
+        ...this.state.members.slice(0, index),
+        ...this.state.members.slice(index + 1),
       ],
     });
   };
@@ -864,6 +924,22 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     );
   };
 
+  updateMemberDetails = (e, index) => {
+    const { members } = this.state;
+    const { name, value } = e.target;
+
+    this.setState({
+      members: [
+        ...members.slice(0, index),
+        {
+          ...members[index],
+          [name]: value,
+        },
+        ...members.slice(index + 1),
+      ],
+    });
+  };
+
   onSubmit = async () => {
     const {
       artistName,
@@ -876,6 +952,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       artistVerb,
       artistVideo,
       images,
+      members,
     } = this.state;
 
     // validate fields
@@ -887,6 +964,21 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     ) {
       return showToastMessage(
         'Please check required fields.',
+        MessageType.ERROR,
+      );
+    }
+
+    if (
+      members.filter(
+        (member) =>
+          member.email &&
+          member.email.length &&
+          member.firstName &&
+          member.firstName.length,
+      ).length !== members.length
+    ) {
+      return showToastMessage(
+        'Please check required fields for members.',
         MessageType.ERROR,
       );
     }
@@ -939,8 +1031,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           {this.renderColor()}
           <Members
             members={this.state.members}
-            handleChange={this.handleChange}
+            handleChange={this.updateMemberDetails}
             addMember={this.addMember}
+            removeMember={this.removeMember}
           />
           {/* {this.renderPayment()} */}
           <div className="container">

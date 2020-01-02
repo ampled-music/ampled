@@ -26,7 +26,7 @@ class StripeController < ApplicationController
       user.update(card_is_valid: false)
 
       # send notification to user.email that their payment failed
-      CardDeclineEmailJob.perform_async(usersub.id)
+      CardDeclineEmailJob.perform_async(usersub.id) unless ENV["REDIS_URL"].nil?
       # TODO: update subscription to mark as failed?
     end
     render json: {}

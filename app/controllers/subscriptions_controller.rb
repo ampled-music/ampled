@@ -17,7 +17,7 @@ class SubscriptionsController < ApplicationController
 
   def create
     subscription = subscribe_stripe
-    NewSupporterEmailJob.perform_async(subscription.id)
+    NewSupporterEmailJob.perform_async(subscription.id) unless ENV["REDIS_URL"].nil?
     render json: subscription
   rescue StandardError => e
     Raven.capture_exception(e)

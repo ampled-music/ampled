@@ -29,7 +29,7 @@ export const createSubscriptionReducer = {
   [createSubscriptionAction.ENDED]: (state: typeof initialState) => ({
     ...state,
     processing: initialState.processing,
-    status: initialState.status,
-    hasError: false,
+    // status: initialState.status,
+    // hasError: false,
   }),
 };

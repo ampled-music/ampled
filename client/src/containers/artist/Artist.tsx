@@ -113,14 +113,16 @@ class ArtistComponent extends React.Component<Props, any> {
       stagger: 0,
       width: 10,
       height: 10,
-      colors: [this.props.artists.artist.accent_color],
+      colors: [
+        this.props.artists.artist.accent_color,
+        this.props.artists.artist.accent_color + '33',
+      ],
     };
     return confettiConfig;
   };
 
   getArtistInfo = () => {
     if (this.props.match.params.slug) {
-      console.log(`Have slug: ${this.props.match.params.slug}`);
       this.props.getArtist(null, this.props.match.params.slug);
     } else {
       this.props.getArtist(this.props.match.params.id);

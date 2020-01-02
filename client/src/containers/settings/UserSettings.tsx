@@ -205,7 +205,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
               <div className="user-content__hr"></div>
             </div>
           )}
-          {console.log(userData)}
           {userData.twitter && (
             <div className="user-content__social">
               <FontAwesomeIcon className="icon" icon={faTwitter} />{' '}

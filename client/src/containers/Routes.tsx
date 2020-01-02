@@ -60,7 +60,6 @@ const Routes = () => {
         sensitive
         path={routePaths.capsSlugs}
         render={(props) => {
-          console.log('capsslugs');
           return <Redirect to={`${props.location.pathname.toLowerCase()}`} />;
         }}
       />

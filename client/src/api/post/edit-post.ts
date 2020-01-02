@@ -11,9 +11,15 @@ interface Post {
 }
 
 export const editPost = async (post: Post) => {
-  const { title, body, audio_file, image_url, artist_page_id, is_private, id } = post;
-
-  console.log(image_url);
+  const {
+    title,
+    body,
+    audio_file,
+    image_url,
+    artist_page_id,
+    is_private,
+    id,
+  } = post;
 
   const { data } = await apiAxios({
     method: 'put',

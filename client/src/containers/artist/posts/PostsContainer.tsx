@@ -88,7 +88,6 @@ class PostsContainerComponent extends React.Component<Props, any> {
       setTimeout(() => {
         const { hash } = this.props;
         if (hash && hash.length) {
-          console.log(`scroll to post ${hash}`);
           document.getElementById(hash.replace('#', '')).scrollIntoView();
         }
       }, 100);

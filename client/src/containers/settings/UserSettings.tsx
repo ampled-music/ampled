@@ -279,6 +279,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
             ></div>
             <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
+              <p className="artist__info_role">
+                {ownedPage.role
+                  ? ownedPage.role.charAt(0).toUpperCase() +
+                    ownedPage.role.slice(1) +
+                    ' of'
+                  : ''}
+              </p>
               <p
                 className="artist__info_name"
                 onClick={() => this.redirectToArtistPage(ownedPage)}

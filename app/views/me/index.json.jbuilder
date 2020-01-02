@@ -43,15 +43,17 @@ json.subscriptions @subscriptions do |subscription|
   json.amount subscription.plan.nominal_amount
 end
 json.ownedPages @owned_pages do |page|
-  json.artistId page.id
-  json.artistSlug page.slug
-  json.name page.name
-  json.image page.cover_url
-  json.supportersCount page.subscriber_count
-  json.monthlyTotal page.monthly_total
-  json.lastPost page.last_post_date
-  json.lastPayout page.last_payout
-  json.stripeSignup page.stripe_signup_url
-  json.stripeDashboard page.stripe_dashboard_url
-  json.isStripeSetup page.is_stripe_ready
+  json.role page.role
+  json.instrument page.instrument
+  json.artistId page.page.id
+  json.artistSlug page.page.slug
+  json.name page.page.name
+  json.image page.page.cover_url
+  json.supportersCount page.page.subscriber_count
+  json.monthlyTotal page.page.monthly_total
+  json.lastPost page.page.last_post_date
+  json.lastPayout page.page.last_payout
+  json.stripeSignup page.page.stripe_signup_url
+  json.stripeDashboard page.page.stripe_dashboard_url
+  json.isStripeSetup page.page.is_stripe_ready
 end

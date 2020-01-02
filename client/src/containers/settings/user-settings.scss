@@ -169,6 +169,18 @@
         padding: 100px 1rem 0.5rem;
         width: 100%;
 
+        &_role {
+          display: flex;
+          font-weight: bold;
+          align-self: center;
+          font-size: 12px;
+          align-items: flex-end;
+          width: 100%;
+          justify-content: center;
+          margin: 0;
+          font-family: $font-family-sans-serif;
+        }
+
         &_name {
           display: flex;
           font-weight: bold;

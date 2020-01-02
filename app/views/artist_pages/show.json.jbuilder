@@ -19,7 +19,11 @@ json.most_recent_supporter do
   end
 end
 
-json.owners @artist_page.owners, partial: "users/user", as: :user
+json.owners @artist_page.page_ownerships do |ownership|
+  json.partial! "users/user", user: ownership.user
+  json.role ownership.role
+  json.instrument ownership.instrument
+end
 
 json.supporters @artist_page.active_subscribers, partial: "users/user", as: :user
 

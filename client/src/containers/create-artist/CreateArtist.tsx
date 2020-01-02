@@ -1003,6 +1003,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         instagram_handle: artistInstagram,
         twitter_handle: artistTwitter,
         images,
+        members,
         verb_plural: artistVerb !== 'is',
       },
     });

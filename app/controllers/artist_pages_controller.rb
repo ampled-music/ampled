@@ -30,18 +30,13 @@ class ArtistPagesController < ApplicationController
       return render json: { status: "error", message: "Confirm your email address first." }
     end
 
-    # TODO
-    # - create new users for members, where needed
-
-    @artist_page = ArtistPage.new(artist_page_params)
-    @artist_page.owners << current_user
-
-    return render json: { status: "error", message: "Something went wrong." } unless @artist_page.save
-
-    # - create new images based on uploads
-    params[:images].map.with_index do |image_url, index|
-      @artist_page.images.create(url: image_url, order: index)
+    unless (@artist_page = ArtistPage.create(artist_page_params))
+      return render json: { status: "error", message: "Something went wrong." }
     end
+
+    set_members
+
+    set_images
 
     render json: { status: "ok", message: "Your page has been created!" }
   rescue ActiveRecord::RecordNotUnique => e
@@ -83,6 +78,33 @@ class ArtistPagesController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def artist_page_params
     params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :banner_image_url,
-                                        :slug, :location, :accent_color, :video_url, :verb_plural, :images)
+                                        :slug, :location, :accent_color, :video_url, :verb_plural, :images,
+                                        :members)
+  end
+
+  # Helper functions for creating / updating an artist page.
+  def set_members
+    params[:members].map.with_index do |member, index|
+      member_user = if index.zero?
+                      current_user
+                    else
+                      User.find_by(email: member[:email]) ||
+                        User.create(email: member[:email],
+                                    name: member[:firstName],
+                                    password: (0...8).map { rand(65..91).chr }.join)
+                    end
+      @artist_page.owners << member_user
+      PageOwnership.find_by(user_id: member_user[:id],
+                            artist_page_id: @artist_page[:id]).update(instrument: member[:role],
+                                                                      role: member[:isAdmin] ? "admin" : "member")
+    end
+    @artist_page.save
+  end
+
+  def set_images
+    # - create new images based on uploads
+    params[:images].map.with_index do |image_url, index|
+      @artist_page.images.create(url: image_url, order: index)
+    end
   end
 end

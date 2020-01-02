@@ -1,7 +1,7 @@
 class MeController < ApplicationController
   def index
     @owned_pages = current_user&.owned_pages
-    @owned = current_user&.owned_pages&.map { |page| OpenStruct.new(id: page.id, role: "owner") }
+    @owned = current_user&.page_ownerships&.map { |ownership| OpenStruct.new(id: ownership.artist_page.id, role: ownership.role) }
     @supported = current_user&.supported_artists&.map { |page| OpenStruct.new(id: page.id, role: "supporter") }
     @subscriptions = current_user&.subscriptions&.active
     @stripe_info = stripe_card_info

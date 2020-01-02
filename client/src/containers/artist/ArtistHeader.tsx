@@ -279,7 +279,9 @@ export class ArtistHeader extends React.Component<Props, any> {
   canLoggedUserPost = () => {
     return (
       this.props.loggedUserAccess &&
-      this.props.loggedUserAccess.role === UserRoles.Owner
+      (this.props.loggedUserAccess.role === UserRoles.Admin ||
+        this.props.loggedUserAccess.role === UserRoles.Member ||
+        this.props.loggedUserAccess.role === UserRoles.Owner)
     );
   };
 

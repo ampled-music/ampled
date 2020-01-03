@@ -1,6 +1,6 @@
-@import "../../theme/vars.scss";
-@import "../../theme/mixins.scss";
-@import "../../theme/global.scss";
+@import '../../theme/vars.scss';
+@import '../../theme/mixins.scss';
+@import '../../theme/global.scss';
 
 .artist-header {
   font-family: $font-family-sans-serif;
@@ -158,7 +158,7 @@
     }
 
     &_name {
-      font-size: 1.0rem;
+      font-size: 1rem;
       text-transform: capitalize;
     }
 
@@ -207,7 +207,7 @@
 
     img {
       width: 100%;
-      opacity: .5;
+      opacity: 0.5;
     }
 
     &:nth-child(1n) {
@@ -286,10 +286,15 @@
       justify-content: center;
       flex-direction: column;
       width: 90%;
-      margin: 1rem auto 2rem;
+      margin: 0.5rem auto 0;
       border: 2px solid $brand-primary;
       padding: 10px 0px;
       min-height: 140px;
+
+      @include mq($layout-m) {
+        margin: 1rem auto 2rem;
+        text-align: left;
+      }
 
       &.paper_md {
         min-height: 210px;
@@ -301,7 +306,7 @@
       }
     }
 
-    &_paper-bg { 
+    &_paper-bg {
       width: 115%;
       left: -7%;
       top: 3%;
@@ -319,7 +324,7 @@
     &_text {
       font-family: $font-family-monospace;
       padding: 1rem 2rem;
-      font-size: .8rem;
+      font-size: 0.8rem;
     }
 
     &_image {
@@ -361,11 +366,10 @@
         margin-top: 0px;
 
         &_mr {
-          font-size: .7rem;
+          font-size: 0.7rem;
           font-family: $font-family-monospace;
         }
       }
-
     }
 
     &_all {
@@ -381,7 +385,6 @@
   }
 
   .supporter {
-
     @include mq($layout-m) {
       position: relative;
       display: block;
@@ -440,7 +443,7 @@
       background-color: $white;
       position: absolute;
       display: none;
-      padding: .5rem 1rem;
+      padding: 0.5rem 1rem;
       z-index: 300;
       box-shadow: 1px 1px 3px $gray-light;
       width: 350px;
@@ -463,7 +466,7 @@
         display: flex;
 
         &_photo {
-          margin-right: .5rem;
+          margin-right: 0.5rem;
 
           &_image {
             width: 50px;
@@ -484,7 +487,7 @@
           &_since,
           &_bio {
             font-family: $font-family-monospace;
-            font-size: .8rem;
+            font-size: 0.8rem;
             @include mq(0, $layout-m) {
               display: none;
             }
@@ -497,8 +500,8 @@
       }
 
       &_bands {
-        margin-top: .5rem;
-        padding-top: .5rem;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
         border-top: 1px solid $gray;
 
         &_section {
@@ -519,7 +522,7 @@
 
         &_name {
           text-transform: uppercase;
-          font-size: .9rem;
+          font-size: 0.9rem;
           display: inline-block;
           a {
             transition: color $speed;
@@ -545,13 +548,13 @@
     width: 75px;
     border-radius: 100%;
     border-width: 0px;
-    background-color: rgba($white, .4);
+    background-color: rgba($white, 0.4);
     transition: all $speed;
 
     &:hover {
       height: 85px;
       width: 85px;
-      background-color: rgba($white, .6);
+      background-color: rgba($white, 0.6);
       transition: all $speed;
       cursor: pointer;
     }
@@ -566,8 +569,12 @@
   font-family: $font-family-monospace;
   border-top: 2px solid $black;
   border-bottom: 2px solid $black;
-  margin: 2rem auto;
+  margin: 1rem auto;
   padding: 1rem 0;
+
+  @include mq($layout-m) {
+    margin: 2rem auto;
+  }
 
   .icon {
     margin: 0 0.5rem 0 0;
@@ -591,7 +598,7 @@
 
     &_twitter,
     &_instagram {
-      margin: 0 0 0 .5rem;
+      margin: 0 0 0 0.5rem;
 
       @include mq($layout-m) {
         margin: 0 1rem;
@@ -627,7 +634,7 @@
 
     span {
       visibility: visible;
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
 
     @include mq($layout-m) {

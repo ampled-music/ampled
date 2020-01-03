@@ -107,12 +107,8 @@ class ArtistComponent extends React.Component<Props, any> {
       angle: 90,
       spread: 70,
       startVelocity: 70,
-      elementCount: 200,
-      dragFriction: 0.1,
+      elementCount: 250,
       duration: 5000,
-      stagger: 0,
-      width: 10,
-      height: 10,
       colors: [
         this.props.artists.artist.accent_color,
         this.props.artists.artist.accent_color + '33',

@@ -21,12 +21,12 @@ class StripeController < ApplicationController
     if event_type == "invoice.payment_failed"
       usersub = Subscription.find_by(stripe_customer_id: object[:customer])
       user = User.find(usersub.user_id)
-      # TODO: send notification to user.email that their payment to ap.name failed
-      # ap = ArtistPage.find_by(stripe_user_id: params[:account])
 
       # Mark user as having invalid card
       user.update(card_is_valid: false)
 
+      # send notification to user.email that their payment failed
+      CardDeclineEmailJob.perform_async(usersub.id) unless ENV["REDIS_URL"].nil?
       # TODO: update subscription to mark as failed?
     end
     render json: {}

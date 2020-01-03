@@ -10,7 +10,10 @@ import { Helmet } from 'react-helmet';
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
-import { initialState as subscriptionsInitialState, SubscriptionStep } from '../../redux/subscriptions/initial-state';
+import {
+  initialState as subscriptionsInitialState,
+  SubscriptionStep,
+} from '../../redux/subscriptions/initial-state';
 import { CloudinaryContext } from 'cloudinary-react';
 import { PostsContainer } from '../artist/posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
@@ -55,10 +58,12 @@ class ArtistComponent extends React.Component<Props, any> {
     showConfirmationDialog: false,
     successfulSupport: false,
   };
+  players: Set<any>;
 
   componentDidMount() {
     window.scrollTo(0, 0);
     this.getArtistInfo();
+    this.players = new Set();
   }
 
   componentDidUpdate(prevProps: Props, prevState) {
@@ -67,34 +72,53 @@ class ArtistComponent extends React.Component<Props, any> {
     }
 
     if (this.props.subscriptions.status === SubscriptionStep.Finished) {
-      showToastMessage(`Thanks for supporting ${this.props.artists.artist.name}!`, MessageType.SUCCESS);
+      showToastMessage(
+        `Thanks for supporting ${this.props.artists.artist.name}!`,
+        MessageType.SUCCESS,
+      );
       // Confetti
       if (prevState.successfulSupport === false) {
         this.setState({ successfulSupport: true });
       }
     }
-
   }
+
+  playerCallback = (action: string, instance: any) => {
+    const { players } = this;
+    if (action === 'play') {
+      // Pause all active players
+      players.forEach((player) => {
+        // handlePause instance method both pauses audio *and* triggers
+        // the 'pause' callback below
+        player.handlePause();
+      });
+
+      // Add newly active player to set
+      players.add(instance);
+    } else if (action === 'pause') {
+      // Triggered after player has already been paused;
+      // remove paused player from set
+      players.delete(instance);
+    }
+  };
 
   getConfettiConfig = () => {
     const confettiConfig = {
       angle: 90,
       spread: 70,
       startVelocity: 70,
-      elementCount: 200,
-      dragFriction: 0.1,
+      elementCount: 250,
       duration: 5000,
-      stagger: 0,
-      width: 10,
-      height: 10,
-      colors: [this.props.artists.artist.accent_color]
+      colors: [
+        this.props.artists.artist.accent_color,
+        this.props.artists.artist.accent_color + '33',
+      ],
     };
     return confettiConfig;
   };
 
   getArtistInfo = () => {
     if (this.props.match.params.slug) {
-      console.log(`Have slug: ${this.props.match.params.slug}`);
       this.props.getArtist(null, this.props.match.params.slug);
     } else {
       this.props.getArtist(this.props.match.params.id);
@@ -153,7 +177,12 @@ class ArtistComponent extends React.Component<Props, any> {
   getLoggedUserPageAccess = () => {
     const { me } = this.props;
 
-    return me.userData && me.userData.artistPages.find((page) => page.artistId === +this.props.artists.artist.id);
+    return (
+      me.userData &&
+      me.userData.artistPages.find(
+        (page) => page.artistId === +this.props.artists.artist.id,
+      )
+    );
   };
 
   ColorLuminance = (hex, lum) => {
@@ -168,24 +197,31 @@ class ArtistComponent extends React.Component<Props, any> {
     lum = lum || 0;
 
     // convert to decimal and change luminosity
-    var rgb = "#", c, i;
+    var rgb = '#',
+      c,
+      i;
     for (i = 0; i < 3; i++) {
       c = parseInt(hex.substr(i * 2, 2), 16);
-      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-      rgb += ("00" + c).substr(c.length);
+      c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
+      rgb += ('00' + c).substr(c.length);
     }
 
     return rgb;
-  }
+  };
 
   handleSupportClick = () => {
     let supportUrl;
     if (this.props.artists.artist.slug) {
-      supportUrl = routePaths.support.replace(':id', this.props.artists.artist.slug);
+      supportUrl = routePaths.support.replace(
+        ':id',
+        this.props.artists.artist.slug,
+      );
     } else {
-      supportUrl = routePaths.support.replace(':id', String(this.props.artists.artist.id));
+      supportUrl = routePaths.support.replace(
+        ':id',
+        String(this.props.artists.artist.id),
+      );
     }
-
 
     if (this.props.me && this.props.me.userData) {
       this.props.history.push(supportUrl);
@@ -201,7 +237,10 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { artists, me: { userData, loadingMe } } = this.props;
+    const {
+      artists,
+      me: { userData, loadingMe },
+    } = this.props;
     const artist = artists.artist;
     const loggedUserAccess = this.getLoggedUserPageAccess();
     let isSupporter = false;
@@ -215,9 +254,8 @@ class ArtistComponent extends React.Component<Props, any> {
     }
 
     if (artists && !artists.loading && artists.error) {
-      return (<NoArtist />);
+      return <NoArtist />;
     }
-
 
     return (
       <div className="App">
@@ -243,12 +281,16 @@ class ArtistComponent extends React.Component<Props, any> {
               .btn.btn-support:hover,
               .private-support__btn > .btn:hover,
               .new-post button:hover {
-                background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
+                background-color: ${this.ColorLuminance(
+                  artist.accent_color,
+                  -0.2,
+                )};
               }
               .supporter__hover-card_bands_name a:hover {
                 color: ${artist.accent_color};
               }
-              ${isSupporter && `
+              ${isSupporter &&
+                `
                 .user-image { 
                   border: 1px solid ${artist.accent_color}; 
                 }
@@ -257,7 +299,7 @@ class ArtistComponent extends React.Component<Props, any> {
                   color: ${artist.accent_color}; 
                 }
               `}
-            `
+            `,
             }}
           />
 
@@ -266,12 +308,14 @@ class ArtistComponent extends React.Component<Props, any> {
             positionTop50={false}
             positionFlip={false}
           />
-          {
-            artist && artist.name &&
-            (<Helmet>
-              <title>{artist.name} | Ampled | Direct Community Support For Music Artists</title>
-            </Helmet>)
-          }
+          {artist && artist.name && (
+            <Helmet>
+              <title>
+                {artist.name} | Ampled | Direct Community Support For Music
+                Artists
+              </title>
+            </Helmet>
+          )}
           <ArtistHeader
             artist={artist}
             openVideoModal={this.openVideoModal}
@@ -299,6 +343,7 @@ class ArtistComponent extends React.Component<Props, any> {
             updateArtist={this.getArtistInfo}
             loading={artists.loading || loadingMe}
             loggedUserAccess={loggedUserAccess}
+            playerCallback={this.playerCallback}
           />
           <Modal open={this.state.openPostModal} onClose={this.closePostModal}>
             <PostForm
@@ -317,9 +362,12 @@ class ArtistComponent extends React.Component<Props, any> {
             handleSupportClick={this.handleSupportClick}
           />
           <MessageModal
+            accentColor={artist.accent_color}
             artistBio={artist.bio}
             open={this.state.openMessageModal}
+            handleSupportClick={this.handleSupportClick}
             onClose={this.closeMessageModal}
+            showSupport={!isSupporter}
           />
           <ConfirmationDialog
             open={this.state.showConfirmationDialog}
@@ -332,9 +380,7 @@ class ArtistComponent extends React.Component<Props, any> {
               config={this.getConfettiConfig()}
             />
           </div>
-          <Loading
-            artistLoading={artists.loading || loadingMe}
-          />
+          <Loading artistLoading={artists.loading || loadingMe} />
         </CloudinaryContext>
       </div>
     );
@@ -347,7 +393,7 @@ const mapStateToProps = (state: Store) => {
     me: state.me,
     posts: state.posts,
     authentication: state.authentication,
-    subscriptions: state.subscriptions
+    subscriptions: state.subscriptions,
   };
 };
 
@@ -358,9 +404,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const Artist = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ArtistComponent);
+const Artist = connect(mapStateToProps, mapDispatchToProps)(ArtistComponent);
 
 export { Artist };

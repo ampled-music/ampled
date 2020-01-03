@@ -58,9 +58,9 @@ class HomeHeader extends React.Component<Props, any> {
                 <div className="home-header__cta" onClick={this.toggleNewsletter}>
                   <div className="home-header__cta_title ">We're launching soon!</div>
                   <div>
-                    <a className="home-header__cta_link" href="#">
+                    <button className="link home-header__cta_link">
                       Join our mailing list
-                    </a>
+                    </button>
                   </div>
                 </div>
               )}

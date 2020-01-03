@@ -40,6 +40,8 @@ class ArtistPage < ApplicationRecord
 
   validate :sluggy_slug
 
+  before_save :set_screenshot
+
   def sluggy_slug
     return unless slug
 
@@ -113,6 +115,9 @@ class ArtistPage < ApplicationRecord
     create_product if stripe_product_id.nil?
 
     @stripe_product ||= Stripe::Product.retrieve(stripe_product_id, stripe_account: stripe_user_id)
+    return @stripe_product unless @stripe_product.statement_descriptor.nil?
+
+    Stripe::Product.update(stripe_product_id, { statement_descriptor: name }, stripe_account: stripe_user_id)
   end
 
   def subscriber_count
@@ -143,13 +148,29 @@ class ArtistPage < ApplicationRecord
     subscriptions.active.order(created_at: :desc).first&.user
   end
 
+  def set_screenshot
+    self.video_screenshot_url = find_screenshot_url(video_url) unless video_url.nil?
+  end
+
   private
+
+  def find_screenshot_url(video_url)
+    if video_url.match?(/vimeo/i)
+      vimeo_id = video_url.match(%r{vimeo.com\/([\d\w]+)}i)[1]
+      response = Faraday.get "https://vimeo.com/api/v2/video/" + vimeo_id + ".json"
+      JSON.parse(response.body)[0]["thumbnail_large"]
+    elsif video_url.match?(/youtu/i)
+      youtube_id = video_url.match(%r{(youtube\.com\/watch\?v=|youtu.be\/)(.+)}i)[2]
+      "https://img.youtube.com/vi/" + youtube_id + "/0.jpg"
+    end
+  end
 
   def create_product
     product = Stripe::Product.create(
       {
         name: "Ampled Support",
-        type: "service"
+        type: "service",
+        statement_descriptor: name
       }, stripe_account: stripe_user_id
     )
     update(stripe_product_id: product.id)

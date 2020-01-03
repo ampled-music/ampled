@@ -17,7 +17,10 @@ import { Helmet } from 'react-helmet';
 import avatar from '../../../images/ampled_avatar.svg';
 
 import { showToastMessage, MessageType } from '../../shared/toast/toast';
-import { initialState as artistsInitialState, ArtistModel } from '../../../redux/artists/initial-state';
+import {
+  initialState as artistsInitialState,
+  ArtistModel,
+} from '../../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import {
@@ -64,17 +67,34 @@ export class SupportComponent extends React.Component<Props, any> {
       this.redirectToArtistsPage();
     }
 
-    if (me.userData && me.userData && me.userData.subscriptions && me.userData.subscriptions.find(sub => Number(sub.artistPageId) === Number(this.props.match.params.id))) {
-      console.log('already support by id');
+    if (
+      me.userData &&
+      me.userData &&
+      me.userData.subscriptions &&
+      me.userData.subscriptions.find(
+        (sub) =>
+          Number(sub.artistPageId) === Number(this.props.match.params.id),
+      )
+    ) {
       this.redirectToArtistsPage();
     }
 
-    if (me.userData && me.userData && me.userData.subscriptions && me.userData.subscriptions.find(sub => sub.artistSlug === this.props.match.params.id)) {
-      console.log('already support by slug');
+    if (
+      me.userData &&
+      me.userData &&
+      me.userData.subscriptions &&
+      me.userData.subscriptions.find(
+        (sub) => sub.artistSlug === this.props.match.params.id,
+      )
+    ) {
       this.redirectToArtistsPage();
     }
 
-    if (subscriptions && subscriptions.hasError && !prevProps.subscriptions.hasError) {
+    if (
+      subscriptions &&
+      subscriptions.hasError &&
+      !prevProps.subscriptions.hasError
+    ) {
       getMe();
       showToastMessage(subscriptions.error, MessageType.ERROR);
     }
@@ -84,20 +104,22 @@ export class SupportComponent extends React.Component<Props, any> {
     // validate hex string
     hex = String(hex).replace(/[^0-9a-f]/gi, '');
     if (hex.length < 6) {
-      hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
     }
     lum = lum || 0;
-  
+
     // convert to decimal and change luminosity
-    var rgb = "#", c, i;
+    var rgb = '#',
+      c,
+      i;
     for (i = 0; i < 3; i++) {
-      c = parseInt(hex.substr(i*2,2), 16);
-      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-      rgb += ("00"+c).substr(c.length);
+      c = parseInt(hex.substr(i * 2, 2), 16);
+      c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
+      rgb += ('00' + c).substr(c.length);
     }
-  
+
     return rgb;
-  }
+  };
 
   returnFirstName = (name) => {
     let spacePosition = name.indexOf(' ');
@@ -109,23 +131,25 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   redirectToArtistsPage = () => {
-    const { history, match, artists: { artist } } = this.props;
+    const {
+      history,
+      match,
+      artists: { artist },
+    } = this.props;
 
     if (artist && artist.id) {
       if (artist.slug && artist.slug.length > 0) {
         history.push(routePaths.slugs.replace(':slug', artist.slug));
       } else {
         history.push(routePaths.artists.replace(':id', String(artist.id)));
-      }  
+      }
     } else {
       if (Number.isNaN(Number(match.params.id))) {
         history.push(routePaths.slugs.replace(':slug', match.params.id));
       } else {
         history.push(routePaths.artists.replace(':id', match.params.id));
       }
-  
     }
-    
   };
 
   getArtistInfo = () => {
@@ -143,7 +167,10 @@ export class SupportComponent extends React.Component<Props, any> {
 
   handleSupportClick = () => {
     if (this.state.supportLevelValue < 3) {
-      showToastMessage('Sorry, but you need to insert a value equal or bigger than $3.00.', MessageType.ERROR);
+      showToastMessage(
+        'Sorry, but you need to insert a value equal or bigger than $3.00.',
+        MessageType.ERROR,
+      );
 
       return;
     }
@@ -156,7 +183,10 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   startSubscription = () => {
-    const { match: { params }, artists: { artist } } = this.props;
+    const {
+      match: { params },
+      artists: { artist },
+    } = this.props;
     const artistPageId = artist && artist.id ? artist.id : params.id;
     this.props.startSubscription({
       artistPageId,
@@ -176,7 +206,13 @@ export class SupportComponent extends React.Component<Props, any> {
     const placeholderImage =
       'https://images.pexels.com/photos/1749822/pexels-photo-1749822.jpeg?cs=srgb&dl=backlit-band-concert-1749822.jpg';
 
-    return <img className="support__artist-image" src={images.length ? images[0] : placeholderImage} alt="Artist" />;
+    return (
+      <img
+        className="support__artist-image"
+        src={images.length ? images[0] : placeholderImage}
+        alt="Artist"
+      />
+    );
   };
 
   renderArtists = (owners) => (
@@ -184,9 +220,17 @@ export class SupportComponent extends React.Component<Props, any> {
       {owners.map((owner, index) => (
         <div key={index} className="support__artist-info">
           {owner.profile_image_url ? (
-            <img className="support__artist-info_image" src={owner.profile_image_url} alt={`${this.returnFirstName(owner.name)}'s avatar`} />
+            <img
+              className="support__artist-info_image"
+              src={owner.profile_image_url}
+              alt={`${this.returnFirstName(owner.name)}'s avatar`}
+            />
           ) : (
-            <img className="support__artist-info_image" src={avatar} alt="Avatar" />
+            <img
+              className="support__artist-info_image"
+              src={avatar}
+              alt="Avatar"
+            />
           )}
           <p>{this.returnFirstName(owner.name)}</p>
         </div>
@@ -194,7 +238,8 @@ export class SupportComponent extends React.Component<Props, any> {
     </div>
   );
 
-  calculateSupportTotal = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100).toFixed(2);
+  calculateSupportTotal = (supportLevel) =>
+    (Math.round((supportLevel * 100 + 30) / 0.971) / 100).toFixed(2);
 
   renderSupportLevelForm = (artistName) => (
     <div className="row justify-content-center" key={artistName}>
@@ -203,7 +248,7 @@ export class SupportComponent extends React.Component<Props, any> {
           <h3>Support What You Want</h3>
           <div className="support__value-field">
             <input
-              aria-label="Support level" 
+              aria-label="Support level"
               type="number"
               name="supportLevelValue"
               onChange={this.handleChange}
@@ -211,33 +256,51 @@ export class SupportComponent extends React.Component<Props, any> {
               placeholder="3 min"
             />
           </div>
-          {
-            this.state.supportLevelValue && this.state.supportLevelValue >= 3 ? 
-            (<p className="support__value-description">
-              Your total charge will be <strong>${this.calculateSupportTotal(this.state.supportLevelValue)}</strong>.
-              <br /><br />
-              This is due to our payment processor's service fee. More details can be
-              found <a href="https://app.ampled.com/payment-processing" target="_blank" rel="noopener noreferrer">here</a>.
-            </p>) :
-            (<p className="support__value-description">
-              Support {artistName} directly for $3 (or more) per month to unlock access to all of their posts and get
-                  notifications when they post anything new.
-            </p>)
-            }
-          
+          {this.state.supportLevelValue && this.state.supportLevelValue >= 3 ? (
+            <p className="support__value-description">
+              Your total charge will be{' '}
+              <strong>
+                ${this.calculateSupportTotal(this.state.supportLevelValue)}
+              </strong>
+              .
+              <br />
+              <br />
+              This is due to our payment processor's service fee. More details
+              can be found{' '}
+              <a
+                href="https://app.ampled.com/payment-processing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                here
+              </a>
+              .
+            </p>
+          ) : (
+            <p className="support__value-description">
+              Support {artistName} directly for $3 (or more) per month to unlock
+              access to all of their posts and get notifications when they post
+              anything new.
+            </p>
+          )}
         </div>
       </div>
     </div>
   );
 
   renderStartSubscriptionAction = (artistName) => {
-    const buttonLabel = this.props.me.userData ? `SUPPORT ${artistName.toUpperCase()}` : 'SIGNUP OR LOGIN TO SUPPORT';
+    const buttonLabel = this.props.me.userData
+      ? `SUPPORT ${artistName.toUpperCase()}`
+      : 'SIGNUP OR LOGIN TO SUPPORT';
 
     return (
       <div className="row justify-content-center">
         <div className="col-md-5">
           <div className="support__action">
-            <button disabled={!this.state.supportLevelValue} onClick={this.handleSupportClick}>
+            <button
+              disabled={!this.state.supportLevelValue}
+              onClick={this.handleSupportClick}
+            >
               {buttonLabel}
             </button>
           </div>
@@ -247,13 +310,21 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   renderPaymentStep = (artist: ArtistModel) => {
-    const { subscriptions, createSubscription, declineStep, me: { userData } } = this.props;
+    const {
+      subscriptions,
+      createSubscription,
+      declineStep,
+      me: { userData },
+    } = this.props;
 
     const { artistPageId, subscriptionLevelValue } = subscriptions;
 
     switch (subscriptions.status) {
       case SubscriptionStep.SupportLevel:
-        return [this.renderArtists(artist.owners), this.renderSupportLevelForm(artist.name)];
+        return [
+          this.renderArtists(artist.owners),
+          this.renderSupportLevelForm(artist.name),
+        ];
       case SubscriptionStep.PaymentDetails:
         return (
           <StripePaymentProvider
@@ -283,15 +354,17 @@ export class SupportComponent extends React.Component<Props, any> {
 
     return (
       <div className="container support__container">
-        {
-          artist && artist.name &&
-          (<Helmet>
-            <title>Support {artist.name} on Ampled | Direct Community Support For Music Artists</title>
-          </Helmet>)
-        }
+        {artist && artist.name && (
+          <Helmet>
+            <title>
+              Support {artist.name} on Ampled | Direct Community Support For
+              Music Artists
+            </title>
+          </Helmet>
+        )}
         <style
           dangerouslySetInnerHTML={{
-          __html: `
+            __html: `
           body {
             background-color: ${artist.accent_color}20 !important;
           }
@@ -305,13 +378,11 @@ export class SupportComponent extends React.Component<Props, any> {
           .support__level-form,
           .support__artist-info_image {
             border-color: ${artist.accent_color};
-          }`
+          }`,
           }}
         />
         <div className="row no-gutters justify-content-center">
-          <div className="col-md-8">
-            {this.renderSupportHeader(artistName)}
-          </div>
+          <div className="col-md-8">{this.renderSupportHeader(artistName)}</div>
         </div>
         <div className="row no-gutters justify-content-center">
           <div className="col-md-8">
@@ -325,8 +396,8 @@ export class SupportComponent extends React.Component<Props, any> {
             </div>
           </div>
         </div>
-        {subscriptions.status === SubscriptionStep.SupportLevel && this.renderStartSubscriptionAction(artistName)}
-
+        {subscriptions.status === SubscriptionStep.SupportLevel &&
+          this.renderStartSubscriptionAction(artistName)}
       </div>
     );
   }
@@ -352,9 +423,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const Support = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SupportComponent);
+const Support = connect(mapStateToProps, mapDispatchToProps)(SupportComponent);
 
 export { Support };

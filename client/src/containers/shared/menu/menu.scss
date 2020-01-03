@@ -1,5 +1,5 @@
-@import "../../../theme/vars.scss";
-@import "../../../theme/mixins.scss";
+@import '../../../theme/vars.scss';
+@import '../../../theme/mixins.scss';
 
 .menu {
   .menu-icon {
@@ -17,7 +17,8 @@
       display: flex;
       flex-direction: column;
 
-      a {
+      a,
+      button {
         padding: 0.5rem;
         padding-left: 16px;
         padding-right: 16px;
@@ -29,11 +30,13 @@
         box-sizing: content-box;
         font-weight: 400;
         line-height: 1.5em;
+        text-align: left;
         white-space: nowrap;
         font-family: Courier, 'Courier New', monospace !important;
       }
 
-      a:hover {
+      a:hover,
+      button:hover {
         text-decoration: none;
         background-color: rgba(0, 0, 0, 0.08);
       }

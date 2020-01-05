@@ -12,6 +12,7 @@
 
   &__photo-container {
     display: flex;
+    position: relative;
     justify-content: center;
     margin: 0 0 2rem 0;
 
@@ -243,7 +244,7 @@
 
   &__banner-icons {
     display: flex;
-    bottom: 0rem;
+    bottom: -20px;
     position: absolute;
 
     &_icon {
@@ -290,11 +291,6 @@
       border: 2px solid $brand-primary;
       padding: 10px 0px;
       min-height: 140px;
-
-      @include mq($layout-m) {
-        margin: 1rem auto 2rem;
-        text-align: left;
-      }
 
       &.paper_md {
         min-height: 210px;
@@ -573,7 +569,7 @@
   padding: 1rem 0;
 
   @include mq($layout-m) {
-    margin: 2rem auto;
+    margin: 1rem auto 2rem;
   }
 
   .icon {

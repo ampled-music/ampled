@@ -1045,6 +1045,16 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-1"></div>
+              <div className="col-md-6 col-sm-10 create-artist__copy">
+                Your page will initially only be visible to you and any other
+                members you've added. The Ampled team does a quick spot check of
+                all pages before they become visible to the general public, but
+                this normally doesn't take us very long.
+              </div>
+              <div className="col-md-3 col-sm-1"></div>
+            </div>
+            <div className="row">
+              <div className="col-md-3 col-sm-1"></div>
               <div className="col-md-6 col-sm-10">
                 <button onClick={this.onSubmit} className="btn btn-ampled">
                   Create your page

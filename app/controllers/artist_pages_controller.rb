@@ -1,5 +1,6 @@
 class ArtistPagesController < ApplicationController
   before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy]
+  before_action :check_approved, only: :show
 
   def index
     @artist_pages = ArtistPage.all
@@ -73,6 +74,12 @@ class ArtistPagesController < ApplicationController
 
   def set_page_ownership
     @role = PageOwnership.where(user_id: current_user.try(:id), artist_page_id: params[:id]).take.try(:role)
+  end
+
+  def check_approved
+    return if @artist_page.approved? || current_user&.admin?
+
+    render json: {}, status: :bad_request unless current_user&.owned_pages&.include?(@artist_page)
   end
 
   # Only allow a trusted parameter "white list" through.

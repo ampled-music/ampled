@@ -61,8 +61,9 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(JSON.parse(response.body)["message"]).to eq "Your page has been created!"
     end
 
-    xit "stops duplicate slugs" do
+    it "stops duplicate slugs" do
       sign_in user
+      post url, params: create_params
       post url, params: create_params
 
       expect(JSON.parse(response.body)["status"]).to eq "error"

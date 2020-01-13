@@ -16,6 +16,7 @@ json.userInfo do
   json.image current_user&.profile_image_url
   json.created_at current_user&.created_at
   json.email current_user&.email
+  json.email_confirmed current_user&.confirmed_at.present?
   json.cardInfo do
     if @stripe_info.present?
       json.exp_month @stripe_info[:exp_month]

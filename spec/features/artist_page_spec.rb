@@ -11,6 +11,22 @@ RSpec.describe ArtistPagesController, type: :request do
     sign_in user
   end
 
+  context "when loading all artist_pages" do
+    let(:url) { "/artist_pages.json" }
+
+    it "returns 200" do
+      get url
+
+      expect(response.status).to eq 200
+    end
+
+    xit "responds with a JSON array" do
+      get url
+
+      expect(JSON.parse(response.body)).not_to be_empty
+    end
+  end
+
   context "when loading approved artist_page data" do
     let(:url) { "/artist_pages/#{artist_page.id}.json" }
     let(:slugurl) { "/slug/#{artist_page.slug}.json" }

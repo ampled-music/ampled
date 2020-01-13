@@ -1,6 +1,7 @@
 class ArtistPagesController < ApplicationController
   before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy]
   before_action :check_approved, only: :show
+  before_action :check_create_okay, only: :create
 
   def index
     @artist_pages = ArtistPage.all
@@ -26,15 +27,6 @@ class ArtistPagesController < ApplicationController
   end
 
   def create
-    # Only logged-in users who have confirmed their emails may create artist pages.
-    if current_user.nil? || current_user.confirmed_at.nil?
-      return render json: { status: "error", message: "Confirm your email address first." }
-    end
-
-    if (artist_page_params[:name].nil? || artist_page_params[:slug].nil?)
-      return render json: { status: "error", message: "Missing required parameters." }
-    end
-
     unless (@artist_page = ArtistPage.create(artist_page_params))
       return render json: { status: "error", message: "Something went wrong." }
     end
@@ -78,6 +70,15 @@ class ArtistPagesController < ApplicationController
 
   def set_page_ownership
     @role = PageOwnership.where(user_id: current_user.try(:id), artist_page_id: params[:id]).take.try(:role)
+  end
+
+  def check_create_okay
+    # Only logged-in users who have confirmed their emails may create artist pages.
+    if current_user.nil? || current_user.confirmed_at.nil?
+      render json: { status: "error", message: "Confirm your email address first." }
+    elsif artist_page_params[:name].nil? || artist_page_params[:slug].nil?
+      render json: { status: "error", message: "Missing required parameters." }
+    end
   end
 
   def check_approved

@@ -23,7 +23,7 @@ RSpec.describe ArtistPagesController, type: :request do
     it "responds with a JSON array" do
       get url
 
-      expect(JSON.parse(response.body)).not_to be_empty
+      expect(JSON.parse(response.body)).to be_a(Array)
     end
   end
 

@@ -1,21 +1,26 @@
 require "rails_helper"
 
 RSpec.describe ArtistPagesController, type: :request do
-  let(:user) { create(:user, confirmed_at: Time.current, email: "creator@ampled.com") }
-  let(:friend_user) { create(:user, confirmed_at: Time.current, email: "testfriend@ampled.com") }
+  let(:user) { create(:user, confirmed_at: Time.current, email: "creator@ampled.com", name: "Creator") }
 
   let(:create_params) do
     {
       artist_page: {
         name: "Test",
         slug: "testslug",
-        bio: "About me",
-        members: [
-          { email: "creator@ampled.com", firstName: "Creator" },
-          { email: "testfriend@ampled.com", firstname: "Friend" }
-        ],
-        images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
-      }
+        bio: "About me"
+      },
+      members: [
+        {
+          email: "creator@ampled.com",
+          firstName: "Creator"
+        },
+        {
+          email: "testfriend@ampled.com",
+          firstName: "Friend"
+        }
+      ],
+      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
     }
   end
 
@@ -23,13 +28,13 @@ RSpec.describe ArtistPagesController, type: :request do
     {
       artist_page: {
         slug: "sluggy",
-        bio: "About me",
-        members: [
-          { email: "creator@ampled.com", firstName: "Creator" },
-          { email: "testfriend@ampled.com", firstname: "Friend" }
-        ],
-        images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
-      }
+        bio: "About me"
+      },
+      members: [
+        { email: "creator@ampled.com", firstName: "Creator" },
+        { email: "testfriend@ampled.com", firstName: "Friend" }
+      ],
+      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
     }
   end
 

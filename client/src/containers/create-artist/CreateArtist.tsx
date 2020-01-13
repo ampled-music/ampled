@@ -994,17 +994,19 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       method: 'post',
       url: '/artist_pages',
       data: {
-        name: artistName,
-        bio: artistMessage,
-        location: artistLocation,
-        accent_color: artistColor,
-        slug: artistSlug.toLowerCase(),
-        video_url: artistVideo,
-        instagram_handle: artistInstagram,
-        twitter_handle: artistTwitter,
+        artist_page: {
+          name: artistName,
+          bio: artistMessage,
+          location: artistLocation,
+          accent_color: artistColor,
+          slug: artistSlug.toLowerCase(),
+          video_url: artistVideo,
+          instagram_handle: artistInstagram,
+          twitter_handle: artistTwitter,
+          verb_plural: artistVerb !== 'is',
+        },
         images,
         members,
-        verb_plural: artistVerb !== 'is',
       },
     });
 

@@ -96,7 +96,7 @@ class ArtistPagesController < ApplicationController
 
   # Helper functions for creating / updating an artist page.
   def set_members
-    params[:members] || [].map.with_index do |member, index|
+    params[:members].map.with_index do |member, index|
       member_user = if index.zero?
                       current_user
                     else
@@ -115,7 +115,7 @@ class ArtistPagesController < ApplicationController
 
   def set_images
     # - create new images based on uploads
-    params[:images] || [].map.with_index do |image_url, index|
+    params[:images].map.with_index do |image_url, index|
       @artist_page.images.create(url: image_url, order: index)
     end
   end

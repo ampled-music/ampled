@@ -566,6 +566,13 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               <div className="create-artist__copy">
                 Let us know a few things about who you are and how you want to
                 present yourself.
+                <br />
+                <br />
+                <b>
+                  You can't change your artist/band name or your custom link
+                  later
+                </b>
+                , so make sure they're right.
               </div>
             </div>
           </div>
@@ -807,7 +814,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                       used as accents on both your page and around the site.
                     </p>
                     <p>
-                      The lighter version (20% opacity) of the color is how the
+                      The lighter version (20% opacity) of the color is how it
                       will appear in certain rare instances.
                     </p>
                   </div>

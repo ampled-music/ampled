@@ -30,6 +30,7 @@ import { ArtistInfo } from './ArtistInfo';
 import { PostForm } from './posts/post-form/PostForm';
 import { NoArtist } from '../shared/no-artist/NoArtist';
 import { routePaths } from '../route-paths';
+import { Link } from 'react-router-dom';
 
 interface ArtistProps {
   match: {
@@ -179,9 +180,10 @@ class ArtistComponent extends React.Component<Props, any> {
 
     return (
       me.userData &&
-      me.userData.artistPages.find(
-        (page) => page.artistId === +this.props.artists.artist.id,
-      )
+      (me.userData.admin ||
+        me.userData.artistPages.find(
+          (page) => page.artistId === +this.props.artists.artist.id,
+        ))
     );
   };
 
@@ -235,6 +237,12 @@ class ArtistComponent extends React.Component<Props, any> {
       this.setState({ openWhyModal: false });
     }
   };
+
+  renderSticky = (message: any, color: string) => (
+    <div className="artistAlertHeader" style={{ background: color }}>
+      {message}
+    </div>
+  );
 
   render() {
     const {
@@ -316,6 +324,26 @@ class ArtistComponent extends React.Component<Props, any> {
               </title>
             </Helmet>
           )}
+          {artist &&
+            !artist.approved &&
+            loggedUserAccess &&
+            this.renderSticky(
+              <span>
+                Your page hasn't been approved yet, so only you and your
+                bandmates can see it.
+              </span>,
+              '#99eeee',
+            )}
+          {artist &&
+            !artist.isStripeSetup &&
+            loggedUserAccess &&
+            this.renderSticky(
+              <span>
+                You can't be supported or make private posts until you set up
+                payouts in your <Link to={routePaths.settings}>settings</Link>.
+              </span>,
+              '#99eeee',
+            )}
           <ArtistHeader
             artist={artist}
             openVideoModal={this.openVideoModal}

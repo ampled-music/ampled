@@ -2,6 +2,7 @@
 #
 # Table name: users
 #
+#  admin                  :boolean
 #  bio                    :string
 #  card_brand             :string
 #  card_exp_month         :string

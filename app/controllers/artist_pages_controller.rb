@@ -31,6 +31,10 @@ class ArtistPagesController < ApplicationController
       return render json: { status: "error", message: "Confirm your email address first." }
     end
 
+    if (artist_page_params[:name].nil? || artist_page_params[:slug].nil?)
+      return render json: { status: "error", message: "Missing required parameters." }
+    end
+
     unless (@artist_page = ArtistPage.create(artist_page_params))
       return render json: { status: "error", message: "Something went wrong." }
     end
@@ -91,7 +95,7 @@ class ArtistPagesController < ApplicationController
 
   # Helper functions for creating / updating an artist page.
   def set_members
-    params[:members].map.with_index do |member, index|
+    params[:members] || [].map.with_index do |member, index|
       member_user = if index.zero?
                       current_user
                     else
@@ -110,7 +114,7 @@ class ArtistPagesController < ApplicationController
 
   def set_images
     # - create new images based on uploads
-    params[:images].map.with_index do |image_url, index|
+    params[:images] || [].map.with_index do |image_url, index|
       @artist_page.images.create(url: image_url, order: index)
     end
   end

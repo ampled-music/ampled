@@ -6,24 +6,35 @@ RSpec.describe ArtistPagesController, type: :request do
 
   let(:create_params) do
     {
-      name: "Test",
-      slug: "testslug",
-      members: ["testfriend@ampled.com"]
+      artist_page: {
+        name: "Test",
+        slug: "testslug",
+        bio: "About me",
+        members: [
+          { email: "creator@ampled.com", firstName: "Creator" },
+          { email: "testfriend@ampled.com", firstname: "Friend" }
+        ],
+        images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+      }
     }
   end
 
   let(:missing_create_params) do
     {
-      slug: "sluggy",
-      members: [
-        { email: "creator@ampled.com" },
-        { email: "testfriend@ampled.com" }
-      ]
+      artist_page: {
+        slug: "sluggy",
+        bio: "About me",
+        members: [
+          { email: "creator@ampled.com", firstName: "Creator" },
+          { email: "testfriend@ampled.com", firstname: "Friend" }
+        ],
+        images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+      }
     }
   end
 
   context "when creating an artist page" do
-    let(:url) { "/artist_pages.json" }
+    let(:url) { "/artist_pages" }
 
     it "stops unconfirmed users from creating" do
       post url, params: create_params
@@ -38,7 +49,7 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(JSON.parse(response.body)["status"]).to eq "error"
     end
 
-    xit "allows confirmed users to create" do
+    it "allows confirmed users to create" do
       sign_in user
       post url, params: create_params
 

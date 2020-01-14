@@ -29,6 +29,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     stripe_dashboard_url: Field::Text,
     video_url: Field::String,
     approved: Field::Boolean,
+    featured: Field::Boolean,
     verb_plural: Field::Boolean
   }.freeze
 
@@ -61,6 +62,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :stripe_dashboard_url,
     :video_url,
     :approved,
+    :featured,
     :verb_plural
   ].freeze
 
@@ -78,6 +80,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :instagram_handle,
     :video_url,
     :approved,
+    :featured,
     :verb_plural
   ].freeze
 

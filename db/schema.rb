@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_13_173804) do
+ActiveRecord::Schema.define(version: 2020_01_14_005529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2020_01_13_173804) do
     t.string "slug"
     t.boolean "verb_plural", default: false
     t.boolean "approved", default: false
+    t.boolean "featured", default: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 

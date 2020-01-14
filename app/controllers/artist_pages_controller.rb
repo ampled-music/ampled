@@ -4,7 +4,7 @@ class ArtistPagesController < ApplicationController
   before_action :check_create_okay, only: :create
 
   def index
-    @artist_pages = ArtistPage.where(:featured => true)
+    @artist_pages = ArtistPage.where(featured: true)
 
     respond_to do |format|
       format.html

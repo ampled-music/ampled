@@ -3,9 +3,11 @@
 # Table name: artist_pages
 #
 #  accent_color         :string
+#  approved             :boolean          default(FALSE)
 #  banner_image_url     :string
 #  bio                  :string
 #  created_at           :datetime         not null
+#  featured             :boolean          default(FALSE)
 #  id                   :bigint(8)        not null, primary key
 #  instagram_handle     :string
 #  location             :string
@@ -17,6 +19,7 @@
 #  stripe_user_id       :string
 #  twitter_handle       :string
 #  updated_at           :datetime         not null
+#  verb_plural          :boolean          default(FALSE)
 #  video_screenshot_url :string
 #  video_url            :string
 #

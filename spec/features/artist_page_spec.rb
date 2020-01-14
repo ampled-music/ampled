@@ -4,13 +4,30 @@ RSpec.describe ArtistPagesController, type: :request do
   let(:user) { create(:user, confirmed_at: Time.current) }
   let(:supporter) { create(:user, confirmed_at: Time.current) }
 
-  let(:artist_page) { create(:artist_page, slug: "test") }
+  let(:artist_page) { create(:artist_page, slug: "test", approved: true) }
+  let(:artist_page_unapproved) { create(:artist_page, slug: "unapproved", approved: false) }
 
   before(:each) do
     sign_in user
   end
 
-  context "when loading artist_page data" do
+  context "when loading all artist_pages" do
+    let(:url) { "/artist_pages.json" }
+
+    it "returns 200" do
+      get url
+
+      expect(response.status).to eq 200
+    end
+
+    it "responds with a JSON array" do
+      get url
+
+      expect(JSON.parse(response.body)).to be_a(Array)
+    end
+  end
+
+  context "when loading approved artist_page data" do
     let(:url) { "/artist_pages/#{artist_page.id}.json" }
     let(:slugurl) { "/slug/#{artist_page.slug}.json" }
 
@@ -44,6 +61,17 @@ RSpec.describe ArtistPagesController, type: :request do
       get url
 
       expect(JSON.parse(response.body)["supporters"].count).to eq 0
+    end
+  end
+
+  context "when loading unapproved artist_page data as an anonymous user" do
+    let(:url) { "/artist_pages/#{artist_page_unapproved.id}.json" }
+    let(:slugurl) { "/slug/#{artist_page_unapproved.slug}.json" }
+
+    it "returns 400" do
+      get url
+
+      expect(response.status).to eq 400
     end
   end
 end

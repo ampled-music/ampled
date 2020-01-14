@@ -34,6 +34,7 @@ class UserDashboard < Administrate::BaseDashboard
     ship_state: Field::String,
     ship_country: Field::String,
     ship_zip: Field::String,
+    admin: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -71,7 +72,8 @@ class UserDashboard < Administrate::BaseDashboard
     :ship_city,
     :ship_state,
     :ship_zip,
-    :ship_country
+    :ship_country,
+    :admin,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -91,7 +93,8 @@ class UserDashboard < Administrate::BaseDashboard
     :ship_city,
     :ship_state,
     :ship_zip,
-    :ship_country
+    :ship_country,
+    :admin,
   ].freeze
 
   # Overwrite this method to customize how users are displayed

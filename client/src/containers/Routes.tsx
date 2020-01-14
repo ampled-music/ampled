@@ -12,6 +12,7 @@ import { routePaths } from './route-paths';
 // import { UserSettings } from './settings/UserSettings';
 // import { UserDetails } from './user-details/UserDetails';
 // import { ResetPassword } from './connect/ResetPassword';
+// import { CreateArtist } from './create-artist/CreateArtist';
 
 const LazyPostForm = React.lazy(() =>
   import('./artist/posts/post-form/PostForm').then((module) => ({
@@ -44,6 +45,11 @@ const LazyUserDetails = React.lazy(() =>
     default: module.UserDetails,
   })),
 );
+const LazyCreateArtist = React.lazy(() =>
+  import('./create-artist/CreateArtist').then((module) => ({
+    default: module.CreateArtist,
+  })),
+);
 
 const Routes = () => {
   return (
@@ -72,6 +78,11 @@ const Routes = () => {
         component={LazyResetPassword}
       />
       <PublicRoute exact path={routePaths.noArtist} component={LazyNoArtist} />
+      <ProtectedRoute
+        exact
+        path={routePaths.createArtist}
+        component={LazyCreateArtist}
+      />
       <ProtectedRoute
         exact
         path={routePaths.settings}

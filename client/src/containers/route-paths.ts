@@ -11,5 +11,6 @@ export const routePaths = {
   upload: '/upload',
   settings: '/settings',
   userDetails: '/user-details',
+  createArtist: '/create-artist',
   noArtist: '/no_artist',
 };

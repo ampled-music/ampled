@@ -44,7 +44,9 @@ class PostComponent extends React.Component<any, any> {
   canLoggedUserPost = () => {
     return (
       this.props.loggedUserAccess &&
-      this.props.loggedUserAccess.role === UserRoles.Owner
+      (this.props.loggedUserAccess.role === UserRoles.Admin ||
+        this.props.loggedUserAccess.role === UserRoles.Member ||
+        this.props.loggedUserAccess.role === UserRoles.Owner)
     );
   };
 
@@ -114,9 +116,12 @@ class PostComponent extends React.Component<any, any> {
 
     return (
       loggedUserAccess &&
-      [UserRoles.Supporter.toString(), UserRoles.Owner.toString()].includes(
-        loggedUserAccess.role,
-      )
+      [
+        UserRoles.Supporter.toString(),
+        UserRoles.Owner.toString(),
+        UserRoles.Admin.toString(),
+        UserRoles.Member.toString(),
+      ].includes(loggedUserAccess.role)
     );
   };
 
@@ -124,7 +129,10 @@ class PostComponent extends React.Component<any, any> {
     const { loggedUserAccess, me } = this.props;
 
     return (
-      (loggedUserAccess && loggedUserAccess.role === UserRoles.Owner) ||
+      (loggedUserAccess &&
+        (loggedUserAccess.role === UserRoles.Owner ||
+          loggedUserAccess.role === UserRoles.Admin ||
+          loggedUserAccess.role === UserRoles.Member)) ||
       (me && commentUserId === me.id)
     );
   };
@@ -298,9 +306,11 @@ class PostComponent extends React.Component<any, any> {
               ))}
 
             {this.isUserSubscribed() &&
-              ![UserRoles.Owner.toString()].includes(
-                this.props.loggedUserAccess.role,
-              ) &&
+              ![
+                UserRoles.Owner.toString(),
+                UserRoles.Admin.toString(),
+                UserRoles.Member.toString(),
+              ].includes(this.props.loggedUserAccess.role) &&
               isPrivate && (
                 <div className="post__status">
                   <FontAwesomeIcon className="unlock" icon={faUnlock} />

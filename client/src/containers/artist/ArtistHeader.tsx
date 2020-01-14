@@ -103,6 +103,11 @@ export class ArtistHeader extends React.Component<Props, any> {
               {owner.name}
               {owner.last_initial && <span> {owner.last_initial}.</span>}
             </div>
+            {owner.instrument && (
+              <div className="supporter__hover-card_header_info_name">
+                {owner.instrument}
+              </div>
+            )}
             {owner.joined_since && (
               <div className="supporter__hover-card_header_info_since">
                 Joined Ampled {owner.joined_since}
@@ -274,7 +279,9 @@ export class ArtistHeader extends React.Component<Props, any> {
   canLoggedUserPost = () => {
     return (
       this.props.loggedUserAccess &&
-      this.props.loggedUserAccess.role === UserRoles.Owner
+      (this.props.loggedUserAccess.role === UserRoles.Admin ||
+        this.props.loggedUserAccess.role === UserRoles.Member ||
+        this.props.loggedUserAccess.role === UserRoles.Owner)
     );
   };
 

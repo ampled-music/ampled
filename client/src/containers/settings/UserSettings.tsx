@@ -279,6 +279,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
             ></div>
             <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
+              <p className="artist__info_role">
+                {ownedPage.role
+                  ? ownedPage.role.charAt(0).toUpperCase() +
+                    ownedPage.role.slice(1) +
+                    ' of'
+                  : ''}
+              </p>
               <p
                 className="artist__info_name"
                 onClick={() => this.redirectToArtistPage(ownedPage)}
@@ -324,28 +331,30 @@ class UserSettingsComponent extends React.Component<Props, any> {
                         icon={faStripe}
                       />
                     </div>
-                    <div className="col-8">
-                      {ownedPage.isStripeSetup ? (
-                        <a
-                          href={ownedPage.stripeDashboard}
-                          className="details__stripe_link"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Edit Payout Details
-                        </a>
-                      ) : (
-                        <a
-                          href={ownedPage.stripeSignup}
-                          className="details__stripe_link"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{ color: '#d9534f' }}
-                        >
-                          Set Up Payouts
-                        </a>
-                      )}
-                    </div>
+                    {ownedPage.role === 'admin' && (
+                      <div className="col-8">
+                        {ownedPage.isStripeSetup ? (
+                          <a
+                            href={ownedPage.stripeDashboard}
+                            className="details__stripe_link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Edit Payout Details
+                          </a>
+                        ) : (
+                          <a
+                            href={ownedPage.stripeSignup}
+                            className="details__stripe_link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#d9534f' }}
+                          >
+                            Set Up Payouts
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

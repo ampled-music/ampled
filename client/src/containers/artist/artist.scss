@@ -2,6 +2,13 @@
 @import '../../theme/mixins.scss';
 @import '../../theme/global.scss';
 
+.artistAlertHeader {
+  font-family: $font-family-sans-serif;
+  text-align: center;
+  padding: 10px;
+  margin: 4px 0;
+}
+
 .artist-header {
   font-family: $font-family-sans-serif;
   margin-top: 50px;

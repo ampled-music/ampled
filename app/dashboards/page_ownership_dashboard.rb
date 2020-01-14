@@ -14,6 +14,8 @@ class PageOwnershipDashboard < Administrate::BaseDashboard
     ),
     artist_page: Field::BelongsTo,
     id: Field::Number,
+    role: Field::String,
+    instrument: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -26,8 +28,8 @@ class PageOwnershipDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :user,
     :artist_page,
-    :id,
     :created_at,
+    :role,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -38,6 +40,8 @@ class PageOwnershipDashboard < Administrate::BaseDashboard
     :id,
     :created_at,
     :updated_at,
+    :role,
+    :instrument,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -46,6 +50,8 @@ class PageOwnershipDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :user,
     :artist_page,
+    :role,
+    :instrument,
   ].freeze
 
   # Overwrite this method to customize how page ownerships are displayed

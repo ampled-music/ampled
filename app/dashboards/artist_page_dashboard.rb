@@ -11,7 +11,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     "#{artist_page.name} - #{artist_page.id}"
   end
   ATTRIBUTE_TYPES = {
-    owners: Field::HasMany.with_options(class_name: "User", show: %i[email], searchable: true,
+    owners: Field::HasMany.with_options(class_name: "User", show: %i[email], searchable: false,
                                         searchable_field: 'email'),
     images: Field::HasMany.with_options(show: %i[url]),
     id: Field::Number,

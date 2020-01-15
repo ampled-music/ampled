@@ -22,7 +22,6 @@ class UserDashboard < Administrate::BaseDashboard
     name: Field::String,
     last_name: Field::String,
     profile_image_url: Field::String,
-    password: Field::String,
     city: Field::String,
     country: Field::String,
     twitter: Field::String,

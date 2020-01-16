@@ -19,6 +19,7 @@ class ProtectModal extends React.Component<any> {
     this.props.openAuthModal({
       modalPage: this.props.modalPage || 'login',
       customLoginMessage: 'This page requires you to be logged in.',
+      onModalCloseAction: () => (window.location.href = '/'),
     });
   }
 

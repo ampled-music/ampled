@@ -7,6 +7,7 @@ export const initialState = {
   modalPage: 'login',
   showSupportMessage: undefined,
   customLoginMessage: undefined,
+  onModalCloseAction: undefined,
   redirectTo: undefined,
   artistName: undefined,
   error: undefined,

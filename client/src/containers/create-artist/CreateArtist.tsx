@@ -577,7 +577,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         <div className="artist-about">
           <div className="row">
             <div className="col-md-6 col-sm-12">
-              <div className="create-artist__title">About</div>
+              {/* <div className="create-artist__title">About</div> */}
               <div className="create-artist__copy">
                 <b>
                   You can't change your artist/band name or your custom link

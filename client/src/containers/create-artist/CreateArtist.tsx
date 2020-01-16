@@ -630,6 +630,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 fullWidth
                 required
                 InputProps={{
+                  autoComplete: 'off',
+                  inputProps: { autoCapitalize: 'off', autoCorrect: 'off' },
                   startAdornment: (
                     <InputAdornment position="start">
                       ampled.com/artist/

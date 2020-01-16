@@ -92,6 +92,8 @@
       flex-direction: column;
       margin: 1rem;
       padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid $black;
 
       &.primary {
         background: $gray-light;

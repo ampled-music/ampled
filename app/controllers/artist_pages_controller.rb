@@ -73,9 +73,10 @@ class ArtistPagesController < ApplicationController
   end
 
   def check_create_okay
-    current_user&.reload
+    # Pull user from DB in case they've confirmed recently.
+    user = User.find_by(id: current_user&.id)
     # Only logged-in users who have confirmed their emails may create artist pages.
-    if current_user.nil? || current_user.confirmed_at.nil?
+    if current_user.nil? || user&.confirmed_at.nil?
       render json: { status: "error", message: "Confirm your email address first." }
     elsif artist_page_params[:name].nil? || artist_page_params[:slug].nil?
       render json: { status: "error", message: "Missing required parameters." }

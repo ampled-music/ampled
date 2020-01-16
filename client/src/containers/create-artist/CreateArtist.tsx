@@ -511,7 +511,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
 
   handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    if (name == 'artistSlug') {
+      this.setState({ [name]: value.toLowerCase() });
+    } else {
+      this.setState({ [name]: value });
+    }
   };
 
   renderHeader = () => {

@@ -19,6 +19,11 @@
     padding-top: 6rem;
     justify-content: space-between;
 
+    @include mq(0, $tablet) {
+      height: auto;
+      padding-top: unset;
+    }
+
     &_tear {
       width: 100%;
     }

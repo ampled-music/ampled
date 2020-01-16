@@ -225,9 +225,9 @@ const Members = ({
             <div className="create-artist__copy">
               Who else is a member of{' '}
               {bandName && bandName.length ? bandName : 'your band'}? Add them
-              here. Admins have the ability to add/ remove members and access
-              and edit payout info. After you finish filling out this form,
-              we’ll send them an email invite to join the page.
+              here. Admins have the ability to add / remove members and access /
+              edit payout info. After you finish filling out this form, we’ll
+              send them an email invite to join the page.
               {/* This step is optional, but we encourage you to list the members of
               your project or band to further connect with your audience and
               give them insight into your own interests. The order in which they
@@ -446,10 +446,14 @@ const Member = ({
           </div> */}
           <div className="row">
             <div className="col-12 create-artist__copy">
-              {isMe ? 'You' : 'Members'} can edit {isMe ? 'your ' : 'their '}
-              name, photo, social handles, etc. in {isMe ? 'your ' : 'their '}
-              <Link to="/user-details">user details</Link>
-              {isMe ? '' : ' after they register'}.
+              <h6>
+                {isMe ? 'You' : 'Members'} can edit {isMe ? 'your ' : 'their '}
+                name, photo, social handles, etc. in {isMe ? 'your ' : 'their '}
+                <a href="/user-details" target="_blank">
+                  user details
+                </a>
+                {isMe ? '' : ' after they register'}.
+              </h6>
             </div>
           </div>
         </CardContent>
@@ -782,6 +786,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="row">
             <div className="col-md-6 col-sm-12">
               <div className="create-artist__subtitle">Featured Images</div>
+              <h6>Minimum resolution: 700 X 700 Maximum size: 5mb</h6>
               {/* <div className="create-artist__copy">
                 You can have several photos for your profile, but there can be
                 only one profile photo, which will be used to identify you to
@@ -792,7 +797,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           </div>
           <div className="row">
             {imageTypes.map((type, index) => (
-              <div className="col-md-3 col-sm-12" key={index}>
+              <div className="col-md-4 col-sm-12" key={index}>
                 <ImageUploader
                   altText={type}
                   setURL={imageSetter(index)}
@@ -800,11 +805,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 />
               </div>
             ))}
-            <div className="col-md-3 col-sm-12">
-              <div className="create-artist__copy">
-                Minimum resolution: 700 X 700 Maximum size: 5mb
-              </div>
-            </div>
           </div>
         </div>
       </div>

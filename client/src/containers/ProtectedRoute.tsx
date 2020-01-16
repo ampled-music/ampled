@@ -17,8 +17,9 @@ import {
 class ProtectModal extends React.Component<any> {
   componentDidMount() {
     this.props.openAuthModal({
-      modalPage: 'login',
+      modalPage: this.props.modalPage || 'login',
       customLoginMessage: 'This page requires you to be logged in.',
+      onModalCloseAction: () => (window.location.href = '/'),
     });
   }
 
@@ -27,7 +28,12 @@ class ProtectModal extends React.Component<any> {
   }
 }
 
-const ProtectedRoute = ({ component: Component, openAuthModal, ...rest }) => {
+const ProtectedRoute = ({
+  component: Component,
+  modalPage = 'login',
+  openAuthModal,
+  ...rest
+}) => {
   const renderComponent = (props) => {
     const isLoggedIn = !!store.get(config.localStorageKeys.token);
 
@@ -45,7 +51,10 @@ const ProtectedRoute = ({ component: Component, openAuthModal, ...rest }) => {
             {isLoggedIn ? (
               <Component {...props} />
             ) : (
-              <ProtectModal openAuthModal={openAuthModal} />
+              <ProtectModal
+                modalPage={modalPage}
+                openAuthModal={openAuthModal}
+              />
             )}
           </main>
         </div>

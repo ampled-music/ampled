@@ -176,14 +176,22 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   getLoggedUserPageAccess = () => {
-    const { me } = this.props;
+    const {
+      me: { userData },
+    } = this.props;
+
+    if (userData?.admin) {
+      return {
+        artistId: +this.props.artists.artist.id,
+        role: 'admin',
+      };
+    }
 
     return (
-      me.userData &&
-      (me.userData.admin ||
-        me.userData.artistPages.find(
-          (page) => page.artistId === +this.props.artists.artist.id,
-        ))
+      userData &&
+      userData?.artistPages.find(
+        (page) => page.artistId === +this.props.artists.artist.id,
+      )
     );
   };
 

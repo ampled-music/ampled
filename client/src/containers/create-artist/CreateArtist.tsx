@@ -205,30 +205,41 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
   }
 }
 
-const Members = ({ members, addMember, removeMember, handleChange }) => {
+const Members = ({
+  bandName,
+  members,
+  addMember,
+  removeMember,
+  handleChange,
+}) => {
   return (
     <div className="container">
       <div className="artist-members">
         <div className="row">
           <div className="col-md-6">
-            <div className="create-artist__title">Members</div>
+            <div className="create-artist__title">Add Members</div>
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
             <div className="create-artist__copy">
-              This step is optional, but we encourage you to list the members of
+              Who else is a member of{' '}
+              {bandName && bandName.length ? bandName : 'your band'}? Add them
+              here. Admins have the ability to add / remove members and access /
+              edit payout info. After you finish filling out this form, we’ll
+              send them an email invite to join the page.
+              {/* This step is optional, but we encourage you to list the members of
               your project or band to further connect with your audience and
               give them insight into your own interests. The order in which they
-              will appear can be altered below.
+              will appear can be altered below. */}
             </div>
           </div>
-          <div className="col-md-6">
+          {/* <div className="col-md-6">
             <div className="create-artist__copy">
               All members marked as admins will be notified of payouts, changes,
               and updates, unless specified otherwise.
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="row">
@@ -435,10 +446,14 @@ const Member = ({
           </div> */}
           <div className="row">
             <div className="col-12 create-artist__copy">
-              {isMe ? 'You' : 'Members'} can edit {isMe ? 'your ' : 'their '}
-              name, photo, social handles, etc. in {isMe ? 'your ' : 'their '}
-              <Link to="/user-details">user details</Link>
-              {isMe ? '' : ' after they register'}.
+              <h6>
+                {isMe ? 'You' : 'Members'} can edit {isMe ? 'your ' : 'their '}
+                name, photo, social handles, etc. in {isMe ? 'your ' : 'their '}
+                <a href="/user-details" target="_blank">
+                  user details
+                </a>
+                {isMe ? '' : ' after they register'}.
+              </h6>
             </div>
           </div>
         </CardContent>
@@ -562,12 +577,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         <div className="artist-about">
           <div className="row">
             <div className="col-md-6 col-sm-12">
-              <div className="create-artist__title">About</div>
+              {/* <div className="create-artist__title">About</div> */}
               <div className="create-artist__copy">
-                Let us know a few things about who you are and how you want to
-                present yourself.
-                <br />
-                <br />
                 <b>
                   You can't change your artist/band name or your custom link
                   later
@@ -619,6 +630,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 fullWidth
                 required
                 InputProps={{
+                  autoComplete: 'off',
+                  inputProps: { autoCapitalize: 'off', autoCorrect: 'off' },
                   startAdornment: (
                     <InputAdornment position="start">
                       ampled.com/artist/
@@ -672,12 +685,17 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           </div>
           <div className="row">
             <div className="col-md-4 col-sm-12">
-              <div className="create-artist__subtitle">Message</div>
+              <div className="create-artist__subtitle">Written Message</div>
+              <h6>Required</h6>
+              <h6>
+                This message is featured on your artist page. You can edit this
+                later.
+              </h6>
             </div>
             <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistMessage"
-                label="Message from the artist"
+                label="Tell everyone who you are, what brought you to join Ampled, and why they should support you."
                 id="message"
                 value={this.state.artistMessage || ''}
                 onChange={this.handleChange}
@@ -731,9 +749,12 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           </div>
           <div className="row">
             <div className="col-md-4 col-sm-12">
-              <div className="create-artist__subtitle">
-                Artist Video Message
-              </div>
+              <div className="create-artist__subtitle">Video Message</div>
+              <h6>Optional</h6>
+              <h6>
+                This video is featured on your artist page. You can add this
+                later.
+              </h6>
             </div>
             <div className="col-md-8 col-sm-12">
               <TextField
@@ -766,18 +787,19 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         <div className="image-upload">
           <div className="row">
             <div className="col-md-6 col-sm-12">
-              <div className="create-artist__subtitle">Artist Images</div>
-              <div className="create-artist__copy">
+              <div className="create-artist__subtitle">Featured Images</div>
+              <h6>Minimum resolution: 700 X 700 Maximum size: 5mb</h6>
+              {/* <div className="create-artist__copy">
                 You can have several photos for your profile, but there can be
                 only one profile photo, which will be used to identify you to
                 your supporters in certain scenarios. Select your primary photo
                 and then up to two secondary photos for your profile.
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="row">
             {imageTypes.map((type, index) => (
-              <div className="col-md-3 col-sm-12" key={index}>
+              <div className="col-md-4 col-sm-12" key={index}>
                 <ImageUploader
                   altText={type}
                   setURL={imageSetter(index)}
@@ -785,11 +807,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 />
               </div>
             ))}
-            <div className="col-md-3 col-sm-12">
-              <div className="create-artist__copy">
-                Minimum resolution: 700 X 700 Maximum size: 5mb
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -807,16 +824,23 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="row justify-content-between">
               <div className="col-md-6 col-sm-12">
                 <div className="artist-color__info">
-                  <div className="create-artist__subtitle">Artist Color</div>
+                  <div className="create-artist__subtitle">Accent Color</div>
                   <div className="create-artist__copy">
                     <p>
-                      Select a color for your artist page. This color will be
-                      used as accents on both your page and around the site.
+                      Select a color for your artist page.
+                      {/* This color will be
+                      used as accents on both your page and around the site. */}
                     </p>
-                    <p>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    {/* <p>
                       The lighter version (20% opacity) of the color is how it
                       will appear in certain rare instances.
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>
@@ -831,7 +855,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
         </div>
-        <div
+        {/* <div
           className="secondary-color"
           style={{ backgroundColor: this.state.artistColorAlpha }}
         >
@@ -842,7 +866,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   };
@@ -1043,6 +1067,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           {this.renderImages()}
           {this.renderColor()}
           <Members
+            bandName={this.state.artistName}
             members={this.state.members}
             handleChange={this.updateMemberDetails}
             addMember={this.addMember}

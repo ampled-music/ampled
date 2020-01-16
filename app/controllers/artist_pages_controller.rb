@@ -73,6 +73,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def check_create_okay
+    current_user.reload
     # Only logged-in users who have confirmed their emails may create artist pages.
     if current_user.nil? || current_user.confirmed_at.nil?
       render json: { status: "error", message: "Confirm your email address first." }

@@ -78,6 +78,9 @@
   }
 
   .image-upload {
+    .loading-circle {
+      margin: auto;
+    }
     .btn-upload {
       background-color: $white;
     }
@@ -137,6 +140,12 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity $speed;
+        &:hover {
+          opacity: 1;
+        }
         span {
           font-family: $font-family-sans-serif;
           margin-top: 1rem;

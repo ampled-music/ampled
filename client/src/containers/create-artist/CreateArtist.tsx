@@ -159,7 +159,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
         </>
       );
     } else if (loadingImage) {
-      body = <CircularProgress />;
+      body = <CircularProgress className="loading-circle" />;
     } else {
       body = (
         <>

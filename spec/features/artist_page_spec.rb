@@ -37,13 +37,13 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(response.status).to eq 200
     end
 
-    xit "responds with JSON including the artist_page id" do
+    it "responds with JSON including the artist_page id" do
       get url
 
       expect(JSON.parse(response.body)["id"]).to eq artist_page.id
     end
 
-    xit "responds with JSON including the artist_page slug" do
+    it "responds with JSON including the artist_page slug" do
       get slugurl
 
       expect(JSON.parse(response.body)["slug"]).to eq artist_page.slug

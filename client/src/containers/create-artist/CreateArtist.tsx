@@ -4,7 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import SwipeableViews from 'react-swipeable-views';
+// import SwipeableViews from 'react-swipeable-views';
 import {
   TextField,
   Radio,
@@ -47,12 +47,6 @@ import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
 
 interface CreateArtistProps {
   me: any;
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
 }
 
 interface ImageUploaderProps {
@@ -174,6 +168,69 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
           onChange={this.processImage}
         />
         {body}
+      </div>
+    );
+  }
+}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
+
+const TabPanel = (props: TabPanelProps) => {
+  const { children, value, index, ...other } = props;
+  const [value, setValue] = React.useState(0);
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </Typography>
+  );
+};
+
+class SimpleTabs extends React.Component<TabPanelProps> {
+  handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
+  };
+
+  a11yProps = (index: any) => {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  };
+  render() {
+    return (
+      <div>
+        <AppBar position="static">
+          <Tabs
+            value={value}
+            onChange={this.handleChange}
+            aria-label="simple tabs example"
+          >
+            <Tab label="Item One" {...a11yProps(0)} />
+            <Tab label="Item Two" {...a11yProps(1)} />
+            <Tab label="Item Three" {...a11yProps(2)} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0}>
+          Item One
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          Item Two
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          Item Three
+        </TabPanel>
       </div>
     );
   }
@@ -436,30 +493,6 @@ const Member = ({
   );
 };
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={3}>{children}</Box>}
-    </Typography>
-  );
-}
-
-function a11yProps(index: any) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
 class CreateArtist extends React.Component<CreateArtistProps, any> {
   state = {
     artistColor: '#baddac',
@@ -523,39 +556,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <h1>Create Your Artist Page</h1>
         </div>
         <img className="create-artist__header_tear" src={tear} alt="" />
-      </div>
-    );
-  };
-
-  renderNav = () => {
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-      setValue(newValue);
-    };
-
-    return (
-      <div>
-        <AppBar position="static">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="simple tabs example"
-          >
-            <Tab label="Item One" {...a11yProps(0)} />
-            <Tab label="Item Two" {...a11yProps(1)} />
-            <Tab label="Item Three" {...a11yProps(2)} />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0}>
-          Item One
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Item Three
-        </TabPanel>
       </div>
     );
   };
@@ -1050,7 +1050,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="create-artist">
         <MuiThemeProvider theme={theme}>
           {this.renderHeader()}
-          {this.renderNav()}
           {this.renderAbout()}
           {this.renderInfo()}
           {this.renderImages()}

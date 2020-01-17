@@ -189,7 +189,7 @@ class ArtistComponent extends React.Component<Props, any> {
 
     return (
       userData &&
-      userData?.artistPages.find(
+      userData?.ownedPages.find(
         (page) => page.artistId === +this.props.artists.artist.id,
       )
     );
@@ -246,10 +246,8 @@ class ArtistComponent extends React.Component<Props, any> {
     }
   };
 
-  renderSticky = (message: any, color: string) => (
-    <div className="artistAlertHeader" style={{ background: color }}>
-      {message}
-    </div>
+  renderSticky = (message: any) => (
+    <div className="artistAlertHeader">{message}</div>
   );
 
   render() {
@@ -337,20 +335,21 @@ class ArtistComponent extends React.Component<Props, any> {
             loggedUserAccess &&
             this.renderSticky(
               <span>
-                Your page hasn't been approved yet, so only you and your
-                bandmates can see it.
+                Your page is pending a quick approval.{' '}
+                <Link to={routePaths.settings}>Learn more here</Link>.
               </span>,
-              '#99eeee',
             )}
           {artist &&
             !artist.isStripeSetup &&
             loggedUserAccess &&
             this.renderSticky(
               <span>
-                You can't be supported or make private posts until you set up
-                payouts in your <Link to={routePaths.settings}>settings</Link>.
+                Right now you can't be supported until you{' '}
+                <a href={loggedUserAccess.stripeSignup}>
+                  set up your Stripe Account
+                </a>
+                .
               </span>,
-              '#99eeee',
             )}
           <ArtistHeader
             artist={artist}

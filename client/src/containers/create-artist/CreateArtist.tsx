@@ -178,10 +178,10 @@ interface TabPanelProps {
   index: any;
   value: any;
 }
+const [value, setValue] = React.useState(0);
 
 const TabPanel = (props: TabPanelProps) => {
   const { value, index, children } = this.props;
-  // const [value, setValue] = React.useState(0);
 
   return (
     <Typography
@@ -190,7 +190,7 @@ const TabPanel = (props: TabPanelProps) => {
       hidden={value !== props.index}
       id={`simple-tabpanel-${props.index}`}
       aria-labelledby={`simple-tab-${props.index}`}
-      {...other}
+      // {...other}
     >
       {value === index && <Box p={3}>{children}</Box>}
     </Typography>
@@ -1052,6 +1052,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="create-artist">
         <MuiThemeProvider theme={theme}>
           {this.renderHeader()}
+          {/* <SimpleTabs /> */}
           {this.renderAbout()}
           {this.renderInfo()}
           {this.renderImages()}

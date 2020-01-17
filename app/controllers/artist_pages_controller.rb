@@ -46,7 +46,8 @@ class ArtistPagesController < ApplicationController
 
   def update
     if @artist_page.update(artist_page_params)
-      redirect_to @artist_page, notice: "Artist page was successfully updated."
+      render json: { status: "ok", message: "Your page has been updated!" }
+      # redirect_to @artist_page, notice: "Artist page was successfully updated."
     else
       render :edit
     end

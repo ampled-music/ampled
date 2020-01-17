@@ -48,6 +48,8 @@ import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
 
 interface CreateArtistProps {
   me: any;
+  editMode?: boolean;
+  artist?: any;
 }
 
 interface TabPanelProps {
@@ -483,6 +485,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   componentDidUpdate = (prevProps) => {
     const {
       me: { userData },
+      artist,
+      editMode,
     } = this.props;
     if (userData && !prevProps?.me?.userData) {
       const { name, last_name, instagram, twitter, image, email } = userData;
@@ -500,6 +504,72 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             photo: image,
           },
         ],
+      });
+    }
+    if (editMode && artist && !prevProps?.artist?.name && artist.name) {
+      console.log(artist);
+      const {
+        accent_color,
+        name,
+        verb_plural,
+        location,
+        bio,
+        twitter_handle,
+        instagram_handle,
+        video_url,
+        slug,
+        owners,
+        images,
+      } = artist;
+      this.setState({
+        artistColor: accent_color,
+        artistName: name,
+        artistVerb: verb_plural ? 'are' : 'is',
+        artistLocation: location,
+        artistMessage: bio,
+        artistTwitter: twitter_handle,
+        artistInstagram: instagram_handle,
+        artistVideo: video_url,
+        artistSlug: slug,
+        artistStripe: '',
+        members: (owners || []).map((owner) => ({
+          firstName: owner.name || '',
+          instrument: owner.instrument || '',
+        })),
+        images: images || [],
+      });
+    }
+  };
+
+  componentDidMount = () => {
+    const { artist, editMode } = this.props;
+    if (editMode && artist && artist.name) {
+      const {
+        accent_color,
+        name,
+        verb_plural,
+        location,
+        bio,
+        twitter_handle,
+        instagram_handle,
+        video_url,
+        slug,
+        owners,
+        images,
+      } = artist;
+      this.setState({
+        artistColor: accent_color,
+        artistName: name,
+        artistVerb: verb_plural ? 'are' : 'is',
+        artistLocation: location,
+        artistMessage: bio,
+        artistTwitter: twitter_handle,
+        artistInstagram: instagram_handle,
+        artistVideo: video_url,
+        artistSlug: slug,
+        artistStripe: '',
+        members: owners || [],
+        images: images || [],
       });
     }
   };
@@ -522,7 +592,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     return (
       <div className="create-artist__header">
         <div className="container">
-          <h1>Create Your Artist Page</h1>
+          <h1>{this.props.editMode ? 'Edit' : 'Create'} Your Artist Page</h1>
         </div>
         <img className="create-artist__header_tear" src={tear} alt="" />
       </div>
@@ -579,18 +649,20 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     return (
       <div className="container">
         <div className="artist-about">
-          <div className="row">
-            <div className="col-md-6 col-sm-12">
-              {/* <div className="create-artist__title">About</div> */}
-              <div className="create-artist__copy">
-                <b>
-                  You can't change your artist/band name or your custom link
-                  later
-                </b>
-                , so make sure they're right.
+          {!this.props.editMode && (
+            <div className="row">
+              <div className="col-md-6 col-sm-12">
+                {/* <div className="create-artist__title">About</div> */}
+                <div className="create-artist__copy">
+                  <b>
+                    You can't change your artist/band name or your custom link
+                    later
+                  </b>
+                  , so make sure they're right.
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     );
@@ -615,6 +687,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 value={this.state.artistName || ''}
                 onChange={this.handleChange}
                 fullWidth
+                disabled={!!this.props.editMode}
                 required
               />
             </div>
@@ -633,6 +706,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 onChange={this.handleChange}
                 fullWidth
                 required
+                disabled={!!this.props.editMode}
                 InputProps={{
                   autoComplete: 'off',
                   inputProps: { autoCapitalize: 'off', autoCorrect: 'off' },
@@ -961,14 +1035,14 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
 
   updateMemberDetails = (e, index) => {
     const { members } = this.state;
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
     this.setState({
       members: [
         ...members.slice(0, index),
         {
           ...members[index],
-          [name]: value,
+          [name]: type === 'checkbox' ? checked : value,
         },
         ...members.slice(index + 1),
       ],
@@ -1004,6 +1078,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     }
 
     if (
+      // TODO: disable edit mode bail out once members are working
+      !this.props.editMode &&
       members.filter(
         (member) =>
           member.email &&
@@ -1025,35 +1101,65 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     this.setState({
       loading: true,
     });
-    const { data } = await apiAxios({
-      method: 'post',
-      url: '/artist_pages',
-      data: {
-        artist_page: {
-          name: artistName,
-          bio: artistMessage,
-          location: artistLocation,
-          accent_color: artistColor,
-          slug: artistSlug.toLowerCase(),
-          video_url: artistVideo,
-          instagram_handle: artistInstagram,
-          twitter_handle: artistTwitter,
-          verb_plural: artistVerb !== 'is',
+    if (!this.props.editMode) {
+      const { data } = await apiAxios({
+        method: 'post',
+        url: '/artist_pages',
+        data: {
+          artist_page: {
+            name: artistName,
+            bio: artistMessage,
+            location: artistLocation,
+            accent_color: artistColor,
+            slug: artistSlug.toLowerCase(),
+            video_url: artistVideo,
+            instagram_handle: artistInstagram,
+            twitter_handle: artistTwitter,
+            verb_plural: artistVerb !== 'is',
+          },
+          images,
+          members,
         },
-        images,
-        members,
-      },
-    });
+      });
 
-    this.setState({
-      loading: false,
-    });
+      this.setState({
+        loading: false,
+      });
 
-    if (data.status && data.status === 'error') {
-      showToastMessage(data.message, MessageType.ERROR);
-    } else if (data.status && data.status === 'ok') {
-      showToastMessage(data.message, MessageType.SUCCESS);
-      window.location.href = `/artist/${artistSlug}`;
+      if (data.status && data.status === 'error') {
+        showToastMessage(data.message, MessageType.ERROR);
+      } else if (data.status && data.status === 'ok') {
+        showToastMessage(data.message, MessageType.SUCCESS);
+        window.location.href = `/artist/${artistSlug}`;
+      }
+    } else {
+      const { data } = await apiAxios({
+        method: 'put',
+        url: `/artist_pages/${this.props.artist?.id}`,
+        data: {
+          artist_page: {
+            bio: artistMessage,
+            location: artistLocation,
+            accent_color: artistColor,
+            video_url: artistVideo,
+            instagram_handle: artistInstagram,
+            twitter_handle: artistTwitter,
+            verb_plural: artistVerb !== 'is',
+          },
+          images,
+        },
+      });
+
+      this.setState({
+        loading: false,
+      });
+
+      if (data.status && data.status === 'error') {
+        showToastMessage(data.message, MessageType.ERROR);
+      } else if (data.status && data.status === 'ok') {
+        showToastMessage(data.message, MessageType.SUCCESS);
+        window.location.href = `/artist/${artistSlug}`;
+      }
     }
   };
 
@@ -1079,21 +1185,23 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           />
           {/* {this.renderPayment()} */}
           <div className="container">
-            <div className="row">
-              <div className="col-md-3 col-sm-1"></div>
-              <div className="col-md-6 col-sm-10 create-artist__copy">
-                Your page will initially only be visible to you and any other
-                members you've added. The Ampled team does a quick spot check of
-                all pages before they become visible to the general public, but
-                this normally doesn't take us very long.
+            {!this.props.editMode && (
+              <div className="row">
+                <div className="col-md-3 col-sm-1"></div>
+                <div className="col-md-6 col-sm-10 create-artist__copy">
+                  Your page will initially only be visible to you and any other
+                  members you've added. The Ampled team does a quick spot check
+                  of all pages before they become visible to the general public,
+                  but this normally doesn't take us very long.
+                </div>
+                <div className="col-md-3 col-sm-1"></div>
               </div>
-              <div className="col-md-3 col-sm-1"></div>
-            </div>
+            )}
             <div className="row">
               <div className="col-md-3 col-sm-1"></div>
               <div className="col-md-6 col-sm-10">
                 <button onClick={this.onSubmit} className="btn btn-ampled">
-                  Create your page
+                  {this.props.editMode ? 'Save' : 'Create'} your page
                 </button>
               </div>
               <div className="col-md-3 col-sm-1"></div>

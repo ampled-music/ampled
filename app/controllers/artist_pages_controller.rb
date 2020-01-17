@@ -46,7 +46,9 @@ class ArtistPagesController < ApplicationController
 
   def update
     if @artist_page.update(artist_page_params)
-      redirect_to @artist_page, notice: "Artist page was successfully updated."
+      set_images
+      render json: { status: "ok", message: "Your page has been updated!" }
+      # redirect_to @artist_page, notice: "Artist page was successfully updated."
     else
       render :edit
     end
@@ -117,6 +119,8 @@ class ArtistPagesController < ApplicationController
 
   def set_images
     # - create new images based on uploads
+    @artist_page.images.destroy_all
+
     params[:images].map.with_index do |image_url, index|
       @artist_page.images.create(url: image_url, order: index)
     end

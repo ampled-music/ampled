@@ -180,16 +180,16 @@ interface TabPanelProps {
 }
 
 const TabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
-  const [value, setValue] = React.useState(0);
+  const { value, index, children } = this.props;
+  // const [value, setValue] = React.useState(0);
 
   return (
     <Typography
       component="div"
       role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      hidden={value !== props.index}
+      id={`simple-tabpanel-${props.index}`}
+      aria-labelledby={`simple-tab-${props.index}`}
       {...other}
     >
       {value === index && <Box p={3}>{children}</Box>}
@@ -197,24 +197,26 @@ const TabPanel = (props: TabPanelProps) => {
   );
 };
 
-class SimpleTabs extends React.Component<TabPanelProps> {
-  handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
-  };
+const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  setValue(newValue);
+};
 
-  a11yProps = (index: any) => {
-    return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
-    };
+const a11yProps = (index: any) => {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
   };
+};
+
+class SimpleTabs extends React.Component<TabPanelProps, any> {
   render() {
+    const { value } = this.props;
     return (
       <div>
         <AppBar position="static">
           <Tabs
             value={value}
-            onChange={this.handleChange}
+            onChange={handleChange}
             aria-label="simple tabs example"
           >
             <Tab label="Item One" {...a11yProps(0)} />

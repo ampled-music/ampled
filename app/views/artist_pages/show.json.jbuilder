@@ -25,7 +25,7 @@ json.owners @artist_page.page_ownerships do |ownership|
   if @artist_page.owners.exists?(current_user.id)
     json.email ownership.user.email
     json.lastName ownership.user.last_name
-  end 
+  end
   json.role ownership.role
   json.instrument ownership.instrument
 end

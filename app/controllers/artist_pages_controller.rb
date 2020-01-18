@@ -45,7 +45,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def update
-    unless (@role == "admin" || current_user&.admin?)
+    unless @role == "admin" || current_user&.admin?
       return render json: { status: "error", message: "You don't have that permission." }
     end
 

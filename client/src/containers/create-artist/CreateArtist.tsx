@@ -213,6 +213,7 @@ const Members = ({
   addMember,
   removeMember,
   handleChange,
+  userData,
 }) => {
   return (
     <div className="container">
@@ -251,6 +252,7 @@ const Members = ({
               handleChange={handleChange}
               removeMember={removeMember}
               index={i}
+              userData={userData}
               {...v}
             />
           ))}
@@ -286,8 +288,9 @@ const Member = ({
   index,
   handleChange,
   removeMember,
+  userData,
 }) => {
-  const isMe = index === 0;
+  const isMe = email === userData.email;
   return (
     <div className="col-md-6 col-sm-12" style={{ marginBottom: '8px' }}>
       <Card className="artist-members__card">
@@ -535,6 +538,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
           instrument: owner.instrument || '',
+          email: owner.email || '',
+          lastName: owner.lastName || '',
+          isAdmin: owner.role === 'admin',
         })),
         images: images || [],
       });
@@ -1147,6 +1153,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             verb_plural: artistVerb !== 'is',
           },
           images,
+          members,
         },
       });
 
@@ -1182,6 +1189,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             handleChange={this.updateMemberDetails}
             addMember={this.addMember}
             removeMember={this.removeMember}
+            userData={this.props.me?.userData}
           />
           {/* {this.renderPayment()} */}
           <div className="container">

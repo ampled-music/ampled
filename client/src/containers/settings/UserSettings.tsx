@@ -226,6 +226,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <Link to="/user-details" className="user-content__edit-profile">
             <FontAwesomeIcon icon={faEdit} /> Edit Profile
           </Link>
+          {userData.admin && (
+            <div>
+              <strong>Ampled Admin</strong>
+            </div>
+          )}
         </div>
       </div>
     );

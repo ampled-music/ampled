@@ -45,12 +45,16 @@ class ArtistPagesController < ApplicationController
   end
 
   def update
+    unless (@role == "admin" || current_user&.admin?)
+      return render json: { status: "error", message: "You don't have that permission." }
+    end
+
     if @artist_page.update(artist_page_params)
       set_images
+      # TODO: set members
       render json: { status: "ok", message: "Your page has been updated!" }
-      # redirect_to @artist_page, notice: "Artist page was successfully updated."
     else
-      render :edit
+      render json: { status: "error", message: "Something went wrong." }
     end
   end
 

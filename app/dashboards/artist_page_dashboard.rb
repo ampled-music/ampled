@@ -41,6 +41,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :name,
     :id,
     :owners,
+    :featured
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES

@@ -8,7 +8,7 @@ class ArtistPagesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @artist_pages }
+      format.json
     end
   end
 
@@ -45,10 +45,17 @@ class ArtistPagesController < ApplicationController
   end
 
   def update
+    unless @role == "admin" || current_user&.admin?
+      return render json: { status: "error", message: "You don't have that permission." }
+    end
+
     if @artist_page.update(artist_page_params)
-      redirect_to @artist_page, notice: "Artist page was successfully updated."
+      set_images
+      @artist_page.owners.clear
+      set_members
+      render json: { status: "ok", message: "Your page has been updated!" }
     else
-      render :edit
+      render json: { status: "error", message: "Something went wrong." }
     end
   end
 
@@ -98,15 +105,12 @@ class ArtistPagesController < ApplicationController
 
   # Helper functions for creating / updating an artist page.
   def set_members
-    params[:members].map.with_index do |member, index|
-      member_user = if index.zero?
-                      current_user
-                    else
-                      User.find_by(email: member[:email]) ||
-                        User.create(email: member[:email],
-                                    name: member[:firstName],
-                                    password: (0...8).map { rand(65..91).chr }.join)
-                    end
+    params[:members].map do |member|
+      member_user = User.find_by(email: member[:email]) ||
+                    User.create(email: member[:email],
+                                name: member[:firstName],
+                                last_name: member[:lastName],
+                                password: (0...8).map { rand(65..91).chr }.join)
       @artist_page.owners << member_user
       PageOwnership.find_by(user_id: member_user[:id],
                             artist_page_id: @artist_page[:id]).update(instrument: member[:role],
@@ -117,6 +121,8 @@ class ArtistPagesController < ApplicationController
 
   def set_images
     # - create new images based on uploads
+    @artist_page.images.destroy_all
+
     params[:images].map.with_index do |image_url, index|
       @artist_page.images.create(url: image_url, order: index)
     end

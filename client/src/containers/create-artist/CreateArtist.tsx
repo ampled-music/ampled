@@ -180,10 +180,9 @@ interface TabPanelProps {
   index: any;
   value: any;
 }
-const [value, setValue] = React.useState(0);
 
 const TabPanel = (props: TabPanelProps) => {
-  const { value, index, children } = this.props;
+  const { value, index, children, ...other } = props;
 
   return (
     <Typography
@@ -192,15 +191,11 @@ const TabPanel = (props: TabPanelProps) => {
       hidden={value !== props.index}
       id={`simple-tabpanel-${props.index}`}
       aria-labelledby={`simple-tab-${props.index}`}
-      // {...other}
+      {...other}
     >
       {value === index && <Box p={3}>{children}</Box>}
     </Typography>
   );
-};
-
-const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-  setValue(newValue);
 };
 
 const a11yProps = (index: any) => {
@@ -210,35 +205,37 @@ const a11yProps = (index: any) => {
   };
 };
 
-class SimpleTabs extends React.Component<TabPanelProps, any> {
-  render() {
-    const { value } = this.props;
-    return (
-      <div>
-        <AppBar position="static">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="simple tabs example"
-          >
-            <Tab label="Item One" {...a11yProps(0)} />
-            <Tab label="Item Two" {...a11yProps(1)} />
-            <Tab label="Item Three" {...a11yProps(2)} />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0}>
-          Item One
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Item Three
-        </TabPanel>
-      </div>
-    );
-  }
-}
+const SimpleTabs = () => {
+  const [tabIndex, setTabIndex] = React.useState(0);
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setTabIndex(newValue);
+  };
+
+  return (
+    <div>
+      <AppBar position="static">
+        <Tabs
+          value={tabIndex}
+          onChange={handleChange}
+          aria-label="simple tabs example"
+        >
+          <Tab label="Item One" {...a11yProps(0)} />
+          <Tab label="Item Two" {...a11yProps(1)} />
+          <Tab label="Item Three" {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={tabIndex} index={0}>
+        Item One
+      </TabPanel>
+      <TabPanel value={tabIndex} index={1}>
+        Item Two
+      </TabPanel>
+      <TabPanel value={tabIndex} index={2}>
+        Item Three
+      </TabPanel>
+    </div>
+  );
+};
 
 const Members = ({
   bandName,
@@ -1165,7 +1162,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="create-artist">
         <MuiThemeProvider theme={theme}>
           {this.renderHeader()}
-          {/* <SimpleTabs /> */}
+          <SimpleTabs />
           {this.renderAbout()}
           {this.renderInfo()}
           {this.renderImages()}

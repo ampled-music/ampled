@@ -22,6 +22,11 @@ const LazyPostForm = React.lazy(() =>
 const LazyArtist = React.lazy(() =>
   import('./artist/Artist').then((module) => ({ default: module.Artist })),
 );
+const LazyEditArtist = React.lazy(() =>
+  import('./artist/EditArtist').then((module) => ({
+    default: module.Edit,
+  })),
+);
 const LazyNoArtist = React.lazy(() =>
   import('./shared/no-artist/NoArtist').then((module) => ({
     default: module.NoArtist,
@@ -65,6 +70,11 @@ const Routes = () => {
       />
       <PublicRoute exact path={routePaths.artists} component={LazyArtist} />
       <PublicRoute exact path={routePaths.slugs} component={LazyArtist} />
+      <PublicRoute
+        exact
+        path={routePaths.editArtist}
+        component={LazyEditArtist}
+      />
       <PublicRoute exact path={routePaths.support} component={Support} />
       <PublicRoute
         exact

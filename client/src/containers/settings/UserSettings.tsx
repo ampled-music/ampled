@@ -226,6 +226,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <Link to="/user-details" className="user-content__edit-profile">
             <FontAwesomeIcon icon={faEdit} /> Edit Profile
           </Link>
+          {userData.admin && (
+            <div>
+              <strong>Ampled Admin</strong>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -353,6 +358,20 @@ class UserSettingsComponent extends React.Component<Props, any> {
                             Set Up Payouts
                           </a>
                         )}
+                      </div>
+                    )}
+                    {ownedPage.role === 'admin' && (
+                      <div className="col-8">
+                        <a
+                          href={routePaths.editArtist.replace(
+                            ':slug',
+                            ownedPage.artistSlug,
+                          )}
+                          className="details__stripe_link"
+                          rel="noopener noreferrer"
+                        >
+                          Edit Page
+                        </a>
                       </div>
                     )}
                   </div>

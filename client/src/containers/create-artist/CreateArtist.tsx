@@ -535,6 +535,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
           instrument: owner.instrument || '',
+          email: owner.email || '',
+          lastName: owner.lastName || '',
         })),
         images: images || [],
       });

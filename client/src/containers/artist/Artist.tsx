@@ -336,7 +336,10 @@ class ArtistComponent extends React.Component<Props, any> {
             this.renderSticky(
               <span>
                 Your page is pending a quick approval.{' '}
-                <Link to={routePaths.settings}>Learn more here</Link>.
+                <a href="https://app.ampled.com/approval" target="_blank">
+                  Learn more here
+                </a>
+                .
               </span>,
             )}
           {artist &&

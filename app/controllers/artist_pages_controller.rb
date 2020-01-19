@@ -2,6 +2,7 @@ class ArtistPagesController < ApplicationController
   before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy]
   before_action :check_approved, only: :show
   before_action :check_create_okay, only: :create
+  before_action :check_update_okay, only: :update
 
   def index
     @artist_pages = ArtistPage.where(featured: true)
@@ -45,10 +46,6 @@ class ArtistPagesController < ApplicationController
   end
 
   def update
-    unless @role == "admin" || current_user&.admin?
-      return render json: { status: "error", message: "You don't have that permission." }
-    end
-
     if @artist_page.update(artist_page_params)
       set_images
       @artist_page.owners.clear
@@ -91,6 +88,19 @@ class ArtistPagesController < ApplicationController
     elsif artist_page_params[:name].nil? || artist_page_params[:slug].nil?
       render json: { status: "error", message: "Missing required parameters." }
     end
+  end
+
+  def check_update_okay
+    unless @role == "admin" || current_user&.admin?
+      return render json: { status: "error", message: "You don't have that permission." }
+    end
+
+    return if artist_page_params[:slug].nil? && artist_page_params[:name].nil?
+
+    render json: {
+      status: "error",
+      message: "You can't change your URL or name."
+    }
   end
 
   def check_approved

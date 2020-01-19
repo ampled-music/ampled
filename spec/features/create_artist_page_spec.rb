@@ -42,8 +42,6 @@ RSpec.describe ArtistPagesController, type: :request do
   let(:update_params) do
     {
       artist_page: {
-        name: "Test",
-        slug: "testslug",
         bio: "About me",
         video_url: "https://www.youtube.com/watch?v=hHW1oY26kxQ"
       },
@@ -64,8 +62,6 @@ RSpec.describe ArtistPagesController, type: :request do
   let(:vimeo_update_params) do
     {
       artist_page: {
-        name: "Test",
-        slug: "testslug",
         bio: "About me",
         video_url: "https://vimeo.com/331608175"
       },

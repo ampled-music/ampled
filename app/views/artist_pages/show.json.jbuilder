@@ -22,7 +22,7 @@ end
 
 json.owners @artist_page.page_ownerships do |ownership|
   json.partial! "users/user", user: ownership.user
-  if current_user.exists? && @artist_page.owners.exists?(current_user.id)
+  if !current_user.nil? && @artist_page.owners.exists?(current_user.id)
     json.email ownership.user.email
     json.lastName ownership.user.last_name
   end

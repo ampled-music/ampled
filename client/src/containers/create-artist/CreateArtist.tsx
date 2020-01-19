@@ -37,7 +37,6 @@ import tear from '../../images/full_page_tear.png';
 import polaroid from '../../images/polaroid.png';
 
 import { Store } from '../../redux/configure-store';
-import { Link } from 'react-router-dom';
 
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
@@ -162,7 +161,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
         </>
       );
     } else if (loadingImage) {
-      body = <CircularProgress />;
+      body = <CircularProgress className="loading-circle" />;
     } else {
       body = (
         <>
@@ -587,7 +586,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
 
   handleChange = (e) => {
     const { name, value } = e.target;
-    if (name == 'artistSlug') {
+    if (name === 'artistSlug') {
       this.setState({ [name]: value.toLowerCase() });
     } else {
       this.setState({ [name]: value });
@@ -1090,7 +1089,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         (member) =>
           member.email &&
           member.email.length &&
-          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
             member.email,
           ) &&
           member.firstName &&

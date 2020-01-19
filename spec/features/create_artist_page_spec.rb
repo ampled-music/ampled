@@ -61,6 +61,28 @@ RSpec.describe ArtistPagesController, type: :request do
     }
   end
 
+  let(:vimeo_update_params) do
+    {
+      artist_page: {
+        name: "Test",
+        slug: "testslug",
+        bio: "About me",
+        video_url: "https://vimeo.com/331608175"
+      },
+      members: [
+        {
+          email: "creator@ampled.com",
+          firstName: "Creator"
+        },
+        {
+          email: "testfriend@ampled.com",
+          firstName: "Friend"
+        }
+      ],
+      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+    }
+  end
+
   context "when creating an artist page" do
     let(:url) { "/artist_pages" }
 
@@ -119,10 +141,16 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(JSON.parse(response.body)["message"]).to eq "Your page has been updated!"
     end
 
-    it "pulls video screenshot url" do
+    it "pulls video screenshot url for youtube" do
       sign_in user
       put "/artist_pages/#{artist_page.id}", params: update_params
       expect(ArtistPage.find(artist_page.id)[:video_screenshot_url]).to eq "https://img.youtube.com/vi/hHW1oY26kxQ/0.jpg"
+    end
+
+    it "pulls video screenshot url for vimeo", vcr: true do
+      sign_in user
+      put "/artist_pages/#{artist_page.id}", params: vimeo_update_params
+      expect(ArtistPage.find(artist_page.id)[:video_screenshot_url]).to eq "https://i.vimeocdn.com/video/777053973_640.jpg"
     end
   end
 

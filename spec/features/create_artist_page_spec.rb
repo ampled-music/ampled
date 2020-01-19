@@ -137,4 +137,28 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(ArtistPage.find(artist_page.id)).to eq artist_page
     end
   end
+
+  context "when attempting to delete your own page" do
+    let(:user) { create(:user) }
+    let(:artist_page) { create(:artist_page) }
+
+    before do
+      user.owned_pages << artist_page
+      PageOwnership.find_by(user_id: user[:id], artist_page_id: artist_page[:id]).update(role: "admin")
+    end
+
+    before(:each) do
+      sign_in user
+    end
+
+    before { delete "/artist_pages/#{artist_page.id}" }
+
+    it "returns success" do
+      expect(JSON.parse(response.body)["message"]).to eq "Your page has been deleted!"
+    end
+
+    it "deletes the page" do
+      expect(ArtistPage.find_by(id: artist_page.id)).to eq nil
+    end
+  end
 end

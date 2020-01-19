@@ -44,7 +44,8 @@ RSpec.describe ArtistPagesController, type: :request do
       artist_page: {
         name: "Test",
         slug: "testslug",
-        bio: "About me"
+        bio: "About me",
+        video_url: "https://www.youtube.com/watch?v=hHW1oY26kxQ"
       },
       members: [
         {
@@ -116,6 +117,12 @@ RSpec.describe ArtistPagesController, type: :request do
       sign_in user
       put "/artist_pages/#{artist_page.id}", params: update_params
       expect(JSON.parse(response.body)["message"]).to eq "Your page has been updated!"
+    end
+
+    it "pulls video screenshot url" do
+      sign_in user
+      put "/artist_pages/#{artist_page.id}", params: update_params
+      expect(ArtistPage.find(artist_page.id)[:video_screenshot_url]).to eq "https://img.youtube.com/vi/hHW1oY26kxQ/0.jpg"
     end
   end
 

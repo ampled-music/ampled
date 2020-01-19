@@ -118,4 +118,23 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(JSON.parse(response.body)["message"]).to eq "Your page has been updated!"
     end
   end
+
+  context "when attempting to delete another users' page" do
+    let(:user) { create(:user) }
+    let(:artist_page) { create(:artist_page) }
+
+    before(:each) do
+      sign_in user
+    end
+
+    before { delete "/artist_pages/#{artist_page.id}" }
+
+    it "returns an error" do
+      expect(JSON.parse(response.body)["message"]).to eq "You don't have that permission."
+    end
+
+    it "does not delete the page" do
+      expect(ArtistPage.find(artist_page.id)).to eq artist_page
+    end
+  end
 end

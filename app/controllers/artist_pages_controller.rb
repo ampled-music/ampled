@@ -60,8 +60,11 @@ class ArtistPagesController < ApplicationController
   end
 
   def destroy
-    @artist_page.destroy
-    redirect_to artist_pages_url, notice: "Artist page was successfully destroyed."
+    unless @role == "admin" || current_user&.admin?
+      return render json: { status: "error", message: "You don't have that permission." }
+    end
+
+    render json: { status: "ok", message: "Your page has been deleted!" } if @artist_page.destroy
   end
 
   private

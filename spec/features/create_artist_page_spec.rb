@@ -196,4 +196,28 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(ArtistPage.find_by(id: artist_page.id)).to eq nil
     end
   end
+
+  context "when an artist page owner gets me.json the ownedPages data" do
+    let(:user) { create(:user) }
+    let(:artist_page) { create(:artist_page) }
+
+    before do
+      user.owned_pages << artist_page
+      PageOwnership.find_by(user_id: user[:id], artist_page_id: artist_page[:id]).update(role: "admin")
+    end
+
+    before(:each) do
+      sign_in user
+    end
+
+    before { get "/me.json" }
+
+    it "contains a stripe signup url" do
+      expect(JSON.parse(response.body)["ownedPages"][0]["stripeSignup"]).not_to be_empty
+    end
+
+    it "contains a numeric supporter count" do
+      expect(JSON.parse(response.body)["ownedPages"][0]["supportersCount"]).to be_a(Integer)
+    end
+  end
 end

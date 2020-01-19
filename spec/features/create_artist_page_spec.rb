@@ -59,6 +59,27 @@ RSpec.describe ArtistPagesController, type: :request do
     }
   end
 
+  let(:bad_update_params) do
+    {
+      artist_page: {
+        bio: "About me",
+        slug: "newslug",
+        video_url: "https://www.youtube.com/watch?v=hHW1oY26kxQ"
+      },
+      members: [
+        {
+          email: "creator@ampled.com",
+          firstName: "Creator"
+        },
+        {
+          email: "testfriend@ampled.com",
+          firstName: "Friend"
+        }
+      ],
+      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+    }
+  end
+
   let(:vimeo_update_params) do
     {
       artist_page: {
@@ -135,6 +156,12 @@ RSpec.describe ArtistPagesController, type: :request do
       sign_in user
       put "/artist_pages/#{artist_page.id}", params: update_params
       expect(JSON.parse(response.body)["message"]).to eq "Your page has been updated!"
+    end
+
+    it "won't let admins change their slug" do
+      sign_in user
+      put "/artist_pages/#{artist_page.id}", params: bad_update_params
+      expect(JSON.parse(response.body)["message"]).to eq "You can't change your URL or name."
     end
 
     it "pulls video screenshot url for youtube" do

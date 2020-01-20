@@ -42,6 +42,16 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
     end
   end
 
+  context "when updating card on file" do
+    before do
+      put "/me/updatecard.json", params: { token: "tok_visa" }
+    end
+
+    it "returns updated card info" do
+      expect(JSON.parse(response.body)["card_last4"]).not_to be_empty
+    end
+  end
+
   context "when creating a subscription" do
     let(:url) { "/subscriptions/" }
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_29_230426) do
+ActiveRecord::Schema.define(version: 2020_01_14_005529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,9 @@ ActiveRecord::Schema.define(version: 2019_11_29_230426) do
     t.string "stripe_access_token"
     t.string "stripe_product_id"
     t.string "slug"
+    t.boolean "verb_plural", default: false
+    t.boolean "approved", default: false
+    t.boolean "featured", default: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 
@@ -59,6 +62,8 @@ ActiveRecord::Schema.define(version: 2019_11_29_230426) do
     t.integer "artist_page_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "role", default: "member"
+    t.string "instrument"
     t.index ["artist_page_id", "user_id"], name: "index_page_ownerships_on_artist_page_id_and_user_id"
     t.index ["user_id", "artist_page_id"], name: "index_page_ownerships_on_user_id_and_artist_page_id"
   end
@@ -131,6 +136,7 @@ ActiveRecord::Schema.define(version: 2019_11_29_230426) do
     t.string "card_exp_month"
     t.string "card_exp_year"
     t.boolean "card_is_valid"
+    t.boolean "admin"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true

@@ -7,29 +7,33 @@ class PostPolicy
   end
 
   def create?
-    owner?
+    owner? || admin?
   end
 
   def destroy?
-    owner? || author?
+    owner? || author? || admin?
   end
 
   def comment?
-    subscriber? || owner?
+    subscriber? || owner? || admin?
   end
 
   def update?
-    owner? || author?
+    owner? || author? || admin?
   end
 
   def view_details?
-    !post.is_private || owner? || (subscriber? && card_valid?)
+    !post.is_private || owner? || (subscriber? && card_valid?) || admin?
   end
 
   private
 
   def author?
     @post.user == @user
+  end
+
+  def admin?
+    @user&.admin?
   end
 
   def owner?

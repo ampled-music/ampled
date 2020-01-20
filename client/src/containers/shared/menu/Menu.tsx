@@ -35,7 +35,7 @@ const styles = (theme) => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
-  }
+  },
 });
 
 interface State {
@@ -52,7 +52,10 @@ interface menuProps {
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
-type Props = typeof authenticationInitialState & typeof meInitialState & Dispatchers & menuProps;
+type Props = typeof authenticationInitialState &
+  typeof meInitialState &
+  Dispatchers &
+  menuProps;
 
 class MenuListComposition extends React.Component<Props, State> {
   state = {
@@ -94,20 +97,14 @@ class MenuListComposition extends React.Component<Props, State> {
     return (
       <div className="menu-items">
         <div className={this.props.classes.hideDesktop}>
-          {
-            !this.props.userData && this.props.renderLoginLink()
-          }
+          {!this.props.userData && this.props.renderLoginLink()}
         </div>
         <a href={config.menuUrls.createArtist}>
           <b>Create an artist page</b>
         </a>
         <div className="divider" />
-        <a href={config.menuUrls.blog}>
-          Blog
-        </a>
-        <a href={config.menuUrls.about}>
-          About us
-        </a>
+        <a href={config.menuUrls.blog}>Blog</a>
+        <a href={config.menuUrls.about}>About us</a>
       </div>
     );
   };
@@ -119,7 +116,9 @@ class MenuListComposition extends React.Component<Props, State> {
           <FontAwesomeIcon icon={faCog} /> <b>My Profile</b>
         </Link>
         <Divider />
-        <a onClick={this.logout}>Logout</a>
+        <button className="link" onClick={this.logout}>
+          Logout
+        </button>
       </div>
     );
   };
@@ -130,17 +129,30 @@ class MenuListComposition extends React.Component<Props, State> {
 
     return (
       <div className="menu">
-        <img className="menu-icon" src={menu} alt="menu" onClick={this.handleToggle} ref="menu" />
+        <img
+          className="menu-icon"
+          src={menu}
+          alt="menu"
+          onClick={this.handleToggle}
+          ref="menu"
+        />
 
         <Popper open={open} anchorEl={anchorEl} transition disablePortal>
           {({ TransitionProps, placement }) => (
             <Grow
               {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+              style={{
+                transformOrigin:
+                  placement === 'bottom' ? 'center top' : 'center bottom',
+              }}
             >
               <Paper className="menu-list">
                 <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList>{userData ? this.renderUserMenu() : this.renderDefaultMenu()}</MenuList>
+                  <MenuList>
+                    {userData
+                      ? this.renderUserMenu()
+                      : this.renderDefaultMenu()}
+                  </MenuList>
                 </ClickAwayListener>
               </Paper>
             </Grow>
@@ -163,9 +175,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const MenuComponent = withStyles(styles)(MenuListComposition);
-const Menu = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(MenuComponent);
+const Menu = connect(mapStateToProps, mapDispatchToProps)(MenuComponent);
 
 export { Menu };

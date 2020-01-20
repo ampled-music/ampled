@@ -7,7 +7,11 @@ body {
 }
 
 a {
+  color: $black;
+  text-decoration: underline;
+  transition: color $speed;
   &:hover {
+    color: rgba($black, 0.7);
     text-decoration: none;
   }
 }
@@ -17,7 +21,7 @@ h4 {
 }
 
 h6 {
-  font-size: .7rem;
+  font-size: 0.7rem;
 }
 
 .page {
@@ -25,7 +29,6 @@ h6 {
 }
 
 .btn {
-
   &-ampled {
     border-radius: 0px;
     border-width: 2px;
@@ -42,6 +45,7 @@ h6 {
     max-width: 350px;
     margin: auto;
     display: block;
+    text-decoration: none;
 
     &:hover {
       background-color: $black;
@@ -165,22 +169,25 @@ h6 {
 }
 
 .link {
-  color: $gray-light;
   cursor: pointer;
   border: 0;
   background: none;
-  margin: .75rem auto;
-  transition: color $speed;
+  margin: 0;
+  padding: 0;
+  opacity: 1;
+  transition: opacity $speed;
 
   &:hover {
-    color: $black;
+    opacity: 0.8;
   }
 
   &__why {
     text-align: center;
     display: block;
-    font-family: $font-family-base;
-    font-size: .9rem;
+    width: 100%;
+    font-family: $font-family-monospace;
+    padding: 10px 0;
+    font-size: 0.9rem;
   }
 }
 
@@ -275,7 +282,6 @@ h6 {
   z-index: 99999;
   width: 50%;
 }
-
 
 .header {
   display: flex;

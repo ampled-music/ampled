@@ -4,6 +4,7 @@ export interface ArtistModel {
   id: number;
   accent_color: string;
   video_url: string;
+  video_screenshot_url: string;
   location: string;
   bio: string;
   twitter_handle: string;
@@ -14,6 +15,7 @@ export interface ArtistModel {
   owners: OwnersProps[];
   supporters: SupportersProps[];
   most_recent_supporter: SupportersProps;
+  approved: boolean;
 }
 
 interface OwnersProps {

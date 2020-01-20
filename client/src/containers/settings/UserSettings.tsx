@@ -6,7 +6,10 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from '../../redux/authentication/authentication-modal';
+import {
+  closeAuthModalAction,
+  openAuthModalAction,
+} from '../../redux/authentication/authentication-modal';
 import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
@@ -14,7 +17,11 @@ import { updateMeAction } from '../../redux/me/update-me';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 
 import { faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import { faTwitter, faInstagram, faStripe } from '@fortawesome/free-brands-svg-icons';
+import {
+  faTwitter,
+  faInstagram,
+  faStripe,
+} from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import tear from '../../images/background_tear.png';
 import tear_black from '../../images/background_tear_black.png';
@@ -33,7 +40,11 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
 type Props = typeof loginInitialState &
   typeof meInitialState &
-  Dispatchers & { history: any; location: any; subscriptions: typeof subscriptionsInitialState };
+  Dispatchers & {
+    history: any;
+    location: any;
+    subscriptions: typeof subscriptionsInitialState;
+  };
 
 class UserSettingsComponent extends React.Component<Props, any> {
   state = {
@@ -48,12 +59,20 @@ class UserSettingsComponent extends React.Component<Props, any> {
     } = this.props;
 
     if (/stripesuccess=true/gi.test(search)) {
-      showToastMessage("Great! You're all set up for payments.", MessageType.SUCCESS);
+      showToastMessage(
+        "Great! You're all set up for payments.",
+        MessageType.SUCCESS,
+      );
     }
   }
 
   componentDidUpdate() {
-    if (this.props.token && !this.props.error && !this.props.userData && !this.props.loadingMe) {
+    if (
+      this.props.token &&
+      !this.props.error &&
+      !this.props.userData &&
+      !this.props.loadingMe
+    ) {
       this.props.getMe();
     }
 
@@ -81,7 +100,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
       return '-';
     }
 
-    return DateTime.fromString(date.split('T')[0], 'yyyy-MM-dd').toLocaleString(DateTime.DATE_MED);
+    return DateTime.fromString(date.split('T')[0], 'yyyy-MM-dd').toLocaleString(
+      DateTime.DATE_MED,
+    );
   };
 
   openCancelModal = (event, subscription) => {
@@ -90,7 +111,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
     this.setState({ showCancelModal: true, subscription });
   };
 
-  closeCancelModal = () => this.setState({ showCancelModal: false, subscription: undefined });
+  closeCancelModal = () =>
+    this.setState({ showCancelModal: false, subscription: undefined });
 
   cancelSubscription = () => {
     this.props.cancelSubscription({
@@ -110,17 +132,25 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   };
 
-  calculateSupportTotal = (supportLevel) => this.calculateSupportTotalNumber(supportLevel).toFixed(2);
+  calculateSupportTotal = (supportLevel) =>
+    this.calculateSupportTotalNumber(supportLevel).toFixed(2);
 
-  calculateSupportTotalNumber = (supportLevel) => Math.round((supportLevel * 100 + 30) / 0.971) / 100;
+  calculateSupportTotalNumber = (supportLevel) =>
+    Math.round((supportLevel * 100 + 30) / 0.971) / 100;
 
   redirectToArtistPage = (artist) => {
     if (artist.artistSlug && artist.artistSlug.length > 0) {
-      this.props.history.push(routePaths.slugs.replace(':slug', artist.artistSlug));
+      this.props.history.push(
+        routePaths.slugs.replace(':slug', artist.artistSlug),
+      );
     } else if (artist.artistId) {
-      this.props.history.push(routePaths.artists.replace(':id', artist.artistId));
+      this.props.history.push(
+        routePaths.artists.replace(':id', artist.artistId),
+      );
     } else if (artist.artistPageId) {
-      this.props.history.push(routePaths.artists.replace(':id', artist.artistPageId));
+      this.props.history.push(
+        routePaths.artists.replace(':id', artist.artistPageId),
+      );
     }
   };
 
@@ -131,7 +161,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="user-image-container">
         <Link to="/user-details">
           {userData.image ? (
-            <img src={userData.image} className="user-image" alt="Your avatar" />
+            <img
+              src={userData.image}
+              className="user-image"
+              alt="Your avatar"
+            />
           ) : (
             <img src={avatar} className="user-image" alt="Your avatar" />
           )}
@@ -155,10 +189,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
         <div className="user-content">
           {this.renderUserImage()}
           <div className="user-content__name">{userData.name}</div>
-          <div className="user-content__joined-at">Joined {this.getFormattedDate(userData.created_at)}</div>
+          <div className="user-content__joined-at">
+            Joined {this.getFormattedDate(userData.created_at)}
+          </div>
           {userData.city && (
             <div className="user-content__city">
-              <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} /> {userData.city}
+              <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} />{' '}
+              {userData.city}
             </div>
           )}
           {userData.bio && (
@@ -168,15 +205,16 @@ class UserSettingsComponent extends React.Component<Props, any> {
               <div className="user-content__hr"></div>
             </div>
           )}
-          {console.log(userData)}
           {userData.twitter && (
             <div className="user-content__social">
-              <FontAwesomeIcon className="icon" icon={faTwitter} /> {userData.twitter}
+              <FontAwesomeIcon className="icon" icon={faTwitter} />{' '}
+              {userData.twitter}
             </div>
           )}
           {userData.instagram && (
             <div className="user-content__social">
-              <FontAwesomeIcon className="icon" icon={faInstagram} /> {userData.instagram}
+              <FontAwesomeIcon className="icon" icon={faInstagram} />{' '}
+              {userData.instagram}
             </div>
           )}
           {/*
@@ -188,6 +226,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <Link to="/user-details" className="user-content__edit-profile">
             <FontAwesomeIcon icon={faEdit} /> Edit Profile
           </Link>
+          {userData.admin && (
+            <div>
+              <strong>Ampled Admin</strong>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -203,12 +246,19 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return (
       <Modal open={this.state.showCancelModal} onClose={this.closeCancelModal}>
         <div className="user-settings-cancel-modal">
-          <p>Are you sure you want to stop supporting {this.state.subscription.name}?</p>
+          <p>
+            Are you sure you want to stop supporting{' '}
+            {this.state.subscription.name}?
+          </p>
           <div className="action-buttons">
             <button className="cancel-button" onClick={this.closeCancelModal}>
               Of Course Not!
             </button>
-            <button className="delete-button" onClick={this.cancelSubscription} style={{ marginLeft: 0 }}>
+            <button
+              className="delete-button"
+              onClick={this.cancelSubscription}
+              style={{ marginLeft: 0 }}
+            >
               Yes
             </button>
           </div>
@@ -223,11 +273,28 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
           <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
-            <img className="artist__image" src={ownedPage.image} alt={ownedPage.name} />
-            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(ownedPage)}></div>
+            <img
+              className="artist__image"
+              src={ownedPage.image}
+              alt={ownedPage.name}
+            />
+            <div
+              className="artist__image-border"
+              onClick={() => this.redirectToArtistPage(ownedPage)}
+            ></div>
             <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
-              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(ownedPage)}>
+              <p className="artist__info_role">
+                {ownedPage.role
+                  ? ownedPage.role.charAt(0).toUpperCase() +
+                    ownedPage.role.slice(1) +
+                    ' of'
+                  : ''}
+              </p>
+              <p
+                className="artist__info_name"
+                onClick={() => this.redirectToArtistPage(ownedPage)}
+              >
                 {ownedPage.name}
               </p>
               <div className="details">
@@ -235,51 +302,78 @@ class UserSettingsComponent extends React.Component<Props, any> {
                   <div className="row no-gutter">
                     <div className="col-6">
                       <div className="details__info_title">Supporters</div>
-                      <div className="details__info_value">{ownedPage.supportersCount || 0}</div>
+                      <div className="details__info_value">
+                        {ownedPage.supportersCount || 0}
+                      </div>
                     </div>
                     <div className="col-6">
                       <div className="details__info_title">Monthly Total</div>
-                      <div className="details__info_value">$ {this.formatMoney(ownedPage.monthlyTotal / 100)}</div>
+                      <div className="details__info_value">
+                        $ {this.formatMoney(ownedPage.monthlyTotal / 100)}
+                      </div>
                     </div>
                   </div>
                   <div className="row no-gutter">
                     <div className="col-6">
                       <div className="details__info_title">Last Post</div>
-                      <div className="details__info_value">{this.getFormattedDate(ownedPage.lastPost)}</div>
+                      <div className="details__info_value">
+                        {this.getFormattedDate(ownedPage.lastPost)}
+                      </div>
                     </div>
                     <div className="col-6">
                       <div className="details__info_title">Last Payout</div>
-                      <div className="details__info_value">{this.getFormattedDate(ownedPage.lastPayout)}</div>
+                      <div className="details__info_value">
+                        {this.getFormattedDate(ownedPage.lastPayout)}
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="details__stripe">
                   <div className="row no-gutter align-items-center">
                     <div className="col-4">
-                      <FontAwesomeIcon className="icon details__stripe_icon" icon={faStripe} />
+                      <FontAwesomeIcon
+                        className="icon details__stripe_icon"
+                        icon={faStripe}
+                      />
                     </div>
-                    <div className="col-8">
-                      {ownedPage.isStripeSetup ? (
+                    {ownedPage.role === 'admin' && (
+                      <div className="col-8">
+                        {ownedPage.isStripeSetup ? (
+                          <a
+                            href={ownedPage.stripeDashboard}
+                            className="details__stripe_link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Edit Payout Details
+                          </a>
+                        ) : (
+                          <a
+                            href={ownedPage.stripeSignup}
+                            className="details__stripe_link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#d9534f' }}
+                          >
+                            Set Up Payouts
+                          </a>
+                        )}
+                      </div>
+                    )}
+                    {ownedPage.role === 'admin' && (
+                      <div className="col-8">
                         <a
-                          href={ownedPage.stripeDashboard}
+                          href={routePaths.editArtist.replace(
+                            ':slug',
+                            ownedPage.artistSlug,
+                          )}
                           className="details__stripe_link"
-                          target="_blank"
                           rel="noopener noreferrer"
                         >
-                          Edit Payout Details
+                          Edit Page
                         </a>
-                      ) : (
-                        <a
-                          href={ownedPage.stripeSignup}
-                          className="details__stripe_link"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{ color: '#d9534f' }}
-                        >
-                          Set Up Payouts
-                        </a>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -295,12 +389,25 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('SUPPORTED ARTISTS')}
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.subscriptions.map((subscription) => (
-          <div key={`artist-${subscription.artistPageId}`} className="artist col-sm-4">
-            <img className="artist__image" src={subscription.image} alt={subscription.name} />
-            <div className="artist__image-border" onClick={() => this.redirectToArtistPage(subscription)}></div>
+          <div
+            key={`artist-${subscription.artistPageId}`}
+            className="artist col-sm-4"
+          >
+            <img
+              className="artist__image"
+              src={subscription.image}
+              alt={subscription.name}
+            />
+            <div
+              className="artist__image-border"
+              onClick={() => this.redirectToArtistPage(subscription)}
+            ></div>
             <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
-              <p className="artist__info_name" onClick={() => this.redirectToArtistPage(subscription)}>
+              <p
+                className="artist__info_name"
+                onClick={() => this.redirectToArtistPage(subscription)}
+              >
                 {subscription.name}
               </p>
               <div className="details">
@@ -312,26 +419,33 @@ class UserSettingsComponent extends React.Component<Props, any> {
                         ${subscription.amount / 100}/Month
                       </div>
                       <div className="details__info_value details__info_value_small">
-                        ${this.calculateSupportTotal(subscription.amount / 100)} incl. fees
+                        ${this.calculateSupportTotal(subscription.amount / 100)}{' '}
+                        incl. fees
                       </div>
                     </div>
                     <div className="col-4">
-                      <a
-                        className="details__info_value details__info_value_cancel"
-                        onClick={(event) => this.openCancelModal(event, subscription)}
+                      <button
+                        className="link details__info_value details__info_value_cancel"
+                        onClick={(event) =>
+                          this.openCancelModal(event, subscription)
+                        }
                       >
                         Cancel
-                      </a>
+                      </button>
                     </div>
                   </div>
                   <div className="row no-gutter">
                     <div className="col-6">
                       <div className="details__info_title">Support Date</div>
-                      <div className="details__info_value">{this.getFormattedDate(subscription.support_date)}</div>
+                      <div className="details__info_value">
+                        {this.getFormattedDate(subscription.support_date)}
+                      </div>
                     </div>
                     <div className="col-6">
                       <div className="details__info_title">Last Post</div>
-                      <div className="details__info_value">{this.getFormattedDate(subscription.last_post_date)}</div>
+                      <div className="details__info_value">
+                        {this.getFormattedDate(subscription.last_post_date)}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -347,7 +461,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
     <div>
       {this.renderPagesTitle('SUPPORTED ARTISTS')}
       <div className="pages row justify-content-center justify-content-md-start">
-        <div className="center col-md-8">You currently don't support any artists.</div>
+        <div className="center col-md-8">
+          You currently don't support any artists.
+        </div>
       </div>
     </div>
   );
@@ -356,8 +472,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
     <div className="row content">
       {this.renderUserInfo()}
       <div className="pages-container col-md-9">
-        {this.props.userData.ownedPages.length > 0 ? this.renderOwnedPages() : ''}
-        {this.props.userData.subscriptions.length > 0 ? this.renderSupportedArtists() : this.renderEmptyArtists()}
+        {this.props.userData.ownedPages.length > 0
+          ? this.renderOwnedPages()
+          : ''}
+        {this.props.userData.subscriptions.length > 0
+          ? this.renderSupportedArtists()
+          : this.renderEmptyArtists()}
       </div>
     </div>
   );

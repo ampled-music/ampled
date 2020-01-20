@@ -1,7 +1,6 @@
 import './artist.scss';
 
 import * as React from 'react';
-import path from 'ramda/src/path';
 import Swipe from 'react-easy-swipe';
 import { isMobile } from 'react-device-detect';
 import cx from 'classnames';
@@ -33,78 +32,50 @@ interface Props {
 export class ArtistHeader extends React.Component<Props, any> {
   state = {
     showConfirmationDialog: false,
-    screenshotURL: ''
   };
 
-  componentDidMount = async () => {
-    const { artist: { video_url } } = this.props;
-    if (video_url && video_url.length) {
-      this.setState({
-        screenshotURL: await this.getThumbnailURLFromVideoURL(video_url)
-      });  
-    }
-  }
-
-  componentDidUpdate = async (prevProps) => {
-    const { artist: { video_url } } = this.props;
-    const { artist: { video_url: prevURL } } = prevProps;
-    if (video_url !== prevURL && (!this.state.screenshotURL || !this.state.screenshotURL.length)) {
-      this.setState({
-        screenshotURL: await this.getThumbnailURLFromVideoURL(video_url)
-      });
-    }
-  }
-
-  getThumbnailURLFromVideoURL = async (videoURL: string) => {
-    if (/vimeo/i.test(videoURL)) {
-      const vimeoId = videoURL.match(/vimeo.com\/([\d\w]+)/)[1];
-      const vimeoJSON = await (await fetch(`//vimeo.com/api/v2/video/${vimeoId}.json`)).json();
-      const vimeoURL = path([0, 'thumbnail_large'], vimeoJSON);
-      if (vimeoURL) {
-        return vimeoURL;
-      }
-    } else if (/youtu/i.test(videoURL)) {
-      const youtubeId = videoURL.match(/(youtube\.com\/watch\?v=|youtu.be\/)(.+)/i)[2];
-      return `https://img.youtube.com/vi/${youtubeId}/0.jpg`;
-    }
-    return this.state.screenshotURL;
-  }
-
   onSwipeLeft = () => {
-    this.cycleBanners('forewords')
-  }
+    this.cycleBanners('forewords');
+  };
 
   onSwipeRight = () => {
-    this.cycleBanners('backwards')
-  }
+    this.cycleBanners('backwards');
+  };
 
   cycleBanners = (direction) => {
-
-    const bannerImages = document.getElementsByClassName("artist-header__photo");
-    const bannerIcons = document.getElementsByClassName("artist-header__banner-icons_icon");
+    const bannerImages = document.getElementsByClassName(
+      'artist-header__photo',
+    );
+    const bannerIcons = document.getElementsByClassName(
+      'artist-header__banner-icons_icon',
+    );
     var index;
 
     for (index = 0; index < bannerImages.length; ++index) {
-
       if (bannerImages[index].classList.contains('active')) {
-
         bannerImages[index].classList.toggle('active');
         bannerIcons[index].classList.toggle('active');
 
         const change = direction === 'backwards' ? -1 : 1;
         index += change;
-        index = index < 0 ? bannerImages.length - 1 : index = index % bannerImages.length;
+        index =
+          index < 0
+            ? bannerImages.length - 1
+            : (index = index % bannerImages.length);
 
         bannerImages[index].classList.add('active');
         bannerIcons[index].classList.add('active');
       }
     }
-  }
+  };
 
   selectBanner = (currentIndex) => {
-
-    const bannerImages = document.getElementsByClassName("artist-header__photo");
-    const bannerIcons = document.getElementsByClassName("artist-header__banner-icons_icon");
+    const bannerImages = document.getElementsByClassName(
+      'artist-header__photo',
+    );
+    const bannerIcons = document.getElementsByClassName(
+      'artist-header__banner-icons_icon',
+    );
 
     for (var index = 0; index < bannerImages.length; ++index) {
       if (bannerImages[index].classList.contains('active')) {
@@ -114,45 +85,60 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
     bannerImages[currentIndex].classList.add('active');
     bannerIcons[currentIndex].classList.add('active');
-  }
+  };
 
-  renderArtistName = () => <div className="artist-header__title"><span className="artist-header__title_flair"></span>{this.props.artist.name}</div>;
+  renderArtistName = () => (
+    <div className="artist-header__title">
+      <span className="artist-header__title_flair"></span>
+      {this.props.artist.name}
+    </div>
+  );
 
   renderOwnerHover = ({ owner }) => {
     return (
       <div className="supporter__hover-card">
         <div className="supporter__hover-card_header">
           <div className="supporter__hover-card_header_info">
-            <div className="supporter__hover-card_header_info_name">{owner.name}
-              {owner.last_initial && (
-                <span> {owner.last_initial}.</span>
-              )}
+            <div className="supporter__hover-card_header_info_name">
+              {owner.name}
+              {owner.last_initial && <span> {owner.last_initial}.</span>}
             </div>
+            {owner.instrument && (
+              <div className="supporter__hover-card_header_info_name">
+                {owner.instrument}
+              </div>
+            )}
             {owner.joined_since && (
-              <div className="supporter__hover-card_header_info_since">Joined Ampled {owner.joined_since}</div>
+              <div className="supporter__hover-card_header_info_since">
+                Joined Ampled {owner.joined_since}
+              </div>
             )}
             {owner.bio && (
-              <div className="supporter__hover-card_header_info_bio">{owner.bio}</div>
+              <div className="supporter__hover-card_header_info_bio">
+                {owner.bio}
+              </div>
             )}
           </div>
         </div>
         {owner.supports.length > 0 && (
           <div className="supporter__hover-card_bands">
             <div className="supporter__hover-card_bands_section">
-                <h6>Also Supports</h6>
-                {owner.supports
-                  .map((artist) => (
-                    <div className="supporter__hover-card_bands_name">
-                      <a href={artist.slug}>{artist.name}</a>
-                    </div>
-                  ))}
-              </div>
+              <h6>Also Supports</h6>
+              {owner.supports.map((artist) => (
+                <div
+                  className="supporter__hover-card_bands_name"
+                  key={artist.name}
+                >
+                  <a href={artist.slug}>{artist.name}</a>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
     );
   };
-  
+
   renderOwners = () => {
     const { artist } = this.props;
     const RenderOwnerHover = this.renderOwnerHover;
@@ -161,11 +147,13 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__persons">
         {artist.owners &&
           artist.owners.map((owner) => (
-            <div key={`owner-${owner.id}`} id={`owner-${owner.id}`} className="artist-header__person supporter">
+            <div
+              key={`owner-${owner.id}`}
+              id={`owner-${owner.id}`}
+              className="artist-header__person supporter"
+            >
               <div className="member-image">
-                <RenderOwnerHover
-                  owner={owner}
-                />
+                <RenderOwnerHover owner={owner} />
                 {owner.profile_image_url ? (
                   <img
                     className="artist-header__person_image member"
@@ -174,13 +162,13 @@ export class ArtistHeader extends React.Component<Props, any> {
                     style={{ borderColor: artist.accent_color }}
                   />
                 ) : (
-                    <img
-                      className="artist-header__person_image member"
-                      src={avatar}
-                      alt={owner.name}
-                      style={{ borderColor: artist.accent_color }}
-                    />
-                  )}
+                  <img
+                    className="artist-header__person_image member"
+                    src={avatar}
+                    alt={owner.name}
+                    style={{ borderColor: artist.accent_color }}
+                  />
+                )}
               </div>
             </div>
           ))}
@@ -199,13 +187,21 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   renderCloudinaryPhoto = (image: string, crop: number, altText: string) => {
     const crop_url_path = `w_${crop},h_${crop},c_fill`;
-    const cloudinary_id = image.substring(image.lastIndexOf("/") + 1, image.lastIndexOf("."));
+    const cloudinary_id = image.substring(
+      image.lastIndexOf('/') + 1,
+      image.lastIndexOf('.'),
+    );
     if (image.includes('https://res.cloudinary')) {
       return (
-        <Image publicId={cloudinary_id} alt={altText} >
-          <Transformation crop="fill" width={crop} height={crop} responsive_placeholder="blank"/>
+        <Image publicId={cloudinary_id} alt={altText}>
+          <Transformation
+            crop="fill"
+            width={crop}
+            height={crop}
+            responsive_placeholder="blank"
+          />
         </Image>
-      )
+      );
     } else {
       const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
       return <img src={img_src} alt={altText} />;
@@ -219,12 +215,14 @@ export class ArtistHeader extends React.Component<Props, any> {
         {artist.images &&
           artist.images.map((image, index) => {
             return (
-              <div key={index} className={cx('artist-header__photo', { active: index === 0 })}>
+              <div
+                key={index}
+                className={cx('artist-header__photo', { active: index === 0 })}
+              >
                 {this.renderCloudinaryPhoto(image, 800, 'Artist header')}
               </div>
             );
-          })
-        }
+          })}
       </div>
     );
   };
@@ -240,42 +238,51 @@ export class ArtistHeader extends React.Component<Props, any> {
               return (
                 <span
                   key={index}
-                  className={cx('artist-header__banner-icons_icon', { active: index === 0 })}
+                  className={cx('artist-header__banner-icons_icon', {
+                    active: index === 0,
+                  })}
                   onClick={() => this.selectBanner(index)}
                 ></span>
               );
             } else {
               return null;
             }
-          })
-        }
+          })}
       </div>
     );
   };
 
   renderPhotoContainer = () => (
-    <div className="artist-header__photo-container" style={{ borderColor: this.props.artist.accent_color }}>
+    <div
+      className="artist-header__photo-container"
+      style={{ borderColor: this.props.artist.accent_color }}
+    >
       {this.renderOwners()}
       {this.renderBanners()}
       <div
-        onClick={!isMobile && (this.cycleBanners)}
+        onClick={!isMobile ? this.cycleBanners : undefined}
         className="artist-header__photo-container_border"
-        style={{ borderColor: this.props.artist.accent_color }}>
+        style={{ borderColor: this.props.artist.accent_color }}
+      >
         <Swipe
           onSwipeLeft={this.onSwipeLeft}
           onSwipeRight={this.onSwipeRight}
           allowMouseEvents={true}
           tolerance={25}
           className="artist-header__photo-container_border_swipe"
-        >
-        </Swipe>
+        ></Swipe>
       </div>
       {this.renderBannerIcons()}
     </div>
   );
 
   canLoggedUserPost = () => {
-    return this.props.loggedUserAccess && this.props.loggedUserAccess.role === UserRoles.Owner;
+    return (
+      this.props.loggedUserAccess &&
+      (this.props.loggedUserAccess.role === UserRoles.Admin ||
+        this.props.loggedUserAccess.role === UserRoles.Member ||
+        this.props.loggedUserAccess.role === UserRoles.Owner)
+    );
   };
 
   renderFloatingNewPostButton = () =>
@@ -294,14 +301,29 @@ export class ArtistHeader extends React.Component<Props, any> {
     if (artist.video_url) {
       return (
         <div>
-          <div className="artist-header__message_container" style={{ borderColor: artist.accent_color }}>
-            <button onClick={this.props.openVideoModal} className="artist-header__play" aria-label="Play video message">
-              <FontAwesomeIcon className="artist-header__play_svg" icon={faPlay} style={{ color: artist.accent_color }} />
+          <div
+            className="artist-header__message_container"
+            style={{ borderColor: artist.accent_color }}
+          >
+            <button
+              onClick={this.props.openVideoModal}
+              className="artist-header__play"
+              aria-label="Play video message"
+            >
+              <FontAwesomeIcon
+                className="artist-header__play_svg"
+                icon={faPlay}
+                style={{ color: artist.accent_color }}
+              />
             </button>
             <div className="artist-header__message_video">
-              <img className="artist-header__message_tear" src={tear} alt=""/>
+              <img className="artist-header__message_tear" src={tear} alt="" />
               <div className="artist-header__message_image_container">
-                <img className="artist-header__message_image" src={this.state.screenshotURL} alt="Video message thumbnail"/>
+                <img
+                  className="artist-header__message_image"
+                  src={artist.video_screenshot_url}
+                  alt="Video message thumbnail"
+                />
               </div>
             </div>
           </div>
@@ -318,12 +340,23 @@ export class ArtistHeader extends React.Component<Props, any> {
       return (
         <div>
           <div
-            className={cx('artist-header__message_container', { paper_md: !artist.video_url })}
+            className={cx('artist-header__message_container', {
+              paper_md: !artist.video_url,
+            })}
             style={{ borderColor: artist.accent_color }}
           >
             <div className="artist-header__message_text">
-              <img className="artist-header__message_paper-bg" src={artist.video_url ? paper_sm : paper_md} alt="" />
-              <TextTruncate line={artist.video_url ? 5 : 9} element="span" truncateText="&#8230;" text={artist.bio} />
+              <img
+                className="artist-header__message_paper-bg"
+                src={artist.video_url ? paper_sm : paper_md}
+                alt=""
+              />
+              <TextTruncate
+                line={artist.video_url ? 5 : 9}
+                element="span"
+                truncateText="&#8230;"
+                text={artist.bio}
+              />
             </div>
             <button
               className="btn btn-ampled btn-read-more"
@@ -353,23 +386,25 @@ export class ArtistHeader extends React.Component<Props, any> {
             </div>
           )}
           <div className="supporter__hover-card_header_info">
-            <div className="supporter__hover-card_header_info_name">{supporter.name}
+            <div className="supporter__hover-card_header_info_name">
+              {supporter.name}
               {supporter.last_initial && (
                 <span> {supporter.last_initial}.</span>
               )}
             </div>
             {supporter.supports && (
-              <div className="supporter__hover-card_header_info_since">Supporter since 
+              <div className="supporter__hover-card_header_info_since">
+                Supporter since
                 {supporter.supports
                   .filter((artists) => R.equals(artists.name, artist_name))
                   .map((artists) => (
-                    <span> {artists.supporter_since}</span>
+                    <span key={artists.name}> {artists.supporter_since}</span>
                   ))}
               </div>
             )}
           </div>
         </div>
-        {(supporter.supports.length > 1 || supporter.member_of.length > 0 ) && (
+        {(supporter.supports.length > 1 || supporter.member_of.length > 0) && (
           <div className="supporter__hover-card_bands">
             {supporter.supports.length > 1 && (
               <div className="supporter__hover-card_bands_section">
@@ -377,7 +412,10 @@ export class ArtistHeader extends React.Component<Props, any> {
                 {supporter.supports
                   .filter((artist) => !R.equals(artist.name, artist_name))
                   .map((artist) => (
-                    <div className="supporter__hover-card_bands_name">
+                    <div
+                      className="supporter__hover-card_bands_name"
+                      key={artist.slug}
+                    >
                       <a href={artist.slug}>{artist.name}</a>
                     </div>
                   ))}
@@ -386,12 +424,14 @@ export class ArtistHeader extends React.Component<Props, any> {
             {supporter.member_of.length > 0 && (
               <div className="supporter__hover-card_bands_section">
                 <h6>Member of</h6>
-                {supporter.member_of
-                  .map((artist) => (
-                    <div className="supporter__hover-card_bands_name">
-                      <a href={artist.slug}>{artist.name}</a>
-                    </div>
-                  ))}
+                {supporter.member_of.map((artist) => (
+                  <div
+                    className="supporter__hover-card_bands_name"
+                    key={artist.name}
+                  >
+                    <a href={artist.slug}>{artist.name}</a>
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -409,13 +449,15 @@ export class ArtistHeader extends React.Component<Props, any> {
     }
     return (
       <div className="supporter">
-        <RenderSupporterHover
-          supporter={supporter}
-        />
+        <RenderSupporterHover supporter={supporter} />
         <div
           key={`supporter-${supporter.id}`}
           id={`supporter-${supporter.id}`}
-          className={isSmall ? 'supporter-image artist-header__person_small' : 'supporter-image artist-header__person'}
+          className={
+            isSmall
+              ? 'supporter-image artist-header__person_small'
+              : 'supporter-image artist-header__person'
+          }
         >
           {supporter.profile_image_url ? (
             <img
@@ -425,33 +467,38 @@ export class ArtistHeader extends React.Component<Props, any> {
               style={style}
             />
           ) : (
-              <img
-                className="artist-header__person_svg"
-                src={avatar}
-                alt={supporter.name}
-                style={style}
-              />
-            )}
+            <img
+              className="artist-header__person_svg"
+              src={avatar}
+              alt={supporter.name}
+              style={style}
+            />
+          )}
         </div>
       </div>
     );
   };
 
   renderSupportButton = () => {
-
     const { artist } = this.props;
     const borderColor = artist.accent_color;
 
     return (
-      <div>
-        <button className="btn btn-ampled btn-support" style={{ borderColor }} onClick={(e) => this.props.handleSupportClick()}>
-          Become a Supporter
+      <div
+        className="artist-header__message_container"
+        style={{ border: 'unset', minHeight: 'auto' }}
+      >
+        <button
+          className="btn btn-ampled btn-support"
+          style={{ borderColor, maxWidth: '100%' }}
+          onClick={(e) => this.props.handleSupportClick()}
+        >
+          Support What You Want
         </button>
         <button onClick={this.props.openWhyModal} className="link link__why">
           Why support?
         </button>
       </div>
-
     );
   };
 
@@ -470,7 +517,9 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header__supporters">
         {artist.supporters.length > 0 && (
           <div>
-            <div className="artist-header__supporters_title">{artist.supporters.length} Supporters</div>
+            <div className="artist-header__supporters_title">
+              {artist.supporters.length} Supporters
+            </div>
             <div className="row">
               <div className="artist-header__supporters_recent col-4">
                 <RenderSupporter
@@ -478,13 +527,21 @@ export class ArtistHeader extends React.Component<Props, any> {
                   borderColor={borderColor}
                 />
                 <div className="artist-header__person_info">
-                  <div className="artist-header__person_name">{mostRecentSupporter.name}</div>
+                  <div className="artist-header__person_name">
+                    {mostRecentSupporter.name}
+                  </div>
                   <div className="artist-header__person_mr">Most Recent</div>
                 </div>
               </div>
               <div className="artist-header__supporters_all col-8">
                 {artist.supporters
-                  .filter((supporter) => !R.equals(R.path(['most_recent_supporter', 'id'], artist), +supporter.id))
+                  .filter(
+                    (supporter) =>
+                      !R.equals(
+                        R.path(['most_recent_supporter', 'id'], artist),
+                        +supporter.id,
+                      ),
+                  )
                   .map((supporter) => (
                     <div key={`minisupporter-${supporter.id}`}>
                       <RenderSupporter
@@ -508,15 +565,16 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="artist-header container">
         {this.renderArtistName()}
         <div className="row justify-content-between">
-          <div className="col-md-7">
-            {this.renderPhotoContainer()}
-          </div>
+          <div className="col-md-7">{this.renderPhotoContainer()}</div>
           <div className="col-md-4 artist-header__message-col">
             {this.renderVideoContainer()}
             {this.renderMessageContainer()}
             {this.renderFloatingNewPostButton()}
             {this.renderSupportersContainer()}
-            {!this.props.isSupporter && !this.canLoggedUserPost() && isStripeSetup && this.renderSupportButton()}
+            {!this.props.isSupporter &&
+              !this.canLoggedUserPost() &&
+              isStripeSetup &&
+              this.renderSupportButton()}
           </div>
         </div>
       </div>

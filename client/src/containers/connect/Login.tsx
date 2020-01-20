@@ -3,7 +3,10 @@ import './login.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeAuthModalAction, openAuthModalAction } from '../../redux/authentication/authentication-modal';
+import {
+  closeAuthModalAction,
+  openAuthModalAction,
+} from '../../redux/authentication/authentication-modal';
 import { loginAction } from '../../redux/authentication/login';
 import { Store } from '../../redux/configure-store';
 import * as store from 'store';
@@ -36,7 +39,7 @@ class LoginComponent extends React.Component<Props, any> {
     if (this.props.error && !prevProps.error) {
       let { error } = this.props;
       if (/confirm your email/i.test(this.props.error)) {
-        error = `${error}<br>Please use the link in the login form.`
+        error = `${error}<br>Please use the link in the login form.`;
         this.setState({
           showConfirmationResend: true,
         });
@@ -92,7 +95,10 @@ class LoginComponent extends React.Component<Props, any> {
         data: { user: { email: this.state.email } },
       });
 
-      showToastMessage(`Confirmation instructions have been sent to ${this.state.email}.`, MessageType.SUCCESS);
+      showToastMessage(
+        `Confirmation instructions have been sent to ${this.state.email}.`,
+        MessageType.SUCCESS,
+      );
 
       this.setState({
         showConfirmationResend: false,
@@ -100,17 +106,23 @@ class LoginComponent extends React.Component<Props, any> {
     } catch (e) {
       showToastMessage('Something went wrong.', MessageType.ERROR);
     }
-  }
+  };
 
   render() {
-    const { login } = this.props;
+    const { login, customLoginMessage } = this.props;
 
     return (
       <div className="login__container">
         <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
           <h4>LOGIN</h4>
-          <form className="form-container form-control flex-column" name="login" onSubmit={this.handleSubmit}>
+          {customLoginMessage && <p>{customLoginMessage}</p>}
+
+          <form
+            className="form-container form-control flex-column"
+            name="login"
+            onSubmit={this.handleSubmit}
+          >
             <input
               className="input-group-text"
               type="email"
@@ -136,31 +148,42 @@ class LoginComponent extends React.Component<Props, any> {
           </form>
           {!this.state.showConfirmationResend && (
             <label>
-              <a onClick={() => this.props.openAuthModal({ modalPage: 'forgotPassword' })}>
+              <button
+                className="link"
+                onClick={() =>
+                  this.props.openAuthModal({ modalPage: 'forgotPassword' })
+                }
+              >
                 <u>Forgot Password?</u>
-              </a>
+              </button>
             </label>
           )}
           {this.state.showConfirmationResend && (
             <label style={{ textAlign: 'center' }}>
-              <a onClick={this.resendConfirmation}>
+              <button className="link" onClick={this.resendConfirmation}>
                 <u>
                   Re-send confirmation to
                   <br />
                   {this.state.email}
                 </u>
-              </a>
+              </button>
             </label>
           )}
-          {process.env.NODE_ENV === 'development' && !this.state.showConfirmationResend && (
-            <label>
-              Don't have an account?{' '}
-              <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
-                <u>Sign up</u>
-              </a>
-              .
-            </label>
-          )}
+          {process.env.NODE_ENV === 'development' &&
+            !this.state.showConfirmationResend && (
+              <label>
+                Don't have an account?{' '}
+                <button
+                  className="link"
+                  onClick={() =>
+                    this.props.openAuthModal({ modalPage: 'signup' })
+                  }
+                >
+                  <u>Sign up</u>
+                </button>
+                .
+              </label>
+            )}
         </div>
       </div>
     );
@@ -177,9 +200,6 @@ const mapDispatchToProps = (dispatch) => ({
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
 });
 
-const Login = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoginComponent);
+const Login = connect(mapStateToProps, mapDispatchToProps)(LoginComponent);
 
 export { Login };

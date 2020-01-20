@@ -30,13 +30,19 @@ interface NavComponentProps {
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
-type Props = typeof loginInitialState & typeof meInitialState & NavComponentProps & Dispatchers;
+type Props = typeof loginInitialState &
+  typeof meInitialState &
+  NavComponentProps &
+  Dispatchers;
 
 class NavComponent extends React.Component<Props, any> {
   getLoggedUserPageAccess = () => {
     const { userData, artist } = this.props;
 
-    return userData && userData.artistPages.find((page) => page.artistId === +artist.id);
+    return (
+      userData &&
+      userData.artistPages.find((page) => page.artistId === +artist.id)
+    );
   };
 
   showSupportButton = () => {
@@ -46,14 +52,23 @@ class NavComponent extends React.Component<Props, any> {
       return false;
     }
 
-    if (this.props.match.path.indexOf(routePaths.artists) === -1 && this.props.match.path.indexOf(routePaths.slugs) === -1) {
+    if (
+      this.props.match.path.indexOf(routePaths.artists) === -1 &&
+      this.props.match.path.indexOf(routePaths.slugs) === -1
+    ) {
       return false;
     } else if (this.props.artistError) {
       return false;
     }
 
     return (
-      !loggedUserAccess || ![UserRoles.Supporter.toString(), UserRoles.Owner.toString()].includes(loggedUserAccess.role)
+      !loggedUserAccess ||
+      ![
+        UserRoles.Supporter.toString(),
+        UserRoles.Owner.toString(),
+        UserRoles.Member.toString(),
+        UserRoles.Admin.toString(),
+      ].includes(loggedUserAccess.role)
     );
   };
 
@@ -65,7 +80,6 @@ class NavComponent extends React.Component<Props, any> {
     } else {
       artistId = this.props.match.params.id;
     }
-
 
     if (this.props.userData) {
       this.props.history.push(routePaths.support.replace(':id', artistId));
@@ -95,27 +109,26 @@ class NavComponent extends React.Component<Props, any> {
 
   renderLoginLink = () => (
     <div>
-      <a onClick={() => this.props.openAuthModal({ modalPage: 'login' })}>
+      <button
+        className="link"
+        onClick={() => this.props.openAuthModal({ modalPage: 'login' })}
+      >
         <b>Login</b>
-      </a>{' '}
+      </button>{' '}
       {/* or{' '}
-      <a onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
+      <button className="link" onClick={() => this.props.openAuthModal({ modalPage: 'signup' })}>
         <b>Sign Up</b>
-      </a> */}
+      </button> */}
     </div>
   );
 
   renderNavLink = () => {
     if (this.props.userData) {
-      return (
-        this.renderUserImage()
-      )
+      return this.renderUserImage();
     } else if (!this.props.userData && !this.props.loadingMe) {
-      return (
-        this.renderLoginLink()
-      )
+      return this.renderLoginLink();
     }
-  }
+  };
 
   render() {
     return (
@@ -124,22 +137,24 @@ class NavComponent extends React.Component<Props, any> {
           <img src={logo} alt="logo" height="100%" />
         </Link>
         {this.showSupportButton() && (
-          <button className="btn btn-ampled btn-support btn-support-header" onClick={this.handleSupportClick}>
+          <button
+            className="btn btn-ampled btn-support btn-support-header"
+            onClick={this.handleSupportClick}
+          >
             Support this artist
           </button>
         )}
         <div className="menus">
-          <div className="supporter-message">
-            You are a supporter
-          </div>
-          <div className="loginLink">
-            {this.renderNavLink()}
-          </div>
+          <div className="supporter-message">You are a supporter</div>
+          <div className="loginLink">{this.renderNavLink()}</div>
           <Menu renderLoginLink={this.renderLoginLink} />
         </div>
         {this.showSupportButton() && (
           <div className="stickySupport">
-            <button className="btn btn-ampled btn-support" onClick={this.handleSupportClick}>
+            <button
+              className="btn btn-ampled btn-support"
+              onClick={this.handleSupportClick}
+            >
               Support this artist
             </button>
           </div>
@@ -160,9 +175,6 @@ const mapDispatchToProps = (dispatch) => ({
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
 });
 
-const Nav = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(NavComponent);
+const Nav = connect(mapStateToProps, mapDispatchToProps)(NavComponent);
 
 export { Nav };

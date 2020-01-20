@@ -17,7 +17,9 @@ import { Helmet } from 'react-helmet';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
-type Props = typeof loginInitialState & typeof meInitialState & Dispatchers & { history: any };
+type Props = typeof loginInitialState &
+  typeof meInitialState &
+  Dispatchers & { history: any };
 
 class AppComponent extends React.Component<Props, any> {
   componentDidMount() {
@@ -25,7 +27,12 @@ class AppComponent extends React.Component<Props, any> {
   }
 
   componentDidUpdate() {
-    if (this.props.token && !this.props.error && !this.props.userData && !this.props.loadingMe) {
+    if (
+      this.props.token &&
+      !this.props.error &&
+      !this.props.userData &&
+      !this.props.loadingMe
+    ) {
       this.props.getMe();
     }
   }
@@ -35,14 +42,19 @@ class AppComponent extends React.Component<Props, any> {
       <div className="page">
         <Helmet>
           <title>Ampled | Direct Community Support For Music Artists</title>
-          {
-            process.env.NODE_ENV === 'development' &&
-            (<meta name="robots" content="noindex, nofollow"/>)
-          }
+          {process.env.NODE_ENV === 'development' && (
+            <meta name="robots" content="noindex, nofollow" />
+          )}
         </Helmet>
-        <React.Suspense fallback={<Loading artistLoading={true}/>}>
+        <React.Suspense fallback={<Loading artistLoading={true} />}>
           <Routes />
-          <Modal open={this.props.authModalOpen} onClose={this.props.closeAuthModal}>
+          <Modal
+            open={this.props.authModalOpen}
+            onClose={() => {
+              this.props.onModalCloseAction && this.props.onModalCloseAction();
+              this.props.closeAuthModal();
+            }}
+          >
             <AuthModal history={this.props.history} />
           </Modal>
         </React.Suspense>
@@ -61,9 +73,6 @@ const mapDispatchToProps = (dispatch) => ({
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
 });
 
-const App = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AppComponent);
+const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
 
 export { App };

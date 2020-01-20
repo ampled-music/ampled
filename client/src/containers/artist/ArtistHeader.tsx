@@ -247,29 +247,38 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
   };
 
-  renderPhotoContainer = () => (
-    <div
-      className="artist-header__photo-container"
-      style={{ borderColor: this.props.artist.accent_color }}
-    >
-      {this.renderOwners()}
-      {this.renderBanners()}
+  renderPhotoContainer = () => {
+    const { artist } = this.props;
+    return (
       <div
-        onClick={!isMobile ? this.cycleBanners : undefined}
-        className="artist-header__photo-container_border"
-        style={{ borderColor: this.props.artist.accent_color }}
+        className="artist-header__photo-container"
+        style={{ borderColor: artist.accent_color }}
       >
-        <Swipe
-          onSwipeLeft={this.onSwipeLeft}
-          onSwipeRight={this.onSwipeRight}
-          allowMouseEvents={true}
-          tolerance={25}
-          className="artist-header__photo-container_border_swipe"
-        ></Swipe>
+        {this.renderOwners()}
+        {this.renderBanners()}
+        {artist.images && (
+          <div
+            onClick={
+              !isMobile && artist.images.length > 1
+                ? this.cycleBanners
+                : undefined
+            }
+            className="artist-header__photo-container_border"
+            style={{ borderColor: artist.accent_color }}
+          >
+            <Swipe
+              onSwipeLeft={this.onSwipeLeft}
+              onSwipeRight={this.onSwipeRight}
+              allowMouseEvents={true}
+              tolerance={25}
+              className="artist-header__photo-container_border_swipe"
+            ></Swipe>
+          </div>
+        )}
+        {this.renderBannerIcons()}
       </div>
-      {this.renderBannerIcons()}
-    </div>
-  );
+    );
+  };
 
   canLoggedUserPost = () => {
     return (

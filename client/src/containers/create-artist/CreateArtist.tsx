@@ -3,7 +3,7 @@ import './create-artist.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
 // import SwipeableViews from 'react-swipeable-views';
 import {
   TextField,
@@ -189,8 +189,8 @@ const TabPanel = (props: TabPanelProps) => {
       component="div"
       role="tabpanel"
       hidden={value !== props.index}
-      id={`simple-tabpanel-${props.index}`}
-      aria-labelledby={`simple-tab-${props.index}`}
+      id={`artist-tabpanel-${props.index}`}
+      aria-labelledby={`artist-tab-${props.index}`}
       {...other}
     >
       {value === index && <Box p={3}>{children}</Box>}
@@ -200,8 +200,8 @@ const TabPanel = (props: TabPanelProps) => {
 
 const a11yProps = (index: any) => {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `artist-tab-${index}`,
+    'aria-controls': `artist-tabpanel-${index}`,
   };
 };
 
@@ -213,15 +213,15 @@ const SimpleTabs = () => {
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="static" className="create-artist__tabs">
         <Tabs
           value={tabIndex}
           onChange={handleChange}
-          aria-label="simple tabs example"
+          aria-label="create artist tabs"
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="About" {...a11yProps(0)} />
+          <Tab label="Members" {...a11yProps(1)} />
+          <Tab label="Complete" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={tabIndex} index={0}>

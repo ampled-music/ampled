@@ -763,7 +763,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistMessage"
-                label="Tell everyone who you are, what brought you to join Ampled, and why they should support you."
                 id="message"
                 value={this.state.artistMessage || ''}
                 onChange={this.handleChange}
@@ -818,7 +817,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="row">
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Video Message</div>
-              <h6>Optional</h6>
               <h6>
                 This video is featured on your artist page. You can add this
                 later.

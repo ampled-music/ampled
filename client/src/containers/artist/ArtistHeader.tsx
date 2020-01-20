@@ -104,18 +104,13 @@ export class ArtistHeader extends React.Component<Props, any> {
               {owner.last_initial && <span> {owner.last_initial}.</span>}
             </div>
             {owner.instrument && (
-              <div className="supporter__hover-card_header_info_name">
+              <div className="supporter__hover-card_header_info_role">
                 {owner.instrument}
               </div>
             )}
             {owner.joined_since && (
               <div className="supporter__hover-card_header_info_since">
                 Joined Ampled {owner.joined_since}
-              </div>
-            )}
-            {owner.bio && (
-              <div className="supporter__hover-card_header_info_bio">
-                {owner.bio}
               </div>
             )}
           </div>

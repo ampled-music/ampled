@@ -5,6 +5,7 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
     # when recording VCR cassettes, use a real (test) customer id
     create(:user, stripe_customer_id: "cus_FfMNyx9ktbGwnx", confirmed_at: Time.current)
   end
+  let(:other_user) { create(:user) }
   let(:artist_page) { create(:artist_page) }
   let(:other_artist_page) { create(:artist_page) }
 
@@ -110,6 +111,23 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
 
       cancelled_sub = Stripe::Subscription.retrieve(@subscription.stripe_id, stripe_account: artist_page.stripe_user_id)
       expect(cancelled_sub.status).to eq("canceled")
+    end
+
+    it "doesn't cancel for another user" do
+      sign_out user
+      sign_in other_user
+
+      delete "/subscriptions/#{@subscription.id}"
+
+      expect(JSON.parse(response.body)["message"]).to eq("Not allowed.")
+    end
+
+    it "doesn't cancel for unauthenticated user" do
+      sign_out user
+
+      delete "/subscriptions/#{@subscription.id}"
+
+      expect(response.body).to eq("You need to sign in or sign up before continuing.")
     end
   end
 

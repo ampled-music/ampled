@@ -35,6 +35,13 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
     other_artist_page.update(stripe_user_id: other_existing_stripe_auth["stripe_user_id"])
   end
 
+  context "when pulling me.json" do
+    before { get "/me.json" }
+    it "contains card info" do
+      expect(JSON.parse(response.body)["userInfo"]["cardInfo"]["last4"]).not_to be_empty
+    end
+  end
+
   context "when creating a subscription" do
     let(:url) { "/subscriptions/" }
 

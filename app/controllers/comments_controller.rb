@@ -24,11 +24,11 @@ class CommentsController < ApplicationController
   end
 
   def check_permission
-    render_not_allowed if current_user.nil?
+    return render_not_allowed if current_user.nil?
 
     return if @comment.user == current_user
 
-    render_not_allowed unless PostPolicy.new(current_user, @comment.post).destroy?
+    return render_not_allowed unless PostPolicy.new(current_user, @comment.post).destroy?
   end
 
   def comment_params

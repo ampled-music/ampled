@@ -1,6 +1,8 @@
 class ArtistPagesController < ApplicationController
   before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy]
   before_action :check_approved, only: :show
+  before_action :check_user, only: %i[create update]
+  before_action :check_has_image, only: :create
   before_action :check_create_okay, only: :create
   before_action :check_update_okay, only: :update
 
@@ -79,14 +81,28 @@ class ArtistPagesController < ApplicationController
     @role = PageOwnership.where(user_id: current_user.try(:id), artist_page_id: params[:id]).take.try(:role)
   end
 
-  def check_create_okay
+  def check_user
+    return render json: { status: "error", message: "Confirm your email address first." } if current_user.nil?
+
     # Pull user from DB in case they've confirmed recently.
     user = User.find_by(id: current_user&.id)
     # Only logged-in users who have confirmed their emails may create artist pages.
-    if current_user.nil? || user&.confirmed_at.nil?
-      render json: { status: "error", message: "Confirm your email address first." }
-    elsif artist_page_params[:name].nil? || artist_page_params[:slug].nil?
-      render json: { status: "error", message: "Missing required parameters." }
+    return render json: { status: "error", message: "Confirm your email address first." } if user&.confirmed_at.nil?
+  end
+
+  def missing_params_error
+    render json: { status: "error", message: "Missing required parameters." }
+  end
+
+  def check_has_image
+    render json: { status: "error", message: "You need at least a main image." } if params[:images][0].nil?
+  end
+
+  def check_create_okay
+    # required params
+    if artist_page_params[:name].nil? || artist_page_params[:slug].nil? || artist_page_params[:bio].nil? || \
+       artist_page_params[:location].nil? || artist_page_params[:accent_color].nil?
+      missing_params_error
     end
   end
 

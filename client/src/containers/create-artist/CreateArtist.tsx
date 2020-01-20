@@ -3,8 +3,7 @@ import './create-artist.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
-// import SwipeableViews from 'react-swipeable-views';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import {
   TextField,
   Radio,
@@ -205,7 +204,7 @@ const a11yProps = (index: any) => {
   };
 };
 
-const SimpleTabs = () => {
+const CreateArtistTabs = () => {
   const [tabIndex, setTabIndex] = React.useState(0);
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabIndex(newValue);
@@ -1160,43 +1159,51 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="create-artist">
         <MuiThemeProvider theme={theme}>
           {this.renderHeader()}
-          <SimpleTabs />
-          {this.renderAbout()}
-          {this.renderInfo()}
-          {this.renderImages()}
-          {this.renderColor()}
-          <Members
-            bandName={this.state.artistName}
-            members={this.state.members}
-            handleChange={this.updateMemberDetails}
-            addMember={this.addMember}
-            removeMember={this.removeMember}
-            userData={this.props.me?.userData}
-          />
+          <CreateArtistTabs />
+
+          <TabPanel value={0} index={0}>
+            {this.renderAbout()}
+            {this.renderInfo()}
+            {this.renderImages()}
+            {this.renderColor()}
+          </TabPanel>
+          <TabPanel value={1} index={1}>
+            <Members
+              bandName={this.state.artistName}
+              members={this.state.members}
+              handleChange={this.updateMemberDetails}
+              addMember={this.addMember}
+              removeMember={this.removeMember}
+              userData={this.props.me?.userData}
+            />
+          </TabPanel>
+
           {/* {this.renderPayment()} */}
-          <div className="container">
-            {!this.props.editMode && (
+          <TabPanel value={2} index={2}>
+            <div className="container">
+              {!this.props.editMode && (
+                <div className="row">
+                  <div className="col-md-3 col-sm-1"></div>
+                  <div className="col-md-6 col-sm-10 create-artist__copy">
+                    Your page will initially only be visible to you and any
+                    other members you've added. The Ampled team does a quick
+                    spot check of all pages before they become visible to the
+                    general public, but this normally doesn't take us very long.
+                  </div>
+                  <div className="col-md-3 col-sm-1"></div>
+                </div>
+              )}
               <div className="row">
                 <div className="col-md-3 col-sm-1"></div>
-                <div className="col-md-6 col-sm-10 create-artist__copy">
-                  Your page will initially only be visible to you and any other
-                  members you've added. The Ampled team does a quick spot check
-                  of all pages before they become visible to the general public,
-                  but this normally doesn't take us very long.
+                <div className="col-md-6 col-sm-10">
+                  <button onClick={this.onSubmit} className="btn btn-ampled">
+                    {this.props.editMode ? 'Save' : 'Create'} your page
+                  </button>
                 </div>
                 <div className="col-md-3 col-sm-1"></div>
               </div>
-            )}
-            <div className="row">
-              <div className="col-md-3 col-sm-1"></div>
-              <div className="col-md-6 col-sm-10">
-                <button onClick={this.onSubmit} className="btn btn-ampled">
-                  {this.props.editMode ? 'Save' : 'Create'} your page
-                </button>
-              </div>
-              <div className="col-md-3 col-sm-1"></div>
             </div>
-          </div>
+          </TabPanel>
         </MuiThemeProvider>
       </div>
     );

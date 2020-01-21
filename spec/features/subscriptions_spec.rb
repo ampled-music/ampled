@@ -58,6 +58,11 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
     it "returns updated card info" do
       expect(JSON.parse(response.body)["card_last4"]).not_to be_empty
     end
+
+    it "returns updated card info in me.json" do
+      get "/me.json"
+      expect(JSON.parse(response.body)["userInfo"]["cardInfo"]["last4"]).not_to be_empty
+    end
   end
 
   context "when updating card on file with an existing subscription" do

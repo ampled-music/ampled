@@ -204,18 +204,17 @@ const a11yProps = (index: any) => {
   };
 };
 
-const CreateArtistTabs = () => {
-  const [tabIndex, setTabIndex] = React.useState(0);
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setTabIndex(newValue);
-  };
+const CreateArtistTabs = ({ tabIndex, setTabindex }) => {
+  // const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  //   setTabIndex(newValue);
+  // };
 
   return (
     <div>
       <AppBar position="static" className="create-artist__tabs">
         <Tabs
           value={tabIndex}
-          onChange={handleChange}
+          onChange={setTabindex}
           aria-label="create artist tabs"
         >
           <Tab label="About" {...a11yProps(0)} />
@@ -509,6 +508,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     artistVideo: '',
     artistSlug: '',
     artistStripe: '',
+    tabIndex: 0,
     members: [],
     images: [],
     loading: true,
@@ -1159,15 +1159,17 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="create-artist">
         <MuiThemeProvider theme={theme}>
           {this.renderHeader()}
-          <CreateArtistTabs />
-
-          <TabPanel value={0} index={0}>
+          <CreateArtistTabs
+            tabIndex={this.state.tabIndex}
+            setTabIndex={(index) => this.setState({ tabIndex: index })}
+          />
+          <TabPanel value={this.state.tabIndex} index={0}>
             {this.renderAbout()}
             {this.renderInfo()}
             {this.renderImages()}
             {this.renderColor()}
           </TabPanel>
-          <TabPanel value={1} index={1}>
+          <TabPanel value={this.state.tabIndex} index={1}>
             <Members
               bandName={this.state.artistName}
               members={this.state.members}
@@ -1179,7 +1181,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           </TabPanel>
 
           {/* {this.renderPayment()} */}
-          <TabPanel value={2} index={2}>
+          <TabPanel value={this.state.tabIndex} index={2}>
             <div className="container">
               {!this.props.editMode && (
                 <div className="row">

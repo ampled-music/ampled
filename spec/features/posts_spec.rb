@@ -114,7 +114,7 @@ end
 RSpec.describe "POST /posts", type: :request do
   let(:user) { create(:user) }
   let(:owner_user) { create(:user) }
-  let(:artist_page) { create(:artist_page) }
+  let(:artist_page) { create(:artist_page, approved: true) }
   let(:post_params) do
     {
       post: {
@@ -153,6 +153,20 @@ RSpec.describe "POST /posts", type: :request do
 
     it "returns 200" do
       expect(response.status).to eq 200
+    end
+  end
+
+  context "when viewing the artist page" do
+    before do
+      owner_user.owned_pages << artist_page
+      sign_in owner_user
+      post "/artist_pages/#{artist_page.id}/posts", params: post_params
+    end
+
+    it "the post appears in the page with correct data" do
+      get "/artist_pages/#{artist_page.id}.json"
+      expect(JSON.parse(response.body)["posts"][0]["title"]).to eq("test")
+      expect(JSON.parse(response.body)["posts"][0]["author"]).to eq(owner_user.name)
     end
   end
 end

@@ -50,7 +50,7 @@ RSpec.describe ArtistPage, type: :model do
           stripe_account: ap.stripe_user_id
         )
 
-        expect(ap.last_payout).to eq(Time.new(2019, 12, 30, 0, 0, 0, "+00:00"))
+        expect(ap.last_payout).to eq(Time.new(2020, 1, 21, 0, 53, 5, "+00:00"))
       end
     end
 

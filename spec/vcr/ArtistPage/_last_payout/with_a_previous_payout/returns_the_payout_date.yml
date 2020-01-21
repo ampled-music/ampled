@@ -478,8 +478,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 5.0.0-36-generic (buildd@lgw01-amd64-060) (gcc version 7.4.0 (Ubuntu
-        7.4.0-1ubuntu1~18.04.1)) #39~18.04.1-Ubuntu SMP Tue Nov 12 11:09:50 UTC 2019","hostname":"x250"}'
+        version 5.3.0-26-generic (buildd@lgw01-amd64-039) (gcc version 7.4.0 (Ubuntu
+        7.4.0-1ubuntu1~18.04.1)) #28~18.04.1-Ubuntu SMP Wed Dec 18 16:40:14 UTC 2019","hostname":"x250"}'
       Stripe-Account:
       - acct_1FA1TnKB00tmjmII
       Accept-Encoding:
@@ -498,7 +498,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sat, 30 Nov 2019 04:13:33 GMT
+      - Tue, 21 Jan 2020 00:29:08 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -518,7 +518,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_f3jURLxXDbQAcy
+      - req_oCHQMb6oE3CVWk
       Stripe-Account:
       - acct_1FA1TnKB00tmjmII
       Stripe-Version:
@@ -529,13 +529,13 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "po_1FkNKrKB00tmjmIIKXWy5nFC",
+          "id": "po_1G3AcCKB00tmjmIIuVMhbwm1",
           "object": "payout",
           "amount": 1,
-          "arrival_date": 1575244800,
+          "arrival_date": 1579566548,
           "automatic": false,
-          "balance_transaction": "txn_1FkNKrKB00tmjmIIxDzJijTx",
-          "created": 1575087213,
+          "balance_transaction": "txn_1G3AcCKB00tmjmIIwWnf0jIT",
+          "created": 1579566548,
           "currency": "usd",
           "description": null,
           "destination": "ba_1FA1UZKB00tmjmIIDh772GTH",
@@ -552,7 +552,7 @@ http_interactions:
           "type": "bank_account"
         }
     http_version: 
-  recorded_at: Sat, 30 Nov 2019 04:13:33 GMT
+  recorded_at: Tue, 21 Jan 2020 00:29:08 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/payouts
@@ -568,8 +568,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 5.0.0-37-generic (buildd@lcy01-amd64-023) (gcc version 7.4.0 (Ubuntu
-        7.4.0-1ubuntu1~18.04.1)) #40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019","hostname":"x250"}'
+        version 5.3.0-26-generic (buildd@lgw01-amd64-039) (gcc version 7.4.0 (Ubuntu
+        7.4.0-1ubuntu1~18.04.1)) #28~18.04.1-Ubuntu SMP Wed Dec 18 16:40:14 UTC 2019","hostname":"x250"}'
       Stripe-Account:
       - acct_1FA1TnKB00tmjmII
       Accept-Encoding:
@@ -588,7 +588,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sat, 28 Dec 2019 00:07:00 GMT
+      - Tue, 21 Jan 2020 00:42:05 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -608,7 +608,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_LZGSzrCkirpuqo
+      - req_mmsVWsH9RaK3SP
       Stripe-Account:
       - acct_1FA1TnKB00tmjmII
       Stripe-Version:
@@ -619,13 +619,13 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "po_1FuSpbKB00tmjmIISQmYdRl7",
+          "id": "po_1G3AoiKB00tmjmIIfo5oKGgW",
           "object": "payout",
           "amount": 1,
-          "arrival_date": 1577664000,
+          "arrival_date": 1579567324,
           "automatic": false,
-          "balance_transaction": "txn_1FuSpbKB00tmjmIIZ6QQSRwC",
-          "created": 1577491619,
+          "balance_transaction": "txn_1G3AoiKB00tmjmII68nqPKQM",
+          "created": 1579567324,
           "currency": "usd",
           "description": null,
           "destination": "ba_1FA1UZKB00tmjmIIDh772GTH",
@@ -642,7 +642,7 @@ http_interactions:
           "type": "bank_account"
         }
     http_version: 
-  recorded_at: Sat, 28 Dec 2019 00:07:00 GMT
+  recorded_at: Tue, 21 Jan 2020 00:42:05 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
@@ -658,8 +658,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 5.0.0-37-generic (buildd@lcy01-amd64-023) (gcc version 7.4.0 (Ubuntu
-        7.4.0-1ubuntu1~18.04.1)) #40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019","hostname":"x250"}'
+        version 5.3.0-26-generic (buildd@lgw01-amd64-039) (gcc version 7.4.0 (Ubuntu
+        7.4.0-1ubuntu1~18.04.1)) #28~18.04.1-Ubuntu SMP Wed Dec 18 16:40:14 UTC 2019","hostname":"x250"}'
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -676,11 +676,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sat, 28 Dec 2019 00:16:04 GMT
+      - Tue, 21 Jan 2020 00:53:05 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '3010'
+      - '3007'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -696,7 +696,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_TmIyfdEZj2UHUL
+      - req_ElJZjMAKXUAmqZ
       Stripe-Version:
       - '2019-02-11'
       Strict-Transport-Security:
@@ -705,14 +705,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_1FuSyNCNj1cfz4PUmAAT5Itn",
+          "id": "ch_1G3AzLCNj1cfz4PUc80qLE3A",
           "object": "charge",
           "amount": 50000,
           "amount_refunded": 0,
           "application": null,
           "application_fee": null,
           "application_fee_amount": null,
-          "balance_transaction": "txn_1FuSyOCNj1cfz4PUSQ7nIyMc",
+          "balance_transaction": "txn_1G3AzMCNj1cfz4PUts7RZ5jM",
           "billing_details": {
             "address": {
               "city": null,
@@ -727,7 +727,7 @@ http_interactions:
             "phone": null
           },
           "captured": true,
-          "created": 1577492163,
+          "created": 1579567983,
           "currency": "usd",
           "customer": null,
           "description": null,
@@ -748,13 +748,13 @@ http_interactions:
             "network_status": "approved_by_network",
             "reason": null,
             "risk_level": "normal",
-            "risk_score": 57,
+            "risk_score": 9,
             "seller_message": "Payment complete.",
             "type": "authorized"
           },
           "paid": true,
           "payment_intent": null,
-          "payment_method": "card_1FuSyNCNj1cfz4PU39PFygwG",
+          "payment_method": "card_1G3AzLCNj1cfz4PU02JxTJTo",
           "payment_method_details": {
             "card": {
               "brand": "visa",
@@ -764,8 +764,8 @@ http_interactions:
                 "cvc_check": null
               },
               "country": "US",
-              "exp_month": 12,
-              "exp_year": 2020,
+              "exp_month": 1,
+              "exp_year": 2021,
               "fingerprint": "rIkL5X5IinEetfnD",
               "funding": "credit",
               "installments": null,
@@ -778,7 +778,7 @@ http_interactions:
           },
           "receipt_email": null,
           "receipt_number": null,
-          "receipt_url": "https://pay.stripe.com/receipts/acct_1E3X3XCNj1cfz4PU/ch_1FuSyNCNj1cfz4PUmAAT5Itn/rcpt_GRLfyyxgVnQRflrJfqx7co5Yq9vOWJL",
+          "receipt_url": "https://pay.stripe.com/receipts/acct_1E3X3XCNj1cfz4PU/ch_1G3AzLCNj1cfz4PUc80qLE3A/rcpt_GaLghXc2Sus5nsa2hYJAcWhp04FC46l",
           "refunded": false,
           "refunds": {
             "object": "list",
@@ -787,12 +787,12 @@ http_interactions:
             ],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/charges/ch_1FuSyNCNj1cfz4PUmAAT5Itn/refunds"
+            "url": "/v1/charges/ch_1G3AzLCNj1cfz4PUc80qLE3A/refunds"
           },
           "review": null,
           "shipping": null,
           "source": {
-            "id": "card_1FuSyNCNj1cfz4PU39PFygwG",
+            "id": "card_1G3AzLCNj1cfz4PU02JxTJTo",
             "object": "card",
             "address_city": null,
             "address_country": null,
@@ -807,8 +807,8 @@ http_interactions:
             "customer": null,
             "cvc_check": null,
             "dynamic_last4": null,
-            "exp_month": 12,
-            "exp_year": 2020,
+            "exp_month": 1,
+            "exp_year": 2021,
             "fingerprint": "rIkL5X5IinEetfnD",
             "funding": "credit",
             "last4": "0077",
@@ -821,15 +821,15 @@ http_interactions:
           "statement_descriptor": null,
           "statement_descriptor_suffix": null,
           "status": "succeeded",
-          "transfer": "tr_1FuSyNCNj1cfz4PUgmDyaNUh",
+          "transfer": "tr_1G3AzMCNj1cfz4PUeXubvays",
           "transfer_data": {
             "amount": null,
             "destination": "acct_1FA1TnKB00tmjmII"
           },
-          "transfer_group": "group_ch_1FuSyNCNj1cfz4PUmAAT5Itn"
+          "transfer_group": "group_ch_1G3AzLCNj1cfz4PUc80qLE3A"
         }
     http_version: 
-  recorded_at: Sat, 28 Dec 2019 00:16:04 GMT
+  recorded_at: Tue, 21 Jan 2020 00:53:05 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/payouts
@@ -845,8 +845,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 5.0.0-37-generic (buildd@lcy01-amd64-023) (gcc version 7.4.0 (Ubuntu
-        7.4.0-1ubuntu1~18.04.1)) #40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019","hostname":"x250"}'
+        version 5.3.0-26-generic (buildd@lgw01-amd64-039) (gcc version 7.4.0 (Ubuntu
+        7.4.0-1ubuntu1~18.04.1)) #28~18.04.1-Ubuntu SMP Wed Dec 18 16:40:14 UTC 2019","hostname":"x250"}'
       Stripe-Account:
       - acct_1FA1TnKB00tmjmII
       Accept-Encoding:
@@ -865,7 +865,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sat, 28 Dec 2019 00:16:05 GMT
+      - Tue, 21 Jan 2020 00:53:06 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -885,7 +885,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_wIqVJK3mpDYzix
+      - req_w2YA5r5x4Wcndz
       Stripe-Account:
       - acct_1FA1TnKB00tmjmII
       Stripe-Version:
@@ -896,13 +896,13 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "po_1FuSyPKB00tmjmIINnKGLJSg",
+          "id": "po_1G3AzOKB00tmjmIIx5jHylWl",
           "object": "payout",
           "amount": 1,
-          "arrival_date": 1577664000,
+          "arrival_date": 1579567985,
           "automatic": false,
-          "balance_transaction": "txn_1FuSyPKB00tmjmIIIb7isltR",
-          "created": 1577492164,
+          "balance_transaction": "txn_1G3AzOKB00tmjmIIET37T3mt",
+          "created": 1579567985,
           "currency": "usd",
           "description": null,
           "destination": "ba_1FA1UZKB00tmjmIIDh772GTH",
@@ -919,7 +919,7 @@ http_interactions:
           "type": "bank_account"
         }
     http_version: 
-  recorded_at: Sat, 28 Dec 2019 00:16:05 GMT
+  recorded_at: Tue, 21 Jan 2020 00:53:06 GMT
 - request:
     method: get
     uri: https://api.stripe.com/v1/payouts?limit=1
@@ -935,8 +935,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.5.3 p105 (2018-10-18)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 5.0.0-37-generic (buildd@lcy01-amd64-023) (gcc version 7.4.0 (Ubuntu
-        7.4.0-1ubuntu1~18.04.1)) #40~18.04.1-Ubuntu SMP Thu Nov 14 12:06:39 UTC 2019","hostname":"x250"}'
+        version 5.3.0-26-generic (buildd@lgw01-amd64-039) (gcc version 7.4.0 (Ubuntu
+        7.4.0-1ubuntu1~18.04.1)) #28~18.04.1-Ubuntu SMP Wed Dec 18 16:40:14 UTC 2019","hostname":"x250"}'
       Stripe-Account:
       - acct_1FA1TnKB00tmjmII
       Accept-Encoding:
@@ -955,7 +955,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sat, 28 Dec 2019 00:16:05 GMT
+      - Tue, 21 Jan 2020 00:53:06 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -975,7 +975,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_z2r1ZTWuGd9pl1
+      - req_YJTYzucNeNzXaJ
       Stripe-Account:
       - acct_1FA1TnKB00tmjmII
       Stripe-Version:
@@ -989,13 +989,13 @@ http_interactions:
           "object": "list",
           "data": [
             {
-              "id": "po_1FuSyPKB00tmjmIINnKGLJSg",
+              "id": "po_1G3AzOKB00tmjmIIx5jHylWl",
               "object": "payout",
               "amount": 1,
-              "arrival_date": 1577664000,
+              "arrival_date": 1579567985,
               "automatic": false,
-              "balance_transaction": "txn_1FuSyPKB00tmjmIIIb7isltR",
-              "created": 1577492164,
+              "balance_transaction": "txn_1G3AzOKB00tmjmIIET37T3mt",
+              "created": 1579567985,
               "currency": "usd",
               "description": null,
               "destination": "ba_1FA1UZKB00tmjmIIDh772GTH",
@@ -1016,5 +1016,5 @@ http_interactions:
           "url": "/v1/payouts"
         }
     http_version: 
-  recorded_at: Sat, 28 Dec 2019 00:16:05 GMT
+  recorded_at: Tue, 21 Jan 2020 00:53:06 GMT
 recorded_with: VCR 4.0.0

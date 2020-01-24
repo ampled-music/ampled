@@ -31,15 +31,15 @@ http_interactions:
       X-Ratelimit-Limit:
       - '3600'
       X-Ratelimit-Remaining:
-      - '3599'
+      - '3595'
       X-Ratelimit-Reset:
-      - '1579475319'
+      - '1579570145'
       Content-Disposition:
       - attachment; filename=vimeo.json
       Cache-Control:
       - max-age=60
       Expires:
-      - Sun, 19 Jan 2020 22:09:39 GMT
+      - Tue, 21 Jan 2020 00:54:02 GMT
       Last-Modified:
       - Tue, 14 Jan 2020 22:53:35 GMT
       Etag:
@@ -63,19 +63,19 @@ http_interactions:
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 19 Jan 2020 22:08:39 GMT
+      - Tue, 21 Jan 2020 00:53:02 GMT
       Age:
       - '0'
       Connection:
       - keep-alive
       X-Served-By:
-      - cache-bwi5144-BWI, cache-ewr18122-EWR
+      - cache-bwi5124-BWI, cache-ewr18120-EWR
       X-Cache:
       - MISS, MISS
       X-Cache-Hits:
       - 0, 0
       X-Timer:
-      - S1579471720.826075,VS0,VE52
+      - S1579567983.842110,VS0,VE58
       Vary:
       - User-Agent,Accept-Encoding
     body:
@@ -103,7 +103,7 @@ http_interactions:
         Effects Project","user_url":"https:\/\/vimeo.com\/aftereffectshive","user_portrait_small":"https:\/\/i.vimeocdn.com\/portrait\/30820239_30x30","user_portrait_medium":"https:\/\/i.vimeocdn.com\/portrait\/30820239_75x75","user_portrait_large":"https:\/\/i.vimeocdn.com\/portrait\/30820239_100x100","user_portrait_huge":"https:\/\/i.vimeocdn.com\/portrait\/30820239_300x300","stats_number_of_likes":0,"stats_number_of_plays":46,"stats_number_of_comments":0,"duration":58,"width":3840,"height":2160,"tags":"concert,
         banda, band, dj, crowd, event, grunge, rena, music, rock, sebicheargentino","embed_privacy":"anywhere"}]'
     http_version: 
-  recorded_at: Sun, 19 Jan 2020 22:08:39 GMT
+  recorded_at: Tue, 21 Jan 2020 00:53:02 GMT
 - request:
     method: get
     uri: https://vimeo.com/api/v2/video/331608175.json
@@ -135,15 +135,15 @@ http_interactions:
       X-Ratelimit-Limit:
       - '3600'
       X-Ratelimit-Remaining:
-      - '3598'
+      - '3594'
       X-Ratelimit-Reset:
-      - '1579475319'
+      - '1579570145'
       Content-Disposition:
       - attachment; filename=vimeo.json
       Cache-Control:
       - max-age=60
       Expires:
-      - Sun, 19 Jan 2020 22:09:40 GMT
+      - Tue, 21 Jan 2020 00:54:03 GMT
       Last-Modified:
       - Tue, 14 Jan 2020 22:53:35 GMT
       Etag:
@@ -167,19 +167,19 @@ http_interactions:
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 19 Jan 2020 22:08:40 GMT
+      - Tue, 21 Jan 2020 00:53:03 GMT
       Age:
       - '0'
       Connection:
       - keep-alive
       X-Served-By:
-      - cache-bwi5150-BWI, cache-ewr18121-EWR
+      - cache-bwi5121-BWI, cache-ewr18140-EWR
       X-Cache:
       - MISS, MISS
       X-Cache-Hits:
       - 0, 0
       X-Timer:
-      - S1579471720.978780,VS0,VE52
+      - S1579567983.007457,VS0,VE56
       Vary:
       - User-Agent,Accept-Encoding
     body:
@@ -207,5 +207,5 @@ http_interactions:
         Effects Project","user_url":"https:\/\/vimeo.com\/aftereffectshive","user_portrait_small":"https:\/\/i.vimeocdn.com\/portrait\/30820239_30x30","user_portrait_medium":"https:\/\/i.vimeocdn.com\/portrait\/30820239_75x75","user_portrait_large":"https:\/\/i.vimeocdn.com\/portrait\/30820239_100x100","user_portrait_huge":"https:\/\/i.vimeocdn.com\/portrait\/30820239_300x300","stats_number_of_likes":0,"stats_number_of_plays":46,"stats_number_of_comments":0,"duration":58,"width":3840,"height":2160,"tags":"concert,
         banda, band, dj, crowd, event, grunge, rena, music, rock, sebicheargentino","embed_privacy":"anywhere"}]'
     http_version: 
-  recorded_at: Sun, 19 Jan 2020 22:08:40 GMT
+  recorded_at: Tue, 21 Jan 2020 00:53:03 GMT
 recorded_with: VCR 4.0.0

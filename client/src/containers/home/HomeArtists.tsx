@@ -76,7 +76,11 @@ class HomeArtistsComponent extends React.Component<Props, State> {
                 className="home-artists__item_image_hover"
                 style={{ backgroundColor: page.accent_color }}
               >
-                <img className="home-artists__item_image" src={page.image} />
+                <img
+                  className="home-artists__item_image"
+                  src={page.image}
+                  alt={page.name}
+                />
               </div>
               <div
                 className="home-artists__item_border"

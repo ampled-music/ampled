@@ -30,7 +30,23 @@ import { ArtistInfo } from './ArtistInfo';
 import { PostForm } from './posts/post-form/PostForm';
 import { NoArtist } from '../shared/no-artist/NoArtist';
 import { routePaths } from '../route-paths';
-import { Link } from 'react-router-dom';
+
+const mapStateToProps = (state: Store) => {
+  return {
+    artists: state.artists,
+    me: state.me,
+    posts: state.posts,
+    authentication: state.authentication,
+    subscriptions: state.subscriptions,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getArtist: bindActionCreators(getArtistAction, dispatch),
+    openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+  };
+};
 
 interface ArtistProps {
   match: {
@@ -207,7 +223,7 @@ class ArtistComponent extends React.Component<Props, any> {
     lum = lum || 0;
 
     // convert to decimal and change luminosity
-    var rgb = '#',
+    let rgb = '#',
       c,
       i;
     for (i = 0; i < 3; i++) {
@@ -336,6 +352,7 @@ class ArtistComponent extends React.Component<Props, any> {
             this.renderSticky(
               <span>
                 Your page is pending a quick approval.{' '}
+                {/* eslint-disable-next-line react/jsx-no-target-blank */}
                 <a href="https://app.ampled.com/approval" target="_blank">
                   Learn more here
                 </a>
@@ -347,7 +364,7 @@ class ArtistComponent extends React.Component<Props, any> {
             loggedUserAccess &&
             this.renderSticky(
               <span>
-                Right now you can't be supported until you{' '}
+                Right now you can&#39;t be supported until you{' '}
                 <a href={loggedUserAccess.stripeSignup}>
                   set up your Stripe Account
                 </a>
@@ -424,23 +441,6 @@ class ArtistComponent extends React.Component<Props, any> {
     );
   }
 }
-
-const mapStateToProps = (state: Store) => {
-  return {
-    artists: state.artists,
-    me: state.me,
-    posts: state.posts,
-    authentication: state.authentication,
-    subscriptions: state.subscriptions,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getArtist: bindActionCreators(getArtistAction, dispatch),
-    openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
-  };
-};
 
 const Artist = connect(mapStateToProps, mapDispatchToProps)(ArtistComponent);
 

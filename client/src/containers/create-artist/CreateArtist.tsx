@@ -467,9 +467,15 @@ const Member = ({
 };
 
 class CreateArtist extends React.Component<CreateArtistProps, any> {
+  randomColor = () => {
+    const bgColor = ['#e9c7c6', '#eddfbd', '#baddac', '#cae4e7'];
+    return bgColor[Math.floor(Math.random() * bgColor.length)];
+  };
+
   state = {
-    artistColor: '#baddac',
-    artistColorAlpha: '#baddac33',
+    randomColor: this.randomColor(),
+    artistColor: '',
+    artistColorAlpha: '',
     artistName: '',
     artistVerb: 'are',
     artistLocation: '',
@@ -524,7 +530,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         images,
       } = artist;
       this.setState({
+        randomColor: accent_color,
         artistColor: accent_color,
+        artistColorAlpha: accent_color + '33',
         artistName: name,
         artistVerb: verb_plural ? 'are' : 'is',
         artistLocation: location,
@@ -598,7 +606,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
 
   renderHeader = () => {
     return (
-      <div className="create-artist__header">
+      <div
+        className="create-artist__header"
+        style={{ backgroundColor: this.state.randomColor }}
+      >
         <div className="container">
           <h2>{this.props.editMode ? 'Edit' : 'Create'} Your Artist Page</h2>
         </div>
@@ -830,7 +841,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="row">
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Video Message</div>
-              <h6>Optional</h6>
               <h6>
                 This video is featured on your artist page. You can add this
                 later.
@@ -898,7 +908,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="artist-color">
         <div
           className="primary-color"
-          style={{ backgroundColor: this.state.artistColor }}
+          style={{ backgroundColor: this.state.randomColor }}
         >
           <div className="container">
             <div className="row justify-content-between">
@@ -927,7 +937,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               <div className="col-md-4 col-sm-12">
                 <div className="artist-color__picker">
                   <ChromePicker
-                    color={this.state.artistColor}
+                    color={
+                      this.state.artistColor
+                        ? this.state.artistColor
+                        : this.state.randomColor
+                    }
                     onChangeComplete={this.handleColorChange}
                   />
                 </div>

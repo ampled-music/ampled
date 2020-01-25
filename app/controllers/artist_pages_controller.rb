@@ -154,8 +154,8 @@ class ArtistPagesController < ApplicationController
 
       if new_member
         ArtistPageMemberCreatedJob.perform_async(@artist_page.id, member_user.id, current_user.id)
-      else
-        ArtistPageMemberAddedJob.perform_async(@artist_page.id, member_user.id)
+      elsif member_user.id != current_user.id
+        ArtistPageMemberAddedJob.perform_async(@artist_page.id, member_user.id, current_user.id)
       end
     end
     @artist_page.save

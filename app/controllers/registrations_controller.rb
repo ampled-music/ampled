@@ -16,6 +16,12 @@ class RegistrationsController < Devise::RegistrationsController
 
   private
 
+  def build_resource(*args)
+    super
+
+    @user.skip_confirmation_notification!
+  end
+
   def user_params
     params.permit(:profile_image_url, :name, :last_name, :city, :country, :twitter, :instagram, :bio,
                   :ship_address, :ship_address2, :ship_city, :ship_state, :ship_country, :ship_zip)

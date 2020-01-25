@@ -15,6 +15,7 @@ import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
 import { updateMeAction } from '../../redux/me/update-me';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
+import { Image, Transformation } from 'cloudinary-react';
 
 import { faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -154,6 +155,39 @@ class UserSettingsComponent extends React.Component<Props, any> {
     }
   };
 
+  renderPhoto = (image: string, crop: number) => {
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
+    if (image.includes('https://res.cloudinary')) {
+      return image.replace('upload/', `upload/${crop_url_path}/`);
+    } else {
+      return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+    }
+  };
+
+  renderCloudinaryPhoto = (image: string, crop: number, altText: string) => {
+    console.log(image);
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
+    const cloudinary_id = image.substring(
+      image.lastIndexOf('/') + 1,
+      image.lastIndexOf('.'),
+    );
+    if (image.includes('https://res.cloudinary')) {
+      return (
+        <Image publicId={cloudinary_id} alt={altText}>
+          <Transformation
+            crop="fill"
+            width={crop}
+            height={crop}
+            responsive_placeholder="blank"
+          />
+        </Image>
+      );
+    } else {
+      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+      return <img src={img_src} alt={altText} />;
+    }
+  };
+
   renderUserImage = () => {
     const { userData } = this.props;
 
@@ -275,7 +309,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
             <img
               className="artist__image"
-              src={ownedPage.image}
+              src={this.renderPhoto(ownedPage.image, 200)}
               alt={ownedPage.name}
             />
             <div
@@ -393,7 +427,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           >
             <img
               className="artist__image"
-              src={subscription.image}
+              src={this.renderPhoto(subscription.image, 200)}
               alt={subscription.name}
             />
             <div

@@ -588,8 +588,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   handleColorChange = (color) => {
-    this.setState({ artistColor: color.hex });
-    this.setState({ artistColorAlpha: color.hex + '33' });
+    this.setState({
+      randomColor: color.hex,
+      artistColor: color.hex,
+      artistColorAlpha: color.hex + '33',
+    });
   };
 
   handleChange = (e) => {

@@ -141,7 +141,7 @@ class ArtistPagesController < ApplicationController
       new_member = false
       if member_user.nil?
         new_member = true
-        member_user = create_member
+        member_user = create_member(member)
       end
 
       @artist_page.owners << member_user
@@ -161,7 +161,7 @@ class ArtistPagesController < ApplicationController
     @artist_page.save
   end
 
-  def create_member
+  def create_member(member)
     member_user = User.new(email: member[:email],
                            name: member[:firstName],
                            last_name: member[:lastName],

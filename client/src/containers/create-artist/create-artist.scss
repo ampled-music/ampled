@@ -115,9 +115,15 @@
       background-color: $white;
     }
     &__picker {
-      transform: translateY(2rem);
       display: flex;
       justify-content: center;
+      @include mq($layout-m) {
+        transform: translateY(2rem);
+      }
+      .chrome-picker {
+        max-width: 320px;
+        width: 100% !important;
+      }
     }
     &__opacity {
       padding: 1rem;

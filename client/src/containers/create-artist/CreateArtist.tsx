@@ -930,7 +930,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                   </div>
                 </div>
               </div>
-              <div className="col-md-3 col-sm-12">
+              <div className="col-md-4 col-sm-12">
                 <div className="artist-color__picker">
                   <ChromePicker
                     color={this.state.artistColor}

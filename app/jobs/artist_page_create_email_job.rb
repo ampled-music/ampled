@@ -15,7 +15,7 @@ class ArtistPageCreateEmailJob
         to: user.email,
         template_alias: "artist-page-created",
         template_model: {
-          artist_name: artist_page.name
+          artist_name: artist.name
         }
       }]
     )

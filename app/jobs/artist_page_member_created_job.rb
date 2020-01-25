@@ -20,7 +20,7 @@ class ArtistPageMemberCreatedJob
         to: user.email,
         template_alias: "non-member-added-to-artist-page",
         template_model: {
-          artist_name: artist_page.name,
+          artist_name: artist.name,
           artist_admin_first_name: admin.name,
           confirm_invite_link: "#{ENV["REACT_APP_API_URL"]}/users/confirmation?confirmation_token=#{token}"
         }

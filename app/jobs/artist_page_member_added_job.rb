@@ -15,8 +15,8 @@ class ArtistPageMemberAddedJob
         to: user.email,
         template_alias: "member-added-to-artist-page",
         template_model: {
-          artist_name: artist_page.name,
-          confirm_invite_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}"
+          artist_name: artist.name,
+          confirm_invite_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}"
         }
       }]
     )

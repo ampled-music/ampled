@@ -600,7 +600,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     return (
       <div className="create-artist__header">
         <div className="container">
-          <h1>{this.props.editMode ? 'Edit' : 'Create'} Your Artist Page</h1>
+          <h2>{this.props.editMode ? 'Edit' : 'Create'} Your Artist Page</h2>
         </div>
         <img className="create-artist__header_tear" src={tear} alt="" />
       </div>
@@ -658,17 +658,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="container">
         <div className="artist-about">
           {!this.props.editMode && (
-            <div className="row">
-              <div className="col-md-6 col-sm-12">
-                {/* <div className="create-artist__title">About</div> */}
-                <div className="create-artist__copy">
-                  <b>
-                    You can't change your artist/band name or your custom link
-                    later
-                  </b>
-                  , so make sure they're right.
-                </div>
-              </div>
+            <div className="create-artist__copy">
+              <b>
+                You can't change your artist/band name or your custom link later
+              </b>
+              , so make sure they're right.
             </div>
           )}
         </div>

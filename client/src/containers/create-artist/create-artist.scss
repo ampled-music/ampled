@@ -5,7 +5,7 @@
 .create-artist {
   margin-top: 50px;
 
-  h1 {
+  h2 {
     font-family: $font-family-sans-serif;
     text-transform: uppercase;
     margin: 2rem auto;
@@ -13,10 +13,10 @@
 
   &__header {
     background-color: #baddac;
-    height: 300px;
+    height: 190px;
     display: flex;
     flex-direction: column;
-    padding-top: 6rem;
+    padding-top: 2rem;
     justify-content: space-between;
 
     @include mq(0, $tablet) {
@@ -65,6 +65,9 @@
 
   &__copy {
     font-family: $font-family-monospace;
+    max-width: 460px;
+    width: 100%;
+    margin: 2rem 0 0;
   }
 
   .artist-about,

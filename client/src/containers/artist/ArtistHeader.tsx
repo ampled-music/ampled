@@ -381,13 +381,15 @@ export class ArtistHeader extends React.Component<Props, any> {
                 text={artist.bio}
               />
             </div>
-            <button
-              className="btn btn-ampled btn-read-more"
-              style={{ borderColor }}
-              onClick={this.props.openMessageModal}
-            >
-              Read More
-            </button>
+            {artist.bio.length > 130 && (
+              <button
+                className="btn btn-ampled btn-read-more"
+                style={{ borderColor }}
+                onClick={this.props.openMessageModal}
+              >
+                Read More
+              </button>
+            )}
           </div>
         </div>
       );

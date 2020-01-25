@@ -41,7 +41,7 @@ class PostPolicy
   end
 
   def page_admin?
-    PageOwnership.find_by(user_id: @user[:id], artist_page_id: @post.artist_page.id)&.role == "admin"
+    PageOwnership.find_by(user_id: @user&.id, artist_page_id: @post.artist_page.id)&.role == "admin"
   end
 
   def subscriber?

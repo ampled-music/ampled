@@ -33,13 +33,14 @@ RSpec.describe "DELETE /posts", type: :request do
     end
   end
 
-  context "when the user owns the artist page where the post lives" do
+  context "when the user admins the artist page where the post lives" do
     let(:user) { create(:user) }
     let(:artist_page) { create(:artist_page) }
     let(:post) { create(:post, artist_page: artist_page) }
 
     before do
       user.owned_pages << artist_page
+      PageOwnership.find_by(user_id: user[:id], artist_page_id: artist_page[:id]).update(role: "admin")
     end
 
     before(:each) do

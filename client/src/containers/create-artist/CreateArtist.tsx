@@ -94,6 +94,15 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
     deleteToken: undefined,
   };
 
+  renderPhoto = (image: string, crop: number) => {
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
+    if (image.includes('https://res.cloudinary')) {
+      return image.replace('upload/', `upload/${crop_url_path}/`);
+    } else {
+      return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+    }
+  };
+
   processImage = async (e) => {
     const imageFile = e.target.files[0];
 
@@ -133,7 +142,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
         <>
           <img
             className="image-upload__image_polaroid"
-            src={imageURL}
+            src={this.renderPhoto(imageURL, 200)}
             alt={altText}
           />
           {/* <span className="preview__name">{altText}</span> */}
@@ -924,12 +933,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                       {/* This color will be
                       used as accents on both your page and around the site. */}
                     </p>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                     {/* <p>
                       The lighter version (20% opacity) of the color is how it
                       will appear in certain rare instances.

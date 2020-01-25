@@ -775,7 +775,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistMessage"
-                label="Tell everyone who you are, what brought you to join Ampled, and why they should support you."
+                label="Who are you? Why should people support you?"
                 id="message"
                 value={this.state.artistMessage || ''}
                 onChange={this.handleChange}

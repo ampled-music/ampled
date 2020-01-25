@@ -361,16 +361,16 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       </div>
                     )}
                     {ownedPage.role === 'admin' && (
-                      <div className="col-8">
+                      <div className="col-12">
                         <a
                           href={routePaths.editArtist.replace(
                             ':slug',
                             ownedPage.artistSlug,
                           )}
-                          className="details__stripe_link"
+                          className="details__edit_link"
                           rel="noopener noreferrer"
                         >
-                          Edit Page
+                          Edit Artist Details
                         </a>
                       </div>
                     )}

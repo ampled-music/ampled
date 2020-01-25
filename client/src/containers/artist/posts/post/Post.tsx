@@ -164,7 +164,7 @@ class PostComponent extends React.Component<any, any> {
   };
 
   returnFirstName = (name) => {
-    let spacePosition = name.indexOf(' ');
+    const spacePosition = name.indexOf(' ');
     if (spacePosition === -1) {
       return name;
     } else {
@@ -191,7 +191,7 @@ class PostComponent extends React.Component<any, any> {
     </div>
   );
 
-  renderLock = (isLapsed: boolean = false) => {
+  renderLock = (isLapsed = false) => {
     const { me } = this.props;
     const authenticated = !!me;
 

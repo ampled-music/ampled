@@ -94,6 +94,15 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
     deleteToken: undefined,
   };
 
+  renderPhoto = (image: string, crop: number) => {
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
+    if (image.includes('https://res.cloudinary')) {
+      return image.replace('upload/', `upload/${crop_url_path}/`);
+    } else {
+      return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+    }
+  };
+
   processImage = async (e) => {
     const imageFile = e.target.files[0];
 
@@ -133,7 +142,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
         <>
           <img
             className="image-upload__image_polaroid"
-            src={imageURL}
+            src={this.renderPhoto(imageURL, 200)}
             alt={altText}
           />
           {/* <span className="preview__name">{altText}</span> */}
@@ -467,9 +476,15 @@ const Member = ({
 };
 
 class CreateArtist extends React.Component<CreateArtistProps, any> {
+  randomColor = () => {
+    const bgColor = ['#e9c7c6', '#eddfbd', '#baddac', '#cae4e7'];
+    return bgColor[Math.floor(Math.random() * bgColor.length)];
+  };
+
   state = {
-    artistColor: '#baddac',
-    artistColorAlpha: '#baddac33',
+    randomColor: this.randomColor(),
+    artistColor: '',
+    artistColorAlpha: '',
     artistName: '',
     artistVerb: 'are',
     artistLocation: '',
@@ -524,7 +539,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         images,
       } = artist;
       this.setState({
+        randomColor: accent_color,
         artistColor: accent_color,
+        artistColorAlpha: accent_color + '33',
         artistName: name,
         artistVerb: verb_plural ? 'are' : 'is',
         artistLocation: location,
@@ -580,14 +597,20 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   handleColorChange = (color) => {
-    this.setState({ artistColor: color.hex });
-    this.setState({ artistColorAlpha: color.hex + '33' });
+    this.setState({
+      randomColor: color.hex,
+      artistColor: color.hex,
+      artistColorAlpha: color.hex + '33',
+    });
   };
 
   handleChange = (e) => {
     const { name, value } = e.target;
+
     if (name === 'artistSlug') {
       this.setState({ [name]: value.toLowerCase() });
+    } else if (name === 'artistInstagram' || name === 'artistTwitter') {
+      this.setState({ [name]: value.replace(/^#|@/, '') });
     } else {
       this.setState({ [name]: value });
     }
@@ -595,9 +618,12 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
 
   renderHeader = () => {
     return (
-      <div className="create-artist__header">
+      <div
+        className="create-artist__header"
+        style={{ backgroundColor: this.state.randomColor }}
+      >
         <div className="container">
-          <h1>{this.props.editMode ? 'Edit' : 'Create'} Your Artist Page</h1>
+          <h2>{this.props.editMode ? 'Edit' : 'Create'} Your Artist Page</h2>
         </div>
         <img className="create-artist__header_tear" src={tear} alt="" />
       </div>
@@ -655,17 +681,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="container">
         <div className="artist-about">
           {!this.props.editMode && (
-            <div className="row">
-              <div className="col-md-6 col-sm-12">
-                {/* <div className="create-artist__title">About</div> */}
-                <div className="create-artist__copy">
-                  <b>
-                    You can't change your artist/band name or your custom link
-                    later
-                  </b>
-                  , so make sure they're right.
-                </div>
-              </div>
+            <div className="create-artist__copy">
+              <b>
+                You can't change your artist/band name or your custom link later
+              </b>
+              , so make sure they're right.
             </div>
           )}
         </div>
@@ -778,7 +798,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistMessage"
-                label="Tell everyone who you are, what brought you to join Ampled, and why they should support you."
+                label="Who are you? Why should people support you?"
                 id="message"
                 value={this.state.artistMessage || ''}
                 onChange={this.handleChange}
@@ -833,7 +853,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="row">
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Video Message</div>
-              <h6>Optional</h6>
               <h6>
                 This video is featured on your artist page. You can add this
                 later.
@@ -901,7 +920,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       <div className="artist-color">
         <div
           className="primary-color"
-          style={{ backgroundColor: this.state.artistColor }}
+          style={{ backgroundColor: this.state.randomColor }}
         >
           <div className="container">
             <div className="row justify-content-between">
@@ -914,12 +933,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                       {/* This color will be
                       used as accents on both your page and around the site. */}
                     </p>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                     {/* <p>
                       The lighter version (20% opacity) of the color is how it
                       will appear in certain rare instances.
@@ -927,10 +940,14 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                   </div>
                 </div>
               </div>
-              <div className="col-md-3 col-sm-12">
+              <div className="col-md-4 col-sm-12">
                 <div className="artist-color__picker">
                   <ChromePicker
-                    color={this.state.artistColor}
+                    color={
+                      this.state.artistColor
+                        ? this.state.artistColor
+                        : this.state.randomColor
+                    }
                     onChangeComplete={this.handleColorChange}
                   />
                 </div>

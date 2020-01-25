@@ -499,7 +499,8 @@
           text-align: left;
 
           &_since,
-          &_bio {
+          &_bio,
+          &_role {
             font-family: $font-family-monospace;
             font-size: 0.8rem;
             @include mq(0, $layout-m) {
@@ -621,7 +622,8 @@
   }
 }
 
-.new-post {
+.new-post,
+.edit-page {
   position: fixed;
   z-index: 100;
 
@@ -677,4 +679,8 @@
     color: $white;
     visibility: hidden;
   }
+}
+
+.edit-page {
+  top: 115px;
 }

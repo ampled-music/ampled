@@ -6,7 +6,7 @@ import { isMobile } from 'react-device-detect';
 import cx from 'classnames';
 
 import { Image, Transformation } from 'cloudinary-react';
-import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from '../../redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
@@ -104,18 +104,13 @@ export class ArtistHeader extends React.Component<Props, any> {
               {owner.last_initial && <span> {owner.last_initial}.</span>}
             </div>
             {owner.instrument && (
-              <div className="supporter__hover-card_header_info_name">
+              <div className="supporter__hover-card_header_info_role">
                 {owner.instrument}
               </div>
             )}
             {owner.joined_since && (
               <div className="supporter__hover-card_header_info_since">
                 Joined Ampled {owner.joined_since}
-              </div>
-            )}
-            {owner.bio && (
-              <div className="supporter__hover-card_header_info_bio">
-                {owner.bio}
               </div>
             )}
           </div>
@@ -252,29 +247,38 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
   };
 
-  renderPhotoContainer = () => (
-    <div
-      className="artist-header__photo-container"
-      style={{ borderColor: this.props.artist.accent_color }}
-    >
-      {this.renderOwners()}
-      {this.renderBanners()}
+  renderPhotoContainer = () => {
+    const { artist } = this.props;
+    return (
       <div
-        onClick={!isMobile ? this.cycleBanners : undefined}
-        className="artist-header__photo-container_border"
-        style={{ borderColor: this.props.artist.accent_color }}
+        className="artist-header__photo-container"
+        style={{ borderColor: artist.accent_color }}
       >
-        <Swipe
-          onSwipeLeft={this.onSwipeLeft}
-          onSwipeRight={this.onSwipeRight}
-          allowMouseEvents={true}
-          tolerance={25}
-          className="artist-header__photo-container_border_swipe"
-        ></Swipe>
+        {this.renderOwners()}
+        {this.renderBanners()}
+        {artist.images && (
+          <div
+            onClick={
+              !isMobile && artist.images.length > 1
+                ? this.cycleBanners
+                : undefined
+            }
+            className="artist-header__photo-container_border"
+            style={{ borderColor: artist.accent_color }}
+          >
+            <Swipe
+              onSwipeLeft={this.onSwipeLeft}
+              onSwipeRight={this.onSwipeRight}
+              allowMouseEvents={true}
+              tolerance={25}
+              className="artist-header__photo-container_border_swipe"
+            ></Swipe>
+          </div>
+        )}
+        {this.renderBannerIcons()}
       </div>
-      {this.renderBannerIcons()}
-    </div>
-  );
+    );
+  };
 
   canLoggedUserPost = () => {
     return (
@@ -285,12 +289,31 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
   };
 
+  canLoggedUserAdmin = () => {
+    return (
+      this.props.loggedUserAccess &&
+      (this.props.loggedUserAccess.role === UserRoles.Admin ||
+        this.props.loggedUserAccess.role === UserRoles.Owner)
+    );
+  };
+
   renderFloatingNewPostButton = () =>
     this.canLoggedUserPost() && (
       <div className="new-post">
         <button onClick={this.props.openPostModal}>
           <span>New Post</span>
           <FontAwesomeIcon icon={faPlus} color="#ffffff" />
+        </button>
+      </div>
+    );
+
+  renderFloatingEditButton = () =>
+    this.canLoggedUserAdmin() && (
+      <div className="edit-page">
+        {/* Need to connect button to edit  */}
+        <button>
+          <span>Edit Page</span>
+          <FontAwesomeIcon icon={faEdit} color="#ffffff" />
         </button>
       </div>
     );
@@ -358,13 +381,15 @@ export class ArtistHeader extends React.Component<Props, any> {
                 text={artist.bio}
               />
             </div>
-            <button
-              className="btn btn-ampled btn-read-more"
-              style={{ borderColor }}
-              onClick={this.props.openMessageModal}
-            >
-              Read More
-            </button>
+            {artist.bio.length > 130 && (
+              <button
+                className="btn btn-ampled btn-read-more"
+                style={{ borderColor }}
+                onClick={this.props.openMessageModal}
+              >
+                Read More
+              </button>
+            )}
           </div>
         </div>
       );
@@ -570,6 +595,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderVideoContainer()}
             {this.renderMessageContainer()}
             {this.renderFloatingNewPostButton()}
+            {this.renderFloatingEditButton()}
             {this.renderSupportersContainer()}
             {!this.props.isSupporter &&
               !this.canLoggedUserPost() &&

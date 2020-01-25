@@ -301,6 +301,7 @@ class ArtistComponent extends React.Component<Props, any> {
                 color: white;
               }
               .new-post button,
+              .edit-page button,
               .post__change button,
               .artist-header__photo,
               .artist-header__title_flair,
@@ -310,7 +311,8 @@ class ArtistComponent extends React.Component<Props, any> {
               .btn.btn-read-more:hover,
               .btn.btn-support:hover,
               .private-support__btn > .btn:hover,
-              .new-post button:hover {
+              .new-post button:hover,
+              .edit-page button:hover {
                 background-color: ${this.ColorLuminance(
                   artist.accent_color,
                   -0.2,

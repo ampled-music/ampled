@@ -253,6 +253,21 @@
               }
             }
           }
+
+          &__edit {
+            &_link {
+              font-size: 11px;
+              text-align: center;
+              color: $white;
+              text-decoration: underline;
+              line-height: 16px;
+              display: block;
+
+              &:hover {
+                text-decoration: none;
+              }
+            }
+          }
         }
       }
     }

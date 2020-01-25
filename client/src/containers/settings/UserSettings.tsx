@@ -328,15 +328,15 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     </div>
                   </div>
                 </div>
-                <div className="details__stripe">
-                  <div className="row no-gutter align-items-center">
-                    <div className="col-4">
-                      <FontAwesomeIcon
-                        className="icon details__stripe_icon"
-                        icon={faStripe}
-                      />
-                    </div>
-                    {ownedPage.role === 'admin' && (
+                {ownedPage.role === 'admin' && (
+                  <div className="details__stripe">
+                    <div className="row no-gutter align-items-center">
+                      <div className="col-4">
+                        <FontAwesomeIcon
+                          className="icon details__stripe_icon"
+                          icon={faStripe}
+                        />
+                      </div>
                       <div className="col-8">
                         {ownedPage.isStripeSetup ? (
                           <a
@@ -359,8 +359,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
                           </a>
                         )}
                       </div>
-                    )}
-                    {ownedPage.role === 'admin' && (
                       <div className="col-12">
                         <a
                           href={routePaths.editArtist.replace(
@@ -373,9 +371,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
                           Edit Artist Details
                         </a>
                       </div>
-                    )}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>

@@ -594,7 +594,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     } else {
       this.setState({ [name]: value });
     }
-    console.log(name, value);
   };
 
   renderHeader = () => {

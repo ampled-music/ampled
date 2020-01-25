@@ -3,16 +3,8 @@ import { Switch, Redirect, Route } from 'react-router-dom';
 
 import { ProtectedRoute } from './ProtectedRoute';
 import { PublicRoute } from './PublicRoute';
-// import { Artist } from './artist/Artist';
-// import { PostForm } from './artist/posts/post-form/PostForm';
 import { Support } from './artist/support/Support';
-// import { Home } from './home/Home';
-// import { NoArtist } from './shared/no-artist/NoArtist';
 import { routePaths } from './route-paths';
-// import { UserSettings } from './settings/UserSettings';
-// import { UserDetails } from './user-details/UserDetails';
-// import { ResetPassword } from './connect/ResetPassword';
-// import { CreateArtist } from './create-artist/CreateArtist';
 
 const LazyPostForm = React.lazy(() =>
   import('./artist/posts/post-form/PostForm').then((module) => ({
@@ -38,6 +30,11 @@ const LazyHome = React.lazy(() =>
 const LazyResetPassword = React.lazy(() =>
   import('./connect/ResetPassword').then((module) => ({
     default: module.ResetPassword,
+  })),
+);
+const LazyForgotPassword = React.lazy(() =>
+  import('./connect/ForgotPassword').then((module) => ({
+    default: module.ForgotPassword,
   })),
 );
 const LazyUserSettings = React.lazy(() =>
@@ -86,6 +83,11 @@ const Routes = () => {
         exact
         path={routePaths.passwordReset}
         component={LazyResetPassword}
+      />
+      <PublicRoute
+        exact
+        path={routePaths.forgotPassword}
+        component={LazyForgotPassword}
       />
       <PublicRoute exact path={routePaths.noArtist} component={LazyNoArtist} />
       <ProtectedRoute

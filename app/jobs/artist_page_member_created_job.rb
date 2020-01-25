@@ -9,8 +9,6 @@ class ArtistPageMemberCreatedJob
     @user = User.find(user_id)
     return if user.blank?
 
-    token = user.confirmation_token
-
     @admin = User.find(admin_id)
     return if admin.blank?
 
@@ -22,7 +20,7 @@ class ArtistPageMemberCreatedJob
         template_model: {
           artist_name: artist.name,
           artist_admin_first_name: admin.name,
-          confirm_invite_link: "#{ENV["REACT_APP_API_URL"]}/users/confirmation?confirmation_token=#{token}"
+          destination_link: "#{ENV["REACT_APP_API_URL"]}/reset-password"
         }
       }]
     )

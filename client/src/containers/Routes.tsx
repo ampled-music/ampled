@@ -61,7 +61,7 @@ const Routes = () => {
         exact
         sensitive
         path={routePaths.capsSlugs}
-        render={(props) => {
+        render={(props: { location: { pathname: string } }) => {
           return <Redirect to={`${props.location.pathname.toLowerCase()}`} />;
         }}
       />

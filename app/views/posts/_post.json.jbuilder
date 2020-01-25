@@ -1,5 +1,6 @@
 json.id post.id
 json.author post.author
+json.authorId post.user_id
 json.authorImage post.author_image
 json.title post.title
 json.created_at post.created_at.to_i

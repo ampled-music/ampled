@@ -11,7 +11,7 @@ class PostPolicy
   end
 
   def destroy?
-    owner? || author? || admin?
+    author? || admin?
   end
 
   def comment?
@@ -19,7 +19,7 @@ class PostPolicy
   end
 
   def update?
-    owner? || author? || admin?
+    author? || admin?
   end
 
   def view_details?

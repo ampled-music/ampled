@@ -55,12 +55,13 @@ class ForgotPasswordComponent extends React.Component<any> {
 
   render() {
     const { error } = this.state;
+    const { authModalOpen } = this.props;
 
     return (
       <div className="login__container">
         <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
-          <h4>FORGOT PASSWORD</h4>
+          {authModalOpen ? <h4>FORGOT PASSWORD</h4> : <h4>RESET PASSWORD</h4>}
           <form
             className="form-container form-control flex-column"
             name="login"
@@ -80,7 +81,7 @@ class ForgotPasswordComponent extends React.Component<any> {
             </button>
             <span className="error-message">{error}</span>
           </form>
-          {this.props.authModalOpen && (
+          {authModalOpen && (
             <label>
               <button
                 className="link"

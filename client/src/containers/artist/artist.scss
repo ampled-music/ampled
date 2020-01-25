@@ -622,7 +622,8 @@
   }
 }
 
-.new-post {
+.new-post,
+.edit-page {
   position: fixed;
   z-index: 100;
 
@@ -678,4 +679,8 @@
     color: $white;
     visibility: hidden;
   }
+}
+
+.edit-page {
+  top: 115px;
 }

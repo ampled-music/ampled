@@ -6,7 +6,7 @@ import { isMobile } from 'react-device-detect';
 import cx from 'classnames';
 
 import { Image, Transformation } from 'cloudinary-react';
-import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from '../../redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
@@ -289,12 +289,31 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
   };
 
+  canLoggedUserAdmin = () => {
+    return (
+      this.props.loggedUserAccess &&
+      (this.props.loggedUserAccess.role === UserRoles.Admin ||
+        this.props.loggedUserAccess.role === UserRoles.Owner)
+    );
+  };
+
   renderFloatingNewPostButton = () =>
     this.canLoggedUserPost() && (
       <div className="new-post">
         <button onClick={this.props.openPostModal}>
           <span>New Post</span>
           <FontAwesomeIcon icon={faPlus} color="#ffffff" />
+        </button>
+      </div>
+    );
+
+  renderFloatingEditButton = () =>
+    this.canLoggedUserAdmin() && (
+      <div className="edit-page">
+        {/* Need to connect button to edit  */}
+        <button>
+          <span>Edit Page</span>
+          <FontAwesomeIcon icon={faEdit} color="#ffffff" />
         </button>
       </div>
     );
@@ -574,6 +593,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderVideoContainer()}
             {this.renderMessageContainer()}
             {this.renderFloatingNewPostButton()}
+            {this.renderFloatingEditButton()}
             {this.renderSupportersContainer()}
             {!this.props.isSupporter &&
               !this.canLoggedUserPost() &&

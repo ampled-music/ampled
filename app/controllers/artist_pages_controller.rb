@@ -52,8 +52,10 @@ class ArtistPagesController < ApplicationController
   def update
     if @artist_page.update(artist_page_params)
       set_images unless has_no_images
-      @artist_page.owners.clear
-      set_members unless has_no_members
+      unless has_no_members
+        @artist_page.owners.clear
+        set_members
+      end 
       render json: { status: "ok", message: "Your page has been updated!" }
     else
       render json: { status: "error", message: "Something went wrong." }

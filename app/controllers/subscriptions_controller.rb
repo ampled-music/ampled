@@ -6,14 +6,14 @@ class SubscriptionsController < ApplicationController
     @subscriptions = current_user.subscriptions
   end
 
-  def show
+  def show # BA - should we delete this?
   end
 
-  def new
+  def new # BA - should we delete this?
     @artist_page = ArtistPage.new
   end
 
-  def edit
+  def edit # BA - should we delete this?
   end
 
   def create

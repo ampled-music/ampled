@@ -3,7 +3,7 @@ class UploadsController < ApplicationController
     @signer ||= Aws::S3::Presigner.new
   end
 
-  def sign_file
+  def sign_file # BA check current_user / add policy object
     key = "#{SecureRandom.uuid}.#{file_extension}"
     # redirect_to status: 404 unless file_extension.present?
     url = signer.presigned_url(:put_object,

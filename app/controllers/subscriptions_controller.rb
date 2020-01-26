@@ -5,14 +5,14 @@ class SubscriptionsController < ApplicationController
     @subscriptions = current_user.subscriptions
   end
 
-  def show
+  def show # BA - should we delete this?
   end
 
-  def new
+  def new # BA - should we delete this?
     @artist_page = ArtistPage.new
   end
 
-  def edit
+  def edit # BA - should we delete this?
   end
 
   def create
@@ -110,6 +110,9 @@ class SubscriptionsController < ApplicationController
   end
 
   def subscribe_stripe
+    # BA - little nervous about this method, not clear what all its referencing
+    # so I'm not 100% on what we'd need to do to prevent malicious input
+    # maybe move it to a service object?
     create_platform_customer if current_user.stripe_customer_id.blank?
 
     plan = stripe_plan

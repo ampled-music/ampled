@@ -1,6 +1,8 @@
 class ArtistPagesController < ApplicationController
   before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy]
 
+  # BA - it looks like we need policy objects for most of these methods
+
   def index
     @artist_pages = ArtistPage.all
 
@@ -17,11 +19,11 @@ class ArtistPagesController < ApplicationController
     end
   end
 
-  def new
+  def new # BA - can we delete this?
     @artist_page = ArtistPage.new
   end
 
-  def edit
+  def edit # BA - can we delete this?
   end
 
   def create

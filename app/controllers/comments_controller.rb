@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[destroy]
 
-  def create
+  def create # BA - add policy object - big abuse vector here
     @comment = Comment.new(comment_params)
 
     if @comment.save
@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def destroy
+  def destroy # BA - add policy object
     @comment.destroy
     200
   end

@@ -14,7 +14,7 @@ class CommentPolicy
   def destroy?
     commenter? || owner? || admin?
   end
-  
+
   private
 
   def commenter?
@@ -32,5 +32,4 @@ class CommentPolicy
   def subscriber?
     @user&.subscribed?(@post.artist_page)
   end
-
 end

@@ -74,14 +74,11 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(response.status).to eq 400
     end
   end
-
-  
 end
 
-RSpec.describe 'PUT /artist_page', type: :request do
-
+RSpec.describe "PUT /artist_page", type: :request do
   context "when user is unauthenticated" do
-    let(:artist_page) { create(:artist_page, slug: "test", approved: true, name: 'old name') }
+    let(:artist_page) { create(:artist_page, slug: "test", approved: true, name: "old name") }
     before { put "/artist_pages/#{artist_page.id}.json", params: { artist_page: { name: "new name" } } }
 
     it "does not update the post" do
@@ -89,10 +86,10 @@ RSpec.describe 'PUT /artist_page', type: :request do
     end
   end
 
-  context 'when a user is unconfirmed' do
-    let(:artist_page) { create(:artist_page, slug: "test", approved: true, name: 'old name') }
+  context "when a user is unconfirmed" do
+    let(:artist_page) { create(:artist_page, slug: "test", approved: true, name: "old name") }
     let(:user) { create(:user, confirmed_at: nil) }
-    
+
     before(:each) do
       sign_in user
     end
@@ -103,54 +100,53 @@ RSpec.describe 'PUT /artist_page', type: :request do
     end
 
     it "returns an error telling the user they need to confirm" do
-      expect(JSON.parse(response.body)['message']).to match('Confirm your email')
+      expect(JSON.parse(response.body)["message"]).to match("Confirm your email")
     end
   end
 
-  context 'when adding new members to the page' do
+  context "when adding new members to the page" do
     let(:user) { create(:user, confirmed_at: Time.now) }
-    let(:artist_page) { create(:artist_page, slug: "test", approved: true, name: 'old name') }
-    let!(:ownership){ PageOwnership.create(user: user, artist_page: artist_page, role: 'admin')}
+    let(:artist_page) { create(:artist_page, slug: "test", approved: true, name: "old name") }
+    let!(:ownership) { PageOwnership.create(user: user, artist_page: artist_page, role: "admin") }
 
     before(:each) do
       sign_in user
     end
 
     before do
-      put "/artist_pages/#{artist_page.id}.json", params: { 
+      put "/artist_pages/#{artist_page.id}.json", params: {
         artist_page: {
-          members: [ { email: 'new@user.com', firstName: 'new', lastName: 'user' } ] 
+          members: [{ email: "new@user.com", firstName: "new", lastName: "user" }]
         }
       }
     end
 
-    it 'creates new users for members that do not yet exist' do
-      expect(User.find_by(email: 'new@user.com')).to exist
+    it "creates new users for members that do not yet exist" do
+      expect(User.find_by(email: "new@user.com")).to exist
     end
   end
 
-  context 'when adding members that already belong to the platform' do
+  context "when adding members that already belong to the platform" do
     let(:user) { create(:user, confirmed_at: Time.now) }
-    let(:user_member){ create(:user, name: 'oldname')}
+    let(:user_member) { create(:user, name: "oldname") }
     let(:artist_page) { create(:artist_page, slug: "test", approved: true) }
-    let!(:ownership){ PageOwnership.create(user: user, artist_page: artist_page, role: 'admin')}
+    let!(:ownership) { PageOwnership.create(user: user, artist_page: artist_page, role: "admin") }
 
     before(:each) do
       sign_in user
     end
 
     before do
-      put "/artist_pages/#{artist_page.id}.json", params: { 
+      put "/artist_pages/#{artist_page.id}.json", params: {
         artist_page: {
-          members: [ { email: user_member.email, firstName: 'new', lastName: 'user' } ] 
+          members: [{ email: user_member.email, firstName: "new", lastName: "user" }]
         }
       }
     end
 
-    it 'does not try to create users for members that already exist' do
+    it "does not try to create users for members that already exist" do
       expect(User.where(email: user_member.email).count).to eq(1)
-      expect(User.find_by(email: user_member.email).name).to eq('oldname')
+      expect(User.find_by(email: user_member.email).name).to eq("oldname")
     end
   end
-
 end

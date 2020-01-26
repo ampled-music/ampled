@@ -57,7 +57,7 @@ class ArtistPagesController < ApplicationController
       unless has_no_members
         @artist_page.owners.clear
         set_members
-      end 
+      end
       render json: { status: "ok", message: "Your page has been updated!" }
     else
       render json: { status: "error", message: "Something went wrong." }

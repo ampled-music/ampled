@@ -87,6 +87,7 @@ class ArtistPagesController < ApplicationController
     return render json: { status: "error", message: "Confirm your email address first." } if current_user.nil?
 
     # Pull user from DB in case they've confirmed recently.
+    # BA - Was this actually a problem? Could we current_user.reload at the top of the method instead?
     user = User.find_by(id: current_user&.id)
     # Only logged-in users who have confirmed their emails may create artist pages.
     return render json: { status: "error", message: "Confirm your email address first." } if user&.confirmed_at.nil?
@@ -113,6 +114,7 @@ class ArtistPagesController < ApplicationController
       return render json: { status: "error", message: "You don't have that permission." }
     end
 
+    # could we just have an update_params method similar to artist_page_params ?
     return if artist_page_params[:slug].nil? && artist_page_params[:name].nil?
 
     render json: {

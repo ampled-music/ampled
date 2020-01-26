@@ -1,34 +1,32 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[destroy]
-  before_action :check_permission, only: %i[destroy]
 
   def create
     @comment = Comment.new(comment_params)
 
-    if @comment.save
+    if policy.create? && @comment.save
       redirect_to @comment.post.artist_page, notice: "Comment added"
     else
-      render :new
+      render_not_allowed
     end
   end
 
   def destroy
-    @comment.destroy
-    200
+    if policy.destroy? && @comment.destroy
+      200
+    else
+      render_not_allowed
+    end
   end
 
   private
 
-  def render_not_allowed
-    render json: { status: "error", message: "Not allowed." }
+  def policy
+    CommentPolicy.new(user: current_user, comment: @comment)
   end
 
-  def check_permission
-    return render_not_allowed if current_user.nil?
-
-    return if @comment.user == current_user
-
-    return render_not_allowed unless PostPolicy.new(current_user, @comment.post).destroy?
+  def render_not_allowed
+    render json: { status: "error", message: "Not allowed." }
   end
 
   def comment_params

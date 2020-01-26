@@ -30,6 +30,8 @@ class ArtistPagesController < ApplicationController
   end
 
   def create
+    # if we used activerecord validations, we could just check ArtistPage.new(...).valid?
+    # and if not valid, return @artist_page.errors to give more info about whats wrong
     unless (@artist_page = ArtistPage.create(artist_page_params))
       return render json: { status: "error", message: "Something went wrong." }
     end
@@ -103,6 +105,7 @@ class ArtistPagesController < ApplicationController
 
   def check_create_okay
     # required params
+    # could we use active record validations here instead?
     if artist_page_params[:name].nil? || artist_page_params[:slug].nil? || artist_page_params[:bio].nil? || \
        artist_page_params[:location].nil? || artist_page_params[:accent_color].nil?
       missing_params_error

@@ -268,14 +268,10 @@ export class ArtistHeader extends React.Component<Props, any> {
           >
             <Swipe
               onSwipeLeft={
-                !isMobile && artist.images.length > 1
-                  ? this.onSwipeLeft
-                  : undefined
+                artist.images.length > 1 ? this.onSwipeLeft : undefined
               }
               onSwipeRight={
-                !isMobile && artist.images.length > 1
-                  ? this.onSwipeRight
-                  : undefined
+                artist.images.length > 1 ? this.onSwipeRight : undefined
               }
               allowMouseEvents={true}
               tolerance={25}

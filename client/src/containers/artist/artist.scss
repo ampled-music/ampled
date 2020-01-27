@@ -6,7 +6,7 @@
   font-family: $font-family-monospace;
   font-size: $font-size-md;
   text-align: center;
-  padding: 5px;
+  padding: 5px 10px;
   margin: 0;
   background-color: $black;
   color: $white;
@@ -628,9 +628,8 @@
   z-index: 100;
 
   @include mq(0, $layout-m) {
-    left: 0px;
     bottom: 0px;
-    width: 100%;
+    width: 50%;
     border-top: 1px solid $black;
   }
 
@@ -680,7 +679,19 @@
     visibility: hidden;
   }
 }
+.new-post {
+  @include mq(0, $layout-m) {
+    left: 0px;
+  }
+}
 
 .edit-page {
-  top: 115px;
+  @include mq(0, $layout-m) {
+    right: 0px;
+    border-left: 1px solid $black;
+  }
+
+  @include mq($layout-m) {
+    top: 115px;
+  }
 }

@@ -12,14 +12,14 @@
   }
 
   &__header {
-    height: 190px;
+    height: 230px;
     display: flex;
     flex-direction: column;
     padding-top: 2rem;
     justify-content: space-between;
 
     @include mq(0, $tablet) {
-      height: auto;
+      height: 160px;
       padding-top: unset;
     }
 

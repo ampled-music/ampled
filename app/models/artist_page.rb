@@ -173,7 +173,7 @@ class ArtistPage < ApplicationRecord
       {
         name: "Ampled Support",
         type: "service",
-        statement_descriptor: name
+        statement_descriptor: name[0..24]
       }, stripe_account: stripe_user_id
     )
     update(stripe_product_id: product.id)

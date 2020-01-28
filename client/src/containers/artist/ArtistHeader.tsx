@@ -267,8 +267,12 @@ export class ArtistHeader extends React.Component<Props, any> {
             style={{ borderColor: artist.accent_color }}
           >
             <Swipe
-              onSwipeLeft={this.onSwipeLeft}
-              onSwipeRight={this.onSwipeRight}
+              onSwipeLeft={
+                artist.images.length > 1 ? this.onSwipeLeft : undefined
+              }
+              onSwipeRight={
+                artist.images.length > 1 ? this.onSwipeRight : undefined
+              }
               allowMouseEvents={true}
               tolerance={25}
               className="artist-header__photo-container_border_swipe"

@@ -122,7 +122,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def check_approved
-    return if @artist_page.approved? || current_user&.admin?
+    return if @artist_page&.approved? || current_user&.admin?
 
     render json: {}, status: :bad_request unless current_user&.owned_pages&.include?(@artist_page)
   end

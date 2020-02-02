@@ -16,6 +16,7 @@
     "cloudinary-react": "^1.2.1",
     "luxon": "^1.12.1",
     "node-sass": "^4.12.0",
+    "prop-types": "^15.7.2",
     "ramda": "0.26.1",
     "react": "^16.8.6",
     "react-device-detect": "^1.9.10",

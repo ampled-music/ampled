@@ -14,6 +14,7 @@ if PostPolicy.new(current_user, post).view_details?
   json.body post.body
   json.audio_file post.audio_file
 else
+  json.body "#{post.body[0..50]}..."
   json.deny_details_lapsed current_user.present? && current_user&.subscribed?(post.artist_page) &&
                            current_user&.card_last4.present? && !current_user&.card_is_valid?
 end

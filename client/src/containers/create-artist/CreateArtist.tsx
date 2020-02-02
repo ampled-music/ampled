@@ -1210,8 +1210,24 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   render() {
+    const {
+      me: { userData },
+    } = this.props;
+
     if (this.state.loading) {
       return <Loading artistLoading={true} />;
+    } else if (userData && !userData.email_confirmed) {
+      return (
+        <div
+          style={{
+            textAlign: 'center',
+            margin: '100px auto',
+          }}
+        >
+          Please confirm your email first by clicking the link in your welcome
+          email.
+        </div>
+      );
     }
     return (
       <div className="create-artist">

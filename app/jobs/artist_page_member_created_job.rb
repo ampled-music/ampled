@@ -12,6 +12,8 @@ class ArtistPageMemberCreatedJob
     @admin = User.find(admin_id)
     return if admin.blank?
 
+    token = user.confirmation_token
+
     SendBatchEmail.call(
       [{
         from: ENV["POSTMARK_FROM_EMAIL"],
@@ -20,7 +22,7 @@ class ArtistPageMemberCreatedJob
         template_model: {
           artist_name: artist.name,
           artist_admin_first_name: admin.name,
-          destination_link: "#{ENV["REACT_APP_API_URL"]}/reset-password"
+          destination_link: "#{ENV["REACT_APP_API_URL"]}/users/confirmation?confirmation_token=#{token}"
         }
       }]
     )

@@ -24,6 +24,7 @@
 #  locked_at              :datetime
 #  name                   :string           not null
 #  profile_image_url      :string
+#  redirect_uri           :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string

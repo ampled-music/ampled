@@ -20,6 +20,7 @@ class ProtectModal extends React.Component<any> {
       modalPage: this.props.modalPage || 'login',
       customLoginMessage: 'This page requires you to be logged in.',
       onModalCloseAction: () => (window.location.href = '/'),
+      showSupportMessage: this.props.showSupportMessage || false,
     });
   }
 
@@ -31,6 +32,7 @@ class ProtectModal extends React.Component<any> {
 const ProtectedRoute = ({
   component: Component,
   modalPage = 'login',
+  showSupportMessage = false,
   openAuthModal,
   ...rest
 }) => {
@@ -54,6 +56,7 @@ const ProtectedRoute = ({
               <ProtectModal
                 modalPage={modalPage}
                 openAuthModal={openAuthModal}
+                showSupportMessage={showSupportMessage}
               />
             )}
           </main>

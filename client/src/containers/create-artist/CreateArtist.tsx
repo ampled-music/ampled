@@ -1,4 +1,5 @@
 import './create-artist.scss';
+import './../artist/posts/post/post.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -44,6 +45,7 @@ import { Loading } from '../shared/loading/Loading';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { deleteFileFromCloudinary } from '../../api/cloudinary/delete-image';
 import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
+import { Modal } from '../shared/modal/Modal';
 
 interface CreateArtistProps {
   me: any;
@@ -497,6 +499,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     members: [],
     images: [],
     loading: true,
+    showConfirmRemoveMember: false,
+    confirmRemoveMemberIndex: 99,
   };
 
   constructor(props) {
@@ -1017,12 +1021,20 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     });
   };
 
+  removeMemberConfirm = (index) => {
+    this.setState({
+      showConfirmRemoveMember: true,
+      confirmRemoveMemberIndex: index,
+    });
+  };
+
   removeMember = (index) => {
     this.setState({
       members: [
         ...this.state.members.slice(0, index),
         ...this.state.members.slice(index + 1),
       ],
+      showConfirmRemoveMember: false,
     });
   };
 
@@ -1241,6 +1253,39 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     }
     return (
       <div className="create-artist">
+        <Modal
+          open={this.state.showConfirmRemoveMember}
+          onClose={() => {
+            this.setState({ showConfirmRemoveMember: false });
+          }}
+        >
+          <div className="delete-post-modal__container">
+            <img className="tear tear__topper" src={tear} alt="" />
+            <div className="delete-post-modal">
+              <div className="delete-post-modal__title">
+                <h4>Are you sure?</h4>
+              </div>
+              <div className="delete-post-modal__actions action-buttons">
+                <button
+                  className="cancel-button"
+                  onClick={() => {
+                    this.setState({ showConfirmRemoveMember: false });
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="delete-button"
+                  onClick={() => {
+                    this.removeMember(this.state.confirmRemoveMemberIndex);
+                  }}
+                >
+                  Remove Member
+                </button>
+              </div>
+            </div>
+          </div>
+        </Modal>
         <MuiThemeProvider theme={theme}>
           {this.renderHeader()}
           {/* {this.renderNav()} */}
@@ -1253,7 +1298,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             members={this.state.members}
             handleChange={this.updateMemberDetails}
             addMember={this.addMember}
-            removeMember={this.removeMember}
+            removeMember={this.removeMemberConfirm}
             userData={this.props.me?.userData}
           />
           {/* {this.renderPayment()} */}

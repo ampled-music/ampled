@@ -424,16 +424,7 @@ class PostComponent extends React.Component<any, any> {
                     </a>
                   )}
                 >
-                  {post.body && !allowDetails ? (
-                    <TextTruncate
-                      line={2}
-                      element="span"
-                      truncateText="&#8230;"
-                      text={post.body}
-                    />
-                  ) : (
-                    post.body
-                  )}
+                  {post.body}
                 </Linkify>
               </div>
             )}

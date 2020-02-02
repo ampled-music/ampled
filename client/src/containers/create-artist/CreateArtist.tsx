@@ -1123,8 +1123,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     }
 
     if (
-      // TODO: disable edit mode bail out once members are working
-      !this.props.editMode &&
       members.filter(
         (member) =>
           member.email &&

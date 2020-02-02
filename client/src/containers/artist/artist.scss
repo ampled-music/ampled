@@ -639,7 +639,8 @@
     top: 70px;
   }
 
-  button {
+  button,
+  .edit-button {
     cursor: pointer;
     background-color: $brand-primary;
     border-width: 0px;

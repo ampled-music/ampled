@@ -2,6 +2,7 @@ import './artist.scss';
 
 import * as React from 'react';
 import Swipe from 'react-easy-swipe';
+import { Link } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import cx from 'classnames';
 
@@ -314,11 +315,12 @@ export class ArtistHeader extends React.Component<Props, any> {
   renderFloatingEditButton = () =>
     this.canLoggedUserAdmin() && (
       <div className="edit-page">
-        {/* Need to connect button to edit  */}
-        <button>
-          <span>Edit Page</span>
-          <FontAwesomeIcon icon={faEdit} color="#ffffff" />
-        </button>
+        <Link to={`/artist/${this.props.artist.slug}/edit`}>
+          <button>
+            <span>Edit Page</span>
+            <FontAwesomeIcon icon={faEdit} color="#ffffff" />
+          </button>
+        </Link>
       </div>
     );
 

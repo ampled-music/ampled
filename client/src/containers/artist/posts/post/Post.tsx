@@ -137,8 +137,20 @@ class PostComponent extends React.Component<any, any> {
     );
   };
 
+  canLoggedUserDeletePost = (postUserId: number) => {
+    const { loggedUserAccess, me } = this.props;
+
+    return (
+      (loggedUserAccess &&
+        (loggedUserAccess.role === UserRoles.Owner ||
+          loggedUserAccess.role === UserRoles.Admin)) ||
+      (me && postUserId === me.id)
+    );
+  };
+
   handleDeleteComment = async (commentId) => {
     await this.props.deleteComment(commentId);
+    this.closeDeletePostModal();
     this.props.updateArtist();
   };
 
@@ -164,7 +176,7 @@ class PostComponent extends React.Component<any, any> {
   };
 
   returnFirstName = (name) => {
-    let spacePosition = name.indexOf(' ');
+    const spacePosition = name.indexOf(' ');
     if (spacePosition === -1) {
       return name;
     } else {
@@ -191,7 +203,7 @@ class PostComponent extends React.Component<any, any> {
     </div>
   );
 
-  renderLock = (isLapsed: boolean = false) => {
+  renderLock = (isLapsed = false) => {
     const { me } = this.props;
     const authenticated = !!me;
 
@@ -325,11 +337,13 @@ class PostComponent extends React.Component<any, any> {
                     <FontAwesomeIcon icon={faPen} />
                   </button>
                 </div>
-                <div className="post__change_delete">
-                  <button onClick={this.openDeletePostModal}>
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
-                </div>
+                {this.canLoggedUserDeletePost(post.authorId) && (
+                  <div className="post__change_delete">
+                    <button onClick={this.openDeletePostModal}>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </div>
+                )}
               </div>
             )}
 

@@ -15,3 +15,12 @@ AllCops:
     - './db/migrate/*'
     - './config/initializers/*'
     - './lib/tasks/*'
+
+Rails/ApplicationController:
+  Enabled: false
+
+Rails/ApplicationMailer:
+  Enabled: false
+
+Style/FormatStringToken:
+  Enabled: false

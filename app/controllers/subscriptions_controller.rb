@@ -151,7 +151,7 @@ class SubscriptionsController < ApplicationController
   def create_platform_customer
     customer = Stripe::Customer.create(
       description: current_user.email,
-      source: params["token"], # obtained with Stripe.js
+      source: params["token"] # obtained with Stripe.js
     )
     current_user.update(stripe_customer_id: customer.id)
   end

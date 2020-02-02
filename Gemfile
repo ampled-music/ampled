@@ -2,7 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Heroku uses the ruby version to configure your application"s runtime.
-ruby "2.5.3"
+ruby "2.5.7"
 
 # Back-endy
 gem "administrate"
@@ -57,6 +57,7 @@ group :development, :test do
   gem "rspec_junit_formatter"
   gem "rubocop", require: false
   gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
 end
 
 group :development do

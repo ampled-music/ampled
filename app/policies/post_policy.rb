@@ -11,7 +11,7 @@ class PostPolicy
   end
 
   def destroy?
-    owner? || author? || admin?
+    page_admin? || author? || admin?
   end
 
   def comment?
@@ -19,7 +19,7 @@ class PostPolicy
   end
 
   def update?
-    owner? || author? || admin?
+    page_admin? || author? || admin?
   end
 
   def view_details?
@@ -38,6 +38,10 @@ class PostPolicy
 
   def owner?
     @user&.owned_pages&.include?(@post.artist_page)
+  end
+
+  def page_admin?
+    PageOwnership.find_by(user_id: @user&.id, artist_page_id: @post.artist_page.id)&.role == "admin"
   end
 
   def subscriber?

@@ -38,6 +38,8 @@ class ArtistPagesController < ApplicationController
 
     set_images
 
+    ArtistPageCreateEmailJob.perform_async(@artist_page.id, current_user.id) unless ENV["REDIS_URL"].nil?
+
     render json: { status: "ok", message: "Your page has been created!" }
   rescue ActiveRecord::RecordNotUnique => e
     Raven.capture_exception(e)
@@ -120,7 +122,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def check_approved
-    return if @artist_page.approved? || current_user&.admin?
+    return if @artist_page&.approved? || current_user&.admin?
 
     render json: {}, status: :bad_request unless current_user&.owned_pages&.include?(@artist_page)
   end
@@ -135,17 +137,38 @@ class ArtistPagesController < ApplicationController
   # Helper functions for creating / updating an artist page.
   def set_members
     params[:members].map do |member|
-      member_user = User.find_by(email: member[:email]) ||
-                    User.create(email: member[:email],
-                                name: member[:firstName],
-                                last_name: member[:lastName],
-                                password: (0...8).map { rand(65..91).chr }.join)
+      member_user = User.find_by(email: member[:email])
+      new_member = false
+      if member_user.nil?
+        new_member = true
+        member_user = create_member(member)
+      end
+
       @artist_page.owners << member_user
       PageOwnership.find_by(user_id: member_user[:id],
                             artist_page_id: @artist_page[:id]).update(instrument: member[:role],
                                                                       role: member[:isAdmin] ? "admin" : "member")
+
+      # Skip emails if we're not in an environment where they work.
+      next if ENV["REDIS_URL"].nil?
+
+      if new_member
+        ArtistPageMemberCreatedJob.perform_async(@artist_page.id, member_user.id, current_user.id)
+      elsif member_user.id != current_user.id
+        ArtistPageMemberAddedJob.perform_async(@artist_page.id, member_user.id, current_user.id)
+      end
     end
     @artist_page.save
+  end
+
+  def create_member(member)
+    member_user = User.new(email: member[:email],
+                           name: member[:firstName],
+                           last_name: member[:lastName],
+                           password: (0...8).map { rand(65..91).chr }.join)
+    member_user.skip_confirmation_notification!
+    member_user.save!
+    member_user
   end
 
   def set_images

@@ -10,7 +10,14 @@ interface Post {
 }
 
 export const createPost = async (post: Post) => {
-  const { title, body, audio_file, image_url, artist_page_id, is_private } = post;
+  const {
+    title,
+    body,
+    audio_file,
+    image_url,
+    artist_page_id,
+    is_private,
+  } = post;
 
   const { data } = await apiAxios({
     method: 'post',

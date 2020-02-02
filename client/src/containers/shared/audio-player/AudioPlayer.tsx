@@ -54,6 +54,12 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     });
   };
 
+  player: any;
+
+  ref = player => {
+    this.player = player
+  };
+
   // Actions for handling audio
   handlePlayPause = () => {
     this.setState({ playing: !this.state.playing, durationShow: 'on' });
@@ -81,18 +87,17 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     this.setState({ volume: parseFloat(e.target.value) });
   };
 
-  // @todo: figure out way to seek
-  handleSeekChange = (e) => {
-    this.props.callback && this.props.callback('seek', this);
-    this.setState({ played: parseFloat(e.target.value) });
-  };
-  handleSeekMouseDown = (e) => {
-    this.props.callback && this.props.callback('seeking', this);
+  // Start and finish only work with mouse up and mouse down events which break the material ui slider
+  startSeeking = (event) => {
     this.setState({ seeking: true });
   };
-  handleSeekMouseUp = (e) => {
-    this.props.callback && this.props.callback('endseek', this);
+
+  finishSeeking = (event) => {
     this.setState({ seeking: false });
+  };
+
+  commitSeeking = (event, value) => {
+    this.player.seekTo(value);
   };
 
   // Progress updates state
@@ -131,7 +136,6 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     const {
       url,
       playing,
-      played,
       loaded,
       /* controls, */ volume,
       loop,
@@ -174,13 +178,13 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
           className={cx('audio-player ', { 'with-image': this.props.image })}
         >
           <ReactPlayer
+            ref={this.ref}
             url={url}
             height="100%"
             width="100%"
             loop={loop}
             volume={volume}
             playing={playing}
-            played={played}
             loaded={loaded}
             onPause={this.handlePause}
             onPlay={this.handlePlay}
@@ -202,8 +206,8 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
               {playing ? (
                 <FontAwesomeIcon icon={faPause} />
               ) : (
-                <FontAwesomeIcon icon={faPlay} />
-              )}
+                  <FontAwesomeIcon icon={faPlay} />
+                )}
             </PlayButton>
           </div>
           <AudioSlider
@@ -213,6 +217,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
             value={playedSeconds}
             valueLabelDisplay={durationShow}
             valueLabelFormat={this.valueLabelFormat}
+            onChange={this.commitSeeking}
           />
         </div>
       </MuiThemeProvider>

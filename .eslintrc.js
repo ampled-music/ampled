@@ -17,6 +17,8 @@ module.exports = {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    // While we wait to unify backend/frontend camelcase/snakecase
+    '@typescript-eslint/camelcase': 'off',
   },
   settings: {
     react: {

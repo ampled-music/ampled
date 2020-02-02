@@ -9,6 +9,7 @@ export const routePaths = {
   connect: '/connect',
   home: '/home',
   passwordReset: '/users/password/edit',
+  forgotPassword: '/reset-password',
   upload: '/upload',
   settings: '/settings',
   userDetails: '/user-details',

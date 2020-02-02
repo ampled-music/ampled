@@ -5,8 +5,15 @@ import { actions } from './actions';
 
 export const signupAction = createActionThunk(
   actions.signup,
-  (username: string, password: string, passwordConfirmation: string, name: string, last_name: string) =>
-    signUp(username, password, passwordConfirmation, name, last_name),
+  (
+    username: string,
+    password: string,
+    passwordConfirmation: string,
+    name: string,
+    last_name: string,
+    redirect?: string,
+  ) =>
+    signUp(username, password, passwordConfirmation, name, last_name, redirect),
 );
 
 export const signupReducer = {

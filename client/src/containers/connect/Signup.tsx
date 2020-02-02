@@ -117,12 +117,15 @@ class SignupComponent extends React.Component<Props, any> {
     const { email, password, confirmPassword, name, last_name } = this.state;
     this.emailPass = { email, password };
 
+    const { authentication } = this.props;
+
     const submitResult = await this.props.signup(
       email,
       password,
       confirmPassword,
       name,
       last_name,
+      authentication?.showSupportMessage === 'create' ? '/create-artist' : '/',
     );
 
     if (submitResult) {

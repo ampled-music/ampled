@@ -9,9 +9,9 @@ json.comments post.comments, partial: "comments/comment", as: :comment
 json.is_private post.is_private
 json.has_audio post.has_audio
 json.image_url post.image_url
-if PostPolicy.new(current_user, post).view_details?
+json.body post.body
+  if PostPolicy.new(current_user, post).view_details?
   json.allow_details true
-  json.body post.body
   json.audio_file post.audio_file
 else
   json.deny_details_lapsed current_user.present? && current_user&.subscribed?(post.artist_page) &&

@@ -18,6 +18,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Modal } from '../../../shared/modal/Modal';
 import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
 import Linkify from 'react-linkify';
+import TextTruncate from 'react-text-truncate';
 
 import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';
@@ -423,7 +424,16 @@ class PostComponent extends React.Component<any, any> {
                     </a>
                   )}
                 >
-                  {post.body}
+                  {post.body && !allowDetails ? (
+                    <TextTruncate
+                      line={2}
+                      element="span"
+                      truncateText="&#8230;"
+                      text={post.body}
+                    />
+                  ) : (
+                    post.body
+                  )}
                 </Linkify>
               </div>
             )}

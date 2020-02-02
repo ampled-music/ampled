@@ -62,6 +62,16 @@ class ForgotPasswordComponent extends React.Component<any> {
         <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
           {authModalOpen ? <h4>FORGOT PASSWORD</h4> : <h4>RESET PASSWORD</h4>}
+          {!authModalOpen && (
+            <div
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              Enter your email address below to kick off the password setup
+              process.
+            </div>
+          )}
           <form
             className="form-container form-control flex-column"
             name="login"

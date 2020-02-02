@@ -482,7 +482,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   state = {
-    randomColor: this.randomColor(),
+    randomColor: '',
     artistColor: '',
     artistColorAlpha: '',
     artistName: '',
@@ -499,29 +499,41 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     loading: true,
   };
 
+  constructor(props) {
+    super(props);
+    const randomColor = this.randomColor();
+    this.state = {
+      ...this.state,
+      randomColor,
+      artistColor: randomColor,
+    };
+  }
+
   componentDidUpdate = (prevProps) => {
     const {
       me: { userData },
       artist,
       editMode,
     } = this.props;
+    const { loading } = this.state;
     if (userData && !prevProps?.me?.userData) {
       const { name, last_name, instagram, twitter, image, email } = userData;
-      this.setState({
-        loading: false,
-        members: [
-          {
-            isAdmin: true,
-            firstName: name,
-            lastName: last_name,
-            email,
-            role: '',
-            instagram,
-            twitter,
-            photo: image,
-          },
-        ],
-      });
+      if (!editMode) {
+        this.setState({
+          members: [
+            {
+              isAdmin: true,
+              firstName: name,
+              lastName: last_name,
+              email,
+              role: '',
+              instagram,
+              twitter,
+              photo: image,
+            },
+          ],
+        });
+      }
     }
     if (editMode && artist && !prevProps?.artist?.name && artist.name) {
       console.log(artist);
@@ -561,6 +573,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         images: images || [],
       });
     }
+    if (userData && (artist || !editMode) && loading) {
+      this.setState({
+        loading: false,
+      });
+    }
   };
 
   componentDidMount = () => {
@@ -590,7 +607,13 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistVideo: video_url,
         artistSlug: slug,
         artistStripe: '',
-        members: owners || [],
+        members: (owners || []).map((owner) => ({
+          firstName: owner.name || '',
+          instrument: owner.instrument || '',
+          email: owner.email || '',
+          lastName: owner.lastName || '',
+          isAdmin: owner.role === 'admin',
+        })),
         images: images || [],
       });
     }

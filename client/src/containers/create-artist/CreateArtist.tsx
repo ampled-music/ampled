@@ -3,6 +3,7 @@ import './../artist/posts/post/post.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -286,15 +287,24 @@ const Members = ({
   );
 };
 
+Members.propTypes = {
+  bandName: PropTypes.string,
+  members: PropTypes.array,
+  addMember: PropTypes.func,
+  removeMember: PropTypes.func,
+  handleChange: PropTypes.func,
+  userData: PropTypes.object,
+};
+
 const Member = ({
   isAdmin,
   firstName,
   lastName,
   role,
   email,
-  instagram,
-  twitter,
-  photo,
+  // instagram,
+  // twitter,
+  // photo,
   index,
   handleChange,
   removeMember,
@@ -319,7 +329,7 @@ const Member = ({
                 aria-label="close"
                 color="primary"
                 // style={{}}
-                onClick={(e) => removeMember(index)}
+                onClick={() => removeMember(index)}
               >
                 <FontAwesomeIcon icon={faTimes} />
               </IconButton>
@@ -475,6 +485,20 @@ const Member = ({
       </Card>
     </div>
   );
+};
+
+Member.propTypes = {
+  isAdmin: PropTypes.bool,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  role: PropTypes.string,
+  email: PropTypes.string,
+  index: PropTypes.number,
+  handleChange: PropTypes.func,
+  removeMember: PropTypes.func,
+  userData: PropTypes.shape({
+    email: PropTypes.string,
+  }),
 };
 
 class CreateArtist extends React.Component<CreateArtistProps, any> {
@@ -710,9 +734,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           {!this.props.editMode && (
             <div className="create-artist__copy">
               <b>
-                You can't change your artist/band name or your custom link later
+                You can&#39;t change your artist/band name or your custom link
+                later
               </b>
-              , so make sure they're right.
+              , so make sure they&#39;re right.
             </div>
           )}
         </div>
@@ -1308,9 +1333,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 <div className="col-md-3 col-sm-1"></div>
                 <div className="col-md-6 col-sm-10 create-artist__copy">
                   Your page will initially only be visible to you and any other
-                  members you've added. The Ampled team does a quick spot check
-                  of all pages before they become visible to the general public,
-                  but this normally doesn't take us very long.
+                  members you&#39;ve added. The Ampled team does a quick spot
+                  check of all pages before they become visible to the general
+                  public, but this normally doesn&#39;t take us very long.
                 </div>
                 <div className="col-md-3 col-sm-1"></div>
               </div>

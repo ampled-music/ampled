@@ -835,6 +835,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="row">
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Social</div>
+              <h6>
+                Just your username, with no &quot;@&quot;.
+                <br />
+                Not a URL.
+              </h6>
             </div>
             <div className="col-md-8 col-sm-12">
               <TextField
@@ -1118,6 +1123,13 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     ) {
       return showToastMessage(
         'Please check required fields.',
+        MessageType.ERROR,
+      );
+    }
+
+    if (/[@:/]/gi.test(artistTwitter) || /[@:/]/gi.test(artistInstagram)) {
+      return showToastMessage(
+        'Please check the format of your social handles.',
         MessageType.ERROR,
       );
     }

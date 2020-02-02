@@ -18,7 +18,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { Modal } from '../../../shared/modal/Modal';
 import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
 import Linkify from 'react-linkify';
-import TextTruncate from 'react-text-truncate';
 
 import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';

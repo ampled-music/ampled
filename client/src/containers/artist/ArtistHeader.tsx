@@ -314,7 +314,6 @@ export class ArtistHeader extends React.Component<Props, any> {
   renderFloatingEditButton = () =>
     this.canLoggedUserAdmin() && (
       <div className="edit-page">
-        {/* Need to connect button to edit  */}
         <button
           onClick={() => {
             window.location.href = `${window.location.pathname}/edit`;

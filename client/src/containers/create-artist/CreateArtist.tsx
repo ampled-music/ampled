@@ -482,7 +482,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   state = {
-    randomColor: this.randomColor(),
+    randomColor: '',
     artistColor: '',
     artistColorAlpha: '',
     artistName: '',
@@ -498,6 +498,16 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     images: [],
     loading: true,
   };
+
+  constructor(props) {
+    super(props);
+    const randomColor = this.randomColor();
+    this.state = {
+      ...this.state,
+      randomColor,
+      artistColor: randomColor,
+    };
+  }
 
   componentDidUpdate = (prevProps) => {
     const {

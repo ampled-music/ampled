@@ -165,6 +165,7 @@ class ArtistPagesController < ApplicationController
     member_user = User.new(email: member[:email],
                            name: member[:firstName],
                            last_name: member[:lastName],
+                           redirect_uri: "/reset-password",
                            password: (0...8).map { rand(65..91).chr }.join)
     member_user.skip_confirmation_notification!
     member_user.save!

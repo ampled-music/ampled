@@ -174,6 +174,11 @@ class SignupComponent extends React.Component<Props, any> {
         <div className="login">
           <h4>SIGN UP</h4>
           {authentication.showSupportMessage &&
+            authentication.showSupportMessage === 'create' && (
+              <p>Sign up to create an artist page.</p>
+            )}
+
+          {authentication.showSupportMessage &&
             authentication.showSupportMessage === 'post' &&
             authentication.artistName && (
               <p>

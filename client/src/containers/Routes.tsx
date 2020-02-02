@@ -92,7 +92,8 @@ const Routes = () => {
       <PublicRoute exact path={routePaths.noArtist} component={LazyNoArtist} />
       <ProtectedRoute
         exact
-        modalPage={'signup'}
+        modalPage="signup"
+        showSupportMessage="create"
         path={routePaths.createArtist}
         component={LazyCreateArtist}
       />

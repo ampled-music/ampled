@@ -137,7 +137,7 @@ class PostComponent extends React.Component<any, any> {
     );
   };
 
-  canLoggedUserDeletePost = (postUserId: number) => {
+  canLoggedUserEditPost = (postUserId: number) => {
     const { loggedUserAccess, me } = this.props;
 
     return (
@@ -330,20 +330,18 @@ class PostComponent extends React.Component<any, any> {
                 </div>
               )}
 
-            {this.canLoggedUserPost() && (
+            {this.canLoggedUserEditPost(post.authorId) && (
               <div className="post__change">
                 <div className="post__change_edit">
                   <button onClick={this.openEditPostModal}>
                     <FontAwesomeIcon icon={faPen} />
                   </button>
                 </div>
-                {this.canLoggedUserDeletePost(post.authorId) && (
-                  <div className="post__change_delete">
-                    <button onClick={this.openDeletePostModal}>
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </div>
-                )}
+                <div className="post__change_delete">
+                  <button onClick={this.openDeletePostModal}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </div>
               </div>
             )}
 

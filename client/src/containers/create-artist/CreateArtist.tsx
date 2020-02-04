@@ -609,7 +609,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   componentDidMount = () => {
-    const { artist, editMode } = this.props;
+    const {
+      artist,
+      editMode,
+      me: { userData },
+    } = this.props;
     if (editMode && artist && artist.name) {
       const {
         accent_color,
@@ -643,6 +647,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           isAdmin: owner.role === 'admin',
         })),
         images: images || [],
+      });
+    } else if (!editMode && userData) {
+      this.setState({
+        loading: false,
       });
     }
   };

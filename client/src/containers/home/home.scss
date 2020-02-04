@@ -1,7 +1,6 @@
-@import "../../theme/vars.scss";
-@import "../../theme/mixins.scss";
-@import "../../theme/global.scss";
-
+@import '../../theme/vars.scss';
+@import '../../theme/mixins.scss';
+@import '../../theme/global.scss';
 
 .home-section {
   overflow: hidden;
@@ -17,7 +16,6 @@
 }
 
 .home-header {
-
   &__support {
     width: 100%;
     display: block;
@@ -27,7 +25,7 @@
     font-size: 2rem;
     line-height: 2.5rem;
     text-transform: uppercase;
-    letter-spacing: .2rem;
+    letter-spacing: 0.2rem;
     margin: 2rem 0;
     text-align: center;
 
@@ -267,7 +265,6 @@
     }
   }
 
-
   &__info {
     width: 100%;
     min-height: 160px;
@@ -323,7 +320,7 @@
 
     &.money {
       width: 50%;
-      transform: translate(50px, -70px)
+      transform: translate(50px, -70px);
     }
 
     @include mq($tablet) {
@@ -390,7 +387,7 @@
 
       &:hover {
         .home-artists__item_image {
-          opacity: .75;
+          opacity: 0.75;
           transition: all $speed;
         }
       }
@@ -399,7 +396,7 @@
     &_border {
       border: 2px solid $black;
       width: calc(100% - 30px);
-      height: 100%;
+      height: calc(100% - 30px);
       position: absolute;
       border-width: 2px;
       border-style: solid;
@@ -503,7 +500,7 @@
 
     &_info {
       font-family: $font-family-monospace;
-      font-size: .9rem;
+      font-size: 0.9rem;
       line-height: 1.9rem;
       margin: 1rem auto 2rem;
     }

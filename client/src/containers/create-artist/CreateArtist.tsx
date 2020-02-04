@@ -579,7 +579,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         images,
       } = artist;
       this.setState({
-        randomColor: accent_color,
         artistColor: accent_color,
         artistColorAlpha: accent_color + '33',
         artistName: name,
@@ -649,7 +648,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
 
   handleColorChange = (color) => {
     this.setState({
-      randomColor: color.hex,
       artistColor: color.hex,
       artistColorAlpha: color.hex + '33',
     });
@@ -973,12 +971,12 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   renderColor = () => {
+    const bgColor = this.state.artistColor
+      ? this.state.artistColor
+      : this.state.randomColor;
     return (
       <div className="artist-color">
-        <div
-          className="primary-color"
-          style={{ backgroundColor: this.state.randomColor }}
-        >
+        <div className="primary-color" style={{ backgroundColor: bgColor }}>
           <div className="container">
             <div className="row justify-content-between">
               <div className="col-md-6 col-sm-12">

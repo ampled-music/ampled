@@ -117,12 +117,15 @@ class SignupComponent extends React.Component<Props, any> {
     const { email, password, confirmPassword, name, last_name } = this.state;
     this.emailPass = { email, password };
 
+    const { authentication } = this.props;
+
     const submitResult = await this.props.signup(
       email,
       password,
       confirmPassword,
       name,
       last_name,
+      authentication?.showSupportMessage === 'create' ? '/create-artist' : '/',
     );
 
     if (submitResult) {
@@ -173,6 +176,11 @@ class SignupComponent extends React.Component<Props, any> {
         <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
           <h4>SIGN UP</h4>
+          {authentication.showSupportMessage &&
+            authentication.showSupportMessage === 'create' && (
+              <p>Sign up to create an artist page.</p>
+            )}
+
           {authentication.showSupportMessage &&
             authentication.showSupportMessage === 'post' &&
             authentication.artistName && (

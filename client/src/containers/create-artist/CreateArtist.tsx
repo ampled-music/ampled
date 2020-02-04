@@ -649,6 +649,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         images: images || [],
       });
     } else if (!editMode && userData) {
+      // nothing commit
       this.setState({
         loading: false,
       });

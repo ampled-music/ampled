@@ -215,14 +215,14 @@ class PostComponent extends React.Component<any, any> {
         <div className="private-support__btn">
           {isLapsed ? (
             <Link to={routePaths.userDetails} className="btn btn-ampled">
-              UPDATE YOUR CARD
+              Update Payment Details
             </Link>
           ) : (
             <button
               className="btn btn-ampled"
               onClick={() => this.handlePrivatePostClick(authenticated)}
             >
-              SUPPORT TO UNLOCK
+              Support To Unlock
             </button>
           )}
         </div>

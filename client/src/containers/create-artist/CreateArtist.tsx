@@ -1031,7 +1031,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       members: [
         ...this.state.members,
         {
-          isAdmin: false,
+          isAdmin: true,
           email: '',
           firstName: '',
           lastName: '',

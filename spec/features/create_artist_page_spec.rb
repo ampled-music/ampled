@@ -27,6 +27,29 @@ RSpec.describe ArtistPagesController, type: :request do
     }
   end
 
+  let(:bad_slug_params) do
+    {
+      artist_page: {
+        name: "Test",
+        slug: "666",
+        bio: "About me",
+        location: "Testville",
+        accent_color: "#aabbcc"
+      },
+      members: [
+        {
+          email: "creator@ampled.com",
+          firstName: "Creator"
+        },
+        {
+          email: "testfriend@ampled.com",
+          firstName: "Friend"
+        }
+      ],
+      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+    }
+  end
+
   let(:missing_create_params) do
     {
       artist_page: {
@@ -129,6 +152,13 @@ RSpec.describe ArtistPagesController, type: :request do
       sign_in user
       post url, params: create_params
       post url, params: create_params
+
+      expect(JSON.parse(response.body)["status"]).to eq "error"
+    end
+
+    it "stops numeric slugs" do
+      sign_in user
+      post url, params: bad_slug_params
 
       expect(JSON.parse(response.body)["status"]).to eq "error"
     end

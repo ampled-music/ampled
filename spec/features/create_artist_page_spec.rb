@@ -8,7 +8,7 @@ RSpec.describe ArtistPagesController, type: :request do
     {
       artist_page: {
         name: "Test",
-        slug: "testslug",
+        slug: "testslug7",
         bio: "About me",
         location: "Testville",
         accent_color: "#aabbcc"

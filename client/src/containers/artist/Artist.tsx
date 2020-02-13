@@ -282,6 +282,9 @@ class ArtistComponent extends React.Component<Props, any> {
         }
       }
     }
+    if (loggedUserAccess) {
+      isSupporter = true;
+    }
 
     if (artists && !artists.loading && artists.error) {
       return <NoArtist />;

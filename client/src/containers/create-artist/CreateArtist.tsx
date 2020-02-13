@@ -1163,7 +1163,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       !artistName ||
       !artistSlug ||
       !artistColor ||
-      !/^[a-z0-9]+$/.test(artistSlug)
+      !/^[a-z-0-9]*[a-z]+[a-z-0-9]*$/.test(artistSlug)
     ) {
       return showToastMessage(
         'Please check required fields.',

@@ -48,7 +48,7 @@ class ArtistPage < ApplicationRecord
   def sluggy_slug
     return unless slug
 
-    errors.add(:slug, "can only contain lowercase letters and dashes") unless slug.match?(/^[a-z-]+$/)
+    errors.add(:slug, "can only contain lowercase letters, numbers, and dashes") unless slug.match?(/^[a-z-0-9]*[a-z]+[a-z-0-9]*$/)
   end
 
   def active_subscribers

@@ -21,6 +21,19 @@ import tear from '../../images/background_tear.png';
 
 import { once } from 'ramda';
 
+const mapStateToProps = (state: Store) => ({
+  authentication: state.authentication,
+  signup: state.signup,
+  me: state.me,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  login: bindActionCreators(loginAction, dispatch),
+  signup: bindActionCreators(signupAction, dispatch),
+  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+});
+
 interface SignupProps {
   signup: typeof signupInitialState;
   authentication: typeof authenticationInitialState;
@@ -302,19 +315,6 @@ class SignupComponent extends React.Component<Props, any> {
     );
   }
 }
-
-const mapStateToProps = (state: Store) => ({
-  authentication: state.authentication,
-  signup: state.signup,
-  me: state.me,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  login: bindActionCreators(loginAction, dispatch),
-  signup: bindActionCreators(signupAction, dispatch),
-  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
-  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
-});
 
 const Signup = connect(mapStateToProps, mapDispatchToProps)(SignupComponent);
 

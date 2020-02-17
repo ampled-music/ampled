@@ -3,9 +3,11 @@
 # Table name: artist_pages
 #
 #  accent_color         :string
+#  approved             :boolean          default(FALSE)
 #  banner_image_url     :string
 #  bio                  :string
 #  created_at           :datetime         not null
+#  featured             :boolean          default(FALSE)
 #  id                   :bigint(8)        not null, primary key
 #  instagram_handle     :string
 #  location             :string
@@ -17,6 +19,7 @@
 #  stripe_user_id       :string
 #  twitter_handle       :string
 #  updated_at           :datetime         not null
+#  verb_plural          :boolean          default(FALSE)
 #  video_screenshot_url :string
 #  video_url            :string
 #
@@ -45,7 +48,9 @@ class ArtistPage < ApplicationRecord
   def sluggy_slug
     return unless slug
 
-    errors.add(:slug, "can only contain lowercase letters and dashes") unless slug.match?(/^[a-z-]+$/)
+    return if slug.match?(/^[a-z\-0-9]*[a-z]+[a-z\-0-9]*$/)
+
+    errors.add(:slug, "can only contain lowercase letters, numbers, and dashes")
   end
 
   def active_subscribers
@@ -64,7 +69,7 @@ class ArtistPage < ApplicationRecord
 
     base = "https://connect.stripe.com/express/oauth/authorize"
     params = {
-      redirect_uri: "#{ENV["REACT_APP_API_URL"]}stripe_oauth_callback",
+      redirect_uri: "#{ENV["REACT_APP_API_URL"]}/stripe_oauth_callback",
       client_id: ENV["STRIPE_CLIENT_ID"] || "ca_Eowu0ycKNxFo46f8hqlCNCpt4w26bxer",
       state: stripe_state_token,
       "suggested_capabilities[]" => "card_payments"
@@ -82,7 +87,7 @@ class ArtistPage < ApplicationRecord
     stripe_plan = Stripe::Plan.create(
       {
         product: stripe_product.id,
-        nickname: "Ampled Support $5",
+        nickname: "Ampled Support", # should this be based on the amount?
         interval: "month",
         currency: "usd",
         amount: ((nominal_amount + 30) / 0.971).round

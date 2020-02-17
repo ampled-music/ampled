@@ -2,9 +2,27 @@
 @import '../../theme/mixins.scss';
 @import '../../theme/global.scss';
 
+.artistAlertHeader {
+  font-family: $font-family-monospace;
+  font-size: $font-size-md;
+  text-align: center;
+  padding: 5px 10px;
+  margin: 0;
+  background-color: $black;
+  color: $white;
+  span {
+    display: list-item;
+  }
+  a {
+    color: $white;
+    &:hover {
+      color: $white;
+    }
+  }
+}
+
 .artist-header {
   font-family: $font-family-sans-serif;
-  margin-top: 50px;
 
   @include mq($layout-l) {
     padding: 0 15px 0 35px;
@@ -12,6 +30,7 @@
 
   &__photo-container {
     display: flex;
+    position: relative;
     justify-content: center;
     margin: 0 0 2rem 0;
 
@@ -243,7 +262,7 @@
 
   &__banner-icons {
     display: flex;
-    bottom: 0rem;
+    bottom: -20px;
     position: absolute;
 
     &_icon {
@@ -286,15 +305,10 @@
       justify-content: center;
       flex-direction: column;
       width: 90%;
-      margin: 0.5rem auto 0;
+      margin: 0rem auto 1.5rem;
       border: 2px solid $brand-primary;
       padding: 10px 0px;
       min-height: 140px;
-
-      @include mq($layout-m) {
-        margin: 1rem auto 2rem;
-        text-align: left;
-      }
 
       &.paper_md {
         min-height: 210px;
@@ -485,7 +499,8 @@
           text-align: left;
 
           &_since,
-          &_bio {
+          &_bio,
+          &_role {
             font-family: $font-family-monospace;
             font-size: 0.8rem;
             @include mq(0, $layout-m) {
@@ -573,7 +588,7 @@
   padding: 1rem 0;
 
   @include mq($layout-m) {
-    margin: 2rem auto;
+    margin: 1rem auto 2rem;
   }
 
   .icon {
@@ -607,14 +622,14 @@
   }
 }
 
-.new-post {
+.new-post,
+.edit-page {
   position: fixed;
   z-index: 100;
 
   @include mq(0, $layout-m) {
-    left: 0px;
     bottom: 0px;
-    width: 100%;
+    width: 50%;
     border-top: 1px solid $black;
   }
 
@@ -624,7 +639,8 @@
     top: 70px;
   }
 
-  button {
+  button,
+  .edit-button {
     cursor: pointer;
     background-color: $brand-primary;
     border-width: 0px;
@@ -662,5 +678,21 @@
   span {
     color: $white;
     visibility: hidden;
+  }
+}
+.new-post {
+  @include mq(0, $layout-m) {
+    left: 0px;
+  }
+}
+
+.edit-page {
+  @include mq(0, $layout-m) {
+    right: 0px;
+    border-left: 1px solid $black;
+  }
+
+  @include mq($layout-m) {
+    top: 115px;
   }
 }

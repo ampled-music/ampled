@@ -6,7 +6,7 @@ import { isMobile } from 'react-device-detect';
 import cx from 'classnames';
 
 import { Image, Transformation } from 'cloudinary-react';
-import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from '../../redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
@@ -25,7 +25,7 @@ interface Props {
   openMessageModal: React.MouseEventHandler;
   artist: ArtistModel;
   loggedUserAccess: { role: string; artistId: number };
-  isSupporter: Boolean;
+  isSupporter: boolean;
   handleSupportClick: Function;
 }
 
@@ -49,7 +49,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     const bannerIcons = document.getElementsByClassName(
       'artist-header__banner-icons_icon',
     );
-    var index;
+    let index;
 
     for (index = 0; index < bannerImages.length; ++index) {
       if (bannerImages[index].classList.contains('active')) {
@@ -77,7 +77,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       'artist-header__banner-icons_icon',
     );
 
-    for (var index = 0; index < bannerImages.length; ++index) {
+    for (let index = 0; index < bannerImages.length; ++index) {
       if (bannerImages[index].classList.contains('active')) {
         bannerImages[index].classList.toggle('active');
         bannerIcons[index].classList.toggle('active');
@@ -103,14 +103,14 @@ export class ArtistHeader extends React.Component<Props, any> {
               {owner.name}
               {owner.last_initial && <span> {owner.last_initial}.</span>}
             </div>
+            {owner.instrument && (
+              <div className="supporter__hover-card_header_info_role">
+                {owner.instrument}
+              </div>
+            )}
             {owner.joined_since && (
               <div className="supporter__hover-card_header_info_since">
                 Joined Ampled {owner.joined_since}
-              </div>
-            )}
-            {owner.bio && (
-              <div className="supporter__hover-card_header_info_bio">
-                {owner.bio}
               </div>
             )}
           </div>
@@ -247,34 +247,57 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
   };
 
-  renderPhotoContainer = () => (
-    <div
-      className="artist-header__photo-container"
-      style={{ borderColor: this.props.artist.accent_color }}
-    >
-      {this.renderOwners()}
-      {this.renderBanners()}
+  renderPhotoContainer = () => {
+    const { artist } = this.props;
+    return (
       <div
-        onClick={!isMobile ? this.cycleBanners : undefined}
-        className="artist-header__photo-container_border"
-        style={{ borderColor: this.props.artist.accent_color }}
+        className="artist-header__photo-container"
+        style={{ borderColor: artist.accent_color }}
       >
-        <Swipe
-          onSwipeLeft={this.onSwipeLeft}
-          onSwipeRight={this.onSwipeRight}
-          allowMouseEvents={true}
-          tolerance={25}
-          className="artist-header__photo-container_border_swipe"
-        ></Swipe>
+        {this.renderOwners()}
+        {this.renderBanners()}
+        {artist.images && (
+          <div
+            onClick={
+              !isMobile && artist.images.length > 1
+                ? this.cycleBanners
+                : undefined
+            }
+            className="artist-header__photo-container_border"
+            style={{ borderColor: artist.accent_color }}
+          >
+            <Swipe
+              onSwipeLeft={
+                artist.images.length > 1 ? this.onSwipeLeft : undefined
+              }
+              onSwipeRight={
+                artist.images.length > 1 ? this.onSwipeRight : undefined
+              }
+              allowMouseEvents={true}
+              tolerance={25}
+              className="artist-header__photo-container_border_swipe"
+            ></Swipe>
+          </div>
+        )}
+        {this.renderBannerIcons()}
       </div>
-      {this.renderBannerIcons()}
-    </div>
-  );
+    );
+  };
 
   canLoggedUserPost = () => {
     return (
       this.props.loggedUserAccess &&
-      this.props.loggedUserAccess.role === UserRoles.Owner
+      (this.props.loggedUserAccess.role === UserRoles.Admin ||
+        this.props.loggedUserAccess.role === UserRoles.Member ||
+        this.props.loggedUserAccess.role === UserRoles.Owner)
+    );
+  };
+
+  canLoggedUserAdmin = () => {
+    return (
+      this.props.loggedUserAccess &&
+      (this.props.loggedUserAccess.role === UserRoles.Admin ||
+        this.props.loggedUserAccess.role === UserRoles.Owner)
     );
   };
 
@@ -284,6 +307,20 @@ export class ArtistHeader extends React.Component<Props, any> {
         <button onClick={this.props.openPostModal}>
           <span>New Post</span>
           <FontAwesomeIcon icon={faPlus} color="#ffffff" />
+        </button>
+      </div>
+    );
+
+  renderFloatingEditButton = () =>
+    this.canLoggedUserAdmin() && (
+      <div className="edit-page">
+        <button
+          onClick={() => {
+            window.location.href = `${window.location.pathname}/edit`;
+          }}
+        >
+          <span>Edit Page</span>
+          <FontAwesomeIcon icon={faEdit} color="#ffffff" />
         </button>
       </div>
     );
@@ -351,13 +388,15 @@ export class ArtistHeader extends React.Component<Props, any> {
                 text={artist.bio}
               />
             </div>
-            <button
-              className="btn btn-ampled btn-read-more"
-              style={{ borderColor }}
-              onClick={this.props.openMessageModal}
-            >
-              Read More
-            </button>
+            {artist.bio.length > 130 && (
+              <button
+                className="btn btn-ampled btn-read-more"
+                style={{ borderColor }}
+                onClick={this.props.openMessageModal}
+              >
+                Read More
+              </button>
+            )}
           </div>
         </div>
       );
@@ -434,7 +473,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   };
 
   renderSupporter = ({ supporter, borderColor, isSmall = false }) => {
-    let style = { borderColor, maxWidth: 'auto', maxHeight: 'auto' };
+    const style = { borderColor, maxWidth: 'auto', maxHeight: 'auto' };
     const RenderSupporterHover = this.renderSupporterHover;
     if (isSmall) {
       style.maxWidth = '36px';
@@ -484,7 +523,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         <button
           className="btn btn-ampled btn-support"
           style={{ borderColor, maxWidth: '100%' }}
-          onClick={(e) => this.props.handleSupportClick()}
+          onClick={() => this.props.handleSupportClick()}
         >
           Support What You Want
         </button>
@@ -563,6 +602,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             {this.renderVideoContainer()}
             {this.renderMessageContainer()}
             {this.renderFloatingNewPostButton()}
+            {this.renderFloatingEditButton()}
             {this.renderSupportersContainer()}
             {!this.props.isSupporter &&
               !this.canLoggedUserPost() &&

@@ -2,6 +2,7 @@
 #
 # Table name: users
 #
+#  admin                  :boolean
 #  bio                    :string
 #  card_brand             :string
 #  card_exp_month         :string
@@ -21,9 +22,9 @@
 #  jti                    :string           not null
 #  last_name              :string
 #  locked_at              :datetime
-#  login_redirect_url     :string
 #  name                   :string           not null
 #  profile_image_url      :string
+#  redirect_uri           :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string

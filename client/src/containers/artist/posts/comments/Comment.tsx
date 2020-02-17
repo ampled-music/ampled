@@ -5,6 +5,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';
 import { Modal } from '../../../shared/modal/Modal';
+import Linkify from 'react-linkify';
 
 const renderHeader = ({ author, createdDate }) => (
   <div className="comment__header">
@@ -14,7 +15,26 @@ const renderHeader = ({ author, createdDate }) => (
 );
 
 const renderBody = (text: string) => (
-  <div className="comment__copy">{text}</div>
+  <div className="comment__copy">
+    <Linkify
+      componentDecorator={(
+        decoratedHref: string,
+        decoratedText: string,
+        key: number,
+      ) => (
+        <a
+          href={decoratedHref}
+          key={key}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {decoratedText}
+        </a>
+      )}
+    >
+      {text}
+    </Linkify>
+  </div>
 );
 
 const renderDeleteModal = ({ deleteComment, commentId, setShowModal }) => (

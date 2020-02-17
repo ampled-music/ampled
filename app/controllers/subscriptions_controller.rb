@@ -1,18 +1,22 @@
 class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
+  before_action :allow_destroy, only: %i[destroy]
 
   def index
     @subscriptions = current_user.subscriptions
   end
 
   def show
+    # BA - should we delete this?
   end
 
   def new
+    # BA - should we delete this?
     @artist_page = ArtistPage.new
   end
 
   def edit
+    # BA - should we delete this?
   end
 
   def create
@@ -32,10 +36,18 @@ class SubscriptionsController < ApplicationController
     # end
   end
 
+  def allow_destroy
+    return render_not_allowed unless current_subscription.user == current_user || current_user.admin?
+  end
+
   def destroy
     current_subscription.cancel!
     # redirect_to artist_pages_url, notice: "Artist page was successfully destroyed."
     render json: :ok
+  end
+
+  def render_not_allowed
+    render json: { status: "error", message: "Not allowed." }
   end
 
   def update_platform_customer

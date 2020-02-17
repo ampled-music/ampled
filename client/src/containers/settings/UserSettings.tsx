@@ -15,6 +15,7 @@ import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
 import { updateMeAction } from '../../redux/me/update-me';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
+import { Image, Transformation } from 'cloudinary-react';
 
 import { faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -154,6 +155,39 @@ class UserSettingsComponent extends React.Component<Props, any> {
     }
   };
 
+  renderPhoto = (image: string, crop: number) => {
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
+    if (image.includes('https://res.cloudinary')) {
+      return image.replace('upload/', `upload/${crop_url_path}/`);
+    } else {
+      return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+    }
+  };
+
+  renderCloudinaryPhoto = (image: string, crop: number, altText: string) => {
+    console.log(image);
+    const crop_url_path = `w_${crop},h_${crop},c_fill`;
+    const cloudinary_id = image.substring(
+      image.lastIndexOf('/') + 1,
+      image.lastIndexOf('.'),
+    );
+    if (image.includes('https://res.cloudinary')) {
+      return (
+        <Image publicId={cloudinary_id} alt={altText}>
+          <Transformation
+            crop="fill"
+            width={crop}
+            height={crop}
+            responsive_placeholder="blank"
+          />
+        </Image>
+      );
+    } else {
+      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+      return <img src={img_src} alt={altText} />;
+    }
+  };
+
   renderUserImage = () => {
     const { userData } = this.props;
 
@@ -226,6 +260,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <Link to="/user-details" className="user-content__edit-profile">
             <FontAwesomeIcon icon={faEdit} /> Edit Profile
           </Link>
+          {userData.admin && (
+            <div>
+              <strong>Ampled Admin</strong>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -268,17 +307,26 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
           <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
-            <img
-              className="artist__image"
-              src={ownedPage.image}
-              alt={ownedPage.name}
-            />
+            {ownedPage.image && (
+              <img
+                className="artist__image"
+                src={this.renderPhoto(ownedPage.image, 200)}
+                alt={ownedPage.name}
+              />
+            )}
             <div
               className="artist__image-border"
               onClick={() => this.redirectToArtistPage(ownedPage)}
             ></div>
             <img className="tear__topper" src={tear_black} alt="" />
             <div className="artist__info">
+              <p className="artist__info_role">
+                {ownedPage.role
+                  ? ownedPage.role.charAt(0).toUpperCase() +
+                    ownedPage.role.slice(1) +
+                    ' of'
+                  : ''}
+              </p>
               <p
                 className="artist__info_name"
                 onClick={() => this.redirectToArtistPage(ownedPage)}
@@ -316,38 +364,52 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     </div>
                   </div>
                 </div>
-                <div className="details__stripe">
-                  <div className="row no-gutter align-items-center">
-                    <div className="col-4">
-                      <FontAwesomeIcon
-                        className="icon details__stripe_icon"
-                        icon={faStripe}
-                      />
-                    </div>
-                    <div className="col-8">
-                      {ownedPage.isStripeSetup ? (
+                {ownedPage.role === 'admin' && (
+                  <div className="details__stripe">
+                    <div className="row no-gutter align-items-center">
+                      <div className="col-4">
+                        <FontAwesomeIcon
+                          className="icon details__stripe_icon"
+                          icon={faStripe}
+                        />
+                      </div>
+                      <div className="col-8">
+                        {ownedPage.isStripeSetup ? (
+                          <a
+                            href={ownedPage.stripeDashboard}
+                            className="details__stripe_link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Edit Payout Details
+                          </a>
+                        ) : (
+                          <a
+                            href={ownedPage.stripeSignup}
+                            className="details__stripe_link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#d9534f' }}
+                          >
+                            Set Up Payouts
+                          </a>
+                        )}
+                      </div>
+                      <div className="col-12">
                         <a
-                          href={ownedPage.stripeDashboard}
-                          className="details__stripe_link"
-                          target="_blank"
+                          href={routePaths.editArtist.replace(
+                            ':slug',
+                            ownedPage.artistSlug,
+                          )}
+                          className="details__edit_link"
                           rel="noopener noreferrer"
                         >
-                          Edit Payout Details
+                          Edit Artist Details
                         </a>
-                      ) : (
-                        <a
-                          href={ownedPage.stripeSignup}
-                          className="details__stripe_link"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{ color: '#d9534f' }}
-                        >
-                          Set Up Payouts
-                        </a>
-                      )}
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -367,7 +429,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           >
             <img
               className="artist__image"
-              src={subscription.image}
+              src={this.renderPhoto(subscription.image, 200)}
               alt={subscription.name}
             />
             <div

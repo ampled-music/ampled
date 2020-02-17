@@ -33,13 +33,14 @@ RSpec.describe "DELETE /posts", type: :request do
     end
   end
 
-  context "when the user owns the artist page where the post lives" do
+  context "when the user admins the artist page where the post lives" do
     let(:user) { create(:user) }
     let(:artist_page) { create(:artist_page) }
     let(:post) { create(:post, artist_page: artist_page) }
 
     before do
       user.owned_pages << artist_page
+      PageOwnership.find_by(user_id: user[:id], artist_page_id: artist_page[:id]).update(role: "admin")
     end
 
     before(:each) do
@@ -107,6 +108,66 @@ RSpec.describe "PUT /posts", type: :request do
 
     it "updates the post" do
       expect(Post.find_by(id: post.id).title).to eq "my new title"
+    end
+  end
+end
+
+RSpec.describe "POST /posts", type: :request do
+  let(:user) { create(:user) }
+  let(:owner_user) { create(:user) }
+  let(:artist_page) { create(:artist_page, approved: true) }
+  let(:post_params) do
+    {
+      post: {
+        artist_page_id: artist_page.id,
+        title: "test",
+        body: "test test"
+      }
+    }
+  end
+
+  context "when user is unauthenticated" do
+    before { post "/artist_pages/#{artist_page.id}/posts", params: post_params }
+
+    it "returns 400" do
+      expect(response.status).to eq 400
+    end
+  end
+
+  context "when user doesn't own the page" do
+    before do
+      sign_in user
+      post "/artist_pages/#{artist_page.id}/posts", params: post_params
+    end
+
+    it "returns 400" do
+      expect(response.status).to eq 400
+    end
+  end
+
+  context "when the user owns the artist page" do
+    before do
+      owner_user.owned_pages << artist_page
+      sign_in owner_user
+      post "/artist_pages/#{artist_page.id}/posts", params: post_params
+    end
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+  end
+
+  context "when viewing the artist page" do
+    before do
+      owner_user.owned_pages << artist_page
+      sign_in owner_user
+      post "/artist_pages/#{artist_page.id}/posts", params: post_params
+    end
+
+    it "the post appears in the page with correct data" do
+      get "/artist_pages/#{artist_page.id}.json"
+      expect(JSON.parse(response.body)["posts"][0]["title"]).to eq("test")
+      expect(JSON.parse(response.body)["posts"][0]["author"]).to eq(owner_user.name)
     end
   end
 end

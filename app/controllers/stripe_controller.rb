@@ -7,11 +7,13 @@ class StripeController < ApplicationController
     # to generate the stubs used in testing
     # File.open('other_stripe_account_stub.json','w'){ |f| f.write(stripe_account.to_json) }
     ap = ArtistPage.find_by(state_token: params[:state])
+    # BA - Delete an artists state token after it's used?
     ap.update(stripe_user_id: stripe_account["stripe_user_id"])
     redirect_to "/settings?stripesuccess=true"
   end
 
   def webhook
+    # BA we should check the signature https://stripe.com/docs/webhooks/signatures
     object = params[:data][:object]
     event_type = params[:type]
     logger.info "STRIPE EVENT: #{event_type} (live mode: #{params[:livemode]})"

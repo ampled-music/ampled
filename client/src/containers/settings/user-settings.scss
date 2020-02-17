@@ -169,6 +169,18 @@
         padding: 100px 1rem 0.5rem;
         width: 100%;
 
+        &_role {
+          display: flex;
+          font-weight: bold;
+          align-self: center;
+          font-size: 12px;
+          align-items: flex-end;
+          width: 100%;
+          justify-content: center;
+          margin: 0;
+          font-family: $font-family-sans-serif;
+        }
+
         &_name {
           display: flex;
           font-weight: bold;
@@ -231,6 +243,21 @@
             &_link {
               font-size: 11px;
               text-align: right;
+              color: $white;
+              text-decoration: underline;
+              line-height: 16px;
+              display: block;
+
+              &:hover {
+                text-decoration: none;
+              }
+            }
+          }
+
+          &__edit {
+            &_link {
+              font-size: 11px;
+              text-align: center;
               color: $white;
               text-decoration: underline;
               line-height: 16px;

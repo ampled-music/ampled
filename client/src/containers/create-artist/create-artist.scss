@@ -1,0 +1,177 @@
+@import '../../theme/vars.scss';
+@import '../../theme/mixins.scss';
+@import '../../theme/global.scss';
+
+.create-artist {
+  margin-top: 50px;
+
+  h2 {
+    font-family: $font-family-sans-serif;
+    text-transform: uppercase;
+    margin: 2rem auto;
+  }
+
+  &__header {
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    justify-content: space-between;
+
+    @include mq(0, $tablet) {
+      height: 160px;
+      padding-top: unset;
+    }
+
+    &_tear {
+      width: 100%;
+    }
+  }
+
+  .row {
+    margin-bottom: 0.5rem;
+    @include mq($layout-m) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  h6 {
+    font-family: $font-family-monospace;
+    color: $gray-light;
+  }
+
+  &__title {
+    font-family: $font-family-sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+  }
+
+  &__subtitle {
+    font-family: $font-family-sans-serif;
+    font-size: 1rem;
+    @include mq($layout-m) {
+      font-size: 1.3rem;
+    }
+  }
+
+  &__info {
+    font-family: $font-family-monospace;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  &__copy {
+    font-family: $font-family-monospace;
+    max-width: 460px;
+    width: 100%;
+    margin: 2rem 0 0;
+  }
+
+  .artist-about,
+  .artist-custom,
+  .artist-members,
+  .artist-invite,
+  .artist-payment {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid $black;
+  }
+
+  .image-upload {
+    .loading-circle {
+      margin: auto;
+    }
+    .btn-upload {
+      background-color: $white;
+    }
+    &__image {
+      display: flex;
+      height: 230px;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+      margin: 1rem;
+      padding: 1rem;
+      border-radius: 5px;
+      border: 1px solid $black;
+
+      &.primary {
+        background: $gray-light;
+      }
+      &.secondary {
+        background: $gray-lighter;
+      }
+      &_polaroid {
+        max-width: 130px;
+        margin: 0 auto 1rem;
+        display: block;
+      }
+    }
+  }
+  .artist-color {
+    &__info {
+      padding: 1rem;
+      margin: 2rem;
+      background-color: $white;
+    }
+    &__picker {
+      display: flex;
+      justify-content: center;
+      @include mq($layout-m) {
+        transform: translateY(2rem);
+      }
+      .chrome-picker {
+        max-width: 320px;
+        width: 100% !important;
+      }
+    }
+    &__opacity {
+      padding: 1rem;
+      margin: 2rem;
+      font-family: $font-family-monospace;
+      display: flex;
+      justify-content: center;
+    }
+    .row {
+      margin-bottom: 0rem;
+    }
+  }
+  .artist-members {
+    margin: 2rem 0;
+    &__card {
+      border: 1px solid $black;
+      display: flex;
+      justify-content: center;
+      box-shadow: none;
+      &_add {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity $speed;
+        &:hover {
+          opacity: 1;
+        }
+        span {
+          font-family: $font-family-sans-serif;
+          margin-top: 1rem;
+        }
+      }
+      .row {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+  .artist-payment {
+    &__stripe {
+      &_icon {
+        width: 200px;
+        height: 160px;
+      }
+    }
+  }
+}

@@ -37,7 +37,7 @@ class PostsController < ApplicationController
       :image_url,
       :audio_file,
       :is_private
-    ).merge(user_id: current_user.id)
+    ).merge(user_id: current_user&.id)
   end
 
   def set_post

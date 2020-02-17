@@ -11,7 +11,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     "#{artist_page.name} - #{artist_page.id}"
   end
   ATTRIBUTE_TYPES = {
-    owners: Field::HasMany.with_options(class_name: "User", show: %i[email], searchable: true,
+    owners: Field::HasMany.with_options(class_name: "User", show: %i[email], searchable: false,
                                         searchable_field: 'email'),
     images: Field::HasMany.with_options(show: %i[url]),
     id: Field::Number,
@@ -20,14 +20,16 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     location: Field::String,
     bio: Field::Text,
     accent_color: Field::String,
-    video_url: Field::String,
     twitter_handle: Field::String,
     instagram_handle: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     stripe_signup_url: Field::Text,
     stripe_dashboard_url: Field::Text,
-    video_url: Field::String
+    video_url: Field::String,
+    approved: Field::Boolean,
+    featured: Field::Boolean,
+    verb_plural: Field::Boolean
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -39,6 +41,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :name,
     :id,
     :owners,
+    :featured
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -57,7 +60,10 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :updated_at,
     :stripe_signup_url,
     :stripe_dashboard_url,
-    :video_url
+    :video_url,
+    :approved,
+    :featured,
+    :verb_plural
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -72,7 +78,10 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :accent_color,
     :twitter_handle,
     :instagram_handle,
-    :video_url
+    :video_url,
+    :approved,
+    :featured,
+    :verb_plural
   ].freeze
 
   # Overwrite this method to customize how artist pages are displayed

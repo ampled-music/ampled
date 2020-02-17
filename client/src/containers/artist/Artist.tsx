@@ -31,6 +31,23 @@ import { PostForm } from './posts/post-form/PostForm';
 import { NoArtist } from '../shared/no-artist/NoArtist';
 import { routePaths } from '../route-paths';
 
+const mapStateToProps = (state: Store) => {
+  return {
+    artists: state.artists,
+    me: state.me,
+    posts: state.posts,
+    authentication: state.authentication,
+    subscriptions: state.subscriptions,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getArtist: bindActionCreators(getArtistAction, dispatch),
+    openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+  };
+};
+
 interface ArtistProps {
   match: {
     params: {
@@ -175,11 +192,20 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   getLoggedUserPageAccess = () => {
-    const { me } = this.props;
+    const {
+      me: { userData },
+    } = this.props;
+
+    if (userData?.admin) {
+      return {
+        artistId: +this.props.artists.artist.id,
+        role: 'admin',
+      };
+    }
 
     return (
-      me.userData &&
-      me.userData.artistPages.find(
+      userData &&
+      userData?.ownedPages.find(
         (page) => page.artistId === +this.props.artists.artist.id,
       )
     );
@@ -197,7 +223,7 @@ class ArtistComponent extends React.Component<Props, any> {
     lum = lum || 0;
 
     // convert to decimal and change luminosity
-    var rgb = '#',
+    let rgb = '#',
       c,
       i;
     for (i = 0; i < 3; i++) {
@@ -236,6 +262,10 @@ class ArtistComponent extends React.Component<Props, any> {
     }
   };
 
+  renderSticky = (message: any) => (
+    <div className="artistAlertHeader">{message}</div>
+  );
+
   render() {
     const {
       artists,
@@ -271,6 +301,7 @@ class ArtistComponent extends React.Component<Props, any> {
                 color: white;
               }
               .new-post button,
+              .edit-page button,
               .post__change button,
               .artist-header__photo,
               .artist-header__title_flair,
@@ -280,7 +311,8 @@ class ArtistComponent extends React.Component<Props, any> {
               .btn.btn-read-more:hover,
               .btn.btn-support:hover,
               .private-support__btn > .btn:hover,
-              .new-post button:hover {
+              .new-post button:hover,
+              .edit-page button:hover {
                 background-color: ${this.ColorLuminance(
                   artist.accent_color,
                   -0.2,
@@ -316,6 +348,31 @@ class ArtistComponent extends React.Component<Props, any> {
               </title>
             </Helmet>
           )}
+          {artist &&
+            !artist.approved &&
+            loggedUserAccess &&
+            this.renderSticky(
+              <span>
+                Your page is pending a quick approval.{' '}
+                {/* eslint-disable-next-line react/jsx-no-target-blank */}
+                <a href="https://app.ampled.com/approval" target="_blank">
+                  Learn more here
+                </a>
+                .
+              </span>,
+            )}
+          {artist &&
+            !artist.isStripeSetup &&
+            loggedUserAccess &&
+            this.renderSticky(
+              <span>
+                Right now you can&#39;t be supported until you{' '}
+                <a href={loggedUserAccess.stripeSignup}>
+                  set up your Stripe Account
+                </a>
+                .
+              </span>,
+            )}
           <ArtistHeader
             artist={artist}
             openVideoModal={this.openVideoModal}
@@ -386,23 +443,6 @@ class ArtistComponent extends React.Component<Props, any> {
     );
   }
 }
-
-const mapStateToProps = (state: Store) => {
-  return {
-    artists: state.artists,
-    me: state.me,
-    posts: state.posts,
-    authentication: state.authentication,
-    subscriptions: state.subscriptions,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getArtist: bindActionCreators(getArtistAction, dispatch),
-    openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
-  };
-};
 
 const Artist = connect(mapStateToProps, mapDispatchToProps)(ArtistComponent);
 

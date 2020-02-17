@@ -15,6 +15,9 @@ json.userInfo do
   json.ship_country current_user&.ship_country
   json.image current_user&.profile_image_url
   json.created_at current_user&.created_at
+  json.email current_user&.email
+  json.email_confirmed current_user&.confirmed_at.present?
+  json.admin current_user&.admin?
   json.cardInfo do
     if @stripe_info.present?
       json.exp_month @stripe_info[:exp_month]
@@ -42,15 +45,17 @@ json.subscriptions @subscriptions do |subscription|
   json.amount subscription.plan.nominal_amount
 end
 json.ownedPages @owned_pages do |page|
-  json.artistId page.id
-  json.artistSlug page.slug
-  json.name page.name
-  json.image page.cover_url
-  json.supportersCount page.subscriber_count
-  json.monthlyTotal page.monthly_total
-  json.lastPost page.last_post_date
-  json.lastPayout page.last_payout
-  json.stripeSignup page.stripe_signup_url
-  json.stripeDashboard page.stripe_dashboard_url
-  json.isStripeSetup page.is_stripe_ready
+  json.role page.role
+  json.instrument page.instrument
+  json.artistId page.page.id
+  json.artistSlug page.page.slug
+  json.name page.page.name
+  json.image page.page.cover_url
+  json.supportersCount page.page.subscriber_count
+  json.monthlyTotal page.page.monthly_total
+  json.lastPost page.page.last_post_date
+  json.lastPayout page.page.last_payout
+  json.stripeSignup page.role == "admin" ? page.page.stripe_signup_url : json.null
+  json.stripeDashboard page.role == "admin" ? page.page.stripe_dashboard_url : json.null
+  json.isStripeSetup page.page.is_stripe_ready
 end

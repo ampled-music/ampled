@@ -44,7 +44,9 @@ class PostComponent extends React.Component<any, any> {
   canLoggedUserPost = () => {
     return (
       this.props.loggedUserAccess &&
-      this.props.loggedUserAccess.role === UserRoles.Owner
+      (this.props.loggedUserAccess.role === UserRoles.Admin ||
+        this.props.loggedUserAccess.role === UserRoles.Member ||
+        this.props.loggedUserAccess.role === UserRoles.Owner)
     );
   };
 
@@ -114,9 +116,12 @@ class PostComponent extends React.Component<any, any> {
 
     return (
       loggedUserAccess &&
-      [UserRoles.Supporter.toString(), UserRoles.Owner.toString()].includes(
-        loggedUserAccess.role,
-      )
+      [
+        UserRoles.Supporter.toString(),
+        UserRoles.Owner.toString(),
+        UserRoles.Admin.toString(),
+        UserRoles.Member.toString(),
+      ].includes(loggedUserAccess.role)
     );
   };
 
@@ -124,13 +129,28 @@ class PostComponent extends React.Component<any, any> {
     const { loggedUserAccess, me } = this.props;
 
     return (
-      (loggedUserAccess && loggedUserAccess.role === UserRoles.Owner) ||
+      (loggedUserAccess &&
+        (loggedUserAccess.role === UserRoles.Owner ||
+          loggedUserAccess.role === UserRoles.Admin ||
+          loggedUserAccess.role === UserRoles.Member)) ||
       (me && commentUserId === me.id)
+    );
+  };
+
+  canLoggedUserEditPost = (postUserId: number) => {
+    const { loggedUserAccess, me } = this.props;
+
+    return (
+      (loggedUserAccess &&
+        (loggedUserAccess.role === UserRoles.Owner ||
+          loggedUserAccess.role === UserRoles.Admin)) ||
+      (me && postUserId === me.id)
     );
   };
 
   handleDeleteComment = async (commentId) => {
     await this.props.deleteComment(commentId);
+    this.closeDeletePostModal();
     this.props.updateArtist();
   };
 
@@ -156,7 +176,7 @@ class PostComponent extends React.Component<any, any> {
   };
 
   returnFirstName = (name) => {
-    let spacePosition = name.indexOf(' ');
+    const spacePosition = name.indexOf(' ');
     if (spacePosition === -1) {
       return name;
     } else {
@@ -183,7 +203,7 @@ class PostComponent extends React.Component<any, any> {
     </div>
   );
 
-  renderLock = (isLapsed: boolean = false) => {
+  renderLock = (isLapsed = false) => {
     const { me } = this.props;
     const authenticated = !!me;
 
@@ -195,14 +215,14 @@ class PostComponent extends React.Component<any, any> {
         <div className="private-support__btn">
           {isLapsed ? (
             <Link to={routePaths.userDetails} className="btn btn-ampled">
-              UPDATE YOUR CARD
+              Update Payment Details
             </Link>
           ) : (
             <button
               className="btn btn-ampled"
               onClick={() => this.handlePrivatePostClick(authenticated)}
             >
-              SUPPORT TO UNLOCK
+              Support To Unlock
             </button>
           )}
         </div>
@@ -298,9 +318,11 @@ class PostComponent extends React.Component<any, any> {
               ))}
 
             {this.isUserSubscribed() &&
-              ![UserRoles.Owner.toString()].includes(
-                this.props.loggedUserAccess.role,
-              ) &&
+              ![
+                UserRoles.Owner.toString(),
+                UserRoles.Admin.toString(),
+                UserRoles.Member.toString(),
+              ].includes(this.props.loggedUserAccess.role) &&
               isPrivate && (
                 <div className="post__status">
                   <FontAwesomeIcon className="unlock" icon={faUnlock} />
@@ -308,7 +330,7 @@ class PostComponent extends React.Component<any, any> {
                 </div>
               )}
 
-            {this.canLoggedUserPost() && (
+            {this.canLoggedUserEditPost(post.authorId) && (
               <div className="post__change">
                 <div className="post__change_edit">
                   <button onClick={this.openEditPostModal}>

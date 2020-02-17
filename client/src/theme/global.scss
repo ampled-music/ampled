@@ -7,7 +7,11 @@ body {
 }
 
 a {
+  color: $black;
+  text-decoration: underline;
+  transition: color $speed;
   &:hover {
+    color: rgba($black, 0.7);
     text-decoration: none;
   }
 }
@@ -41,6 +45,7 @@ h6 {
     max-width: 350px;
     margin: auto;
     display: block;
+    text-decoration: none;
 
     &:hover {
       background-color: $black;

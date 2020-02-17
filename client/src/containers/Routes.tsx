@@ -3,15 +3,8 @@ import { Switch, Redirect, Route } from 'react-router-dom';
 
 import { ProtectedRoute } from './ProtectedRoute';
 import { PublicRoute } from './PublicRoute';
-// import { Artist } from './artist/Artist';
-// import { PostForm } from './artist/posts/post-form/PostForm';
 import { Support } from './artist/support/Support';
-// import { Home } from './home/Home';
-// import { NoArtist } from './shared/no-artist/NoArtist';
 import { routePaths } from './route-paths';
-// import { UserSettings } from './settings/UserSettings';
-// import { UserDetails } from './user-details/UserDetails';
-// import { ResetPassword } from './connect/ResetPassword';
 
 const LazyPostForm = React.lazy(() =>
   import('./artist/posts/post-form/PostForm').then((module) => ({
@@ -20,6 +13,11 @@ const LazyPostForm = React.lazy(() =>
 );
 const LazyArtist = React.lazy(() =>
   import('./artist/Artist').then((module) => ({ default: module.Artist })),
+);
+const LazyEditArtist = React.lazy(() =>
+  import('./artist/EditArtist').then((module) => ({
+    default: module.Edit,
+  })),
 );
 const LazyNoArtist = React.lazy(() =>
   import('./shared/no-artist/NoArtist').then((module) => ({
@@ -34,6 +32,11 @@ const LazyResetPassword = React.lazy(() =>
     default: module.ResetPassword,
   })),
 );
+const LazyForgotPassword = React.lazy(() =>
+  import('./connect/ForgotPassword').then((module) => ({
+    default: module.ForgotPassword,
+  })),
+);
 const LazyUserSettings = React.lazy(() =>
   import('./settings/UserSettings').then((module) => ({
     default: module.UserSettings,
@@ -42,6 +45,11 @@ const LazyUserSettings = React.lazy(() =>
 const LazyUserDetails = React.lazy(() =>
   import('./user-details/UserDetails').then((module) => ({
     default: module.UserDetails,
+  })),
+);
+const LazyCreateArtist = React.lazy(() =>
+  import('./create-artist/CreateArtist').then((module) => ({
+    default: module.CreateArtist,
   })),
 );
 
@@ -53,12 +61,17 @@ const Routes = () => {
         exact
         sensitive
         path={routePaths.capsSlugs}
-        render={(props) => {
+        render={(props: { location: { pathname: string } }) => {
           return <Redirect to={`${props.location.pathname.toLowerCase()}`} />;
         }}
       />
       <PublicRoute exact path={routePaths.artists} component={LazyArtist} />
       <PublicRoute exact path={routePaths.slugs} component={LazyArtist} />
+      <PublicRoute
+        exact
+        path={routePaths.editArtist}
+        component={LazyEditArtist}
+      />
       <PublicRoute exact path={routePaths.support} component={Support} />
       <PublicRoute
         exact
@@ -71,7 +84,19 @@ const Routes = () => {
         path={routePaths.passwordReset}
         component={LazyResetPassword}
       />
+      <PublicRoute
+        exact
+        path={routePaths.forgotPassword}
+        component={LazyForgotPassword}
+      />
       <PublicRoute exact path={routePaths.noArtist} component={LazyNoArtist} />
+      <ProtectedRoute
+        exact
+        modalPage="signup"
+        showSupportMessage="create"
+        path={routePaths.createArtist}
+        component={LazyCreateArtist}
+      />
       <ProtectedRoute
         exact
         path={routePaths.settings}

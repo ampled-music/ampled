@@ -1,0 +1,211 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://vimeo.com/api/v2/video/331608175.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      X-Ratelimit-Limit:
+      - '3600'
+      X-Ratelimit-Remaining:
+      - '3595'
+      X-Ratelimit-Reset:
+      - '1579570145'
+      Content-Disposition:
+      - attachment; filename=vimeo.json
+      Cache-Control:
+      - max-age=60
+      Expires:
+      - Tue, 21 Jan 2020 00:54:02 GMT
+      Last-Modified:
+      - Tue, 14 Jan 2020 22:53:35 GMT
+      Etag:
+      - '"462455bd7cff2f5f915bb2b07a5e5500"'
+      X-Ua-Compatible:
+      - IE=edge
+      X-Xss-Protection:
+      - 1; mode=block
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Content-Security-Policy-Report-Only:
+      - 'default-src https: data: blob: wss: ''unsafe-inline'' ''unsafe-eval''; report-uri
+        /_csp'
+      X-Vimeo-Dc:
+      - ge
+      Via:
+      - 1.1 varnish
+      - 1.1 varnish
+      Content-Length:
+      - '1053'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Tue, 21 Jan 2020 00:53:02 GMT
+      Age:
+      - '0'
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-bwi5124-BWI, cache-ewr18120-EWR
+      X-Cache:
+      - MISS, MISS
+      X-Cache-Hits:
+      - 0, 0
+      X-Timer:
+      - S1579567983.842110,VS0,VE58
+      Vary:
+      - User-Agent,Accept-Encoding
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"id":331608175,"title":"BnW Concert | Apple Motion Files","description":"Download
+        BnW Concert - https:\/\/1.envato.market\/c\/1301690\/475676\/4415?u=https:\/\/videohive.net\/item\/bnw-concert\/11995841?ref=videogtx
+        <br \/>\n<br \/>\n - Replace all pictures - Replace all videos - Retype all
+        text! - (preview pictures and videos are not included) - Audio: http:\/\/audiojungle.net\/item\/sport\/11388694
+        <br \/>\n<br \/>\n Last Update 6 July 15 Created 6 July 15 Requires Plugins
+        No Software Version Apple Motion 5 Resolution 1920x1080 File Size 113mb Tags
+        band, banda, concert, crowd, dj, event, grunge, music, rena, rock, sebicheargentino
+        <br \/>\n<br \/>\n <br \/>\n<br \/>\n tags: band, banda, concert, crowd, dj,
+        event, grunge, music, rena, rock, sebicheargentino <br \/>\n<br \/>\n download
+        BnW Concert | Apple Motion Files https:\/\/videohive.net\/item\/bnw-concert\/11995841?ref=videogtx
+        <br \/>\n<br \/>\n There is none directly downloadable links in this Channel
+        <br \/>\n<br \/>\n All the links are refered to official website. <br \/>\n<br
+        \/>\n This Channel only indexs the products and links. <br \/>\n<br \/>\n
+        The products information and the links are only used to spread them. <br \/>\n<br
+        \/>\n Our Channel makes the products seen by more customers. <br \/>\n<br
+        \/>\n Everyday there is new buyers reaching to official page from our channel
+        <br \/>\n<br \/>\n If you do not want your products listing in our Channel
+        , or want to delete them, please let us know. We will take them down as soon
+        as possiable. <br \/>\n<br \/>\n Feel free to contact us http:\/\/aecustomization.mozello.ru","url":"https:\/\/vimeo.com\/331608175","upload_date":"2019-04-20
+        19:26:21","thumbnail_small":"https:\/\/i.vimeocdn.com\/video\/777053973_100x75.jpg","thumbnail_medium":"https:\/\/i.vimeocdn.com\/video\/777053973_200x150.jpg","thumbnail_large":"https:\/\/i.vimeocdn.com\/video\/777053973_640.jpg","user_id":96394245,"user_name":"After
+        Effects Project","user_url":"https:\/\/vimeo.com\/aftereffectshive","user_portrait_small":"https:\/\/i.vimeocdn.com\/portrait\/30820239_30x30","user_portrait_medium":"https:\/\/i.vimeocdn.com\/portrait\/30820239_75x75","user_portrait_large":"https:\/\/i.vimeocdn.com\/portrait\/30820239_100x100","user_portrait_huge":"https:\/\/i.vimeocdn.com\/portrait\/30820239_300x300","stats_number_of_likes":0,"stats_number_of_plays":46,"stats_number_of_comments":0,"duration":58,"width":3840,"height":2160,"tags":"concert,
+        banda, band, dj, crowd, event, grunge, rena, music, rock, sebicheargentino","embed_privacy":"anywhere"}]'
+    http_version: 
+  recorded_at: Tue, 21 Jan 2020 00:53:02 GMT
+- request:
+    method: get
+    uri: https://vimeo.com/api/v2/video/331608175.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      X-Ratelimit-Limit:
+      - '3600'
+      X-Ratelimit-Remaining:
+      - '3594'
+      X-Ratelimit-Reset:
+      - '1579570145'
+      Content-Disposition:
+      - attachment; filename=vimeo.json
+      Cache-Control:
+      - max-age=60
+      Expires:
+      - Tue, 21 Jan 2020 00:54:03 GMT
+      Last-Modified:
+      - Tue, 14 Jan 2020 22:53:35 GMT
+      Etag:
+      - '"462455bd7cff2f5f915bb2b07a5e5500"'
+      X-Ua-Compatible:
+      - IE=edge
+      X-Xss-Protection:
+      - 1; mode=block
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Content-Security-Policy-Report-Only:
+      - 'default-src https: data: blob: wss: ''unsafe-inline'' ''unsafe-eval''; report-uri
+        /_csp'
+      X-Vimeo-Dc:
+      - ge
+      Via:
+      - 1.1 varnish
+      - 1.1 varnish
+      Content-Length:
+      - '1053'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Tue, 21 Jan 2020 00:53:03 GMT
+      Age:
+      - '0'
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-bwi5121-BWI, cache-ewr18140-EWR
+      X-Cache:
+      - MISS, MISS
+      X-Cache-Hits:
+      - 0, 0
+      X-Timer:
+      - S1579567983.007457,VS0,VE56
+      Vary:
+      - User-Agent,Accept-Encoding
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"id":331608175,"title":"BnW Concert | Apple Motion Files","description":"Download
+        BnW Concert - https:\/\/1.envato.market\/c\/1301690\/475676\/4415?u=https:\/\/videohive.net\/item\/bnw-concert\/11995841?ref=videogtx
+        <br \/>\n<br \/>\n - Replace all pictures - Replace all videos - Retype all
+        text! - (preview pictures and videos are not included) - Audio: http:\/\/audiojungle.net\/item\/sport\/11388694
+        <br \/>\n<br \/>\n Last Update 6 July 15 Created 6 July 15 Requires Plugins
+        No Software Version Apple Motion 5 Resolution 1920x1080 File Size 113mb Tags
+        band, banda, concert, crowd, dj, event, grunge, music, rena, rock, sebicheargentino
+        <br \/>\n<br \/>\n <br \/>\n<br \/>\n tags: band, banda, concert, crowd, dj,
+        event, grunge, music, rena, rock, sebicheargentino <br \/>\n<br \/>\n download
+        BnW Concert | Apple Motion Files https:\/\/videohive.net\/item\/bnw-concert\/11995841?ref=videogtx
+        <br \/>\n<br \/>\n There is none directly downloadable links in this Channel
+        <br \/>\n<br \/>\n All the links are refered to official website. <br \/>\n<br
+        \/>\n This Channel only indexs the products and links. <br \/>\n<br \/>\n
+        The products information and the links are only used to spread them. <br \/>\n<br
+        \/>\n Our Channel makes the products seen by more customers. <br \/>\n<br
+        \/>\n Everyday there is new buyers reaching to official page from our channel
+        <br \/>\n<br \/>\n If you do not want your products listing in our Channel
+        , or want to delete them, please let us know. We will take them down as soon
+        as possiable. <br \/>\n<br \/>\n Feel free to contact us http:\/\/aecustomization.mozello.ru","url":"https:\/\/vimeo.com\/331608175","upload_date":"2019-04-20
+        19:26:21","thumbnail_small":"https:\/\/i.vimeocdn.com\/video\/777053973_100x75.jpg","thumbnail_medium":"https:\/\/i.vimeocdn.com\/video\/777053973_200x150.jpg","thumbnail_large":"https:\/\/i.vimeocdn.com\/video\/777053973_640.jpg","user_id":96394245,"user_name":"After
+        Effects Project","user_url":"https:\/\/vimeo.com\/aftereffectshive","user_portrait_small":"https:\/\/i.vimeocdn.com\/portrait\/30820239_30x30","user_portrait_medium":"https:\/\/i.vimeocdn.com\/portrait\/30820239_75x75","user_portrait_large":"https:\/\/i.vimeocdn.com\/portrait\/30820239_100x100","user_portrait_huge":"https:\/\/i.vimeocdn.com\/portrait\/30820239_300x300","stats_number_of_likes":0,"stats_number_of_plays":46,"stats_number_of_comments":0,"duration":58,"width":3840,"height":2160,"tags":"concert,
+        banda, band, dj, crowd, event, grunge, rena, music, rock, sebicheargentino","embed_privacy":"anywhere"}]'
+    http_version: 
+  recorded_at: Tue, 21 Jan 2020 00:53:03 GMT
+recorded_with: VCR 4.0.0

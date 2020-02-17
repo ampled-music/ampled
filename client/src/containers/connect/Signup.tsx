@@ -125,7 +125,9 @@ class SignupComponent extends React.Component<Props, any> {
       confirmPassword,
       name,
       last_name,
-      authentication?.showSupportMessage === 'create' ? '/create-artist' : '/',
+      authentication?.showSupportMessage === 'create'
+        ? '/create-artist?login=true'
+        : '/',
     );
 
     if (submitResult) {

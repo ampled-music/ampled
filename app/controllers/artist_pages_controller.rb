@@ -113,14 +113,17 @@ class ArtistPagesController < ApplicationController
     render json: { status: "error", message: "You need at least a main image." } if has_no_images
   end
 
+  def missing_create_params
+    artist_page_params[:name].nil? || artist_page_params[:slug].nil? || artist_page_params[:bio].nil? || \
+      artist_page_params[:location].nil? || artist_page_params[:accent_color].nil?
+  end
+
   def check_create_okay
     # required params
     # could we use active record validations here instead?
-    if artist_page_params[:name].nil? || artist_page_params[:slug].nil? || artist_page_params[:bio].nil? || \
-       artist_page_params[:location].nil? || artist_page_params[:accent_color].nil? || has_no_images || \
-       has_no_members
-      missing_params_error
-    end
+    return unless missing_create_params || has_no_images || has_no_members
+
+    missing_params_error
   end
 
   def check_update_okay

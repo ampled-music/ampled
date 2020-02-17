@@ -148,6 +148,12 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(JSON.parse(response.body)["message"]).to eq "Your page has been created!"
     end
 
+    it "creates new users for members that do not yet exist" do
+      sign_in user
+      post url, params: create_params
+      expect(User.find_by(email: "testfriend@ampled.com")).not_to be_nil
+    end
+
     it "stops duplicate slugs" do
       sign_in user
       post url, params: create_params
@@ -206,6 +212,12 @@ RSpec.describe ArtistPagesController, type: :request do
       sign_in user
       put "/artist_pages/#{artist_page.id}", params: vimeo_update_params
       expect(ArtistPage.find(artist_page.id)[:video_screenshot_url]).to eq "https://i.vimeocdn.com/video/777053973_640.jpg"
+    end
+
+    it "creates new users for members that do not yet exist" do
+      sign_in user
+      put "/artist_pages/#{artist_page.id}", params: update_params
+      expect(User.find_by(email: "testfriend@ampled.com")).not_to be_nil
     end
   end
 

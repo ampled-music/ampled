@@ -82,10 +82,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
                   alt={page.name}
                 />
               </div>
-              <div
-                className="home-artists__item_border"
-                style={{ borderColor: page.accent_color }}
-              ></div>
+              <div className="home-artists__item_border"></div>
             </Link>
           </div>
         );

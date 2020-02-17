@@ -25,7 +25,7 @@ interface Props {
   openMessageModal: React.MouseEventHandler;
   artist: ArtistModel;
   loggedUserAccess: { role: string; artistId: number };
-  isSupporter: Boolean;
+  isSupporter: boolean;
   handleSupportClick: Function;
 }
 
@@ -49,7 +49,7 @@ export class ArtistHeader extends React.Component<Props, any> {
     const bannerIcons = document.getElementsByClassName(
       'artist-header__banner-icons_icon',
     );
-    var index;
+    let index;
 
     for (index = 0; index < bannerImages.length; ++index) {
       if (bannerImages[index].classList.contains('active')) {
@@ -77,7 +77,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       'artist-header__banner-icons_icon',
     );
 
-    for (var index = 0; index < bannerImages.length; ++index) {
+    for (let index = 0; index < bannerImages.length; ++index) {
       if (bannerImages[index].classList.contains('active')) {
         bannerImages[index].classList.toggle('active');
         bannerIcons[index].classList.toggle('active');
@@ -267,8 +267,12 @@ export class ArtistHeader extends React.Component<Props, any> {
             style={{ borderColor: artist.accent_color }}
           >
             <Swipe
-              onSwipeLeft={this.onSwipeLeft}
-              onSwipeRight={this.onSwipeRight}
+              onSwipeLeft={
+                artist.images.length > 1 ? this.onSwipeLeft : undefined
+              }
+              onSwipeRight={
+                artist.images.length > 1 ? this.onSwipeRight : undefined
+              }
               allowMouseEvents={true}
               tolerance={25}
               className="artist-header__photo-container_border_swipe"
@@ -310,8 +314,11 @@ export class ArtistHeader extends React.Component<Props, any> {
   renderFloatingEditButton = () =>
     this.canLoggedUserAdmin() && (
       <div className="edit-page">
-        {/* Need to connect button to edit  */}
-        <button>
+        <button
+          onClick={() => {
+            window.location.href = `${window.location.pathname}/edit`;
+          }}
+        >
           <span>Edit Page</span>
           <FontAwesomeIcon icon={faEdit} color="#ffffff" />
         </button>
@@ -466,7 +473,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   };
 
   renderSupporter = ({ supporter, borderColor, isSmall = false }) => {
-    let style = { borderColor, maxWidth: 'auto', maxHeight: 'auto' };
+    const style = { borderColor, maxWidth: 'auto', maxHeight: 'auto' };
     const RenderSupporterHover = this.renderSupporterHover;
     if (isSmall) {
       style.maxWidth = '36px';
@@ -516,7 +523,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         <button
           className="btn btn-ampled btn-support"
           style={{ borderColor, maxWidth: '100%' }}
-          onClick={(e) => this.props.handleSupportClick()}
+          onClick={() => this.props.handleSupportClick()}
         >
           Support What You Want
         </button>

@@ -1,7 +1,9 @@
 import './create-artist.scss';
+import './../artist/posts/post/post.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -44,6 +46,7 @@ import { Loading } from '../shared/loading/Loading';
 import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { deleteFileFromCloudinary } from '../../api/cloudinary/delete-image';
 import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
+import { Modal } from '../shared/modal/Modal';
 
 interface CreateArtistProps {
   me: any;
@@ -284,15 +287,24 @@ const Members = ({
   );
 };
 
+Members.propTypes = {
+  bandName: PropTypes.string,
+  members: PropTypes.array,
+  addMember: PropTypes.func,
+  removeMember: PropTypes.func,
+  handleChange: PropTypes.func,
+  userData: PropTypes.object,
+};
+
 const Member = ({
   isAdmin,
   firstName,
   lastName,
   role,
   email,
-  instagram,
-  twitter,
-  photo,
+  // instagram,
+  // twitter,
+  // photo,
   index,
   handleChange,
   removeMember,
@@ -317,7 +329,7 @@ const Member = ({
                 aria-label="close"
                 color="primary"
                 // style={{}}
-                onClick={(e) => removeMember(index)}
+                onClick={() => removeMember(index)}
               >
                 <FontAwesomeIcon icon={faTimes} />
               </IconButton>
@@ -475,6 +487,20 @@ const Member = ({
   );
 };
 
+Member.propTypes = {
+  isAdmin: PropTypes.bool,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  role: PropTypes.string,
+  email: PropTypes.string,
+  index: PropTypes.number,
+  handleChange: PropTypes.func,
+  removeMember: PropTypes.func,
+  userData: PropTypes.shape({
+    email: PropTypes.string,
+  }),
+};
+
 class CreateArtist extends React.Component<CreateArtistProps, any> {
   randomColor = () => {
     const bgColor = ['#e9c7c6', '#eddfbd', '#baddac', '#cae4e7'];
@@ -482,7 +508,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   state = {
-    randomColor: this.randomColor(),
+    randomColor: '',
     artistColor: '',
     artistColorAlpha: '',
     artistName: '',
@@ -497,7 +523,19 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     members: [],
     images: [],
     loading: true,
+    showConfirmRemoveMember: false,
+    confirmRemoveMemberIndex: 99,
   };
+
+  constructor(props) {
+    super(props);
+    const randomColor = this.randomColor();
+    this.state = {
+      ...this.state,
+      randomColor,
+      artistColor: randomColor,
+    };
+  }
 
   componentDidUpdate = (prevProps) => {
     const {
@@ -505,23 +543,25 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       artist,
       editMode,
     } = this.props;
+    const { loading } = this.state;
     if (userData && !prevProps?.me?.userData) {
       const { name, last_name, instagram, twitter, image, email } = userData;
-      this.setState({
-        loading: false,
-        members: [
-          {
-            isAdmin: true,
-            firstName: name,
-            lastName: last_name,
-            email,
-            role: '',
-            instagram,
-            twitter,
-            photo: image,
-          },
-        ],
-      });
+      if (!editMode) {
+        this.setState({
+          members: [
+            {
+              isAdmin: true,
+              firstName: name,
+              lastName: last_name,
+              email,
+              role: '',
+              instagram,
+              twitter,
+              photo: image,
+            },
+          ],
+        });
+      }
     }
     if (editMode && artist && !prevProps?.artist?.name && artist.name) {
       console.log(artist);
@@ -539,7 +579,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         images,
       } = artist;
       this.setState({
-        randomColor: accent_color,
         artistColor: accent_color,
         artistColorAlpha: accent_color + '33',
         artistName: name,
@@ -561,10 +600,19 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         images: images || [],
       });
     }
+    if (userData && (artist || !editMode) && loading) {
+      this.setState({
+        loading: false,
+      });
+    }
   };
 
   componentDidMount = () => {
-    const { artist, editMode } = this.props;
+    const {
+      artist,
+      editMode,
+      me: { userData },
+    } = this.props;
     if (editMode && artist && artist.name) {
       const {
         accent_color,
@@ -590,15 +638,25 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistVideo: video_url,
         artistSlug: slug,
         artistStripe: '',
-        members: owners || [],
+        members: (owners || []).map((owner) => ({
+          firstName: owner.name || '',
+          instrument: owner.instrument || '',
+          email: owner.email || '',
+          lastName: owner.lastName || '',
+          isAdmin: owner.role === 'admin',
+        })),
         images: images || [],
+      });
+    } else if (!editMode && userData) {
+      // nothing commit
+      this.setState({
+        loading: false,
       });
     }
   };
 
   handleColorChange = (color) => {
     this.setState({
-      randomColor: color.hex,
       artistColor: color.hex,
       artistColorAlpha: color.hex + '33',
     });
@@ -683,9 +741,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           {!this.props.editMode && (
             <div className="create-artist__copy">
               <b>
-                You can't change your artist/band name or your custom link later
+                You can&#39;t change your artist/band name or your custom link
+                later
               </b>
-              , so make sure they're right.
+              , so make sure they&#39;re right.
             </div>
           )}
         </div>
@@ -812,6 +871,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="row">
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Social</div>
+              <h6>
+                Just your username, with no &quot;@&quot;.
+                <br />
+                Not a URL.
+              </h6>
             </div>
             <div className="col-md-8 col-sm-12">
               <TextField
@@ -916,12 +980,12 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   renderColor = () => {
+    const bgColor = this.state.artistColor
+      ? this.state.artistColor
+      : this.state.randomColor;
     return (
       <div className="artist-color">
-        <div
-          className="primary-color"
-          style={{ backgroundColor: this.state.randomColor }}
-        >
+        <div className="primary-color" style={{ backgroundColor: bgColor }}>
           <div className="container">
             <div className="row justify-content-between">
               <div className="col-md-6 col-sm-12">
@@ -976,7 +1040,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       members: [
         ...this.state.members,
         {
-          isAdmin: false,
+          isAdmin: true,
           email: '',
           firstName: '',
           lastName: '',
@@ -989,12 +1053,20 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     });
   };
 
+  removeMemberConfirm = (index) => {
+    this.setState({
+      showConfirmRemoveMember: true,
+      confirmRemoveMemberIndex: index,
+    });
+  };
+
   removeMember = (index) => {
     this.setState({
       members: [
         ...this.state.members.slice(0, index),
         ...this.state.members.slice(index + 1),
       ],
+      showConfirmRemoveMember: false,
     });
   };
 
@@ -1091,7 +1163,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       !artistName ||
       !artistSlug ||
       !artistColor ||
-      !/^[a-z-]+$/.test(artistSlug)
+      !/^[a-z-0-9]*[a-z]+[a-z-0-9]*$/.test(artistSlug)
     ) {
       return showToastMessage(
         'Please check required fields.',
@@ -1099,9 +1171,14 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       );
     }
 
+    if (/[@:/]/gi.test(artistTwitter) || /[@:/]/gi.test(artistInstagram)) {
+      return showToastMessage(
+        'Please check the format of your social handles.',
+        MessageType.ERROR,
+      );
+    }
+
     if (
-      // TODO: disable edit mode bail out once members are working
-      !this.props.editMode &&
       members.filter(
         (member) =>
           member.email &&
@@ -1187,11 +1264,60 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   render() {
+    const {
+      me: { userData },
+    } = this.props;
+
     if (this.state.loading) {
       return <Loading artistLoading={true} />;
+    } else if (userData && !userData.email_confirmed) {
+      return (
+        <div
+          style={{
+            textAlign: 'center',
+            margin: '100px auto',
+          }}
+        >
+          Please confirm your email first by clicking the link in your welcome
+          email.
+        </div>
+      );
     }
     return (
       <div className="create-artist">
+        <Modal
+          open={this.state.showConfirmRemoveMember}
+          onClose={() => {
+            this.setState({ showConfirmRemoveMember: false });
+          }}
+        >
+          <div className="delete-post-modal__container">
+            <img className="tear tear__topper" src={tear} alt="" />
+            <div className="delete-post-modal">
+              <div className="delete-post-modal__title">
+                <h4>Are you sure?</h4>
+              </div>
+              <div className="delete-post-modal__actions action-buttons">
+                <button
+                  className="cancel-button"
+                  onClick={() => {
+                    this.setState({ showConfirmRemoveMember: false });
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="delete-button"
+                  onClick={() => {
+                    this.removeMember(this.state.confirmRemoveMemberIndex);
+                  }}
+                >
+                  Remove Member
+                </button>
+              </div>
+            </div>
+          </div>
+        </Modal>
         <MuiThemeProvider theme={theme}>
           {this.renderHeader()}
           {/* {this.renderNav()} */}
@@ -1204,7 +1330,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             members={this.state.members}
             handleChange={this.updateMemberDetails}
             addMember={this.addMember}
-            removeMember={this.removeMember}
+            removeMember={this.removeMemberConfirm}
             userData={this.props.me?.userData}
           />
           {/* {this.renderPayment()} */}
@@ -1214,9 +1340,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 <div className="col-md-3 col-sm-1"></div>
                 <div className="col-md-6 col-sm-10 create-artist__copy">
                   Your page will initially only be visible to you and any other
-                  members you've added. The Ampled team does a quick spot check
-                  of all pages before they become visible to the general public,
-                  but this normally doesn't take us very long.
+                  members you&#39;ve added. The Ampled team does a quick spot
+                  check of all pages before they become visible to the general
+                  public, but this normally doesn&#39;t take us very long.
                 </div>
                 <div className="col-md-3 col-sm-1"></div>
               </div>

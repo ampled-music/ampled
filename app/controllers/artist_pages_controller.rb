@@ -7,7 +7,7 @@ class ArtistPagesController < ApplicationController
   before_action :check_update_okay, only: :update
 
   def index
-    @artist_pages = ArtistPage.where(featured: true)
+    @artist_pages = ArtistPage.where(featured: true).take(3)
 
     respond_to do |format|
       format.html
@@ -138,7 +138,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def check_approved
-    return if @artist_page.approved? || current_user&.admin?
+    return if @artist_page&.approved? || current_user&.admin?
 
     render json: {}, status: :bad_request unless current_user&.owned_pages&.include?(@artist_page)
   end
@@ -181,6 +181,7 @@ class ArtistPagesController < ApplicationController
     member_user = User.new(email: member[:email],
                            name: member[:firstName],
                            last_name: member[:lastName],
+                           redirect_uri: "/reset-password",
                            password: (0...8).map { rand(65..91).chr }.join)
     member_user.skip_confirmation_notification!
     member_user.save!

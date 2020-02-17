@@ -10,10 +10,9 @@ import { HomeHow } from './HomeHow';
 import { Texture } from '../shared/texture/Texture';
 
 class Home extends React.Component<any> {
-
   state = {
-    randomColor: undefined
-  }
+    randomColor: undefined,
+  };
 
   randomColor = () => {
     const bgColor = ['#e9c7c6', '#eddfbd', '#baddac', '#cae4e7'];
@@ -23,40 +22,33 @@ class Home extends React.Component<any> {
   constructor(props) {
     super(props);
     this.state = {
-      randomColor: this.randomColor()
+      randomColor: this.randomColor(),
     };
   }
-
 
   render() {
     const { randomColor } = this.state;
 
     return (
       <div className="home-section">
-        <HomeHeader
-          bgColor={randomColor}
-        />
+        <HomeHeader bgColor={randomColor} />
         <Texture
           positionTop25={false}
           positionTop50={true}
           positionFlip={false}
         />
         <HomeFor />
-        <HomeHow
-          bgColor={randomColor}
-        />
+        <HomeHow bgColor={randomColor} />
         <Texture
           positionTop25={true}
           positionTop50={false}
           positionFlip={true}
         />
-        <HomeArtists
-          bgColor={randomColor}
-        />
+        <HomeArtists bgColor={randomColor} />
         <Footer />
       </div>
-    )
-  };
+    );
+  }
 }
 
 export { Home };

@@ -307,11 +307,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
           <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
-            <img
-              className="artist__image"
-              src={this.renderPhoto(ownedPage.image, 200)}
-              alt={ownedPage.name}
-            />
+            {ownedPage.image && (
+              <img
+                className="artist__image"
+                src={this.renderPhoto(ownedPage.image, 200)}
+                alt={ownedPage.name}
+              />
+            )}
             <div
               className="artist__image-border"
               onClick={() => this.redirectToArtistPage(ownedPage)}

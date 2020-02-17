@@ -20,6 +20,7 @@ class ProtectModal extends React.Component<any> {
       modalPage: this.props.modalPage || 'login',
       customLoginMessage: 'This page requires you to be logged in.',
       onModalCloseAction: () => (window.location.href = '/'),
+      showSupportMessage: this.props.showSupportMessage || false,
     });
   }
 
@@ -31,16 +32,26 @@ class ProtectModal extends React.Component<any> {
 const ProtectedRoute = ({
   component: Component,
   modalPage = 'login',
+  showSupportMessage = false,
   openAuthModal,
   ...rest
 }) => {
   const renderComponent = (props) => {
     const isLoggedIn = !!store.get(config.localStorageKeys.token);
 
+    const randomColor = () => {
+      const bgColor = ['#e9c7c6', '#eddfbd', '#baddac', '#cae4e7'];
+      return bgColor[Math.floor(Math.random() * bgColor.length)];
+    };
+
     if (props.location.pathname === routePaths.settings) {
-      document.body.style.background = '#EDDFBD';
+      document.body.style.background = randomColor();
     } else {
       document.body.style.background = 'white';
+    }
+
+    if (/login=true/gi.test(props.location.search)) {
+      modalPage = 'login';
     }
 
     return (
@@ -54,6 +65,7 @@ const ProtectedRoute = ({
               <ProtectModal
                 modalPage={modalPage}
                 openAuthModal={openAuthModal}
+                showSupportMessage={showSupportMessage}
               />
             )}
           </main>

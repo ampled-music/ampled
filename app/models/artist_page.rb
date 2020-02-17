@@ -48,7 +48,9 @@ class ArtistPage < ApplicationRecord
   def sluggy_slug
     return unless slug
 
-    errors.add(:slug, "can only contain lowercase letters and dashes") unless slug.match?(/^[a-z-]+$/)
+    return if slug.match?(/^[a-z\-0-9]*[a-z]+[a-z\-0-9]*$/)
+
+    errors.add(:slug, "can only contain lowercase letters, numbers, and dashes")
   end
 
   def active_subscribers
@@ -120,7 +122,7 @@ class ArtistPage < ApplicationRecord
     @stripe_product ||= Stripe::Product.retrieve(stripe_product_id, stripe_account: stripe_user_id)
     return @stripe_product unless @stripe_product.statement_descriptor.nil?
 
-    Stripe::Product.update(stripe_product_id, { statement_descriptor: name }, stripe_account: stripe_user_id)
+    Stripe::Product.update(stripe_product_id, { statement_descriptor: name[0..21] }, stripe_account: stripe_user_id)
   end
 
   def subscriber_count
@@ -173,7 +175,7 @@ class ArtistPage < ApplicationRecord
       {
         name: "Ampled Support",
         type: "service",
-        statement_descriptor: name
+        statement_descriptor: name[0..21]
       }, stripe_account: stripe_user_id
     )
     update(stripe_product_id: product.id)

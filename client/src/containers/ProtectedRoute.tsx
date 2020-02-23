@@ -50,6 +50,10 @@ const ProtectedRoute = ({
       document.body.style.background = 'white';
     }
 
+    if (/login=true/gi.test(props.location.search)) {
+      modalPage = 'login';
+    }
+
     return (
       <div className="public-routes">
         <div>

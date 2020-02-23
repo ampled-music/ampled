@@ -87,7 +87,7 @@ class ArtistPage < ApplicationRecord
     stripe_plan = Stripe::Plan.create(
       {
         product: stripe_product.id,
-        nickname: "Ampled Support $5",
+        nickname: "Ampled Support", # should this be based on the amount?
         interval: "month",
         currency: "usd",
         amount: ((nominal_amount + 30) / 0.971).round

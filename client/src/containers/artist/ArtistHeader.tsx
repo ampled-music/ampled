@@ -4,6 +4,7 @@ import * as React from 'react';
 import cx from 'classnames';
 
 import { Image, Transformation } from 'cloudinary-react';
+import { IconButton } from '@material-ui/core/';
 import { faPlay, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from '../../redux/artists/initial-state';
@@ -124,7 +125,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             className="artist-header__message_container"
             style={{ borderColor: artist.accent_color }}
           >
-            <button
+            <IconButton
               onClick={this.props.openVideoModal}
               className="artist-header__play"
               aria-label="Play video message"
@@ -132,9 +133,8 @@ export class ArtistHeader extends React.Component<Props, any> {
               <FontAwesomeIcon
                 className="artist-header__play_svg"
                 icon={faPlay}
-                style={{ color: artist.accent_color }}
               />
-            </button>
+            </IconButton>
             <div className="artist-header__message_video">
               <img className="artist-header__message_tear" src={tear} alt="" />
               <div className="artist-header__message_image_container">

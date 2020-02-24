@@ -4,8 +4,7 @@ import * as React from 'react';
 import cx from 'classnames';
 
 import { Image, Transformation } from 'cloudinary-react';
-import { IconButton } from '@material-ui/core/';
-import { faPlay, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from '../../redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
@@ -13,11 +12,11 @@ import TextTruncate from 'react-text-truncate';
 import * as R from 'ramda';
 
 import avatar from '../../images/ampled_avatar.svg';
-import tear from '../../images/paper_header.png';
 import paper_sm from '../../images/background_paper_sm.png';
 import paper_md from '../../images/background_paper_md.png';
 
 import { FeaturedImages } from './header/FeaturedImages';
+import { FeaturedVideo } from './header/FeaturedVideo';
 
 interface Props {
   openVideoModal: React.MouseEventHandler;
@@ -112,42 +111,6 @@ export class ArtistHeader extends React.Component<Props, any> {
     } else {
       const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
       return <img src={img_src} alt={altText} />;
-    }
-  };
-
-  renderVideoContainer = () => {
-    const { artist } = this.props;
-
-    if (artist.video_url) {
-      return (
-        <div>
-          <div
-            className="artist-header__message_container"
-            style={{ borderColor: artist.accent_color }}
-          >
-            <IconButton
-              onClick={this.props.openVideoModal}
-              className="artist-header__play"
-              aria-label="Play video message"
-            >
-              <FontAwesomeIcon
-                className="artist-header__play_svg"
-                icon={faPlay}
-              />
-            </IconButton>
-            <div className="artist-header__message_video">
-              <img className="artist-header__message_tear" src={tear} alt="" />
-              <div className="artist-header__message_image_container">
-                <img
-                  className="artist-header__message_image"
-                  src={artist.video_screenshot_url}
-                  alt="Video message thumbnail"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      );
     }
   };
 
@@ -395,7 +358,10 @@ export class ArtistHeader extends React.Component<Props, any> {
             />
           </div>
           <div className="col-md-4 artist-header__message-col">
-            {this.renderVideoContainer()}
+            <FeaturedVideo
+              artist={this.props.artist}
+              openVideoModal={this.props.openVideoModal}
+            />
             {this.renderMessageContainer()}
             {this.renderFloatingNewPostButton()}
             {this.renderFloatingEditButton()}

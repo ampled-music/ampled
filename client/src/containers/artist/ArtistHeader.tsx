@@ -17,6 +17,7 @@ import paper_md from '../../images/background_paper_md.png';
 
 import { FeaturedImages } from './header/FeaturedImages';
 import { FeaturedVideo } from './header/FeaturedVideo';
+import { FeaturedMessage } from './header/FeaturedMessage';
 
 interface Props {
   openVideoModal: React.MouseEventHandler;
@@ -362,14 +363,17 @@ export class ArtistHeader extends React.Component<Props, any> {
               artist={this.props.artist}
               openVideoModal={this.props.openVideoModal}
             />
-            {this.renderMessageContainer()}
-            {this.renderFloatingNewPostButton()}
-            {this.renderFloatingEditButton()}
+            <FeaturedMessage
+              artist={this.props.artist}
+              openMessageModal={this.props.openMessageModal}
+            />
             {this.renderSupportersContainer()}
             {!this.props.isSupporter &&
               !this.canLoggedUserPost() &&
               isStripeSetup &&
               this.renderSupportButton()}
+            {this.renderFloatingNewPostButton()}
+            {this.renderFloatingEditButton()}
           </div>
         </div>
       </div>

@@ -95,6 +95,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
   state = {
     loadingImage: false,
     deleteToken: undefined,
+    publicId: null,
   };
 
   renderPhoto = (image: string, crop: number) => {
@@ -125,13 +126,14 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
     this.setState({
       deleteToken: fileInfo.delete_token,
       loadingImage: false,
+      publicId: fileInfo.public_id,
     });
     this.props.setURL(fileInfo.secure_url);
   };
 
   removeImage = async () => {
     deleteFileFromCloudinary(this.state.deleteToken);
-    this.setState({ imageUrl: null, deleteToken: undefined });
+    this.setState({ imageUrl: null, deleteToken: undefined, publicId: null });
     this.props.setURL(null);
   };
 

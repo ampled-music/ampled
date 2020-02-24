@@ -69,38 +69,6 @@ export class FeaturedImages extends React.Component<Props, any> {
     bannerIcons[currentIndex].classList.add('active');
   };
 
-  renderPhoto = (image: string, crop: number) => {
-    const crop_url_path = `w_${crop},h_${crop},c_fill`;
-    if (image.includes('https://res.cloudinary')) {
-      return image.replace('upload/', `upload/${crop_url_path}/`);
-    } else {
-      return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-    }
-  };
-
-  renderCloudinaryPhoto = (image: string, crop: number, altText: string) => {
-    const crop_url_path = `w_${crop},h_${crop},c_fill`;
-    const cloudinary_id = image.substring(
-      image.lastIndexOf('/') + 1,
-      image.lastIndexOf('.'),
-    );
-    if (image.includes('https://res.cloudinary')) {
-      return (
-        <Image publicId={cloudinary_id} alt={altText}>
-          <Transformation
-            crop="fill"
-            width={crop}
-            height={crop}
-            responsive_placeholder="blank"
-          />
-        </Image>
-      );
-    } else {
-      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-      return <img src={img_src} alt={altText} />;
-    }
-  };
-
   renderOwnerHover = ({ owner }) => {
     return (
       <div className="supporter__hover-card">
@@ -159,7 +127,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                 {owner.profile_image_url ? (
                   <img
                     className="artist-header__person_image member"
-                    src={this.renderPhoto(owner.profile_image_url, 150)}
+                    src={owner.profile_image_url}
                     alt={owner.name}
                     style={{ borderColor: artist.accent_color }}
                   />
@@ -189,7 +157,14 @@ export class FeaturedImages extends React.Component<Props, any> {
                 key={index}
                 className={cx('artist-header__photo', { active: index === 0 })}
               >
-                {this.renderCloudinaryPhoto(image, 800, 'Artist header')}
+                <Image publicId={image}>
+                  <Transformation
+                    crop="fill"
+                    width="800"
+                    height="800"
+                    responsive_placeholder="blank"
+                  />
+                </Image>
               </div>
             );
           })}
@@ -260,6 +235,6 @@ export class FeaturedImages extends React.Component<Props, any> {
   };
 
   render() {
-    return <div className="col-md-7">{this.renderPhotoContainer()}</div>;
+    return <div>{this.renderPhotoContainer()}</div>;
   }
 }

@@ -1,7 +1,6 @@
 import './../artist/artist.scss';
 import './user-settings.scss';
 
-import { DateTime } from 'luxon';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -101,9 +100,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
       return '-';
     }
 
-    return DateTime.fromString(date.split('T')[0], 'yyyy-MM-dd').toLocaleString(
-      DateTime.DATE_MED,
-    );
+    return new Date(date).toLocaleString('en-us', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
   };
 
   openCancelModal = (event, subscription) => {

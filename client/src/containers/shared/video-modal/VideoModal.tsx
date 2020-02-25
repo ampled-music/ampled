@@ -7,7 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import ReactPlayer from 'react-player';
+import YouTubePlayer from 'react-player/lib/players/YouTube';
+import VimeoPlayer from 'react-player/lib/players/Vimeo';
 
 import './video-modal.scss';
 import { theme } from './theme';
@@ -21,6 +22,13 @@ interface Props {
 
 class VideoModalComponent extends React.Component<Props, any> {
   render() {
+    let VideoComponent;
+    if (/vimeo/i.test(this.props.videoUrl)) {
+      VideoComponent = VimeoPlayer;
+    } else if (/youtu/i.test(this.props.videoUrl)) {
+      VideoComponent = YouTubePlayer;
+    }
+
     return (
       <MuiThemeProvider theme={theme}>
         <Dialog
@@ -32,7 +40,7 @@ class VideoModalComponent extends React.Component<Props, any> {
           onClose={(e) => this.props.onClose(e)}
         >
           <div className="video">
-            <ReactPlayer
+            <VideoComponent
               className="react-player"
               url={this.props.videoUrl}
               width="100%"

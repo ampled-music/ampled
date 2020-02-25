@@ -88,15 +88,15 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   };
 
   // Start and finish only work with mouse up and mouse down events which break the material ui slider
-  startSeeking = (event) => {
+  startSeeking = () => {
     this.setState({ seeking: true });
   };
 
-  finishSeeking = (event) => {
+  finishSeeking = () => {
     this.setState({ seeking: false });
   };
 
-  commitSeeking = (event, value) => {
+  commitSeeking = (value) => {
     this.player.seekTo(value);
   };
 
@@ -137,7 +137,8 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
       url,
       playing,
       loaded,
-      /* controls, */ volume,
+      // controls,
+      volume,
       loop,
       playedSeconds,
       loadedSeconds,
@@ -150,6 +151,10 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
         height: this.props.image ? '70px' : '40px',
         zIndex: 10,
         marginTop: this.props.image ? '0' : '5px',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        '&:hover': {
+          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+        },
       },
     })(IconButton);
     const AudioSlider = withStyles({

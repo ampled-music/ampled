@@ -30,6 +30,25 @@ import { deletePost } from '../../../../api/post/delete-post';
 const sortItemsByCreationDate = (items) =>
   items.sort((a, b) => b.created_at - a.created_at);
 
+const returnPlayableUrl = (audio_file) => {
+  const playableUrl = `${config.aws.playableBaseUrl}${audio_file}`;
+  return playableUrl;
+};
+
+const canLoggedUserDeleteComment = (
+  commentUserId: number,
+  loggedUserAccess: { role },
+  me,
+) => {
+  return (
+    (loggedUserAccess &&
+      (loggedUserAccess.role === UserRoles.Owner ||
+        loggedUserAccess.role === UserRoles.Admin ||
+        loggedUserAccess.role === UserRoles.Member)) ||
+    (me && commentUserId === me.id)
+  );
+};
+
 const Comments = ({
   post,
   classes,
@@ -37,8 +56,9 @@ const Comments = ({
   handleDeleteComment,
   handleExpandClick,
   handleSubmit,
-  canLoggedUserDeleteComment,
   isUserSubscribed,
+  loggedUserAccess,
+  me,
 }) => {
   const allComments = sortItemsByCreationDate(post.comments);
   const firstComments = allComments.slice(0, 2).reverse();
@@ -53,7 +73,11 @@ const Comments = ({
           <Comment
             key={comment.id}
             comment={comment}
-            canDelete={canLoggedUserDeleteComment(comment.user_id)}
+            canDelete={canLoggedUserDeleteComment(
+              comment.user_id,
+              loggedUserAccess,
+              me,
+            )}
             deleteComment={handleDeleteComment}
           />
         ))}
@@ -64,7 +88,11 @@ const Comments = ({
               <Comment
                 key={comment.id}
                 comment={comment}
-                canDelete={canLoggedUserDeleteComment(comment.user_id)}
+                canDelete={canLoggedUserDeleteComment(
+                  comment.user_id,
+                  loggedUserAccess,
+                  me,
+                )}
                 deleteComment={handleDeleteComment}
               />
             ))}
@@ -100,6 +128,104 @@ Comments.propTypes = {
   handleSubmit: PropTypes.func,
   canLoggedUserDeleteComment: PropTypes.func,
   isUserSubscribed: PropTypes.bool,
+  loggedUserAccess: PropTypes.any,
+  me: PropTypes.any,
+};
+
+const PostMedia = ({
+  post: { image_url, has_audio, audio_file, deny_details_lapsed },
+  classes,
+  allowDetails,
+  accentColor,
+  me,
+  handlePrivatePostClick,
+}) => (
+  <>
+    {image_url && !has_audio && (
+      <div className="post__image-container">
+        <CardMedia
+          className={cx(classes.media, {
+            'blur-image': !allowDetails,
+          })}
+          image={this.renderCloudinaryPhoto(image_url, 500)}
+        />
+        {!allowDetails && (
+          <Lock
+            isLapsed={deny_details_lapsed}
+            me={me}
+            handlePrivatePostClick={handlePrivatePostClick}
+          />
+        )}
+      </div>
+    )}
+
+    {has_audio && (
+      <div className="post__audio-container">
+        <div className="post__image-container">
+          {image_url && (
+            <CardMedia
+              className={cx(classes.media, {
+                'blur-image': !allowDetails,
+              })}
+              image={this.renderCloudinaryPhoto(image_url, 500)}
+            />
+          )}
+          {!image_url && !allowDetails && (
+            <div
+              style={{
+                height: '340px',
+                background:
+                  'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
+              }}
+            />
+          )}
+          {!allowDetails && (
+            <Lock
+              isLapsed={deny_details_lapsed}
+              me={me}
+              handlePrivatePostClick={handlePrivatePostClick}
+            />
+          )}
+        </div>
+        {allowDetails && (
+          <AudioPlayer
+            url={returnPlayableUrl(audio_file)}
+            image={this.renderCloudinaryPhoto(image_url, 500)}
+            accentColor={accentColor}
+            callback={this.props.playerCallback}
+          />
+        )}
+      </div>
+    )}
+
+    {!has_audio && !image_url && !allowDetails && (
+      <div className="post__image-container">
+        <div
+          style={{
+            height: '340px',
+            background:
+              'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
+          }}
+        />
+        {
+          <Lock
+            isLapsed={deny_details_lapsed}
+            me={me}
+            handlePrivatePostClick={handlePrivatePostClick}
+          />
+        }
+      </div>
+    )}
+  </>
+);
+
+PostMedia.propTypes = {
+  post: PropTypes.any,
+  classes: PropTypes.any,
+  allowDetails: PropTypes.bool,
+  accentColor: PropTypes.string,
+  me: PropTypes.any,
+  handlePrivatePostClick: PropTypes.func,
 };
 
 const Lock = ({ isLapsed = false, me, handlePrivatePostClick }) => {
@@ -239,9 +365,7 @@ class PostComponent extends React.Component<any, any> {
     this.props.updateArtist();
   };
 
-  isUserSubscribed = () => {
-    const { loggedUserAccess } = this.props;
-
+  isUserSubscribed = (loggedUserAccess) => {
     return (
       loggedUserAccess &&
       [
@@ -250,18 +374,6 @@ class PostComponent extends React.Component<any, any> {
         UserRoles.Admin.toString(),
         UserRoles.Member.toString(),
       ].includes(loggedUserAccess.role)
-    );
-  };
-
-  canLoggedUserDeleteComment = (commentUserId: number) => {
-    const { loggedUserAccess, me } = this.props;
-
-    return (
-      (loggedUserAccess &&
-        (loggedUserAccess.role === UserRoles.Owner ||
-          loggedUserAccess.role === UserRoles.Admin ||
-          loggedUserAccess.role === UserRoles.Member)) ||
-      (me && commentUserId === me.id)
     );
   };
 
@@ -297,12 +409,6 @@ class PostComponent extends React.Component<any, any> {
     }
   };
 
-  returnPlayableUrl = () => {
-    const { post } = this.props;
-    const playableUrl = `${config.aws.playableBaseUrl}${post.audio_file}`;
-    return playableUrl;
-  };
-
   returnFirstName = (name) => {
     const spacePosition = name.indexOf(' ');
     if (spacePosition === -1) {
@@ -326,7 +432,7 @@ class PostComponent extends React.Component<any, any> {
   };
 
   render = () => {
-    const { classes, post, accentColor, me } = this.props;
+    const { classes, post, accentColor, me, loggedUserAccess } = this.props;
 
     const deny_details_lapsed = post.deny_details_lapsed || false;
 
@@ -334,18 +440,24 @@ class PostComponent extends React.Component<any, any> {
     const isPrivate = post.is_private;
     const authenticated = !!me;
 
+    const authorFirstName = this.returnFirstName(post.author);
+    const canLoggedUserEditPost = this.canLoggedUserEditPost(post.authorId);
+    const canLoggedUserPost = this.canLoggedUserPost();
+
     return (
       <div>
         <div className="post">
-          <Modal
-            open={this.state.showDeletePostModal}
-            onClose={this.closeDeletePostModal}
-          >
-            <DeleteModal
-              onCancel={this.closeDeletePostModal}
-              onConfirm={this.handleDeletePost}
-            />
-          </Modal>
+          {this.state.showDeletePostModal && (
+            <Modal
+              open={this.state.showDeletePostModal}
+              onClose={this.closeDeletePostModal}
+            >
+              <DeleteModal
+                onCancel={this.closeDeletePostModal}
+                onConfirm={this.handleDeletePost}
+              />
+            </Modal>
+          )}
           <Modal
             open={this.state.showEditPostModal}
             onClose={this.closeEditPostModal}
@@ -374,14 +486,12 @@ class PostComponent extends React.Component<any, any> {
                     <img
                       className="user-image"
                       src={post.authorImage}
-                      alt={`${this.returnFirstName(post.author)}'s avatar`}
+                      alt={`${authorFirstName}'s avatar`}
                     />
                   ) : (
                     <img className="user-image" src={avatar} alt="Avatar" />
                   )}
-                  <span className="post__header_name">
-                    {this.returnFirstName(post.author)}
-                  </span>
+                  <span className="post__header_name">{authorFirstName}</span>
                 </div>
                 <div className={classes.postDate}>
                   {post.created_ago === 'less than a minute' ? (
@@ -395,7 +505,7 @@ class PostComponent extends React.Component<any, any> {
               </div>
               <Divider />
 
-              {this.canLoggedUserPost() &&
+              {canLoggedUserPost &&
                 (isPrivate ? (
                   <div className="post__status">
                     <FontAwesomeIcon className="unlock" icon={faUnlock} />
@@ -405,12 +515,8 @@ class PostComponent extends React.Component<any, any> {
                   <div className="post__status">Public Post</div>
                 ))}
 
-              {this.isUserSubscribed() &&
-                ![
-                  UserRoles.Owner.toString(),
-                  UserRoles.Admin.toString(),
-                  UserRoles.Member.toString(),
-                ].includes(this.props.loggedUserAccess.role) &&
+              {this.isUserSubscribed(loggedUserAccess) &&
+                !canLoggedUserPost &&
                 isPrivate && (
                   <div className="post__status">
                     <FontAwesomeIcon className="unlock" icon={faUnlock} />
@@ -418,7 +524,7 @@ class PostComponent extends React.Component<any, any> {
                   </div>
                 )}
 
-              {this.canLoggedUserEditPost(post.authorId) && (
+              {canLoggedUserEditPost && (
                 <div className="post__change">
                   <div className="post__change_edit">
                     <button onClick={this.openEditPostModal}>
@@ -433,81 +539,14 @@ class PostComponent extends React.Component<any, any> {
                 </div>
               )}
 
-              {post.image_url && !post.has_audio && (
-                <div className="post__image-container">
-                  <CardMedia
-                    className={cx(classes.media, {
-                      'blur-image': !allowDetails,
-                    })}
-                    image={this.renderCloudinaryPhoto(post.image_url, 500)}
-                  />
-                  {!allowDetails && (
-                    <Lock
-                      isLapsed={deny_details_lapsed}
-                      me={this.props.me}
-                      handlePrivatePostClick={this.handlePrivatePostClick}
-                    />
-                  )}
-                </div>
-              )}
-
-              {post.has_audio && (
-                <div className="post__audio-container">
-                  <div className="post__image-container">
-                    {post.image_url && (
-                      <CardMedia
-                        className={cx(classes.media, {
-                          'blur-image': !allowDetails,
-                        })}
-                        image={this.renderCloudinaryPhoto(post.image_url, 500)}
-                      />
-                    )}
-                    {!post.image_url && !allowDetails && (
-                      <div
-                        style={{
-                          height: '340px',
-                          background:
-                            'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
-                        }}
-                      />
-                    )}
-                    {!allowDetails && (
-                      <Lock
-                        isLapsed={deny_details_lapsed}
-                        me={this.props.me}
-                        handlePrivatePostClick={this.handlePrivatePostClick}
-                      />
-                    )}
-                  </div>
-                  {allowDetails && (
-                    <AudioPlayer
-                      url={this.returnPlayableUrl()}
-                      image={this.renderCloudinaryPhoto(post.image_url, 500)}
-                      accentColor={accentColor}
-                      callback={this.props.playerCallback}
-                    />
-                  )}
-                </div>
-              )}
-
-              {!post.has_audio && !post.image_url && !allowDetails && (
-                <div className="post__image-container">
-                  <div
-                    style={{
-                      height: '340px',
-                      background:
-                        'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
-                    }}
-                  />
-                  {
-                    <Lock
-                      isLapsed={deny_details_lapsed}
-                      me={this.props.me}
-                      handlePrivatePostClick={this.handlePrivatePostClick}
-                    />
-                  }
-                </div>
-              )}
+              <PostMedia
+                post={post}
+                classes={classes}
+                allowDetails={allowDetails}
+                me={me}
+                accentColor={accentColor}
+                handlePrivatePostClick={this.handlePrivatePostClick}
+              />
 
               <div className="post__title">{post.title}</div>
 
@@ -536,14 +575,15 @@ class PostComponent extends React.Component<any, any> {
             </Card>
           </div>
           <Comments
-            post={this.props.post}
+            post={post}
             expanded={this.state.expanded}
-            classes={this.props.classes}
+            classes={classes}
             handleDeleteComment={this.handleDeleteComment}
             handleExpandClick={this.handleExpandClick}
             handleSubmit={this.handleSubmit}
-            canLoggedUserDeleteComment={this.canLoggedUserDeleteComment}
-            isUserSubscribed={this.isUserSubscribed()}
+            isUserSubscribed={this.isUserSubscribed(loggedUserAccess)}
+            me={me}
+            loggedUserAccess={loggedUserAccess}
           />
         </div>
       </div>

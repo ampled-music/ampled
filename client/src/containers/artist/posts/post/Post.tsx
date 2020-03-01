@@ -27,6 +27,19 @@ import { styles } from './post-style';
 
 import { deletePost } from '../../../../api/post/delete-post';
 
+const renderCloudinaryPhoto = (image: string, crop: number) => {
+  const crop_url_path = `w_${crop},h_${crop},c_fill`;
+  if (image) {
+    if (image.includes('https://res.cloudinary')) {
+      const img_src = image.replace('upload/', `upload/${crop_url_path}/`);
+      return img_src;
+    } else {
+      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+      return img_src;
+    }
+  }
+};
+
 const sortItemsByCreationDate = (items) =>
   items.sort((a, b) => b.created_at - a.created_at);
 
@@ -162,6 +175,7 @@ const PostMedia = ({
   accentColor,
   me,
   handlePrivatePostClick,
+  playerCallback,
 }) => (
   <>
     {image_url && !has_audio && (
@@ -170,7 +184,7 @@ const PostMedia = ({
           className={cx(classes.media, {
             'blur-image': !allowDetails,
           })}
-          image={this.renderCloudinaryPhoto(image_url, 500)}
+          image={renderCloudinaryPhoto(image_url, 500)}
         />
         {!allowDetails && (
           <Lock
@@ -190,7 +204,7 @@ const PostMedia = ({
               className={cx(classes.media, {
                 'blur-image': !allowDetails,
               })}
-              image={this.renderCloudinaryPhoto(image_url, 500)}
+              image={renderCloudinaryPhoto(image_url, 500)}
             />
           )}
           {!image_url && !allowDetails && (
@@ -213,9 +227,9 @@ const PostMedia = ({
         {allowDetails && (
           <AudioPlayer
             url={returnPlayableUrl(audio_file)}
-            image={this.renderCloudinaryPhoto(image_url, 500)}
+            image={renderCloudinaryPhoto(image_url, 500)}
             accentColor={accentColor}
-            callback={this.props.playerCallback}
+            callback={playerCallback}
           />
         )}
       </div>
@@ -249,6 +263,7 @@ PostMedia.propTypes = {
   accentColor: PropTypes.string,
   me: PropTypes.any,
   handlePrivatePostClick: PropTypes.func,
+  playerCallback: PropTypes.func,
 };
 
 const Lock = ({ isLapsed = false, me, handlePrivatePostClick }) => {
@@ -452,19 +467,6 @@ class PostComponent extends React.Component<any, any> {
     }
   };
 
-  renderCloudinaryPhoto = (image: string, crop: number) => {
-    const crop_url_path = `w_${crop},h_${crop},c_fill`;
-    if (image) {
-      if (image.includes('https://res.cloudinary')) {
-        const img_src = image.replace('upload/', `upload/${crop_url_path}/`);
-        return img_src;
-      } else {
-        const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-        return img_src;
-      }
-    }
-  };
-
   render = () => {
     const { classes, post, accentColor, me, loggedUserAccess } = this.props;
 
@@ -579,6 +581,7 @@ class PostComponent extends React.Component<any, any> {
                 me={me}
                 accentColor={accentColor}
                 handlePrivatePostClick={this.handlePrivatePostClick}
+                playerCallback={this.props.playerCallback}
               />
 
               <div className="post__title">{post.title}</div>

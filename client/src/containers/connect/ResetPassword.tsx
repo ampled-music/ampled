@@ -8,9 +8,8 @@ import {
   closeAuthModalAction,
   openAuthModalAction,
 } from '../../redux/authentication/authentication-modal';
+import { showToastAction } from '../../redux/toast/toast-modal';
 import { routePaths } from './../route-paths';
-
-import { showToastMessage, MessageType } from '../shared/toast/toast';
 
 import tear from '../../images/background_tear.png';
 
@@ -66,10 +65,10 @@ class ResetPasswordComponent extends React.Component<any> {
 
       console.log(data);
 
-      showToastMessage(
-        'Password changed! Please log in with your new password.',
-        MessageType.SUCCESS,
-      );
+      this.props.showToast({
+        message: 'Password changed! Please log in with your new password.',
+        type: 'success',
+      });
       window.location.href = routePaths.root;
     } catch (e) {
       console.log(e);
@@ -155,6 +154,7 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = (dispatch) => ({
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
 });
 
 const ResetPassword = connect(

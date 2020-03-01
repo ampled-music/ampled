@@ -7,13 +7,13 @@ import {
   closeAuthModalAction,
   openAuthModalAction,
 } from '../../redux/authentication/authentication-modal';
+import { showToastAction } from '../../redux/toast/toast-modal';
 import { loginAction } from '../../redux/authentication/login';
 import { Store } from '../../redux/configure-store';
 import * as store from 'store';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { routePaths } from '../route-paths';
-import { showToastMessage, MessageType } from '../shared/toast/toast';
 
 import tear from '../../images/background_tear.png';
 
@@ -44,7 +44,7 @@ class LoginComponent extends React.Component<Props, any> {
           showConfirmationResend: true,
         });
       }
-      showToastMessage(error, MessageType.ERROR);
+      this.props.showToast({ message: error, type: 'error' });
     }
 
     if (!this.props.token) {
@@ -53,7 +53,10 @@ class LoginComponent extends React.Component<Props, any> {
 
     once(() => {
       this.saveTokenToLocalStorage();
-      showToastMessage('You are logged in. Welcome back!', MessageType.SUCCESS);
+      this.props.showToast({
+        message: 'You are logged in. Welcome back!',
+        type: 'success',
+      });
       if (this.props.redirectTo) {
         window.location = this.props.redirectTo;
       }
@@ -95,16 +98,19 @@ class LoginComponent extends React.Component<Props, any> {
         data: { user: { email: this.state.email } },
       });
 
-      showToastMessage(
-        `Confirmation instructions have been sent to ${this.state.email}.`,
-        MessageType.SUCCESS,
-      );
+      this.props.showToast({
+        type: 'success',
+        message: `Confirmation instructions have been sent to ${this.state.email}.`,
+      });
 
       this.setState({
         showConfirmationResend: false,
       });
     } catch (e) {
-      showToastMessage('Something went wrong.', MessageType.ERROR);
+      this.props.showToast({
+        type: 'error',
+        message: 'Something went wrong.',
+      });
     }
   };
 
@@ -198,6 +204,7 @@ const mapDispatchToProps = (dispatch) => ({
   login: bindActionCreators(loginAction, dispatch),
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
 });
 
 const Login = connect(mapStateToProps, mapDispatchToProps)(LoginComponent);

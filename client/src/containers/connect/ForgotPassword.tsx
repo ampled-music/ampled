@@ -8,8 +8,7 @@ import {
   closeAuthModalAction,
   openAuthModalAction,
 } from '../../redux/authentication/authentication-modal';
-
-import { showToastMessage, MessageType } from '../shared/toast/toast';
+import { showToastAction } from '../../redux/toast/toast-modal';
 
 import tear from '../../images/background_tear.png';
 
@@ -34,10 +33,10 @@ class ForgotPasswordComponent extends React.Component<any> {
         data: { user: { email: this.state.email } },
       });
 
-      showToastMessage(
-        'Please check your email for next steps.',
-        MessageType.SUCCESS,
-      );
+      this.props.showToast({
+        type: 'success',
+        message: 'Please check your email for next steps.',
+      });
       if (this.props.authModalOpen) {
         this.props.closeAuthModal();
       } else {
@@ -121,6 +120,7 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = (dispatch) => ({
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
 });
 
 const ForgotPassword = connect(

@@ -8,13 +8,15 @@ import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
 
 import { closeAuthModalAction } from '../../redux/authentication/authentication-modal';
-import { hideToastAction } from '../../redux/toast/toast-modal';
+import {
+  showToastAction,
+  hideToastAction,
+} from '../../redux/toast/toast-modal';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { Routes } from '../Routes';
 import { AuthModal } from '../connect/AuthModal';
 import { Modal } from '../shared/modal/Modal';
-import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { Loading } from '../shared/loading/Loading';
 import { Helmet } from 'react-helmet';
 import Toast from './Toast';
@@ -30,12 +32,15 @@ class AppComponent extends React.Component<Props, any> {
     this.props.getMe();
     const search = this.props.history?.location?.search;
     if (/flash=confirmed/gi.test(search)) {
-      showToastMessage('Your email has been confirmed!', MessageType.SUCCESS);
+      this.props.showToast({
+        message: 'Your email has been confirmed!',
+        type: 'success',
+      });
     } else if (/flash=confirmerror/gi.test(search)) {
-      showToastMessage(
-        'There was an error confirming your email.',
-        MessageType.ERROR,
-      );
+      this.props.showToast({
+        message: 'There was an error confirming your email.',
+        type: 'error',
+      });
     }
   }
 
@@ -89,6 +94,7 @@ const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
   hideToast: bindActionCreators(hideToastAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
 });
 
 const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);

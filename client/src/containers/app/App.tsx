@@ -12,6 +12,7 @@ import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { Routes } from '../Routes';
 import { AuthModal } from '../connect/AuthModal';
 import { Modal } from '../shared/modal/Modal';
+import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { Loading } from '../shared/loading/Loading';
 import { Helmet } from 'react-helmet';
 
@@ -24,6 +25,15 @@ type Props = typeof loginInitialState &
 class AppComponent extends React.Component<Props, any> {
   componentDidMount() {
     this.props.getMe();
+    const search = this.props.history?.location?.search;
+    if (/flash=confirmed/gi.test(search)) {
+      showToastMessage('Your email has been confirmed!', MessageType.SUCCESS);
+    } else if (/flash=confirmerror/gi.test(search)) {
+      showToastMessage(
+        'There was an error confirming your email.',
+        MessageType.ERROR,
+      );
+    }
   }
 
   componentDidUpdate() {

@@ -21,6 +21,19 @@ import { Loading } from '../shared/loading/Loading';
 import { Helmet } from 'react-helmet';
 import Toast from './Toast';
 
+const mapStateToProps = (state: Store) => ({
+  ...state.authentication,
+  ...state.me,
+  toast: state.toast,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getMe: bindActionCreators(getMeAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  hideToast: bindActionCreators(hideToastAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
+});
+
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
 type Props = typeof loginInitialState &
@@ -83,19 +96,6 @@ class AppComponent extends React.Component<Props, any> {
     );
   }
 }
-
-const mapStateToProps = (state: Store) => ({
-  ...state.authentication,
-  ...state.me,
-  toast: state.toast,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getMe: bindActionCreators(getMeAction, dispatch),
-  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
-  hideToast: bindActionCreators(hideToastAction, dispatch),
-  showToast: bindActionCreators(showToastAction, dispatch),
-});
 
 const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
 

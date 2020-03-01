@@ -16,6 +16,7 @@ import { AuthModal } from '../connect/AuthModal';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
 import { Helmet } from 'react-helmet';
+import Toast from './Toast';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
@@ -61,21 +62,7 @@ class AppComponent extends React.Component<Props, any> {
           >
             <AuthModal history={this.props.history} />
           </Modal>
-          {visible && (
-            <div id="toast-container" className="toast-top-full-width">
-              <div className={`toast toast-${toast.type}`}>
-                <button
-                  type="button"
-                  className="toast-close-button"
-                  role="button"
-                  onClick={this.props.hideToast}
-                >
-                  ×
-                </button>
-                <div className="toast-message">{toast.message}</div>
-              </div>
-            </div>
-          )}
+          {visible && <Toast toast={toast} hideToast={this.props.hideToast} />}
         </React.Suspense>
       </div>
     );

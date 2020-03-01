@@ -2,6 +2,7 @@ import './post.scss';
 
 import cx from 'classnames';
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { routePaths } from '../../../route-paths';
 import { UserRoles } from '../../../shared/user-roles';
@@ -25,6 +26,286 @@ import { PostForm } from '../post-form/PostForm';
 import { styles } from './post-style';
 
 import { deletePost } from '../../../../api/post/delete-post';
+
+const sortItemsByCreationDate = (items) =>
+  items.sort((a, b) => b.created_at - a.created_at);
+
+const returnPlayableUrl = (audio_file) => {
+  const playableUrl = `${config.aws.playableBaseUrl}${audio_file}`;
+  return playableUrl;
+};
+
+const canLoggedUserDeleteComment = (
+  commentUserId: number,
+  loggedUserAccess: { role },
+  me,
+) => {
+  return (
+    (loggedUserAccess &&
+      (loggedUserAccess.role === UserRoles.Owner ||
+        loggedUserAccess.role === UserRoles.Admin ||
+        loggedUserAccess.role === UserRoles.Member)) ||
+    (me && commentUserId === me.id)
+  );
+};
+
+const Comments = ({
+  post,
+  classes,
+  expanded,
+  handleDeleteComment,
+  handleExpandClick,
+  handleSubmit,
+  handlePrivatePostAction,
+  isUserSubscribed,
+  loggedUserAccess,
+  me,
+}) => {
+  const allComments = sortItemsByCreationDate(post.comments);
+  const firstComments = allComments.slice(0, 2).reverse();
+  const hasPreviousComments = allComments.length > 2;
+  const hasComments = allComments.length > 0;
+  const authenticated = !!me;
+
+  return (
+    <div className="comments-list">
+      {hasComments && <span className="comments-list__header">Comments</span>}
+      {!expanded &&
+        firstComments.map((comment) => (
+          <Comment
+            key={comment.id}
+            comment={comment}
+            canDelete={canLoggedUserDeleteComment(
+              comment.user_id,
+              loggedUserAccess,
+              me,
+            )}
+            deleteComment={handleDeleteComment}
+          />
+        ))}
+      {hasPreviousComments && (
+        <div>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            {allComments.reverse().map((comment) => (
+              <Comment
+                key={comment.id}
+                comment={comment}
+                canDelete={canLoggedUserDeleteComment(
+                  comment.user_id,
+                  loggedUserAccess,
+                  me,
+                )}
+                deleteComment={handleDeleteComment}
+              />
+            ))}
+          </Collapse>
+          <CardActions
+            className={cx(classes.actions, 'collapse-actions')}
+            disableSpacing
+          >
+            <button
+              className="show-previous-command-btn"
+              onClick={handleExpandClick}
+            >
+              <b>
+                {expanded ? 'Hide Previous Comments' : 'View Previous Comments'}
+              </b>
+            </button>
+          </CardActions>
+        </div>
+      )}
+      {isUserSubscribed && (
+        <CommentForm handleSubmit={handleSubmit} postId={post.id} />
+      )}
+      {!isUserSubscribed && (
+        <div
+          style={{
+            fontFamily: '"Courier", Courier, monospace',
+            fontSize: '13px',
+          }}
+        >
+          <a
+            onClick={() => handlePrivatePostAction(authenticated)}
+            style={{
+              textDecoration: 'underline',
+              fontFamily: 'inherit',
+              cursor: 'pointer',
+            }}
+          >
+            {authenticated ? 'Support' : 'Log in'}
+          </a>{' '}
+          to comment
+        </div>
+      )}
+    </div>
+  );
+};
+
+Comments.propTypes = {
+  post: PropTypes.any,
+  expanded: PropTypes.bool,
+  classes: PropTypes.any,
+  handleDeleteComment: PropTypes.func,
+  handleExpandClick: PropTypes.func,
+  handleSubmit: PropTypes.func,
+  handlePrivatePostAction: PropTypes.func,
+  canLoggedUserDeleteComment: PropTypes.func,
+  isUserSubscribed: PropTypes.bool,
+  loggedUserAccess: PropTypes.any,
+  me: PropTypes.any,
+};
+
+const PostMedia = ({
+  post: { image_url, has_audio, audio_file, deny_details_lapsed },
+  classes,
+  allowDetails,
+  accentColor,
+  me,
+  handlePrivatePostClick,
+}) => (
+  <>
+    {image_url && !has_audio && (
+      <div className="post__image-container">
+        <CardMedia
+          className={cx(classes.media, {
+            'blur-image': !allowDetails,
+          })}
+          image={this.renderCloudinaryPhoto(image_url, 500)}
+        />
+        {!allowDetails && (
+          <Lock
+            isLapsed={deny_details_lapsed}
+            me={me}
+            handlePrivatePostClick={handlePrivatePostClick}
+          />
+        )}
+      </div>
+    )}
+
+    {has_audio && (
+      <div className="post__audio-container">
+        <div className="post__image-container">
+          {image_url && (
+            <CardMedia
+              className={cx(classes.media, {
+                'blur-image': !allowDetails,
+              })}
+              image={this.renderCloudinaryPhoto(image_url, 500)}
+            />
+          )}
+          {!image_url && !allowDetails && (
+            <div
+              style={{
+                height: '340px',
+                background:
+                  'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
+              }}
+            />
+          )}
+          {!allowDetails && (
+            <Lock
+              isLapsed={deny_details_lapsed}
+              me={me}
+              handlePrivatePostClick={handlePrivatePostClick}
+            />
+          )}
+        </div>
+        {allowDetails && (
+          <AudioPlayer
+            url={returnPlayableUrl(audio_file)}
+            image={this.renderCloudinaryPhoto(image_url, 500)}
+            accentColor={accentColor}
+            callback={this.props.playerCallback}
+          />
+        )}
+      </div>
+    )}
+
+    {!has_audio && !image_url && !allowDetails && (
+      <div className="post__image-container">
+        <div
+          style={{
+            height: '340px',
+            background:
+              'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
+          }}
+        />
+        {
+          <Lock
+            isLapsed={deny_details_lapsed}
+            me={me}
+            handlePrivatePostClick={handlePrivatePostClick}
+          />
+        }
+      </div>
+    )}
+  </>
+);
+
+PostMedia.propTypes = {
+  post: PropTypes.any,
+  classes: PropTypes.any,
+  allowDetails: PropTypes.bool,
+  accentColor: PropTypes.string,
+  me: PropTypes.any,
+  handlePrivatePostClick: PropTypes.func,
+};
+
+const Lock = ({ isLapsed = false, me, handlePrivatePostClick }) => {
+  const authenticated = !!me;
+
+  return (
+    <div className="private-support">
+      <div className="private-support__copy">
+        {isLapsed ? 'Support On Hold' : 'Supporter Only'}
+      </div>
+      <div className="private-support__btn">
+        {isLapsed ? (
+          <Link to={routePaths.userDetails} className="btn btn-ampled">
+            Update Payment Details
+          </Link>
+        ) : (
+          <button
+            className="btn btn-ampled"
+            onClick={() => handlePrivatePostClick(authenticated)}
+          >
+            Support To Unlock
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
+
+Lock.propTypes = {
+  isLapsed: PropTypes.bool,
+  handlePrivatePostClick: PropTypes.func,
+  me: PropTypes.any,
+};
+
+const DeleteModal = ({ onCancel, onConfirm }) => (
+  <div className="delete-post-modal__container">
+    <img className="tear tear__topper" src={tear} alt="" />
+    <div className="delete-post-modal">
+      <div className="delete-post-modal__title">
+        <h4>Are you sure?</h4>
+      </div>
+      <div className="delete-post-modal__actions action-buttons">
+        <button className="cancel-button" onClick={onCancel}>
+          Cancel
+        </button>
+        <button className="delete-button" onClick={onConfirm}>
+          Delete Post
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
+DeleteModal.propTypes = {
+  onCancel: PropTypes.func,
+  onConfirm: PropTypes.func,
+};
 
 class PostComponent extends React.Component<any, any> {
   state = {
@@ -74,7 +355,7 @@ class PostComponent extends React.Component<any, any> {
     this.setState({ showEditPostModal: false });
   };
 
-  openSignupModal = () => {
+  openSignupModal = (redirectToSupport: boolean) => {
     let artistId;
 
     if (this.props.match.params.slug) {
@@ -87,7 +368,9 @@ class PostComponent extends React.Component<any, any> {
       modalPage: 'signup',
       showSupportMessage: 'post',
       artistName: this.props.artistName,
-      redirectTo: routePaths.support.replace(':id', artistId),
+      redirectTo: redirectToSupport
+        ? routePaths.support.replace(':id', artistId)
+        : window.location.pathname,
     });
   };
 
@@ -102,18 +385,12 @@ class PostComponent extends React.Component<any, any> {
     );
   };
 
-  sortItemsByCreationDate(items) {
-    return items.sort((a, b) => b.created_at - a.created_at);
-  }
-
   handleSubmit = async (comment) => {
     await this.props.addComment(comment);
     this.props.updateArtist();
   };
 
-  isUserSubscribed = () => {
-    const { loggedUserAccess } = this.props;
-
+  isUserSubscribed = (loggedUserAccess) => {
     return (
       loggedUserAccess &&
       [
@@ -122,18 +399,6 @@ class PostComponent extends React.Component<any, any> {
         UserRoles.Admin.toString(),
         UserRoles.Member.toString(),
       ].includes(loggedUserAccess.role)
-    );
-  };
-
-  canLoggedUserDeleteComment = (commentUserId: number) => {
-    const { loggedUserAccess, me } = this.props;
-
-    return (
-      (loggedUserAccess &&
-        (loggedUserAccess.role === UserRoles.Owner ||
-          loggedUserAccess.role === UserRoles.Admin ||
-          loggedUserAccess.role === UserRoles.Member)) ||
-      (me && commentUserId === me.id)
     );
   };
 
@@ -162,17 +427,20 @@ class PostComponent extends React.Component<any, any> {
   handlePrivatePostClick = (authenticated: boolean) => {
     if (this.props.post.allow_details) {
       return;
-    } else if (!authenticated) {
-      this.openSignupModal();
     } else {
-      this.redirectToSupport();
+      this.handlePrivatePostAction(authenticated, true);
     }
   };
 
-  returnPlayableUrl = () => {
-    const { post } = this.props;
-    const playableUrl = `${config.aws.playableBaseUrl}${post.audio_file}`;
-    return playableUrl;
+  handlePrivatePostAction = (
+    authenticated: boolean,
+    redirectToSupport: boolean,
+  ) => {
+    if (!authenticated) {
+      this.openSignupModal(redirectToSupport);
+    } else {
+      this.redirectToSupport();
+    }
   };
 
   returnFirstName = (name) => {
@@ -182,52 +450,6 @@ class PostComponent extends React.Component<any, any> {
     } else {
       return name.substr(0, spacePosition);
     }
-  };
-
-  renderDeleteModal = () => (
-    <div className="delete-post-modal__container">
-      <img className="tear tear__topper" src={tear} alt="" />
-      <div className="delete-post-modal">
-        <div className="delete-post-modal__title">
-          <h4>Are you sure?</h4>
-        </div>
-        <div className="delete-post-modal__actions action-buttons">
-          <button className="cancel-button" onClick={this.closeDeletePostModal}>
-            Cancel
-          </button>
-          <button className="delete-button" onClick={this.handleDeletePost}>
-            Delete Post
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
-  renderLock = (isLapsed = false) => {
-    const { me } = this.props;
-    const authenticated = !!me;
-
-    return (
-      <div className="private-support">
-        <div className="private-support__copy">
-          {isLapsed ? 'Support On Hold' : 'Supporter Only'}
-        </div>
-        <div className="private-support__btn">
-          {isLapsed ? (
-            <Link to={routePaths.userDetails} className="btn btn-ampled">
-              Update Payment Details
-            </Link>
-          ) : (
-            <button
-              className="btn btn-ampled"
-              onClick={() => this.handlePrivatePostClick(authenticated)}
-            >
-              Support To Unlock
-            </button>
-          )}
-        </div>
-      </div>
-    );
   };
 
   renderCloudinaryPhoto = (image: string, crop: number) => {
@@ -243,8 +465,8 @@ class PostComponent extends React.Component<any, any> {
     }
   };
 
-  renderPost = () => {
-    const { classes, post, accentColor, me } = this.props;
+  render = () => {
+    const { classes, post, accentColor, me, loggedUserAccess } = this.props;
 
     const deny_details_lapsed = post.deny_details_lapsed || false;
 
@@ -252,246 +474,155 @@ class PostComponent extends React.Component<any, any> {
     const isPrivate = post.is_private;
     const authenticated = !!me;
 
+    const authorFirstName = this.returnFirstName(post.author);
+    const canLoggedUserEditPost = this.canLoggedUserEditPost(post.authorId);
+    const canLoggedUserPost = this.canLoggedUserPost();
+    const isUserSubscribed = this.isUserSubscribed(loggedUserAccess);
+
     return (
-      <div className="post">
-        <Modal
-          open={this.state.showDeletePostModal}
-          onClose={this.closeDeletePostModal}
-        >
-          {this.renderDeleteModal()}
-        </Modal>
-        <Modal
-          open={this.state.showEditPostModal}
-          onClose={this.closeEditPostModal}
-        >
-          <PostForm
-            close={this.closeEditPostModal}
-            discardChanges={this.closeEditPostModal}
-            isEdit
-            post={post}
-          />
-        </Modal>
-        <div
-          className={cx('post', { 'clickable-post': !allowDetails })}
-          onClick={() =>
-            !deny_details_lapsed && this.handlePrivatePostClick(authenticated)
-          }
-          title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
-        >
-          <Card
-            className={classes.card}
-            style={{ border: `2px solid ${accentColor}` }}
+      <div>
+        <div className="post">
+          {this.state.showDeletePostModal && (
+            <Modal
+              open={this.state.showDeletePostModal}
+              onClose={this.closeDeletePostModal}
+            >
+              <DeleteModal
+                onCancel={this.closeDeletePostModal}
+                onConfirm={this.handleDeletePost}
+              />
+            </Modal>
+          )}
+          <Modal
+            open={this.state.showEditPostModal}
+            onClose={this.closeEditPostModal}
           >
-            <div className="post__header">
-              <div className={classes.postTitle}>
-                {post.authorImage ? (
-                  <img
-                    className="user-image"
-                    src={post.authorImage}
-                    alt={`${this.returnFirstName(post.author)}'s avatar`}
-                  />
-                ) : (
-                  <img className="user-image" src={avatar} alt="Avatar" />
-                )}
-                <span className="post__header_name">
-                  {this.returnFirstName(post.author)}
-                </span>
-              </div>
-              <div className={classes.postDate}>
-                {post.created_ago === 'less than a minute' ? (
-                  <div className={classes.postDate}>Just Now</div>
-                ) : (
-                  <div className={classes.postDate}>{post.created_ago} ago</div>
-                )}
-              </div>
-            </div>
-            <Divider />
-
-            {this.canLoggedUserPost() &&
-              (isPrivate ? (
-                <div className="post__status">
-                  <FontAwesomeIcon className="unlock" icon={faUnlock} />
-                  Supporters Only
+            <PostForm
+              close={this.closeEditPostModal}
+              discardChanges={this.closeEditPostModal}
+              isEdit
+              post={post}
+            />
+          </Modal>
+          <div
+            className={cx('post', { 'clickable-post': !allowDetails })}
+            onClick={() =>
+              !deny_details_lapsed && this.handlePrivatePostClick(authenticated)
+            }
+            title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
+          >
+            <Card
+              className={classes.card}
+              style={{ border: `2px solid ${accentColor}` }}
+            >
+              <div className="post__header">
+                <div className={classes.postTitle}>
+                  {post.authorImage ? (
+                    <img
+                      className="user-image"
+                      src={post.authorImage}
+                      alt={`${authorFirstName}'s avatar`}
+                    />
+                  ) : (
+                    <img className="user-image" src={avatar} alt="Avatar" />
+                  )}
+                  <span className="post__header_name">{authorFirstName}</span>
                 </div>
-              ) : (
-                <div className="post__status">Public Post</div>
-              ))}
+                <div className={classes.postDate}>
+                  {post.created_ago === 'less than a minute' ? (
+                    <div className={classes.postDate}>Just Now</div>
+                  ) : (
+                    <div className={classes.postDate}>
+                      {post.created_ago} ago
+                    </div>
+                  )}
+                </div>
+              </div>
+              <Divider />
 
-            {this.isUserSubscribed() &&
-              ![
-                UserRoles.Owner.toString(),
-                UserRoles.Admin.toString(),
-                UserRoles.Member.toString(),
-              ].includes(this.props.loggedUserAccess.role) &&
-              isPrivate && (
+              {canLoggedUserPost &&
+                (isPrivate ? (
+                  <div className="post__status">
+                    <FontAwesomeIcon className="unlock" icon={faUnlock} />
+                    Supporters Only
+                  </div>
+                ) : (
+                  <div className="post__status">Public Post</div>
+                ))}
+
+              {isUserSubscribed && !canLoggedUserPost && isPrivate && (
                 <div className="post__status">
                   <FontAwesomeIcon className="unlock" icon={faUnlock} />
                   Supporters Only
                 </div>
               )}
 
-            {this.canLoggedUserEditPost(post.authorId) && (
-              <div className="post__change">
-                <div className="post__change_edit">
-                  <button onClick={this.openEditPostModal}>
-                    <FontAwesomeIcon icon={faPen} />
-                  </button>
+              {canLoggedUserEditPost && (
+                <div className="post__change">
+                  <div className="post__change_edit">
+                    <button onClick={this.openEditPostModal}>
+                      <FontAwesomeIcon icon={faPen} />
+                    </button>
+                  </div>
+                  <div className="post__change_delete">
+                    <button onClick={this.openDeletePostModal}>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </div>
                 </div>
-                <div className="post__change_delete">
-                  <button onClick={this.openDeletePostModal}>
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
+              )}
+
+              <PostMedia
+                post={post}
+                classes={classes}
+                allowDetails={allowDetails}
+                me={me}
+                accentColor={accentColor}
+                handlePrivatePostClick={this.handlePrivatePostClick}
+              />
+
+              <div className="post__title">{post.title}</div>
+
+              {post.body && (
+                <div className="post__body">
+                  <Linkify
+                    componentDecorator={(
+                      decoratedHref: string,
+                      decoratedText: string,
+                      key: number,
+                    ) => (
+                      <a
+                        href={decoratedHref}
+                        key={key}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {decoratedText}
+                      </a>
+                    )}
+                  >
+                    {post.body}
+                  </Linkify>
                 </div>
-              </div>
-            )}
-
-            {post.image_url && !post.has_audio && (
-              <div className="post__image-container">
-                <CardMedia
-                  className={cx(classes.media, { 'blur-image': !allowDetails })}
-                  image={this.renderCloudinaryPhoto(post.image_url, 500)}
-                />
-                {!allowDetails && this.renderLock(deny_details_lapsed)}
-              </div>
-            )}
-
-            {post.has_audio && (
-              <div className="post__audio-container">
-                <div className="post__image-container">
-                  {post.image_url && (
-                    <CardMedia
-                      className={cx(classes.media, {
-                        'blur-image': !allowDetails,
-                      })}
-                      image={this.renderCloudinaryPhoto(post.image_url, 500)}
-                    />
-                  )}
-                  {!post.image_url && !allowDetails && (
-                    <div
-                      style={{
-                        height: '340px',
-                        background:
-                          'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
-                      }}
-                    />
-                  )}
-                  {!allowDetails && this.renderLock(deny_details_lapsed)}
-                </div>
-                {allowDetails && (
-                  <AudioPlayer
-                    url={this.returnPlayableUrl()}
-                    image={this.renderCloudinaryPhoto(post.image_url, 500)}
-                    accentColor={accentColor}
-                    callback={this.props.playerCallback}
-                  />
-                )}
-              </div>
-            )}
-
-            {!post.has_audio && !post.image_url && !allowDetails && (
-              <div className="post__image-container">
-                <div
-                  style={{
-                    height: '340px',
-                    background:
-                      'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
-                  }}
-                />
-                {this.renderLock(deny_details_lapsed)}
-              </div>
-            )}
-
-            <div className="post__title">{post.title}</div>
-
-            {post.body && (
-              <div className="post__body">
-                <Linkify
-                  componentDecorator={(
-                    decoratedHref: string,
-                    decoratedText: string,
-                    key: number,
-                  ) => (
-                    <a
-                      href={decoratedHref}
-                      key={key}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {decoratedText}
-                    </a>
-                  )}
-                >
-                  {post.body}
-                </Linkify>
-              </div>
-            )}
-          </Card>
-        </div>
-        {this.renderComments()}
-      </div>
-    );
-  };
-
-  renderComments = () => {
-    const { classes, post } = this.props;
-    const { expanded } = this.state;
-
-    const allComments = this.sortItemsByCreationDate(post.comments);
-    const firstComments = allComments.slice(0, 2).reverse();
-    const hasPreviousComments = allComments.length > 2;
-    const hasComments = allComments.length > 0;
-
-    return (
-      <div className="comments-list">
-        {hasComments && <span className="comments-list__header">Comments</span>}
-        {!expanded &&
-          firstComments.map((comment) => (
-            <Comment
-              key={comment.id}
-              comment={comment}
-              canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
-              deleteComment={this.handleDeleteComment}
-            />
-          ))}
-        {hasPreviousComments && (
-          <div>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-              {allComments.reverse().map((comment) => (
-                <Comment
-                  key={comment.id}
-                  comment={comment}
-                  canDelete={this.canLoggedUserDeleteComment(comment.user_id)}
-                  deleteComment={this.handleDeleteComment}
-                />
-              ))}
-            </Collapse>
-            <CardActions
-              className={cx(classes.actions, 'collapse-actions')}
-              disableSpacing
-            >
-              <button
-                className="show-previous-command-btn"
-                onClick={this.handleExpandClick}
-              >
-                <b>
-                  {expanded
-                    ? 'Hide Previous Comments'
-                    : 'View Previous Comments'}
-                </b>
-              </button>
-            </CardActions>
+              )}
+            </Card>
           </div>
-        )}
-        {this.isUserSubscribed() && (
-          <CommentForm handleSubmit={this.handleSubmit} postId={post.id} />
-        )}
+          <Comments
+            post={post}
+            expanded={this.state.expanded}
+            classes={classes}
+            handleDeleteComment={this.handleDeleteComment}
+            handleExpandClick={this.handleExpandClick}
+            handleSubmit={this.handleSubmit}
+            isUserSubscribed={isUserSubscribed}
+            me={me}
+            handlePrivatePostAction={this.handlePrivatePostAction}
+            loggedUserAccess={loggedUserAccess}
+          />
+        </div>
       </div>
     );
   };
-
-  render() {
-    return <div>{this.renderPost()}</div>;
-  }
 }
 
 const Post = withStyles(styles)(withRouter(PostComponent));

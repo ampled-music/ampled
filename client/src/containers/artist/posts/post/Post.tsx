@@ -56,6 +56,7 @@ const Comments = ({
   handleDeleteComment,
   handleExpandClick,
   handleSubmit,
+  handlePrivatePostAction,
   isUserSubscribed,
   loggedUserAccess,
   me,
@@ -64,6 +65,7 @@ const Comments = ({
   const firstComments = allComments.slice(0, 2).reverse();
   const hasPreviousComments = allComments.length > 2;
   const hasComments = allComments.length > 0;
+  const authenticated = !!me;
 
   return (
     <div className="comments-list">
@@ -115,6 +117,26 @@ const Comments = ({
       {isUserSubscribed && (
         <CommentForm handleSubmit={handleSubmit} postId={post.id} />
       )}
+      {!isUserSubscribed && (
+        <div
+          style={{
+            fontFamily: '"Courier", Courier, monospace',
+            fontSize: '13px',
+          }}
+        >
+          <a
+            onClick={() => handlePrivatePostAction(authenticated)}
+            style={{
+              textDecoration: 'underline',
+              fontFamily: 'inherit',
+              cursor: 'pointer',
+            }}
+          >
+            {authenticated ? 'Support' : 'Log in'}
+          </a>{' '}
+          to comment
+        </div>
+      )}
     </div>
   );
 };
@@ -126,6 +148,7 @@ Comments.propTypes = {
   handleDeleteComment: PropTypes.func,
   handleExpandClick: PropTypes.func,
   handleSubmit: PropTypes.func,
+  handlePrivatePostAction: PropTypes.func,
   canLoggedUserDeleteComment: PropTypes.func,
   isUserSubscribed: PropTypes.bool,
   loggedUserAccess: PropTypes.any,
@@ -332,7 +355,7 @@ class PostComponent extends React.Component<any, any> {
     this.setState({ showEditPostModal: false });
   };
 
-  openSignupModal = () => {
+  openSignupModal = (redirectToSupport: boolean) => {
     let artistId;
 
     if (this.props.match.params.slug) {
@@ -345,7 +368,9 @@ class PostComponent extends React.Component<any, any> {
       modalPage: 'signup',
       showSupportMessage: 'post',
       artistName: this.props.artistName,
-      redirectTo: routePaths.support.replace(':id', artistId),
+      redirectTo: redirectToSupport
+        ? routePaths.support.replace(':id', artistId)
+        : window.location.pathname,
     });
   };
 
@@ -402,8 +427,17 @@ class PostComponent extends React.Component<any, any> {
   handlePrivatePostClick = (authenticated: boolean) => {
     if (this.props.post.allow_details) {
       return;
-    } else if (!authenticated) {
-      this.openSignupModal();
+    } else {
+      this.handlePrivatePostAction(authenticated, true);
+    }
+  };
+
+  handlePrivatePostAction = (
+    authenticated: boolean,
+    redirectToSupport: boolean,
+  ) => {
+    if (!authenticated) {
+      this.openSignupModal(redirectToSupport);
     } else {
       this.redirectToSupport();
     }
@@ -443,6 +477,7 @@ class PostComponent extends React.Component<any, any> {
     const authorFirstName = this.returnFirstName(post.author);
     const canLoggedUserEditPost = this.canLoggedUserEditPost(post.authorId);
     const canLoggedUserPost = this.canLoggedUserPost();
+    const isUserSubscribed = this.isUserSubscribed(loggedUserAccess);
 
     return (
       <div>
@@ -515,14 +550,12 @@ class PostComponent extends React.Component<any, any> {
                   <div className="post__status">Public Post</div>
                 ))}
 
-              {this.isUserSubscribed(loggedUserAccess) &&
-                !canLoggedUserPost &&
-                isPrivate && (
-                  <div className="post__status">
-                    <FontAwesomeIcon className="unlock" icon={faUnlock} />
-                    Supporters Only
-                  </div>
-                )}
+              {isUserSubscribed && !canLoggedUserPost && isPrivate && (
+                <div className="post__status">
+                  <FontAwesomeIcon className="unlock" icon={faUnlock} />
+                  Supporters Only
+                </div>
+              )}
 
               {canLoggedUserEditPost && (
                 <div className="post__change">
@@ -581,8 +614,9 @@ class PostComponent extends React.Component<any, any> {
             handleDeleteComment={this.handleDeleteComment}
             handleExpandClick={this.handleExpandClick}
             handleSubmit={this.handleSubmit}
-            isUserSubscribed={this.isUserSubscribed(loggedUserAccess)}
+            isUserSubscribed={isUserSubscribed}
             me={me}
+            handlePrivatePostAction={this.handlePrivatePostAction}
             loggedUserAccess={loggedUserAccess}
           />
         </div>

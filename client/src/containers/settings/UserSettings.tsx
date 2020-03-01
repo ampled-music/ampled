@@ -13,6 +13,7 @@ import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
 import { updateMeAction } from '../../redux/me/update-me';
+import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
 
@@ -34,7 +35,16 @@ import { initialState as subscriptionsInitialState } from '../../redux/subscript
 import { routePaths } from '../route-paths';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
-import { showToastMessage, MessageType } from '../shared/toast/toast';
+
+const mapDispatchToProps = (dispatch) => ({
+  getMe: bindActionCreators(getMeAction, dispatch),
+  setMe: bindActionCreators(setUserDataAction, dispatch),
+  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  cancelSubscription: bindActionCreators(cancelSubscriptionAction, dispatch),
+  updateMe: bindActionCreators(updateMeAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
+});
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
@@ -59,10 +69,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
     } = this.props;
 
     if (/stripesuccess=true/gi.test(search)) {
-      showToastMessage(
-        "Great! You're all set up for payments.",
-        MessageType.SUCCESS,
-      );
+      this.props.showToast({
+        message: "Great! You're all set up for payments.",
+        type: 'success',
+      });
     }
   }
 
@@ -89,10 +99,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
       artistSlug && artistSlug.length ? artistSlug : artistPageId.toString(),
     );
 
-    showToastMessage(
-      `We are sad to see you leaving. Remember that you can always support <a href="${artistPageLink}">${artistName}</a> with a different value!`,
-      MessageType.SUCCESS,
-    );
+    this.props.showToast({
+      message: `We are sad to see you leaving. Remember that you can always support <a href="${artistPageLink}">${artistName}</a> with a different value!`,
+      type: 'success',
+    });
   };
 
   getFormattedDate = (date: string) => {
@@ -534,15 +544,6 @@ const mapStateToProps = (state: Store) => ({
   ...state.authentication,
   ...state.me,
   subscriptions: state.subscriptions,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getMe: bindActionCreators(getMeAction, dispatch),
-  setMe: bindActionCreators(setUserDataAction, dispatch),
-  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
-  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
-  cancelSubscription: bindActionCreators(cancelSubscriptionAction, dispatch),
-  updateMe: bindActionCreators(updateMeAction, dispatch),
 });
 
 const UserSettings = connect(

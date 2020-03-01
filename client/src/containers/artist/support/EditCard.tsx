@@ -1,14 +1,19 @@
 import './checkout-form.scss';
 
 import * as React from 'react';
-import { injectStripe, CardCVCElement, CardExpiryElement, CardNumberElement } from 'react-stripe-elements';
-import { showToastMessage, MessageType } from '../../shared/toast/toast';
+import {
+  injectStripe,
+  CardCVCElement,
+  CardExpiryElement,
+  CardNumberElement,
+} from 'react-stripe-elements';
 
 interface Props {
   stripe?: any;
   errorCard?: any;
   updateCard: Function;
   declineStep: Function;
+  showToast: Function;
 }
 
 class EditCardFormComponent extends React.Component<Props, any> {
@@ -19,9 +24,12 @@ class EditCardFormComponent extends React.Component<Props, any> {
   componentDidUpdate = (prevProps) => {
     if (!prevProps.errorCard && this.props.errorCard) {
       this.setState({ disableActions: false });
-      showToastMessage(this.props.errorCard.message, MessageType.ERROR);
+      this.props.showToast({
+        message: this.props.errorCard.message,
+        type: 'error',
+      });
     }
-  }
+  };
 
   submit = async (event) => {
     this.setState({ disableActions: true });
@@ -32,21 +40,28 @@ class EditCardFormComponent extends React.Component<Props, any> {
     let { token: paymentToken, error } = await this.props.stripe.createToken();
 
     if (error) {
-      showToastMessage(error.message, MessageType.ERROR);
+      this.props.showToast({
+        message: error.message,
+        type: 'error',
+      });
       this.setState({ disableActions: false });
     } else {
       this.props.updateCard(paymentToken.id);
     }
   };
 
-  calculateSupportTotal = (supportLevel) => (Math.round((supportLevel * 100 + 30) / .971) / 100).toFixed(2);
+  calculateSupportTotal = (supportLevel) =>
+    (Math.round((supportLevel * 100 + 30) / 0.971) / 100).toFixed(2);
 
   render() {
     return (
       <div className="container checkout-form-container">
         <div className="row justify-content-center">
           <div className="col-md-12">
-            <form className="form-group support__level-form" onSubmit={this.submit}>
+            <form
+              className="form-group support__level-form"
+              onSubmit={this.submit}
+            >
               <h3>Enter your payment details</h3>
               <div className="form-row">
                 <div className="col">
@@ -65,7 +80,11 @@ class EditCardFormComponent extends React.Component<Props, any> {
                 </div>
               </div>
               <div className="actions">
-                <button disabled={this.state.disableActions} className="btn btn-primary" type="submit">
+                <button
+                  disabled={this.state.disableActions}
+                  className="btn btn-primary"
+                  type="submit"
+                >
                   Update
                 </button>
                 <button

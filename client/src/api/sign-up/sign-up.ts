@@ -21,7 +21,7 @@ export const signUp = async (
         passwordConfirmation,
         name,
         last_name,
-        redirect_uri: redirect || null,
+        redirect_uri: redirect || '/',
       },
     },
   });

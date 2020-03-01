@@ -8,7 +8,10 @@ import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
 
 import { closeAuthModalAction } from '../../redux/authentication/authentication-modal';
-import { hideToastAction } from '../../redux/toast/toast-modal';
+import {
+  showToastAction,
+  hideToastAction,
+} from '../../redux/toast/toast-modal';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { Routes } from '../Routes';
@@ -17,6 +20,19 @@ import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
 import { Helmet } from 'react-helmet';
 import Toast from './Toast';
+
+const mapStateToProps = (state: Store) => ({
+  ...state.authentication,
+  ...state.me,
+  toast: state.toast,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getMe: bindActionCreators(getMeAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  hideToast: bindActionCreators(hideToastAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
+});
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
@@ -27,6 +43,18 @@ type Props = typeof loginInitialState &
 class AppComponent extends React.Component<Props, any> {
   componentDidMount() {
     this.props.getMe();
+    const search = this.props.history?.location?.search;
+    if (/flash=confirmed/gi.test(search)) {
+      this.props.showToast({
+        message: 'Your email has been confirmed!',
+        type: 'success',
+      });
+    } else if (/flash=confirmerror/gi.test(search)) {
+      this.props.showToast({
+        message: 'There was an error confirming your email.',
+        type: 'error',
+      });
+    }
   }
 
   componentDidUpdate() {
@@ -68,18 +96,6 @@ class AppComponent extends React.Component<Props, any> {
     );
   }
 }
-
-const mapStateToProps = (state: Store) => ({
-  ...state.authentication,
-  ...state.me,
-  toast: state.toast,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getMe: bindActionCreators(getMeAction, dispatch),
-  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
-  hideToast: bindActionCreators(hideToastAction, dispatch),
-});
 
 const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
 

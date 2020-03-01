@@ -175,6 +175,7 @@ const PostMedia = ({
   accentColor,
   me,
   handlePrivatePostClick,
+  playerCallback,
 }) => (
   <>
     {image_url && !has_audio && (
@@ -228,7 +229,7 @@ const PostMedia = ({
             url={returnPlayableUrl(audio_file)}
             image={renderCloudinaryPhoto(image_url, 500)}
             accentColor={accentColor}
-            callback={this.props.playerCallback}
+            callback={playerCallback}
           />
         )}
       </div>
@@ -262,6 +263,7 @@ PostMedia.propTypes = {
   accentColor: PropTypes.string,
   me: PropTypes.any,
   handlePrivatePostClick: PropTypes.func,
+  playerCallback: PropTypes.func,
 };
 
 const Lock = ({ isLapsed = false, me, handlePrivatePostClick }) => {
@@ -579,6 +581,7 @@ class PostComponent extends React.Component<any, any> {
                 me={me}
                 accentColor={accentColor}
                 handlePrivatePostClick={this.handlePrivatePostClick}
+                playerCallback={this.props.playerCallback}
               />
 
               <div className="post__title">{post.title}</div>

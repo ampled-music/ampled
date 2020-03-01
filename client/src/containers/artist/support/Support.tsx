@@ -9,6 +9,7 @@ import { getArtistAction } from '../../../redux/artists/get-details';
 import { openAuthModalAction } from '../../../redux/authentication/authentication-modal';
 import { Store } from '../../../redux/configure-store';
 import { getMeAction } from '../../../redux/me/get-me';
+import { showToastAction } from '../../../redux/toast/toast-modal';
 import { createSubscriptionAction } from '../../../redux/subscriptions/create';
 import { declineStepAction } from '../../../redux/subscriptions/decline-step';
 import { startSubscriptionAction } from '../../../redux/subscriptions/start-subscription';
@@ -16,7 +17,6 @@ import { Helmet } from 'react-helmet';
 
 import avatar from '../../../images/ampled_avatar.svg';
 
-import { showToastMessage, MessageType } from '../../shared/toast/toast';
 import {
   initialState as artistsInitialState,
   ArtistModel,
@@ -96,7 +96,10 @@ export class SupportComponent extends React.Component<Props, any> {
       !prevProps.subscriptions.hasError
     ) {
       getMe();
-      showToastMessage(subscriptions.error, MessageType.ERROR);
+      this.props.showToast({
+        message: subscriptions.error,
+        type: 'error',
+      });
     }
   }
 
@@ -109,7 +112,7 @@ export class SupportComponent extends React.Component<Props, any> {
     lum = lum || 0;
 
     // convert to decimal and change luminosity
-    var rgb = '#',
+    let rgb = '#',
       c,
       i;
     for (i = 0; i < 3; i++) {
@@ -122,7 +125,7 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   returnFirstName = (name) => {
-    let spacePosition = name.indexOf(' ');
+    const spacePosition = name.indexOf(' ');
     if (spacePosition === -1) {
       return name;
     } else {
@@ -167,10 +170,11 @@ export class SupportComponent extends React.Component<Props, any> {
 
   handleSupportClick = () => {
     if (this.state.supportLevelValue < 3) {
-      showToastMessage(
-        'Sorry, but you need to insert a value equal or bigger than $3.00.',
-        MessageType.ERROR,
-      );
+      this.props.showToast({
+        message:
+          'Sorry, but you need to insert a value equal or bigger than $3.00.',
+        type: 'error',
+      });
 
       return;
     }
@@ -334,6 +338,7 @@ export class SupportComponent extends React.Component<Props, any> {
             declineStep={declineStep}
             formType="checkout"
             userData={userData}
+            showToast={this.props.showToast}
           />
         );
       default:
@@ -420,6 +425,7 @@ const mapDispatchToProps = (dispatch) => {
     startSubscription: bindActionCreators(startSubscriptionAction, dispatch),
     createSubscription: bindActionCreators(createSubscriptionAction, dispatch),
     declineStep: bindActionCreators(declineStepAction, dispatch),
+    showToast: bindActionCreators(showToastAction, dispatch),
   };
 };
 

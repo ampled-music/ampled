@@ -2,14 +2,14 @@ import './toast.scss';
 
 import * as toastr from 'toastr';
 
-import { merge } from 'ramda'
+import { merge } from 'ramda';
 
 interface ToastConfig {
-  closeButton: boolean,
-  positionClass: string,
-  preventDuplicates: boolean,
-  timeOut: number,
-  extendedTimeOut: number,
+  closeButton: boolean;
+  positionClass: string;
+  preventDuplicates: boolean;
+  timeOut: number;
+  extendedTimeOut: number;
 }
 
 type ToastConfigOpts = Partial<ToastConfig>;
@@ -29,18 +29,18 @@ const messages = {
   success: (message: string, config: ToastConfigOpts) => {
     return toastr.success(message, '', merge(toastConfig, config));
   },
-  warning: (message: string, config: ToastConfigOpts) => {
-    return toastr.warning(message, '', merge(toastConfig, config));
-  },
 };
 
 export enum MessageType {
   ERROR,
   SUCCESS,
-  WARNING,
 }
 
-export const showToastMessage = (message: string, messageType: MessageType, opts: ToastConfigOpts = {}) => {
+export const showToastMessage = (
+  message: string,
+  messageType: MessageType,
+  opts: ToastConfigOpts = {},
+) => {
   const type = MessageType[messageType].toLowerCase();
 
   return messages[type](message, opts);

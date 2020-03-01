@@ -10,10 +10,9 @@ class ConfirmationsController < Devise::ConfirmationsController
     if resource.errors.empty?
       set_flash_message!(:notice, :confirmed)
       sign_in(resource_name, resource)
-      redirect_to after_confirmation_path_for(resource_name, resource)
-    else
-      redirect_to after_confirmation_path_for(resource_name, resource)
     end
+
+    redirect_to after_confirmation_path_for(resource_name, resource)
   end
 
   private

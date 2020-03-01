@@ -1,4 +1,5 @@
 import '../../styles/App.css';
+import '../shared/toast/toast.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -7,6 +8,7 @@ import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
 
 import { closeAuthModalAction } from '../../redux/authentication/authentication-modal';
+import { hideToastAction } from '../../redux/toast/toast-modal';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { Routes } from '../Routes';
@@ -19,7 +21,7 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
 type Props = typeof loginInitialState &
   typeof meInitialState &
-  Dispatchers & { history: any };
+  Dispatchers & { history: any; toast: any };
 
 class AppComponent extends React.Component<Props, any> {
   componentDidMount() {
@@ -38,6 +40,8 @@ class AppComponent extends React.Component<Props, any> {
   }
 
   render() {
+    const { visible } = this.props.toast;
+    const { toast } = this.props;
     return (
       <div className="page">
         <Helmet>
@@ -57,6 +61,21 @@ class AppComponent extends React.Component<Props, any> {
           >
             <AuthModal history={this.props.history} />
           </Modal>
+          {visible && (
+            <div id="toast-container" className="toast-top-full-width">
+              <div className={`toast toast-${toast.type}`}>
+                <button
+                  type="button"
+                  className="toast-close-button"
+                  role="button"
+                  onClick={this.props.hideToast}
+                >
+                  ×
+                </button>
+                <div className="toast-message">{toast.message}</div>
+              </div>
+            </div>
+          )}
         </React.Suspense>
       </div>
     );
@@ -66,11 +85,13 @@ class AppComponent extends React.Component<Props, any> {
 const mapStateToProps = (state: Store) => ({
   ...state.authentication,
   ...state.me,
+  toast: state.toast,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  hideToast: bindActionCreators(hideToastAction, dispatch),
 });
 
 const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);

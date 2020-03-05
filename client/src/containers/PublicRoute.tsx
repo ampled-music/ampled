@@ -10,7 +10,11 @@ export const PublicRoute = ({ component: Component, ...rest }) => {
   const [color] = React.useState(randomColor());
 
   const renderComponent = (props) => {
-    document.body.style.background = color;
+    if (props.location.pathname.startsWith('/artist/')) {
+      document.body.style.background = 'white';
+    } else {
+      document.body.style.background = color;
+    }
 
     return (
       <div className="public-routes">

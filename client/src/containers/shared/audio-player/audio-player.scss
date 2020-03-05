@@ -9,6 +9,10 @@
     justify-content: center;
     position: absolute;
     width: 100%;
+    svg {
+      position: relative;
+      left: 2px;
+    }
   }
   &__slider {
     .MuiSlider-thumb {

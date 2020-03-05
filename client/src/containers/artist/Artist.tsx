@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import Confetti from 'react-dom-confetti';
 import { getArtistAction } from '../../redux/artists/get-details';
 import { openAuthModalAction } from '../../redux/authentication/authentication-modal';
+import { showToastAction } from '../../redux/toast/toast-modal';
 import { Store } from '../../redux/configure-store';
 import { Helmet } from 'react-helmet';
 
@@ -19,7 +20,6 @@ import { PostsContainer } from '../artist/posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
-import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { VideoModal } from '../shared/video-modal/VideoModal';
 import { WhyModal } from '../shared/why-modal/WhyModal';
 import { MessageModal } from '../shared/message-modal/MessageModal';
@@ -45,6 +45,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getArtist: bindActionCreators(getArtistAction, dispatch),
     openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+    showToast: bindActionCreators(showToastAction, dispatch),
   };
 };
 
@@ -89,10 +90,10 @@ class ArtistComponent extends React.Component<Props, any> {
     }
 
     if (this.props.subscriptions.status === SubscriptionStep.Finished) {
-      showToastMessage(
-        `Thanks for supporting ${this.props.artists.artist.name}!`,
-        MessageType.SUCCESS,
-      );
+      this.props.showToast({
+        message: `Thanks for supporting ${this.props.artists.artist.name}!`,
+        type: 'success',
+      });
       // Confetti
       if (prevState.successfulSupport === false) {
         this.setState({ successfulSupport: true });

@@ -1,5 +1,5 @@
-@import "../../../theme/vars.scss";
-@import "../../../theme/mixins.scss";
+@import '../../../theme/vars.scss';
+@import '../../../theme/mixins.scss';
 
 #toast-container {
   position: fixed;
@@ -54,6 +54,11 @@
   justify-content: space-between;
   align-items: center;
   pointer-events: auto;
+  transition: 1s all;
+}
+
+.toast.fading {
+  opacity: 0;
 }
 
 .toast-close-button {

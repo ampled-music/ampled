@@ -8,9 +8,11 @@ import { CheckoutForm } from './CheckoutForm';
 import { EditCardForm } from './EditCard';
 
 interface Props {
-  createSubscription: (
-    subscription: { artistPageId: number; subscriptionLevelValue: number; paymentToken: string },
-  ) => void;
+  createSubscription: (subscription: {
+    artistPageId: number;
+    subscriptionLevelValue: number;
+    paymentToken: string;
+  }) => void;
   declineStep: any;
   artistPageId: any;
   subscriptionLevelValue: any;
@@ -18,6 +20,7 @@ interface Props {
   updateCard?: Function;
   userData?: any;
   errorCard?: any;
+  showToast: Function;
 }
 
 declare global {
@@ -52,6 +55,7 @@ export class StripePaymentProvider extends React.Component<Props, any> {
       updateCard,
       userData,
       errorCard,
+      showToast,
     } = this.props;
 
     let element;
@@ -63,10 +67,18 @@ export class StripePaymentProvider extends React.Component<Props, any> {
           createSubscription={createSubscription}
           declineStep={declineStep}
           userData={userData}
+          showToast={showToast}
         />
       );
     } else if (formType === 'editcard') {
-      element = <EditCardForm updateCard={updateCard} declineStep={declineStep} errorCard={errorCard} />;
+      element = (
+        <EditCardForm
+          updateCard={updateCard}
+          declineStep={declineStep}
+          errorCard={errorCard}
+          showToast={showToast}
+        />
+      );
     }
 
     return (

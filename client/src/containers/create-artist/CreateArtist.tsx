@@ -3,6 +3,7 @@ import './../artist/posts/post/post.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -32,7 +33,7 @@ import {
   faInstagram,
   faStripe,
 } from '@fortawesome/free-brands-svg-icons';
-import { ChromePicker } from 'react-color';
+import ChromePicker from 'react-color/lib/Chrome';
 
 import { theme } from './theme';
 import tear from '../../images/full_page_tear.png';
@@ -40,10 +41,11 @@ import polaroid from '../../images/polaroid.png';
 
 import { Store } from '../../redux/configure-store';
 
+import { showToastAction } from '../../redux/toast/toast-modal';
+
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
 
-import { showToastMessage, MessageType } from '../shared/toast/toast';
 import { deleteFileFromCloudinary } from '../../api/cloudinary/delete-image';
 import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
 import { Modal } from '../shared/modal/Modal';
@@ -52,6 +54,7 @@ interface CreateArtistProps {
   me: any;
   editMode?: boolean;
   artist?: any;
+  showToast: Function;
 }
 
 interface TabPanelProps {
@@ -1165,17 +1168,17 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       !artistColor ||
       !/^[a-z-0-9]*[a-z]+[a-z-0-9]*$/.test(artistSlug)
     ) {
-      return showToastMessage(
-        'Please check required fields.',
-        MessageType.ERROR,
-      );
+      return this.props.showToast({
+        message: 'Please check required fields.',
+        type: 'error',
+      });
     }
 
     if (/[@:/]/gi.test(artistTwitter) || /[@:/]/gi.test(artistInstagram)) {
-      return showToastMessage(
-        'Please check the format of your social handles.',
-        MessageType.ERROR,
-      );
+      return this.props.showToast({
+        message: 'Please check the format of your social handles.',
+        type: 'error',
+      });
     }
 
     if (
@@ -1190,10 +1193,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           member.firstName.length,
       ).length !== members.length
     ) {
-      return showToastMessage(
-        'Please check required fields for members.',
-        MessageType.ERROR,
-      );
+      return this.props.showToast({
+        message: 'Please check required fields for members.',
+        type: 'error',
+      });
     }
 
     // create page
@@ -1226,9 +1229,15 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
 
       if (data.status && data.status === 'error') {
-        showToastMessage(data.message, MessageType.ERROR);
+        this.props.showToast({
+          message: data.message,
+          type: 'error',
+        });
       } else if (data.status && data.status === 'ok') {
-        showToastMessage(data.message, MessageType.SUCCESS);
+        this.props.showToast({
+          message: data.message,
+          type: 'success',
+        });
         window.location.href = `/artist/${artistSlug}`;
       }
     } else {
@@ -1255,9 +1264,15 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
 
       if (data.status && data.status === 'error') {
-        showToastMessage(data.message, MessageType.ERROR);
+        this.props.showToast({
+          message: data.message,
+          type: 'error',
+        });
       } else if (data.status && data.status === 'ok') {
-        showToastMessage(data.message, MessageType.SUCCESS);
+        this.props.showToast({
+          message: data.message,
+          type: 'success',
+        });
         window.location.href = `/artist/${artistSlug}`;
       }
     }
@@ -1369,6 +1384,13 @@ const mapStateToProps = (state: Store) => {
   };
 };
 
-const connectArtist = connect(mapStateToProps)(CreateArtist);
+const mapDispatchToProps = (dispatch) => ({
+  showToast: bindActionCreators(showToastAction, dispatch),
+});
+
+const connectArtist = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CreateArtist);
 
 export { connectArtist as CreateArtist };

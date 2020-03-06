@@ -13,6 +13,7 @@ class ArtistPageCreateEmailJob
       [{
         from: ENV["POSTMARK_FROM_EMAIL"],
         to: user.email,
+        bcc: ["austin@ampled.com", "collin@ampled.com"],
         template_alias: "artist-page-created",
         template_model: {
           artist_name: artist.name

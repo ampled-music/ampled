@@ -3,7 +3,7 @@ import './audio-player.scss';
 import * as React from 'react';
 import cx from 'classnames';
 
-import ReactPlayer from 'react-player';
+import FilePlayer from 'react-player/lib/players/FilePlayer';
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import { IconButton, Slider } from '@material-ui/core/';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
@@ -182,7 +182,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
         <div
           className={cx('audio-player ', { 'with-image': this.props.image })}
         >
-          <ReactPlayer
+          <FilePlayer
             ref={this.ref}
             url={url}
             height="100%"

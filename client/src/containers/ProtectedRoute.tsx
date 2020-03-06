@@ -36,16 +36,18 @@ const ProtectedRoute = ({
   openAuthModal,
   ...rest
 }) => {
+  const randomColor = () => {
+    const bgColor = ['#e9c7c6', '#eddfbd', '#baddac', '#cae4e7'];
+    return bgColor[Math.floor(Math.random() * bgColor.length)];
+  };
+
+  const [color] = React.useState(randomColor());
+
   const renderComponent = (props) => {
     const isLoggedIn = !!store.get(config.localStorageKeys.token);
 
-    const randomColor = () => {
-      const bgColor = ['#e9c7c6', '#eddfbd', '#baddac', '#cae4e7'];
-      return bgColor[Math.floor(Math.random() * bgColor.length)];
-    };
-
     if (props.location.pathname === routePaths.settings) {
-      document.body.style.background = randomColor();
+      document.body.style.background = color;
     } else {
       document.body.style.background = 'white';
     }

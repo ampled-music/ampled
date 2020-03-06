@@ -2,7 +2,6 @@ import './artist.scss';
 
 import * as React from 'react';
 import Swipe from 'react-easy-swipe';
-import { isMobile } from 'react-device-detect';
 import cx from 'classnames';
 
 import { Image, Transformation } from 'cloudinary-react';
@@ -51,7 +50,9 @@ export class ArtistHeader extends React.Component<Props, any> {
       'artist-header__banner-icons_icon',
     );
     let index;
-
+    if (bannerImages.length <= 1) {
+      return;
+    }
     for (index = 0; index < bannerImages.length; ++index) {
       if (bannerImages[index].classList.contains('active')) {
         bannerImages[index].classList.toggle('active');
@@ -250,6 +251,9 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   renderPhotoContainer = () => {
     const { artist } = this.props;
+    const isMobile = window.matchMedia('only screen and (max-width: 760px)')
+      .matches;
+
     return (
       <div
         className="artist-header__photo-container"
@@ -259,11 +263,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         {this.renderBanners()}
         {artist.images && (
           <div
-            onClick={
-              !isMobile && artist.images.length > 1
-                ? this.cycleBanners
-                : undefined
-            }
+            onClick={!isMobile ? this.cycleBanners : undefined}
             className="artist-header__photo-container_border"
             style={{ borderColor: artist.accent_color }}
           >

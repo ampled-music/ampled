@@ -1,7 +1,6 @@
 import './footer.scss';
 
 import * as React from 'react';
-import { DateTime } from 'luxon';
 import { Link } from 'react-router-dom';
 import { config } from '../../config';
 
@@ -72,7 +71,9 @@ class Footer extends React.Component<Props, any> {
               <Link to="/">
                 <img src={logo} alt="logo" className="logo" />
               </Link>
-              <div className="copyright">©{DateTime.local().year} Ampled</div>
+              <div className="copyright">
+                ©{new Date().getFullYear()} Ampled
+              </div>
               <div className="own-it">
                 We Own It!{' '}
                 <span role="img" aria-label="Solidarity">

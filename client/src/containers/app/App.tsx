@@ -1,4 +1,5 @@
 import '../../styles/App.css';
+import '../shared/toast/toast.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -7,6 +8,10 @@ import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
 
 import { closeAuthModalAction } from '../../redux/authentication/authentication-modal';
+import {
+  showToastAction,
+  hideToastAction,
+} from '../../redux/toast/toast-modal';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { Routes } from '../Routes';
@@ -14,16 +19,42 @@ import { AuthModal } from '../connect/AuthModal';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
 import { Helmet } from 'react-helmet';
+import Toast from './Toast';
+
+const mapStateToProps = (state: Store) => ({
+  ...state.authentication,
+  ...state.me,
+  toast: state.toast,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getMe: bindActionCreators(getMeAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  hideToast: bindActionCreators(hideToastAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
+});
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
 type Props = typeof loginInitialState &
   typeof meInitialState &
-  Dispatchers & { history: any };
+  Dispatchers & { history: any; toast: any };
 
 class AppComponent extends React.Component<Props, any> {
   componentDidMount() {
     this.props.getMe();
+    const search = this.props.history?.location?.search;
+    if (/flash=confirmed/gi.test(search)) {
+      this.props.showToast({
+        message: 'Your email has been confirmed!',
+        type: 'success',
+      });
+    } else if (/flash=confirmerror/gi.test(search)) {
+      this.props.showToast({
+        message: 'There was an error confirming your email.',
+        type: 'error',
+      });
+    }
   }
 
   componentDidUpdate() {
@@ -38,6 +69,8 @@ class AppComponent extends React.Component<Props, any> {
   }
 
   render() {
+    const { visible } = this.props.toast;
+    const { toast } = this.props;
     return (
       <div className="page">
         <Helmet>
@@ -57,21 +90,12 @@ class AppComponent extends React.Component<Props, any> {
           >
             <AuthModal history={this.props.history} />
           </Modal>
+          {visible && <Toast toast={toast} hideToast={this.props.hideToast} />}
         </React.Suspense>
       </div>
     );
   }
 }
-
-const mapStateToProps = (state: Store) => ({
-  ...state.authentication,
-  ...state.me,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getMe: bindActionCreators(getMeAction, dispatch),
-  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
-});
 
 const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
 

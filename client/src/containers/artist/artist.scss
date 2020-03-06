@@ -561,6 +561,10 @@
     &:hover {
       background-color: rgba(255, 255, 255, 0.4) !important;
     }
+    &_svg {
+      position: relative;
+      left: 2px;
+    }
   }
 }
 

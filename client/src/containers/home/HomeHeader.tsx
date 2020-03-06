@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { config } from '../../config';
-import header_collage from '../../images/home/home_header_collage_4.png';
+import header_collage from '../../images/home/home_header_collage_5.png';
 
 interface Props {
   bgColor: string;

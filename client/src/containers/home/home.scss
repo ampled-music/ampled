@@ -103,6 +103,7 @@
 
 .home-for {
   border-top: 10px solid $black;
+  padding-bottom: 2rem;
 
   h1 {
     font-family: $font-family-sans-serif;
@@ -153,7 +154,7 @@
   color: $white;
   position: relative;
   overflow: hidden;
-  margin: 2rem auto 0;
+  margin: 0 auto;
   padding: 0;
 
   @include mq($tablet) {

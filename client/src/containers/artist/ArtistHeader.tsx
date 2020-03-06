@@ -2,10 +2,10 @@ import './artist.scss';
 
 import * as React from 'react';
 import Swipe from 'react-easy-swipe';
-import { isMobile } from 'react-device-detect';
 import cx from 'classnames';
 
 import { Image, Transformation } from 'cloudinary-react';
+import { IconButton } from '@material-ui/core/';
 import { faPlay, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from '../../redux/artists/initial-state';
@@ -50,7 +50,9 @@ export class ArtistHeader extends React.Component<Props, any> {
       'artist-header__banner-icons_icon',
     );
     let index;
-
+    if (bannerImages.length <= 1) {
+      return;
+    }
     for (index = 0; index < bannerImages.length; ++index) {
       if (bannerImages[index].classList.contains('active')) {
         bannerImages[index].classList.toggle('active');
@@ -249,6 +251,9 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   renderPhotoContainer = () => {
     const { artist } = this.props;
+    const isMobile = window.matchMedia('only screen and (max-width: 760px)')
+      .matches;
+
     return (
       <div
         className="artist-header__photo-container"
@@ -258,11 +263,7 @@ export class ArtistHeader extends React.Component<Props, any> {
         {this.renderBanners()}
         {artist.images && (
           <div
-            onClick={
-              !isMobile && artist.images.length > 1
-                ? this.cycleBanners
-                : undefined
-            }
+            onClick={!isMobile ? this.cycleBanners : undefined}
             className="artist-header__photo-container_border"
             style={{ borderColor: artist.accent_color }}
           >
@@ -335,7 +336,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             className="artist-header__message_container"
             style={{ borderColor: artist.accent_color }}
           >
-            <button
+            <IconButton
               onClick={this.props.openVideoModal}
               className="artist-header__play"
               aria-label="Play video message"
@@ -343,9 +344,8 @@ export class ArtistHeader extends React.Component<Props, any> {
               <FontAwesomeIcon
                 className="artist-header__play_svg"
                 icon={faPlay}
-                style={{ color: artist.accent_color }}
               />
-            </button>
+            </IconButton>
             <div className="artist-header__message_video">
               <img className="artist-header__message_tear" src={tear} alt="" />
               <div className="artist-header__message_image_container">

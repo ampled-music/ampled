@@ -33,7 +33,7 @@ import {
   faInstagram,
   faStripe,
 } from '@fortawesome/free-brands-svg-icons';
-import { ChromePicker } from 'react-color';
+import ChromePicker from 'react-color/lib/Chrome';
 
 import { theme } from './theme';
 import tear from '../../images/full_page_tear.png';

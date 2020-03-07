@@ -3,7 +3,7 @@ import './audio-player.scss';
 import * as React from 'react';
 import cx from 'classnames';
 
-import ReactPlayer from 'react-player';
+import FilePlayer from 'react-player/lib/players/FilePlayer';
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import { IconButton, Slider } from '@material-ui/core/';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
@@ -56,8 +56,8 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
 
   player: any;
 
-  ref = player => {
-    this.player = player
+  ref = (player) => {
+    this.player = player;
   };
 
   // Actions for handling audio
@@ -88,15 +88,15 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   };
 
   // Start and finish only work with mouse up and mouse down events which break the material ui slider
-  startSeeking = (event) => {
+  startSeeking = () => {
     this.setState({ seeking: true });
   };
 
-  finishSeeking = (event) => {
+  finishSeeking = () => {
     this.setState({ seeking: false });
   };
 
-  commitSeeking = (event, value) => {
+  commitSeeking = (value) => {
     this.player.seekTo(value);
   };
 
@@ -137,7 +137,8 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
       url,
       playing,
       loaded,
-      /* controls, */ volume,
+      // controls,
+      volume,
       loop,
       playedSeconds,
       loadedSeconds,
@@ -150,6 +151,10 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
         height: this.props.image ? '70px' : '40px',
         zIndex: 10,
         marginTop: this.props.image ? '0' : '5px',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        '&:hover': {
+          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+        },
       },
     })(IconButton);
     const AudioSlider = withStyles({
@@ -177,7 +182,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
         <div
           className={cx('audio-player ', { 'with-image': this.props.image })}
         >
-          <ReactPlayer
+          <FilePlayer
             ref={this.ref}
             url={url}
             height="100%"
@@ -206,8 +211,8 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
               {playing ? (
                 <FontAwesomeIcon icon={faPause} />
               ) : (
-                  <FontAwesomeIcon icon={faPlay} />
-                )}
+                <FontAwesomeIcon icon={faPlay} />
+              )}
             </PlayButton>
           </div>
           <AudioSlider

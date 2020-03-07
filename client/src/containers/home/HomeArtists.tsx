@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { config } from '../../config';
 
 import { artistsPages } from '../../redux/ducks/get-artists-pages';
+import tear_2 from '../../images/home/home_tear_2.png';
 
 interface Props {
   getArtistsPages: Function;
@@ -13,7 +14,6 @@ interface Props {
     loading: boolean;
     pages: [];
   };
-  bgColor: string;
 }
 
 interface State {
@@ -41,22 +41,22 @@ class HomeArtistsComponent extends React.Component<Props, State> {
     }
 
     return (
-      <div
-        className="home-artists"
-        style={{ backgroundColor: this.props.bgColor }}
-      >
-        <h1 className="home-artists__title">Featured Artists</h1>
-        <div className="container">
-          <div className="row justify-content-center">
-            {this.getArtistsList(artistsPages)}
-          </div>
-          <div className="row">
-            <a
-              href={config.menuUrls.createArtist}
-              className="home-artists__button btn btn-ampled center"
-            >
-              Create Your Artist Page
-            </a>
+      <div>
+        <img className="tear tear_2" src={tear_2} alt="" />
+        <div className="home-artists">
+          <h1 className="home-artists__title">Featured Artists</h1>
+          <div className="container">
+            <div className="row justify-content-center">
+              {this.getArtistsList(artistsPages)}
+            </div>
+            <div className="row">
+              <a
+                href={config.menuUrls.createArtist}
+                className="home-artists__button btn btn-ampled center"
+              >
+                Create Your Artist Page
+              </a>
+            </div>
           </div>
         </div>
       </div>

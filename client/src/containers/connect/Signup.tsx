@@ -11,11 +11,11 @@ import { Store } from '../../redux/configure-store';
 import * as store from 'store';
 import { signupAction } from '../../redux/signup/signup';
 import { loginAction } from '../../redux/authentication/login';
+import { showToastAction } from '../../redux/toast/toast-modal';
 
 import { initialState as authenticationInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as signupInitialState } from '../../redux/signup/initial-state';
-import { showToastMessage, MessageType } from '../shared/toast/toast';
 
 import tear from '../../images/background_tear.png';
 
@@ -32,6 +32,7 @@ const mapDispatchToProps = (dispatch) => ({
   signup: bindActionCreators(signupAction, dispatch),
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
 });
 
 interface SignupProps {
@@ -74,11 +75,10 @@ class SignupComponent extends React.Component<Props, any> {
       authentication.authModalOpen &&
       !authentication.authenticating
     ) {
-      showToastMessage(
-        'Signed up! Please wait while we log you in.',
-        MessageType.SUCCESS,
-        { timeOut: 8000 },
-      );
+      this.props.showToast({
+        message: 'Signed up! Please wait while we log you in.',
+        type: 'success',
+      });
       this.doLogin();
     }
   }
@@ -147,11 +147,10 @@ class SignupComponent extends React.Component<Props, any> {
       this.setState({ submitted: true });
       this.checkErrors();
     } else {
-      showToastMessage(
-        'Error signing up. Maybe you already have an account?',
-        MessageType.ERROR,
-        { timeOut: 8000 },
-      );
+      this.props.showToast({
+        message: 'Error signing up. Maybe you already have an account?',
+        type: 'error',
+      });
     }
   };
 

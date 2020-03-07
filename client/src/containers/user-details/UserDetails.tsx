@@ -10,21 +10,38 @@ import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
 import { updateMeAction } from '../../redux/me/update-me';
-import { updateCardAction } from '../..//redux/me/update-card';
+import { updateCardAction } from '../../redux/me/update-card';
+import { showToastAction } from '../../redux/toast/toast-modal';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { Button, DialogActions, MenuItem, TextField, InputAdornment, CircularProgress, Card, CardContent } from '@material-ui/core';
-import { faTwitter, faInstagram, faCcAmex, faCcDiscover, faCcMastercard, faCcVisa, faCcStripe } from '@fortawesome/free-brands-svg-icons';
+import {
+  Button,
+  DialogActions,
+  MenuItem,
+  TextField,
+  InputAdornment,
+  CircularProgress,
+  Card,
+  CardContent,
+} from '@material-ui/core';
+import {
+  faTwitter,
+  faInstagram,
+  faCcAmex,
+  faCcDiscover,
+  faCcMastercard,
+  faCcVisa,
+  faCcStripe,
+} from '@fortawesome/free-brands-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
 import { UploadFile } from '../shared/upload/UploadFile';
 import { StripePaymentProvider } from '../artist/support/StripePaymentProvider';
-import { showToastMessage, MessageType } from '../shared/toast/toast';
 
 import avatar from '../../images/ampled_avatar.svg';
 
@@ -34,7 +51,7 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
 type Props = typeof loginInitialState &
   typeof meInitialState &
-  Dispatchers & { history: any; errorCard: any; };
+  Dispatchers & { history: any; errorCard: any };
 
 const SingleCardDisplay = ({ brand, last4, exp_month, exp_year, is_valid }) => {
   let brandIcon = faCcStripe;
@@ -83,14 +100,15 @@ const SingleCardDisplay = ({ brand, last4, exp_month, exp_year, is_valid }) => {
 };
 
 interface CardInfoProps {
-  brand: String;
-  last4: String;
-  exp_month: String;
-  exp_year: String;
-  is_valid: Boolean;
+  brand: string;
+  last4: string;
+  exp_month: string;
+  exp_year: string;
+  is_valid: boolean;
   updateCard: Function;
-  updatedCard: Boolean;
+  updatedCard: boolean;
   errorCard: any;
+  showToast: Function;
 }
 
 class CardInfo extends React.Component<CardInfoProps> {
@@ -113,28 +131,30 @@ class CardInfo extends React.Component<CardInfoProps> {
           {brand ? (
             <div>
               <SingleCardDisplay {...this.props} />
-              <button className="btn btn-link btn-edit-card" onClick={() => this.setState({ showEditForm: !showEditForm })}>
+              <button
+                className="btn btn-link btn-edit-card"
+                onClick={() => this.setState({ showEditForm: !showEditForm })}
+              >
                 Replace this card
               </button>
             </div>
           ) : (
-              <Card className="card card-empty">
-                <CardContent>
-                  <span
-                    className="btn btn-link btn-edit-card"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    No card stored
+            <Card className="card card-empty">
+              <CardContent>
+                <span
+                  className="btn btn-link btn-edit-card"
+                  style={{ textDecoration: 'none' }}
+                >
+                  No card stored
                 </span>
-                  {/*
+                {/*
                 <button className="btn btn-link btn-edit-card" onClick={() => this.setState({ showEditForm: !showEditForm })}>
                   Add a payment method                
                 </button>
                 */}
-                </CardContent>
-              </Card>
-            )}
-          
+              </CardContent>
+            </Card>
+          )}
         </div>
       );
     } else {
@@ -149,6 +169,7 @@ class CardInfo extends React.Component<CardInfoProps> {
           createSubscription={() => null}
           updateCard={updateCard}
           errorCard={errorCard}
+          showToast={this.props.showToast}
         />
       );
     }
@@ -188,25 +209,28 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   validateForm = () => {
     let ok = true;
-    if ( ! this.state.name.length ){
+    if (!this.state.name.length) {
       ok = false;
       this.setState({ name_error: true });
     } else {
       this.setState({ name_error: false });
     }
-    if ( ! this.state.city.length ){
+    if (!this.state.city.length) {
       ok = false;
       this.setState({ city_error: true });
     } else {
       this.setState({ city_error: false });
     }
-    if ( ! this.state.country.length ){
+    if (!this.state.country.length) {
       ok = false;
       this.setState({ country_error: true });
     } else {
       this.setState({ country_error: false });
     }
-    if (/[@:/]/ig.test(this.state.twitter) || /[@:/]/ig.test(this.state.instagram)) {
+    if (
+      /[@:/]/gi.test(this.state.twitter) ||
+      /[@:/]/gi.test(this.state.instagram)
+    ) {
       ok = false;
       this.setState({ social_error: true });
     } else {
@@ -216,30 +240,45 @@ class UserDetailsComponent extends React.Component<Props, any> {
   };
 
   handleSubmit = async (e) => {
-
+    const { showToast } = this.props;
     e.preventDefault();
 
-    if ( !this.validateForm() ){
-      showToastMessage("There was an error with your fields.", MessageType.ERROR, {timeOut: 4000});
+    if (!this.validateForm()) {
+      showToast({
+        message: 'There was an error with your fields.',
+        type: 'error',
+      });
       return;
     }
 
-    const submitResult = await this.props.updateMe( this.state );
+    const submitResult = await this.props.updateMe(this.state);
 
     if (submitResult) {
-      showToastMessage("Your changes have been saved.", MessageType.SUCCESS, {timeOut: 8000});
-    }
-    else {
-      showToastMessage("There was an error submitting your details.", MessageType.ERROR, {timeOut: 8000});
+      showToast({
+        message: 'Your changes have been saved.',
+        type: 'success',
+      });
+    } else {
+      showToast({
+        messaage: 'There was an error submitting your details.',
+        type: 'error',
+      });
     }
   };
 
   componentDidMount() {
-    this.props.getMe().then( ( userData ) => { this.loadUserDataIntoState( userData ) } )
+    this.props.getMe().then((userData) => {
+      this.loadUserDataIntoState(userData);
+    });
   }
 
   componentDidUpdate() {
-    if (this.props.token && !this.props.error && !this.props.userData && !this.props.loadingMe) {
+    if (
+      this.props.token &&
+      !this.props.error &&
+      !this.props.userData &&
+      !this.props.loadingMe
+    ) {
       this.props.getMe();
     }
 
@@ -254,7 +293,11 @@ class UserDetailsComponent extends React.Component<Props, any> {
       <div className="user-image-container">
         <button onClick={this.showUserPhotoModal} aria-label="Edit avatar">
           {userData.image ? (
-            <img src={userData.image} className="user-image" alt="Your avatar" />
+            <img
+              src={userData.image}
+              className="user-image"
+              alt="Your avatar"
+            />
           ) : (
             <img src={avatar} className="user-image" alt="Your avatar" />
           )}
@@ -268,14 +311,19 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   renderAddPhotoButton = () => (
     <div className="add-photo-button-container">
-      <UploadFile inputRefId="input-user-photo" uploadFile={this.loadPhotoContent} />
+      <UploadFile
+        inputRefId="input-user-photo"
+        uploadFile={this.loadPhotoContent}
+      />
       <div className="action-buttons single-button">
         <button
           disabled={this.props.updating}
           className="add-media"
           onClick={() => document.getElementById('input-user-photo').click()}
         >
-          {this.state.photoContent || this.props.userData.image ? 'Change photo' : 'Add photo'}
+          {this.state.photoContent || this.props.userData.image
+            ? 'Change photo'
+            : 'Add photo'}
         </button>
       </div>
     </div>
@@ -289,25 +337,37 @@ class UserDetailsComponent extends React.Component<Props, any> {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
-          <img src={userData.image} className='image-preview loading-image' alt="Loading" />
+          <img
+            src={userData.image}
+            className="image-preview loading-image"
+            alt="Loading"
+          />
         </div>
       );
     } else if (processingImage) {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
-          <img src={avatar} className='image-preview loading-image' alt="Loading" />
+          <img
+            src={avatar}
+            className="image-preview loading-image"
+            alt="Loading"
+          />
         </div>
       );
     }
 
     const placeholderImage = userData.image ? (
-      <img src={userData.image} className='image-preview' alt="Avatar" />
+      <img src={userData.image} className="image-preview" alt="Avatar" />
     ) : (
-        <img src={avatar} className="image-preview" alt="Avatar" />
-      );
+      <img src={avatar} className="image-preview" alt="Avatar" />
+    );
 
-    return photoBody ? <img src={photoBody} className="image-preview" alt="Avatar" /> : placeholderImage;
+    return photoBody ? (
+      <img src={photoBody} className="image-preview" alt="Avatar" />
+    ) : (
+      placeholderImage
+    );
   };
 
   renderPhotoSelector = () => {
@@ -316,10 +376,18 @@ class UserDetailsComponent extends React.Component<Props, any> {
         {this.renderPhoto()}
         {this.renderAddPhotoButton()}
         <div className="action-buttons">
-          <button disabled={this.props.updating} className="cancel-button" onClick={this.closeUserPhotoModal}>
+          <button
+            disabled={this.props.updating}
+            className="cancel-button"
+            onClick={this.closeUserPhotoModal}
+          >
             Cancel
           </button>
-          <button disabled={!this.state.photoContent || this.props.updating} className="continue-button" onClick={this.saveUserPhoto}>
+          <button
+            disabled={!this.state.photoContent || this.props.updating}
+            className="continue-button"
+            onClick={this.saveUserPhoto}
+          >
             Save
           </button>
         </div>
@@ -327,7 +395,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     );
   };
 
-  loadUserDataIntoState = userData => {
+  loadUserDataIntoState = (userData) => {
     this.setState({
       name: userData.name || '',
       last_name: userData.last_name || '',
@@ -343,7 +411,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       ship_country: userData.ship_country || 'United States',
       ship_zip: userData.ship_zip || '',
     });
-  }
+  };
 
   loadPhotoContent = (photoContent) => {
     this.setState({ processingImage: true });
@@ -371,13 +439,16 @@ class UserDetailsComponent extends React.Component<Props, any> {
   updateUserPhoto = () => {
     this.closeUserPhotoModal();
     this.props.setMe({ image: this.props.updatedData.profileImageUrl });
-    showToastMessage('User photo updated!', MessageType.SUCCESS);
+    this.props.showToast({
+      message: 'User photo updated!',
+      type: 'success',
+    });
   };
 
   showUserPhotoModal = (e) => {
     e.preventDefault();
     this.setState({ showUserPhotoModal: true });
-  }
+  };
   closeUserPhotoModal = () => this.setState({ showUserPhotoModal: false });
 
   renderBasicInfo = () => {
@@ -398,7 +469,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <TextField
                     name="name"
                     label="First name"
-                    id="first-name" 
+                    id="first-name"
                     value={this.state.name}
                     onChange={this.handleChange}
                     fullWidth
@@ -410,7 +481,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   <TextField
                     name="last_name"
                     label="Last name (Optional)"
-                    id="last-name" 
+                    id="last-name"
                     value={this.state.last_name}
                     onChange={this.handleChange}
                     fullWidth
@@ -470,10 +541,11 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     onChange={this.handleChange}
                     fullWidth
                     InputProps={{
-                      startAdornment:
-                        (<InputAdornment position="start">
+                      startAdornment: (
+                        <InputAdornment position="start">
                           <FontAwesomeIcon className="icon" icon={faTwitter} />
-                        </InputAdornment>)
+                        </InputAdornment>
+                      ),
                     }}
                     InputLabelProps={{ shrink: true }}
                   />
@@ -486,10 +558,14 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     onChange={this.handleChange}
                     fullWidth
                     InputProps={{
-                      startAdornment:
-                        (<InputAdornment position="start">
-                          <FontAwesomeIcon className="icon" icon={faInstagram} />
-                        </InputAdornment>)
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <FontAwesomeIcon
+                            className="icon"
+                            icon={faInstagram}
+                          />
+                        </InputAdornment>
+                      ),
                     }}
                     InputLabelProps={{ shrink: true }}
                   />
@@ -498,7 +574,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
                       Don't include @ or the full URL.
                       <br />
                       e.g. 'ampl3d' not '@ampl3d' or 'twitter.com/ampl3d'.
-                      <br /><br />
+                      <br />
+                      <br />
                     </span>
                   )}
                   <TextField
@@ -520,7 +597,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
         </div>
       </div>
     );
-  }
+  };
 
   renderPayments = () => {
     const {
@@ -528,6 +605,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       updatedCard,
       updateCard,
       errorCard,
+      showToast,
     } = this.props;
 
     return (
@@ -539,24 +617,32 @@ class UserDetailsComponent extends React.Component<Props, any> {
           <div className="col-md-10">
             <div className="row no-gutters">
               <div className="col-sm-8 col-md-5">
-                <CardInfo {...cardInfo} updatedCard={updatedCard} updateCard={updateCard} errorCard={errorCard} />
+                <CardInfo
+                  {...cardInfo}
+                  updatedCard={updatedCard}
+                  updateCard={updateCard}
+                  errorCard={errorCard}
+                  showToast={showToast}
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
     );
-  }
+  };
 
   renderAddress = () => {
-
     return (
       <div className="address">
         <div className="row">
           <div className="col-md-2 user-details__side">
             <div className="user-details__title">Address</div>
             <h6>Optional</h6>
-            <div className="user-details__info">This is only to allow the artists you support the ability to send you things.</div>
+            <div className="user-details__info">
+              This is only to allow the artists you support the ability to send
+              you things.
+            </div>
           </div>
 
           <div className="col-md-10">
@@ -701,7 +787,6 @@ class UserDetailsComponent extends React.Component<Props, any> {
                   />
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -711,10 +796,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   renderButtons = () => (
     <DialogActions className="action-buttons">
-      <Button
-        type="submit"
-        className="finished-button"
-      >
+      <Button type="submit" className="finished-button">
         Finished
       </Button>
     </DialogActions>
@@ -722,7 +804,10 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   renderContent = () => (
     <MuiThemeProvider theme={theme}>
-      <Modal open={this.state.showUserPhotoModal} onClose={this.closeUserPhotoModal}>
+      <Modal
+        open={this.state.showUserPhotoModal}
+        onClose={this.closeUserPhotoModal}
+      >
         {this.renderPhotoSelector()}
       </Modal>
       <form onSubmit={this.handleSubmit}>
@@ -738,10 +823,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
     const { userData } = this.props;
     return (
       <div className="container user-details">
-          <Loading
-            artistLoading={this.props.loadingMe}
-          />
-          {userData && this.renderContent()}
+        <Loading artistLoading={this.props.loadingMe} />
+        {userData && this.renderContent()}
       </div>
     );
   }
@@ -758,6 +841,7 @@ const mapDispatchToProps = (dispatch) => ({
   setMe: bindActionCreators(setUserDataAction, dispatch),
   updateMe: bindActionCreators(updateMeAction, dispatch),
   updateCard: bindActionCreators(updateCardAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
 });
 
 const UserDetails = connect(

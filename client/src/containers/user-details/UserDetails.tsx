@@ -149,7 +149,7 @@ class CardInfo extends React.Component<CardInfoProps> {
                 </span>
                 {/*
                 <button className="btn btn-link btn-edit-card" onClick={() => this.setState({ showEditForm: !showEditForm })}>
-                  Add a payment method                
+                  Add a payment method
                 </button>
                 */}
               </CardContent>
@@ -184,6 +184,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     processingImage: false,
     name: '',
     last_name: '',
+    email: '',
     city: '',
     country: '',
     twitter: '',
@@ -399,6 +400,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     this.setState({
       name: userData.name || '',
       last_name: userData.last_name || '',
+      email: userData.email || '',
       city: userData.city || '',
       country: userData.country || '',
       twitter: userData.twitter || '',
@@ -451,6 +453,31 @@ class UserDetailsComponent extends React.Component<Props, any> {
   };
   closeUserPhotoModal = () => this.setState({ showUserPhotoModal: false });
 
+  renderEmailAddress = () => {
+    return (
+      <div className="row no-gutters">
+        <div className="col-2 col-md-3">
+          <div className="user-details__subtitle">Email</div>
+          <h6>Required</h6>
+        </div>
+        <div className="row col-10 col-md-9">
+          <div className="col-md-6">
+            <TextField
+              name="email"
+              label="Email"
+              id="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+              fullWidth
+              required
+              InputLabelProps={{ shrink: true }}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   renderBasicInfo = () => {
     return (
       <div className="basic-info">
@@ -490,6 +517,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                 </div>
               </div>
             </div>
+            {this.renderEmailAddress()}
             <div className="row no-gutters">
               <div className="col-2 col-md-3">
                 <div className="user-details__subtitle">Location</div>

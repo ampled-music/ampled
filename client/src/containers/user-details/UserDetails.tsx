@@ -457,12 +457,13 @@ class UserDetailsComponent extends React.Component<Props, any> {
     return (
       <div className="row no-gutters">
         <div className="col-2 col-md-3">
-          <div className="user-details__subtitle">Email</div>
+          <div className="user-details__subtitle">Account</div>
           <h6>Required</h6>
         </div>
         <div className="row col-10 col-md-9">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <TextField
+              type="email"
               name="email"
               label="Email"
               id="email"

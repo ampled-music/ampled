@@ -185,6 +185,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     name: '',
     last_name: '',
     email: '',
+    originalEmail: '', // used for checking if the user is attempting to update their email
     city: '',
     country: '',
     twitter: '',
@@ -255,8 +256,16 @@ class UserDetailsComponent extends React.Component<Props, any> {
     const submitResult = await this.props.updateMe(this.state);
 
     if (submitResult) {
+      const hasEmailChanged = this.state.email !== this.state.originalEmail;
+      const successMessage = 'Your changes have been saved.';
+      const emailChangedMessage =
+        'You changed the email address associated with your account. Use this new email address for future logins.';
+      const message = hasEmailChanged
+        ? `${successMessage} ${emailChangedMessage}`
+        : successMessage;
+
       showToast({
-        message: 'Your changes have been saved.',
+        message,
         type: 'success',
       });
     } else {

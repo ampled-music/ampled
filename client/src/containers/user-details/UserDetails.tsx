@@ -261,7 +261,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       });
     } else {
       showToast({
-        messaage: 'There was an error submitting your details.',
+        message: 'There was an error submitting your details.',
         type: 'error',
       });
     }

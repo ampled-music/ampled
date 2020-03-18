@@ -40,13 +40,15 @@ class VideoModalComponent extends React.Component<Props, any> {
           onClose={(e) => this.props.onClose(e)}
         >
           <div className="video">
-            <VideoComponent
-              className="react-player"
-              url={this.props.videoUrl}
-              width="100%"
-              height="100%"
-              playing
-            />
+            {this.props.videoUrl && (
+              <VideoComponent
+                className="react-player"
+                url={this.props.videoUrl}
+                width="100%"
+                height="100%"
+                playing
+              />
+            )}
           </div>
           {this.props.fullScreen && (
             <IconButton

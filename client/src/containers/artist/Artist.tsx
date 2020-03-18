@@ -57,6 +57,9 @@ interface ArtistProps {
     };
     path: string;
   };
+  location: {
+    search: string;
+  };
   history: any;
   artists: typeof artistsInitialState;
   me: typeof meInitialState;
@@ -79,9 +82,14 @@ class ArtistComponent extends React.Component<Props, any> {
   players: Set<any>;
 
   componentDidMount() {
+    const {
+      location: { search },
+    } = this.props;
     window.scrollTo(0, 0);
     this.getArtistInfo();
     this.players = new Set();
+    const successfulSupport = /flash=supported/gi.test(search);
+    this.setState({ successfulSupport });
   }
 
   componentDidUpdate(prevProps: Props, prevState) {
@@ -89,16 +97,16 @@ class ArtistComponent extends React.Component<Props, any> {
       this.getArtistInfo();
     }
 
-    if (this.props.subscriptions.status === SubscriptionStep.Finished) {
-      this.props.showToast({
-        message: `Thanks for supporting ${this.props.artists.artist.name}!`,
-        type: 'success',
-      });
-      // Confetti
-      if (prevState.successfulSupport === false) {
-        this.setState({ successfulSupport: true });
-      }
-    }
+    // if (this.props.subscriptions.status === SubscriptionStep.Finished) {
+    //   this.props.showToast({
+    //     message: `Thanks for supporting ${this.props.artists.artist.name}!`,
+    //     type: 'success',
+    //   });
+    //   // Confetti
+    //   if (prevState.successfulSupport === false) {
+    //     this.setState({ successfulSupport: true });
+    //   }
+    // }
   }
 
   playerCallback = (action: string, instance: any) => {
@@ -271,7 +279,13 @@ class ArtistComponent extends React.Component<Props, any> {
     const {
       artists,
       me: { userData, loadingMe },
+      location: { search },
     } = this.props;
+
+    const { successfulSupport } = this.state;
+    const showConfetti =
+      successfulSupport && artists && !artists.loading && !artists.error;
+
     const artist = artists.artist;
     const loggedUserAccess = this.getLoggedUserPageAccess();
     let isSupporter = false;
@@ -433,10 +447,7 @@ class ArtistComponent extends React.Component<Props, any> {
             discardChanges={this.discardChanges}
           />
           <div className="confetti-overlay">
-            <Confetti
-              active={this.state.successfulSupport}
-              config={this.getConfettiConfig()}
-            />
+            <Confetti active={showConfetti} config={this.getConfettiConfig()} />
           </div>
           <Loading artistLoading={artists.loading || loadingMe} />
         </CloudinaryContext>

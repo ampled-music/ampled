@@ -20,10 +20,23 @@ class MeController < ApplicationController
         exp_year: current_user.card_exp_year, last4: current_user.card_last4,
         is_valid: current_user.card_is_valid }
     else
-      card = Stripe::Customer.retrieve(current_user.stripe_customer_id).sources.data[0]
+      update_card
+    end
+  end
+
+  def update_card
+    card = Stripe::Customer.retrieve(current_user.stripe_customer_id).sources.data[0]
+    if card.nil?
+      current_user.update(card_brand: nil, card_exp_month: nil,
+        card_exp_year: nil, card_last4: nil,
+        card_is_valid: false)
+      { brand: nil, exp_month: nil,
+        exp_year: nil, last4: nil,
+        is_valid: false }
+    else
       current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
-                          card_exp_year: card.exp_year, card_last4: card.last4,
-                          card_is_valid: true)
+        card_exp_year: card.exp_year, card_last4: card.last4,
+        card_is_valid: true)
       { brand: card.brand, exp_month: card.exp_month,
         exp_year: card.exp_year, last4: card.last4,
         is_valid: true }

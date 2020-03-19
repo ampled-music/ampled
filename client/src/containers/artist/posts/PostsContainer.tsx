@@ -114,12 +114,16 @@ class PostsContainerComponent extends React.Component<Props, any> {
       me,
       openAuthModal,
       artistId,
-      loggedUserAccess,
+      // loggedUserAccess,
     } = this.props;
 
     if (!posts) {
       return null;
     }
+
+    const loggedUserAccess = (me?.artistPages || []).filter(
+      (access) => +access.artistId == +artistId,
+    )?.[0];
 
     return this.sortItemsByCreationDate(posts).map((post) => (
       <div key={`post-${post.id}`} id={`post-${post.id}`}>

@@ -94,7 +94,7 @@ class ArtistPagesController < ApplicationController
     # BA - Was this actually a problem? Could we current_user.reload at the top of the method instead?
     user = User.find_by(id: current_user&.id)
     # Only logged-in users who have confirmed their emails may create artist pages.
-    return render json: { status: "error", message: "Confirm your email address first." } if user&.confirmed_at.nil?
+    render json: { status: "error", message: "Please confirm your email address first." } if user&.confirmed_at.nil?
   end
 
   def missing_params_error

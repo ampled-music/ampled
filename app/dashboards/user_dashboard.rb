@@ -18,6 +18,7 @@ class UserDashboard < Administrate::BaseDashboard
     remember_created_at: Field::DateTime,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    confirmed_at: Field::DateTime,
     locked_at: Field::DateTime,
     name: Field::String,
     last_name: Field::String,
@@ -59,6 +60,7 @@ class UserDashboard < Administrate::BaseDashboard
     :locked_at,
     :created_at,
     :updated_at,
+    :confirmed_at,
     :name,
     :last_name,
     :city,
@@ -93,6 +95,7 @@ class UserDashboard < Administrate::BaseDashboard
     :ship_state,
     :ship_zip,
     :ship_country,
+    :confirmed_at,
     :admin,
   ].freeze
 

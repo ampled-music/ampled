@@ -354,12 +354,14 @@ class ArtistComponent extends React.Component<Props, any> {
             loggedUserAccess &&
             this.renderSticky(
               <span>
-                Your page is pending a quick approval.{' '}
+                Your page is pending a quick approval.
+                <br />
+                When you're ready to go,{' '}
                 {/* eslint-disable-next-line react/jsx-no-target-blank */}
-                <a href="https://app.ampled.com/approval" target="_blank">
-                  Learn more here
-                </a>
-                .
+                <a href="mailto:hello@ampled.com" target="_blank">
+                  email us
+                </a>{' '}
+                and let us know.
               </span>,
             )}
           {artist &&

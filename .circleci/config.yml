@@ -38,6 +38,9 @@ jobs:
           name: Run tests
           command: bundle exec rake
       - run: bundle exec rubocop
+      - run:
+          name: Build react client
+          command: npm run build-client
 
   deploy:
     machine:

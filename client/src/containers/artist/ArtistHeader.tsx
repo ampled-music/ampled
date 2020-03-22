@@ -2,7 +2,6 @@ import './artist.scss';
 
 import * as React from 'react';
 
-import { Image, Transformation } from 'cloudinary-react';
 import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from '../../redux/artists/initial-state';
@@ -29,13 +28,6 @@ export class ArtistHeader extends React.Component<Props, any> {
     showConfirmationDialog: false,
   };
 
-  renderArtistName = () => (
-    <div className="artist-header__title">
-      <span className="artist-header__title_flair"></span>
-      {this.props.artist.name}
-    </div>
-  );
-
   canLoggedUserPost = () => {
     return (
       this.props.loggedUserAccess &&
@@ -52,6 +44,13 @@ export class ArtistHeader extends React.Component<Props, any> {
         this.props.loggedUserAccess.role === UserRoles.Owner)
     );
   };
+
+  renderArtistName = () => (
+    <div className="artist-header__title">
+      <span className="artist-header__title_flair"></span>
+      {this.props.artist.name}
+    </div>
+  );
 
   renderFloatingNewPostButton = () =>
     this.canLoggedUserPost() && (
@@ -76,38 +75,6 @@ export class ArtistHeader extends React.Component<Props, any> {
         </button>
       </div>
     );
-
-  renderPhoto = (image: string, crop: number) => {
-    const crop_url_path = `w_${crop},h_${crop},c_fill`;
-    if (image.includes('https://res.cloudinary')) {
-      return image.replace('upload/', `upload/${crop_url_path}/`);
-    } else {
-      return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-    }
-  };
-
-  renderCloudinaryPhoto = (image: string, crop: number, altText: string) => {
-    const crop_url_path = `w_${crop},h_${crop},c_fill`;
-    const cloudinary_id = image.substring(
-      image.lastIndexOf('/') + 1,
-      image.lastIndexOf('.'),
-    );
-    if (image.includes('https://res.cloudinary')) {
-      return (
-        <Image publicId={cloudinary_id} alt={altText}>
-          <Transformation
-            crop="fill"
-            width={crop}
-            height={crop}
-            responsive_placeholder="blank"
-          />
-        </Image>
-      );
-    } else {
-      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-      return <img src={img_src} alt={altText} />;
-    }
-  };
 
   render() {
     return (

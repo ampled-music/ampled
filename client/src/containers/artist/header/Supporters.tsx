@@ -15,38 +15,6 @@ interface Props {
 }
 
 export class Supporters extends React.Component<Props, any> {
-  renderPhoto = (image: string, crop: number) => {
-    const crop_url_path = `w_${crop},h_${crop},c_fill`;
-    if (image.includes('https://res.cloudinary')) {
-      return image.replace('upload/', `upload/${crop_url_path}/`);
-    } else {
-      return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-    }
-  };
-
-  renderCloudinaryPhoto = (image: string, crop: number, altText: string) => {
-    const crop_url_path = `w_${crop},h_${crop},c_fill`;
-    const cloudinary_id = image.substring(
-      image.lastIndexOf('/') + 1,
-      image.lastIndexOf('.'),
-    );
-    if (image.includes('https://res.cloudinary')) {
-      return (
-        <Image publicId={cloudinary_id} alt={altText}>
-          <Transformation
-            crop="fill"
-            width={crop}
-            height={crop}
-            responsive_placeholder="blank"
-          />
-        </Image>
-      );
-    } else {
-      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-      return <img src={img_src} alt={altText} />;
-    }
-  };
-
   canLoggedUserPost = () => {
     return (
       this.props.loggedUserAccess &&
@@ -63,11 +31,18 @@ export class Supporters extends React.Component<Props, any> {
         <div className="supporter__hover-card_header">
           {supporter.profile_image_url && (
             <div className="supporter__hover-card_header_photo">
-              <img
-                className="supporter__hover-card_header_photo_image"
-                src={this.renderPhoto(supporter.profile_image_url, 150)}
+              <Image
+                publicId={supporter.profile_image_url}
                 alt={supporter.name}
-              />
+                className="supporter__hover-card_header_photo_image"
+              >
+                <Transformation
+                  crop="fill"
+                  width={150}
+                  height={150}
+                  responsive_placeholder="blank"
+                />
+              </Image>
             </div>
           )}
           <div className="supporter__hover-card_header_info">
@@ -145,12 +120,19 @@ export class Supporters extends React.Component<Props, any> {
           }
         >
           {supporter.profile_image_url ? (
-            <img
-              className="artist-header__person_image"
-              src={this.renderPhoto(supporter.profile_image_url, 200)}
+            <Image
+              publicId={supporter.profile_image_url}
               alt={supporter.name}
+              className="artist-header__person_image"
               style={style}
-            />
+            >
+              <Transformation
+                crop="fill"
+                width={200}
+                height={200}
+                responsive_placeholder="blank"
+              />
+            </Image>
           ) : (
             <img
               className="artist-header__person_svg"

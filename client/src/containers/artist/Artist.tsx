@@ -11,10 +11,7 @@ import { Helmet } from 'react-helmet';
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
-import {
-  initialState as subscriptionsInitialState,
-  SubscriptionStep,
-} from '../../redux/subscriptions/initial-state';
+import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
 import { CloudinaryContext } from 'cloudinary-react';
 import { PostsContainer } from '../artist/posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
@@ -279,7 +276,6 @@ class ArtistComponent extends React.Component<Props, any> {
     const {
       artists,
       me: { userData, loadingMe },
-      location: { search },
     } = this.props;
 
     const { successfulSupport } = this.state;

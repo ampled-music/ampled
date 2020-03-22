@@ -67,7 +67,7 @@ namespace :dummy do
           user: author,
           artist_page: ap,
           body: Faker::Books::Lovecraft.paragraphs([1, 2].sample).join("\n"),
-          title: Faker::Books::HitchhikersGuideToTheGalaxy.quote
+          title: Faker::Movies::HitchhikersGuideToTheGalaxy.quote
         )
       end
     end

@@ -3,11 +3,7 @@ import * as React from 'react';
 import { config } from '../../config';
 import header_collage from '../../images/home/home_header_collage_5.png';
 
-interface Props {
-  bgColor: string;
-}
-
-class HomeHeader extends React.Component<Props, any> {
+class HomeHeader extends React.Component<any, any> {
   state = {
     showNewsletter: false,
   };

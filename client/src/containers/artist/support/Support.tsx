@@ -63,7 +63,7 @@ export class SupportComponent extends React.Component<Props, any> {
     }
 
     if (subscriptions.status === SubscriptionStep.Finished) {
-      getMe();
+      // getMe();
       this.redirectToArtistsPage();
     }
 
@@ -137,20 +137,38 @@ export class SupportComponent extends React.Component<Props, any> {
     const {
       history,
       match,
+      subscriptions,
       artists: { artist },
     } = this.props;
 
+    const flash =
+      subscriptions.status === SubscriptionStep.Finished
+        ? '?flash=supported'
+        : '';
+
     if (artist && artist.id) {
       if (artist.slug && artist.slug.length > 0) {
-        history.push(routePaths.slugs.replace(':slug', artist.slug));
+        window.location.href = routePaths.slugs.replace(
+          ':slug',
+          artist.slug + flash,
+        );
       } else {
-        history.push(routePaths.artists.replace(':id', String(artist.id)));
+        window.location.href = routePaths.artists.replace(
+          ':id',
+          String(artist.id) + flash,
+        );
       }
     } else {
       if (Number.isNaN(Number(match.params.id))) {
-        history.push(routePaths.slugs.replace(':slug', match.params.id));
+        window.location.href = routePaths.slugs.replace(
+          ':slug',
+          String(match.params.id) + flash,
+        );
       } else {
-        history.push(routePaths.artists.replace(':id', match.params.id));
+        window.location.href = routePaths.artists.replace(
+          ':id',
+          String(match.params.id) + flash,
+        );
       }
     }
   };

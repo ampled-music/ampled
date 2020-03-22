@@ -100,7 +100,7 @@ RSpec.describe "PUT /artist_page", type: :request do
     end
 
     it "returns an error telling the user they need to confirm" do
-      expect(JSON.parse(response.body)["message"]).to match("Confirm your email")
+      expect(JSON.parse(response.body)["message"]).to match("Please confirm your email")
     end
   end
 

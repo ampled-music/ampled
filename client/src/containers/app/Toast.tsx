@@ -50,6 +50,7 @@ class Toast extends React.Component<any> {
           className={`toast toast-${toast.type} ${fading ? 'fading' : ''}`}
           onMouseOver={this.clearTimer}
           onMouseOut={this.setTimer}
+          onClick={this.hideToast}
         >
           <button
             type="button"

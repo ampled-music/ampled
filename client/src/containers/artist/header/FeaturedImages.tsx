@@ -146,6 +146,13 @@ export class FeaturedImages extends React.Component<Props, any> {
     );
   };
 
+  handlePublicID = (image: string) => {
+    const url = image.split('/');
+    const part_1 = url[url.length - 2];
+    const part_2 = url[url.length - 1];
+    return part_1 + '/' + part_2;
+  };
+
   renderBanners = () => {
     const { artist } = this.props;
     return (
@@ -157,8 +164,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                 key={index}
                 className={cx('artist-header__photo', { active: index === 0 })}
               >
-                {console.log(image.split('/'))}
-                <Image publicId={image}>
+                <Image publicId={this.handlePublicID(image)}>
                   <Transformation
                     crop="fill"
                     width="800"

@@ -166,6 +166,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
     }
   };
 
+  handlePublicID = (image: string) => {
+    const url = image.split('/');
+    const part_1 = url[url.length - 2];
+    const part_2 = url[url.length - 1];
+    return part_1 + '/' + part_2;
+  };
+
   renderUserImage = () => {
     const { userData } = this.props;
 
@@ -174,7 +181,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
         <Link to="/user-details">
           {userData.image ? (
             <Image
-              publicId={userData.image}
+              publicId={this.handlePublicID(userData.image)}
               alt={userData.name}
               className="user-image"
             >
@@ -294,7 +301,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
             {ownedPage.image && (
               <Image
-                publicId={ownedPage.image}
+                publicId={this.handlePublicID(ownedPage.image)}
                 alt={ownedPage.name}
                 className="artist__image"
               >
@@ -420,7 +427,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
             className="artist col-sm-4"
           >
             <Image
-              publicId={subscription.image}
+              publicId={this.handlePublicID(subscription.image)}
               alt={subscription.name}
               className="artist__image"
             >

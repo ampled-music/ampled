@@ -24,6 +24,13 @@ export class Supporters extends React.Component<Props, any> {
     );
   };
 
+  handlePublicID = (image: string) => {
+    const url = image.split('/');
+    const part_1 = url[url.length - 2];
+    const part_2 = url[url.length - 1];
+    return part_1 + '/' + part_2;
+  };
+
   renderSupporterHover = ({ supporter }) => {
     const artist_name = this.props.artist.name;
     return (
@@ -32,7 +39,7 @@ export class Supporters extends React.Component<Props, any> {
           {supporter.profile_image_url && (
             <div className="supporter__hover-card_header_photo">
               <Image
-                publicId={supporter.profile_image_url}
+                publicId={this.handlePublicID(supporter.profile_image_url)}
                 alt={supporter.name}
                 className="supporter__hover-card_header_photo_image"
               >
@@ -121,7 +128,7 @@ export class Supporters extends React.Component<Props, any> {
         >
           {supporter.profile_image_url ? (
             <Image
-              publicId={supporter.profile_image_url}
+              publicId={this.handlePublicID(supporter.profile_image_url)}
               alt={supporter.name}
               className="artist-header__person_image"
               style={style}

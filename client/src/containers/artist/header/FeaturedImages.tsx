@@ -157,6 +157,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                 key={index}
                 className={cx('artist-header__photo', { active: index === 0 })}
               >
+                {console.log(image.split('/'))}
                 <Image publicId={image}>
                   <Transformation
                     crop="fill"

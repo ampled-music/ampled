@@ -131,7 +131,8 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
       loadingImage: false,
       publicId: fileInfo.public_id,
     });
-    this.props.setURL(fileInfo.secure_url);
+    console.log(this.state.publicId);
+    this.props.setURL(fileInfo.public_id);
   };
 
   removeImage = async () => {

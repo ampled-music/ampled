@@ -20,6 +20,7 @@ import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
 import { Helmet } from 'react-helmet';
 import Toast from './Toast';
+import { CloudinaryContext } from 'cloudinary-react';
 
 const mapStateToProps = (state: Store) => ({
   ...state.authentication,
@@ -78,25 +79,30 @@ class AppComponent extends React.Component<Props, any> {
     const { toast } = this.props;
     return (
       <div className="page">
-        <Helmet>
-          <title>Ampled | Direct Community Support For Music Artists</title>
-          {process.env.NODE_ENV === 'development' && (
-            <meta name="robots" content="noindex, nofollow" />
-          )}
-        </Helmet>
-        <React.Suspense fallback={<Loading artistLoading={true} />}>
-          <Routes />
-          <Modal
-            open={this.props.authModalOpen}
-            onClose={() => {
-              this.props.onModalCloseAction && this.props.onModalCloseAction();
-              this.props.closeAuthModal();
-            }}
-          >
-            <AuthModal history={this.props.history} />
-          </Modal>
-          {visible && <Toast toast={toast} hideToast={this.props.hideToast} />}
-        </React.Suspense>
+        <CloudinaryContext cloudName="ampled-web">
+          <Helmet>
+            <title>Ampled | Direct Community Support For Music Artists</title>
+            {process.env.NODE_ENV === 'development' && (
+              <meta name="robots" content="noindex, nofollow" />
+            )}
+          </Helmet>
+          <React.Suspense fallback={<Loading artistLoading={true} />}>
+            <Routes />
+            <Modal
+              open={this.props.authModalOpen}
+              onClose={() => {
+                this.props.onModalCloseAction &&
+                  this.props.onModalCloseAction();
+                this.props.closeAuthModal();
+              }}
+            >
+              <AuthModal history={this.props.history} />
+            </Modal>
+            {visible && (
+              <Toast toast={toast} hideToast={this.props.hideToast} />
+            )}
+          </React.Suspense>
+        </CloudinaryContext>
       </div>
     );
   }

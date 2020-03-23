@@ -45,8 +45,8 @@ export class Supporters extends React.Component<Props, any> {
               >
                 <Transformation
                   crop="fill"
-                  width={150}
-                  height={150}
+                  width={100}
+                  height={100}
                   responsive_placeholder="blank"
                 />
               </Image>
@@ -135,8 +135,8 @@ export class Supporters extends React.Component<Props, any> {
             >
               <Transformation
                 crop="fill"
-                width={200}
-                height={200}
+                width={60}
+                height={60}
                 responsive_placeholder="blank"
               />
             </Image>

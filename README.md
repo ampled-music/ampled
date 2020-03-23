@@ -43,9 +43,9 @@ Note: `./bin/rake` runs the springified version of rake (there's a `./bin/rspec`
 
 First you need to install all npm dependencies in both root as well as client.
 
-    $ npm install
+    $ yarn install
     $ cd client
-    $ npm install
+    $ yarn install
 
 Back in the root directory migrate the database
 
@@ -149,6 +149,7 @@ Several common features and operational parameters can be set using environment 
 
 **Required**
 
+* `S3_BUCKET` - AWS S3 bucket name. 
 * `SECRET_KEY_BASE` - Secret key base for verifying signed cookies. Should be 30+ random characters and secret!
 
 **Optional**

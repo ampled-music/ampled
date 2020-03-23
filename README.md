@@ -43,9 +43,9 @@ Note: `./bin/rake` runs the springified version of rake (there's a `./bin/rspec`
 
 First you need to install all npm dependencies in both root as well as client.
 
-    $ npm install
+    $ yarn install
     $ cd client
-    $ npm install
+    $ yarn install
 
 Back in the root directory migrate the database
 

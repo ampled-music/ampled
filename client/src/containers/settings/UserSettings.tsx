@@ -187,8 +187,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
             >
               <Transformation
                 crop="fill"
-                width={200}
-                height={200}
+                width={250}
+                height={250}
                 responsive_placeholder="blank"
               />
             </Image>
@@ -307,8 +307,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
               >
                 <Transformation
                   crop="fill"
-                  width={200}
-                  height={200}
+                  width={250}
+                  height={250}
                   responsive_placeholder="blank"
                 />
               </Image>
@@ -433,8 +433,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
             >
               <Transformation
                 crop="fill"
-                width={200}
-                height={200}
+                width={250}
+                height={250}
                 responsive_placeholder="blank"
               />
             </Image>

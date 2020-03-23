@@ -58,8 +58,6 @@ class ArtistPagesController < ApplicationController
 
     set_members
 
-    set_images
-
     ArtistPageCreateEmailJob.perform_async(@artist_page.id, current_user.id) unless ENV["REDIS_URL"].nil?
 
     render json: { status: "ok", message: "Your page has been created!" }
@@ -70,9 +68,11 @@ class ArtistPagesController < ApplicationController
     render json: { status: "error", message: e.message }
   end
 
+  # If the update includes new sets of images, we will delete all the old images after the update is successful.
   def update
+    old_image_ids = @artist_page.images.map(&:id)
     if @artist_page.update(artist_page_params)
-      set_images unless has_no_images
+      Image.where(id: old_image_ids).delete_all unless has_no_images
       unless has_no_members
         @artist_page.owners.clear
         set_members
@@ -142,7 +142,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def has_no_images
-    params[:images].nil? || params[:images][0].nil?
+    artist_page_params[:images_attributes].blank?
   end
 
   def check_has_image
@@ -186,11 +186,19 @@ class ArtistPagesController < ApplicationController
     render json: {}, status: :bad_request unless current_user&.owned_pages&.include?(@artist_page)
   end
 
+  # We accept both 'images' and 'images_attributes' as artist_page parameters from the frontend.
+  # Here we rename 'images' to 'images_attribures', which is the key that Rails' nested attribute
+  # support expects.
+  def rename_image_params
+    params[:artist_page][:images_attributes] = params[:artist_page][:images] if params[:artist_page]&.include?(:images)
+  end
+
   # Only allow a trusted parameter "white list" through.
   def artist_page_params
+    rename_image_params
     params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :banner_image_url,
-                                        :slug, :location, :accent_color, :video_url, :verb_plural, :images,
-                                        :members)
+                                        :slug, :location, :accent_color, :video_url, :verb_plural,
+                                        :members, images_attributes: Image::PERMITTED_PARAMS)
   end
 
   # Helper functions for creating / updating an artist page.
@@ -229,14 +237,5 @@ class ArtistPagesController < ApplicationController
     member_user.skip_confirmation_notification!
     member_user.save!
     member_user
-  end
-
-  def set_images
-    # - create new images based on uploads
-    @artist_page.images.destroy_all
-
-    params[:images].map do |image_url|
-      @artist_page.images.create(url: image_url)
-    end
   end
 end

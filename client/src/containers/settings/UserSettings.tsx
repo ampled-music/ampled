@@ -187,8 +187,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
             >
               <Transformation
                 crop="fill"
-                width={250}
-                height={250}
+                width={120}
+                height={120}
                 responsive_placeholder="blank"
               />
             </Image>

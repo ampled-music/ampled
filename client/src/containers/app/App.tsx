@@ -54,11 +54,6 @@ class AppComponent extends React.Component<Props, any> {
         message: 'There was an error confirming your email.',
         type: 'error',
       });
-    } else if (/flash=supported/gi.test(search)) {
-      this.props.showToast({
-        message: 'Thanks for your support!',
-        type: 'success',
-      });
     }
   }
 

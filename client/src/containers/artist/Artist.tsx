@@ -92,6 +92,10 @@ class ArtistComponent extends React.Component<Props, any> {
     const successfulSupport = /flash=supported/gi.test(search);
     this.setState({ successfulSupport });
     if (successfulSupport) {
+      this.props.showToast({
+        message: 'Thanks for your support!',
+        type: 'success',
+      });
       this.props.history.replace(this.props.location.pathname);
     }
   }

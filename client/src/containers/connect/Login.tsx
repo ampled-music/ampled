@@ -25,6 +25,13 @@ interface LoginProps {
   history: any;
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  login: bindActionCreators(loginAction, dispatch),
+  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
+});
+
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 type Props = typeof loginInitialState & Dispatchers & LoginProps;
 
@@ -39,7 +46,13 @@ class LoginComponent extends React.Component<Props, any> {
     if (this.props.error && !prevProps.error) {
       let { error } = this.props;
       if (/confirm your email/i.test(this.props.error)) {
-        error = `${error}<br>Please use the link in the login form.`;
+        error = (
+          <>
+            {error}
+            <br />
+            Please use the link in the login form.
+          </>
+        );
         this.setState({
           showConfirmationResend: true,
         });
@@ -178,7 +191,7 @@ class LoginComponent extends React.Component<Props, any> {
           {process.env.NODE_ENV === 'development' &&
             !this.state.showConfirmationResend && (
               <label>
-                Don't have an account?{' '}
+                Don&apos;t have an account?{' '}
                 <button
                   className="link"
                   onClick={() =>
@@ -198,13 +211,6 @@ class LoginComponent extends React.Component<Props, any> {
 
 const mapStateToProps = (state: Store) => ({
   ...state.authentication,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  login: bindActionCreators(loginAction, dispatch),
-  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
-  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
-  showToast: bindActionCreators(showToastAction, dispatch),
 });
 
 const Login = connect(mapStateToProps, mapDispatchToProps)(LoginComponent);

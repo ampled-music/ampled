@@ -162,7 +162,7 @@ class ArtistPage < ApplicationRecord
   def check_approved
     return unless approved_changed? && approved
 
-    logger.info name + " approved"
+    ArtistPageApprovedEmailJob.perform_async(id) unless ENV["REDIS_URL"].nil?
   end
 
   private

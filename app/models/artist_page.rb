@@ -45,6 +45,8 @@ class ArtistPage < ApplicationRecord
 
   before_save :set_screenshot
 
+  before_save :check_approved
+
   def sluggy_slug
     return unless slug
 
@@ -155,6 +157,12 @@ class ArtistPage < ApplicationRecord
 
   def set_screenshot
     self.video_screenshot_url = find_screenshot_url(video_url) unless video_url.nil?
+  end
+
+  def check_approved
+    if self.approved_changed? && approved 
+      logger.info name + " approved"
+    end
   end
 
   private

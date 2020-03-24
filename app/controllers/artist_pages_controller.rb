@@ -196,7 +196,7 @@ class ArtistPagesController < ApplicationController
     @artist_page.images.destroy_all
 
     params[:images].map.with_index do |image_url, index|
-      @artist_page.images.create(url: image_url, order: index)
+      @artist_page.images.create(url: image_url)
     end
   end
 end

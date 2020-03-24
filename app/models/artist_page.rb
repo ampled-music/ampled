@@ -160,9 +160,9 @@ class ArtistPage < ApplicationRecord
   end
 
   def check_approved
-    if self.approved_changed? && approved 
-      logger.info name + " approved"
-    end
+    return unless approved_changed? && approved
+
+    logger.info name + " approved"
   end
 
   private

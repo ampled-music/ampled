@@ -537,7 +537,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <div className="container user-settings-container">
-        <Loading artistLoading={this.props.loadingMe} />
+        <Loading artistLoading={this.props.loadingMe && !this.props.userData} />
         {userData && this.renderContent()}
         {this.renderCancelSubscriptionModal()}
       </div>

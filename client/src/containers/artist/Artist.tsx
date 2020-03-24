@@ -90,6 +90,12 @@ class ArtistComponent extends React.Component<Props, any> {
     this.players = new Set();
     const successfulSupport = /flash=supported/gi.test(search);
     this.setState({ successfulSupport });
+    if (successfulSupport) {
+      this.props.showToast({
+        message: 'Thanks for your support!',
+        type: 'success',
+      });
+    }
   }
 
   componentDidUpdate(prevProps: Props, prevState) {

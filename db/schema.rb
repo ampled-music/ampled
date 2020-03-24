@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_02_175336) do
+ActiveRecord::Schema.define(version: 2020_03_23_235330) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "artist_pages", force: :cascade do |t|
@@ -51,10 +50,10 @@ ActiveRecord::Schema.define(version: 2020_02_02_175336) do
 
   create_table "images", force: :cascade do |t|
     t.string "url"
-    t.integer "order"
     t.bigint "artist_page_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "public_id"
     t.index ["artist_page_id"], name: "index_images_on_artist_page_id"
   end
 
@@ -120,6 +119,7 @@ ActiveRecord::Schema.define(version: 2020_02_02_175336) do
     t.string "profile_image_url"
     t.string "jti", null: false
     t.string "stripe_customer_id"
+    t.string "login_redirect_url"
     t.string "last_name"
     t.string "city"
     t.string "country"

@@ -11,7 +11,6 @@ class ImageDashboard < Administrate::BaseDashboard
     artist_page: Field::BelongsTo,
     id: Field::Number,
     url: Field::String,
-    order: Field::Number,
     public_id: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -26,7 +25,6 @@ class ImageDashboard < Administrate::BaseDashboard
     :artist_page,
     :id,
     :url,
-    :order,
     :public_id,
   ].freeze
 
@@ -36,7 +34,6 @@ class ImageDashboard < Administrate::BaseDashboard
     :artist_page,
     :id,
     :url,
-    :order,
     :public_id,
     :created_at,
     :updated_at,
@@ -48,7 +45,6 @@ class ImageDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :artist_page,
     :url,
-    :order,
     :public_id,
   ].freeze
 

@@ -59,6 +59,7 @@ interface ArtistProps {
   };
   location: {
     search: string;
+    pathname: string;
   };
   history: any;
   artists: typeof artistsInitialState;
@@ -95,6 +96,7 @@ class ArtistComponent extends React.Component<Props, any> {
         message: 'Thanks for your support!',
         type: 'success',
       });
+      this.props.history.replace(this.props.location.pathname);
     }
   }
 

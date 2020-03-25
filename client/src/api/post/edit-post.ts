@@ -23,7 +23,7 @@ export const editPost = async (post: Post) => {
 
   const { data } = await apiAxios({
     method: 'put',
-    url: `/posts/${id}`,
+    url: `/posts/${id}.json`,
     headers: {
       'Content-Type': 'application/json',
     },

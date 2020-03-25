@@ -8,4 +8,6 @@ const middleware = createProxyMiddleware({
 
 module.exports = function(app) {
   app.use('/*.json', middleware);
+  app.use('/uploads/*', middleware);
+  app.use('/subscriptions*', middleware);
 };

@@ -1,6 +1,6 @@
 class ArtistPageApprovedEmailJob
   include Sidekiq::Worker
-  attr_accessor :artist, :user
+  attr_accessor :artist, :users
 
   def perform(artist_id)
     @artist = ArtistPage.find(artist_id)

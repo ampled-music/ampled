@@ -21,6 +21,7 @@ class SubscriptionsController < ApplicationController
 
   def create
     subscription = subscribe_stripe
+    UserSupportedArtistEmailJob.perform_async(subscription.id) unless ENV["REDIS_URL"].nil?
     NewSupporterEmailJob.perform_async(subscription.id) unless ENV["REDIS_URL"].nil?
     render json: subscription
   rescue StandardError => e

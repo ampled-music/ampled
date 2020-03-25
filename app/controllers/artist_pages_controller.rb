@@ -203,8 +203,8 @@ class ArtistPagesController < ApplicationController
     # - create new images based on uploads
     @artist_page.images.destroy_all
 
-    params[:images].map.with_index do |image_url, index|
-      @artist_page.images.create(url: image_url, order: index)
+    params[:images].map do |image_url|
+      @artist_page.images.create(url: image_url)
     end
   end
 end

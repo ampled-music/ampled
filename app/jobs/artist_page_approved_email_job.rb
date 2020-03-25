@@ -6,7 +6,7 @@ class ArtistPageApprovedEmailJob
     @artist = ArtistPage.find(artist_id)
     return if artist.blank?
 
-    @users = post.artist_page.owners
+    @users = artist.owners
 
     SendBatchEmail.call(messages)
   end

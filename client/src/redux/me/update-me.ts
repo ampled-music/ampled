@@ -9,8 +9,13 @@ export const updateMeAction = createActionThunk(
   actions.updateMe,
   async (updatedMe) => {
     if (updatedMe.file) {
-      const fileInfo = await uploadFileToCloudinary(updatedMe.file);
-      return updateMe({ profile_image_url: fileInfo.secure_url });
+      const cloudinaryResponse = await uploadFileToCloudinary(updatedMe.file);
+
+      if (!cloudinaryResponse) {
+        // TODO: handle error when cloudinary request errors once we can pass along error messages
+        return () => undefined;
+      }
+      return updateMe({ profile_image_url: cloudinaryResponse.secure_url });
     }
 
     return updateMe({

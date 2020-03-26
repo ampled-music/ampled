@@ -16,9 +16,19 @@ export const uploadFileToCloudinary = async (file: any) => {
     headers: { 'X-Requested-With': 'XMLHttpRequest' },
   };
 
-  const { data } = await axios.post(config.cloudinary.uploadImageUrl, fd, reqConfig);
+  console.log('uploading to cloudinary');
 
-  return data;
+  try {
+    const { data } = await axios.post(
+      config.cloudinary.uploadImageUrl,
+      fd,
+      reqConfig,
+    );
+
+    return data;
+  } catch (err) {
+    return undefined;
+  }
 };
 
 const createSignature = (timestamp) => {

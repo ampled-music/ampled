@@ -10,6 +10,7 @@ import { getArtistAction } from '../../../../redux/artists/get-details';
 import { Store } from '../../../../redux/configure-store';
 import { createPostAction } from '../../../../redux/posts/create';
 import { editPostAction } from '../../../../redux/posts/edit';
+import { showToastAction } from '../../../../redux/toast/toast-modal';
 
 import {
   Button,
@@ -132,16 +133,29 @@ class PostFormComponent extends React.Component<Props, any> {
       this.removeImage();
     }
 
-    const fileInfo = await uploadFileToCloudinary(imageFile);
-    const fileName = imageFile.name;
+    const cloudinaryResponse = await uploadFileToCloudinary(imageFile);
 
-    this.setState({
-      imageUrl: fileInfo.secure_url,
-      deleteToken: fileInfo.delete_token,
-      hasUnsavedChanges: true,
-      loadingImage: false,
-      imageName: fileName,
-    });
+    if (cloudinaryResponse) {
+      const fileName = imageFile.name;
+
+      this.setState({
+        imageUrl: cloudinaryResponse.secure_url,
+        deleteToken: cloudinaryResponse.delete_token,
+        hasUnsavedChanges: true,
+        loadingImage: false,
+        imageName: fileName,
+      });
+    } else {
+      this.setState({
+        loadingImage: false,
+      });
+
+      this.props.showToast({
+        message:
+          'Something went wrong with your image upload. Please try again.',
+        type: 'error',
+      });
+    }
   };
 
   removeImage = () => {
@@ -350,7 +364,7 @@ class PostFormComponent extends React.Component<Props, any> {
                         name="pin-post"
                         id="pin-post"
                         type="checkbox"
-                        aria-label="Pin post" 
+                        aria-label="Pin post"
                       // onChange={this.state.isPinned}
                       // checked={this.state.isPinned}
                       />
@@ -405,6 +419,7 @@ const mapDispatchToProps = (dispatch) => {
     createPost: bindActionCreators(createPostAction, dispatch),
     editPost: bindActionCreators(editPostAction, dispatch),
     getArtist: bindActionCreators(getArtistAction, dispatch),
+    showToast: bindActionCreators(showToastAction, dispatch),
   };
 };
 

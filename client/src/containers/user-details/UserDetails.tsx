@@ -1,5 +1,6 @@
 import './../artist/artist.scss';
 import './user-details.scss';
+import '../settings/user-settings.scss';
 
 import * as loadImage from 'blueimp-load-image';
 import * as React from 'react';

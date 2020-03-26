@@ -16,8 +16,6 @@ export const uploadFileToCloudinary = async (file: any) => {
     headers: { 'X-Requested-With': 'XMLHttpRequest' },
   };
 
-  console.log('uploading to cloudinary');
-
   try {
     const { data } = await axios.post(
       config.cloudinary.uploadImageUrl,

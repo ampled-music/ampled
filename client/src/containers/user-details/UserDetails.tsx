@@ -449,11 +449,24 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   updateUserPhoto = () => {
     this.closeUserPhotoModal();
-    this.props.setMe({ image: this.props.updatedData.profileImageUrl });
-    this.props.showToast({
-      message: 'User photo updated!',
-      type: 'success',
-    });
+
+    if (this.props.updatedData.profileImageUrl) {
+      this.props.setMe({ image: this.props.updatedData.profileImageUrl });
+      this.props.showToast({
+        message: 'User photo updated!',
+        type: 'success',
+      });
+    } else {
+      this.setState({
+        photoContent: undefined,
+        photoBody: undefined,
+      });
+      this.props.showToast({
+        message:
+          'Something went wrong with your image upload. Please try again.',
+        type: 'error',
+      });
+    }
   };
 
   showUserPhotoModal = (e) => {

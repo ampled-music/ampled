@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
+import { CloudinaryContext } from 'cloudinary-react';
 import { Nav } from './shared/nav/Nav';
 
 export const PublicRoute = ({ component: Component, ...rest }) => {
@@ -19,10 +20,12 @@ export const PublicRoute = ({ component: Component, ...rest }) => {
     return (
       <div className="public-routes">
         <div>
-          <Nav match={props.match} history={props.history} />
-          <main>
-            <Component {...props} />
-          </main>
+          <CloudinaryContext cloudName="ampled-web">
+            <Nav match={props.match} history={props.history} />
+            <main>
+              <Component {...props} />
+            </main>
+          </CloudinaryContext>
         </div>
       </div>
     );

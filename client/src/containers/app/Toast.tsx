@@ -52,12 +52,7 @@ class Toast extends React.Component<any> {
           onMouseOut={this.setTimer}
           onClick={this.hideToast}
         >
-          <button
-            type="button"
-            className="toast-close-button"
-            role="button"
-            onClick={hideToast}
-          >
+          <button className="toast-close-button" onClick={hideToast}>
             ×
           </button>
           <div className="toast-message">{toast.message}</div>

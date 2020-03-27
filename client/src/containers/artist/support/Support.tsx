@@ -135,7 +135,6 @@ export class SupportComponent extends React.Component<Props, any> {
 
   redirectToArtistsPage = () => {
     const {
-      history,
       match,
       subscriptions,
       artists: { artist },

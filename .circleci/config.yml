@@ -83,7 +83,10 @@ workflows:
               only: development
   build-and-deploy-production:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only: master
       - deploy-production:
           requires:
             - build

@@ -20,6 +20,14 @@ const getApiAxios = () => {
 
   axiosApi.interceptors.response.use(
     (response) => {
+      const {
+        headers: { authorization },
+      } = response;
+
+      if (authorization) {
+        store.set('token', authorization);
+      }
+
       return response;
     },
     (error) => {

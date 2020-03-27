@@ -118,6 +118,17 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
       return;
     }
 
+    if (
+      ['image/gif', 'image/jpeg', 'image/png'].indexOf(imageFile.type) === -1
+    ) {
+      this.props.showToast({
+        message: 'Please select an image file.',
+        type: 'error',
+      });
+
+      return;
+    }
+
     this.setState({ loadingImage: true });
 
     if (this.state.deleteToken) {

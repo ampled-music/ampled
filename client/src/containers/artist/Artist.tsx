@@ -11,11 +11,7 @@ import { Helmet } from 'react-helmet';
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
-import {
-  initialState as subscriptionsInitialState,
-  SubscriptionStep,
-} from '../../redux/subscriptions/initial-state';
-import { CloudinaryContext } from 'cloudinary-react';
+import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
 import { PostsContainer } from '../artist/posts/PostsContainer';
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { Modal } from '../shared/modal/Modal';
@@ -287,7 +283,6 @@ class ArtistComponent extends React.Component<Props, any> {
     const {
       artists,
       me: { userData, loadingMe },
-      location: { search },
     } = this.props;
 
     const { successfulSupport } = this.state;
@@ -312,10 +307,9 @@ class ArtistComponent extends React.Component<Props, any> {
 
     return (
       <div className="App">
-        <CloudinaryContext cloudName="ampled-web">
-          <style
-            dangerouslySetInnerHTML={{
-              __html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
               .btn.btn-read-more,
               .btn.btn-support,
               .private-support__btn > .btn {
@@ -355,112 +349,111 @@ class ArtistComponent extends React.Component<Props, any> {
                 }
               `}
             `,
-            }}
-          />
+          }}
+        />
 
-          <Texture
-            positionTop25={false}
-            positionTop50={false}
-            positionFlip={false}
-          />
-          {artist && artist.name && (
-            <Helmet>
-              <title>
-                {artist.name} | Ampled | Direct Community Support For Music
-                Artists
-              </title>
-            </Helmet>
+        <Texture
+          positionTop25={false}
+          positionTop50={false}
+          positionFlip={false}
+        />
+        {artist && artist.name && (
+          <Helmet>
+            <title>
+              {artist.name} | Ampled | Direct Community Support For Music
+              Artists
+            </title>
+          </Helmet>
+        )}
+        {artist &&
+          !artist.approved &&
+          loggedUserAccess &&
+          this.renderSticky(
+            <span>
+              Your page is pending a quick approval.
+              <br />
+              When you're ready to go,{' '}
+              {/* eslint-disable-next-line react/jsx-no-target-blank */}
+              <a href="mailto:hello@ampled.com" target="_blank">
+                email us
+              </a>{' '}
+              and let us know.
+            </span>,
           )}
-          {artist &&
-            !artist.approved &&
-            loggedUserAccess &&
-            this.renderSticky(
-              <span>
-                Your page is pending a quick approval.
-                <br />
-                When you're ready to go,{' '}
-                {/* eslint-disable-next-line react/jsx-no-target-blank */}
-                <a href="mailto:hello@ampled.com" target="_blank">
-                  email us
-                </a>{' '}
-                and let us know.
-              </span>,
-            )}
-          {artist &&
-            !artist.isStripeSetup &&
-            loggedUserAccess &&
-            this.renderSticky(
-              <span>
-                Right now you can&#39;t be supported until you{' '}
-                <a href={loggedUserAccess.stripeSignup}>
-                  set up your Stripe Account
-                </a>
-                .
-              </span>,
-            )}
-          <ArtistHeader
-            artist={artist}
-            openVideoModal={this.openVideoModal}
-            openMessageModal={this.openMessageModal}
-            openPostModal={this.openPostModal}
-            openWhyModal={this.openWhyModal}
-            loggedUserAccess={loggedUserAccess}
-            isSupporter={isSupporter}
-            handleSupportClick={this.handleSupportClick}
-          />
-          <ArtistInfo
-            location={artist.location}
-            accentColor={artist.accent_color}
-            twitterHandle={artist.twitter_handle}
-            instagramHandle={artist.instagram_handle}
-          />
-          <PostsContainer
-            match={this.props.match}
-            hash={this.props.history.location.hash}
-            posts={artist.posts}
-            artistName={artist.name}
-            artistId={artist.id}
-            artistSlug={artist.slug}
-            accentColor={artist.accent_color}
-            updateArtist={this.getArtistInfo}
-            loading={artists.loading || loadingMe}
-            loggedUserAccess={loggedUserAccess}
-            playerCallback={this.playerCallback}
-          />
-          <Modal open={this.state.openPostModal} onClose={this.closePostModal}>
-            <PostForm
-              close={this.getUserConfirmation}
-              discardChanges={this.discardChanges}
-            />
-          </Modal>
-          <VideoModal
-            open={this.state.openVideoModal}
-            videoUrl={artist.video_url}
-            onClose={this.closeVideoModal}
-          />
-          <WhyModal
-            open={this.state.openWhyModal}
-            onClose={this.closeWhyModal}
-            handleSupportClick={this.handleSupportClick}
-          />
-          <MessageModal
-            accentColor={artist.accent_color}
-            artistBio={artist.bio}
-            open={this.state.openMessageModal}
-            handleSupportClick={this.handleSupportClick}
-            onClose={this.closeMessageModal}
-            showSupport={!isSupporter}
-          />
-          <ConfirmationDialog
-            open={this.state.showConfirmationDialog}
-            closeConfirmationDialog={this.closeConfirmationDialog}
+        {artist &&
+          !artist.isStripeSetup &&
+          loggedUserAccess &&
+          this.renderSticky(
+            <span>
+              Right now you can&#39;t be supported until you{' '}
+              <a href={loggedUserAccess.stripeSignup}>
+                set up your Stripe Account
+              </a>
+              .
+            </span>,
+          )}
+        <ArtistHeader
+          artist={artist}
+          openVideoModal={this.openVideoModal}
+          openMessageModal={this.openMessageModal}
+          openPostModal={this.openPostModal}
+          openWhyModal={this.openWhyModal}
+          loggedUserAccess={loggedUserAccess}
+          isSupporter={isSupporter}
+          handleSupportClick={this.handleSupportClick}
+        />
+        <ArtistInfo
+          location={artist.location}
+          accentColor={artist.accent_color}
+          twitterHandle={artist.twitter_handle}
+          instagramHandle={artist.instagram_handle}
+        />
+        <PostsContainer
+          match={this.props.match}
+          hash={this.props.history.location.hash}
+          posts={artist.posts}
+          artistName={artist.name}
+          artistId={artist.id}
+          artistSlug={artist.slug}
+          accentColor={artist.accent_color}
+          updateArtist={this.getArtistInfo}
+          loading={artists.loading || loadingMe}
+          loggedUserAccess={loggedUserAccess}
+          playerCallback={this.playerCallback}
+        />
+        <Modal open={this.state.openPostModal} onClose={this.closePostModal}>
+          <PostForm
+            close={this.getUserConfirmation}
             discardChanges={this.discardChanges}
           />
-          <div className="confetti-overlay">
-            <Confetti active={showConfetti} config={this.getConfettiConfig()} />
-          </div>
-          <Loading artistLoading={artists.loading || loadingMe} />
-        </CloudinaryContext>
+        </Modal>
+        <VideoModal
+          open={this.state.openVideoModal}
+          videoUrl={artist.video_url}
+          onClose={this.closeVideoModal}
+        />
+        <WhyModal
+          open={this.state.openWhyModal}
+          onClose={this.closeWhyModal}
+          handleSupportClick={this.handleSupportClick}
+        />
+        <MessageModal
+          accentColor={artist.accent_color}
+          artistBio={artist.bio}
+          open={this.state.openMessageModal}
+          handleSupportClick={this.handleSupportClick}
+          onClose={this.closeMessageModal}
+          showSupport={!isSupporter}
+        />
+        <ConfirmationDialog
+          open={this.state.showConfirmationDialog}
+          closeConfirmationDialog={this.closeConfirmationDialog}
+          discardChanges={this.discardChanges}
+        />
+        <div className="confetti-overlay">
+          <Confetti active={showConfetti} config={this.getConfettiConfig()} />
+        </div>
+        <Loading artistLoading={artists.loading || loadingMe} />
       </div>
     );
   }

@@ -122,7 +122,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
     }
 
     const loggedUserAccess = (me?.artistPages || []).filter(
-      (access) => +access.artistId == +artistId,
+      (access) => +access.artistId === +artistId,
     )?.[0];
 
     return this.sortItemsByCreationDate(posts).map((post) => (

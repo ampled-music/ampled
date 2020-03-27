@@ -29,7 +29,7 @@ import { Upload } from './Upload';
 interface PostFormProps {
   close: (hasUnsavedChanges: any) => void;
   discardChanges: () => void;
-  isEdit?: Boolean;
+  isEdit?: boolean;
   post?: any;
 }
 
@@ -48,6 +48,7 @@ class PostFormComponent extends React.Component<Props, any> {
     isPublic: false,
     isPinned: false,
     imageUrl: null,
+    publicId: null,
     deleteToken: undefined,
     hasUnsavedChanges: false,
     loadingImage: false,
@@ -57,6 +58,7 @@ class PostFormComponent extends React.Component<Props, any> {
   constructor(props) {
     super(props);
     if (props.post) {
+      console.log(props.post);
       this.state = {
         ...this.initialState,
         ...props.post,
@@ -141,6 +143,7 @@ class PostFormComponent extends React.Component<Props, any> {
       this.setState({
         imageUrl: cloudinaryResponse.secure_url,
         deleteToken: cloudinaryResponse.delete_token,
+        publicId: cloudinaryResponse.public_id,
         hasUnsavedChanges: true,
         loadingImage: false,
         imageName: fileName,
@@ -163,6 +166,7 @@ class PostFormComponent extends React.Component<Props, any> {
     this.setState({
       imageUrl: null,
       deleteToken: undefined,
+      publicId: null,
       hasUnsavedChanges: false,
     });
   };

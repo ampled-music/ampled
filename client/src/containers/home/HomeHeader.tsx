@@ -14,7 +14,10 @@ class HomeHeader extends React.Component<any, any> {
 
   render() {
     return (
-      <div className="home-header container-fluid">
+      <div
+        className="home-header container-fluid"
+        style={{ backgroundColor: this.props.bgColor }}
+      >
         <div className="row align-items-center justify-content-xl-center">
           <div className="col-lg-4 col-xl-3">
             <div className="home-header__support">

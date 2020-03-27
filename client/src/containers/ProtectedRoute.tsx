@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
+import { CloudinaryContext } from 'cloudinary-react';
 import * as store from 'store';
 
 import { config } from '../config';
@@ -59,18 +60,20 @@ const ProtectedRoute = ({
     return (
       <div className="public-routes">
         <div>
-          <Nav match={props.match} history={props.history} />
-          <main>
-            {isLoggedIn ? (
-              <Component {...props} />
-            ) : (
-              <ProtectModal
-                modalPage={modalPage}
-                openAuthModal={openAuthModal}
-                showSupportMessage={showSupportMessage}
-              />
-            )}
-          </main>
+          <CloudinaryContext cloudName="ampled-web">
+            <Nav match={props.match} history={props.history} />
+            <main>
+              {isLoggedIn ? (
+                <Component {...props} />
+              ) : (
+                <ProtectModal
+                  modalPage={modalPage}
+                  openAuthModal={openAuthModal}
+                  showSupportMessage={showSupportMessage}
+                />
+              )}
+            </main>
+          </CloudinaryContext>
         </div>
       </div>
     );

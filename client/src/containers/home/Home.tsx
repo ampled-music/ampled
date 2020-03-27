@@ -10,10 +10,6 @@ import { HomeHow } from './HomeHow';
 import { Texture } from '../shared/texture/Texture';
 
 class Home extends React.Component<any> {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="home-section">

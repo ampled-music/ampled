@@ -137,7 +137,7 @@ const Comments = ({
             fontSize: '13px',
           }}
         >
-          <a
+          <button
             onClick={() => handlePrivatePostAction(authenticated)}
             style={{
               textDecoration: 'underline',
@@ -146,7 +146,7 @@ const Comments = ({
             }}
           >
             {authenticated ? 'Support' : 'Log in'}
-          </a>{' '}
+          </button>{' '}
           to comment
         </div>
       )}

@@ -7,7 +7,7 @@ const middleware = createProxyMiddleware({
 });
 
 module.exports = function(app) {
-  app.use('/*.json', middleware);
+  app.use(/\/(me|artist|user|comment|post).*\.json/gi, middleware);
   app.use('/uploads/*', middleware);
   app.use('/subscriptions*', middleware);
 };

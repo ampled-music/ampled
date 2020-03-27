@@ -1250,7 +1250,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     if (!this.props.editMode) {
       const { data } = await apiAxios({
         method: 'post',
-        url: '/artist_pages',
+        url: '/artist_pages.json',
         data: {
           artist_page: {
             name: artistName,
@@ -1287,7 +1287,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     } else {
       const { data } = await apiAxios({
         method: 'put',
-        url: `/artist_pages/${this.props.artist?.id}`,
+        url: `/artist_pages/${this.props.artist?.id}.json`,
         data: {
           artist_page: {
             bio: artistMessage,

@@ -657,6 +657,24 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       this.setState({
         loading: false,
       });
+
+      if (this.state.members.length === 0) {
+        const { name, last_name, instagram, twitter, image, email } = userData;
+        this.setState({
+          members: [
+            {
+              isAdmin: true,
+              firstName: name,
+              lastName: last_name,
+              email,
+              role: '',
+              instagram,
+              twitter,
+              photo: image,
+            },
+          ],
+        });
+      }
     }
   };
 

@@ -308,6 +308,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
               <Image
                 publicId={this.handlePublicID(ownedPage.image)}
                 alt={ownedPage.name}
+                key={ownedPage.name}
                 className="artist__image"
               >
                 <Transformation
@@ -434,6 +435,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
             <Image
               publicId={this.handlePublicID(subscription.image)}
               alt={subscription.name}
+              key={subscription.name}
               className="artist__image"
             >
               <Transformation

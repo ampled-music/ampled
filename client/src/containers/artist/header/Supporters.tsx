@@ -41,6 +41,7 @@ export class Supporters extends React.Component<Props, any> {
               <Image
                 publicId={this.handlePublicID(supporter.profile_image_url)}
                 alt={supporter.name}
+                key={`hover-${supporter.name}`}
                 className="supporter__hover-card_header_photo_image"
               >
                 <Transformation
@@ -130,6 +131,7 @@ export class Supporters extends React.Component<Props, any> {
             <Image
               publicId={this.handlePublicID(supporter.profile_image_url)}
               alt={supporter.name}
+              key={supporter.name}
               className="artist-header__person_image"
               style={style}
             >

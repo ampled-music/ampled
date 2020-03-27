@@ -127,6 +127,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                 {owner.profile_image_url ? (
                   <Image
                     className="artist-header__person_image member"
+                    key={owner.name}
                     publicId={this.handlePublicID(owner.profile_image_url)}
                     alt={owner.name}
                     style={{ borderColor: artist.accent_color }}
@@ -171,7 +172,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                 key={index}
                 className={cx('artist-header__photo', { active: index === 0 })}
               >
-                <Image publicId={this.handlePublicID(image)}>
+                <Image publicId={this.handlePublicID(image)} key={image}>
                   <Transformation
                     crop="fill"
                     width={800}

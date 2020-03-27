@@ -431,11 +431,23 @@ class UserDetailsComponent extends React.Component<Props, any> {
     loadImage(
       photoContent.body,
       (canvas) => {
-        this.setState({
-          processingImage: false,
-          photoBody: canvas.toDataURL(),
-          photoContent,
-        });
+        if (!canvas.toDataURL) {
+          this.props.showToast({
+            message: 'Please select an image file.',
+            type: 'error',
+          });
+          this.setState({
+            processingImage: false,
+            photoContent: undefined,
+            photoBody: undefined,
+          });
+        } else {
+          this.setState({
+            processingImage: false,
+            photoBody: canvas.toDataURL(),
+            photoContent,
+          });
+        }
       },
       { orientation: true },
     );

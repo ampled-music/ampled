@@ -202,6 +202,20 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
 
       expect(response.body).to eq("You need to sign in or sign up before continuing.")
     end
+
+    it "calls email job for user cancelling subsciption" do
+      allow(UserCancelledSubscriptionEmailJob).to receive(:perform_async)
+
+      prev_redis_url = ENV["REDIS_URL"]
+      begin
+        ENV["REDIS_URL"] = "temp"
+        delete "/subscriptions/#{@subscription.id}"
+      ensure
+        ENV["REDIS_URL"] = prev_redis_url
+      end
+
+      expect(UserCancelledSubscriptionEmailJob).to have_received(:perform_async).with(@subscription.id)
+    end
   end
 
   context "when creating a subscription for an artist who was previously supported & cancelled" do

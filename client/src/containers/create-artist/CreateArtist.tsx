@@ -92,6 +92,7 @@ interface ImageUploaderProps {
   altText: string;
   imageURL?: string;
   setURL: Function;
+  showToast: Function;
 }
 
 class ImageUploader extends React.Component<ImageUploaderProps> {
@@ -117,21 +118,43 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
       return;
     }
 
+    if (
+      ['image/gif', 'image/jpeg', 'image/png'].indexOf(imageFile.type) === -1
+    ) {
+      this.props.showToast({
+        message: 'Please select an image file.',
+        type: 'error',
+      });
+
+      return;
+    }
+
     this.setState({ loadingImage: true });
 
     if (this.state.deleteToken) {
       this.removeImage();
     }
 
-    const fileInfo = await uploadFileToCloudinary(imageFile);
-    // const fileName = imageFile.name;
+    const cloudinaryResponse = await uploadFileToCloudinary(imageFile);
 
-    this.setState({
-      deleteToken: fileInfo.delete_token,
-      loadingImage: false,
-      publicId: fileInfo.public_id,
-    });
-    this.props.setURL(fileInfo.secure_url);
+    if (cloudinaryResponse) {
+      this.setState({
+        deleteToken: cloudinaryResponse.delete_token,
+        loadingImage: false,
+        publicId: cloudinaryResponse.public_id,
+      });
+      this.props.setURL(cloudinaryResponse.secure_url);
+    } else {
+      this.setState({
+        loadingImage: false,
+      });
+
+      this.props.showToast({
+        message:
+          'Something went wrong with your image upload. Please try again.',
+        type: 'error',
+      });
+    }
   };
 
   removeImage = async () => {
@@ -993,6 +1016,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                   altText={type}
                   setURL={imageSetter(index)}
                   imageURL={images[index]}
+                  showToast={this.props.showToast}
                 />
               </div>
             ))}

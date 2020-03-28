@@ -175,3 +175,42 @@ Several common features and operational parameters can be set using environment 
 
 - Heroku for hosting.
 - CircleCI for continuous integration.
+
+# Internal Tools
+
+Located in the `tools` folder. **Please don't touch if you don't need to!**
+
+## `application-fee-management`
+
+A command-line tool that allows us to update our platform fee in bulk for all subscriptions across all connected accounts.
+
+### Installation & setup
+
+```
+    cd ./tools/application-fee-management/
+    yarn install
+```
+
+You'll also need a `.env` file in /tools/application-fee-management/ with `STRIPE_SECRET_KEY` set.
+
+### Use
+
+To list all connected accounts and subscriptions:
+
+```
+yarn start
+```
+
+To add a 13.84% fee to all connected accounts and subscriptions:
+
+```
+yarn start --addFee 13.84
+```
+
+To remove fees from all connected accounts and subscriptions:
+
+```
+yarn start --addFee 0
+or
+yarn start --removeFee
+```

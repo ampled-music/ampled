@@ -90,7 +90,7 @@ const getAccountSubscriptions = async (accountId, starting_after) => {
     application-fee-management
     
       List all connected accounts and subscriptions: yarn start
-      Add a 13.84% fee to all subscriptions: yarn start --addFee 13.84
+      Add a 13.24% fee to all subscriptions: yarn start --addFee 13.24
       Remove fees from all subscriptions: yarn start --removeFee
       Remove fees from all subscriptions: yarn start --addFee 0
     `);

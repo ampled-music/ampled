@@ -24,8 +24,10 @@ client/.env
 /public/assets
 /public/static
 /node_modules
+/tools/*/node_modules
 
 package-lock\.json
 
 /coverage
 .DS_store
+tools/application-fee-management/.env

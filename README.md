@@ -201,10 +201,10 @@ To list all connected accounts and subscriptions:
 yarn start
 ```
 
-To add a 13.84% fee to all connected accounts and subscriptions:
+To add a 13.24% fee to all connected accounts and subscriptions:
 
 ```
-yarn start --addFee 13.84
+yarn start --addFee 13.24
 ```
 
 To remove fees from all connected accounts and subscriptions:

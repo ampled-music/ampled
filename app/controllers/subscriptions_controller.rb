@@ -45,9 +45,6 @@ class SubscriptionsController < ApplicationController
     current_subscription.cancel!
     UserCancelledSubscriptionEmailJob.perform_async(current_subscription.id) unless ENV["REDIS_URL"].nil?
     render json: :ok
-  rescue StandardError => e
-    Raven.capture_exception(e)
-    render json: { status: "error", message: e.message }
   end
 
   def render_not_allowed

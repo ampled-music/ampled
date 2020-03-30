@@ -143,6 +143,8 @@ const Comments = ({
               textDecoration: 'underline',
               fontFamily: 'inherit',
               cursor: 'pointer',
+              border: 'unset',
+              padding: 0,
             }}
           >
             {authenticated ? 'Support' : 'Log in'}

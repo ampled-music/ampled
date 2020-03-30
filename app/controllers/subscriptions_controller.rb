@@ -21,6 +21,7 @@ class SubscriptionsController < ApplicationController
 
   def create
     subscription = subscribe_stripe
+    UserSupportedArtistEmailJob.perform_async(subscription.id) unless ENV["REDIS_URL"].nil?
     NewSupporterEmailJob.perform_async(subscription.id) unless ENV["REDIS_URL"].nil?
     render json: subscription
   rescue StandardError => e
@@ -42,7 +43,7 @@ class SubscriptionsController < ApplicationController
 
   def destroy
     current_subscription.cancel!
-    # redirect_to artist_pages_url, notice: "Artist page was successfully destroyed."
+    UserCancelledSubscriptionEmailJob.perform_async(current_subscription.id) unless ENV["REDIS_URL"].nil?
     render json: :ok
   end
 
@@ -112,7 +113,7 @@ class SubscriptionsController < ApplicationController
         customer: artist_customer_id,
         plan: plan.stripe_id,
         expand: ["latest_invoice.payment_intent"],
-        application_fee_percent: 13.24
+        application_fee_percent: 0
       }, stripe_account: current_artist_page.stripe_user_id
     )
   end

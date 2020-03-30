@@ -1,5 +1,6 @@
 import './../artist/artist.scss';
 import './user-details.scss';
+import '../settings/user-settings.scss';
 
 import * as loadImage from 'blueimp-load-image';
 import * as React from 'react';
@@ -149,7 +150,7 @@ class CardInfo extends React.Component<CardInfoProps> {
                 </span>
                 {/*
                 <button className="btn btn-link btn-edit-card" onClick={() => this.setState({ showEditForm: !showEditForm })}>
-                  Add a payment method                
+                  Add a payment method
                 </button>
                 */}
               </CardContent>
@@ -184,6 +185,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
     processingImage: false,
     name: '',
     last_name: '',
+    email: '',
+    originalEmail: '', // used for checking if the user is attempting to update their email
     city: '',
     country: '',
     twitter: '',
@@ -254,13 +257,21 @@ class UserDetailsComponent extends React.Component<Props, any> {
     const submitResult = await this.props.updateMe(this.state);
 
     if (submitResult) {
+      const hasEmailChanged = this.state.email !== this.state.originalEmail;
+      const successMessage = 'Your changes have been saved.';
+      const emailChangedMessage =
+        'You changed the email address associated with your account. Use this new email address for future logins.';
+      const message = hasEmailChanged
+        ? `${successMessage} ${emailChangedMessage}`
+        : successMessage;
+
       showToast({
-        message: 'Your changes have been saved.',
+        message,
         type: 'success',
       });
     } else {
       showToast({
-        messaage: 'There was an error submitting your details.',
+        message: 'There was an error submitting your details.',
         type: 'error',
       });
     }
@@ -268,7 +279,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   componentDidMount() {
     this.props.getMe().then((userData) => {
-      this.loadUserDataIntoState(userData);
+      userData && this.loadUserDataIntoState(userData);
     });
   }
 
@@ -399,6 +410,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
     this.setState({
       name: userData.name || '',
       last_name: userData.last_name || '',
+      email: userData.email || '',
+      originalEmail: userData.email || '',
       city: userData.city || '',
       country: userData.country || '',
       twitter: userData.twitter || '',
@@ -419,11 +432,23 @@ class UserDetailsComponent extends React.Component<Props, any> {
     loadImage(
       photoContent.body,
       (canvas) => {
-        this.setState({
-          processingImage: false,
-          photoBody: canvas.toDataURL(),
-          photoContent,
-        });
+        if (!canvas.toDataURL) {
+          this.props.showToast({
+            message: 'Please select an image file.',
+            type: 'error',
+          });
+          this.setState({
+            processingImage: false,
+            photoContent: undefined,
+            photoBody: undefined,
+          });
+        } else {
+          this.setState({
+            processingImage: false,
+            photoBody: canvas.toDataURL(),
+            photoContent,
+          });
+        }
       },
       { orientation: true },
     );
@@ -438,11 +463,24 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   updateUserPhoto = () => {
     this.closeUserPhotoModal();
-    this.props.setMe({ image: this.props.updatedData.profileImageUrl });
-    this.props.showToast({
-      message: 'User photo updated!',
-      type: 'success',
-    });
+
+    if (this.props.updatedData.profileImageUrl) {
+      this.props.setMe({ image: this.props.updatedData.profileImageUrl });
+      this.props.showToast({
+        message: 'User photo updated!',
+        type: 'success',
+      });
+    } else {
+      this.setState({
+        photoContent: undefined,
+        photoBody: undefined,
+      });
+      this.props.showToast({
+        message:
+          'Something went wrong with your image upload. Please try again.',
+        type: 'error',
+      });
+    }
   };
 
   showUserPhotoModal = (e) => {
@@ -450,6 +488,32 @@ class UserDetailsComponent extends React.Component<Props, any> {
     this.setState({ showUserPhotoModal: true });
   };
   closeUserPhotoModal = () => this.setState({ showUserPhotoModal: false });
+
+  renderEmailAddress = () => {
+    return (
+      <div className="row no-gutters">
+        <div className="col-2 col-md-3">
+          <div className="user-details__subtitle">Account</div>
+          <h6>Required</h6>
+        </div>
+        <div className="row col-10 col-md-9">
+          <div className="col-md-12">
+            <TextField
+              type="email"
+              name="email"
+              label="Email"
+              id="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+              fullWidth
+              required
+              InputLabelProps={{ shrink: true }}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   renderBasicInfo = () => {
     return (
@@ -490,6 +554,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                 </div>
               </div>
             </div>
+            {this.renderEmailAddress()}
             <div className="row no-gutters">
               <div className="col-2 col-md-3">
                 <div className="user-details__subtitle">Location</div>

@@ -125,12 +125,20 @@ export class FeaturedImages extends React.Component<Props, any> {
               <div className="member-image">
                 <RenderOwnerHover owner={owner} />
                 {owner.profile_image_url ? (
-                  <img
+                  <Image
                     className="artist-header__person_image member"
-                    src={owner.profile_image_url}
+                    key={owner.name}
+                    publicId={this.handlePublicID(owner.profile_image_url)}
                     alt={owner.name}
                     style={{ borderColor: artist.accent_color }}
-                  />
+                  >
+                    <Transformation
+                      crop="fill"
+                      width={60}
+                      height={60}
+                      responsive_placeholder="blank"
+                    />
+                  </Image>
                 ) : (
                   <img
                     className="artist-header__person_image member"
@@ -164,11 +172,11 @@ export class FeaturedImages extends React.Component<Props, any> {
                 key={index}
                 className={cx('artist-header__photo', { active: index === 0 })}
               >
-                <Image publicId={this.handlePublicID(image)}>
+                <Image publicId={this.handlePublicID(image)} key={image}>
                   <Transformation
                     crop="fill"
-                    width="800"
-                    height="800"
+                    width={800}
+                    height={800}
                     responsive_placeholder="blank"
                   />
                 </Image>

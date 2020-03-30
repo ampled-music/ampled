@@ -55,6 +55,7 @@ interface ArtistProps {
   };
   location: {
     search: string;
+    pathname: string;
   };
   history: any;
   artists: typeof artistsInitialState;
@@ -86,6 +87,13 @@ class ArtistComponent extends React.Component<Props, any> {
     this.players = new Set();
     const successfulSupport = /flash=supported/gi.test(search);
     this.setState({ successfulSupport });
+    if (successfulSupport) {
+      this.props.showToast({
+        message: 'Thanks for your support!',
+        type: 'success',
+      });
+      this.props.history.replace(this.props.location.pathname);
+    }
   }
 
   componentDidUpdate(prevProps: Props, prevState) {

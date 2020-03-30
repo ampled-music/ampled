@@ -21,11 +21,15 @@ export const uploadFileToCloudinary = async (file: any) => {
     headers: { 'X-Requested-With': 'XMLHttpRequest' },
   };
 
-  const { data } = await axios.post(
-    config.cloudinary.uploadImageUrl,
-    formData,
-    reqConfig,
-  );
+  try {
+    const { data } = await axios.post(
+      config.cloudinary.uploadImageUrl,
+      formData,
+      reqConfig,
+    );
 
-  return data;
+    return data;
+  } catch (err) {
+    return undefined;
+  }
 };

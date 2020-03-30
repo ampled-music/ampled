@@ -100,7 +100,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
     );
 
     this.props.showToast({
-      message: `We are sad to see you leaving. Remember that you can always support <a href="${artistPageLink}">${artistName}</a> with a different value!`,
+      message: (
+        <>
+          We are sad to see you leaving. Remember that you can always support{' '}
+          <a href={artistPageLink}>{artistName}</a> with a different value!
+        </>
+      ),
       type: 'success',
     });
   };
@@ -187,8 +192,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
             >
               <Transformation
                 crop="fill"
-                width={200}
-                height={200}
+                width={120}
+                height={120}
                 responsive_placeholder="blank"
               />
             </Image>
@@ -303,12 +308,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
               <Image
                 publicId={this.handlePublicID(ownedPage.image)}
                 alt={ownedPage.name}
+                key={ownedPage.name}
                 className="artist__image"
               >
                 <Transformation
                   crop="fill"
-                  width={200}
-                  height={200}
+                  width={250}
+                  height={250}
                   responsive_placeholder="blank"
                 />
               </Image>
@@ -429,12 +435,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
             <Image
               publicId={this.handlePublicID(subscription.image)}
               alt={subscription.name}
+              key={subscription.name}
               className="artist__image"
             >
               <Transformation
                 crop="fill"
-                width={200}
-                height={200}
+                width={250}
+                height={250}
                 responsive_placeholder="blank"
               />
             </Image>
@@ -503,7 +510,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('SUPPORTED ARTISTS')}
       <div className="pages row justify-content-center justify-content-md-start">
         <div className="center col-md-8">
-          You currently don't support any artists.
+          You currently don&apos;t support any artists.
         </div>
       </div>
     </div>
@@ -528,7 +535,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <div className="container user-settings-container">
-        <Loading artistLoading={this.props.loadingMe} />
+        <Loading artistLoading={this.props.loadingMe && !this.props.userData} />
         {userData && this.renderContent()}
         {this.renderCancelSubscriptionModal()}
       </div>

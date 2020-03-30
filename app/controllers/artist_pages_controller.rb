@@ -7,7 +7,7 @@ class ArtistPagesController < ApplicationController
   before_action :check_update_okay, only: :update
 
   def index
-    @artist_pages = ArtistPage.where(featured: true).take(3)
+    @artist_pages = ArtistPage.where(featured: true, approved: true).take(3)
 
     respond_to do |format|
       format.html
@@ -101,6 +101,10 @@ class ArtistPagesController < ApplicationController
     render json: { status: "error", message: "Missing required parameters." }
   end
 
+  def missing_members_error
+    render json: { status: "error", message: "You need at least one member." }
+  end
+
   def has_no_members
     params[:members].nil? || params[:members][0].nil?
   end
@@ -123,7 +127,11 @@ class ArtistPagesController < ApplicationController
     # could we use active record validations here instead?
     return unless missing_create_params || has_no_images || has_no_members
 
-    missing_params_error
+    if has_no_members
+      missing_members_error
+    else
+      missing_params_error
+    end
   end
 
   def check_update_okay
@@ -195,7 +203,7 @@ class ArtistPagesController < ApplicationController
     # - create new images based on uploads
     @artist_page.images.destroy_all
 
-    params[:images].map.with_index do |image_url, index|
+    params[:images].map do |image_url|
       @artist_page.images.create(url: image_url)
     end
   end

@@ -279,7 +279,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   componentDidMount() {
     this.props.getMe().then((userData) => {
-      this.loadUserDataIntoState(userData);
+      userData && this.loadUserDataIntoState(userData);
     });
   }
 
@@ -411,6 +411,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       name: userData.name || '',
       last_name: userData.last_name || '',
       email: userData.email || '',
+      originalEmail: userData.email || '',
       city: userData.city || '',
       country: userData.country || '',
       twitter: userData.twitter || '',

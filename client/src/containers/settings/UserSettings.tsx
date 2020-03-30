@@ -171,37 +171,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
     }
   };
 
-  renderPhoto = (image: string, crop: number) => {
-    const crop_url_path = `w_${crop},h_${crop},c_fill`;
-    if (image.includes('https://res.cloudinary')) {
-      return image.replace('upload/', `upload/${crop_url_path}/`);
-    } else {
-      return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-    }
-  };
-
-  renderCloudinaryPhoto = (image: string, crop: number, altText: string) => {
-    console.log(image);
-    const crop_url_path = `w_${crop},h_${crop},c_fill`;
-    const cloudinary_id = image.substring(
-      image.lastIndexOf('/') + 1,
-      image.lastIndexOf('.'),
-    );
-    if (image.includes('https://res.cloudinary')) {
-      return (
-        <Image publicId={cloudinary_id} alt={altText}>
-          <Transformation
-            crop="fill"
-            width={crop}
-            height={crop}
-            responsive_placeholder="blank"
-          />
-        </Image>
-      );
-    } else {
-      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-      return <img src={img_src} alt={altText} />;
-    }
+  handlePublicID = (image: string) => {
+    const url = image.split('/');
+    const part_1 = url[url.length - 2];
+    const part_2 = url[url.length - 1];
+    return part_1 + '/' + part_2;
   };
 
   renderUserImage = () => {
@@ -211,11 +185,18 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="user-image-container">
         <Link to="/user-details">
           {userData.image ? (
-            <img
-              src={userData.image}
+            <Image
+              publicId={this.handlePublicID(userData.image)}
+              alt={userData.name}
               className="user-image"
-              alt="Your avatar"
-            />
+            >
+              <Transformation
+                crop="fill"
+                width={120}
+                height={120}
+                responsive_placeholder="blank"
+              />
+            </Image>
           ) : (
             <img src={avatar} className="user-image" alt="Your avatar" />
           )}
@@ -324,11 +305,19 @@ class UserSettingsComponent extends React.Component<Props, any> {
         {this.props.userData.ownedPages.map((ownedPage) => (
           <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
             {ownedPage.image && (
-              <img
-                className="artist__image"
-                src={this.renderPhoto(ownedPage.image, 200)}
+              <Image
+                publicId={this.handlePublicID(ownedPage.image)}
                 alt={ownedPage.name}
-              />
+                key={ownedPage.name}
+                className="artist__image"
+              >
+                <Transformation
+                  crop="fill"
+                  width={250}
+                  height={250}
+                  responsive_placeholder="blank"
+                />
+              </Image>
             )}
             <div
               className="artist__image-border"
@@ -443,11 +432,20 @@ class UserSettingsComponent extends React.Component<Props, any> {
             key={`artist-${subscription.artistPageId}`}
             className="artist col-sm-4"
           >
-            <img
-              className="artist__image"
-              src={this.renderPhoto(subscription.image, 200)}
+            <Image
+              publicId={this.handlePublicID(subscription.image)}
               alt={subscription.name}
-            />
+              key={subscription.name}
+              className="artist__image"
+            >
+              <Transformation
+                crop="fill"
+                width={250}
+                height={250}
+                responsive_placeholder="blank"
+              />
+            </Image>
+
             <div
               className="artist__image-border"
               onClick={() => this.redirectToArtistPage(subscription)}

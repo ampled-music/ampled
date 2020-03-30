@@ -1,5 +1,6 @@
 import './../artist/artist.scss';
 import './user-details.scss';
+import '../settings/user-settings.scss';
 
 import * as loadImage from 'blueimp-load-image';
 import * as React from 'react';
@@ -278,7 +279,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   componentDidMount() {
     this.props.getMe().then((userData) => {
-      this.loadUserDataIntoState(userData);
+      userData && this.loadUserDataIntoState(userData);
     });
   }
 
@@ -410,6 +411,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       name: userData.name || '',
       last_name: userData.last_name || '',
       email: userData.email || '',
+      originalEmail: userData.email || '',
       city: userData.city || '',
       country: userData.country || '',
       twitter: userData.twitter || '',
@@ -430,11 +432,23 @@ class UserDetailsComponent extends React.Component<Props, any> {
     loadImage(
       photoContent.body,
       (canvas) => {
-        this.setState({
-          processingImage: false,
-          photoBody: canvas.toDataURL(),
-          photoContent,
-        });
+        if (!canvas.toDataURL) {
+          this.props.showToast({
+            message: 'Please select an image file.',
+            type: 'error',
+          });
+          this.setState({
+            processingImage: false,
+            photoContent: undefined,
+            photoBody: undefined,
+          });
+        } else {
+          this.setState({
+            processingImage: false,
+            photoBody: canvas.toDataURL(),
+            photoContent,
+          });
+        }
       },
       { orientation: true },
     );
@@ -449,11 +463,24 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   updateUserPhoto = () => {
     this.closeUserPhotoModal();
-    this.props.setMe({ image: this.props.updatedData.profileImageUrl });
-    this.props.showToast({
-      message: 'User photo updated!',
-      type: 'success',
-    });
+
+    if (this.props.updatedData.profileImageUrl) {
+      this.props.setMe({ image: this.props.updatedData.profileImageUrl });
+      this.props.showToast({
+        message: 'User photo updated!',
+        type: 'success',
+      });
+    } else {
+      this.setState({
+        photoContent: undefined,
+        photoBody: undefined,
+      });
+      this.props.showToast({
+        message:
+          'Something went wrong with your image upload. Please try again.',
+        type: 'error',
+      });
+    }
   };
 
   showUserPhotoModal = (e) => {

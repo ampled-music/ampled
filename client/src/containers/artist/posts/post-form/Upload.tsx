@@ -56,7 +56,11 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
     this.signFile(file).then((response) => {
       const putUrl = response.data.signedUrl;
-      this.setState({ uploadError: undefined, key: response.data.key, fileName });
+      this.setState({
+        uploadError: undefined,
+        key: response.data.key,
+        fileName,
+      });
 
       const options = {
         url: putUrl,
@@ -108,11 +112,17 @@ class Upload extends React.Component<UploadProps, UploadState> {
         <div className="progress-info" data-progress={progress}>
           <div className="progress-info__name">
             <div className="progress-info__name_mp3">Mp3</div>
-            <div className="progress-info__name_song">{this.state.fileName}</div>
+            <div className="progress-info__name_song">
+              {this.state.fileName}
+            </div>
           </div>
 
           <div className="file-actions" data-progress={progress}>
-            <span className="remove-button" title="Remove audio" onClick={this.removeFile}>
+            <span
+              className="remove-button"
+              title="Remove audio"
+              onClick={this.removeFile}
+            >
               Remove
             </span>
             <label htmlFor="raised-button-file">
@@ -127,11 +137,20 @@ class Upload extends React.Component<UploadProps, UploadState> {
           Upload Progress
         </div>
         <div className="progress-bar__container">
-          <span className="progress-bar__progress" style={{ width: `${progress}%` }} data-progress={progress}>
+          <span
+            className="progress-bar__progress"
+            style={{ width: `${progress}%` }}
+            data-progress={progress}
+          >
             <span>{progress}%</span>
           </span>
         </div>
-        <LinearProgress className="progress-bar" variant="determinate" value={progress} style={{ height: 30 }} />
+        <LinearProgress
+          className="progress-bar"
+          variant="determinate"
+          value={progress}
+          style={{ height: 30 }}
+        />
       </div>
     );
   }
@@ -151,17 +170,21 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
     return (
       <div className="upload">
-        <div className="upload-error">{this.state.uploadError && <h5>{this.state.uploadError}</h5>}</div>
+        <div className="upload-error">
+          {this.state.uploadError && <h5>{this.state.uploadError}</h5>}
+        </div>
 
         <input
           style={{ display: 'none' }}
           id="raised-button-file"
           type="file"
           accept=".mp3"
-          aria-label="Audio file" 
+          aria-label="Audio file"
           onChange={this.processFile}
         />
-        <div className="uploader">{fileName ? this.renderPreview() : this.renderUploadButton()}</div>
+        <div className="uploader">
+          {fileName ? this.renderPreview() : this.renderUploadButton()}
+        </div>
       </div>
     );
   }

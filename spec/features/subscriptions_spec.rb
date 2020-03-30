@@ -104,6 +104,37 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
       post url, params: create_params
       expect(Plan.first.nominal_amount).to eq create_params[:amount]
     end
+
+    it "calls email job for user supported artist" do
+      allow(UserSupportedArtistEmailJob).to receive(:perform_async)
+
+      prev_redis_url = ENV["REDIS_URL"]
+      begin
+        ENV["REDIS_URL"] = "temp"
+        post url, params: create_params
+      ensure
+        ENV["REDIS_URL"] = prev_redis_url
+      end
+
+      subscription = user.subscriptions.active.first
+      expect(UserSupportedArtistEmailJob).to have_received(:perform_async).with(subscription.id)
+    end
+
+    it "calls email job for new supporter" do
+      allow(UserSupportedArtistEmailJob).to receive(:perform_async)
+      allow(NewSupporterEmailJob).to receive(:perform_async)
+
+      prev_redis_url = ENV["REDIS_URL"]
+      begin
+        ENV["REDIS_URL"] = "temp"
+        post url, params: create_params
+      ensure
+        ENV["REDIS_URL"] = prev_redis_url
+      end
+
+      subscription = user.subscriptions.active.first
+      expect(NewSupporterEmailJob).to have_received(:perform_async).with(subscription.id)
+    end
   end
 
   context "when creating multiple subscriptions" do
@@ -170,6 +201,20 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
       delete "/subscriptions/#{@subscription.id}"
 
       expect(response.body).to eq("You need to sign in or sign up before continuing.")
+    end
+
+    it "calls email job for user cancelling subsciption" do
+      allow(UserCancelledSubscriptionEmailJob).to receive(:perform_async)
+
+      prev_redis_url = ENV["REDIS_URL"]
+      begin
+        ENV["REDIS_URL"] = "temp"
+        delete "/subscriptions/#{@subscription.id}"
+      ensure
+        ENV["REDIS_URL"] = prev_redis_url
+      end
+
+      expect(UserCancelledSubscriptionEmailJob).to have_received(:perform_async).with(@subscription.id)
     end
   end
 

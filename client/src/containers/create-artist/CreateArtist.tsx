@@ -92,12 +92,14 @@ interface ImageUploaderProps {
   altText: string;
   imageURL?: string;
   setURL: Function;
+  showToast: Function;
 }
 
 class ImageUploader extends React.Component<ImageUploaderProps> {
   state = {
     loadingImage: false,
     deleteToken: undefined,
+    publicId: null,
   };
 
   renderPhoto = (image: string, crop: number) => {
@@ -116,25 +118,48 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
       return;
     }
 
+    if (
+      ['image/gif', 'image/jpeg', 'image/png'].indexOf(imageFile.type) === -1
+    ) {
+      this.props.showToast({
+        message: 'Please select an image file.',
+        type: 'error',
+      });
+
+      return;
+    }
+
     this.setState({ loadingImage: true });
 
     if (this.state.deleteToken) {
       this.removeImage();
     }
 
-    const fileInfo = await uploadFileToCloudinary(imageFile);
-    // const fileName = imageFile.name;
+    const cloudinaryResponse = await uploadFileToCloudinary(imageFile);
 
-    this.setState({
-      deleteToken: fileInfo.delete_token,
-      loadingImage: false,
-    });
-    this.props.setURL(fileInfo.secure_url);
+    if (cloudinaryResponse) {
+      this.setState({
+        deleteToken: cloudinaryResponse.delete_token,
+        loadingImage: false,
+        publicId: cloudinaryResponse.public_id,
+      });
+      this.props.setURL(cloudinaryResponse.secure_url);
+    } else {
+      this.setState({
+        loadingImage: false,
+      });
+
+      this.props.showToast({
+        message:
+          'Something went wrong with your image upload. Please try again.',
+        type: 'error',
+      });
+    }
   };
 
   removeImage = async () => {
     deleteFileFromCloudinary(this.state.deleteToken);
-    this.setState({ imageUrl: null, deleteToken: undefined });
+    this.setState({ imageUrl: null, deleteToken: undefined, publicId: null });
     this.props.setURL(null);
   };
 
@@ -991,6 +1016,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                   altText={type}
                   setURL={imageSetter(index)}
                   imageURL={images[index]}
+                  showToast={this.props.showToast}
                 />
               </div>
             ))}
@@ -1224,7 +1250,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     if (!this.props.editMode) {
       const { data } = await apiAxios({
         method: 'post',
-        url: '/artist_pages',
+        url: '/artist_pages.json',
         data: {
           artist_page: {
             name: artistName,
@@ -1261,7 +1287,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     } else {
       const { data } = await apiAxios({
         method: 'put',
-        url: `/artist_pages/${this.props.artist?.id}`,
+        url: `/artist_pages/${this.props.artist?.id}.json`,
         data: {
           artist_page: {
             bio: artistMessage,

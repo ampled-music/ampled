@@ -1,0 +1,25 @@
+{
+  "name": "application-fee-management",
+  "version": "1.0.0",
+  "description": "Manage Stripe Connect application fees",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sean Adams",
+  "license": "ISC",
+  "dependencies": {
+    "cli-progress": "^3.6.0",
+    "command-line-args": "^5.1.1",
+    "dotenv": "^8.2.0",
+    "stripe": "^8.38.0"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": true,
+    "arrowParens": "always",
+    "tabWidth": 2,
+    "trailingComma": "all"
+  }
+}

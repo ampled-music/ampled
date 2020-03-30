@@ -14,6 +14,7 @@ import { initialState as meInitialState } from '../../../redux/me/initial-state'
 import { routePaths } from '../../route-paths';
 import { Menu } from '../menu/Menu';
 import { UserRoles } from '../user-roles';
+import { Image, Transformation } from 'cloudinary-react';
 
 interface NavComponentProps {
   match: {
@@ -93,12 +94,30 @@ class NavComponent extends React.Component<Props, any> {
     }
   };
 
+  handlePublicID = (image: string) => {
+    const url = image.split('/');
+    const part_1 = url[url.length - 2];
+    const part_2 = url[url.length - 1];
+    return part_1 + '/' + part_2;
+  };
+
   renderUserImage = () => {
     const { userData } = this.props;
 
     return userData.image ? (
       <Link to="/settings">
-        <img src={userData.image} className="user-image" alt="Your avatar" />
+        <Image
+          publicId={this.handlePublicID(userData.image)}
+          alt={userData.name}
+          className="user-image"
+        >
+          <Transformation
+            crop="fill"
+            width={60}
+            height={60}
+            responsive_placeholder="blank"
+          />
+        </Image>
       </Link>
     ) : (
       <Link to="/settings">

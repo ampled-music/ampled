@@ -1,4 +1,11 @@
-version: 2
+version: 2.1
+commands:
+  check-changed-files-or-halt:
+    parameters:
+      pattern:
+        type: string
+    steps:
+      - run: git diff --name-only << pipeline.git.base_revision >> | egrep -q '<< parameters.pattern >>' || circleci step halt
 jobs:
   build:
     docker:
@@ -38,6 +45,8 @@ jobs:
           name: Run tests
           command: bundle exec rake
       - run: bundle exec rubocop
+      - check-changed-files-or-halt:
+          pattern: \.(js|ts|tsx|js|json)$
       - run:
           name: Build react client
           command: |
@@ -83,7 +92,10 @@ workflows:
               only: development
   build-and-deploy-production:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only: master
       - deploy-production:
           requires:
             - build

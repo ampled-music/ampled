@@ -201,6 +201,18 @@ To list all connected accounts and subscriptions:
 yarn start
 ```
 
+To list all connected accounts and subscriptions, oldest first:
+
+```
+yarn start --sort date_asc
+```
+
+To list all connected accounts and subscriptions, newest first:
+
+```
+yarn start --sort date_desc
+```
+
 To add a 13.24% fee to all connected accounts and subscriptions:
 
 ```

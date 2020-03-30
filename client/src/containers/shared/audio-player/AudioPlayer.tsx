@@ -96,7 +96,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     this.setState({ seeking: false });
   };
 
-  commitSeeking = (value) => {
+  commitSeeking = (event: object, value: number | number[]) => {
     this.player.seekTo(value);
   };
 

@@ -192,6 +192,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
     let name_part = '';
 
     if (broken_name.length < 6) {
+      if (position === 'north' && x === 0 && y === 560) {
+        if (broken_name.length === 1) y_index = 560;
+        if (broken_name.length === 2) y_index = 500;
+        if (broken_name.length === 3) y_index = 440;
+        if (broken_name.length === 4) y_index = 400;
+        if (broken_name.length === 5) y_index = 360;
+      }
       for (let index = 0; index < broken_name.length; index++) {
         name_part += `l_text:Arial_${font_size}_bold:%20${encodeURI(
           broken_name[index],
@@ -234,7 +241,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       artist.name,
       'north',
       0,
-      360,
+      560,
       100,
       85,
     )}/v1585784142/social/SocialRaw_2.png`;
@@ -246,8 +253,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
     console.log(artist.name);
     // console.log('insata: ', insta_1);
     // console.log('insata: ', insta_2);
-    console.log('insata: ', insta_3);
-    console.log('social: ', social_1);
+    // console.log('insata: ', insta_3);
+    // console.log('social: ', social_1);
     console.log('social: ', social_2);
     // console.log('social: ', social_3);
     // console.log('social: ', social_4);

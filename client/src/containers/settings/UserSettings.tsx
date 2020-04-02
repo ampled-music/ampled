@@ -178,8 +178,28 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return part_1 + '/' + part_2;
   };
 
+  handleBrokenName = (
+    fullname: string,
+    x: number,
+    start: number,
+    distance: number,
+  ) => {
+    const broken_name = fullname.split(' ');
+    let x_index = x;
+    let y_index = start;
+    let name_part = '';
+
+    for (let index = 0; index < broken_name.length; index++) {
+      name_part += `l_text:Arial_55_bold:%20${encodeURI(
+        broken_name[index],
+      )}%20,co_rgb:ffffff,b_rgb:202020,g_north_west,x_${x_index},y_${y_index},a_-2/`;
+      y_index += distance;
+    }
+    return name_part;
+  };
+
   handleSocialImages = (artist) => {
-    console.log(artist);
+    // console.log(artist);
     const color = 'ffffff';
 
     const insta_1 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_800,w_800/bo_3px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,g_south,l_social:AmpledLogo.png,w_200,y_20/l_text:Arial_35_bold:%20${encodeURI(
@@ -190,27 +210,38 @@ class UserSettingsComponent extends React.Component<Props, any> {
     const insta_2 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${color},c_scale,h_800,w_800/bo_4px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,l_social:AmpledLogo.png,w_300,y_90/l_text:Arial_45_bold:%20${encodeURI(
       artist.name,
     )}%20,co_rgb:202020,y_-90/l_social:line.png/v1584999718/social/blank.png`;
-    const insta_3 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_800,w_800/bo_3px_solid_rgb:${color},c_scale,h_600,l_social:blank.png,w_600/c_scale,g_south_east,l_social:AmpledLogo.png,w_200,x_120,y_120/l_text:Arial_55_bold:%20Virtual%20,co_rgb:ffffff,b_rgb:202020,g_north_west,x_120,y_70,a_-2/l_text:Arial_55_bold:%20Perfection%20,co_rgb:ffffff,b_rgb:202020,g_north_west,x_120,y_133,a_-2/l_text:Arial_55_bold:%20Cowboy%20,co_rgb:ffffff,b_rgb:202020,g_north_west,x_120,y_200,a_-2/${this.handlePublicID(
-      artist.image,
-    )}`;
-    const social_1 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_1921,w_1081/l_social:SocialRaw_1/l_text:Arial_65_bold:%20Virtual%20,co_rgb:ffffff,b_rgb:202020,g_north_west,x_160,y_150,a_-2/l_text:Arial_65_bold:%20Perfection%20,co_rgb:ffffff,b_rgb:202020,g_north_west,x_160,y_230,a_-2/l_text:Arial_65_bold:%20Cowboy%20,co_rgb:ffffff,b_rgb:202020,g_north_west,x_160,y_320,a_-2/${this.handlePublicID(
-      artist.image,
-    )}`;
-    const social_2 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${color}/l_text:Arial_85_bold:%20Virtual%20,co_rgb:ffffff,b_rgb:202020,g_north,y_480,a_-2/l_text:Arial_85_bold:%20Perfection%20,co_rgb:ffffff,b_rgb:202020,g_north,y_580,a_-2/l_text:Arial_85_bold:%20Cowboy%20,co_rgb:ffffff,b_rgb:202020,g_north,y_690,a_-2/v1585784142/social/SocialRaw_2.png`;
+    const insta_3 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_800,w_800/bo_3px_solid_rgb:${color},c_scale,h_600,l_social:blank.png,w_600/c_scale,g_south_east,l_social:AmpledLogo.png,w_200,x_120,y_120/${this.handleBrokenName(
+      artist.name,
+      120,
+      70,
+      65,
+    )}/${this.handlePublicID(artist.image)}`;
+    const social_1 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_1921,w_1081/l_social:SocialRaw_1/${this.handleBrokenName(
+      artist.name,
+      160,
+      150,
+      80,
+    )}/${this.handlePublicID(artist.image)}`;
+    const social_2 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${color}/${this.handleBrokenName(
+      artist.name,
+      0,
+      480,
+      100,
+    )}/v1585784142/social/SocialRaw_2.png`;
     const social_3 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${color}/v1585784142/social/SocialRaw_4.png`;
     const social_4 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${color}/v1585784142/social/SocialRaw_5.png`;
     const social_5 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${color}/v1585784142/social/SocialRaw_6.png`;
     const social_6 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${color}/v1585784142/social/SocialRaw_7.png`;
 
-    console.log('insata: ', insta_1);
-    console.log('insata: ', insta_2);
+    // console.log('insata: ', insta_1);
+    // console.log('insata: ', insta_2);
     console.log('insata: ', insta_3);
     console.log('social: ', social_1);
     console.log('social: ', social_2);
-    console.log('social: ', social_3);
-    console.log('social: ', social_4);
-    console.log('social: ', social_5);
-    console.log('social: ', social_6);
+    // console.log('social: ', social_3);
+    // console.log('social: ', social_4);
+    // console.log('social: ', social_5);
+    // console.log('social: ', social_6);
   };
 
   renderUserImage = () => {

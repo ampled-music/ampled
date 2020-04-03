@@ -13,18 +13,12 @@ export const config = {
     blog: process.env.REACT_APP_URL_BLOG || 'https://app.ampled.com/zine',
     about: process.env.REACT_APP_URL_ABOUT || 'https://app.ampled.com/about',
   },
-  authUrl: {
-    google: process.env.REACT_APP_GOOGLE_AUTH_URL || '/api/auth/google',
-    linkedIn: process.env.REACT_APP_LINKEDIN_AUTH_URL || '/api/auth/linkedin',
-    facebook: process.env.REACT_APP_FACEBOOK_AUTH_URL || '/api/auth/facebook',
-  },
   cloudinary: {
     uploadImageUrl: 'https://api.cloudinary.com/v1_1/ampled-web/upload',
     deleteImageUrl:
       'https://api.cloudinary.com/v1_1/ampled-web/delete_by_token',
-    apiKey: process.env.CLOUDINARY_API_KEY || '744875614849321',
-    apiSecret:
-      process.env.CLOUDINARY_API_SECRET || 'vkrV4k_iOlct_pt0Ue-DukQCIXQ',
+    apiKey: process.env.REACT_APP_CLOUDINARY_API_KEY,
+    apiSecret: process.env.REACT_APP_CLOUDINARY_API_SECRET,
   },
   aws: {
     playableBaseUrl:

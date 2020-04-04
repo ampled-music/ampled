@@ -13,7 +13,14 @@ class StripeController < ApplicationController
   end
 
   def webhook
-    # BA we should check the signature https://stripe.com/docs/webhooks/signatures
+    logger.info "Verifying Stripe event..."
+    is_account_hook = verify_webhook("STRIPE_WEBHOOK_SECRET")
+    is_connect_hook = verify_webhook("STRIPE_CONNECT_WEBHOOK_SECRET")
+
+    return render json: {}, status: :bad_request unless is_account_hook || is_connect_hook
+
+    logger.info "Stripe event verified."
+
     object = params[:data][:object]
     event_type = params[:type]
     logger.info "STRIPE EVENT: #{event_type} (live mode: #{params[:livemode]})"
@@ -35,6 +42,25 @@ class StripeController < ApplicationController
   end
 
   private
+
+  def verify_webhook(secret)
+    # verify signature
+    payload = request.body.read
+    sig_header = request.env["HTTP_STRIPE_SIGNATURE"]
+
+    begin
+      Stripe::Webhook.construct_event(
+        payload, sig_header, ENV[secret]
+      )
+    rescue JSON::ParserError
+      # Invalid payload
+      return false
+    rescue Stripe::SignatureVerificationError
+      # Invalid signature
+      return false
+    end
+    true
+  end
 
   def authorize_stripe_account
     connection.post("https://connect.stripe.com/oauth/token",

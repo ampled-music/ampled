@@ -21,9 +21,9 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
     - [Continuous Integration/Deployment with CircleCI and Heroku](#continuous-integrationdeployment-with-circleci-and-heroku)
 - [Deploy to Acceptance/Production](#deploy-to-acceptanceproduction)
 - [Server Environments](#server-environments)
-    - [Hosting](#hosting)
-    - [Environment Variables](#environment-variables)
-    - [Third Party Services](#third-party-services)
+  - [Hosting](#hosting)
+  - [Environment Variables](#environment-variables)
+  - [Third Party Services](#third-party-services)
 - [Internal Tools](#internal-tools)
   - [`application-fee-management`](#application-fee-management)
     - [Installation & setup](#installation--setup)
@@ -191,6 +191,8 @@ If you need some of these credentials for local development, you can get the key
 - `RAILS_LOG_TO_STDOUT` - Log to standard out, good for Heroku (default: false).
 - `RAILS_SERVE_STATIC_FILES` - Serve static assets, good for Heroku (default: false).
 - `RAVEN_DSN` - used to support [Sentry](sentry.io) on the backend.
+- `STRIPE_WEBHOOK_SECRET` - signing secret for main Stripe webhook. In your local environment, with the Stripe CLI you can find the endpoint's secret by running `stripe listen`
+- `STRIPE_CONNECT_WEBHOOK_SECRET` - signing secret for Stripe Connect webhook. In your local environment, with the Stripe CLI you can find the endpoint's secret by running `stripe listen`
 
 **Client .env**
 

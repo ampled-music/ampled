@@ -232,6 +232,21 @@
             }
           }
 
+          &__promote {
+            &_link {
+              font-size: 11px;
+              text-align: center;
+              color: $white;
+              text-decoration: underline;
+              line-height: 16px;
+              display: block;
+
+              &:hover {
+                text-decoration: none;
+              }
+            }
+          }
+
           &__stripe {
             border-top: 2px solid $white;
 

@@ -184,15 +184,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
     let name_string = '';
 
     for (let index = 0; index < broken_name.length; index++) {
-      // console.log('name_part: ', broken_name[index]);
-      // console.log('name_array: ', name_array);
-      // console.log('name_string: ', name_string);
-
       if (broken_name[index].length >= 7) {
         // Words longer than 6 get their own line
         if (name_string) {
           // If there is a string being built, push that before the next Word
-          name_array.push(name_string);
+          name_array.push(name_string.trim());
           name_string = '';
         }
         name_array.push(broken_name[index]);
@@ -205,23 +201,22 @@ class UserSettingsComponent extends React.Component<Props, any> {
             continue;
           }
           // Push built string of small word once its over 10
-          name_array.push(name_string);
+          name_array.push(name_string.trim());
           name_string = '';
         } else if (index === broken_name.length - 1) {
           // If its the last word push whats left in the string
-          name_array.push(name_string);
+          name_array.push(name_string.trim());
           name_string = '';
         }
       } else {
         if (name_string) {
           // If there is a string being built, push that before the next Word
-          name_array.push(name_string);
+          name_array.push(name_string.trim());
           name_string = '';
         }
         name_array.push(broken_name[index]);
       }
     }
-    // console.log('end: ', name_array);
     return name_array;
   };
 
@@ -242,6 +237,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     let new_distance = distance;
 
     if (broken_name.length < 5) {
+      // Font size for long names
       if (broken_name.length >= 4) {
         new_font_size = font_size / 1.2;
         new_distance = distance / 1.2;
@@ -258,7 +254,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           y_index = index === 0 ? y_index : y_index - 60;
         }
       }
-
+      // Cycle through and build text plate
       for (let index = 0; index < broken_name.length; index++) {
         // prettier-ignore
         name_part += `l_text:Arial_${new_font_size}_bold:%20${encodeURI( broken_name[index] )}%20,co_rgb:${ color },b_rgb:${ bg },g_${ position },x_${ x },y_${ y_index }/`;
@@ -271,39 +267,44 @@ class UserSettingsComponent extends React.Component<Props, any> {
     }
   };
 
-  handleSocialImages = (artist) => {
+  renderSocialImages = (artist) => {
     let color = artist.artistColor;
     color = color.replace('#', '');
+    const promoteImages = [];
 
     // prettier-ignore
-    const insta_1 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_800,w_800/bo_3px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,g_south,l_social:AmpledLogo.png,w_200,y_20/${this.handleBrokenName( artist.name, 'north', 0, 30, 40, 35, 'ffffff', '202020' )}/${this.handlePublicID( artist.image )}`;
+    promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_800,w_800/bo_3px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,g_south,l_social:AmpledLogo.png,w_200,y_20/${this.handleBrokenName( artist.name, 'north', 0, 30, 40, 35, 'ffffff', '202020' )}/${this.handlePublicID( artist.image )}`, name:`${artist.name} Promote1.jpg`});
     // prettier-ignore
-    const insta_2 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 },c_scale,h_800,w_800/bo_4px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,l_social:AmpledLogo.png,w_300,y_90/${this.handleBrokenName( artist.name, 'center', 0, -90, 50, 45, '202020', null )}/l_social:line.png/v1584999718/social/blank.png`;
+    promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 },c_scale,h_800,w_800/bo_4px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,l_social:AmpledLogo.png,w_300,y_90/${this.handleBrokenName( artist.name, 'center', 0, -90, 50, 45, '202020', null )}/l_social:line.png/v1584999718/social/blank.png`, name:`${artist.name} Promote2.jpg`});
     // prettier-ignore
-    const insta_3 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_800,w_800/bo_3px_solid_rgb:${ color },c_scale,h_600,l_social:blank.png,w_600/c_scale,g_south_east,l_social:AmpledLogo.png,w_200,x_120,y_120/${this.handleBrokenName( artist.name, 'north_west', 120, 70, 65, 55, 'ffffff', '202020'  )}/${this.handlePublicID( artist.image )}`;
+    promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_800,w_800/bo_3px_solid_rgb:${ color },c_scale,h_600,l_social:blank.png,w_600/c_scale,g_south_east,l_social:AmpledLogo.png,w_200,x_120,y_120/${this.handleBrokenName( artist.name, 'north_west', 120, 70, 65, 55, 'ffffff', '202020'  )}/${this.handlePublicID( artist.image )}`, name:`${artist.name} Promote3.jpg`});
     // prettier-ignore
-    const social_1 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_1921,w_1081/l_social:SocialRaw_1/${this.handleBrokenName( artist.name, 'north_west', 160, 150, 80, 65, 'ffffff', '202020'  )}/${this.handlePublicID(artist.image)}`;
+    promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_1921,w_1081/l_social:SocialRaw_1/${this.handleBrokenName( artist.name, 'north_west', 160, 150, 80, 65, 'ffffff', '202020'  )}/${this.handlePublicID(artist.image)}`, name:`${artist.name} Promote4.jpg`});
     // prettier-ignore
-    const social_2 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/${this.handleBrokenName( artist.name, 'north', 0, 560, 100, 85, 'ffffff', '202020'  )}/v1585784142/social/SocialRaw_2.png`;
+    promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/${this.handleBrokenName( artist.name, 'north', 0, 560, 100, 85, 'ffffff', '202020'  )}/v1585784142/social/SocialRaw_2.png`, name:`${artist.name} Promote5.jpg`});
     // prettier-ignore
-    const social_3 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_4.png`;
+    promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_4.png`, name:`${artist.name} Promote6.jpg`});
     // prettier-ignore
-    const social_4 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_5.png`;
+    promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_5.png`, name:`${artist.name} Promote7.jpg`});
     // prettier-ignore
-    const social_5 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_6.png`;
+    promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_6.png`, name:`${artist.name} Promote8.jpg`});
     // prettier-ignore
-    const social_6 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_7.png`;
+    promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_7.png`, name:`${artist.name} Promote9.jpg`});
 
-    console.log(artist.name);
-    // console.log('insata: ', insta_1);
-    console.log('insata: ', insta_2);
-    // console.log('insata: ', insta_3);
-    // console.log('social: ', social_1);
-    // console.log('social: ', social_2);
-    // console.log('social: ', social_3);
-    // console.log('social: ', social_4);
-    // console.log('social: ', social_5);
-    // console.log('social: ', social_6);
+    return (
+      <div className="promote-container">
+        {promoteImages.map((promoImage) => (
+          <a
+            key={promoImage.name}
+            className="details__promote_link"
+            href={promoImage.url}
+            download
+          >
+            {promoImage.name}
+          </a>
+        ))}
+      </div>
+    );
   };
 
   renderUserImage = () => {
@@ -496,15 +497,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       </div>
                     </div>
                   </div>
+                </div>
+                <div className="detail__promote">
                   <div className="row no-gutter">
                     <div className="col-12">
-                      <a
-                        className="details__edit_link"
-                        rel="noopener noreferrer"
-                      >
-                        {this.handleSocialImages(ownedPage)}
-                        Promote Your Page
-                      </a>
+                      {this.renderSocialImages(ownedPage)}
                     </div>
                   </div>
                 </div>
@@ -659,9 +656,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     <div className="row content">
       {this.renderUserInfo()}
       <div className="pages-container col-md-9">
-        {this.props.userData.ownedPages.length > 0
-          ? this.renderOwnedPages()
-          : ''}
+        {this.props.userData.ownedPages.length > 0 && this.renderOwnedPages()}
         {this.props.userData.subscriptions.length > 0
           ? this.renderSupportedArtists()
           : this.renderEmptyArtists()}

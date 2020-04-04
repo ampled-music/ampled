@@ -178,6 +178,53 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return part_1 + '/' + part_2;
   };
 
+  buildBrokenName = (artistname) => {
+    const broken_name = artistname.split(' ');
+    const name_array = [];
+    let name_string = '';
+
+    for (let index = 0; index < broken_name.length; index++) {
+      // console.log('name_part: ', broken_name[index]);
+      // console.log('name_array: ', name_array);
+      // console.log('name_string: ', name_string);
+
+      if (broken_name[index].length >= 7) {
+        // Words longer than 6 get their own line
+        if (name_string) {
+          // If there is a string being built, push that before the next Word
+          name_array.push(name_string);
+          name_string = '';
+        }
+        name_array.push(broken_name[index]);
+      } else if (broken_name[index].length < 7) {
+        // Build string of small words
+        name_string += broken_name[index] + ' ';
+        if (name_string.length > 10) {
+          // If its a small word continue loop
+          if (broken_name[index].length < 3) {
+            continue;
+          }
+          // Push built string of small word once its over 10
+          name_array.push(name_string);
+          name_string = '';
+        } else if (index === broken_name.length - 1) {
+          // If its the last word push whats left in the string
+          name_array.push(name_string);
+          name_string = '';
+        }
+      } else {
+        if (name_string) {
+          // If there is a string being built, push that before the next Word
+          name_array.push(name_string);
+          name_string = '';
+        }
+        name_array.push(broken_name[index]);
+      }
+    }
+    // console.log('end: ', name_array);
+    return name_array;
+  };
+
   handleBrokenName = (
     fullname: string,
     position: string,
@@ -186,24 +233,29 @@ class UserSettingsComponent extends React.Component<Props, any> {
     distance: number,
     font_size: number,
   ) => {
-    const broken_name = fullname.split(' ');
-    const x_index = x;
-    let y_index = y;
+    const broken_name = this.buildBrokenName(fullname);
+    let y_index;
     let name_part = '';
+    let new_font_size = font_size;
+    let new_distance = distance;
 
-    if (broken_name.length < 6) {
-      if (position === 'north' && x === 0 && y === 560) {
-        if (broken_name.length === 1) y_index = 560;
-        if (broken_name.length === 2) y_index = 500;
-        if (broken_name.length === 3) y_index = 440;
-        if (broken_name.length === 4) y_index = 400;
-        if (broken_name.length === 5) y_index = 360;
+    if (broken_name.length < 5) {
+      if (broken_name.length >= 4) {
+        new_font_size = font_size / 1.2;
+        new_distance = distance / 1.2;
       }
+
+      if (position === 'north' && x === 0 && y === 560) {
+        for (let index = 0; index < broken_name.length; index++) {
+          y_index = index === 0 ? y : y_index - 60;
+        }
+      }
+
       for (let index = 0; index < broken_name.length; index++) {
-        name_part += `l_text:Arial_${font_size}_bold:%20${encodeURI(
-          broken_name[index],
-        )}%20,co_rgb:ffffff,b_rgb:202020,g_${position},x_${x_index},y_${y_index},a_-2/`;
-        y_index += distance;
+        // prettier-ignore
+        name_part += `l_text:Arial_${new_font_size}_bold:%20${encodeURI( broken_name[index] )}%20,co_rgb:ffffff,b_rgb:202020,g_${ position },x_${ x },y_${ y_index }/`;
+
+        y_index += Math.round(new_distance);
       }
       return name_part;
     } else {
@@ -236,15 +288,15 @@ class UserSettingsComponent extends React.Component<Props, any> {
     const social_6 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_7.png`;
 
     console.log(artist.name);
-    console.log('insata: ', insta_1);
-    console.log('insata: ', insta_2);
-    console.log('insata: ', insta_3);
-    console.log('social: ', social_1);
-    console.log('social: ', social_2);
-    console.log('social: ', social_3);
-    console.log('social: ', social_4);
-    console.log('social: ', social_5);
-    console.log('social: ', social_6);
+    // console.log('insata: ', insta_1);
+    // console.log('insata: ', insta_2);
+    // console.log('insata: ', insta_3);
+    // console.log('social: ', social_1);
+    // console.log('social: ', social_2);
+    // console.log('social: ', social_3);
+    // console.log('social: ', social_4);
+    // console.log('social: ', social_5);
+    // console.log('social: ', social_6);
   };
 
   renderUserImage = () => {
@@ -444,7 +496,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                         rel="noopener noreferrer"
                       >
                         {this.handleSocialImages(ownedPage)}
-                        Download Social Images
+                        Promote Your Page
                       </a>
                     </div>
                   </div>

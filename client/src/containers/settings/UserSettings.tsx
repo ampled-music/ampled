@@ -178,7 +178,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return part_1 + '/' + part_2;
   };
 
-  buildBrokenName = (artistname) => {
+  buildBrokenName = (artistname: string) => {
     const broken_name = artistname.split(' ');
     const name_array = [];
     let name_string = '';
@@ -232,9 +232,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
     y: number,
     distance: number,
     font_size: number,
+    color: string,
+    bg: string,
   ) => {
     const broken_name = this.buildBrokenName(fullname);
-    let y_index;
+    let y_index = y;
     let name_part = '';
     let new_font_size = font_size;
     let new_distance = distance;
@@ -244,16 +246,22 @@ class UserSettingsComponent extends React.Component<Props, any> {
         new_font_size = font_size / 1.2;
         new_distance = distance / 1.2;
       }
-
+      // Instagram 2
+      if (position === 'center' && x === 0 && y === -90) {
+        for (let index = 0; index < broken_name.length; index++) {
+          y_index = index === 0 ? y_index : y_index - distance / 2;
+        }
+      }
+      // Social 2
       if (position === 'north' && x === 0 && y === 560) {
         for (let index = 0; index < broken_name.length; index++) {
-          y_index = index === 0 ? y : y_index - 60;
+          y_index = index === 0 ? y_index : y_index - 60;
         }
       }
 
       for (let index = 0; index < broken_name.length; index++) {
         // prettier-ignore
-        name_part += `l_text:Arial_${new_font_size}_bold:%20${encodeURI( broken_name[index] )}%20,co_rgb:ffffff,b_rgb:202020,g_${ position },x_${ x },y_${ y_index }/`;
+        name_part += `l_text:Arial_${new_font_size}_bold:%20${encodeURI( broken_name[index] )}%20,co_rgb:${ color },b_rgb:${ bg },g_${ position },x_${ x },y_${ y_index }/`;
 
         y_index += Math.round(new_distance);
       }
@@ -264,20 +272,19 @@ class UserSettingsComponent extends React.Component<Props, any> {
   };
 
   handleSocialImages = (artist) => {
-    const name = encodeURI(artist.name);
     let color = artist.artistColor;
     color = color.replace('#', '');
 
     // prettier-ignore
-    const insta_1 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_800,w_800/bo_3px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,g_south,l_social:AmpledLogo.png,w_200,y_20/l_text:Arial_35_bold:%20${ name }%20,co_rgb:ffffff,b_rgb:202020,g_north,y_30/${this.handlePublicID( artist.image )}`;
+    const insta_1 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_800,w_800/bo_3px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,g_south,l_social:AmpledLogo.png,w_200,y_20/${this.handleBrokenName( artist.name, 'north', 0, 30, 40, 35, 'ffffff', '202020' )}/${this.handlePublicID( artist.image )}`;
     // prettier-ignore
-    const insta_2 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 },c_scale,h_800,w_800/bo_4px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,l_social:AmpledLogo.png,w_300,y_90/l_text:Arial_45_bold:%20${name}%20,co_rgb:202020,y_-90/l_social:line.png/v1584999718/social/blank.png`;
+    const insta_2 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 },c_scale,h_800,w_800/bo_4px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,l_social:AmpledLogo.png,w_300,y_90/${this.handleBrokenName( artist.name, 'center', 0, -90, 50, 45, '202020', null )}/l_social:line.png/v1584999718/social/blank.png`;
     // prettier-ignore
-    const insta_3 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_800,w_800/bo_3px_solid_rgb:${ color },c_scale,h_600,l_social:blank.png,w_600/c_scale,g_south_east,l_social:AmpledLogo.png,w_200,x_120,y_120/${this.handleBrokenName( artist.name, 'north_west', 120, 70, 65, 55 )}/${this.handlePublicID( artist.image )}`;
+    const insta_3 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_800,w_800/bo_3px_solid_rgb:${ color },c_scale,h_600,l_social:blank.png,w_600/c_scale,g_south_east,l_social:AmpledLogo.png,w_200,x_120,y_120/${this.handleBrokenName( artist.name, 'north_west', 120, 70, 65, 55, 'ffffff', '202020'  )}/${this.handlePublicID( artist.image )}`;
     // prettier-ignore
-    const social_1 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_1921,w_1081/l_social:SocialRaw_1/${this.handleBrokenName( artist.name, 'north_west', 160, 150, 80, 65 )}/${this.handlePublicID(artist.image)}`;
+    const social_1 = `https://res.cloudinary.com/ampled-web/image/upload/c_fill,h_1921,w_1081/l_social:SocialRaw_1/${this.handleBrokenName( artist.name, 'north_west', 160, 150, 80, 65, 'ffffff', '202020'  )}/${this.handlePublicID(artist.image)}`;
     // prettier-ignore
-    const social_2 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/${this.handleBrokenName( artist.name, 'north', 0, 560, 100, 85 )}/v1585784142/social/SocialRaw_2.png`;
+    const social_2 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/${this.handleBrokenName( artist.name, 'north', 0, 560, 100, 85, 'ffffff', '202020'  )}/v1585784142/social/SocialRaw_2.png`;
     // prettier-ignore
     const social_3 = `https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_4.png`;
     // prettier-ignore
@@ -289,7 +296,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     console.log(artist.name);
     // console.log('insata: ', insta_1);
-    // console.log('insata: ', insta_2);
+    console.log('insata: ', insta_2);
     // console.log('insata: ', insta_3);
     // console.log('social: ', social_1);
     // console.log('social: ', social_2);

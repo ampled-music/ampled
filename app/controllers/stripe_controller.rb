@@ -21,7 +21,8 @@ class StripeController < ApplicationController
 
     object = params[:data][:object]
     event_type = params[:type]
-    logger.info "STRIPE EVENT: #{event_type} (live mode: #{params[:livemode]})"
+    event_id = params[:id]
+    logger.info "STRIPE EVENT: #{event_type} #{event_id} (live mode: #{params[:livemode]})"
     # for 'charge.failed' only
     # puts object[:customer]
     # puts object[:source][:last4]

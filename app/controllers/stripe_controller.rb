@@ -16,6 +16,7 @@ class StripeController < ApplicationController
     logger.info "Production? #{Rails.env.production?}"
     logger.info "Development? #{Rails.env.development?}"
     logger.info "Acceptance? #{Rails.env.acceptance?}"
+    logger.info "RAILS_ENV: #{ENV["RAILS_ENV"]}"
   end
 
   def webhook

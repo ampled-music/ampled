@@ -43,13 +43,15 @@ class StripeController < ApplicationController
     # for 'charge.failed' only
     # puts object[:customer]
     # puts object[:source][:last4]
-    if event_type == "invoice.payment_failed"
-      logger.info "Stripe: Acting on #{event_type}"
-
-      return invoice_payment_failed(object)
-    elsif event_type == "invoice.payment_succeeded"
-      logger.info "Stripe: Acting on #{event_type}"
-      return invoice_payment_succeeded(object)
+    case event_type
+    when "invoice.payment_failed"
+      invoice_payment_failed(artist_page, object)
+    when "invoice.payment_succeeded"
+      invoice_payment_succeeded(artist_page, object)
+    when "payout.paid"
+      payout_paid(artist_page, object)
+    else
+      logger.warn "Stripe event type '#{event_type}' was received but is not being handled."
     end
     render json: {}
   end
@@ -84,6 +86,18 @@ class StripeController < ApplicationController
     CardDeclineEmailJob.perform_async(usersub.id) unless ENV["REDIS_URL"].nil?
     # TODO: update subscription to mark as failed?
     render json: {}
+  end
+
+  def payout_paid(artist_page, object)
+    # amount paid to artist (ex. 2000 => $20.00)
+    amount_in_cents = object[:amount]
+
+    # date that payout should arrive to bank
+    arrival_date = Time.at(object[:arrival_date])
+
+    # notify artist admins
+    logger.info "Stripe: sending artist-paid email to admins of artist page id: #{artist_page.id}"
+    ArtistPagePaidEmailJob.perform_async(artist_page, amount_in_cents, arrival_date) unless ENV["REDIS_URL"].nil? 
   end
 
   def is_account_hook

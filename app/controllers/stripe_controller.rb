@@ -13,9 +13,7 @@ class StripeController < ApplicationController
   end
 
   def log_environments
-    logger.info "Production? #{Rails.env.production?}"
-    logger.info "Development? #{Rails.env.development?}"
-    logger.info "Acceptance? #{Rails.env.acceptance?}"
+    logger.info "Rails.env: #{Rails.env}"
     logger.info "RAILS_ENV: #{ENV["RAILS_ENV"]}"
   end
 

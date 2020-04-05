@@ -12,6 +12,12 @@ class StripeController < ApplicationController
     redirect_to "/settings?stripesuccess=true"
   end
 
+  def log_environments
+    logger.info "Production? #{Rails.env.production?}"
+    logger.info "Development? #{Rails.env.development?}"
+    logger.info "Acceptance? #{Rails.env.acceptance?}"
+  end
+
   def webhook
     logger.info "Stripe: Verifying webhook event..."
 
@@ -25,11 +31,10 @@ class StripeController < ApplicationController
     event_id = params[:id]
     logger.info "STRIPE EVENT: #{event_type} #{event_id} for #{connect_account} (live mode: #{params[:livemode]})"
 
+    log_environments
+
     # Webhooks for Connect may send test data to live endpoints, so we need
     # to ignore test data in production
-    logger.info "Production? #{Rails.env.production?}"
-    logger.info "Development? #{Rails.env.development?}"
-    logger.info "Acceptance? #{Rails.env.acceptance?}"
     if Rails.env.production? && !params[:livemode]
       logger.info "Stripe: Ignoring test mode event #{event_type} #{event_id} in production."
       return render json: {}

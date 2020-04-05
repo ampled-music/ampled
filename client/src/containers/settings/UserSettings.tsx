@@ -263,7 +263,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
       for (let index = 0; index < broken_name.length; index++) {
         // prettier-ignore
         name_part += `l_text:Arial_${new_font_size}_bold:%20${encodeURI( broken_name[index] )}%20,co_rgb:${ color },b_rgb:${ bg },g_${ position },x_${ x },y_${ y_index }/`;
-
         y_index += Math.round(new_distance);
       }
       return name_part;
@@ -295,8 +294,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_6.png`, name:`${artist.name} Promote8.jpg`});
     // prettier-ignore
     promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_7.png`, name:`${artist.name} Promote9.jpg`});
-
-    // return promoteImages;
 
     return (
       <div>

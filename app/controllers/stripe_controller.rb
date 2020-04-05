@@ -22,12 +22,27 @@ class StripeController < ApplicationController
     logger.info "Stripe event verified."
 
     object = params[:data][:object]
+    connect_account = params[:data][:account]
     event_type = params[:type]
-    logger.info "STRIPE EVENT: #{event_type} (live mode: #{params[:livemode]})"
+    logger.info "STRIPE EVENT: #{event_type} for #{connect_account} (live mode: #{params[:livemode]})"
+
+    # Webhooks for Connect may send test data, so we need to ignore that
+    # in production
+    return render json: {} if Rails.env.production? && !params[:livemode]
+
+    process_webhook(object)
+  end
+
+  private
+
+  def process_webhook(object)
     # for 'charge.failed' only
     # puts object[:customer]
     # puts object[:source][:last4]
     if event_type == "invoice.payment_failed"
+      # This stripe_customer_id is created *on the Connected account* and stored
+      # on the Subscription record - which is why we can find this record
+      # with only this one ID.
       usersub = Subscription.find_by(stripe_customer_id: object[:customer])
       user = User.find(usersub.user_id)
 
@@ -37,11 +52,16 @@ class StripeController < ApplicationController
       # send notification to user.email that their payment failed
       CardDeclineEmailJob.perform_async(usersub.id) unless ENV["REDIS_URL"].nil?
       # TODO: update subscription to mark as failed?
+    elsif event_type == "invoice.payment_succeeded"
+      usersub = Subscription.find_by(stripe_customer_id: object[:customer])
+      # integer cents e.g. 2000 for $20.00
+      invoice_total = object[:total]
+      # lowercase currency e.g. usd
+      invoice_currency = object[:currency]
+
     end
     render json: {}
   end
-
-  private
 
   def verify_webhook(secret)
     # verify signature

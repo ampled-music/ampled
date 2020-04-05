@@ -58,6 +58,7 @@ class StripeController < ApplicationController
       # lowercase currency e.g. usd
       invoice_currency = object[:currency]
 
+      CardChargedEmailJob.perform_async(usersub, invoice_total, invoice_currency) unless ENV["REDIS_URL"].nil?
     end
     render json: {}
   end

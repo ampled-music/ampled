@@ -32,12 +32,13 @@ class StripeController < ApplicationController
       return render json: {}
     end
 
-    process_webhook(event_type, object)
+    process_webhook(event_type, connect_account, object)
   end
 
   private
 
-  def process_webhook(event_type, object)
+  def process_webhook(event_type, connect_account, object)
+    artist_page = ArtistPage.find_by(stripe_user_id: connect_account)
     # for 'charge.failed' only
     # puts object[:customer]
     # puts object[:source][:last4]
@@ -47,7 +48,7 @@ class StripeController < ApplicationController
       # This stripe_customer_id is created *on the Connected account* and stored
       # on the Subscription record - which is why we can find this record
       # with only this one ID.
-      usersub = Subscription.find_by(stripe_customer_id: object[:customer])
+      usersub = Subscription.find_by(stripe_customer_id: object[:customer], artist_page_id: artist_page.id)
       user = User.find(usersub.user_id)
 
       # Mark user as having invalid card
@@ -60,7 +61,8 @@ class StripeController < ApplicationController
     elsif event_type == "invoice.payment_succeeded"
       logger.info "Stripe: Acting on #{event_type}"
 
-      usersub = Subscription.find_by(stripe_customer_id: object[:customer])
+      usersub = Subscription.find_by(stripe_customer_id: object[:customer], artist_page_id: artist_page.id)
+      logger.info "Stripe: usersub.id: #{usersub.id}"
       # integer cents e.g. 2000 for $20.00
       invoice_total = object[:total]
       # lowercase currency e.g. usd

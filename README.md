@@ -209,6 +209,28 @@ If you need some of these credentials for local development, you can get the key
 - Cloudinary for image upload and manipulation.
 - Stripe for credit card payments processing.
 
+### Using the Stripe CLI to test webhooks locally
+
+0. Install the [Stripe CLI](https://stripe.com/docs/stripe-cli#install) using the directions for your OS.
+
+1. Link the Stripe CLI to your account with
+
+```
+stripe login
+```
+
+2. To start forwarding events to your local hook,
+
+```
+stripe listen --forward-to localhost:3000/stripe_hook
+```
+
+This will provide a signing secret that you should include as `STRIPE_WEBHOOK_SECRET` in the root `.env`. Keep this terminal window open as the listener will continue to run and provide helpful output.
+
+3. Start the local Ampled server!
+
+4. You're now ready to listen to webhooks coming from our non-development servers and have them forwarded locally.
+
 # Internal Tools
 
 Located in the `tools` folder. **Please don't touch if you don't need to!**

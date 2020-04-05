@@ -29,12 +29,12 @@ class StripeController < ApplicationController
     # to ignore test data in production
     return render json: {} if Rails.env.production? && !params[:livemode]
 
-    process_webhook(object)
+    process_webhook(event_type, object)
   end
 
   private
 
-  def process_webhook(object)
+  def process_webhook(event_type, object)
     # for 'charge.failed' only
     # puts object[:customer]
     # puts object[:source][:last4]

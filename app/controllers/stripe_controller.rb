@@ -13,18 +13,17 @@ class StripeController < ApplicationController
   end
 
   def webhook
-    logger.info "Verifying Stripe event..."
-    is_account_hook = verify_webhook("STRIPE_WEBHOOK_SECRET")
-    is_connect_hook = verify_webhook("STRIPE_CONNECT_WEBHOOK_SECRET")
+    logger.info "Stripe: Verifying webhook event..."
 
     return render json: {}, status: :bad_request unless is_account_hook || is_connect_hook
 
-    logger.info "Stripe event verified."
+    logger.info "Stripe: Webhook event verified."
 
     object = params[:data][:object]
     connect_account = params[:data][:account]
     event_type = params[:type]
-    logger.info "STRIPE EVENT: #{event_type} for #{connect_account} (live mode: #{params[:livemode]})"
+    event_id = params[:id]
+    logger.info "STRIPE EVENT: #{event_type} #{event_id} for #{connect_account} (live mode: #{params[:livemode]})"
 
     # Webhooks for Connect may send test data, so we need to ignore that
     # in production
@@ -63,6 +62,14 @@ class StripeController < ApplicationController
     render json: {}
   end
 
+  def is_account_hook
+    verify_webhook(ENV["STRIPE_WEBHOOK_SECRET"])
+  end
+
+  def is_connect_hook
+    verify_webhook(ENV["STRIPE_CONNECT_WEBHOOK_SECRET"])
+  end
+
   def verify_webhook(secret)
     # verify signature
     payload = request.body.read
@@ -70,15 +77,18 @@ class StripeController < ApplicationController
 
     begin
       Stripe::Webhook.construct_event(
-        payload, sig_header, ENV[secret]
+        payload, sig_header, secret
       )
     rescue JSON::ParserError
       # Invalid payload
+      logger.warning "Stripe: Invalid webhook payload"
       return false
     rescue Stripe::SignatureVerificationError
       # Invalid signature
+      logger.warning "Stripe: Invalid webhook signature"
       return false
     end
+    logger.info "Stripe: Valid webhook payload & signature"
     true
   end
 

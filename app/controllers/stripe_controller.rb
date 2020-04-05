@@ -82,11 +82,11 @@ class StripeController < ApplicationController
       )
     rescue JSON::ParserError
       # Invalid payload
-      logger.warning "Stripe: Invalid webhook payload"
+      logger.warn "Stripe: Invalid webhook payload"
       return false
     rescue Stripe::SignatureVerificationError
       # Invalid signature
-      logger.warning "Stripe: Invalid webhook signature"
+      logger.warn "Stripe: Invalid webhook signature"
       return false
     end
     logger.info "Stripe: Valid webhook payload & signature"

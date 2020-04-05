@@ -13,7 +13,7 @@ class CardChargedEmailJob
         template_model: {
           artist: subscription.artist_page.name,
           last_4: subscription.user.card_last4,
-          total_amount: number_to_currency(invoice_total / 100),
+          total_amount: format("%.2f", invoice_total / 100),
           currency_name: invoice_currency.upcase
         }
       }]

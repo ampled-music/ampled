@@ -519,13 +519,15 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     </div>
                   </div>
                 </div>
-                <div className="details__promote">
-                  <div className="row no-gutter">
-                    <div className="col-12">
-                      {this.renderSocialImages(ownedPage)}
+                {ownedPage.approved && (
+                  <div className="details__promote">
+                    <div className="row no-gutter">
+                      <div className="col-12">
+                        {this.renderSocialImages(ownedPage)}
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
                 {ownedPage.role === 'admin' && (
                   <div className="details__stripe">
                     <div className="row no-gutter align-items-center">

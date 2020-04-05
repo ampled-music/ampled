@@ -47,6 +47,7 @@ end
 json.ownedPages @owned_pages do |page|
   json.role page.role
   json.instrument page.instrument
+  json.approved page.page.approved
   json.artistId page.page.id
   json.artistSlug page.page.slug
   json.artistColor page.page.accent_color

@@ -45,33 +45,40 @@ class StripeController < ApplicationController
     if event_type == "invoice.payment_failed"
       logger.info "Stripe: Acting on #{event_type}"
 
-      # This stripe_customer_id is created *on the Connected account* and stored
-      # on the Subscription record - which is why we can find this record
-      # with only this one ID.
-      usersub = Subscription.find_by(stripe_customer_id: object[:customer], artist_page_id: artist_page.id)
-      user = User.find(usersub.user_id)
-
-      # Mark user as having invalid card
-      user.update(card_is_valid: false)
-
-      # send notification to user.email that their payment failed
-      logger.info "Stripe: sending CardDeclineEmail to #{user.email}"
-      CardDeclineEmailJob.perform_async(usersub.id) unless ENV["REDIS_URL"].nil?
-      # TODO: update subscription to mark as failed?
+      invoice_payment_failed(artist_page, object)
     elsif event_type == "invoice.payment_succeeded"
       logger.info "Stripe: Acting on #{event_type}"
-
-      usersub = Subscription.find_by(stripe_customer_id: object[:customer], artist_page_id: artist_page.id)
-      logger.info "Stripe: usersub.id: #{usersub.id}"
-      # integer cents e.g. 2000 for $20.00
-      invoice_total = object[:total]
-      # lowercase currency e.g. usd
-      invoice_currency = object[:currency]
-
-      logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"
-      CardChargedEmailJob.perform_async(usersub.id, invoice_total, invoice_currency) unless ENV["REDIS_URL"].nil?
+      invoice_payment_succeeded(artist_page, object)
     end
     render json: {}
+  end
+
+  def invoice_payment_succeeded(artist_page, object)
+    usersub = Subscription.find_by(stripe_customer_id: object[:customer], artist_page_id: artist_page.id)
+    logger.info "Stripe: usersub.id: #{usersub.id}"
+    # integer cents e.g. 2000 for $20.00
+    invoice_total = object[:total]
+    # lowercase currency e.g. usd
+    invoice_currency = object[:currency]
+
+    logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"
+    CardChargedEmailJob.perform_async(usersub.id, invoice_total, invoice_currency) unless ENV["REDIS_URL"].nil?
+  end
+
+  def invoice_payment_failed(artist_page, object)
+    # This stripe_customer_id is created *on the Connected account* and stored
+    # on the Subscription record - which is why we can find this record
+    # with only this one ID.
+    usersub = Subscription.find_by(stripe_customer_id: object[:customer], artist_page_id: artist_page.id)
+    user = User.find(usersub.user_id)
+
+    # Mark user as having invalid card
+    user.update(card_is_valid: false)
+
+    # send notification to user.email that their payment failed
+    logger.info "Stripe: sending CardDeclineEmail to #{user.email}"
+    CardDeclineEmailJob.perform_async(usersub.id) unless ENV["REDIS_URL"].nil?
+    # TODO: update subscription to mark as failed?
   end
 
   def is_account_hook

@@ -20,14 +20,17 @@ class StripeController < ApplicationController
     logger.info "Stripe: Webhook event verified."
 
     object = params[:data][:object]
-    connect_account = params[:data][:account]
+    connect_account = params[:account]
     event_type = params[:type]
     event_id = params[:id]
     logger.info "STRIPE EVENT: #{event_type} #{event_id} for #{connect_account} (live mode: #{params[:livemode]})"
 
     # Webhooks for Connect may send test data to live endpoints, so we need
     # to ignore test data in production
-    return render json: {} if Rails.env.production? && !params[:livemode]
+    if Rails.env.production? && !params[:livemode]
+      logger.info "Stripe: Ignoring test mode event #{event_type} #{event_id} in production."
+      return render json: {}
+    end
 
     process_webhook(event_type, object)
   end
@@ -39,6 +42,8 @@ class StripeController < ApplicationController
     # puts object[:customer]
     # puts object[:source][:last4]
     if event_type == "invoice.payment_failed"
+      logger.info "Stripe: Acting on #{event_type}"
+
       # This stripe_customer_id is created *on the Connected account* and stored
       # on the Subscription record - which is why we can find this record
       # with only this one ID.
@@ -49,15 +54,19 @@ class StripeController < ApplicationController
       user.update(card_is_valid: false)
 
       # send notification to user.email that their payment failed
+      logger.info "Stripe: sending CardDeclineEmail to #{user.email}"
       CardDeclineEmailJob.perform_async(usersub.id) unless ENV["REDIS_URL"].nil?
       # TODO: update subscription to mark as failed?
     elsif event_type == "invoice.payment_succeeded"
+      logger.info "Stripe: Acting on #{event_type}"
+
       usersub = Subscription.find_by(stripe_customer_id: object[:customer])
       # integer cents e.g. 2000 for $20.00
       invoice_total = object[:total]
       # lowercase currency e.g. usd
       invoice_currency = object[:currency]
 
+      logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"
       CardChargedEmailJob.perform_async(usersub, invoice_total, invoice_currency) unless ENV["REDIS_URL"].nil?
     end
     render json: {}

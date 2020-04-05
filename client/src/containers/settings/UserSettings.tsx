@@ -16,6 +16,7 @@ import { updateMeAction } from '../../redux/me/update-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
+import multiDownload from 'multi-download';
 
 import { faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -291,20 +292,33 @@ class UserSettingsComponent extends React.Component<Props, any> {
     // prettier-ignore
     promoteImages.push({url:`https://res.cloudinary.com/ampled-web/image/upload/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_7.png`, name:`${artist.name} Promote9.jpg`});
 
+    // return promoteImages;
+
     return (
       <div className="promote-container">
-        {promoteImages.map((promoImage) => (
+        <button
+          className="details__promote_link"
+          onClick={() => this.handlePromoteImages(promoteImages)}
+        >
+          Promote Your Page
+        </button>
+        {/* {promoteImages.map((promoImage) => (
           <a
             key={promoImage.name}
             className="details__promote_link"
             href={promoImage.url}
-            download
+            download={promoImage.name}
           >
             {promoImage.name}
           </a>
-        ))}
+        ))} */}
       </div>
     );
+  };
+
+  handlePromoteImages = (promoteImages) => {
+    const fileUrls = promoteImages.map((image) => image.url);
+    multiDownload(fileUrls);
   };
 
   renderUserImage = () => {

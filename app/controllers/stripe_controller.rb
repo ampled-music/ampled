@@ -27,6 +27,9 @@ class StripeController < ApplicationController
 
     # Webhooks for Connect may send test data to live endpoints, so we need
     # to ignore test data in production
+    logger.info "Production? #{Rails.env.production?}"
+    logger.info "Development? #{Rails.env.development?}"
+    logger.info "Acceptance? #{Rails.env.acceptance?}"
     if Rails.env.production? && !params[:livemode]
       logger.info "Stripe: Ignoring test mode event #{event_type} #{event_id} in production."
       return render json: {}

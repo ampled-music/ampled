@@ -25,8 +25,8 @@ class StripeController < ApplicationController
     event_id = params[:id]
     logger.info "STRIPE EVENT: #{event_type} #{event_id} for #{connect_account} (live mode: #{params[:livemode]})"
 
-    # Webhooks for Connect may send test data, so we need to ignore that
-    # in production
+    # Webhooks for Connect may send test data to live endpoints, so we need
+    # to ignore test data in production
     return render json: {} if Rails.env.production? && !params[:livemode]
 
     process_webhook(object)

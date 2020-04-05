@@ -193,6 +193,7 @@ If you need some of these credentials for local development, you can get the key
 - `RAVEN_DSN` - used to support [Sentry](sentry.io) on the backend.
 - `STRIPE_WEBHOOK_SECRET` - signing secret for main Stripe webhook. In your local environment, with the Stripe CLI you can find the endpoint's secret by running `stripe listen`
 - `STRIPE_CONNECT_WEBHOOK_SECRET` - signing secret for Stripe Connect webhook. In your local environment, with the Stripe CLI you can find the endpoint's secret by running `stripe listen`
+- `RAILS_ENV` - `production` in production, manually set to `acceptance` on acceptance environment, and `development` when running locally.
 
 **Client .env**
 

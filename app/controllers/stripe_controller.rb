@@ -67,7 +67,7 @@ class StripeController < ApplicationController
       invoice_currency = object[:currency]
 
       logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"
-      CardChargedEmailJob.perform_async(usersub, invoice_total, invoice_currency) unless ENV["REDIS_URL"].nil?
+      CardChargedEmailJob.perform_async(usersub.id, invoice_total, invoice_currency) unless ENV["REDIS_URL"].nil?
     end
     render json: {}
   end

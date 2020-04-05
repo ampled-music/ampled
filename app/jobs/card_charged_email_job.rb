@@ -1,7 +1,10 @@
 class CardChargedEmailJob
   include Sidekiq::Worker
+  attr_accessor :subscription
 
-  def perform(subscription, invoice_total, invoice_currency)
+  def perform(subscription_id, invoice_total, invoice_currency)
+    @subscription = Subscription.find(subscription_id)
+
     SendBatchEmail.call(
       [{
         from: ENV["POSTMARK_FROM_EMAIL"],

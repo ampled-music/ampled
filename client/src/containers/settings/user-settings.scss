@@ -233,17 +233,25 @@
           }
 
           &__promote {
+            border-top: 2px solid $white;
+            padding: 1rem 0;
             &_link {
-              font-size: 11px;
+              font-size: 16px;
               text-align: center;
               color: $white;
               text-decoration: underline;
               line-height: 16px;
               display: block;
+              opacity: 0.6;
 
               &:hover {
-                text-decoration: none;
+                opacity: 1;
               }
+            }
+            &_container {
+              display: flex;
+              justify-content: space-between;
+              margin-top: 0.5rem;
             }
           }
 

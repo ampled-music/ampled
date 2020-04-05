@@ -18,7 +18,11 @@ import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
 import multiDownload from 'multi-download';
 
-import { faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEdit,
+  faMapMarkerAlt,
+  faImage,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   faTwitter,
   faInstagram,
@@ -295,23 +299,29 @@ class UserSettingsComponent extends React.Component<Props, any> {
     // return promoteImages;
 
     return (
-      <div className="promote-container">
-        <button
-          className="details__promote_link"
-          onClick={() => this.handlePromoteImages(promoteImages)}
-        >
-          Promote Your Page
-        </button>
-        {/* {promoteImages.map((promoImage) => (
-          <a
-            key={promoImage.name}
+      <div>
+        <div className="details__info_title">Promote Your Page</div>
+        <div className="details__promote_container">
+          {/* Attempt at a single download button
+          <button
             className="details__promote_link"
-            href={promoImage.url}
-            download={promoImage.name}
+            onClick={() => this.handlePromoteImages(promoteImages)}
           >
-            {promoImage.name}
-          </a>
-        ))} */}
+            Promote Your Page
+          </button> */}
+          {promoteImages.map((promoImage) => (
+            <a
+              key={promoImage.name}
+              className="details__promote_link"
+              href={promoImage.url}
+              download={promoImage.name}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faImage} title={promoImage.name} />
+            </a>
+          ))}
+        </div>
       </div>
     );
   };
@@ -512,7 +522,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     </div>
                   </div>
                 </div>
-                <div className="detail__promote">
+                <div className="details__promote">
                   <div className="row no-gutter">
                     <div className="col-12">
                       {this.renderSocialImages(ownedPage)}

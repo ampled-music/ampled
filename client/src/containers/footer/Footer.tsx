@@ -80,16 +80,6 @@ class Footer extends React.Component<Props, any> {
                   ✊
                 </span>
               </div>
-              <button
-                className="btn btn-ampled"
-                onClick={() =>
-                  window.open(
-                    'https://fundraising.fracturedatlas.org/ampled-co-op/general_support',
-                  )
-                }
-              >
-                Donate Now
-              </button>
             </div>
           </div>
         </div>

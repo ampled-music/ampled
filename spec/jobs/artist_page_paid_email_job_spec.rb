@@ -25,17 +25,6 @@ describe ArtistPagePaidEmailJob, type: :job do
     expect(PageOwnership).to_not have_received(:where)
   end
 
-  it "logs error when no admin owners are found for artist_page" do
-    member_user = create(:user)
-    artist_page = create(:artist_page, owners: [member_user])
-    amount_in_cents = 1641
-    arrival_date = DateTime.now
-
-    expect {
-      described_class.new.perform(artist_page, amount_in_cents, arrival_date)
-    }.to output(/No admin users found for artist page with id: #{artist_page.id}./).to_stdout_from_any_process
-  end
-
   it "returns early when no admin owners are found for artist_page" do
     allow(SendBatchEmail).to receive(:call)
 

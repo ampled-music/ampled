@@ -90,7 +90,7 @@ class StripeController < ApplicationController
 
   def payout_paid(artist_page, object)
     # amount paid to artist (ex. 2000 => $20.00)
-    amount_in_cents = object[:amount]
+    amount_in_cents = object[:amount].to_i
 
     # date that payout should arrive to bank
     arrival_date = DateTime.strptime(object[:arrival_date].to_s, "%s")

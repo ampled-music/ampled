@@ -279,35 +279,30 @@ class UserSettingsComponent extends React.Component<Props, any> {
     const promoteImages = [];
 
     // prettier-ignore
-    promoteImages.push({url:`${BASE_UPLOAD_URL}/c_fill,h_800,w_800/bo_3px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,g_south,l_social:AmpledLogo.png,w_200,y_20/${this.handleBrokenName( artist.name, 'north', 0, 30, 40, 35, 'ffffff', '202020' )}/${this.handlePublicID( artist.image )}`, name:`${artist.name} Promote1.jpg`});
+    promoteImages.push({url:`${BASE_UPLOAD_URL}/c_fill,h_800,w_800/bo_3px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,g_south,l_social:AmpledLogo.png,w_200,y_20/${this.handleBrokenName( artist.name, 'north', 0, 30, 40, 35, 'ffffff', '202020' )}/${this.handlePublicID( artist.image )}`, name:`${artist.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_promote1.jpg`});
     // prettier-ignore
-    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 },c_scale,h_800,w_800/bo_4px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,l_social:AmpledLogo.png,w_300,y_90/${this.handleBrokenName( artist.name, 'center', 0, -90, 50, 45, '202020', null )}/l_social:line.png/v1584999718/social/blank.png`, name:`${artist.name} Promote2.jpg`});
+    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 },c_scale,h_800,w_800/bo_4px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,l_social:AmpledLogo.png,w_300,y_90/${this.handleBrokenName( artist.name, 'center', 0, -90, 50, 45, '202020', null )}/l_social:line.png/v1584999718/social/blank.png`, name:`${artist.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_promote2.jpg`});
     // prettier-ignore
-    promoteImages.push({url:`${BASE_UPLOAD_URL}/c_fill,h_800,w_800/bo_3px_solid_rgb:${ color },c_scale,h_600,l_social:blank.png,w_600/c_scale,g_south_east,l_social:AmpledLogo.png,w_200,x_120,y_120/${this.handleBrokenName( artist.name, 'north_west', 120, 70, 65, 55, 'ffffff', '202020'  )}/${this.handlePublicID( artist.image )}`, name:`${artist.name} Promote3.jpg`});
+    promoteImages.push({url:`${BASE_UPLOAD_URL}/c_fill,h_800,w_800/bo_3px_solid_rgb:${ color },c_scale,h_600,l_social:blank.png,w_600/c_scale,g_south_east,l_social:AmpledLogo.png,w_200,x_120,y_120/${this.handleBrokenName( artist.name, 'north_west', 120, 70, 65, 55, 'ffffff', '202020'  )}/${this.handlePublicID( artist.image )}`, name:`${artist.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_promote3.jpg`});
     // prettier-ignore
-    promoteImages.push({url:`${BASE_UPLOAD_URL}/c_fill,h_1921,w_1081/l_social:SocialRaw_1/${this.handleBrokenName( artist.name, 'north_west', 160, 150, 80, 65, 'ffffff', '202020'  )}/${this.handlePublicID(artist.image)}`, name:`${artist.name} Promote4.jpg`});
+    promoteImages.push({url:`${BASE_UPLOAD_URL}/c_fill,h_1921,w_1081/l_social:SocialRaw_1/${this.handleBrokenName( artist.name, 'north_west', 160, 150, 80, 65, 'ffffff', '202020'  )}/${this.handlePublicID(artist.image)}`, name:`${artist.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_promote4.jpg`});
     // prettier-ignore
-    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 }/${this.handleBrokenName( artist.name, 'north', 0, 560, 100, 85, 'ffffff', '202020'  )}/v1585784142/social/SocialRaw_2.png`, name:`${artist.name} Promote5.jpg`});
+    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 }/${this.handleBrokenName( artist.name, 'north', 0, 560, 100, 85, 'ffffff', '202020'  )}/v1585784142/social/SocialRaw_2.png`, name:`${artist.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_ promote5.jpg`});
     // prettier-ignore
-    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_4.png`, name:`${artist.name} Promote6.jpg`});
+    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_4.png`, name:`${artist.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_promote6.jpg`});
     // prettier-ignore
-    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_5.png`, name:`${artist.name} Promote7.jpg`});
+    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_5.png`, name:`${artist.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_promote7.jpg`});
     // prettier-ignore
-    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_6.png`, name:`${artist.name} Promote8.jpg`});
+    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_6.png`, name:`${artist.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_promote8.jpg`});
     // prettier-ignore
-    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_7.png`, name:`${artist.name} Promote9.jpg`});
+    promoteImages.push({url:`${BASE_UPLOAD_URL}/b_rgb:${ color + 33 }/v1585784142/social/SocialRaw_7.png`, name:`${artist.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_promote9.jpg`});
+
+    console.log(promoteImages);
 
     return (
       <div>
         <div className="details__info_title">Promote Your Page</div>
         <div className="details__promote_container">
-          {/* Attempt at a single download button
-          <button
-            className="details__promote_link"
-            onClick={() => this.handlePromoteImages(promoteImages)}
-          >
-            Promote Your Page
-          </button> */}
           {promoteImages.map((promoImage) => (
             <a
               key={promoImage.name}
@@ -326,6 +321,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
   };
 
   handlePromoteImages = (promoteImages) => {
+    // Attempt at a single download button
     const fileUrls = promoteImages.map((image) => image.url);
     multiDownload(fileUrls);
   };

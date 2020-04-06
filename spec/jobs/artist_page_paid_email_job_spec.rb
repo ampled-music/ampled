@@ -1,7 +1,6 @@
 require "rails_helper"
 
 describe ArtistPagePaidEmailJob, type: :job do
-
   it "returns early when artist_page param is blank" do
     allow(PageOwnership).to receive(:where)
     described_class.new.perform(nil, 1244, DateTime.now)
@@ -32,7 +31,7 @@ describe ArtistPagePaidEmailJob, type: :job do
     amount_in_cents = 1641
     arrival_date = DateTime.now
 
-    expect { 
+    expect {
       described_class.new.perform(artist_page, amount_in_cents, arrival_date)
     }.to output(/No admin users found for artist page with id: #{artist_page.id}./).to_stdout_from_any_process
   end
@@ -45,24 +44,26 @@ describe ArtistPagePaidEmailJob, type: :job do
     amount_in_cents = 1641
     arrival_date = DateTime.now
 
+    described_class.new.perform(artist_page, amount_in_cents, arrival_date)
+
     expect(SendBatchEmail).to_not have_received(:call)
   end
 
   it "sends an email to the admins of the artist page" do
     allow(SendBatchEmail).to receive(:call)
 
-    admin_user_1_email = "admin-1@test.com"
-    admin_user_2_email = "admin-2@test.com"
+    admin_user1_email = "admin-1@test.com"
+    admin_user2_email = "admin-2@test.com"
 
     member_user = create(:user)
-    admin_user_1 = create(:user, email: admin_user_1_email)
-    admin_user_2 = create(:user, email: admin_user_2_email)
+    admin_user1 = create(:user, email: admin_user1_email)
+    admin_user2 = create(:user, email: admin_user2_email)
 
-    artist_page = create(:artist_page, owners: [member_user, admin_user_1, admin_user_2])
+    artist_page = create(:artist_page, owners: [member_user, admin_user1, admin_user2])
 
-    ownership = PageOwnership.find_by(user_id: admin_user_1.id, artist_page_id: artist_page.id)
+    ownership = PageOwnership.find_by(user_id: admin_user1.id, artist_page_id: artist_page.id)
     ownership.update(role: "admin")
-    ownership = PageOwnership.find_by(user_id: admin_user_2.id, artist_page_id: artist_page.id)
+    ownership = PageOwnership.find_by(user_id: admin_user2.id, artist_page_id: artist_page.id)
     ownership.update(role: "admin")
 
     amount_in_cents = 1641
@@ -73,7 +74,7 @@ describe ArtistPagePaidEmailJob, type: :job do
       [
         {
           from: ENV["POSTMARK_FROM_EMAIL"],
-          to: admin_user_1_email,
+          to: admin_user1_email,
           template_alias: "artist-paid",
           template_model: {
             artist_name: artist_page.name,
@@ -83,7 +84,7 @@ describe ArtistPagePaidEmailJob, type: :job do
         },
         {
           from: ENV["POSTMARK_FROM_EMAIL"],
-          to: admin_user_2_email,
+          to: admin_user2_email,
           template_alias: "artist-paid",
           template_model: {
             artist_name: artist_page.name,

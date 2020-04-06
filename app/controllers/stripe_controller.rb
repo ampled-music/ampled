@@ -93,11 +93,11 @@ class StripeController < ApplicationController
     amount_in_cents = object[:amount]
 
     # date that payout should arrive to bank
-    arrival_date = Time.at(object[:arrival_date])
+    arrival_date = DateTime.strptime(object[:arrival_date].to_s, "%s")
 
     # notify artist admins
     logger.info "Stripe: sending artist-paid email to admins of artist page id: #{artist_page.id}"
-    ArtistPagePaidEmailJob.perform_async(artist_page, amount_in_cents, arrival_date) unless ENV["REDIS_URL"].nil? 
+    ArtistPagePaidEmailJob.perform_async(artist_page, amount_in_cents, arrival_date) unless ENV["REDIS_URL"].nil?
   end
 
   def is_account_hook

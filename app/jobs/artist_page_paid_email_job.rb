@@ -15,7 +15,7 @@ class ArtistPagePaidEmailJob
     end
 
     @artist_name = artist_page.name
-    @email_recipients = artist_page.owners.select{ |owner| admin_user_ids.include?(owner.id)}.map(&:email)
+    @email_recipients = artist_page.owners.select { |owner| admin_user_ids.include?(owner.id) }.map(&:email)
     @amount_in_cents = amount_in_cents
     @arrival_date = arrival_date
 
@@ -23,7 +23,7 @@ class ArtistPagePaidEmailJob
   end
 
   private
-  
+
   def messages
     email_recipients.map do |email_to|
       {
@@ -39,4 +39,3 @@ class ArtistPagePaidEmailJob
     end
   end
 end
-  

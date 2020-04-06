@@ -1,13 +1,13 @@
 class ArtistPagePaidEmailJob
   include Sidekiq::Worker
-  attr_accessor :artist_name :email_recipients :amount_in_cents :arrival_date
+  attr_accessor :artist_name, :email_recipients, :amount_in_cents, :arrival_date
 
   def perform(artist_page, amount_in_cents, arrival_date)
-    return if artist_page.nil?
+    return if artist_page.blank?
     return if amount_in_cents <= 0
     return if arrival_date.nil?
 
-    ownership_roles = PageOwnership.find_by(artist_page_id: artist_page.id)
+    ownership_roles = PageOwnership.where(artist_page_id: artist_page.id)
     admin_user_ids = ownership_roles.select(&:is_admin).map(&:user_id)
     if admin_user_ids.empty?
       logger.error("No admin users found for artist page with id: #{artist_page.id}.")
@@ -15,7 +15,7 @@ class ArtistPagePaidEmailJob
     end
 
     @artist_name = artist_page.name
-    @email_recipients = artist_page.owners.select(admin_user_ids.include?(&:id)).map(&:email)
+    @email_recipients = artist_page.owners.select{ |owner| admin_user_ids.include?(owner.id)}.map(&:email)
     @amount_in_cents = amount_in_cents
     @arrival_date = arrival_date
 

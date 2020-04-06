@@ -6,6 +6,8 @@ const commandLineArgs = require('command-line-args');
 const cliProgress = require('cli-progress');
 
 const optionDefinitions = [
+  { name: 'getAccount', type: String },
+  { name: 'listSubs', type: Boolean },
   { name: 'addFee', alias: 'a', type: Number },
   { name: 'removeFee', alias: 'r', type: Boolean },
   { name: 'help', type: Boolean },
@@ -51,6 +53,10 @@ const addFees = async (subs, fee) => {
   return results;
 };
 
+const getAccount = async (account_id) => {
+  return await stripe.accounts.retrieve(account_id);
+};
+
 const getConnectAccounts = async (starting_after) => {
   const accounts = await stripe.accounts.list({ starting_after });
   let { data, has_more } = accounts;
@@ -90,19 +96,29 @@ const getAccountSubscriptions = async (accountId, starting_after) => {
     console.log(`
     application-fee-management
     
-      List all connected accounts and subscriptions: yarn start
-      List all connected accounts and subscriptions, oldest first: yarn start --sort date_asc
-      List all connected accounts and subscriptions, newest first: yarn start --sort date_desc
+      List all connected accounts: yarn start
+      List all connected accounts and subscriptions: yarn start --listSubs
+      List all connected accounts and subscriptions, oldest first: yarn start --listSubs --sort date_asc
+      List all connected accounts and subscriptions, newest first: yarn start --listSubs --sort date_desc
+      Display account object for a connected account: yarn start --getAccount acct_000000
       Add a 13.24% fee to all subscriptions: yarn start --addFee 13.24
       Remove fees from all subscriptions: yarn start --removeFee
       Remove fees from all subscriptions: yarn start --addFee 0
     `);
+    return;
+  } else if (options.getAccount) {
+    const accountDetails = await getAccount(options.getAccount);
+    console.log(accountDetails);
     return;
   }
   console.log('Loading connected accounts...');
   const accounts = await getConnectAccounts();
 
   console.table(accounts);
+
+  if (!(options.addFee || options.removeFee || options.listSubs)) {
+    return;
+  }
 
   let allSubs = [];
 

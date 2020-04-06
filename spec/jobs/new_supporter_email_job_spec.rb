@@ -21,8 +21,8 @@ describe NewSupporterEmailJob, type: :job do
           template_model: {
             supporter_name: supporter.name,
             artist_name: artist.name,
-            support_amount: format("%.2f", subscription.plan.nominal_amount / 100),
-            total_artist_support_amount: format("%.2f", artist.monthly_total / 100)
+            support_amount: format("%.2f", subscription.plan.nominal_amount / 100.0),
+            total_artist_support_amount: format("%.2f", artist.monthly_total / 100.0)
           }
         }
       ]

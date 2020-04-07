@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 2020_04_17_211219) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "artist_pages", force: :cascade do |t|
@@ -121,7 +122,6 @@ ActiveRecord::Schema.define(version: 2020_04_17_211219) do
     t.string "profile_image_url"
     t.string "jti", null: false
     t.string "stripe_customer_id"
-    t.string "login_redirect_url"
     t.string "last_name"
     t.string "city"
     t.string "country"

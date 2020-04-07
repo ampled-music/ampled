@@ -38,7 +38,9 @@ class StripeController < ApplicationController
   private
 
   def process_webhook(event_type, connect_account, object)
-    artist_page = ArtistPage.find_by(stripe_user_id: connect_account)
+    # Using .first here as some Stripe accounts are connected to multiple legacy ArtistPages.
+    artist_page = ArtistPage.find_by(stripe_user_id: connect_account).first
+
     # for 'charge.failed' only
     # puts object[:customer]
     # puts object[:source][:last4]

@@ -65,6 +65,11 @@ class StripeController < ApplicationController
 
     logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"
     CardChargedEmailJob.perform_async(usersub.id, invoice_total, invoice_currency) unless ENV["REDIS_URL"].nil?
+  rescue StandardError => e
+    Raven.extra_context(usersub: usersub) do
+      Raven.capture_exception(e)
+    end
+    render json: { status: "error", message: e.message }, status: :bad_request
   end
 
   def invoice_payment_failed(artist_page, object)

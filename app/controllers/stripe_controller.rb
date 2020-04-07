@@ -38,7 +38,9 @@ class StripeController < ApplicationController
   private
 
   def process_webhook(event_type, connect_account, object)
-    artist_page = ArtistPage.find_by(stripe_user_id: connect_account)
+    # Using .first here as some Stripe accounts are connected to multiple legacy ArtistPages.
+    artist_page = ArtistPage.find_by(stripe_user_id: connect_account).first
+
     # for 'charge.failed' only
     # puts object[:customer]
     # puts object[:source][:last4]
@@ -63,6 +65,11 @@ class StripeController < ApplicationController
 
     logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"
     CardChargedEmailJob.perform_async(usersub.id, invoice_total, invoice_currency) unless ENV["REDIS_URL"].nil?
+  rescue StandardError => e
+    Raven.extra_context(usersub: usersub) do
+      Raven.capture_exception(e)
+    end
+    render json: { status: "error", message: e.message }, status: :bad_request
   end
 
   def invoice_payment_failed(artist_page, object)

@@ -318,7 +318,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           '202020',
           null,
         ),
-        `/l_social:line.png/v1584999718/social/blank.png`,
+        `/l_social:line.png/v1584999718/social/blank.jpg`,
       ].join(''),
       name: `${cleanArtistName}_promote_${n++}.jpg`,
       description: '',
@@ -380,7 +380,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           'ffffff',
           '202020',
         ),
-        `/v1585784142/social/SocialRaw_2.png`,
+        `/v1585784142/social/SocialRaw_2.jpg`,
       ].join(''),
       name: `${cleanArtistName}_ promote_${n++}.jpg`,
       description: '',
@@ -389,7 +389,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteImages.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_4.png`,
+        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_4.jpg`,
       ].join(''),
       name: `${cleanArtistName}_promote_${n++}.jpg`,
       description: '',
@@ -398,7 +398,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteImages.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_5.png`,
+        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_5.jpg`,
       ].join(''),
       name: `${cleanArtistName}_promote_${n++}.jpg`,
       description: '',
@@ -407,7 +407,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteImages.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_6.png`,
+        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_6.jpg`,
       ].join(''),
       name: `${cleanArtistName}_promote_${n++}.jpg`,
       description: '',
@@ -416,7 +416,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteImages.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_7.png`,
+        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_7.jpg`,
       ].join(''),
       name: `${cleanArtistName}_promote_${n++}.jpg`,
       description: '',

@@ -4,6 +4,12 @@ class StripeController < ApplicationController
   def callback
     # This is the callback hit after the artist signs up for a stripe account
     stripe_account = authorize_stripe_account
+
+    # If this Stripe account is already linked to an ArtistPage, fail
+    unless ArtistPage.find_by(stripe_user_id: stripe_account["stripe_user_id"]).nil?
+      return redirect_to "/settings?stripesuccess=duplicate"
+    end
+
     # to generate the stubs used in testing
     # File.open('other_stripe_account_stub.json','w'){ |f| f.write(stripe_account.to_json) }
     ap = ArtistPage.find_by(state_token: params[:state])

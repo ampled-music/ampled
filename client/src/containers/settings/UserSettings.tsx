@@ -68,21 +68,28 @@ class UserSettingsComponent extends React.Component<Props, any> {
       location: { search },
     } = this.props;
 
-    if (/stripesuccess=true/gi.test(search)) {
-      this.props.showToast({
-        message: "Great! You're all set up for payments.",
-        type: 'success',
-      });
-    } else if (/stripesuccess=duplicate/gi.test(search)) {
-      this.props.showToast({
-        message:
-          'This Stripe account is already used by an artist page. Please create a new Stripe account for each artist you wish to receive payouts for.',
-        type: 'error',
-      });
+    if (!this.props.loadingMe && this.props.userData) {
+      if (/stripesuccess=true/gi.test(search)) {
+        this.props.showToast({
+          message: "Great! You're all set up for payments.",
+          type: 'success',
+        });
+      } else if (/stripesuccess=duplicate/gi.test(search)) {
+        this.props.showToast({
+          message:
+            'This Stripe account is already used by an artist page. Please create a new Stripe account for each artist you wish to receive payouts for.',
+          type: 'error',
+        });
+      }
+      this.props.history.replace(this.props.location.pathname);
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    const {
+      location: { search },
+    } = this.props;
+
     if (
       this.props.token &&
       !this.props.error &&
@@ -95,6 +102,22 @@ class UserSettingsComponent extends React.Component<Props, any> {
     if (this.props.subscriptions.cancelled && !this.props.loadingMe) {
       this.showCancelledSuccessMessage();
       this.props.getMe();
+    }
+
+    if (!this.props.loadingMe && this.props.userData && prevProps.loadingMe) {
+      if (/stripesuccess=true/gi.test(search)) {
+        this.props.showToast({
+          message: "Great! You're all set up for payments.",
+          type: 'success',
+        });
+      } else if (/stripesuccess=duplicate/gi.test(search)) {
+        this.props.showToast({
+          message:
+            'This Stripe account is already used by an artist page. Please create a new Stripe account for each artist you wish to receive payouts for.',
+          type: 'error',
+        });
+      }
+      this.props.history.replace(this.props.location.pathname);
     }
   }
 

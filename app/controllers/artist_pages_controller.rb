@@ -7,7 +7,7 @@ class ArtistPagesController < ApplicationController
   before_action :check_update_okay, only: :update
 
   def index
-    @artist_pages = ArtistPage.where(featured: true, approved: true).take(3)
+    @artist_pages = ArtistPage.joins(:images).where(featured: true, approved: true).where.not(images: nil).uniq.take(3)
 
     respond_to do |format|
       format.html do

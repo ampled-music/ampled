@@ -21,6 +21,7 @@ class StripeController < ApplicationController
 
     object = params[:data][:object]
     connect_account = params[:account]
+    # artist_page = ArtistPage.find_by(stripe_user_id: connect_account)
     event_type = params[:type]
     event_id = params[:id]
     logger.info "STRIPE EVENT: #{event_type} #{event_id} for #{connect_account} (live mode: #{params[:livemode]})"
@@ -32,30 +33,28 @@ class StripeController < ApplicationController
       return render json: {}
     end
 
-    process_webhook(event_type, connect_account, object)
+    process_webhook(event_type, object)
   end
 
   private
 
-  def process_webhook(event_type, connect_account, object)
-    artist_page = ArtistPage.find_by(stripe_user_id: connect_account)
-
+  def process_webhook(event_type, object)
     # for 'charge.failed' only
     # puts object[:customer]
     # puts object[:source][:last4]
     if event_type == "invoice.payment_failed"
       logger.info "Stripe: Acting on #{event_type}"
 
-      return invoice_payment_failed(artist_page, object)
+      return invoice_payment_failed(object)
     elsif event_type == "invoice.payment_succeeded"
       logger.info "Stripe: Acting on #{event_type}"
-      return invoice_payment_succeeded(artist_page, object)
+      return invoice_payment_succeeded(object)
     end
     render json: {}
   end
 
-  def invoice_payment_succeeded(artist_page, object)
-    usersub = Subscription.find_by(stripe_customer_id: object[:customer], artist_page_id: artist_page.id)
+  def invoice_payment_succeeded(object)
+    usersub = Subscription.find_by(stripe_id: object[:subscription])
     logger.info "Stripe: usersub.id: #{usersub.id}"
     # integer cents e.g. 2000 for $20.00
     invoice_total = object[:total]
@@ -72,11 +71,8 @@ class StripeController < ApplicationController
     render json: { status: "error", message: e.message }, status: :bad_request
   end
 
-  def invoice_payment_failed(artist_page, object)
-    # This stripe_customer_id is created *on the Connected account* and stored
-    # on the Subscription record - which is why we can find this record
-    # with only this one ID.
-    usersub = Subscription.find_by(stripe_customer_id: object[:customer], artist_page_id: artist_page.id)
+  def invoice_payment_failed(object)
+    usersub = Subscription.find_by(stripe_id: object[:subscription])
     user = User.find(usersub.user_id)
 
     # Mark user as having invalid card

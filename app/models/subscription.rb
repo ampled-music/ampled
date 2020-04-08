@@ -46,6 +46,7 @@ class Subscription < ApplicationRecord
 
   def cancel!
     Stripe::Subscription.retrieve(stripe_id, stripe_account: artist_page.stripe_user_id).delete
+    UserCancelledSubscriptionEmailJob.perform_async(id) unless ENV["REDIS_URL"].nil?
     update(status: :cancelled)
   end
 

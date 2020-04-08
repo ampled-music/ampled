@@ -41,7 +41,7 @@ class Subscription < ApplicationRecord
   scope :active, -> { where(status: %i[pending_active active]) }
 
   def check_stripe
-    raise "Don't just delete a subscription"
+    raise "Don't just delete an active subscription" unless cancelled?
   end
 
   def cancel!

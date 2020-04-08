@@ -47,7 +47,7 @@ Rails.application.routes.draw do
   post "/stripe_hook", to: "stripe#webhook"
 
   root to: "react#index"
-  get "/artists/*path", to: "react#index"
+  get "/artists/:id", to: "artist_pages#redirect_by_id"
   get "/artist/*path", to: "react#index"
   get "/support/*path", to: "react#index"
   get "/create_post/*path", to: "react#index"

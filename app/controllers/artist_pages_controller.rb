@@ -75,6 +75,13 @@ class ArtistPagesController < ApplicationController
     render json: { status: "ok", message: "Your page has been deleted!" } if @artist_page.destroy
   end
 
+  def redirect_by_id
+    artistpage = ArtistPage.find(params[:id])
+    redirect_to "/artist/#{artistpage.slug}"
+  rescue StandardError
+    redirect_to "/"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

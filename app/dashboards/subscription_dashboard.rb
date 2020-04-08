@@ -11,6 +11,7 @@ class SubscriptionDashboard < Administrate::BaseDashboard
     user: Field::BelongsTo,
     artist_page: Field::BelongsTo,
     id: Field::Number,
+    status: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -22,6 +23,7 @@ class SubscriptionDashboard < Administrate::BaseDashboard
     :user,
     :artist_page,
     :id,
+    :status,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -30,6 +32,7 @@ class SubscriptionDashboard < Administrate::BaseDashboard
     :user,
     :artist_page,
     :id,
+    :status,
   ].freeze
 
   # FORM_ATTRIBUTES

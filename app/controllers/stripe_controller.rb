@@ -21,7 +21,6 @@ class StripeController < ApplicationController
 
     object = params[:data][:object]
     connect_account = params[:account]
-    # artist_page = ArtistPage.find_by(stripe_user_id: connect_account)
     event_type = params[:type]
     event_id = params[:id]
     logger.info "STRIPE EVENT: #{event_type} #{event_id} for #{connect_account} (live mode: #{params[:livemode]})"
@@ -33,12 +32,14 @@ class StripeController < ApplicationController
       return render json: {}
     end
 
-    process_webhook(event_type, object)
+    process_webhook(event_type, object, connect_account)
   end
 
   private
 
-  def process_webhook(event_type, object)
+  def process_webhook(event_type, object, _connect_account)
+    # artist_page = ArtistPage.find_by(stripe_user_id: _connect_account)
+
     # for 'charge.failed' only
     # puts object[:customer]
     # puts object[:source][:last4]

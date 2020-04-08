@@ -43,7 +43,7 @@ class ArtistPagesController < ApplicationController
     ArtistPageCreateEmailJob.perform_async(@artist_page.id, current_user.id) unless ENV["REDIS_URL"].nil?
 
     render json: { status: "ok", message: "Your page has been created!" }
-  rescue ActiveRecord::RecordNotUnique => e
+  rescue ActiveRecord::RecordNotUnique
     render json: { status: "error", message: "Someone's already using that custom link." }
   rescue StandardError => e
     Raven.capture_exception(e)

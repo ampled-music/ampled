@@ -318,7 +318,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           '202020',
           null,
         ),
-        `/l_social:line.png/v1584999718/social/blank.jpg`,
+        `/l_social:line.png/v1584999718/social/blank.png`,
       ].join(''),
       name: `${cleanArtistName}_promote_${n++}.jpg`,
       description: '',
@@ -380,45 +380,45 @@ class UserSettingsComponent extends React.Component<Props, any> {
           'ffffff',
           '202020',
         ),
-        `/v1585784142/social/SocialRaw_2.jpg`,
+        `/v1585784142/social/SocialRaw_2.png`,
       ].join(''),
-      name: `${cleanArtistName}_ promote_${n++}.jpg`,
+      name: `${cleanArtistName}_ promote_${n++}.png`,
       description: '',
     });
 
     promoteImages.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_4.jpg`,
+        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_4.png`,
       ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
+      name: `${cleanArtistName}_promote_${n++}.png`,
       description: '',
     });
 
     promoteImages.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_5.jpg`,
+        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_5.png`,
       ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
+      name: `${cleanArtistName}_promote_${n++}.png`,
       description: '',
     });
 
     promoteImages.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_6.jpg`,
+        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_6.png`,
       ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
+      name: `${cleanArtistName}_promote_${n++}.png`,
       description: '',
     });
 
     promoteImages.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_7.jpg`,
+        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_7.png`,
       ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
+      name: `${cleanArtistName}_promote_${n++}.png`,
       description: '',
     });
 

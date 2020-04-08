@@ -10,14 +10,18 @@ class ArtistPagesController < ApplicationController
     @artist_pages = ArtistPage.where(featured: true, approved: true).take(3)
 
     respond_to do |format|
-      format.html
+      format.html do
+        redirect_to "/"
+      end
       format.json
     end
   end
 
   def show
     respond_to do |format|
-      format.html
+      format.html do
+        redirect_to "/artist/#{@artist_page.slug}"
+      end
       format.json
     end
   end

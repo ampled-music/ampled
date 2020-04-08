@@ -88,7 +88,7 @@ class PostFormComponent extends React.Component<Props, any> {
 
   refreshArtist = () => {
     // this.setState(this.initialState);
-    window.setTimeout(() => this.props.getArtist(this.props.artist.id), 1000);
+    window.setTimeout(() => this.props.getArtist(this.props.artist.slug), 1000);
     this.props.discardChanges();
   };
 

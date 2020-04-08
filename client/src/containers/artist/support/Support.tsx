@@ -32,7 +32,7 @@ import { StripePaymentProvider } from './StripePaymentProvider';
 interface ArtistProps {
   match: {
     params: {
-      id: string;
+      slug: string;
     };
   };
   artists: typeof artistsInitialState;
@@ -72,19 +72,7 @@ export class SupportComponent extends React.Component<Props, any> {
       me.userData &&
       me.userData.subscriptions &&
       me.userData.subscriptions.find(
-        (sub) =>
-          Number(sub.artistPageId) === Number(this.props.match.params.id),
-      )
-    ) {
-      this.redirectToArtistsPage();
-    }
-
-    if (
-      me.userData &&
-      me.userData &&
-      me.userData.subscriptions &&
-      me.userData.subscriptions.find(
-        (sub) => sub.artistSlug === this.props.match.params.id,
+        (sub) => sub.artistSlug === this.props.match.params.slug,
       )
     ) {
       this.redirectToArtistsPage();
@@ -151,33 +139,12 @@ export class SupportComponent extends React.Component<Props, any> {
           ':slug',
           artist.slug + flash,
         );
-      } else {
-        window.location.href = routePaths.artists.replace(
-          ':id',
-          String(artist.id) + flash,
-        );
-      }
-    } else {
-      if (Number.isNaN(Number(match.params.id))) {
-        window.location.href = routePaths.slugs.replace(
-          ':slug',
-          String(match.params.id) + flash,
-        );
-      } else {
-        window.location.href = routePaths.artists.replace(
-          ':id',
-          String(match.params.id) + flash,
-        );
       }
     }
   };
 
   getArtistInfo = () => {
-    if (Number.isNaN(Number(this.props.match.params.id))) {
-      this.props.getArtist(null, this.props.match.params.id);
-    } else {
-      this.props.getArtist(this.props.match.params.id);
-    }
+    this.props.getArtist(this.props.match.params.slug);
   };
 
   handleChange = (event) => {
@@ -208,7 +175,7 @@ export class SupportComponent extends React.Component<Props, any> {
       match: { params },
       artists: { artist },
     } = this.props;
-    const artistPageId = artist && artist.id ? artist.id : params.id;
+    const artistPageId = artist && artist.slug ? artist.slug : params.slug;
     this.props.startSubscription({
       artistPageId,
       subscriptionLevelValue: this.state.supportLevelValue * 100,

@@ -53,10 +53,7 @@ class NavComponent extends React.Component<Props, any> {
       return false;
     }
 
-    if (
-      this.props.match.path.indexOf(routePaths.artists) === -1 &&
-      this.props.match.path.indexOf(routePaths.slugs) === -1
-    ) {
+    if (this.props.match.path.indexOf(routePaths.slugs) === -1) {
       return false;
     } else if (this.props.artistError) {
       return false;
@@ -74,13 +71,7 @@ class NavComponent extends React.Component<Props, any> {
   };
 
   handleSupportClick = () => {
-    let artistId;
-
-    if (this.props.match.params.slug) {
-      artistId = this.props.match.params.slug;
-    } else {
-      artistId = this.props.match.params.id;
-    }
+    const artistId = this.props.match.params.slug;
 
     if (this.props.userData) {
       this.props.history.push(routePaths.support.replace(':id', artistId));

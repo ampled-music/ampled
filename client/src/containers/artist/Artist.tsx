@@ -48,7 +48,6 @@ const mapDispatchToProps = (dispatch) => {
 interface ArtistProps {
   match: {
     params: {
-      id: string;
       slug: string;
     };
     path: string;
@@ -148,11 +147,7 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   getArtistInfo = () => {
-    if (this.props.match.params.slug) {
-      this.props.getArtist(null, this.props.match.params.slug);
-    } else {
-      this.props.getArtist(this.props.match.params.id);
-    }
+    this.props.getArtist(this.props.match.params.slug);
   };
 
   getUserConfirmation = (hasUnsavedChanges) => {
@@ -254,11 +249,6 @@ class ArtistComponent extends React.Component<Props, any> {
       supportUrl = routePaths.support.replace(
         ':id',
         this.props.artists.artist.slug,
-      );
-    } else {
-      supportUrl = routePaths.support.replace(
-        ':id',
-        String(this.props.artists.artist.id),
       );
     }
 

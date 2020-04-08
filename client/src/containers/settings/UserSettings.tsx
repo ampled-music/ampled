@@ -93,11 +93,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
   }
 
   showCancelledSuccessMessage = () => {
-    const { artistSlug, artistPageId, artistName } = this.props.subscriptions;
-    const artistPageLink = routePaths.support.replace(
-      ':id',
-      artistSlug && artistSlug.length ? artistSlug : artistPageId.toString(),
-    );
+    const { artistSlug, artistName } = this.props.subscriptions;
+    const artistPageLink = routePaths.support.replace(':id', artistSlug);
 
     this.props.showToast({
       message: (
@@ -159,14 +156,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     if (artist.artistSlug && artist.artistSlug.length > 0) {
       this.props.history.push(
         routePaths.slugs.replace(':slug', artist.artistSlug),
-      );
-    } else if (artist.artistId) {
-      this.props.history.push(
-        routePaths.artists.replace(':id', artist.artistId),
-      );
-    } else if (artist.artistPageId) {
-      this.props.history.push(
-        routePaths.artists.replace(':id', artist.artistPageId),
       );
     }
   };

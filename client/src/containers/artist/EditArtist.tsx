@@ -7,7 +7,7 @@ import { Store } from '../../redux/configure-store';
 
 class EditArtist extends React.Component<any> {
   componentDidMount() {
-    this.props.getArtist(null, this.props.match.params.slug);
+    this.props.getArtist(this.props.match.params.slug);
   }
 
   render = () => (

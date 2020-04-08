@@ -65,7 +65,6 @@ const Routes = () => {
           return <Redirect to={`${props.location.pathname.toLowerCase()}`} />;
         }}
       />
-      <PublicRoute exact path={routePaths.artists} component={LazyArtist} />
       <PublicRoute exact path={routePaths.slugs} component={LazyArtist} />
       <PublicRoute
         exact

@@ -46,10 +46,10 @@ class StripeController < ApplicationController
     if event_type == "invoice.payment_failed"
       logger.info "Stripe: Acting on #{event_type}"
 
-      invoice_payment_failed(artist_page, object)
+      return invoice_payment_failed(artist_page, object)
     elsif event_type == "invoice.payment_succeeded"
       logger.info "Stripe: Acting on #{event_type}"
-      invoice_payment_succeeded(artist_page, object)
+      return invoice_payment_succeeded(artist_page, object)
     end
     render json: {}
   end
@@ -64,6 +64,7 @@ class StripeController < ApplicationController
 
     logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"
     CardChargedEmailJob.perform_async(usersub.id, invoice_total, invoice_currency) unless ENV["REDIS_URL"].nil?
+    render json: {}
   rescue StandardError => e
     Raven.extra_context(usersub: usersub) do
       Raven.capture_exception(e)
@@ -85,6 +86,7 @@ class StripeController < ApplicationController
     logger.info "Stripe: sending CardDeclineEmail to #{user.email}"
     CardDeclineEmailJob.perform_async(usersub.id) unless ENV["REDIS_URL"].nil?
     # TODO: update subscription to mark as failed?
+    render json: {}
   end
 
   def is_account_hook

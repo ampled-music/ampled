@@ -247,7 +247,7 @@ class ArtistComponent extends React.Component<Props, any> {
     let supportUrl;
     if (this.props.artists.artist.slug) {
       supportUrl = routePaths.support.replace(
-        ':id',
+        ':slug',
         this.props.artists.artist.slug,
       );
     }

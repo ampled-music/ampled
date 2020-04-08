@@ -74,13 +74,13 @@ class NavComponent extends React.Component<Props, any> {
     const artistId = this.props.match.params.slug;
 
     if (this.props.userData) {
-      this.props.history.push(routePaths.support.replace(':id', artistId));
+      this.props.history.push(routePaths.support.replace(':slug', artistId));
     } else {
       this.props.openAuthModal({
         modalPage: 'signup',
         showSupportMessage: 'artist',
         artistName: this.props.artist.name,
-        redirectTo: routePaths.support.replace(':id', artistId),
+        redirectTo: routePaths.support.replace(':slug', artistId),
       });
     }
   };

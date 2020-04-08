@@ -175,7 +175,7 @@ export class SupportComponent extends React.Component<Props, any> {
       match: { params },
       artists: { artist },
     } = this.props;
-    const artistPageId = artist && artist.slug ? artist.slug : params.slug;
+    const artistPageId = artist?.id;
     this.props.startSubscription({
       artistPageId,
       subscriptionLevelValue: this.state.supportLevelValue * 100,

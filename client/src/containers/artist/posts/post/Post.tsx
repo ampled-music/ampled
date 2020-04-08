@@ -386,18 +386,18 @@ class PostComponent extends React.Component<any, any> {
       showSupportMessage: 'post',
       artistName: this.props.artistName,
       redirectTo: redirectToSupport
-        ? routePaths.support.replace(':id', artistId)
+        ? routePaths.support.replace(':slug', artistId)
         : window.location.pathname,
     });
   };
 
   redirectToSupport = () => {
-    const { history, artistId, artistSlug } = this.props;
+    const { history, artistSlug } = this.props;
 
     history.push(
       routePaths.support.replace(
-        ':id',
-        artistSlug && artistSlug.length > 0 ? artistSlug : artistId,
+        ':slug',
+        artistSlug && artistSlug.length > 0 ? artistSlug,
       ),
     );
   };

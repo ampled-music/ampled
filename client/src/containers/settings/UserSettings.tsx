@@ -94,7 +94,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   showCancelledSuccessMessage = () => {
     const { artistSlug, artistName } = this.props.subscriptions;
-    const artistPageLink = routePaths.support.replace(':id', artistSlug);
+    const artistPageLink = routePaths.support.replace(':slug', artistSlug);
 
     this.props.showToast({
       message: (

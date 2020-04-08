@@ -11,9 +11,6 @@ module Admin
     def authenticate_admin
       return redirect_to new_session_path("user") unless user_signed_in?
 
-      puts current_user.email
-      puts current_user.admin
-
       return redirect_to "/" unless current_user.admin?
     end
 

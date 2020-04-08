@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     }, status: :bad_request
   end
 
-  def after_sign_in_path_for(user)
+  def after_sign_in_path_for
     "/admin"
   end
 end

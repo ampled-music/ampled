@@ -32,13 +32,13 @@ class StripeController < ApplicationController
       return render json: {}
     end
 
-    process_webhook(event_type, connect_account, object)
+    process_webhook(event_type, object, connect_account)
   end
 
   private
 
-  def process_webhook(event_type, connect_account, object)
-    artist_page = ArtistPage.find_by(stripe_user_id: connect_account)
+  def process_webhook(event_type, object, _connect_account)
+    # artist_page = ArtistPage.find_by(stripe_user_id: _connect_account)
 
     # for 'charge.failed' only
     # puts object[:customer]
@@ -46,16 +46,16 @@ class StripeController < ApplicationController
     if event_type == "invoice.payment_failed"
       logger.info "Stripe: Acting on #{event_type}"
 
-      invoice_payment_failed(artist_page, object)
+      return invoice_payment_failed(object)
     elsif event_type == "invoice.payment_succeeded"
       logger.info "Stripe: Acting on #{event_type}"
-      invoice_payment_succeeded(artist_page, object)
+      return invoice_payment_succeeded(object)
     end
     render json: {}
   end
 
-  def invoice_payment_succeeded(artist_page, object)
-    usersub = Subscription.find_by(stripe_customer_id: object[:customer], artist_page_id: artist_page.id)
+  def invoice_payment_succeeded(object)
+    usersub = Subscription.find_by(stripe_id: object[:subscription])
     logger.info "Stripe: usersub.id: #{usersub.id}"
     # integer cents e.g. 2000 for $20.00
     invoice_total = object[:total]
@@ -64,6 +64,7 @@ class StripeController < ApplicationController
 
     logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"
     CardChargedEmailJob.perform_async(usersub.id, invoice_total, invoice_currency) unless ENV["REDIS_URL"].nil?
+    render json: {}
   rescue StandardError => e
     Raven.extra_context(usersub: usersub) do
       Raven.capture_exception(e)
@@ -71,11 +72,8 @@ class StripeController < ApplicationController
     render json: { status: "error", message: e.message }, status: :bad_request
   end
 
-  def invoice_payment_failed(artist_page, object)
-    # This stripe_customer_id is created *on the Connected account* and stored
-    # on the Subscription record - which is why we can find this record
-    # with only this one ID.
-    usersub = Subscription.find_by(stripe_customer_id: object[:customer], artist_page_id: artist_page.id)
+  def invoice_payment_failed(object)
+    usersub = Subscription.find_by(stripe_id: object[:subscription])
     user = User.find(usersub.user_id)
 
     # Mark user as having invalid card
@@ -85,6 +83,7 @@ class StripeController < ApplicationController
     logger.info "Stripe: sending CardDeclineEmail to #{user.email}"
     CardDeclineEmailJob.perform_async(usersub.id) unless ENV["REDIS_URL"].nil?
     # TODO: update subscription to mark as failed?
+    render json: {}
   end
 
   def is_account_hook

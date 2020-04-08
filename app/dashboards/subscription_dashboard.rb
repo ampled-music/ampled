@@ -43,7 +43,6 @@ class SubscriptionDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :user,
     :artist_page,
-    :status,
   ].freeze
 
   # Overwrite this method to customize how subscriptions are displayed

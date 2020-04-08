@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
+import * as Sentry from '@sentry/browser';
 
 import { closeAuthModalAction } from '../../redux/authentication/authentication-modal';
 import {
@@ -48,6 +49,13 @@ class AppComponent extends React.Component<Props, any> {
   static getDerivedStateFromError() {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    Sentry.withScope((scope) => {
+      scope.setExtra('componentStack', info);
+      Sentry.captureException(error);
+    });
   }
 
   componentDidMount() {

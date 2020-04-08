@@ -11,7 +11,7 @@ module Admin
     def authenticate_admin
       return redirect_to new_session_path("user") unless user_signed_in?
 
-      return redirect_to "/" unless current_user.admin?
+      return render "admin/application/invalid" unless current_user.admin?
     end
 
     # Override this value to specify the number of elements to display at a time

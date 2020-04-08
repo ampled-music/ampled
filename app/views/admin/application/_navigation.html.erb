@@ -8,6 +8,7 @@ as defined by the routes in the `admin/` namespace
 %>
 
 <nav class="navigation" role="navigation">
+<%- if current_user.admin? -%>
   <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
     <%= link_to(
       display_resource_name(resource),
@@ -16,6 +17,7 @@ as defined by the routes in the `admin/` namespace
     ) %>
   <% end %>
   <hr>
+<% end -%>
   <b>
   <%= link_to('Log out', destroy_user_session_path, method: :delete) %>
   </b>

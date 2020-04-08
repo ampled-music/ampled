@@ -11,7 +11,9 @@ class SubscriptionDashboard < Administrate::BaseDashboard
     user: Field::BelongsTo,
     artist_page: Field::BelongsTo,
     id: Field::Number,
-    status: Field::String,
+    status: Field::Select.with_options(
+      collection: ["pending_active", "active", "pending_cancelled", "cancelled"]
+    ),
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -41,6 +43,7 @@ class SubscriptionDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :user,
     :artist_page,
+    :status,
   ].freeze
 
   # Overwrite this method to customize how subscriptions are displayed

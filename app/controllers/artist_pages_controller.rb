@@ -44,7 +44,6 @@ class ArtistPagesController < ApplicationController
 
     render json: { status: "ok", message: "Your page has been created!" }
   rescue ActiveRecord::RecordNotUnique => e
-    Raven.capture_exception(e)
     render json: { status: "error", message: "Someone's already using that custom link." }
   rescue StandardError => e
     Raven.capture_exception(e)

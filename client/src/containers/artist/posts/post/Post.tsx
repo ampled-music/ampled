@@ -394,12 +394,7 @@ class PostComponent extends React.Component<any, any> {
   redirectToSupport = () => {
     const { history, artistSlug } = this.props;
 
-    history.push(
-      routePaths.support.replace(
-        ':slug',
-        artistSlug && artistSlug.length > 0 ? artistSlug,
-      ),
-    );
+    history.push(routePaths.support.replace(':slug', artistSlug));
   };
 
   handleSubmit = async (comment) => {

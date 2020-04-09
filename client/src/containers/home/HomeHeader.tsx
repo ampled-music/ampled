@@ -35,7 +35,7 @@ class HomeHeader extends React.Component<any, any> {
             </a>
             {this.state.showNewsletter ? (
               <div
-                className="footer input-group mb-3"
+                className="email input-group mb-3"
                 style={{
                   zIndex: 999999,
                   borderTop: 'unset',

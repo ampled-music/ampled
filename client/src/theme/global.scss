@@ -318,3 +318,13 @@ h6 {
   height: 50px;
   width: 50px;
 }
+
+.email {
+  form {
+    width: 100%;
+    display: flex;
+  }
+  input {
+    border-radius: 0px;
+  }
+}

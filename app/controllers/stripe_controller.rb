@@ -105,7 +105,7 @@ class StripeController < ApplicationController
     end
 
     render json: {}
-  rescue ArtistPaidEmailJob::ArtistNotFound, ArtistPaidEmailJob::ConnectAccountNotFound => e
+  rescue StandardError => e
     Raven.capture_exception(e)
     logger.error "Failed to email connect account on payout.paid. #{e.message}"
     render json: { status: "error", message: e.message }, status: :bad_request

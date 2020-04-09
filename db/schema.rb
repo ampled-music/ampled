@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_04_17_211219) do
-=======
-ActiveRecord::Schema.define(version: 2020_04_07_003754) do
->>>>>>> Make Images belong_to a polymorphic association. Backport ArtistPage.images to work with new schema.
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"

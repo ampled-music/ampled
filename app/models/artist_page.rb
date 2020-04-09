@@ -34,7 +34,7 @@ class ArtistPage < ApplicationRecord
 
   has_many :posts, dependent: :destroy
 
-  has_many :images, dependent: :destroy
+  has_many :images, as: :imageable, dependent: :destroy
 
   has_many :subscriptions, dependent: :destroy
   has_many :subscribers, through: :subscriptions, source: :user

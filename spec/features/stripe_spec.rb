@@ -24,6 +24,60 @@ RSpec.describe StripeController, type: :request do
       expect(response.status).to eq 200
     end
 
+    context("given event type is invoice.payment_succeeded") do
+      let(:event_type) { "invoice.payment_succeeded" }
+      let(:subscription) { create(:subscription, stripe_id: "sub_1234") }
+      let(:total) { 1234 }
+      let(:currency) { "usd" }
+
+      before(:each) do
+        webhook_params[:type] = event_type
+        webhook_params[:data][:object][:subscription] = subscription.stripe_id
+        webhook_params[:data][:object][:total] = total
+        webhook_params[:data][:object][:currency] = currency
+      end
+
+      it "should find subscription by stripe_id" do
+        allow(Subscription).to receive(:find_by).and_call_original
+
+        post webhook_url, params: webhook_params
+
+        expect(Subscription).to have_received(:find_by).with(stripe_id: subscription.stripe_id)
+      end
+
+      it "should call CardChargedEmailJob" do
+        allow(CardChargedEmailJob).to receive(:perform_async)
+
+        prev_redis_url = ENV["REDIS_URL"]
+        begin
+          ENV["REDIS_URL"] = "temp"
+          post webhook_url, params: webhook_params
+        ensure
+          ENV["REDIS_URL"] = prev_redis_url
+        end
+
+        expect(CardChargedEmailJob).to have_received(:perform_async).with(subscription.id, total.to_s, currency)
+      end
+
+      it "should rescue and capture StandardError error" do
+        error = StandardError.new "BOOM! Test error message."
+        allow(CardChargedEmailJob).to receive(:perform_async).and_raise(error)
+        allow(Raven).to receive(:extra_context)
+
+        prev_redis_url = ENV["REDIS_URL"]
+        begin
+          ENV["REDIS_URL"] = "temp"
+          post webhook_url, params: webhook_params
+        ensure
+          ENV["REDIS_URL"] = prev_redis_url
+        end
+
+        json = JSON.parse(response.body)
+        expect(json["message"]).to eq(error.message)
+        expect(Raven).to have_received(:extra_context).with(usersub: subscription)
+      end
+    end
+
     context("given event type is invoice.payment_failed") do
       let(:event_type) { "invoice.payment_failed" }
       let(:user) { create(:user, card_is_valid: true, subscriptions: [create(:subscription, stripe_id: "sub_1234")]) }

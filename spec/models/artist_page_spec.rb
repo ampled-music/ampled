@@ -75,4 +75,15 @@ RSpec.describe ArtistPage, type: :model do
       end
     end
   end
+
+  describe "#images" do
+    let(:image) { create(:image) }
+    let!(:artist_page) { create(:artist_page, images: [image]) }
+
+    it "get deleted when owning Artist Page is deleted" do
+      expect {
+        artist_page.destroy!
+      }.to change { Image.all.count }.by(-1)
+    end
+  end
 end

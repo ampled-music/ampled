@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_04_17_211219) do
+=======
+ActiveRecord::Schema.define(version: 2020_04_07_003754) do
+>>>>>>> Make Images belong_to a polymorphic association. Backport ArtistPage.images to work with new schema.
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -51,11 +55,12 @@ ActiveRecord::Schema.define(version: 2020_04_17_211219) do
 
   create_table "images", force: :cascade do |t|
     t.string "url"
-    t.bigint "artist_page_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "public_id"
-    t.index ["artist_page_id"], name: "index_images_on_artist_page_id"
+    t.string "imageable_type"
+    t.bigint "imageable_id"
+    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 
   create_table "page_ownerships", force: :cascade do |t|

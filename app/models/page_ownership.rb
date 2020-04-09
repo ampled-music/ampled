@@ -19,8 +19,4 @@
 class PageOwnership < ApplicationRecord
   belongs_to :user
   belongs_to :artist_page
-
-  def is_admin
-    role == "admin"
-  end
 end

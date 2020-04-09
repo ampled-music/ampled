@@ -41,6 +41,8 @@ class ArtistPage < ApplicationRecord
 
   has_many :plans, dependent: :destroy
 
+  accepts_nested_attributes_for :images
+
   validate :sluggy_slug
 
   before_save :set_screenshot

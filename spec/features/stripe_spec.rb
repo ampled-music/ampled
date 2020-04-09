@@ -28,28 +28,22 @@ RSpec.describe StripeController, type: :request do
       expect(response.status).to eq 200
     end
 
-    it "should find artist page by stripe user id" do
-      stripe_user_id = "test_stripe_user_id"
-      webhook_params[:account] = stripe_user_id
-      allow(ArtistPage).to receive(:find_by)
-
-      post webhook_url, params: webhook_params
-
-      expect(ArtistPage).to have_received(:find_by).with({ stripe_user_id: stripe_user_id })
-    end
-
     context("given event_type is payout.paid") do
       let(:amount) { 2402 }
+      let(:currency) { "usd" }
       let(:arrival_date) { 1_586_136_170 }
+      let(:account) { "acc_12345" }
 
       before(:each) do
         webhook_params[:type] = "payout.paid"
+        webhook_params[:account] = account
         webhook_params[:data][:object][:amount] = amount
+        webhook_params[:data][:object][:currency] = currency
         webhook_params[:data][:object][:arrival_date] = arrival_date
       end
 
-      it "should have called ArtistPagePaidEmailJob" do
-        allow(ArtistPagePaidEmailJob).to receive(:perform_async)
+      it "should have called ArtistPaidEmailJob" do
+        allow(ArtistPaidEmailJob).to receive(:perform_async)
 
         prev_redis_url = ENV["REDIS_URL"]
         begin
@@ -59,8 +53,44 @@ RSpec.describe StripeController, type: :request do
           ENV["REDIS_URL"] = prev_redis_url
         end
 
-        expect(ArtistPagePaidEmailJob).to have_received(:perform_async)
-          .with(artist_page, amount, DateTime.strptime(arrival_date.to_s, "%s"))
+        expect(ArtistPaidEmailJob).to have_received(:perform_async)
+          .with(account, amount, currency, DateTime.strptime(arrival_date.to_s, "%s"))
+      end
+
+      it "should rescue and capture ArtistNotFound error" do
+        error = ArtistPaidEmailJob::ArtistNotFound.new "BOOM! Test error message."
+        allow(ArtistPaidEmailJob).to receive(:perform_async).and_raise(error)
+        allow(Raven).to receive(:capture_exception)
+
+        prev_redis_url = ENV["REDIS_URL"]
+        begin
+          ENV["REDIS_URL"] = "temp"
+          post webhook_url, params: webhook_params
+        ensure
+          ENV["REDIS_URL"] = prev_redis_url
+        end
+
+        json = JSON.parse(response.body)
+        expect(json["message"]).to eq(error.message)
+        expect(Raven).to have_received(:capture_exception).with(error)
+      end
+
+      it "should rescue and capture ConnectAccountNotFound error" do
+        error = ArtistPaidEmailJob::ConnectAccountNotFound.new "BOOM! Test error message."
+        allow(ArtistPaidEmailJob).to receive(:perform_async).and_raise(error)
+        allow(Raven).to receive(:capture_exception)
+
+        prev_redis_url = ENV["REDIS_URL"]
+        begin
+          ENV["REDIS_URL"] = "temp"
+          post webhook_url, params: webhook_params
+        ensure
+          ENV["REDIS_URL"] = prev_redis_url
+        end
+
+        json = JSON.parse(response.body)
+        expect(json["message"]).to eq(error.message)
+        expect(Raven).to have_received(:capture_exception).with(error)
       end
     end
   end

@@ -20,10 +20,10 @@ class StripeController < ApplicationController
     logger.info "Stripe: Webhook event verified."
 
     object = params[:data][:object]
-    connect_account = params[:account]
+    connect_account_id = params[:account]
     event_type = params[:type]
     event_id = params[:id]
-    logger.info "STRIPE EVENT: #{event_type} #{event_id} for #{connect_account} (live mode: #{params[:livemode]})"
+    logger.info "STRIPE EVENT: #{event_type} #{event_id} for #{connect_account_id} (live mode: #{params[:livemode]})"
 
     # Webhooks for Connect may send test data to live endpoints, so we need
     # to ignore test data in production
@@ -32,12 +32,12 @@ class StripeController < ApplicationController
       return render json: {}
     end
 
-    process_webhook(event_type, object, connect_account)
+    process_webhook(event_type, object, connect_account_id)
   end
 
   private
 
-  def process_webhook(event_type, object, _connect_account)
+  def process_webhook(event_type, object, connect_account_id)
     # artist_page = ArtistPage.find_by(stripe_user_id: _connect_account)
 
     # for 'charge.failed' only
@@ -45,11 +45,11 @@ class StripeController < ApplicationController
     # puts object[:source][:last4]
     case event_type
     when "invoice.payment_failed"
-      invoice_payment_failed(artist_page, object)
+      return invoice_payment_failed(object)
     when "invoice.payment_succeeded"
-      invoice_payment_succeeded(artist_page, object)
+      return invoice_payment_succeeded(object)
     when "payout.paid"
-      payout_paid(artist_page, object)
+      return payout_paid(object, connect_account_id)
     else
       logger.warn "Stripe event type '#{event_type}' was received but is not being handled."
     end
@@ -88,16 +88,27 @@ class StripeController < ApplicationController
     render json: {}
   end
 
-  def payout_paid(artist_page, object)
-    # amount paid to artist (ex. 2000 => $20.00)
+  def payout_paid(object, connect_account_id)
+    # amount paid (ex. 2000 => $20.00)
     amount_in_cents = object[:amount].to_i
+
+    # currency
+    currency = object[:currency]
 
     # date that payout should arrive to bank
     arrival_date = DateTime.strptime(object[:arrival_date].to_s, "%s")
 
-    # notify artist admins
-    logger.info "Stripe: sending artist-paid email to admins of artist page id: #{artist_page.id}"
-    ArtistPagePaidEmailJob.perform_async(artist_page, amount_in_cents, arrival_date) unless ENV["REDIS_URL"].nil?
+    # notify the stripe account / artist
+    logger.info "Stripe: sending artist-paid email to connect account email."
+    if ENV["REDIS_URL"].present?
+      ArtistPaidEmailJob.perform_async(connect_account_id, amount_in_cents, currency, arrival_date)
+    end
+
+    render json: {}
+  rescue ArtistPaidEmailJob::ArtistNotFound, ArtistPaidEmailJob::ConnectAccountNotFound => e
+    Raven.capture_exception(e)
+    logger.error "Failed to email connect account on payout.paid. #{e.message}"
+    render json: { status: "error", message: e.message }, status: :bad_request
   end
 
   def is_account_hook

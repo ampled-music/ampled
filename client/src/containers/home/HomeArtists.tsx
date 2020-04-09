@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
 import { config } from '../../config';
+import { Image, Transformation } from 'cloudinary-react';
 
 import { artistsPages } from '../../redux/ducks/get-artists-pages';
 import tear_2 from '../../images/home/home_tear_2.png';
@@ -31,6 +32,13 @@ class HomeArtistsComponent extends React.Component<Props, State> {
   componentDidMount() {
     this.props.getArtistsPages();
   }
+
+  handlePublicID = (image: string) => {
+    const url = image.split('/');
+    const part_1 = url[url.length - 2];
+    const part_2 = url[url.length - 1];
+    return part_1 + '/' + part_2;
+  };
 
   render() {
     const loading = this.props.artistsPages.loading;
@@ -76,11 +84,20 @@ class HomeArtistsComponent extends React.Component<Props, State> {
                 className="home-artists__item_image_hover"
                 style={{ backgroundColor: page.accent_color }}
               >
-                <img
+                <Image
                   className="home-artists__item_image"
-                  src={page.image}
-                  alt={page.name}
-                />
+                  publicId={this.handlePublicID(page.image)}
+                  key={page.image}
+                >
+                  <Transformation
+                    crop="fill"
+                    width={800}
+                    height={800}
+                    responsive_placeholder="blank"
+                  />
+                </Image>
+
+                {/* <img src={page.image} alt={page.name} /> */}
               </div>
               <div className="home-artists__item_border"></div>
             </Link>

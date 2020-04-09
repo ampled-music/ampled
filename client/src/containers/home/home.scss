@@ -382,6 +382,7 @@
 
   &__item {
     margin-bottom: 2rem;
+    position: relative;
 
     a {
       text-decoration: none !important;
@@ -397,7 +398,7 @@
     &_border {
       border: 2px solid $black;
       width: calc(100% - 30px);
-      height: calc(100% - 30px);
+      height: 100%;
       position: absolute;
       border-width: 2px;
       border-style: solid;
@@ -412,10 +413,10 @@
       background-color: $black;
       display: inline;
       padding: 5px 10px;
-      position: relative;
-      left: 1rem;
-      top: 1rem;
-      z-index: 2;
+      position: absolute;
+      left: 1.5rem;
+      top: 0.5rem;
+      z-index: 10;
     }
 
     &_image {
@@ -431,37 +432,37 @@
 
     &:nth-child(1n) {
       .home-artists__item_image_hover {
-        transform: translate(7px, -30px);
+        transform: translate(3px, -6px);
       }
     }
 
     &:nth-child(2n) {
       .home-artists__item_image_hover {
-        transform: translate(13px, -10px);
+        transform: translate(-5px, -10px);
       }
     }
 
     &:nth-child(3n) {
       .home-artists__item_image_hover {
-        transform: translate(-10px, -5px);
+        transform: translate(4px, 7px);
       }
     }
 
     &:nth-child(4n) {
       .home-artists__item_image_hover {
-        transform: translate(10px, -3px);
+        transform: translate(8px, -3px);
       }
     }
 
     &:nth-child(5n) {
       .home-artists__item_image_hover {
-        transform: translate(-5px, -10px);
+        transform: translate(-5px, -8px);
       }
     }
 
     &:nth-child(6n) {
       .home-artists__item_image_hover {
-        transform: translate(9px, -25px);
+        transform: translate(9px, -2px);
       }
     }
   }

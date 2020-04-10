@@ -68,11 +68,11 @@ class ArtistPagesController < ApplicationController
     render json: { status: "error", message: e.message }
   end
 
+  # If the update includes new sets of images, we will delete all the old images after the update is successful.
   def update
-    # TODO(anaulin): Update this implementation to use the nested attributes, instead of the attributes that
-    # are used in the set_images helper. Requires first consultation with Ryan or other FE.
+    old_image_ids = @artist_page.images.map(&:id)
     if @artist_page.update(artist_page_params)
-      set_images unless has_no_images
+      Image.where(id: old_image_ids).delete_all unless has_no_images
       unless has_no_members
         @artist_page.owners.clear
         set_members
@@ -229,14 +229,5 @@ class ArtistPagesController < ApplicationController
     member_user.skip_confirmation_notification!
     member_user.save!
     member_user
-  end
-
-  def set_images
-    # - create new images based on uploads
-    @artist_page.images.destroy_all
-
-    params[:images].map do |image_url|
-      @artist_page.images.create(url: image_url)
-    end
   end
 end

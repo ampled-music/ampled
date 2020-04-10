@@ -19,7 +19,6 @@ class RegistrationsController < Devise::RegistrationsController
     render_resource(current_user)
   end
 
-
   private
 
   def build_resource(*args)

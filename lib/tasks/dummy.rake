@@ -2,12 +2,14 @@ namespace :dummy do
   desc "Generates fake data"
 
   task users: [:environment] do
-    (1..10).map do |_|
+    User.all.map(&:destroy)
+
+    users = (1..10).map do |_|
       first = Faker::Name.first_name
       last = Faker::Name.last_name
       password = Faker::Internet.password
       social = Faker::Twitter.screen_name
-      user = User.create(
+      User.create(
         name: first,
         last_name: last,
         city: Faker::Address.city,
@@ -16,12 +18,20 @@ namespace :dummy do
         twitter: social,
         instagram: social,
         email: Faker::Internet.email,
-        profile_image_url: "https://res.cloudinary.com/ampled-web/image/upload/v1586552080/testing/TestingImage_#{rand(1..30)}.jpg",
         password: password,
         password_confirmation: password
       )
-      user.confirm
-      user
+    end
+
+    image_url = -> {
+      "https://res.cloudinary.com/ampled-web/image/upload/v1586553929/testing/users/TestingUserImage_#{rand(1..10)}.jpg"
+    }
+    public_id = -> {
+      "v1586553929/testing/users/TestingUserImage_#{rand(1..30)}"
+    }
+
+    users.each do |us|
+      us.image << Image.create(url: image_url.call, public_id: public_id.call)
     end
   end
 

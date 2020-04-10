@@ -128,7 +128,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                   <Image
                     className="artist-header__person_image member"
                     key={owner.name}
-                    publicId={this.handlePublicID(owner.profile_image_url)}
+                    publicId={owner.image.public_id}
                     alt={owner.name}
                     style={{ borderColor: artist.accent_color }}
                   >
@@ -154,15 +154,9 @@ export class FeaturedImages extends React.Component<Props, any> {
     );
   };
 
-  handlePublicID = (image: string) => {
-    const url = image.split('/');
-    const part_1 = url[url.length - 2];
-    const part_2 = url[url.length - 1];
-    return part_1 + '/' + part_2;
-  };
-
   renderBanners = () => {
     const { artist } = this.props;
+    console.log(artist);
     return (
       <div className="artist-header__photos">
         {artist.images &&
@@ -172,7 +166,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                 key={index}
                 className={cx('artist-header__photo', { active: index === 0 })}
               >
-                <Image publicId={this.handlePublicID(image)} key={image}>
+                <Image publicId={image.public_id} key={image.public_id}>
                   <Transformation
                     crop="fill"
                     width={800}

@@ -15,7 +15,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def update_password
-    puts password_params
     current_user.update_with_password(password_params)
     render_resource(current_user)
   end

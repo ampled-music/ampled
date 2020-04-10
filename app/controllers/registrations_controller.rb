@@ -15,6 +15,8 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def update_password
+    return render json: {}, status: :bad_request if current_user.nil?
+
     current_user.update_with_password(password_params)
     render_resource(current_user)
   end

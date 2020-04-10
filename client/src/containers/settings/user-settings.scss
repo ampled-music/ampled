@@ -85,6 +85,27 @@
             margin-right: 0.5rem;
           }
         }
+
+        &__change-password {
+          display: flex;
+          color: $link-color;
+          font-size: 0.7rem;
+          margin-top: 0.3rem;
+          margin-bottom: 1rem;
+          text-align: center;
+          border: none;
+          cursor: pointer;
+          text-decoration: underline;
+          background: none;
+
+          &:hover {
+            text-decoration: none;
+          }
+
+          svg {
+            margin-right: 0.5rem;
+          }
+        }
       }
     }
 

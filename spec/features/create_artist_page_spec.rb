@@ -75,7 +75,8 @@ RSpec.describe ArtistPagesController, type: :request do
     {
       artist_page: {
         bio: "About me",
-        video_url: "https://www.youtube.com/watch?v=hHW1oY26kxQ"
+        video_url: "https://www.youtube.com/watch?v=hHW1oY26kxQ",
+        images_attributes: [{ url: "updated-url", public_id: "updated-public-id" }]
       },
       members: [
         {
@@ -86,8 +87,7 @@ RSpec.describe ArtistPagesController, type: :request do
           email: "testfriend@ampled.com",
           firstName: "Friend"
         }
-      ],
-      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+      ]
     }
   end
 
@@ -116,7 +116,8 @@ RSpec.describe ArtistPagesController, type: :request do
     {
       artist_page: {
         bio: "About me",
-        video_url: "https://vimeo.com/331608175"
+        video_url: "https://vimeo.com/331608175",
+        images_attributes: images_attributes
       },
       members: [
         {
@@ -127,8 +128,7 @@ RSpec.describe ArtistPagesController, type: :request do
           email: "testfriend@ampled.com",
           firstName: "Friend"
         }
-      ],
-      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+      ]
     }
   end
 
@@ -202,7 +202,8 @@ RSpec.describe ArtistPagesController, type: :request do
   context "when updating an artist page" do
     let(:create_url) { "/artist_pages" }
     let(:other_url) { "/artist_pages/#{other_artist_page.id}" }
-    let(:artist_page) { create(:artist_page) }
+    let(:images) { create_list(:image, 3) }
+    let(:artist_page) { create(:artist_page, images: images) }
 
     before do
       user.owned_pages << artist_page
@@ -220,33 +221,42 @@ RSpec.describe ArtistPagesController, type: :request do
     end
 
     it "will let admins edit their own page" do
-      sign_in user
       put "/artist_pages/#{artist_page.id}", params: update_params
       expect(JSON.parse(response.body)["message"]).to eq "Your page has been updated!"
     end
 
     it "won't let admins change their slug" do
-      sign_in user
       put "/artist_pages/#{artist_page.id}", params: bad_update_params
       expect(JSON.parse(response.body)["message"]).to eq "You can't change your URL or name."
     end
 
     it "pulls video screenshot url for youtube" do
-      sign_in user
       put "/artist_pages/#{artist_page.id}", params: update_params
       expect(ArtistPage.find(artist_page.id)[:video_screenshot_url]).to eq "https://img.youtube.com/vi/hHW1oY26kxQ/0.jpg"
     end
 
     it "pulls video screenshot url for vimeo", vcr: true do
-      sign_in user
       put "/artist_pages/#{artist_page.id}", params: vimeo_update_params
       expect(ArtistPage.find(artist_page.id)[:video_screenshot_url]).to eq "https://i.vimeocdn.com/video/777053973_640.jpg"
     end
 
     it "creates new users for members that do not yet exist" do
-      sign_in user
       put "/artist_pages/#{artist_page.id}", params: update_params
       expect(User.find_by(email: "testfriend@ampled.com")).not_to be_nil
+    end
+
+    it "deletes all previous images if new ones are provided" do
+      expect(artist_page.reload.images.map(&:url)).to match_array(images.map(&:url))
+      put "/artist_pages/#{artist_page.id}", params: update_params
+      expect(artist_page.reload.images.map(&:url)).to match_array("updated-url")
+    end
+
+    it "doesn't delete old images if new ones are not provided" do
+      update_params_without_images = update_params.dup
+      update_params_without_images[:artist_page].delete(:images_attributes)
+      expect {
+        put "/artist_pages/#{artist_page.id}", params: update_params_without_images
+      }.to_not change(Image, :count)
     end
   end
 

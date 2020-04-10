@@ -15,6 +15,6 @@ FactoryBot.define do
   factory :image do
     association :imageable, factory: :artist_page
     url { Faker::Internet.url }
-    public_id { Faker::String.random }
+    public_id { Faker::Alphanumeric.alpha }
   end
 end

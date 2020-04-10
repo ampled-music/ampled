@@ -83,8 +83,10 @@ RSpec.describe ArtistPage, type: :model do
       )
       expect { page_with_images.save! }.to change { Image.all.count }.by(2)
       page_with_images.reload
-      expect(page_with_images.images[0]).to have_attributes(url: "http://first.jpg", public_id: "first_public_id")
-      expect(page_with_images.images[1]).to have_attributes(url: "http://second.jpg", public_id: "second_public_id")
+      page_with_images.images.each do |image|
+        expect(image.url).to_not be_nil
+        expect(image.public_id).to_not be_nil
+      end
     end
   end
 end

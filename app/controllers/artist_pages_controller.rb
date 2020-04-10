@@ -38,8 +38,6 @@ class ArtistPagesController < ApplicationController
 
     set_members
 
-    set_images
-
     ArtistPageCreateEmailJob.perform_async(@artist_page.id, current_user.id) unless ENV["REDIS_URL"].nil?
 
     render json: { status: "ok", message: "Your page has been created!" }
@@ -52,6 +50,8 @@ class ArtistPagesController < ApplicationController
   end
 
   def update
+    # TODO(anaulin): Update this implementation to use the nested attributes, instead of the attributes that
+    # are used in the set_images helper. Requires first consultation with Ryan or other FE.
     if @artist_page.update(artist_page_params)
       set_images unless has_no_images
       unless has_no_members
@@ -110,7 +110,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def has_no_images
-    params[:images].nil? || params[:images][0].nil?
+    artist_page_params[:images_attributes].blank?
   end
 
   def check_has_image
@@ -158,7 +158,7 @@ class ArtistPagesController < ApplicationController
   def artist_page_params
     params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :banner_image_url,
                                         :slug, :location, :accent_color, :video_url, :verb_plural, :images,
-                                        :members)
+                                        :members, images_attributes: Image::PERMITTED_PARAMS)
   end
 
   # Helper functions for creating / updating an artist page.

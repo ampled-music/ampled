@@ -17,4 +17,8 @@
 
 class Image < ApplicationRecord
   belongs_to :imageable, polymorphic: true
+
+  # Image params that are allowed by default.
+  # For use by imageables that set Images via nested attributes.
+  PERMITTED_PARAMS = %i[url public_id].freeze
 end

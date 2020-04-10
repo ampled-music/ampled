@@ -141,6 +141,21 @@ RSpec.describe StripeController, type: :request do
         webhook_params[:data][:object][:arrival_date] = arrival_date
       end
 
+      it "should not call email job when there is no connect account" do
+        webhook_params.delete(:account)
+        allow(ArtistPaidEmailJob).to receive(:perform_async)
+
+        prev_redis_url = ENV["REDIS_URL"]
+        begin
+          ENV["REDIS_URL"] = "temp"
+          post webhook_url, params: webhook_params
+        ensure
+          ENV["REDIS_URL"] = prev_redis_url
+        end
+
+        expect(ArtistPaidEmailJob).to_not have_received(:perform_async)
+      end
+
       it "should have called ArtistPaidEmailJob" do
         allow(ArtistPaidEmailJob).to receive(:perform_async)
 

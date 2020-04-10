@@ -95,6 +95,9 @@ class StripeController < ApplicationController
   end
 
   def payout_paid(object, connect_account_id)
+    # ignore non-connect events
+    render json: {} && return if connect_account_id.blank?
+
     # amount paid (ex. 2000 => $20.00)
     amount_in_cents = object[:amount].to_i
 

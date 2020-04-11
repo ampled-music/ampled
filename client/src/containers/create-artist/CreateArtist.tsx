@@ -48,6 +48,7 @@ import { Loading } from '../shared/loading/Loading';
 
 import { deleteFileFromCloudinary } from '../../api/cloudinary/delete-image';
 import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
+import { Image, Transformation } from 'cloudinary-react';
 import { Modal } from '../shared/modal/Modal';
 
 interface CreateArtistProps {
@@ -90,7 +91,10 @@ function a11yProps(index: any) {
 
 interface ImageUploaderProps {
   altText: string;
-  imageURL?: string;
+  imageObject?: {
+    url: string;
+    public_id: string;
+  };
   setImage: Function;
   showToast: Function;
 }
@@ -101,15 +105,6 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
     deleteToken: undefined,
     publicId: null,
   };
-
-  // renderPhoto = (image: string, crop: number) => {
-  //   const crop_url_path = `w_${crop},h_${crop},c_fill`;
-  //   if (image.includes('https://res.cloudinary')) {
-  //     return image.replace('upload/', `upload/${crop_url_path}/`);
-  //   } else {
-  //     return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-  //   }
-  // };
 
   processImage = async (e) => {
     const imageFile = e.target.files[0];
@@ -162,23 +157,35 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
 
   removeImage = async () => {
     deleteFileFromCloudinary(this.state.deleteToken);
-    this.setState({ imageUrl: null, deleteToken: undefined, publicId: null });
+    this.setState({
+      imageObject: null,
+      deleteToken: undefined,
+      publicId: null,
+    });
     this.props.setImage(null);
   };
 
   render() {
-    const { altText, imageURL } = this.props;
+    const { altText, imageObject } = this.props;
     const { loadingImage } = this.state;
-
     let body: {};
-    if (imageURL) {
+    if (imageObject) {
       body = (
         <>
-          <img
-            className="image-upload__image_polaroid"
-            src={imageURL}
-            alt={altText}
-          />
+          <div className="image-upload__image_container">
+            <Image
+              className="image-upload__image_image"
+              publicId={imageObject.public_id}
+              alt={altText}
+            >
+              <Transformation
+                crop="fill"
+                width={130}
+                height={130}
+                responsive_placeholder="blank"
+              />
+            </Image>
+          </div>
           {/* <span className="preview__name">{altText}</span> */}
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <label>
@@ -208,11 +215,13 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
     } else {
       body = (
         <>
-          <img
-            className="image-upload__image_polaroid"
-            src={polaroid}
-            alt={altText}
-          />
+          <div className="image-upload__image_container">
+            <img
+              className="image-upload__image_polaroid"
+              src={polaroid}
+              alt={altText}
+            />
+          </div>
           <label
             htmlFor={`image-file-${altText}`}
             style={{ display: 'flex', justifyContent: 'center' }}
@@ -1017,7 +1026,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 <ImageUploader
                   altText={type}
                   setImage={imageSetter(index)}
-                  imageURL={images[index]}
+                  imageObject={images[index]}
                   showToast={this.props.showToast}
                 />
               </div>

@@ -24,10 +24,10 @@ namespace :dummy do
     end
 
     image_url = -> {
-      "https://res.cloudinary.com/ampled-web/image/upload/v1586553929/testing/users/TestingUserImage_#{rand(1..10)}.jpg"
+      "https://res.cloudinary.com/ampled-web/image/upload/testing/users/TestingUserImage_#{rand(1..10)}.jpg"
     }
     public_id = -> {
-      "v1586553929/testing/users/TestingUserImage_#{rand(1..30)}"
+      "testing/users/TestingUserImage_#{rand(1..30)}"
     }
 
     users.each do |us|

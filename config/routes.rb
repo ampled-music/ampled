@@ -32,6 +32,9 @@ Rails.application.routes.draw do
   end
 
   put "me/updatecard", to: "subscriptions#update_platform_customer"
+  devise_scope :user do
+    put "me/changepassword", to: "registrations#update_password"
+  end
 
   get "slug/:slug", to: "artist_pages#show"
 

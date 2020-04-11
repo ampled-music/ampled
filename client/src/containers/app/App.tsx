@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
+import * as Sentry from '@sentry/browser';
 
 import { closeAuthModalAction } from '../../redux/authentication/authentication-modal';
 import {
@@ -41,6 +42,22 @@ type Props = typeof loginInitialState &
   Dispatchers & { history: any; toast: any };
 
 class AppComponent extends React.Component<Props, any> {
+  state = {
+    hasError: false,
+  };
+
+  static getDerivedStateFromError() {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    Sentry.withScope((scope) => {
+      scope.setExtra('componentStack', info);
+      Sentry.captureException(error);
+    });
+  }
+
   componentDidMount() {
     this.props.getMe();
     const search = this.props.history?.location?.search;
@@ -71,6 +88,28 @@ class AppComponent extends React.Component<Props, any> {
   render() {
     const { visible } = this.props.toast;
     const { toast } = this.props;
+    if (this.state.hasError) {
+      return (
+        <div className="page">
+          <Helmet>
+            <title>Ampled | Direct Community Support For Music Artists</title>
+            {process.env.NODE_ENV === 'development' && (
+              <meta name="robots" content="noindex, nofollow" />
+            )}
+          </Helmet>
+          <div>
+            <h3
+              style={{
+                textAlign: 'center',
+                fontFamily: '"Courier", Courier, monospace',
+              }}
+            >
+              Sorry, something went wrong - please try reloading.
+            </h3>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="page">
         <Helmet>

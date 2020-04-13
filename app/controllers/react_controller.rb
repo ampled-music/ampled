@@ -3,6 +3,28 @@ class ReactController < ActionController::Base
     render file: "public/index.html", layout: false
   end
 
+  def artist_page
+    artist_page = ArtistPage.find_by(slug: request[:artist_name])
+    return render file: "public/index.html", layout: false if artist_page.nil?
+
+    response_html = render_to_string file: "client/public/index.html", layout: false
+
+    # replace title tag and title metas
+    response_html.gsub! /Ampled\s\|\s/, "#{artist_page.name} | Ampled | "
+
+    # replace description metas
+    response_html.gsub! /content="Ampled allows[^"]+"/, "content=\"#{artist_page.bio}\""
+
+    # additional meta tags not already in index.html
+    additional_meta = "<meta name=\"twitter:card\" content=\"summary_large_image\"> \
+    <meta name=\"og:description\" content=\"#{artist_page.bio}\">
+    <meta property=\"og:image\" content=\"#{artist_page.images.first.url}\" />"
+    response_html.gsub! "<meta charset=\"utf-8\" />", "<meta charset=\"utf-8\" />#{additional_meta}"
+
+    render html: response_html
+    # render file: "public/index.html", layout: false
+  end
+
   def render_404
     render file: "public/index.html", layout: false, status: :not_found,
            content_type: "text/html"

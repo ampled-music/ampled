@@ -10,10 +10,10 @@ class ReactController < ActionController::Base
     response_html = render_to_string file: "client/public/index.html", layout: false
 
     # replace title tag and title metas
-    response_html.gsub! /Ampled\s\|\s/, "#{artist_page.name} | Ampled | "
+    response_html.gsub!(/Ampled\s\|\s/, "#{artist_page.name} | Ampled | ")
 
     # replace description metas
-    response_html.gsub! /content="Ampled allows[^"]+"/, "content=\"#{artist_page.bio}\""
+    response_html.gsub!(/content="Ampled allows[^"]+"/, "content=\"#{artist_page.bio}\"")
 
     # additional meta tags not already in index.html
     additional_meta = "<meta name=\"twitter:card\" content=\"summary_large_image\"> \

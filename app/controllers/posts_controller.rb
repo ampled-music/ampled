@@ -29,6 +29,7 @@ class PostsController < ApplicationController
   end
 
   def index
+    @expand_artist = true
     @posts = Post.order("created_at DESC").page(params[:page])
   end
 

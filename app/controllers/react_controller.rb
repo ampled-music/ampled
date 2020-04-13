@@ -23,7 +23,7 @@ class ReactController < ActionController::Base
     # add image if one exists
     additional_meta += "\n<meta property=\"og:image\" content=\"#{image.url}\" />" unless image.nil?
     # add twitter handle if one exists
-    unless artist_page.twitter_handle.blank?
+    if artist_page.twitter_handle.present?
       additional_meta += "\n<meta property=\"twitter:creator\" content=\"@#{artist_page.twitter_handle}\" />"
     end
     response_html.gsub! "<meta charset=\"utf-8\" />", "<meta charset=\"utf-8\" />#{additional_meta}"

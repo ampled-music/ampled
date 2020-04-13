@@ -2,13 +2,6 @@ import * as store from 'store';
 
 import { apiAxios } from '../setup-axios';
 
-declare global {
-  interface Window {
-    dataLayer: any;
-    Sentry: any;
-  }
-}
-
 export const getMeData = async () => {
   if (!store.get('token')) {
     return undefined;

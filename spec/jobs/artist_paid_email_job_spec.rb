@@ -31,8 +31,11 @@ describe ArtistPaidEmailJob, type: :job do
 
     amount_in_cents = 1641
     currency = "usd"
-    arrival_date = DateTime.now
-    described_class.new.perform(connect_account_id, amount_in_cents, currency, arrival_date)
+    arrival_epoch_time = 1_586_744_761
+    described_class.new.perform(connect_account_id, amount_in_cents, currency, arrival_epoch_time)
+
+    arrival_date = DateTime.strptime(arrival_epoch_time.to_s, "%s")
+    arrival_date_formatted = arrival_date.strftime("%b %d, %Y")
 
     expect(SendBatchEmail).to have_received(:call).with(
       [
@@ -44,7 +47,7 @@ describe ArtistPaidEmailJob, type: :job do
             artist_name: artist_page.name,
             amount_paid: format("%.2f", amount_in_cents / 100),
             currency_name: currency.upcase,
-            arrival_date_formatted: arrival_date.strftime("%b %d, %Y")
+            arrival_date_formatted: arrival_date_formatted
           }
         }
       ]

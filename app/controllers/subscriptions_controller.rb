@@ -43,7 +43,6 @@ class SubscriptionsController < ApplicationController
 
   def destroy
     current_subscription.cancel!
-    UserCancelledSubscriptionEmailJob.perform_async(current_subscription.id) unless ENV["REDIS_URL"].nil?
     render json: :ok
   end
 

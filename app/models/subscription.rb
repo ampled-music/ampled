@@ -41,11 +41,12 @@ class Subscription < ApplicationRecord
   scope :active, -> { where(status: %i[pending_active active]) }
 
   def check_stripe
-    raise "Don't just delete a subscription"
+    raise "Don't just delete an active subscription" unless cancelled?
   end
 
   def cancel!
     Stripe::Subscription.retrieve(stripe_id, stripe_account: artist_page.stripe_user_id).delete
+    UserCancelledSubscriptionEmailJob.perform_async(id) unless ENV["REDIS_URL"].nil?
     update(status: :cancelled)
   end
 

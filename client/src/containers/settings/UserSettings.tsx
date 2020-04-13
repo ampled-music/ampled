@@ -517,7 +517,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
       .replace(/[^a-z0-9]/gi, '_')
       .toLowerCase();
     const supportShare = [];
-    console.log(artist);
 
     // Square
     supportShare.push({

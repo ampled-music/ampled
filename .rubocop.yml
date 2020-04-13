@@ -25,6 +25,9 @@ Rails/ApplicationMailer:
 Style/FormatStringToken:
   Enabled: false
 
+Rails/OutputSafety:
+  Enabled: false
+
 Rails/UnknownEnv:
   Environments:
     - production

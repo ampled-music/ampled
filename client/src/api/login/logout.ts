@@ -8,5 +8,4 @@ export const logout = async () => {
       'Content-Type': 'application/json',
     },
   });
-  window.Sentry.configureScope((scope) => scope.setUser(null));
 };

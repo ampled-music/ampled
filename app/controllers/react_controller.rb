@@ -5,7 +5,7 @@ class ReactController < ActionController::Base
 
   def artist_page
     artist_page = ArtistPage.find_by(slug: request[:artist_name])
-    return render file: "public/index.html", layout: false if artist_page.nil?
+    return render_404 if artist_page.nil?
 
     response_html = render_to_string file: "public/index.html", layout: false
 

@@ -51,8 +51,8 @@ Rails.application.routes.draw do
 
   root to: "react#index"
   get "/artists/*path", to: "react#index"
-  get "/artist/*path", to: "react#index"
-  get "/support/*path", to: "react#index"
+  get "/artist/*artist_name", to: "react#artist_page"
+  get "/support/*artist_name", to: "react#artist_page"
   get "/create_post/*path", to: "react#index"
   get "/connect", to: "react#index"
   get "/upload", to: "react#index"

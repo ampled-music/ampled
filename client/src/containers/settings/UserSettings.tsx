@@ -34,6 +34,7 @@ import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
 import { routePaths } from '../route-paths';
 import { Modal } from '../shared/modal/Modal';
+import { ResetPassword } from '../connect/ResetPassword';
 import { Loading } from '../shared/loading/Loading';
 
 const mapDispatchToProps = (dispatch) => ({
@@ -59,6 +60,7 @@ type Props = typeof loginInitialState &
 class UserSettingsComponent extends React.Component<Props, any> {
   state = {
     showCancelModal: false,
+    showPasswordModal: false,
     subscription: undefined,
   };
 
@@ -68,15 +70,28 @@ class UserSettingsComponent extends React.Component<Props, any> {
       location: { search },
     } = this.props;
 
-    if (/stripesuccess=true/gi.test(search)) {
-      this.props.showToast({
-        message: "Great! You're all set up for payments.",
-        type: 'success',
-      });
+    if (!this.props.loadingMe && this.props.userData) {
+      if (/stripesuccess=true/gi.test(search)) {
+        this.props.showToast({
+          message: "Great! You're all set up for payments.",
+          type: 'success',
+        });
+      } else if (/stripesuccess=duplicate/gi.test(search)) {
+        this.props.showToast({
+          message:
+            'This Stripe account is already used by an artist page. Please create a new Stripe account for each artist you wish to receive payouts for.',
+          type: 'error',
+        });
+      }
+      this.props.history.replace(this.props.location.pathname);
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    const {
+      location: { search },
+    } = this.props;
+
     if (
       this.props.token &&
       !this.props.error &&
@@ -89,6 +104,22 @@ class UserSettingsComponent extends React.Component<Props, any> {
     if (this.props.subscriptions.cancelled && !this.props.loadingMe) {
       this.showCancelledSuccessMessage();
       this.props.getMe();
+    }
+
+    if (!this.props.loadingMe && this.props.userData && prevProps.loadingMe) {
+      if (/stripesuccess=true/gi.test(search)) {
+        this.props.showToast({
+          message: "Great! You're all set up for payments.",
+          type: 'success',
+        });
+      } else if (/stripesuccess=duplicate/gi.test(search)) {
+        this.props.showToast({
+          message:
+            'This Stripe account is already used by an artist page. Please create a new Stripe account for each artist you wish to receive payouts for.',
+          type: 'error',
+        });
+      }
+      this.props.history.replace(this.props.location.pathname);
     }
   }
 
@@ -257,6 +288,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <Link to="/user-details" className="user-content__edit-profile">
             <FontAwesomeIcon icon={faEdit} /> Edit Profile
           </Link>
+          <button
+            onClick={() => this.setState({ showPasswordModal: true })}
+            className="user-content__change-password"
+          >
+            Change Password
+          </button>
           {userData.admin && (
             <div>
               <strong>Ampled Admin</strong>
@@ -538,6 +575,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
         <Loading artistLoading={this.props.loadingMe && !this.props.userData} />
         {userData && this.renderContent()}
         {this.renderCancelSubscriptionModal()}
+        {this.state.showPasswordModal && (
+          <Modal
+            open={this.state.showPasswordModal}
+            onClose={() => this.setState({ showPasswordModal: false })}
+          >
+            <ResetPassword type="change" />
+          </Modal>
+        )}
       </div>
     );
   }

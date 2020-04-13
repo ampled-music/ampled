@@ -7,10 +7,11 @@
 module Admin
   class ApplicationController < Administrate::ApplicationController
     before_action :authenticate_admin
-    http_basic_authenticate_with name: "admin", password: "@mpledI$G00d!"
 
     def authenticate_admin
-      # TODO: Add authentication logic here.
+      return redirect_to new_session_path("user") unless user_signed_in?
+
+      return render "admin/application/invalid" unless current_user.admin?
     end
 
     # Override this value to specify the number of elements to display at a time

@@ -24,8 +24,8 @@ class HomeHeader extends React.Component<any, any> {
               Own your creative freedom
             </div>
             <div className="home-header__info">
-              For artists of any sound or size. Receive support via direct
-              payments from your community and sustainably make music.
+              Direct support for all musicians. Collectively owned, community
+              supported.
             </div>
             <a
               className="home-header__button btn btn-ampled"
@@ -35,7 +35,7 @@ class HomeHeader extends React.Component<any, any> {
             </a>
             {this.state.showNewsletter ? (
               <div
-                className="footer input-group mb-3"
+                className="email input-group mb-3"
                 style={{
                   zIndex: 999999,
                   borderTop: 'unset',

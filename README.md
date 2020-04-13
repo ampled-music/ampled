@@ -1,10 +1,33 @@
 # Ampled Web
 
-...
-
 Generated with [Raygun](https://github.com/carbonfive/raygun).
 
-# Development
+- [Ampled Web](#ampled-web)
+  - [Getting Started](#getting-started)
+    - [Requirements](#requirements)
+    - [First Time Setup](#first-time-setup)
+      - [`bin/setup`](#binsetup)
+      - [`.env`](#env)
+    - [Running the Specs](#running-the-specs)
+    - [Running the Application Locally](#running-the-application-locally)
+  - [Conventions](#conventions)
+    - [Git](#git)
+    - [Code Style](#code-style)
+  - [Additional/Optional Development Details](#additionaloptional-development-details)
+    - [Code Coverage (local)](#code-coverage-local)
+    - [Using Guard](#using-guard)
+    - [Using Mailcatcher](#using-mailcatcher)
+    - [Using ChromeDriver](#using-chromedriver)
+    - [Continuous Integration/Deployment with CircleCI and Heroku](#continuous-integrationdeployment-with-circleci-and-heroku)
+- [Deploy to Acceptance/Production](#deploy-to-acceptanceproduction)
+- [Server Environments](#server-environments)
+  - [Hosting](#hosting)
+  - [Environment Variables](#environment-variables)
+  - [Third Party Services](#third-party-services)
+- [Internal Tools](#internal-tools)
+  - [`application-fee-management`](#application-fee-management)
+    - [Installation & setup](#installation--setup)
+    - [Use](#use)
 
 ## Getting Started
 
@@ -27,7 +50,7 @@ Note, `rake db:sample_data` (run as part of setup) loads a small set of data for
 
 #### `.env`
 
-The `bin/setup` script will create a `.env` file that defines settings for your local environment. Do not check this into source control. Refer to the [environment variables](#environment-variables) section below for what can be specified in `.env`.
+The `bin/setup` script will create `.env` and `client/.env` files that define settings for your local environment. Do not check this into source control. Refer to the [environment variables](#environment-variables) section below for what can be specified in `.env`.
 
 ### Running the Specs
 
@@ -140,16 +163,18 @@ On successful builds, Heroku will trigger a deployment via its
 
 ### Hosting
 
-Acceptance and Production are hosted on Heroku under the _email@example.com_ account.
+Acceptance and Production are hosted on Heroku under the [ampled-music](https://dashboard.heroku.com/teams/ampled-music/apps) account.
 
 ### Environment Variables
 
 Several common features and operational parameters can be set using environment variables.
 
+If you need some of these credentials for local development, you can get the keys from the environment settings in the Heroku acceptance environment.
+
 **Required**
 
-- `S3_BUCKET` - AWS S3 bucket name.
-- `SECRET_KEY_BASE` - Secret key base for verifying signed cookies. Should be 30+ random characters and secret!
+- `S3_BUCKET` - AWS S3 bucket name. You can set this to `ampled-test` for local development.
+- `DEVISE_JWT_SECRET_KEY` - Secret key for verifying JWT tokens. Required if you want to be able to log into your local app.
 
 **Optional**
 
@@ -166,15 +191,46 @@ Several common features and operational parameters can be set using environment 
 - `RAILS_LOG_TO_STDOUT` - Log to standard out, good for Heroku (default: false).
 - `RAILS_SERVE_STATIC_FILES` - Serve static assets, good for Heroku (default: false).
 - `RAVEN_DSN` - used to support [Sentry](sentry.io) on the backend.
+- `STRIPE_WEBHOOK_SECRET` - signing secret for main Stripe webhook. In your local environment, with the Stripe CLI you can find the endpoint's secret by running `stripe listen`
+- `STRIPE_CONNECT_WEBHOOK_SECRET` - signing secret for Stripe Connect webhook. In your local environment, with the Stripe CLI you can find the endpoint's secret by running `stripe listen`
+- `RAILS_ENV` - `production` in production, manually set to `acceptance` on acceptance environment, and `development` when running locally.
 
 **Client .env**
 
 - `REACT_APP_RAVEN_DSN` - used to support [Sentry](sentry.io) on the frontend.
+- `REACT_APP_STRIPE_API_KEY` - Stripe API key
 
 ### Third Party Services
 
 - Heroku for hosting.
 - CircleCI for continuous integration.
+- Sentry.io for error reporting.
+- Postmark for e-mail delivery.
+- S3 for storage of uploaded audio files.
+- Cloudinary for image upload and manipulation.
+- Stripe for credit card payments processing.
+
+### Using the Stripe CLI to test webhooks locally
+
+0. Install the [Stripe CLI](https://stripe.com/docs/stripe-cli#install) using the directions for your OS.
+
+1. Link the Stripe CLI to your account with
+
+```
+stripe login
+```
+
+2. To start forwarding events to your local hook,
+
+```
+stripe listen --forward-to localhost:3000/stripe_hook
+```
+
+This will provide a signing secret that you should include as `STRIPE_WEBHOOK_SECRET` in the root `.env`. Keep this terminal window open as the listener will continue to run and provide helpful output.
+
+3. Start the local Ampled server!
+
+4. You're now ready to listen to webhooks coming from our non-development servers and have them forwarded locally.
 
 # Internal Tools
 

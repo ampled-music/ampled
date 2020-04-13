@@ -7,17 +7,21 @@ class ArtistPagesController < ApplicationController
   before_action :check_update_okay, only: :update
 
   def index
-    @artist_pages = ArtistPage.where(featured: true, approved: true).take(3)
+    @artist_pages = ArtistPage.joins(:images).where(featured: true, approved: true).where.not(images: nil).uniq.take(3)
 
     respond_to do |format|
-      format.html
+      format.html do
+        redirect_to "/"
+      end
       format.json
     end
   end
 
   def show
     respond_to do |format|
-      format.html
+      format.html do
+        redirect_to "/artist/#{@artist_page.slug}"
+      end
       format.json
     end
   end
@@ -43,8 +47,7 @@ class ArtistPagesController < ApplicationController
     ArtistPageCreateEmailJob.perform_async(@artist_page.id, current_user.id) unless ENV["REDIS_URL"].nil?
 
     render json: { status: "ok", message: "Your page has been created!" }
-  rescue ActiveRecord::RecordNotUnique => e
-    Raven.capture_exception(e)
+  rescue ActiveRecord::RecordNotUnique
     render json: { status: "error", message: "Someone's already using that custom link." }
   rescue StandardError => e
     Raven.capture_exception(e)

@@ -16,7 +16,7 @@ class Footer extends React.Component<Props, any> {
           <div className="row">
             <div className="col-12 col-md-4">
               <div className="title">Join Our Mailing List</div>
-              <div className="input-group mb-3">
+              <div className="email input-group mb-3">
                 <form
                   action="https://ampled.us19.list-manage.com/subscribe/post?u=514372f571f3cb5abdf8a2637&amp;id=50f2ab4389"
                   method="post"
@@ -80,16 +80,6 @@ class Footer extends React.Component<Props, any> {
                   ✊
                 </span>
               </div>
-              <button
-                className="btn btn-ampled"
-                onClick={() =>
-                  window.open(
-                    'https://fundraising.fracturedatlas.org/ampled-co-op/general_support',
-                  )
-                }
-              >
-                Donate Now
-              </button>
             </div>
           </div>
         </div>

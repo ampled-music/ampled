@@ -14,6 +14,13 @@ class RegistrationsController < Devise::RegistrationsController
     render_resource(resource)
   end
 
+  def update_password
+    return render json: {}, status: :bad_request if current_user.nil?
+
+    current_user.update_with_password(password_params)
+    render_resource(current_user)
+  end
+
   private
 
   def build_resource(*args)
@@ -26,5 +33,9 @@ class RegistrationsController < Devise::RegistrationsController
     params.permit(:profile_image_url, :name, :last_name, :city, :country, :twitter, :instagram, :bio,
                   :ship_address, :ship_address2, :ship_city, :ship_state, :ship_country, :ship_zip,
                   :email)
+  end
+
+  def password_params
+    params.require(:user).permit(:current_password, :password, :password_confirmation)
   end
 end

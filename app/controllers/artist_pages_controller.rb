@@ -95,6 +95,7 @@ class ArtistPagesController < ApplicationController
 
     # Pull user from DB in case they've confirmed recently.
     # BA - Was this actually a problem? Could we current_user.reload at the top of the method instead?
+    # SA - yeah, current_user.reload wasn't working for some reason :(
     user = User.find_by(id: current_user&.id)
     # Only logged-in users who have confirmed their emails may create artist pages.
     render json: { status: "error", message: "Please confirm your email address first." } if user&.confirmed_at.nil?

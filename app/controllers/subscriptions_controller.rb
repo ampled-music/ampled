@@ -43,7 +43,6 @@ class SubscriptionsController < ApplicationController
 
   def destroy
     current_subscription.cancel!
-
     render json: :ok
   end
 

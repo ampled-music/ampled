@@ -281,7 +281,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
       .toLowerCase();
     const promoteSquare = [];
     const promoteStory = [];
-    const supportShare = [];
 
     // Square
     promoteSquare.push({
@@ -491,6 +490,86 @@ class UserSettingsComponent extends React.Component<Props, any> {
             <div className="details__info_title sm">Stories</div>
             <div className="details__promote_container">
               {promoteStory.map((promoImage) => (
+                <a
+                  key={promoImage.name}
+                  className="details__promote_link"
+                  href={promoImage.url}
+                  download={promoImage.name}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FontAwesomeIcon icon={faImage} title={promoImage.name} />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  renderSupporterShareImages = (artist) => {
+    const BASE_UPLOAD_URL =
+      'https://res.cloudinary.com/ampled-web/image/upload';
+    let color = artist.artistColor;
+    color = color.replace('#', '');
+    const cleanArtistName = artist.name
+      .replace(/[^a-z0-9]/gi, '_')
+      .toLowerCase();
+    const supportShare = [];
+    console.log(artist);
+
+    // Square
+    supportShare.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/c_fill,h_1500,w_1500/l_social:Supporter:Grid/`,
+        this.handleBrokenName(
+          artist.name,
+          'north_west',
+          220,
+          160,
+          80,
+          65,
+          'ffffff',
+          '202020',
+        ),
+        `/`,
+        this.handlePublicID(artist.image),
+      ].join(''),
+      name: `${cleanArtistName}_Grid.jpg`,
+      description: '',
+    });
+
+    // Story
+    supportShare.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/c_fill,h_2666,w_1500/l_social:Supporter:Story/`,
+        this.handleBrokenName(
+          artist.name,
+          'north_west',
+          220,
+          160,
+          100,
+          85,
+          'ffffff',
+          '202020',
+        ),
+        `/`,
+        this.handlePublicID(artist.image),
+      ].join(''),
+      name: `${cleanArtistName}_Story.jpg`,
+      description: '',
+    });
+
+    return (
+      <div>
+        <div className="details__info_title">Promote This Page</div>
+        <div className="row">
+          <div className="col-12">
+            <div className="details__promote_container">
+              {supportShare.map((promoImage) => (
                 <a
                   key={promoImage.name}
                   className="details__promote_link"
@@ -843,6 +922,15 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       </div>
                     </div>
                   </div>
+                  {subscription.artistApproved && (
+                    <div className="details__promote">
+                      <div className="row no-gutter">
+                        <div className="col-12">
+                          {this.renderSupporterShareImages(subscription)}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

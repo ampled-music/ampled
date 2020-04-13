@@ -16,17 +16,11 @@ interface Props {
   declineStep: any;
   artistPageId: any;
   subscriptionLevelValue: any;
-  formType: String;
+  formType: string;
   updateCard?: Function;
   userData?: any;
   errorCard?: any;
   showToast: Function;
-}
-
-declare global {
-  interface Window {
-    Stripe: any;
-  }
 }
 
 export class StripePaymentProvider extends React.Component<Props, any> {

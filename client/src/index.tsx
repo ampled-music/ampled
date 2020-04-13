@@ -8,6 +8,14 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { setupAxios } from './api/setup-axios';
 import { configureStore } from './redux/configure-store';
 
+declare global {
+  interface Window {
+    dataLayer: any;
+    Sentry: any;
+    Stripe: any;
+  }
+}
+
 Sentry.init({ dsn: process.env.REACT_APP_RAVEN_DSN });
 
 setupAxios();

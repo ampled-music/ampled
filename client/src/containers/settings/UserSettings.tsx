@@ -368,6 +368,27 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
+        `/c_fill,h_2666,w_1500/l_social:Story:StoryBlank/`,
+        this.handleBrokenName(
+          artist.name,
+          'north_west',
+          220,
+          160,
+          100,
+          85,
+          'ffffff',
+          '202020',
+        ),
+        `/`,
+        this.handlePublicID(artist.image),
+      ].join(''),
+      name: `${cleanArtistName}_StoryBlank.jpg`,
+      description: '',
+    });
+
+    promoteStory.push({
+      url: [
+        BASE_UPLOAD_URL,
         `/c_fill,h_2666,w_1500/l_social:Story:Story1/`,
         this.handleBrokenName(
           artist.name,

@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[destroy update]
+  before_action :is_admin, only: :index
 
   def create
     @post = Post.new(post_params)
@@ -25,6 +26,14 @@ class PostsController < ApplicationController
     else
       render json: { errors: @post.errors }, status: :bad_request
     end
+  end
+
+  def index
+    @posts = Post.order("created_at DESC").page(params[:page])
+  end
+
+  def is_admin
+    return render json: [] unless PostPolicy.new(current_user, nil).view_all?
   end
 
   private

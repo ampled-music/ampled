@@ -28,6 +28,7 @@ gem "sentry-raven"
 gem "sidekiq"
 gem "skylight"
 gem "stripe"
+gem "will_paginate", "~> 3.3.0"
 gem "zencoder"
 
 # Front-endy

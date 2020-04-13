@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   resources :subscriptions
   resources :artist_pages
 
-  resources :posts, only: %i[destroy update]
+  resources :posts, only: %i[destroy update index]
 
   resources :artist_pages, only: [] do
     resources :posts, only: %i[create index]

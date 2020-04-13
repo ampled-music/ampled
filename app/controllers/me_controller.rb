@@ -27,12 +27,11 @@ class MeController < ApplicationController
   def update_card
     card = Stripe::Customer.retrieve(current_user.stripe_customer_id).sources.data[0]
     if card.nil?
+      # remove card from user if it doesn't exist in Stripe
       current_user.update(card_brand: nil, card_exp_month: nil,
         card_exp_year: nil, card_last4: nil,
-        card_is_valid: false)
-      { brand: nil, exp_month: nil,
-        exp_year: nil, last4: nil,
-        is_valid: false }
+        card_is_valid: nil)
+      nil
     else
       current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
         card_exp_year: card.exp_year, card_last4: card.last4,

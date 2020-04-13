@@ -130,7 +130,7 @@ RSpec.describe StripeController, type: :request do
       let(:event_type) { "payout.paid" }
       let(:amount) { 2402 }
       let(:currency) { "usd" }
-      let(:arrival_date) { 1_586_136_170 }
+      let(:arrival_epoch_time) { 1_586_136_170 }
       let(:account) { "acc_12345" }
 
       before(:each) do
@@ -138,7 +138,7 @@ RSpec.describe StripeController, type: :request do
         webhook_params[:account] = account
         webhook_params[:data][:object][:amount] = amount
         webhook_params[:data][:object][:currency] = currency
-        webhook_params[:data][:object][:arrival_date] = arrival_date
+        webhook_params[:data][:object][:arrival_date] = arrival_epoch_time
       end
 
       it "should not call email job when there is no connect account" do
@@ -168,7 +168,7 @@ RSpec.describe StripeController, type: :request do
         end
 
         expect(ArtistPaidEmailJob).to have_received(:perform_async)
-          .with(account, amount, currency, DateTime.strptime(arrival_date.to_s, "%s"))
+          .with(account, amount, currency, arrival_epoch_time.to_s)
       end
 
       it "should rescue and capture ArtistNotFound error" do

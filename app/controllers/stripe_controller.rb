@@ -98,13 +98,13 @@ class StripeController < ApplicationController
     # currency
     currency = object[:currency]
 
-    # date that payout should arrive to bank
-    arrival_date = DateTime.strptime(object[:arrival_date].to_s, "%s")
+    # when payout should arrive to bank (in UNIX epoch time)
+    arrival_epoch_time = object[:arrival_date]
 
     # notify the stripe account / artist
     logger.info "Stripe: sending artist-paid email to connect account email."
     if ENV["REDIS_URL"].present?
-      ArtistPaidEmailJob.perform_async(connect_account_id, amount_in_cents, currency, arrival_date)
+      ArtistPaidEmailJob.perform_async(connect_account_id, amount_in_cents, currency, arrival_epoch_time)
     end
 
     render json: {}

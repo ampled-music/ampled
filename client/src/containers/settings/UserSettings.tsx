@@ -549,7 +549,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           artist.name,
           'north_west',
           220,
-          160,
+          270,
           100,
           85,
           'ffffff',

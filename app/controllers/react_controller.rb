@@ -26,7 +26,7 @@ class ReactController < ActionController::Base
     if artist_page.twitter_handle.present?
       additional_meta += "\n<meta property=\"twitter:creator\" content=\"@#{artist_page.twitter_handle}\" />"
     end
-    response_html.gsub! "<meta charset=\"utf-8\" />", "<meta charset=\"utf-8\" />#{additional_meta}"
+    response_html.gsub!(/<head>/, "<head>#{additional_meta}")
 
     render html: response_html.html_safe, content_type: "text/html"
   end

@@ -7,7 +7,7 @@ class ReactController < ActionController::Base
     artist_page = ArtistPage.find_by(slug: request[:artist_name])
     return render file: "public/index.html", layout: false if artist_page.nil?
 
-    response_html = render_to_string file: "client/public/index.html", layout: false
+    response_html = render_to_string file: "public/index.html", layout: false
 
     # replace title tag and title metas
     response_html.gsub!(/Ampled\s\|\s/, "#{artist_page.name} | Ampled | ")
@@ -22,7 +22,6 @@ class ReactController < ActionController::Base
     response_html.gsub! "<meta charset=\"utf-8\" />", "<meta charset=\"utf-8\" />#{additional_meta}"
 
     render html: response_html
-    # render file: "public/index.html", layout: false
   end
 
   def render_404

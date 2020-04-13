@@ -24,7 +24,7 @@ class ReactController < ActionController::Base
     additional_meta = "#{additional_meta}<meta property=\"og:image\" content=\"#{image.url}\" />" unless image.nil?
     response_html.gsub! "<meta charset=\"utf-8\" />", "<meta charset=\"utf-8\" />#{additional_meta}"
 
-    render html: response_html
+    render html: response_html.html_safe, content_type: "text/html"
   end
 
   def render_404

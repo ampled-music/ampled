@@ -16,13 +16,8 @@ import { updateMeAction } from '../../redux/me/update-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
-import multiDownload from 'multi-download';
 
-import {
-  faEdit,
-  faMapMarkerAlt,
-  faImage,
-} from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import {
   faTwitter,
   faInstagram,
@@ -212,273 +207,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     const part_1 = url[url.length - 2];
     const part_2 = url[url.length - 1];
     return part_1 + '/' + part_2;
-  };
-
-  buildBrokenName = (artistname: string) => {
-    const broken_name = artistname.split(' ');
-    const name_array = [];
-    let name_string = '';
-
-    for (let index = 0; index < broken_name.length; index++) {
-      if (broken_name[index].length >= 7) {
-        // Words longer than 6 get their own line
-        if (name_string) {
-          // If there is a string being built, push that before the next Word
-          name_array.push(name_string.trim());
-          name_string = '';
-        }
-        name_array.push(broken_name[index]);
-      } else if (broken_name[index].length < 7) {
-        // Build string of small words
-        name_string += broken_name[index] + ' ';
-        if (name_string.length > 10) {
-          // If its a small word continue loop
-          if (broken_name[index].length < 3) {
-            continue;
-          }
-          // Push built string of small word once its over 10
-          name_array.push(name_string.trim());
-          name_string = '';
-        } else if (index === broken_name.length - 1) {
-          // If its the last word push whats left in the string
-          name_array.push(name_string.trim());
-          name_string = '';
-        }
-      } else {
-        if (name_string) {
-          // If there is a string being built, push that before the next Word
-          name_array.push(name_string.trim());
-          name_string = '';
-        }
-        name_array.push(broken_name[index]);
-      }
-    }
-    return name_array;
-  };
-
-  handleBrokenName = (
-    fullname: string,
-    position: string,
-    x: number,
-    y: number,
-    distance: number,
-    font_size: number,
-    color: string,
-    bg: string,
-  ) => {
-    const broken_name = this.buildBrokenName(fullname);
-    let y_index = y;
-    let name_part = '';
-    let new_font_size = font_size;
-    let new_distance = distance;
-
-    if (broken_name.length < 5) {
-      // Font size for long names
-      if (broken_name.length >= 4) {
-        new_font_size = font_size / 1.2;
-        new_distance = distance / 1.2;
-      }
-      // Instagram 2
-      if (position === 'center' && x === 0 && y === -90) {
-        for (let index = 0; index < broken_name.length; index++) {
-          y_index = index === 0 ? y_index : y_index - distance / 2;
-        }
-      }
-      // Social 2
-      if (position === 'north' && x === 0 && y === 560) {
-        for (let index = 0; index < broken_name.length; index++) {
-          y_index = index === 0 ? y_index : y_index - 60;
-        }
-      }
-      // Cycle through and build text plate
-      for (let index = 0; index < broken_name.length; index++) {
-        // prettier-ignore
-        name_part += `l_text:Arial_${new_font_size}_bold:%20${encodeURI( broken_name[index] )}%20,co_rgb:${ color },b_rgb:${ bg },g_${ position },x_${ x },y_${ y_index }/`;
-        y_index += Math.round(new_distance);
-      }
-      return name_part;
-    } else {
-      return '';
-    }
-  };
-
-  renderSocialImages = (artist) => {
-    const BASE_UPLOAD_URL =
-      'https://res.cloudinary.com/ampled-web/image/upload';
-    let color = artist.artistColor;
-    color = color.replace('#', '');
-    const cleanArtistName = artist.name
-      .replace(/[^a-z0-9]/gi, '_')
-      .toLowerCase();
-    const promoteImages = [];
-    let n = 0;
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/c_fill,h_800,w_800/bo_3px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,g_south,l_social:AmpledLogo.png,w_200,y_20/`,
-        this.handleBrokenName(
-          artist.name,
-          'north',
-          0,
-          30,
-          40,
-          35,
-          'ffffff',
-          '202020',
-        ),
-        `/`,
-        this.handlePublicID(artist.image),
-      ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
-      description: '',
-    });
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/b_rgb:${color +
-          '33'},c_scale,h_800,w_800/bo_4px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,l_social:AmpledLogo.png,w_300,y_90/`,
-        this.handleBrokenName(
-          artist.name,
-          'center',
-          0,
-          -90,
-          50,
-          45,
-          '202020',
-          null,
-        ),
-        `/l_social:line.png/v1584999718/social/blank.png`,
-      ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
-      description: '',
-    });
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/c_fill,h_800,w_800/bo_3px_solid_rgb:${color},c_scale,h_600,l_social:blank.png,w_600/c_scale,g_south_east,l_social:AmpledLogo.png,w_200,x_120,y_120/`,
-        this.handleBrokenName(
-          artist.name,
-          'north_west',
-          120,
-          70,
-          65,
-          55,
-          'ffffff',
-          '202020',
-        ),
-        `/`,
-        this.handlePublicID(artist.image),
-      ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
-      description: '',
-    });
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/c_fill,h_1921,w_1081/l_social:SocialRaw_1/`,
-        this.handleBrokenName(
-          artist.name,
-          'north_west',
-          160,
-          150,
-          80,
-          65,
-          'ffffff',
-          '202020',
-        ),
-        `/`,
-        this.handlePublicID(artist.image),
-      ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
-      description: '',
-    });
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/`,
-        this.handleBrokenName(
-          artist.name,
-          'north',
-          0,
-          560,
-          100,
-          85,
-          'ffffff',
-          '202020',
-        ),
-        `/v1585784142/social/SocialRaw_2.png`,
-      ].join(''),
-      name: `${cleanArtistName}_ promote_${n++}.png`,
-      description: '',
-    });
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_4.png`,
-      ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.png`,
-      description: '',
-    });
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_5.png`,
-      ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.png`,
-      description: '',
-    });
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_6.png`,
-      ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.png`,
-      description: '',
-    });
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_7.png`,
-      ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.png`,
-      description: '',
-    });
-
-    return (
-      <div>
-        <div className="details__info_title">Promote Your Page</div>
-        <div className="details__promote_container">
-          {promoteImages.map((promoImage) => (
-            <a
-              key={promoImage.name}
-              className="details__promote_link"
-              href={promoImage.url}
-              download={promoImage.name}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faImage} title={promoImage.name} />
-            </a>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-  handlePromoteImages = (promoteImages) => {
-    // Attempt at a single download button
-    // This requires cross browser to be enabled for cloudinary.com, which it currently is not.
-    const fileUrls = promoteImages.map((image) => image.url);
-    multiDownload(fileUrls);
   };
 
   renderUserImage = () => {
@@ -678,15 +406,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     </div>
                   </div>
                 </div>
-                {ownedPage.approved && (
-                  <div className="details__promote">
-                    <div className="row no-gutter">
-                      <div className="col-12">
-                        {this.renderSocialImages(ownedPage)}
-                      </div>
-                    </div>
-                  </div>
-                )}
                 {ownedPage.role === 'admin' && (
                   <div className="details__stripe">
                     <div className="row no-gutter align-items-center">
@@ -838,7 +557,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
     <div className="row content">
       {this.renderUserInfo()}
       <div className="pages-container col-md-9">
-        {this.props.userData.ownedPages.length > 0 && this.renderOwnedPages()}
+        {this.props.userData.ownedPages.length > 0
+          ? this.renderOwnedPages()
+          : ''}
         {this.props.userData.subscriptions.length > 0
           ? this.renderSupportedArtists()
           : this.renderEmptyArtists()}

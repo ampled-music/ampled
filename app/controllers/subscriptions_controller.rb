@@ -6,19 +6,6 @@ class SubscriptionsController < ApplicationController
     @subscriptions = current_user.subscriptions
   end
 
-  def show
-    # BA - should we delete this?
-  end
-
-  def new
-    # BA - should we delete this?
-    @artist_page = ArtistPage.new
-  end
-
-  def edit
-    # BA - should we delete this?
-  end
-
   def create
     subscription = subscribe_stripe
     UserSupportedArtistEmailJob.perform_async(subscription.id) unless ENV["REDIS_URL"].nil?
@@ -27,14 +14,6 @@ class SubscriptionsController < ApplicationController
   rescue StandardError => e
     Raven.capture_exception(e)
     render json: { status: "error", message: e.message }
-  end
-
-  def update
-    # if @subscription.update(subscription_params)
-    #  redirect_to @artist_page, notice: "Artist page was successfully updated."
-    # else
-    #  render :edit
-    # end
   end
 
   def allow_destroy

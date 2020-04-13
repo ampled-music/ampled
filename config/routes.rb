@@ -58,6 +58,7 @@ Rails.application.routes.draw do
   get "/upload", to: "react#index"
   get "/settings", to: "react#index"
   get "/user-details", to: "react#index"
+  get "/feed", to: "react#index"
 
   get "/no_artist", to: "react#render_404"
   get "/*path", to: "react#render_404"

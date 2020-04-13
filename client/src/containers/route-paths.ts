@@ -15,4 +15,5 @@ export const routePaths = {
   userDetails: '/user-details',
   createArtist: '/create-artist',
   noArtist: '/no_artist',
+  feed: '/feed',
 };

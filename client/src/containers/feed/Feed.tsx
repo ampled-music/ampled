@@ -80,6 +80,14 @@ class Feed extends React.Component<any> {
         className="post-container"
         style={{ maxWidth: '525px', width: '525px', margin: '0 auto' }}
       >
+        <h1
+          style={{
+            textAlign: 'center',
+            fontFamily: "'LL Replica Bold Web', sans-serif",
+          }}
+        >
+          POSTS
+        </h1>
         <style
           dangerouslySetInnerHTML={{
             __html: `

@@ -5,7 +5,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
 
 import { Store } from '../../redux/configure-store';
 
@@ -86,22 +85,22 @@ class Feed extends React.Component<any> {
           ))}
         </div>
         {this.state.page > 1 && (
-          <Button
+          <button
             onClick={this.prevPage}
             className="btn btn-ampled"
             style={{ margin: '0 auto', display: 'block' }}
           >
             Prev Page
-          </Button>
+          </button>
         )}
         {this.state.posts.length === 30 && (
-          <Button
+          <button
             onClick={this.nextPage}
             className="btn btn-ampled"
             style={{ margin: '0 auto', display: 'block' }}
           >
             Next Page
-          </Button>
+          </button>
         )}
       </div>
     );

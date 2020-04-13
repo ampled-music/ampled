@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import { Store } from '../../redux/configure-store';
 
 import { showToastAction } from '../../redux/toast/toast-modal';
+import { createCommentAction } from '../../redux/comments/create';
+import { deleteCommentAction } from '../../redux/comments/delete';
 import { Post } from '../artist/posts/post/Post';
 
 import { apiAxios } from '../../api/setup-axios';
@@ -20,8 +22,10 @@ class Feed extends React.Component<any> {
     loading: true,
     page: 1,
   };
+  players: Set<any>;
 
   componentDidMount = () => {
+    this.players = new Set();
     this.loadData(this.state.page);
   };
 
@@ -45,7 +49,29 @@ class Feed extends React.Component<any> {
     this.setState({ loading: false, posts: data, page });
   };
 
+  playerCallback = (action: string, instance: any) => {
+    const { players } = this;
+    if (action === 'play') {
+      // Pause all active players
+      players.forEach((player) => {
+        // handlePause instance method both pauses audio *and* triggers
+        // the 'pause' callback below
+        player.handlePause();
+      });
+
+      // Add newly active player to set
+      players.add(instance);
+    } else if (action === 'pause') {
+      // Triggered after player has already been paused;
+      // remove paused player from set
+      players.delete(instance);
+    }
+  };
+
   render() {
+    const {
+      me: { userData },
+    } = this.props;
     if (this.state.loading) {
       return <Loading artistLoading={true} />;
     }
@@ -80,7 +106,22 @@ class Feed extends React.Component<any> {
                   {post.artist.name.toUpperCase()}
                 </Link>
               </div>
-              <Post post={post} />
+              <Post
+                post={post}
+                me={userData}
+                accentColor={post.artist.accent_color}
+                artistName={post.artist.name}
+                artistId={post.artist.id}
+                artistSlug={post.artist.slug}
+                loggedUserAccess={
+                  (userData?.artistPages || []).filter(
+                    (access) => +access.artistId === +post.artist.id,
+                  )?.[0]
+                }
+                addComment={this.props.addComment}
+                deleteComment={this.props.deleteComment}
+                playerCallback={this.playerCallback}
+              />
             </div>
           ))}
         </div>
@@ -115,6 +156,8 @@ const mapStateToProps = (state: Store) => {
 
 const mapDispatchToProps = (dispatch) => ({
   showToast: bindActionCreators(showToastAction, dispatch),
+  addComment: bindActionCreators(createCommentAction, dispatch),
+  deleteComment: bindActionCreators(deleteCommentAction, dispatch),
 });
 
 const connectFeed = connect(mapStateToProps, mapDispatchToProps)(Feed);

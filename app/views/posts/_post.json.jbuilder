@@ -20,6 +20,7 @@ else
 end
 if @expand_artist
   json.artist do
+    json.id post.artist_page.id
     json.name post.artist_page.name
     json.slug post.artist_page.slug
     json.accent_color post.artist_page.accent_color

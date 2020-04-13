@@ -9,6 +9,8 @@ class ReactController < ActionController::Base
 
     response_html = render_to_string file: "public/index.html", layout: false
 
+    image = artist_page.images.first
+
     # replace title tag and title metas
     response_html.gsub!(/Ampled\s\|\s/, "#{artist_page.name} | Ampled | ")
 
@@ -17,11 +19,12 @@ class ReactController < ActionController::Base
 
     # additional meta tags not already in index.html
     additional_meta = "<meta name=\"twitter:card\" content=\"summary_large_image\"> \
-    <meta name=\"og:description\" content=\"#{artist_page.bio}\">
-    <meta property=\"og:image\" content=\"#{artist_page.images.first.url}\" />"
+    <meta name=\"og:description\" content=\"#{artist_page.bio}\">"
+    # add image if one exists
+    additional_meta = "#{additional_meta}<meta property=\"og:image\" content=\"#{image.url}\" />" unless image.nil?
     response_html.gsub! "<meta charset=\"utf-8\" />", "<meta charset=\"utf-8\" />#{additional_meta}"
 
-    render html: response_html
+    render html: response_html.html_safe, content_type: "text/html"
   end
 
   def render_404

@@ -15,6 +15,8 @@ export const getMeData = async () => {
   if (data && !data.userInfo.id) {
     store.clearAll();
 
+    window.Sentry.configureScope((scope) => scope.setUser(null));
+
     return undefined;
   }
 

@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   }
 
   resources :comments, only: %i[create destroy]
-  resources :subscriptions
+  resources :subscriptions, only: %i[create destroy]
   resources :artist_pages
 
   resources :posts, only: %i[destroy update]

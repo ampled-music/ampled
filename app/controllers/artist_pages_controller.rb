@@ -30,9 +30,6 @@ class ArtistPagesController < ApplicationController
     @artist_page = ArtistPage.new
   end
 
-  def edit
-  end
-
   def create
     # if we used activerecord validations, we could just check ArtistPage.new(...).valid?
     # and if not valid, return @artist_page.errors to give more info about whats wrong

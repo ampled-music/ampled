@@ -14,7 +14,8 @@ class StripeController < ApplicationController
     # File.open('other_stripe_account_stub.json','w'){ |f| f.write(stripe_account.to_json) }
     ap = ArtistPage.find_by(state_token: params[:state])
     # BA - Delete an artists state token after it's used?
-    ap.update(stripe_user_id: stripe_account["stripe_user_id"])
+    # SA - done 2020/04/13
+    ap.update(stripe_user_id: stripe_account["stripe_user_id"], state_token: nil)
     redirect_to "/settings?stripesuccess=true"
   end
 
@@ -26,10 +27,10 @@ class StripeController < ApplicationController
     logger.info "Stripe: Webhook event verified."
 
     object = params[:data][:object]
-    connect_account = params[:account]
+    connect_account_id = params[:account]
     event_type = params[:type]
     event_id = params[:id]
-    logger.info "STRIPE EVENT: #{event_type} #{event_id} for #{connect_account} (live mode: #{params[:livemode]})"
+    logger.info "STRIPE EVENT: #{event_type} #{event_id} for #{connect_account_id} (live mode: #{params[:livemode]})"
 
     # Webhooks for Connect may send test data to live endpoints, so we need
     # to ignore test data in production
@@ -38,24 +39,26 @@ class StripeController < ApplicationController
       return render json: {}
     end
 
-    process_webhook(event_type, object, connect_account)
+    process_webhook(event_type, object, connect_account_id)
   end
 
   private
 
-  def process_webhook(event_type, object, _connect_account)
+  def process_webhook(event_type, object, connect_account_id)
     # artist_page = ArtistPage.find_by(stripe_user_id: _connect_account)
 
     # for 'charge.failed' only
     # puts object[:customer]
     # puts object[:source][:last4]
-    if event_type == "invoice.payment_failed"
-      logger.info "Stripe: Acting on #{event_type}"
-
+    case event_type
+    when "invoice.payment_failed"
       return invoice_payment_failed(object)
-    elsif event_type == "invoice.payment_succeeded"
-      logger.info "Stripe: Acting on #{event_type}"
+    when "invoice.payment_succeeded"
       return invoice_payment_succeeded(object)
+    when "payout.paid"
+      return payout_paid(object, connect_account_id)
+    else
+      logger.warn "Stripe event type '#{event_type}' was received but is not being handled."
     end
     render json: {}
   end
@@ -90,6 +93,32 @@ class StripeController < ApplicationController
     CardDeclineEmailJob.perform_async(usersub.id) unless ENV["REDIS_URL"].nil?
     # TODO: update subscription to mark as failed?
     render json: {}
+  end
+
+  def payout_paid(object, connect_account_id)
+    # ignore non-connect events
+    render json: {} && return if connect_account_id.blank?
+
+    # amount paid (ex. 2000 => $20.00)
+    amount_in_cents = object[:amount].to_i
+
+    # currency
+    currency = object[:currency]
+
+    # when payout should arrive to bank (in UNIX epoch time)
+    arrival_epoch_time = object[:arrival_date]
+
+    # notify the stripe account / artist
+    logger.info "Stripe: sending artist-paid email to connect account email."
+    if ENV["REDIS_URL"].present?
+      ArtistPaidEmailJob.perform_async(connect_account_id, amount_in_cents, currency, arrival_epoch_time)
+    end
+
+    render json: {}
+  rescue StandardError => e
+    Raven.capture_exception(e)
+    logger.error "Failed to email connect account on payout.paid. #{e.message}"
+    render json: { status: "error", message: e.message }, status: :bad_request
   end
 
   def is_account_hook

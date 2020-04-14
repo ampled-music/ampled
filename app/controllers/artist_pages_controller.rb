@@ -30,9 +30,6 @@ class ArtistPagesController < ApplicationController
     @artist_page = ArtistPage.new
   end
 
-  def edit
-  end
-
   def create
     # if we used activerecord validations, we could just check ArtistPage.new(...).valid?
     # and if not valid, return @artist_page.errors to give more info about whats wrong
@@ -75,6 +72,17 @@ class ArtistPagesController < ApplicationController
     render json: { status: "ok", message: "Your page has been deleted!" } if @artist_page.destroy
   end
 
+  def request_approval
+    set_artist_page
+
+    unless current_user&.owned_pages&.include?(@artist_page)
+      return render json: { status: "error", message: "You don't have that permission." }
+    end
+
+    ApprovalRequestMailer.approval_requested(@artist_page, current_user).deliver_later
+    render json: { status: "ok", message: "We've let the team know you're ready!" }
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -87,7 +95,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def set_page_ownership
-    @role = PageOwnership.where(user_id: current_user.try(:id), artist_page_id: params[:id]).take.try(:role)
+    @role = PageOwnership.where(user_id: current_user.try(:id), artist_page_id: @artist_page.id).take.try(:role)
   end
 
   def check_user
@@ -95,6 +103,7 @@ class ArtistPagesController < ApplicationController
 
     # Pull user from DB in case they've confirmed recently.
     # BA - Was this actually a problem? Could we current_user.reload at the top of the method instead?
+    # SA - yeah, current_user.reload wasn't working for some reason :(
     user = User.find_by(id: current_user&.id)
     # Only logged-in users who have confirmed their emails may create artist pages.
     render json: { status: "error", message: "Please confirm your email address first." } if user&.confirmed_at.nil?

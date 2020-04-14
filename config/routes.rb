@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   }
 
   resources :comments, only: %i[create destroy]
-  resources :subscriptions
+  resources :subscriptions, only: %i[create destroy]
   resources :artist_pages
 
   resources :posts, only: %i[destroy update]
@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   end
 
   get "slug/:slug", to: "artist_pages#show"
+  post "artist/:slug/request_approval", to: "artist_pages#request_approval"
 
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"
@@ -51,8 +52,8 @@ Rails.application.routes.draw do
 
   root to: "react#index"
   get "/artists/*path", to: "react#index"
-  get "/artist/*path", to: "react#index"
-  get "/support/*path", to: "react#index"
+  get "/artist/*artist_name", to: "react#artist_page"
+  get "/support/*artist_name", to: "react#artist_page"
   get "/create_post/*path", to: "react#index"
   get "/connect", to: "react#index"
   get "/upload", to: "react#index"

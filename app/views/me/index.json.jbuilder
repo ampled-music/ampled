@@ -36,8 +36,10 @@ json.artistPages @owned&.concat(@supported) do |page|
 end
 json.subscriptions @subscriptions do |subscription|
   json.subscriptionId subscription.id
+  json.artistApproved subscription.artist_page.approved
   json.artistPageId subscription.artist_page.id
   json.artistSlug subscription.artist_page.slug
+  json.artistColor subscription.artist_page.accent_color
   json.name subscription.artist_page.name
   json.image subscription.artist_page.cover_url
   json.last_post_date subscription.artist_page.last_post_date
@@ -47,8 +49,10 @@ end
 json.ownedPages @owned_pages do |page|
   json.role page.role
   json.instrument page.instrument
+  json.approved page.page.approved
   json.artistId page.page.id
   json.artistSlug page.page.slug
+  json.artistColor page.page.accent_color
   json.name page.page.name
   json.image page.page.cover_url
   json.supportersCount page.page.subscriber_count

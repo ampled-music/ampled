@@ -7,6 +7,7 @@ import { openAuthModalAction } from '../../redux/authentication/authentication-m
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { Store } from '../../redux/configure-store';
 import { Helmet } from 'react-helmet';
+import { apiAxios } from '../../api/setup-axios';
 
 import { initialState as artistsInitialState } from '../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../redux/authentication/initial-state';
@@ -75,6 +76,7 @@ class ArtistComponent extends React.Component<Props, any> {
     openWhyModal: false,
     showConfirmationDialog: false,
     successfulSupport: false,
+    requestedApproval: false,
   };
   players: Set<any>;
 
@@ -279,6 +281,33 @@ class ArtistComponent extends React.Component<Props, any> {
     <div className="artistAlertHeader">{message}</div>
   );
 
+  requestApproval = async () => {
+    try {
+      const { data } = await apiAxios({
+        method: 'post',
+        url: `/artist/${this.props.artists.artist.slug}/request_approval.json`,
+        data: {},
+      });
+      if (data.status === 'ok') {
+        this.props.showToast({
+          message: data.message,
+          type: 'success',
+        });
+        this.setState({ requestedApproval: true });
+      } else {
+        this.props.showToast({
+          message: data.message,
+          type: 'error',
+        });
+      }
+    } catch {
+      this.props.showToast({
+        message: 'Sorry, something went wrong.',
+        type: 'error',
+      });
+    }
+  };
+
   render() {
     const {
       artists,
@@ -372,12 +401,19 @@ class ArtistComponent extends React.Component<Props, any> {
             <span>
               Your page is pending a quick approval.
               <br />
-              When you're ready to go,{' '}
-              {/* eslint-disable-next-line react/jsx-no-target-blank */}
-              <a href="mailto:hello@ampled.com" target="_blank">
-                email us
-              </a>{' '}
-              and let us know.
+              {!this.state.requestedApproval && (
+                <span>
+                  When you&apos;re ready to go,{' '}
+                  <a
+                    role="button"
+                    onClick={this.requestApproval}
+                    style={{ textDecoration: 'underline', cursor: 'pointer' }}
+                  >
+                    click here
+                  </a>{' '}
+                  to let us know.
+                </span>
+              )}
             </span>,
           )}
         {artist &&

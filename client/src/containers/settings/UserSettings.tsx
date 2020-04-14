@@ -533,7 +533,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
           'ffffff',
           '202020',
         ),
-        `/`,
+        `/l_text:Arial_60_bold:%20${encodeURI(
+          'ampled.com%2Fartist%2F' + artist.artistSlug,
+        )}%20,co_rgb:ffffff,b_rgb:202020,g_south_east,y_280,x_100/`,
         this.handlePublicID(artist.image),
       ].join(''),
       name: `${cleanArtistName}_Grid.jpg`,
@@ -555,7 +557,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
           'ffffff',
           '202020',
         ),
-        `/`,
+        `/l_text:Arial_65_bold:%20${encodeURI(
+          'ampled.com%2Fartist%2F' + artist.artistSlug,
+        )}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_500/`,
         this.handlePublicID(artist.image),
       ].join(''),
       name: `${cleanArtistName}_Story.jpg`,

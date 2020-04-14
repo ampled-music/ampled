@@ -47,6 +47,8 @@ class ArtistPage < ApplicationRecord
 
   before_save :check_approved
 
+  scope :approved, -> { where(approved: true) }
+
   def sluggy_slug
     return unless slug
 

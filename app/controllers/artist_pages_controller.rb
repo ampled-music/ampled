@@ -92,6 +92,7 @@ class ArtistPagesController < ApplicationController
                    else
                      ArtistPage.find(params[:id])
                    end
+    return render json: {}, status: :not_found if @artist_page.nil?
   end
 
   def set_page_ownership

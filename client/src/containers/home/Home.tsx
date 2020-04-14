@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { Footer } from '../footer/Footer';
 import { HomeArtists } from './HomeArtists';
-import { HomeBrowse } from './HomeBrowse';
+// import { HomeBrowse } from './HomeBrowse';
 import { HomeFor } from './HomeFor';
 import { HomeHeader } from './HomeHeader';
 import { HomeHow } from './HomeHow';
@@ -28,7 +28,7 @@ class Home extends React.Component<any> {
           positionFlip={true}
         />
         <HomeArtists />
-        <HomeBrowse />
+        {/* <HomeBrowse /> */}
         <Footer />
       </div>
     );

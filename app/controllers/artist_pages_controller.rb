@@ -18,7 +18,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def browse
-    @artist_pages = ArtistPage.where(approved: true).page(params[:page]).per(10)
+    @artist_pages = ArtistPage.where(approved: true).page(params[:page]).per(6).shuffle
     respond_to do |format|
       format.html do
         redirect_to "/"

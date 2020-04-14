@@ -1,6 +1,19 @@
 require "rails_helper"
 
 RSpec.describe ArtistPage, type: :model do
+  describe ".approved scope" do
+    let!(:approved_page) { create(:artist_page, approved: true) }
+    let!(:unapproved_page) { create(:artist_page, approved: false) }
+
+    it "returns approved artist pages" do
+      expect(ArtistPage.approved).to eq([approved_page])
+    end
+
+    it "does not return not approved artist pages" do
+      expect(ArtistPage.approved).to_not include(unapproved_page)
+    end
+  end
+
   describe "#monthly_total" do
     context "with active subscriptions" do
       it "returns the montly total" do

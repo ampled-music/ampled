@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   end
 
   get "slug/:slug", to: "artist_pages#show"
+  post "artist/:slug/request_approval", to: "artist_pages#request_approval"
 
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"

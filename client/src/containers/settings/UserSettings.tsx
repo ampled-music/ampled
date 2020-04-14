@@ -312,6 +312,32 @@ class UserSettingsComponent extends React.Component<Props, any> {
       .toLowerCase();
     const promoteSquare = [];
     const promoteStory = [];
+    const promoteFacebook = [];
+
+    // Facebook
+    promoteFacebook.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/c_fill,h_630,w_1200/c_scale,g_south_east,l_social:AmpledLogo,w_200,x_50,y_50/`,
+        this.handleBrokenName(
+          artist.name,
+          'north_west',
+          50,
+          50,
+          60,
+          45,
+          'ffffff',
+          '202020',
+        ),
+        `/`,
+        this.handlePublicID(artist.image),
+      ].join(''),
+      name: `${cleanArtistName}_Facebook.jpg`,
+      description: '',
+    });
+    if (promoteFacebook.length > 0) {
+      console.log(promoteFacebook);
+    }
 
     // Square
     promoteSquare.push({

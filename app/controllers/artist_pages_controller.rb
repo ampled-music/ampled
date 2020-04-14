@@ -29,7 +29,9 @@ class ArtistPagesController < ApplicationController
       format.html do
         redirect_to "/"
       end
-      format.json
+      format.json do
+        render :template => "artist_pages/index"
+      end
     end
   end
 

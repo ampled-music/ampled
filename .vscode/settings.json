@@ -2,6 +2,9 @@
   "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
+  "[html]": {
+    "editor.formatOnSave": false
+  },
   "editor.codeActionsOnSave": {
     "source.fixAll.esLint": true
   },

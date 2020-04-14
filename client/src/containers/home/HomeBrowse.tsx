@@ -8,6 +8,7 @@ class HomeBrowse extends React.Component {
     artists: [],
     loading: true,
     page: 1,
+    seed: Math.random(),
   };
 
   componentDidMount() {
@@ -18,7 +19,7 @@ class HomeBrowse extends React.Component {
     this.setState({ loading: true });
     const { data } = await apiAxios({
       method: 'get',
-      url: `/artists/browse.json?page=${page}`,
+      url: `/artists/browse.json?page=${page}&seed=${this.state.seed}`,
     });
     this.setState({
       loading: false,

@@ -17,6 +17,16 @@ class ArtistPagesController < ApplicationController
     end
   end
 
+  def browse
+    @artist_pages = ArtistPage.where(approved: true).page(params[:page]).per(10)
+    respond_to do |format|
+      format.html do
+        redirect_to "/"
+      end
+      format.json
+    end
+  end
+
   def show
     respond_to do |format|
       format.html do

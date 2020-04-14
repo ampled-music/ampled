@@ -27,6 +27,19 @@ class PostsController < ApplicationController
     end
   end
 
+  def download_post
+    @post = Post.find(params[:postid])
+
+    return render html: "", status: :not_found unless @post.has_audio
+
+    unless PostPolicy.new(current_user, @post).view_details? && @post.allow_download
+      return render html: "", status: :not_found
+    end
+
+    @signer ||= Aws::S3::Presigner.new
+    redirect_to @signer.presigned_url(:get_object, bucket: ENV["S3_BUCKET"], key: @post.audio_file)
+  end
+
   private
 
   def post_params

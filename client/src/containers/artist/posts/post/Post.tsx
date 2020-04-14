@@ -476,6 +476,8 @@ class PostComponent extends React.Component<any, any> {
 
     const allowDetails = post.allow_details;
     const isPrivate = post.is_private;
+    const allowDownload = post.allow_download;
+    const hasAudio = post.has_audio;
     const authenticated = !!me;
 
     const authorFirstName = this.returnFirstName(post.author);
@@ -585,6 +587,16 @@ class PostComponent extends React.Component<any, any> {
                 handlePrivatePostClick={this.handlePrivatePostClick}
                 playerCallback={this.props.playerCallback}
               />
+              {allowDownload && hasAudio && allowDetails && (
+                <div className="download-link">
+                  <a
+                    href={`/artist/${this.props.artistSlug}/post/${post.id}/download`}
+                    download={`${post.title}.mp3`}
+                  >
+                    Download audio
+                  </a>
+                </div>
+              )}
 
               <div className="post__title">{post.title}</div>
 

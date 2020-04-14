@@ -30,7 +30,7 @@ class ArtistPagesController < ApplicationController
         redirect_to "/"
       end
       format.json do
-        render :template => "artist_pages/index"
+        render template: "artist_pages/index"
       end
     end
   end

@@ -7,6 +7,7 @@ interface Post {
   image_url: string;
   artist_page_id: string;
   is_private: boolean;
+  allow_download: boolean;
 }
 
 export const createPost = async (post: Post) => {
@@ -17,6 +18,7 @@ export const createPost = async (post: Post) => {
     image_url,
     artist_page_id,
     is_private,
+    allow_download,
   } = post;
 
   const { data } = await apiAxios({
@@ -33,6 +35,7 @@ export const createPost = async (post: Post) => {
         image_url,
         artist_page_id,
         is_private,
+        allow_download,
       },
     },
   });

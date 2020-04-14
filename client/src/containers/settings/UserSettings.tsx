@@ -324,7 +324,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           'north_west',
           50,
           50,
-          60,
+          55,
           45,
           'ffffff',
           '202020',

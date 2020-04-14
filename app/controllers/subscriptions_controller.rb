@@ -121,8 +121,17 @@ class SubscriptionsController < ApplicationController
     current_artist_page.plan_for_nominal_amount(subscription_params[:amount].to_i)
   end
 
-  def subscribe_stripe
+  def check_customer
+    # if they have a stripe ID but they're sending a token, their old card got unlinked
+    # so they're entering a new card at checkout - update their Customer
+    update_single_customer if current_user.stripe_customer_id.present? && params["token"].present?
+
+    # if they don't have a stripe ID, we need to create a Customer for them
     create_platform_customer if current_user.stripe_customer_id.blank?
+  end
+
+  def subscribe_stripe
+    check_customer
 
     plan = stripe_plan
     token = create_token

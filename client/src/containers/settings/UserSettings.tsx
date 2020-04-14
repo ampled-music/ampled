@@ -278,14 +278,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
         new_font_size = font_size / 1.2;
         new_distance = distance / 1.2;
       }
-      // Instagram 2
-      if (position === 'center' && x === 0 && y === -90) {
+      // Grid 2
+      if (position === 'center' && x === 0 && y === -180) {
         for (let index = 0; index < broken_name.length; index++) {
           y_index = index === 0 ? y_index : y_index - distance / 2;
         }
       }
-      // Social 2
-      if (position === 'north' && x === 0 && y === 560) {
+      // Story 2
+      if (position === 'center' && x === 0 && y === -400) {
         for (let index = 0; index < broken_name.length; index++) {
           y_index = index === 0 ? y_index : y_index - 60;
         }
@@ -310,81 +310,19 @@ class UserSettingsComponent extends React.Component<Props, any> {
     const cleanArtistName = artist.name
       .replace(/[^a-z0-9]/gi, '_')
       .toLowerCase();
-    const promoteImages = [];
-    let n = 0;
+    const promoteSquare = [];
+    const promoteStory = [];
 
-    promoteImages.push({
+    // Square
+    promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
-        `/c_fill,h_800,w_800/bo_3px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,g_south,l_social:AmpledLogo.png,w_200,y_20/`,
-        this.handleBrokenName(
-          artist.name,
-          'north',
-          0,
-          30,
-          40,
-          35,
-          'ffffff',
-          '202020',
-        ),
-        `/`,
-        this.handlePublicID(artist.image),
-      ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
-      description: '',
-    });
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/b_rgb:${color +
-          '33'},c_scale,h_800,w_800/bo_4px_solid_rgb:202020,c_scale,h_700,l_social:blank.png,w_700/c_scale,l_social:AmpledLogo.png,w_300,y_90/`,
-        this.handleBrokenName(
-          artist.name,
-          'center',
-          0,
-          -90,
-          50,
-          45,
-          '202020',
-          null,
-        ),
-        `/l_social:line.png/v1584999718/social/blank.png`,
-      ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
-      description: '',
-    });
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/c_fill,h_800,w_800/bo_3px_solid_rgb:${color},c_scale,h_600,l_social:blank.png,w_600/c_scale,g_south_east,l_social:AmpledLogo.png,w_200,x_120,y_120/`,
+        `/c_fill,h_1500,w_1500/l_social:Grid:Grid1/`,
         this.handleBrokenName(
           artist.name,
           'north_west',
-          120,
-          70,
-          65,
-          55,
-          'ffffff',
-          '202020',
-        ),
-        `/`,
-        this.handlePublicID(artist.image),
-      ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
-      description: '',
-    });
-
-    promoteImages.push({
-      url: [
-        BASE_UPLOAD_URL,
-        `/c_fill,h_1921,w_1081/l_social:SocialRaw_1/`,
-        this.handleBrokenName(
-          artist.name,
-          'north_west',
+          220,
           160,
-          150,
           80,
           65,
           'ffffff',
@@ -393,82 +331,288 @@ class UserSettingsComponent extends React.Component<Props, any> {
         `/`,
         this.handlePublicID(artist.image),
       ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.jpg`,
+      name: `${cleanArtistName}_Grid1.jpg`,
       description: '',
     });
 
-    promoteImages.push({
+    promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
         `/b_rgb:${color + '33'}/`,
         this.handleBrokenName(
           artist.name,
-          'north',
+          'center',
           0,
-          560,
+          -180,
+          100,
+          75,
+          'ffffff',
+          '202020',
+        ),
+        `social/Grid/Grid2.png`,
+      ].join(''),
+      name: `${cleanArtistName}_Grid2.png`,
+      description: '',
+    });
+
+    promoteSquare.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/b_rgb:${color + '33'}/social/Grid/Grid3.png`,
+      ].join(''),
+      name: `${cleanArtistName}_Grid3.png`,
+      description: '',
+    });
+
+    promoteSquare.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/b_rgb:${color + '33'}/social/Grid/Grid4.png`,
+      ].join(''),
+      name: `${cleanArtistName}_Grid4.png`,
+      description: '',
+    });
+
+    promoteSquare.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/b_rgb:${color + '33'}/social/Grid/Grid5.png`,
+      ].join(''),
+      name: `${cleanArtistName}_Grid5.png`,
+      description: '',
+    });
+
+    promoteSquare.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/l_text:Arial_55_bold:%20${encodeURI(
+          'ampled.com%2Fartist%2F' + artist.artistSlug,
+        )}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_380/`,
+        `/b_rgb:${color + '33'}/social/Grid/Grid6.png`,
+      ].join(''),
+      name: `${cleanArtistName}_Grid6.png`,
+      description: '',
+    });
+
+    // Story
+    promoteStory.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/c_fill,h_2666,w_1500/l_social:Story:StoryBlank/`,
+        this.handleBrokenName(
+          artist.name,
+          'north_west',
+          220,
+          160,
           100,
           85,
           'ffffff',
           '202020',
         ),
-        `/v1585784142/social/SocialRaw_2.png`,
+        `/`,
+        this.handlePublicID(artist.image),
       ].join(''),
-      name: `${cleanArtistName}_ promote_${n++}.png`,
+      name: `${cleanArtistName}_StoryBlank.jpg`,
       description: '',
     });
 
-    promoteImages.push({
+    promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_4.png`,
+        `/c_fill,h_2666,w_1500/l_social:Story:Story1/`,
+        this.handleBrokenName(
+          artist.name,
+          'north_west',
+          220,
+          210,
+          100,
+          85,
+          'ffffff',
+          '202020',
+        ),
+        `/`,
+        this.handlePublicID(artist.image),
       ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.png`,
+      name: `${cleanArtistName}_Story1.jpg`,
       description: '',
     });
 
-    promoteImages.push({
+    promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_5.png`,
+        `/b_rgb:${color + '33'}/`,
+        this.handleBrokenName(
+          artist.name,
+          'center',
+          0,
+          -400,
+          120,
+          85,
+          'ffffff',
+          '202020',
+        ),
+        `social/Story/Story2.png`,
       ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.png`,
+      name: `${cleanArtistName}_Story2.png`,
       description: '',
     });
 
-    promoteImages.push({
+    promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_6.png`,
+        `/b_rgb:${color + '33'}/social/Story/Story3.png`,
       ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.png`,
+      name: `${cleanArtistName}_Story3.png`,
       description: '',
     });
 
-    promoteImages.push({
+    promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/v1585784142/social/SocialRaw_7.png`,
+        `/b_rgb:${color + '33'}/social/Story/Story4.png`,
       ].join(''),
-      name: `${cleanArtistName}_promote_${n++}.png`,
+      name: `${cleanArtistName}_Story4.png`,
+      description: '',
+    });
+
+    promoteStory.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/b_rgb:${color + '33'}/social/Story/Story5.png`,
+      ].join(''),
+      name: `${cleanArtistName}_Story5.png`,
+      description: '',
+    });
+
+    promoteStory.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/l_text:Arial_60_bold:%20${encodeURI(
+          'ampled.com%2Fartist%2F' + artist.artistSlug,
+        )}%20,co_rgb:ffffff,b_rgb:202020,g_center,y_100/`,
+        `/b_rgb:${color + '33'}/social/Story/Story6.png`,
+      ].join(''),
+      name: `${cleanArtistName}_Story6.png`,
       description: '',
     });
 
     return (
       <div>
         <div className="details__info_title">Promote Your Page</div>
-        <div className="details__promote_container">
-          {promoteImages.map((promoImage) => (
-            <a
-              key={promoImage.name}
-              className="details__promote_link"
-              href={promoImage.url}
-              download={promoImage.name}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faImage} title={promoImage.name} />
-            </a>
-          ))}
+        <div className="row">
+          <div className="col-6">
+            <div className="details__info_title sm">Square</div>
+            <div className="details__promote_container">
+              {promoteSquare.map((promoImage) => (
+                <a
+                  key={promoImage.name}
+                  className="details__promote_link"
+                  href={promoImage.url}
+                  download={promoImage.name}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FontAwesomeIcon icon={faImage} title={promoImage.name} />
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="details__info_title sm">Stories</div>
+            <div className="details__promote_container">
+              {promoteStory.map((promoImage) => (
+                <a
+                  key={promoImage.name}
+                  className="details__promote_link"
+                  href={promoImage.url}
+                  download={promoImage.name}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FontAwesomeIcon icon={faImage} title={promoImage.name} />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  renderSupporterShareImages = (artist) => {
+    const BASE_UPLOAD_URL =
+      'https://res.cloudinary.com/ampled-web/image/upload';
+    let color = artist.artistColor;
+    color = color.replace('#', '');
+    const cleanArtistName = artist.name
+      .replace(/[^a-z0-9]/gi, '_')
+      .toLowerCase();
+    const supportShare = [];
+
+    // Square
+    supportShare.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/c_fill,h_1500,w_1500/l_social:Supporter:Grid/`,
+        this.handleBrokenName(
+          artist.name,
+          'north_west',
+          220,
+          160,
+          80,
+          65,
+          'ffffff',
+          '202020',
+        ),
+        `/`,
+        this.handlePublicID(artist.image),
+      ].join(''),
+      name: `${cleanArtistName}_Grid.jpg`,
+      description: '',
+    });
+
+    // Story
+    supportShare.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/c_fill,h_2666,w_1500/l_social:Supporter:Story/`,
+        this.handleBrokenName(
+          artist.name,
+          'north_west',
+          220,
+          270,
+          100,
+          85,
+          'ffffff',
+          '202020',
+        ),
+        `/`,
+        this.handlePublicID(artist.image),
+      ].join(''),
+      name: `${cleanArtistName}_Story.jpg`,
+      description: '',
+    });
+
+    return (
+      <div>
+        <div className="details__info_title">Promote This Page</div>
+        <div className="row">
+          <div className="col-12">
+            <div className="details__promote_container">
+              {supportShare.map((promoImage) => (
+                <a
+                  key={promoImage.name}
+                  className="details__promote_link"
+                  href={promoImage.url}
+                  download={promoImage.name}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FontAwesomeIcon icon={faImage} title={promoImage.name} />
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -477,8 +621,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
   handlePromoteImages = (promoteImages) => {
     // Attempt at a single download button
     // This requires cross browser to be enabled for cloudinary.com, which it currently is not.
-    const fileUrls = promoteImages.map((image) => image.url);
-    multiDownload(fileUrls);
+    // const fileUrls = promoteImages.map((image) => image.url);
+    // multiDownload(fileUrls);
   };
 
   renderUserImage = () => {
@@ -814,6 +958,15 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       </div>
                     </div>
                   </div>
+                  {subscription.artistApproved && (
+                    <div className="details__promote">
+                      <div className="row no-gutter">
+                        <div className="col-12">
+                          {this.renderSupporterShareImages(subscription)}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

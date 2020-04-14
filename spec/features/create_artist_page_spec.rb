@@ -19,7 +19,7 @@ RSpec.describe ArtistPagesController, type: :request do
         bio: "About me",
         location: "Testville",
         accent_color: "#aabbcc",
-        images_attributes: images_attributes
+        images: images_attributes
       },
       members: [
         {
@@ -42,7 +42,7 @@ RSpec.describe ArtistPagesController, type: :request do
         bio: "About me",
         location: "Testville",
         accent_color: "#aabbcc",
-        images_attributes: images_attributes
+        images: images_attributes
       },
       members: [
         {
@@ -62,7 +62,7 @@ RSpec.describe ArtistPagesController, type: :request do
       artist_page: {
         slug: "sluggy",
         bio: "About me",
-        images_attributes: images_attributes
+        images: images_attributes
       },
       members: [
         { email: "creator@ampled.com", firstName: "Creator" },
@@ -76,7 +76,7 @@ RSpec.describe ArtistPagesController, type: :request do
       artist_page: {
         bio: "About me",
         video_url: "https://www.youtube.com/watch?v=hHW1oY26kxQ",
-        images_attributes: [{ url: "updated-url", public_id: "updated-public-id" }]
+        images: [{ url: "updated-url", public_id: "updated-public-id" }]
       },
       members: [
         {
@@ -97,7 +97,7 @@ RSpec.describe ArtistPagesController, type: :request do
         bio: "About me",
         slug: "newslug",
         video_url: "https://www.youtube.com/watch?v=hHW1oY26kxQ",
-        images_attributes: images_attributes
+        images: images_attributes
       },
       members: [
         {
@@ -117,7 +117,7 @@ RSpec.describe ArtistPagesController, type: :request do
       artist_page: {
         bio: "About me",
         video_url: "https://vimeo.com/331608175",
-        images_attributes: images_attributes
+        images: images_attributes
       },
       members: [
         {
@@ -178,7 +178,7 @@ RSpec.describe ArtistPagesController, type: :request do
 
       it "rejects the request if no images are provided" do
         missing_images_params = create_params.dup
-        missing_images_params[:artist_page].delete(:images_attributes)
+        missing_images_params[:artist_page].delete(:images)
         post url, params: missing_images_params
         body = JSON.parse(response.body)
         expect(body["status"]).to eq("error")
@@ -253,7 +253,7 @@ RSpec.describe ArtistPagesController, type: :request do
 
     it "doesn't delete old images if new ones are not provided" do
       update_params_without_images = update_params.dup
-      update_params_without_images[:artist_page].delete(:images_attributes)
+      update_params_without_images[:artist_page].delete(:images)
       expect {
         put "/artist_pages/#{artist_page.id}", params: update_params_without_images
       }.to_not change(Image, :count)

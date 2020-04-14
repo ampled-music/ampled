@@ -14,7 +14,8 @@ class StripeController < ApplicationController
     # File.open('other_stripe_account_stub.json','w'){ |f| f.write(stripe_account.to_json) }
     ap = ArtistPage.find_by(state_token: params[:state])
     # BA - Delete an artists state token after it's used?
-    ap.update(stripe_user_id: stripe_account["stripe_user_id"])
+    # SA - done 2020/04/13
+    ap.update(stripe_user_id: stripe_account["stripe_user_id"], state_token: nil)
     redirect_to "/settings?stripesuccess=true"
   end
 

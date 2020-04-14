@@ -30,7 +30,7 @@ class PostsController < ApplicationController
 
   def index
     @expand_artist = true
-    @posts = Post.order("created_at DESC").page(params[:page])
+    @posts = Post.order("created_at DESC").page(params[:page]).per(30)
   end
 
   def is_admin

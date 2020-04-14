@@ -159,8 +159,13 @@ class ArtistPagesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def artist_page_params
+    if params[:artist_page]&.include?(:images)
+      # Let frontend use 'images' as parameter name, which is more natural. We change it here
+      # to be the images_attributes that ActiveRecord's nested attributes expect.
+      params[:artist_page][:images_attributes] = params[:artist_page][:images]
+    end
     params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :banner_image_url,
-                                        :slug, :location, :accent_color, :video_url, :verb_plural, :images,
+                                        :slug, :location, :accent_color, :video_url, :verb_plural,
                                         :members, images_attributes: Image::PERMITTED_PARAMS)
   end
 

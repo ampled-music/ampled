@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_04_17_211219) do
+=======
+ActiveRecord::Schema.define(version: 2020_04_13_230338) do
+>>>>>>> Add migration to set a public_id based on existing URLs (only if public_id is missing).
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"

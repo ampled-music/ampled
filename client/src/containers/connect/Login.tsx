@@ -188,21 +188,20 @@ class LoginComponent extends React.Component<Props, any> {
               </button>
             </label>
           )}
-          {process.env.NODE_ENV === 'development' &&
-            !this.state.showConfirmationResend && (
-              <label>
-                Don&apos;t have an account?{' '}
-                <button
-                  className="link"
-                  onClick={() =>
-                    this.props.openAuthModal({ modalPage: 'signup' })
-                  }
-                >
-                  <u>Sign up</u>
-                </button>
-                .
-              </label>
-            )}
+          {!this.state.showConfirmationResend && (
+            <label>
+              Don&apos;t have an account?{' '}
+              <button
+                className="link"
+                onClick={() =>
+                  this.props.openAuthModal({ modalPage: 'signup' })
+                }
+              >
+                <u>Sign up</u>
+              </button>
+              .
+            </label>
+          )}
         </div>
       </div>
     );

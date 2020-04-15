@@ -44,16 +44,25 @@ class PostsController < ApplicationController
 
   private
 
+  def rename_images_params
+    return unless params[:post]&.include?(:images)
+
+    # Let frontend use 'images' as parameter name, which is more natural. We change it here
+    # to be the images_attributes that ActiveRecord's nested attributes expect.
+    params[:post][:images_attributes] = params[:post][:images]
+  end
+
   def post_params
+    rename_images_params
     params.require(:post).permit(
       :title,
       :body,
       :artist_page_id,
-      :image_url,
       :audio_file,
       :is_private,
       :allow_download,
-      :video_embed_url
+      :video_embed_url,
+      images_attributes: Image::PERMITTED_PARAMS
     ).merge(user_id: current_user&.id)
   end
 
@@ -62,14 +71,15 @@ class PostsController < ApplicationController
   end
 
   def post_update_params
+    rename_images_params
     params.require(:post).permit(
       :title,
       :body,
-      :image_url,
       :audio_file,
       :is_private,
       :allow_download,
-      :video_embed_url
+      :video_embed_url,
+      images_attributes: Image::PERMITTED_PARAMS
     )
   end
 end

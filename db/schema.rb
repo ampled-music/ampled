@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_04_17_211219) do
-=======
-ActiveRecord::Schema.define(version: 2020_04_13_230338) do
->>>>>>> Add migration to set a public_id based on existing URLs (only if public_id is missing).
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -88,7 +84,6 @@ ActiveRecord::Schema.define(version: 2020_04_13_230338) do
     t.datetime "updated_at", null: false
     t.string "title"
     t.text "body"
-    t.string "image_url"
     t.string "audio_file"
     t.boolean "is_private", default: false
     t.boolean "allow_download", default: false

@@ -14,6 +14,15 @@
 #  updated_at      :datetime         not null
 #  user_id         :bigint(8)
 #  video_embed_url :string
+#  artist_page_id :bigint(8)
+#  audio_file     :string
+#  body           :text
+#  created_at     :datetime         not null
+#  id             :bigint(8)        not null, primary key
+#  is_private     :boolean          default(FALSE)
+#  title          :string
+#  updated_at     :datetime         not null
+#  user_id        :bigint(8)
 #
 # Indexes
 #
@@ -31,6 +40,10 @@ class Post < ApplicationRecord
   belongs_to :user
 
   has_many :comments, dependent: :destroy
+
+  has_many :images, as: :imageable, dependent: :destroy
+
+  accepts_nested_attributes_for :images
 
   # has_attached_file :audio_file
   # validates_attachment_content_type :audio_file, content_type: /\Aaudio\/.*\z/

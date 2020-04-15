@@ -8,7 +8,7 @@ json.created_ago time_ago_in_words(post.created_at)
 json.comments post.comments, partial: "comments/comment", as: :comment
 json.is_private post.is_private
 json.has_audio post.has_audio
-json.image_url post.image_url
+json.images post.images, partial: "images/image", as: :image
 if PostPolicy.new(current_user, post).view_details?
   json.body post.body
   json.allow_details true

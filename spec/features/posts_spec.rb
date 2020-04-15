@@ -121,7 +121,8 @@ RSpec.describe "POST /posts", type: :request do
       post: {
         artist_page_id: artist_page.id,
         title: "test",
-        body: "test test"
+        body: "test test",
+        images: [{ url: "url1", public_id: "public_id1" }]
       }
     }
   end
@@ -168,6 +169,14 @@ RSpec.describe "POST /posts", type: :request do
       get "/artist_pages/#{artist_page.id}.json"
       expect(JSON.parse(response.body)["posts"][0]["title"]).to eq("test")
       expect(JSON.parse(response.body)["posts"][0]["author"]).to eq(owner_user.name)
+    end
+
+    it "the post appears in the page with correct image data" do
+      get "/artist_pages/#{artist_page.id}.json"
+      image = JSON.parse(response.body)["posts"].first["images"].first
+      expect(image).to include("id")
+      expect(image["url"]).to eq("url1")
+      expect(image["public_id"]).to eq("public_id1")
     end
   end
 end

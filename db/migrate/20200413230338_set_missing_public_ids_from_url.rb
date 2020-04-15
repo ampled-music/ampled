@@ -1,7 +1,7 @@
 class SetMissingPublicIdsFromUrl < ActiveRecord::Migration[5.2]
   def up
     Image.all.each { |image| set_public_id(image) }
-  en
+  end
 
   def down
     # Do nothing. We don't want to delete any public ids, since we don't know which

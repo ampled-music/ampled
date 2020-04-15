@@ -353,9 +353,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
       name: `${cleanArtistName}_Facebook.jpg`,
       description: '',
     });
-    if (promoteFacebook.length > 0) {
-      console.log(promoteFacebook);
-    }
+    // if (promoteFacebook.length > 0) {
+    //   console.log(promoteFacebook);
+    // }
 
     // Square
     promoteSquare.push({

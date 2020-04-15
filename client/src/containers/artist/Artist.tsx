@@ -229,7 +229,7 @@ class ArtistComponent extends React.Component<Props, any> {
   lightOrDark = (color) => {
     // Variables for red, green, blue values
     let r, g, b;
-    console.log(color);
+
     if (color) {
       // Check the format of the color, HEX or RGB?
       if (color.match(/^rgb/)) {
@@ -262,6 +262,20 @@ class ArtistComponent extends React.Component<Props, any> {
         return '#1E1E1E';
       } else {
         return '#ffffff';
+      }
+    }
+  };
+
+  hexToRGB = (hex, alpha) => {
+    if (hex) {
+      const r = parseInt(hex.slice(1, 3), 16),
+        g = parseInt(hex.slice(3, 5), 16),
+        b = parseInt(hex.slice(5, 7), 16);
+
+      if (alpha) {
+        return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+      } else {
+        return 'rgb(' + r + ', ' + g + ', ' + b + ')';
       }
     }
   };
@@ -385,6 +399,15 @@ class ArtistComponent extends React.Component<Props, any> {
               }
               .supporter__hover-card_bands_name a:hover {
                 color: ${artist.accent_color};
+              }
+              .audio-player__play-pause button,
+              .artist-header__message_container button {
+                background-color: ${this.hexToRGB(artist.accent_color, '.5')};
+                color: ${this.lightOrDark(artist.accent_color)};
+              }
+              .audio-player__play-pause button:hover,
+              .artist-header__message_container button:hover {
+                background-color: ${this.hexToRGB(artist.accent_color, '.7')};
               }
               ${isSupporter &&
                 `

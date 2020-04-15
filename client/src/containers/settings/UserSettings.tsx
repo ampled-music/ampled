@@ -158,6 +158,24 @@ class UserSettingsComponent extends React.Component<Props, any> {
     });
   };
 
+  adjustedBackgroundColor = (accentColor: string, opacity = 0.2) => {
+    // @accentColor: RGB eg 'aabbcc' *NOT* RGBA
+    // @opacity: float e.g. 0.2 for 20%
+    // e.g. adjustedBackgroundColor('aabbcc', 0.2); => 'f8f2ee'
+    if (accentColor.charAt(0) === '#') {
+      accentColor = accentColor.substr(1, 6);
+    }
+    const adjustedChannel = (hex) =>
+      (Math.round(parseInt(hex, 16) * opacity) + (1 - opacity) * 255).toString(
+        16,
+      );
+    const r = adjustedChannel(accentColor.substr(0, 2));
+    const g = adjustedChannel(accentColor.substr(2, 2));
+    const b = adjustedChannel(accentColor.substr(4, 2));
+
+    return `${r}${g}${b}`;
+  };
+
   openCancelModal = (event, subscription) => {
     event.preventDefault();
 

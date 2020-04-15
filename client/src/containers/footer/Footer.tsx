@@ -51,7 +51,7 @@ class Footer extends React.Component<Props, any> {
               <div className="title">Get Involved</div>
               <a href={config.menuUrls.createArtist}>Create Artist Page</a>
               <a href="https://app.ampled.com/membership">Become a Member</a>
-              <a href="https://app.ampled.com/jobs">Jobs</a>
+              <a href="https://app.ampled.com/contribute">Jobs</a>
               <a href="https://app.ampled.com/press">Press</a>
               <a href="https://app.ampled.com/members">
                 Members Only{' '}

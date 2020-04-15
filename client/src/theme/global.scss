@@ -188,6 +188,10 @@ h6 {
     font-family: $font-family-monospace;
     padding: 10px 0;
     font-size: 0.9rem;
+    background: transparent !important;
+    &:hover {
+      background: transparent !important;
+    }
   }
 }
 

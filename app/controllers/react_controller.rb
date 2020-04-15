@@ -9,7 +9,7 @@ class ReactController < ActionController::Base
 
     response_html = render_to_string file: "public/index.html", layout: false
 
-    image = artist_page.images.first
+    social_image = CloudinaryImageHelper.facebook_share_image(artist_page)
 
     # replace title tag and title metas
     response_html.gsub!(/Ampled\s\|\s/, "#{artist_page.name} | Ampled | ")
@@ -21,7 +21,11 @@ class ReactController < ActionController::Base
     additional_meta = "\n<meta name=\"twitter:card\" content=\"summary_large_image\" /> \
     \n<meta name=\"og:description\" content=\"#{artist_page.bio}\" />"
     # add image if one exists
-    additional_meta += "\n<meta property=\"og:image\" content=\"#{image.url}\" />" unless image.nil?
+    unless social_image.nil?
+      additional_meta += "\n<meta property=\"og:image\" content=\"#{social_image}\" />"
+      additional_meta += "\n<meta property=\"og:image:width\" content=\"1200\" />"
+      additional_meta += "\n<meta property=\"og:image:height\" content=\"630\" />"
+    end
     # add twitter handle if one exists
     if artist_page.twitter_handle.present?
       additional_meta += "\n<meta property=\"twitter:creator\" content=\"@#{artist_page.twitter_handle}\" />"

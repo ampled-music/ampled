@@ -52,6 +52,11 @@ const LazyCreateArtist = React.lazy(() =>
     default: module.CreateArtist,
   })),
 );
+const LazyBrowse = React.lazy(() =>
+  import('./home/HomeBrowse').then((module) => ({
+    default: module.HomeBrowse,
+  })),
+);
 
 const Routes = () => {
   return (
@@ -90,6 +95,7 @@ const Routes = () => {
         component={LazyForgotPassword}
       />
       <PublicRoute exact path={routePaths.noArtist} component={LazyNoArtist} />
+      <PublicRoute exact path={routePaths.browse} component={LazyBrowse} />
       <ProtectedRoute
         exact
         modalPage="signup"

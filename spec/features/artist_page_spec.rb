@@ -27,6 +27,45 @@ RSpec.describe ArtistPagesController, type: :request do
     end
   end
 
+  context "when loading browse artist pages with a random seed" do
+    let!(:approved_page_one) { create(:artist_page, approved: true) }
+    let!(:approved_page_two) { create(:artist_page, approved: true) }
+
+    let(:url) { "/artists/browse.json?seed=0.237894" }
+    let(:url_page_two) { "/artists/browse.json?seed=0.237894&page=2" }
+
+    let(:image) { "https://res.cloudinary.com/ampled-web/image/upload/b_rgb:ddbdac33/social/Story/Story5.png" }
+
+    before do
+      approved_page_one.images.create(url: image)
+      approved_page_two.images.create(url: image)
+    end
+
+    before(:each) do
+      get url
+    end
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+
+    it "responds with a JSON array" do
+      expect(JSON.parse(response.body)).to be_a(Array)
+    end
+
+    it "responds consistently given the same seed" do
+      response_one = JSON.parse(response.body)
+      get url
+      expect(JSON.parse(response.body)).to eq response_one
+    end
+
+    it "distinguishes pages correctly" do
+      response_one = JSON.parse(response.body)
+      get url_page_two
+      expect(JSON.parse(response.body)).to_not eq response_one
+    end
+  end
+
   context "when loading approved artist_page data" do
     let(:url) { "/artist_pages/#{artist_page.id}.json" }
     let(:slugurl) { "/slug/#{artist_page.slug}.json" }

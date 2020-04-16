@@ -1132,6 +1132,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   jwt
+  kaminari
   launchy
   listen
   paperclip (~> 6.0.0)

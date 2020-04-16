@@ -28,8 +28,19 @@ RSpec.describe ArtistPagesController, type: :request do
   end
 
   context "when loading browse artist pages with a random seed" do
+    let!(:approved_page_one) { create(:artist_page, approved: true) }
+    let!(:approved_page_two) { create(:artist_page, approved: true) }
+
     let(:url) { "/artists/browse.json?seed=0.237894" }
     let(:url_page_two) { "/artists/browse.json?seed=0.237894&page=2" }
+
+    let(:image) { "https://res.cloudinary.com/ampled-web/image/upload/b_rgb:ddbdac33/social/Story/Story5.png" }
+
+    before do
+      approved_page_one.images.create(url: image)
+      approved_page_two.images.create(url: image)
+    end
+
     before(:each) do
       get url
     end

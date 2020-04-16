@@ -8,6 +8,7 @@ class HomeBrowse extends React.Component {
   state = {
     artists: [],
     loading: true,
+    canLoadMore: true,
     page: 1,
     seed: Math.random(),
   };
@@ -17,13 +18,18 @@ class HomeBrowse extends React.Component {
   }
 
   loadData = async (page) => {
+    let { canLoadMore } = this.state;
     this.setState({ loading: true });
     const { data } = await apiAxios({
       method: 'get',
       url: `/artists/browse.json?page=${page}&seed=${this.state.seed}`,
     });
+    if (data.length < 6) {
+      canLoadMore = false;
+    }
     this.setState({
       loading: false,
+      canLoadMore,
       artists: [...this.state.artists, ...data],
       page,
     });
@@ -41,8 +47,7 @@ class HomeBrowse extends React.Component {
   };
 
   render() {
-    const { artists, loading } = this.state;
-    const canLoadMore = artists.length % 6 === 0;
+    const { artists, loading, canLoadMore } = this.state;
 
     const loadMore = (
       <a

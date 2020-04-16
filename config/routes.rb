@@ -38,6 +38,7 @@ Rails.application.routes.draw do
 
   get "slug/:slug", to: "artist_pages#show"
   post "artist/:slug/request_approval", to: "artist_pages#request_approval"
+  get "artists/browse", to: "artist_pages#browse"
 
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"
@@ -59,6 +60,7 @@ Rails.application.routes.draw do
   get "/upload", to: "react#index"
   get "/settings", to: "react#index"
   get "/user-details", to: "react#index"
+  get "/browse", to: "react#index"
 
   get "/no_artist", to: "react#render_404"
   get "/*path", to: "react#render_404"

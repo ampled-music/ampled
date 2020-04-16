@@ -27,35 +27,31 @@ RSpec.describe ArtistPagesController, type: :request do
     end
   end
 
-  context "when loading browse artist pages with no seed" do
-    let(:url) { "/artists/browse.json" }
-
-    it "returns 200" do
-      get url
-
-      expect(response.status).to eq 200
-    end
-
-    it "responds with a JSON array" do
-      get url
-
-      expect(JSON.parse(response.body)).to be_a(Array)
-    end
-  end
-
   context "when loading browse artist pages with a random seed" do
     let(:url) { "/artists/browse.json?seed=0.237894" }
+    let(:url_page_two) { "/artists/browse.json?seed=0.237894&page=2" }
+    before(:each) do
+      get url
+    end
 
     it "returns 200" do
-      get url
-
       expect(response.status).to eq 200
     end
 
     it "responds with a JSON array" do
-      get url
-
       expect(JSON.parse(response.body)).to be_a(Array)
+    end
+
+    it "responds consistently given the same seed" do
+      response_one = JSON.parse(response.body)
+      get url
+      expect(JSON.parse(response.body)).to eq response_one
+    end
+
+    it "distinguishes pages correctly" do
+      response_one = JSON.parse(response.body)
+      get url_page_two
+      expect(JSON.parse(response.body)).to_not eq response_one
     end
   end
 

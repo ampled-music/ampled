@@ -6,7 +6,7 @@ RSpec.describe ArtistPage, type: :model do
     let!(:unapproved_page) { create(:artist_page, approved: false) }
 
     it "returns approved artist pages" do
-      expect(ArtistPage.approved).to eq([approved_page])
+      expect(ArtistPage.approved).to include(approved_page)
     end
 
     it "does not return not approved artist pages" do

@@ -21,18 +21,10 @@ class ArtistPagesController < ApplicationController
     if params.has_key?(:seed)
       seed = params[:seed].to_f
       ArtistPage.connection.execute "SELECT setseed(#{seed})"
-      @artist_pages = ArtistPage.approved.order("random()").page(params[:page]).per(6).shuffle
-    else
-      @artist_pages = ArtistPage.approved.page(params[:page]).per(6).shuffle
+      @artist_pages = ArtistPage.approved.order("random()").page(params[:page]).per(6)
     end
-    respond_to do |format|
-      format.html do
-        redirect_to "/"
-      end
-      format.json do
-        render template: "artist_pages/index"
-      end
-    end
+
+    render template: "artist_pages/index"
   end
 
   def show

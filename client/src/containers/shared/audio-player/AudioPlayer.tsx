@@ -146,14 +146,14 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     } = this.state;
     const PlayButton = withStyles({
       root: {
-        color: '#fff',
+        color: 'inherit',
         width: this.props.image ? '70px' : '40px',
         height: this.props.image ? '70px' : '40px',
         zIndex: 10,
         marginTop: this.props.image ? '0' : '5px',
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        backgroundColor: 'inherit',
         '&:hover': {
-          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+          backgroundColor: 'inherit',
         },
       },
     })(IconButton);

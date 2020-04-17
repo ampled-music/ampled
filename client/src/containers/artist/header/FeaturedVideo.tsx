@@ -1,10 +1,13 @@
 import './artist-header.scss';
 
 import * as React from 'react';
+import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core/';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import tear from '../../../images/paper_header.png';
+
+import { theme } from './theme';
 
 interface Props {
   artist: any;
@@ -15,14 +18,24 @@ export class FeaturedVideo extends React.Component<Props, any> {
   renderVideoContainer = () => {
     const { artist } = this.props;
 
+    const PlayButton = withStyles({
+      root: {
+        color: 'inherit',
+        backgroundColor: 'inherit',
+        '&:hover': {
+          backgroundColor: 'inherit',
+        },
+      },
+    })(IconButton);
+
     if (artist.video_url) {
       return (
-        <div>
+        <MuiThemeProvider theme={theme}>
           <div
             className="artist-header__message_container"
             style={{ borderColor: artist.accent_color }}
           >
-            <IconButton
+            <PlayButton
               onClick={this.props.openVideoModal}
               className="artist-header__play"
               aria-label="Play video message"
@@ -31,7 +44,7 @@ export class FeaturedVideo extends React.Component<Props, any> {
                 className="artist-header__play_svg"
                 icon={faPlay}
               />
-            </IconButton>
+            </PlayButton>
             <div className="artist-header__message_video">
               <img className="artist-header__message_tear" src={tear} alt="" />
               <div className="artist-header__message_image_container">
@@ -43,7 +56,7 @@ export class FeaturedVideo extends React.Component<Props, any> {
               </div>
             </div>
           </div>
-        </div>
+        </MuiThemeProvider>
       );
     }
   };

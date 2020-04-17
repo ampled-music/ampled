@@ -158,6 +158,24 @@ class UserSettingsComponent extends React.Component<Props, any> {
     });
   };
 
+  adjustedBackgroundColor = (accentColor: string, opacity = 0.2) => {
+    // @accentColor: RGB eg 'aabbcc' *NOT* RGBA
+    // @opacity: float e.g. 0.2 for 20%
+    // e.g. adjustedBackgroundColor('aabbcc', 0.2); => 'f8f2ee'
+    if (accentColor.charAt(0) === '#') {
+      accentColor = accentColor.substr(1, 6);
+    }
+    const adjustedChannel = (hex) =>
+      (Math.round(parseInt(hex, 16) * opacity) + (1 - opacity) * 255).toString(
+        16,
+      );
+    const r = adjustedChannel(accentColor.substr(0, 2));
+    const g = adjustedChannel(accentColor.substr(2, 2));
+    const b = adjustedChannel(accentColor.substr(4, 2));
+
+    return `${r}${g}${b}`;
+  };
+
   openCancelModal = (event, subscription) => {
     event.preventDefault();
 
@@ -312,6 +330,32 @@ class UserSettingsComponent extends React.Component<Props, any> {
       .toLowerCase();
     const promoteSquare = [];
     const promoteStory = [];
+    const promoteFacebook = [];
+
+    // Facebook
+    promoteFacebook.push({
+      url: [
+        BASE_UPLOAD_URL,
+        `/c_fill,h_630,w_1200/c_scale,g_south_east,l_social:AmpledLogo,w_200,x_50,y_50/`,
+        this.handleBrokenName(
+          artist.name,
+          'north_west',
+          50,
+          50,
+          55,
+          45,
+          'ffffff',
+          '202020',
+        ),
+        `/`,
+        this.handlePublicID(artist.image),
+      ].join(''),
+      name: `${cleanArtistName}_Facebook.jpg`,
+      description: '',
+    });
+    // if (promoteFacebook.length > 0) {
+    //   console.log(promoteFacebook);
+    // }
 
     // Square
     promoteSquare.push({
@@ -564,7 +608,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
           'ffffff',
           '202020',
         ),
-        `/`,
+        `/l_text:Arial_60_bold:%20${encodeURI(
+          'ampled.com%2Fartist%2F' + artist.artistSlug,
+        )}%20,co_rgb:ffffff,b_rgb:202020,g_south_east,y_280,x_100/`,
         this.handlePublicID(artist.image),
       ].join(''),
       name: `${cleanArtistName}_Grid.jpg`,
@@ -586,7 +632,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
           'ffffff',
           '202020',
         ),
-        `/`,
+        `/l_text:Arial_65_bold:%20${encodeURI(
+          'ampled.com%2Fartist%2F' + artist.artistSlug,
+        )}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_500/`,
         this.handlePublicID(artist.image),
       ].join(''),
       name: `${cleanArtistName}_Story.jpg`,

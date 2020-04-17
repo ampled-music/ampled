@@ -27,6 +27,7 @@ class Home extends React.Component<any> {
           positionFlip={true}
         />
         <HomeArtists />
+        {/* <HomeBrowse /> */}
         <Footer />
       </div>
     );

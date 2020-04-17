@@ -244,7 +244,7 @@ RSpec.describe "Download posts", :vcr, type: :request do
 
     context "downloading a public downloadable post" do
       before { get "/artist/#{artist_page.slug}/post/#{public_download_post.id}/download" }
-      it "returns 200" do
+      it "returns 302" do
         expect(response.status).to eq 302
       end
     end
@@ -285,14 +285,14 @@ RSpec.describe "Download posts", :vcr, type: :request do
 
     context "downloading a public downloadable post" do
       before { get "/artist/#{artist_page.slug}/post/#{public_download_post.id}/download" }
-      it "returns 200" do
+      it "returns 302" do
         expect(response.status).to eq 302
       end
     end
 
     context "downloading a private downloadable post" do
       before { get "/artist/#{artist_page.slug}/post/#{private_download_post.id}/download" }
-      it "returns 200" do
+      it "returns 302" do
         expect(response.status).to eq 302
       end
     end

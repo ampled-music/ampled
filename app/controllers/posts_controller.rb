@@ -37,7 +37,9 @@ class PostsController < ApplicationController
     end
 
     @signer ||= Aws::S3::Presigner.new
-    redirect_to @signer.presigned_url(:get_object, bucket: ENV["S3_BUCKET"], key: @post.audio_file)
+    redirect_to @signer.presigned_url(:get_object, bucket: ENV["S3_BUCKET"],
+                                      key: @post.audio_file,
+                                      response_content_disposition: "attachment; filename=\"#{@post.title}.mp3\"")
   end
 
   private

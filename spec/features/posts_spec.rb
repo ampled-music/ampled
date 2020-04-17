@@ -171,3 +171,144 @@ RSpec.describe "POST /posts", type: :request do
     end
   end
 end
+
+RSpec.describe "Download posts", :vcr, type: :request do
+  let(:supporter_user) do
+    create(:user, stripe_customer_id: "cus_FfMNyx9ktbGwnx", confirmed_at: Time.current, email: "user@ampled.com")
+  end
+  let(:public_user) { create(:user) }
+  let(:artist_page) { create(:artist_page, approved: true, slug: "test") }
+  let(:public_download_post) do
+    create(:post, artist_page_id: artist_page.id, title: "test",
+           body: "test test", allow_download: true,
+           audio_file: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.")
+  end
+  let(:private_download_post) do
+    create(:post, artist_page_id: artist_page.id, title: "test",
+           body: "test test", allow_download: true, is_private: true,
+           audio_file: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.")
+  end
+  let(:public_no_download_post) do
+    create(:post, artist_page_id: artist_page.id, title: "test",
+           body: "test test", allow_download: false,
+           audio_file: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.")
+  end
+  let(:public_no_audio_post) do
+    create(:post, artist_page_id: artist_page.id, title: "test",
+           body: "test test", allow_download: true, is_private: true)
+  end
+  let(:create_sub_url) { "/subscriptions/" }
+
+  let(:create_sub_params) do
+    {
+      artist_page_id: artist_page.id,
+      amount: 10_000
+    }
+  end
+  let(:existing_stripe_auth) { JSON.parse(File.read("stripe_account_stub.json")) }
+
+  context "when user is unauthenticated" do
+    context "downloading a public downloadable post" do
+      before { get "/artist/#{artist_page.slug}/post/#{public_download_post.id}/download" }
+      it "returns 302" do
+        expect(response.status).to eq 302
+      end
+    end
+
+    context "downloading a private downloadable post" do
+      before { get "/artist/#{artist_page.slug}/post/#{private_download_post.id}/download" }
+      it "returns 404" do
+        expect(response.status).to eq 404
+      end
+    end
+
+    context "downloading a public undownloadable post" do
+      before { get "/artist/#{artist_page.slug}/post/#{public_no_download_post.id}/download" }
+      it "returns 404" do
+        expect(response.status).to eq 404
+      end
+    end
+
+    context "downloading a public downloadable post with no audio" do
+      before { get "/artist/#{artist_page.slug}/post/#{public_no_audio_post.id}/download" }
+      it "returns 404" do
+        expect(response.status).to eq 404
+      end
+    end
+  end
+
+  context "when user is authenticated but doesn't support" do
+    before(:each) do
+      sign_in public_user
+    end
+
+    context "downloading a public downloadable post" do
+      before { get "/artist/#{artist_page.slug}/post/#{public_download_post.id}/download" }
+      it "returns 200" do
+        expect(response.status).to eq 302
+      end
+    end
+
+    context "downloading a private downloadable post" do
+      before { get "/artist/#{artist_page.slug}/post/#{private_download_post.id}/download" }
+      it "returns 404" do
+        expect(response.status).to eq 404
+      end
+    end
+
+    context "downloading a public undownloadable post" do
+      before { get "/artist/#{artist_page.slug}/post/#{public_no_download_post.id}/download" }
+      it "returns 404" do
+        expect(response.status).to eq 404
+      end
+    end
+
+    context "downloading a public downloadable post with no audio" do
+      before { get "/artist/#{artist_page.slug}/post/#{public_no_audio_post.id}/download" }
+      it "returns 404" do
+        expect(response.status).to eq 404
+      end
+    end
+  end
+
+  context "when user is a supporter" do
+    before do
+      artist_page.update(stripe_user_id: existing_stripe_auth["stripe_user_id"])
+      sign_in supporter_user
+      # This seems to work to get a subscription going.
+      post create_sub_url, params: create_sub_params
+    end
+
+    before(:each) do
+      sign_in supporter_user
+    end
+
+    context "downloading a public downloadable post" do
+      before { get "/artist/#{artist_page.slug}/post/#{public_download_post.id}/download" }
+      it "returns 200" do
+        expect(response.status).to eq 302
+      end
+    end
+
+    context "downloading a private downloadable post" do
+      before { get "/artist/#{artist_page.slug}/post/#{private_download_post.id}/download" }
+      it "returns 200" do
+        expect(response.status).to eq 302
+      end
+    end
+
+    context "downloading a public undownloadable post" do
+      before { get "/artist/#{artist_page.slug}/post/#{public_no_download_post.id}/download" }
+      it "returns 404" do
+        expect(response.status).to eq 404
+      end
+    end
+
+    context "downloading a public downloadable post with no audio" do
+      before { get "/artist/#{artist_page.slug}/post/#{public_no_audio_post.id}/download" }
+      it "returns 404" do
+        expect(response.status).to eq 404
+      end
+    end
+  end
+end

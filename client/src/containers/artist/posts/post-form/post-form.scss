@@ -33,6 +33,13 @@
 
   &__image {
     min-height: 40px;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+
+    .uploader {
+      margin: 0 0 1rem !important;
+    }
 
     .post-image {
       display: flex;

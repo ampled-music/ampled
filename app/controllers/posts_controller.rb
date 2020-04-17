@@ -52,7 +52,8 @@ class PostsController < ApplicationController
       :image_url,
       :audio_file,
       :is_private,
-      :allow_download
+      :allow_download,
+      :video_embed_url
     ).merge(user_id: current_user&.id)
   end
 
@@ -67,7 +68,8 @@ class PostsController < ApplicationController
       :image_url,
       :audio_file,
       :is_private,
-      :allow_download
+      :allow_download,
+      :video_embed_url
     )
   end
 end

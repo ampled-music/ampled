@@ -1,5 +1,5 @@
-@import "../../../../theme/vars.scss";
-@import "../../../../theme/mixins.scss";
+@import '../../../../theme/vars.scss';
+@import '../../../../theme/mixins.scss';
 
 .post-form {
   display: flex;
@@ -25,9 +25,9 @@
     font-weight: bold;
     margin-bottom: 1rem;
 
-    input[type="checkbox"] {
+    input[type='checkbox'] {
       width: 15px;
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
   }
 
@@ -41,7 +41,7 @@
       margin-bottom: 1rem;
 
       .preview {
-        font-size: .8rem;
+        font-size: 0.8rem;
 
         &__image {
           width: 40px;
@@ -54,7 +54,7 @@
   .file-actions {
     font-family: $font-family-monospace;
     color: $brand-primary;
-    font-size: .8rem;
+    font-size: 0.8rem;
     display: flex;
     align-content: center;
 
@@ -62,7 +62,7 @@
       display: none;
     }
 
-    &[data-progress="100"] {
+    &[data-progress='100'] {
       display: inherit;
     }
 
@@ -117,7 +117,7 @@
         display: none;
       }
 
-      &[data-progress="100"] {
+      &[data-progress='100'] {
         display: flex;
       }
 
@@ -142,10 +142,10 @@
       }
     }
 
-    .progress-bar[aria-valuenow="100"],
-    .progress-info__progress[data-progress="100"],
-    .progress-bar__upload[data-progress="100"],
-    .progress-bar__progress[data-progress="100"] {
+    .progress-bar[aria-valuenow='100'],
+    .progress-info__progress[data-progress='100'],
+    .progress-bar__upload[data-progress='100'],
+    .progress-bar__progress[data-progress='100'] {
       display: none;
     }
 
@@ -157,18 +157,18 @@
 
     .progress-bar__upload {
       font-family: $font-family-monospace;
-      font-size: .8rem;
+      font-size: 0.8rem;
       text-align: left;
     }
 
     .progress-bar__progress {
       position: absolute;
       left: -0px;
-      transition: width .4s linear;
+      transition: width 0.4s linear;
 
       span {
         position: absolute;
-        font-size: .8rem;
+        font-size: 0.8rem;
         background-color: $white;
         border-radius: 3px;
         padding: 2px 3px;
@@ -253,7 +253,7 @@
       border-radius: 0px;
       text-transform: capitalize;
       margin: 0 auto;
-      padding: 0 15px;
+      padding: 15px 0;
       outline: none;
 
       &:hover {

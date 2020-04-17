@@ -2,6 +2,7 @@
 #
 # Table name: posts
 #
+#  allow_download :boolean          default(FALSE)
 #  artist_page_id :bigint(8)
 #  audio_file     :string
 #  body           :text

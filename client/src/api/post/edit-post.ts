@@ -8,6 +8,7 @@ interface Post {
   image_url: string;
   artist_page_id: string;
   is_private: boolean;
+  allow_download: boolean;
 }
 
 export const editPost = async (post: Post) => {
@@ -18,6 +19,7 @@ export const editPost = async (post: Post) => {
     image_url,
     artist_page_id,
     is_private,
+    allow_download,
     id,
   } = post;
 
@@ -35,6 +37,7 @@ export const editPost = async (post: Post) => {
         image_url,
         artist_page_id,
         is_private,
+        allow_download,
       },
     },
   });

@@ -46,6 +46,7 @@ class PostFormComponent extends React.Component<Props, any> {
     audioFile: '',
     imageName: '',
     isPublic: false,
+    allowDownload: false,
     isPinned: false,
     imageUrl: null,
     publicId: null,
@@ -100,7 +101,15 @@ class PostFormComponent extends React.Component<Props, any> {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const { title, body, audioFile, imageUrl, isPublic, isPinned } = this.state;
+    const {
+      title,
+      body,
+      audioFile,
+      imageUrl,
+      isPublic,
+      allowDownload,
+      isPinned,
+    } = this.state;
     const { isEdit } = this.props;
 
     const post = {
@@ -110,6 +119,7 @@ class PostFormComponent extends React.Component<Props, any> {
       image_url: imageUrl,
       is_private: !isPublic,
       is_pinned: isPinned,
+      allow_download: allowDownload,
       artist_page_id: this.props.artist.id,
       id: this.state.id,
     };
@@ -187,6 +197,10 @@ class PostFormComponent extends React.Component<Props, any> {
     if (artist.isStripeSetup) {
       this.setState({ isPublic: event.target.checked });
     }
+  };
+
+  handleAllowDownloadChange = (event) => {
+    this.setState({ allowDownload: event.target.checked });
   };
 
   isSaveEnabled = () => {
@@ -285,7 +299,7 @@ class PostFormComponent extends React.Component<Props, any> {
   }
 
   render() {
-    const { hasUnsavedChanges, title, body, imageUrl } = this.state;
+    const { hasUnsavedChanges, title, body, imageUrl, audioFile } = this.state;
     const { isEdit } = this.props;
     const {
       artist: { isStripeSetup },
@@ -373,6 +387,25 @@ class PostFormComponent extends React.Component<Props, any> {
                       Make public
                     </label>
                   </div>
+
+                  {audioFile && audioFile.length > 0 && (
+                    <div className="col-auto">
+                      <label
+                        className="make-public-label"
+                        htmlFor="allow-download"
+                      >
+                        <input
+                          aria-label="Allow download"
+                          name="allowDownload"
+                          id="allow-download"
+                          type="checkbox"
+                          onChange={this.handleAllowDownloadChange}
+                          checked={this.state.allowDownload}
+                        />
+                        Allow download
+                      </label>
+                    </div>
+                  )}
                   <div className="col-auto">
                     {/* <label className="pin-post-label" htmlFor="pin-post">
                       <input

@@ -2,6 +2,13 @@
 @import '../../../../theme/mixins.scss';
 
 .post {
+  .download-link {
+    width: 100%;
+    text-align: center;
+    font-family: $font-family-monospace;
+    font-size: 0.8rem;
+  }
+
   max-width: 500px;
   margin-bottom: 2rem;
 

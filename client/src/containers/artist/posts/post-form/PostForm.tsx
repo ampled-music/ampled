@@ -471,9 +471,6 @@ class PostFormComponent extends React.Component<Props, any> {
                   autoFocus
                   name="title"
                   placeholder="Post title"
-                  helperText={
-                    !(title && title.length > 0) ? 'required' : undefined
-                  }
                   type="text"
                   fullWidth
                   InputLabelProps={{
@@ -482,6 +479,22 @@ class PostFormComponent extends React.Component<Props, any> {
                   value={title}
                   onChange={this.handleChange}
                   required
+                  InputProps={{
+                    endAdornment: !(title && title.length > 0) ? (
+                      <InputAdornment position="end">
+                        <span
+                          style={{
+                            color: 'rgba(0, 0, 0, 0.42)',
+                            fontSize: '0.8rem',
+                          }}
+                        >
+                          (required)
+                        </span>
+                      </InputAdornment>
+                    ) : (
+                      undefined
+                    ),
+                  }}
                 />
                 <TextField
                   name="body"

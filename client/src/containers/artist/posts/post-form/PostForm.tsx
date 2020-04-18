@@ -81,7 +81,6 @@ class PostFormComponent extends React.Component<Props, any> {
   constructor(props) {
     super(props);
     if (props.post) {
-      console.log(props.post);
       this.state = {
         ...this.initialState,
         ...props.post,

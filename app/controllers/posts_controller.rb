@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[destroy update]
+  before_action :set_post, only: %i[destroy update show]
 
   def create
     @post = Post.new(post_params)
@@ -24,6 +24,17 @@ class PostsController < ApplicationController
       render json: :ok
     else
       render json: { errors: @post.errors }, status: :bad_request
+    end
+  end
+
+  def show
+    return render json: {}, status: :bad_request unless PostPolicy.new(current_user, @post).view_details?
+
+    respond_to do |format|
+      format.html do
+        redirect_to "/artist/#{@post.artist_page.slug}/#{@post.id}"
+      end
+      format.json
     end
   end
 

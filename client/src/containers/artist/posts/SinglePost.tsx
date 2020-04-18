@@ -1,4 +1,5 @@
 import './post-container.scss';
+import './../header/artist-header.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -9,10 +10,9 @@ import { deleteCommentAction } from '../../../redux/comments/delete';
 import { apiAxios } from '../../../api/setup-axios';
 import { Store } from '../../../redux/configure-store';
 
-import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
-import { initialState as commentsInitialState } from '../../../redux/comments/initial-state';
 import { Post } from './post/Post';
 import { Loading } from '../../shared/loading/Loading';
+import StyleOverride from './../StyleOverride';
 
 const mapStateToProps = (state: Store) => ({
   authentication: state.authentication,
@@ -28,6 +28,19 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+type SinglePostProps = {
+  match: {
+    params: {
+      slug: string;
+      postId: string;
+    };
+  };
+  me: any;
+  openAuthModal: Function;
+  addComment: Function;
+  deleteComment: Function;
+};
+
 const SinglePostComponent = ({
   match: {
     params: { slug, postId },
@@ -36,8 +49,7 @@ const SinglePostComponent = ({
   openAuthModal,
   addComment,
   deleteComment,
-  updateArtist,
-}) => {
+}: SinglePostProps) => {
   const [post, setPost] = React.useState(null);
   const [error, setError] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
@@ -80,25 +92,32 @@ const SinglePostComponent = ({
   )?.[0];
 
   return (
-    <div
-      className="post-container"
-      style={{ margin: '0 auto', maxWidth: '500px' }}
-    >
-      <Post
-        me={me}
-        post={post}
-        accentColor={accentColor}
-        artistName={artistName}
-        artistId={artistId}
-        artistSlug={artistSlug}
-        loggedUserAccess={loggedUserAccess}
-        openAuthModal={openAuthModal}
-        addComment={addComment}
-        deleteComment={deleteComment}
-        updateArtist={() => setUpdateCount(updateCount + 1)}
-        doReflow={() => null}
-        playerCallback={() => null}
-      />
+    <div className="artist-header container">
+      <StyleOverride accentColor={accentColor} isSupporter={false} />
+      <div className="artist-header__title">
+        <span className="artist-header__title_flair"></span>
+        {artistName}
+      </div>
+      <div
+        className="post-container"
+        style={{ margin: '0 auto', maxWidth: '500px' }}
+      >
+        <Post
+          me={me}
+          post={post}
+          accentColor={accentColor}
+          artistName={artistName}
+          artistId={artistId}
+          artistSlug={artistSlug}
+          loggedUserAccess={loggedUserAccess}
+          openAuthModal={openAuthModal}
+          addComment={addComment}
+          deleteComment={deleteComment}
+          updateArtist={() => setUpdateCount(updateCount + 1)}
+          doReflow={() => null}
+          playerCallback={() => null}
+        />
+      </div>
     </div>
   );
 };

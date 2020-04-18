@@ -217,22 +217,9 @@ const PostMedia = ({
   doReflow,
 }) => (
   <>
-    {has_video_embed && (
+    {has_video_embed && allowDetails && (
       <div className="post__image-container" style={{ height: '250px' }}>
         <PostVideo videoUrl={video_embed_url} doReflow={doReflow} />
-        {/* <CardMedia
-          className={cx(classes.media, {
-            'blur-image': !allowDetails,
-          })}
-          image={renderCloudinaryPhoto(image_url, 500)}
-        /> */}
-        {!allowDetails && (
-          <Lock
-            isLapsed={deny_details_lapsed}
-            me={me}
-            handlePrivatePostClick={handlePrivatePostClick}
-          />
-        )}
       </div>
     )}
     {image_url && !has_audio && (

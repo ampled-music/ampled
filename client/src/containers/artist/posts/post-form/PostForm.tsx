@@ -367,7 +367,7 @@ class PostFormComponent extends React.Component<Props, any> {
               fontSize: '0.8rem',
             }}
           >
-            No video detected.
+            No supported video detected.
           </span>
         </div>
       );
@@ -399,7 +399,7 @@ class PostFormComponent extends React.Component<Props, any> {
             InputLabelProps={{
               shrink: true,
             }}
-            value={videoEmbedUrl}
+            value={videoEmbedUrl || ''}
             onChange={this.handleChange}
             required
             InputProps={{
@@ -471,6 +471,9 @@ class PostFormComponent extends React.Component<Props, any> {
                   autoFocus
                   name="title"
                   placeholder="Post title"
+                  helperText={
+                    !(title && title.length > 0) ? 'required' : undefined
+                  }
                   type="text"
                   fullWidth
                   InputLabelProps={{

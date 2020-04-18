@@ -18,6 +18,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { withStyles } from '@material-ui/core/styles';
 import { Modal } from '../../../shared/modal/Modal';
 import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
+import YouTubePlayer from 'react-player/lib/players/YouTube';
+import VimeoPlayer from 'react-player/lib/players/Vimeo';
 import Linkify from 'react-linkify';
 
 import { Comment } from '../comments/Comment';
@@ -170,16 +172,56 @@ Comments.propTypes = {
   me: PropTypes.any,
 };
 
+const PostVideo = ({ videoUrl, doReflow }) => {
+  const isYouTube = /youtu/i.test(videoUrl);
+  const isVimeo = /vimeo/i.test(videoUrl);
+  let VideoComponent;
+  if (isVimeo) {
+    VideoComponent = VimeoPlayer;
+  } else if (isYouTube) {
+    VideoComponent = YouTubePlayer;
+  }
+  return (
+    <VideoComponent
+      onReady={doReflow}
+      className="react-player"
+      url={videoUrl}
+      width="100%"
+      height="100%"
+      controls={true}
+      light
+    />
+  );
+};
+
+PostVideo.propTypes = {
+  videoUrl: PropTypes.string,
+  doReflow: PropTypes.func,
+};
+
 const PostMedia = ({
-  post: { image_url, has_audio, audio_file, deny_details_lapsed },
+  post: {
+    image_url,
+    has_audio,
+    has_video_embed,
+    video_embed_url,
+    audio_file,
+    deny_details_lapsed,
+  },
   classes,
   allowDetails,
   accentColor,
   me,
   handlePrivatePostClick,
   playerCallback,
+  doReflow,
 }) => (
   <>
+    {has_video_embed && allowDetails && (
+      <div className="post__image-container" style={{ height: '250px' }}>
+        <PostVideo videoUrl={video_embed_url} doReflow={doReflow} />
+      </div>
+    )}
     {image_url && !has_audio && (
       <div className="post__image-container">
         <CardMedia
@@ -266,6 +308,7 @@ PostMedia.propTypes = {
   me: PropTypes.any,
   handlePrivatePostClick: PropTypes.func,
   playerCallback: PropTypes.func,
+  doReflow: PropTypes.func,
 };
 
 const Lock = ({ isLapsed = false, me, handlePrivatePostClick }) => {
@@ -579,6 +622,7 @@ class PostComponent extends React.Component<any, any> {
               )}
 
               <PostMedia
+                doReflow={this.props.doReflow}
                 post={post}
                 classes={classes}
                 allowDetails={allowDetails}

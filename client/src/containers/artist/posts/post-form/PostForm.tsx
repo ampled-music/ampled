@@ -17,14 +17,34 @@ import {
   DialogActions,
   DialogContent,
   TextField,
+  InputAdornment,
+  IconButton,
   CircularProgress,
 } from '@material-ui/core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import YouTubePlayer from 'react-player/lib/players/YouTube';
+import VimeoPlayer from 'react-player/lib/players/Vimeo';
 
 import tear from '../../../../images/background_tear.png';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
 import { Upload } from './Upload';
+
+const mapStateToProps = (state: Store) => ({
+  ...state.posts,
+  ...state.artists,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createPost: bindActionCreators(createPostAction, dispatch),
+    editPost: bindActionCreators(editPostAction, dispatch),
+    getArtist: bindActionCreators(getArtistAction, dispatch),
+    showToast: bindActionCreators(showToastAction, dispatch),
+  };
+};
 
 interface PostFormProps {
   close: (hasUnsavedChanges: any) => void;
@@ -45,6 +65,7 @@ class PostFormComponent extends React.Component<Props, any> {
     body: '',
     audioFile: '',
     imageName: '',
+    videoEmbedUrl: null,
     isPublic: false,
     allowDownload: false,
     isPinned: false,
@@ -54,18 +75,20 @@ class PostFormComponent extends React.Component<Props, any> {
     hasUnsavedChanges: false,
     loadingImage: false,
     savingPost: false,
+    showVideoEmbedField: false,
   };
 
   constructor(props) {
     super(props);
     if (props.post) {
-      console.log(props.post);
       this.state = {
         ...this.initialState,
         ...props.post,
         audioFile: props.post.audio_file,
         imageUrl: props.post.image_url,
+        videoEmbedUrl: props.post.video_embed_url,
         isPublic: !props.post.is_private,
+        showVideoEmbedField: props.post.has_video_embed,
       };
     } else {
       this.state = this.initialState;
@@ -106,6 +129,7 @@ class PostFormComponent extends React.Component<Props, any> {
       body,
       audioFile,
       imageUrl,
+      videoEmbedUrl,
       isPublic,
       allowDownload,
       isPinned,
@@ -117,6 +141,7 @@ class PostFormComponent extends React.Component<Props, any> {
       body,
       audio_file: audioFile,
       image_url: imageUrl,
+      video_embed_url: videoEmbedUrl,
       is_private: !isPublic,
       is_pinned: isPinned,
       allow_download: allowDownload,
@@ -204,20 +229,21 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   isSaveEnabled = () => {
-    const { title, body, imageUrl, audioFile } = this.state;
+    const { title, body, imageUrl, videoEmbedUrl, audioFile } = this.state;
 
     return (
       title &&
       title.length > 0 &&
       ((audioFile && audioFile.length > 0) ||
         (imageUrl && imageUrl.length > 0) ||
+        (videoEmbedUrl && videoEmbedUrl.length > 0) ||
         (body && body.length > 0))
     );
   };
 
   renderUploader(): React.ReactNode {
     return (
-      <div className="uploader">
+      <div className="uploader" style={{ width: '45%' }}>
         {this.state.loadingImage ? (
           <CircularProgress />
         ) : (
@@ -298,8 +324,134 @@ class PostFormComponent extends React.Component<Props, any> {
     );
   }
 
+  renderVideoToggle = () => {
+    return (
+      <div className="uploader" style={{ width: '45%' }}>
+        <Button
+          className="btn btn-ampled image-button"
+          component="span"
+          onClick={() => this.setState({ showVideoEmbedField: true })}
+        >
+          Add Video
+        </Button>
+      </div>
+    );
+  };
+
+  renderVideoPreview = () => {
+    const { videoEmbedUrl } = this.state;
+
+    const isYouTube =
+      videoEmbedUrl &&
+      videoEmbedUrl.length > 0 &&
+      /(www\.)?(youtube\.com|youtu.be)\//i.test(videoEmbedUrl);
+    const isVimeo =
+      videoEmbedUrl &&
+      videoEmbedUrl.length > 0 &&
+      /(www\.)?vimeo.com\/.+/i.test(videoEmbedUrl);
+    const isValidVideo = isYouTube || isVimeo;
+
+    let VideoComponent;
+    if (isVimeo) {
+      VideoComponent = VimeoPlayer;
+    } else if (isYouTube) {
+      VideoComponent = YouTubePlayer;
+    }
+
+    if (!isValidVideo) {
+      return (
+        <div className="uploader">
+          <span
+            style={{
+              fontFamily: '"Courier", Courier, monospace',
+              fontSize: '0.8rem',
+            }}
+          >
+            No supported video detected.
+          </span>
+        </div>
+      );
+    }
+    return (
+      <div className="uploader">
+        <VideoComponent
+          className="react-player"
+          url={videoEmbedUrl}
+          width="100%"
+          height="100%"
+        />
+      </div>
+    );
+  };
+
+  renderVideoEmbedder = () => {
+    const { videoEmbedUrl } = this.state;
+
+    return (
+      <>
+        <div className="uploader" style={{ display: 'block' }}>
+          <TextField
+            autoFocus
+            name="videoEmbedUrl"
+            placeholder="YouTube or Vimeo URL"
+            type="text"
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            value={videoEmbedUrl || ''}
+            onChange={this.handleChange}
+            required
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="Toggle video input"
+                    onClick={() =>
+                      this.setState({
+                        showVideoEmbedField: false,
+                        videoEmbedUrl: null,
+                      })
+                    }
+                  >
+                    <FontAwesomeIcon icon={faTimes} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {this.renderVideoPreview()}
+        </div>
+      </>
+    );
+  };
+
+  renderVisualUpload = () => {
+    const { imageUrl, videoEmbedUrl, showVideoEmbedField } = this.state;
+    return (
+      <div className="post-form__image">
+        <input
+          style={{ display: 'none' }}
+          id="image-file"
+          type="file"
+          aria-label="Image file"
+          accept="image/*"
+          onChange={this.processImage}
+        />
+        {!imageUrl && !videoEmbedUrl && !showVideoEmbedField && (
+          <>
+            {this.renderUploader()}
+            {this.renderVideoToggle()}
+          </>
+        )}
+        {!imageUrl && showVideoEmbedField && this.renderVideoEmbedder()}
+        {imageUrl && this.renderPreview()}
+      </div>
+    );
+  };
+
   render() {
-    const { hasUnsavedChanges, title, body, imageUrl, audioFile } = this.state;
+    const { hasUnsavedChanges, title, body, audioFile } = this.state;
     const { isEdit } = this.props;
     const {
       artist: { isStripeSetup },
@@ -327,6 +479,22 @@ class PostFormComponent extends React.Component<Props, any> {
                   value={title}
                   onChange={this.handleChange}
                   required
+                  InputProps={{
+                    endAdornment: !(title && title.length > 0) ? (
+                      <InputAdornment position="end">
+                        <span
+                          style={{
+                            color: 'rgba(0, 0, 0, 0.42)',
+                            fontSize: '0.8rem',
+                          }}
+                        >
+                          (required)
+                        </span>
+                      </InputAdornment>
+                    ) : (
+                      undefined
+                    ),
+                  }}
                 />
                 <TextField
                   name="body"
@@ -359,19 +527,7 @@ class PostFormComponent extends React.Component<Props, any> {
                   <Upload onComplete={this.updateAudioFile} />
                 )}
               </div>
-              <div className="post-form__image">
-                <input
-                  style={{ display: 'none' }}
-                  id="image-file"
-                  type="file"
-                  aria-label="Image file"
-                  accept="image/*"
-                  onChange={this.processImage}
-                />
-
-                {imageUrl ? this.renderPreview() : this.renderUploader()}
-              </div>
-
+              {this.renderVisualUpload()}
               <div className="post-form__checkboxes">
                 <div className="row justify-content-between">
                   <div className="col-auto">
@@ -456,20 +612,6 @@ class PostFormComponent extends React.Component<Props, any> {
     );
   }
 }
-
-const mapStateToProps = (state: Store) => ({
-  ...state.posts,
-  ...state.artists,
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createPost: bindActionCreators(createPostAction, dispatch),
-    editPost: bindActionCreators(editPostAction, dispatch),
-    getArtist: bindActionCreators(getArtistAction, dispatch),
-    showToast: bindActionCreators(showToastAction, dispatch),
-  };
-};
 
 const PostForm = connect(
   mapStateToProps,

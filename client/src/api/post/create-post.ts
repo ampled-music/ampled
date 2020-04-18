@@ -5,6 +5,7 @@ interface Post {
   body: string;
   audio_file: string;
   image_url: string;
+  video_embed_url: string;
   artist_page_id: string;
   is_private: boolean;
   allow_download: boolean;
@@ -16,6 +17,7 @@ export const createPost = async (post: Post) => {
     body,
     audio_file,
     image_url,
+    video_embed_url,
     artist_page_id,
     is_private,
     allow_download,
@@ -33,6 +35,7 @@ export const createPost = async (post: Post) => {
         body,
         audio_file,
         image_url,
+        video_embed_url,
         artist_page_id,
         is_private,
         allow_download,

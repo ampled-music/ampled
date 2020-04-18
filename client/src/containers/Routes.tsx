@@ -57,6 +57,11 @@ const LazyBrowse = React.lazy(() =>
     default: module.HomeBrowse,
   })),
 );
+const LazySinglePost = React.lazy(() =>
+  import('./artist/posts/SinglePost').then((module) => ({
+    default: module.SinglePost,
+  })),
+);
 
 const Routes = () => {
   return (
@@ -71,6 +76,11 @@ const Routes = () => {
         }}
       />
       <PublicRoute exact path={routePaths.artists} component={LazyArtist} />
+      <PublicRoute
+        exact
+        path={routePaths.viewPost}
+        component={LazySinglePost}
+      />
       <PublicRoute exact path={routePaths.slugs} component={LazyArtist} />
       <PublicRoute
         exact

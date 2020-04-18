@@ -28,14 +28,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    return render json: {}, status: :bad_request unless PostPolicy.new(current_user, @post).view_details?
-
-    respond_to do |format|
-      format.html do
-        redirect_to "/artist/#{@post.artist_page.slug}/#{@post.id}"
-      end
-      format.json
-    end
+    respond_to :json
   end
 
   def download_post

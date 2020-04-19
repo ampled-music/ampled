@@ -1236,6 +1236,16 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
+    if (
+      images.filter((image) => image !== null && typeof image !== 'undefined')
+        .length === 0
+    ) {
+      return this.props.showToast({
+        message: 'Please add at least one image.',
+        type: 'error',
+      });
+    }
+
     if (/[@:/]/gi.test(artistTwitter) || /[@:/]/gi.test(artistInstagram)) {
       return this.props.showToast({
         message: 'Please check the format of your social handles.',

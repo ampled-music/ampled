@@ -128,7 +128,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                   <Image
                     className="artist-header__person_image member"
                     key={owner.name}
-                    publicId={owner.image.public_id}
+                    publicId={this.handlePublicID(owner.profile_image_url)}
                     alt={owner.name}
                     style={{ borderColor: artist.accent_color }}
                   >
@@ -152,6 +152,13 @@ export class FeaturedImages extends React.Component<Props, any> {
           ))}
       </div>
     );
+  };
+
+  handlePublicID = (image: string) => {
+    const url = image.split('/');
+    const part_1 = url[url.length - 2];
+    const part_2 = url[url.length - 1];
+    return part_1 + '/' + part_2;
   };
 
   renderBanners = () => {

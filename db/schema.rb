@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_17_211219) do
+ActiveRecord::Schema.define(version: 2020_04_18_000002) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "artist_pages", force: :cascade do |t|
@@ -51,11 +50,12 @@ ActiveRecord::Schema.define(version: 2020_04_17_211219) do
 
   create_table "images", force: :cascade do |t|
     t.string "url"
-    t.integer "order"
-    t.bigint "artist_page_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["artist_page_id"], name: "index_images_on_artist_page_id"
+    t.string "public_id"
+    t.string "imageable_type"
+    t.bigint "imageable_id"
+    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 
   create_table "page_ownerships", force: :cascade do |t|

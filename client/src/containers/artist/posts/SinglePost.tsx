@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { openAuthModalAction } from '../../../redux/authentication/authentication-modal';
 import { createCommentAction } from '../../../redux/comments/create';
 import { deleteCommentAction } from '../../../redux/comments/delete';
+import { Link } from 'react-router-dom';
 import { apiAxios } from '../../../api/setup-axios';
 import { Store } from '../../../redux/configure-store';
 
@@ -96,7 +97,9 @@ const SinglePostComponent = ({
       <StyleOverride accentColor={accentColor} isSupporter={false} />
       <div className="artist-header__title">
         <span className="artist-header__title_flair"></span>
-        {artistName}
+        <Link to={`/artist/${artistSlug}`} style={{ textDecoration: 'unset' }}>
+          {artistName}
+        </Link>
       </div>
       <div
         className="post-container"

@@ -562,9 +562,14 @@ class PostComponent extends React.Component<any, any> {
           </Modal>
           <div
             className={cx('post', { 'clickable-post': !allowDetails })}
-            onClick={() =>
-              !deny_details_lapsed && this.handlePrivatePostClick(authenticated)
-            }
+            onClick={(e) => {
+              const target = e.target as HTMLElement;
+              if (target.tagName === 'A') {
+                return;
+              }
+              !deny_details_lapsed &&
+                this.handlePrivatePostClick(authenticated);
+            }}
             title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
           >
             <Card

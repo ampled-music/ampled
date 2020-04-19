@@ -242,7 +242,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
       <div
         className={`image-upload__image ${
           altText === 'Primary' ? 'primary' : 'secondary'
-        }`}
+          }`}
       >
         <input
           style={{ display: 'none' }}
@@ -1273,8 +1273,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             instagram_handle: artistInstagram,
             twitter_handle: artistTwitter,
             verb_plural: artistVerb !== 'is',
+            images,
           },
-          images,
           members,
         },
       });
@@ -1308,8 +1308,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             instagram_handle: artistInstagram,
             twitter_handle: artistTwitter,
             verb_plural: artistVerb !== 'is',
+            images,
           },
-          images,
           members,
         },
       });

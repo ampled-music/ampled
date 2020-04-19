@@ -242,7 +242,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
       <div
         className={`image-upload__image ${
           altText === 'Primary' ? 'primary' : 'secondary'
-          }`}
+        }`}
       >
         <input
           style={{ display: 'none' }}
@@ -999,7 +999,14 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   renderImages = () => {
     const { images } = this.state;
     const imageSetter = (index) => (cloudinary) => {
-      images[index] = { url: cloudinary.url, public_id: cloudinary.public_id };
+      if (cloudinary) {
+        images[index] = {
+          url: cloudinary.url,
+          public_id: cloudinary.public_id,
+        };
+      } else {
+        images[index] = null;
+      }
       this.setState({ images });
     };
 

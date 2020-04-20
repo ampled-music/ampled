@@ -360,7 +360,9 @@ class ArtistComponent extends React.Component<Props, any> {
       }
     }
 
-    if (artists && !artists.loading && artists.error) {
+    if (artists && !artists.loading && !artists.error) {
+      return <div>Something</div>;
+    } else if (artists && !artists.loading && artists.error) {
       return <NoArtist />;
     }
 

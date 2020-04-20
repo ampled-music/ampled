@@ -41,6 +41,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :name,
     :id,
     :owners,
+    :approved,
     :featured
   ].freeze
 

@@ -20,10 +20,12 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
     - [Using ChromeDriver](#using-chromedriver)
     - [Continuous Integration/Deployment with CircleCI and Heroku](#continuous-integrationdeployment-with-circleci-and-heroku)
 - [Deploy to Acceptance/Production](#deploy-to-acceptanceproduction)
+- [Database migrations and rollbacks](#database-migrations-and-rollbacks)
 - [Server Environments](#server-environments)
-  - [Hosting](#hosting)
-  - [Environment Variables](#environment-variables)
-  - [Third Party Services](#third-party-services)
+    - [Hosting](#hosting)
+    - [Environment Variables](#environment-variables)
+    - [Third Party Services](#third-party-services)
+    - [Using the Stripe CLI to test webhooks locally](#using-the-stripe-cli-to-test-webhooks-locally)
 - [Internal Tools](#internal-tools)
   - [`application-fee-management`](#application-fee-management)
     - [Installation & setup](#installation--setup)
@@ -155,9 +157,27 @@ On successful builds, Heroku will trigger a deployment via its
 # Deploy to Acceptance/Production
 
 1. Pull Request into Acceptance/Production and run merge will trigger CI
-2. If there are pending migrations, run them locally with the appropriate `DATABASE_URL`
-   - ie: `DATABASE_URL=postgres://ACCEPTANCE/PRODUCTION_URL rails db:migrate`
-3. Trigger a restart in Heroku
+
+The release process on Heroku will automatically run database migrations after the new
+app version is built, but before it is deployed to users. This is controlled via the `release`
+command in our app's [Procfile](Procfile).
+
+# Database migrations and rollbacks
+
+Database migrations run automagically ✨ in staging and production as part of the deploy process.
+If you ever need to run a migration or a migration rollback in a Heroku environment, you can
+do so using the `heroku run` command (part of the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)), like this:
+```bash
+$ heroku run rake db:migrate --app ampled-web
+```
+
+Or, for example, to roll back the most recent migration:
+```bash
+$ heroku run rake db:rollback --app ampled-web
+```
+
+(replace the app name above with `ampled-web-production` if you need to run this against production)
+
 
 # Server Environments
 

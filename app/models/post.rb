@@ -2,16 +2,18 @@
 #
 # Table name: posts
 #
-#  artist_page_id :bigint(8)
-#  audio_file     :string
-#  body           :text
-#  created_at     :datetime         not null
-#  id             :bigint(8)        not null, primary key
-#  image_url      :string
-#  is_private     :boolean          default(FALSE)
-#  title          :string
-#  updated_at     :datetime         not null
-#  user_id        :bigint(8)
+#  allow_download  :boolean          default(FALSE)
+#  artist_page_id  :bigint(8)
+#  audio_file      :string
+#  body            :text
+#  created_at      :datetime         not null
+#  id              :bigint(8)        not null, primary key
+#  image_url       :string
+#  is_private      :boolean          default(FALSE)
+#  title           :string
+#  updated_at      :datetime         not null
+#  user_id         :bigint(8)
+#  video_embed_url :string
 #
 # Indexes
 #
@@ -43,6 +45,12 @@ class Post < ApplicationRecord
 
   def has_audio
     return true if audio_file.present?
+
+    false
+  end
+
+  def has_video_embed
+    return true if video_embed_url.present?
 
     false
   end

@@ -7,7 +7,10 @@ json.created_at post.created_at.to_i
 json.created_ago time_ago_in_words(post.created_at)
 json.comments post.comments, partial: "comments/comment", as: :comment
 json.is_private post.is_private
+json.allow_download post.allow_download
+json.video_embed_url post.video_embed_url
 json.has_audio post.has_audio
+json.has_video_embed post.has_video_embed
 json.image_url post.image_url
 if PostPolicy.new(current_user, post).view_details?
   json.body post.body

@@ -29,8 +29,8 @@ class ArtistPagesController < ApplicationController
 
     if params.has_key?(:seed)
       seed = params[:seed].to_f
-      ArtistPage.connection.execute "SELECT setseed(#{seed})"
-      @artist_pages = ArtistPage.approved.order("random()").page(params[:page]).per(6)
+      ArtistPage.connection.execute ArtistPage.sanitize_sql_like("SELECT setseed(#{seed})")
+      @artist_pages = ArtistPage.approved.order(Arel.sql("random()")).page(params[:page]).per(6)
     end
 
     render template: "artist_pages/index"

@@ -1,10 +1,10 @@
 import './no-artist.scss';
 
 import * as React from 'react';
-import { ArtistModel } from '../../../redux/artists/initial-state';
+import { Image, Transformation } from 'cloudinary-react';
 
 interface Props {
-  artist: ArtistModel;
+  artist: any;
 }
 
 class ArtistComingSoon extends React.Component<Props, any> {
@@ -17,6 +17,8 @@ class ArtistComingSoon extends React.Component<Props, any> {
 
   render() {
     const artist = this.props.artist;
+    console.log(artist);
+
     return (
       <div className="no-artist">
         <div className="container">
@@ -29,11 +31,28 @@ class ArtistComingSoon extends React.Component<Props, any> {
                 ></span>
                 {artist.name}
               </div>
-              <img
-                // src={this.handlePublicID(first_image)}
-                className="no-artist__image"
-                alt={artist.name}
-              />
+
+              <div className="no-artist__container">
+                <div
+                  className="no-artist__container_border"
+                  style={{ borderColor: artist.accent_color }}
+                ></div>
+                {artist.image && (
+                  <Image
+                    className="no-artist__image"
+                    key={artist.name}
+                    publicId={this.handlePublicID(artist.image)}
+                    alt={artist.name}
+                  >
+                    <Transformation
+                      crop="fill"
+                      width={450}
+                      height={450}
+                      responsive_placeholder="blank"
+                    />
+                  </Image>
+                )}
+              </div>
               <p>Coming Soon.</p>
             </div>
           </div>

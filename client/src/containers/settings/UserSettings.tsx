@@ -16,7 +16,6 @@ import { updateMeAction } from '../../redux/me/update-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
-import multiDownload from 'multi-download';
 
 import {
   faEdit,
@@ -311,7 +310,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       // Cycle through and build text plate
       for (let index = 0; index < broken_name.length; index++) {
         // prettier-ignore
-        name_part += `l_text:Arial_${new_font_size}_bold:%20${encodeURI( broken_name[index] )}%20,co_rgb:${ color },b_rgb:${ bg },g_${ position },x_${ x },y_${ y_index }/`;
+        name_part += `l_text:Arial_${new_font_size}_bold:%20${encodeURI(broken_name[index])}%20,co_rgb:${color},b_rgb:${bg},g_${position},x_${x},y_${y_index}/`;
         y_index += Math.round(new_distance);
       }
       return name_part;
@@ -586,8 +585,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderSupporterShareImages = (artist) => {
     const BASE_UPLOAD_URL =
       'https://res.cloudinary.com/ampled-web/image/upload';
-    let color = artist.artistColor;
-    color = color.replace('#', '');
     const cleanArtistName = artist.name
       .replace(/[^a-z0-9]/gi, '_')
       .toLowerCase();
@@ -693,8 +690,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
               />
             </Image>
           ) : (
-            <img src={avatar} className="user-image" alt="Your avatar" />
-          )}
+              <img src={avatar} className="user-image" alt="Your avatar" />
+            )}
         </Link>
       </div>
     );
@@ -829,8 +826,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
               <p className="artist__info_role">
                 {ownedPage.role
                   ? ownedPage.role.charAt(0).toUpperCase() +
-                    ownedPage.role.slice(1) +
-                    ' of'
+                  ownedPage.role.slice(1) +
+                  ' of'
                   : ''}
               </p>
               <p
@@ -899,16 +896,16 @@ class UserSettingsComponent extends React.Component<Props, any> {
                             Edit Payout Details
                           </a>
                         ) : (
-                          <a
-                            href={ownedPage.stripeSignup}
-                            className="details__stripe_link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#d9534f' }}
-                          >
-                            Set Up Payouts
-                          </a>
-                        )}
+                            <a
+                              href={ownedPage.stripeSignup}
+                              className="details__stripe_link"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ color: '#d9534f' }}
+                            >
+                              Set Up Payouts
+                            </a>
+                          )}
                       </div>
                       <div className="col-12">
                         <a

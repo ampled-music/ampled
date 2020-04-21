@@ -107,10 +107,16 @@ RSpec.describe ArtistPagesController, type: :request do
     let(:url) { "/artist_pages/#{artist_page_unapproved.id}.json" }
     let(:slugurl) { "/slug/#{artist_page_unapproved.slug}.json" }
 
-    it "returns 400" do
+    it "returns 200" do
       get url
 
-      expect(response.status).to eq 400
+      expect(response.status).to eq 200
+    end
+
+    it "does not include owner data" do
+      get url
+
+      expect(JSON.parse(response.body)["owners"]).to be_nil
     end
   end
 end

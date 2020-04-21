@@ -45,6 +45,10 @@ class ArtistPagesController < ApplicationController
     end
   end
 
+  def show_pending
+    render template: "artist_pages/show_pending"
+  end
+
   def new
     @artist_page = ArtistPage.new
   end
@@ -183,7 +187,7 @@ class ArtistPagesController < ApplicationController
   def check_approved
     return if @artist_page&.approved? || current_user&.admin?
 
-    render json: {}, status: :bad_request unless current_user&.owned_pages&.include?(@artist_page)
+    return show_pending unless current_user&.owned_pages&.include?(@artist_page)
   end
 
   # Only allow a trusted parameter "white list" through.

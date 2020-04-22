@@ -14,6 +14,9 @@ client/.env
 /db/*.sqlite3-journal
 /db/local_database_volume
 
+# Ignore database backups 
+/db/backups/
+
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp

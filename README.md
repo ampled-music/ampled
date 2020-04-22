@@ -107,6 +107,20 @@ Rubocop is configured to enforce the style guide for this project.
 
 ## Additional/Optional Development Details
 
+### Backup & Restore Database
+
+To backup your postgres database run:
+
+    $ bundle exec rake db:dump[backup_name]
+
+To restore run:
+
+    $ bundle exec rake db:restore[backup_name]
+
+The backup files are stored in `/db/backups/` directory. If you use zsh, your rake task parameter brackets must be escaped.
+
+IMPORTANT: These commands will connect to whatever DB your rails environment is configured with.
+
 ### Code Coverage (local)
 
 Coverage for the ruby specs:

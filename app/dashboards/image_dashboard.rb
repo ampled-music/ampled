@@ -11,7 +11,7 @@ class ImageDashboard < Administrate::BaseDashboard
     artist_page: Field::BelongsTo,
     id: Field::Number,
     url: Field::String,
-    order: Field::Number,
+    public_id: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -25,7 +25,7 @@ class ImageDashboard < Administrate::BaseDashboard
     :artist_page,
     :id,
     :url,
-    :order,
+    :public_id,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -34,7 +34,7 @@ class ImageDashboard < Administrate::BaseDashboard
     :artist_page,
     :id,
     :url,
-    :order,
+    :public_id,
     :created_at,
     :updated_at,
   ].freeze
@@ -45,7 +45,7 @@ class ImageDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :artist_page,
     :url,
-    :order,
+    :public_id,
   ].freeze
 
   # Overwrite this method to customize how images are displayed

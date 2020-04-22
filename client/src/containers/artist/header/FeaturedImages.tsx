@@ -163,6 +163,7 @@ export class FeaturedImages extends React.Component<Props, any> {
 
   renderBanners = () => {
     const { artist } = this.props;
+    console.log(artist);
     return (
       <div className="artist-header__photos">
         {artist.images &&
@@ -172,7 +173,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                 key={index}
                 className={cx('artist-header__photo', { active: index === 0 })}
               >
-                <Image publicId={this.handlePublicID(image)} key={image}>
+                <Image publicId={image.public_id} key={image.public_id}>
                   <Transformation
                     crop="fill"
                     width={800}

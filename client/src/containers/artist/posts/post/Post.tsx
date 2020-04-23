@@ -197,7 +197,7 @@ const PostMedia = ({
     has_audio,
     has_video_embed,
     video_embed_url,
-    audio_file,
+    audio_uploads,
     deny_details_lapsed,
   },
   allowDetails,
@@ -263,7 +263,7 @@ const PostMedia = ({
         </div>
         {allowDetails && (
           <AudioPlayer
-            url={returnPlayableUrl(audio_file)}
+            url={returnPlayableUrl(audio_uploads[0]?.public_id)}
             image={renderCloudinaryPhoto(image_url)}
             accentColor={accentColor}
             callback={playerCallback}

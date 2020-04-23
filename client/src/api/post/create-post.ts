@@ -3,7 +3,7 @@ import { apiAxios } from '../setup-axios';
 interface Post {
   title: string;
   body: string;
-  audio_file: string;
+  audio_uploads: PostAudio[];
   image_url: string;
   video_embed_url: string;
   artist_page_id: string;
@@ -11,11 +11,16 @@ interface Post {
   allow_download: boolean;
 }
 
+interface PostAudio {
+  id: number;
+  public_id: string;
+}
+
 export const createPost = async (post: Post) => {
   const {
     title,
     body,
-    audio_file,
+    audio_uploads,
     image_url,
     video_embed_url,
     artist_page_id,
@@ -33,7 +38,7 @@ export const createPost = async (post: Post) => {
       post: {
         title,
         body,
-        audio_file,
+        audio_uploads_attributes: audio_uploads,
         image_url,
         video_embed_url,
         artist_page_id,

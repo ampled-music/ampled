@@ -4,7 +4,7 @@ interface Post {
   id: number;
   title: string;
   body: string;
-  audio_file: string;
+  audio_uploads: PostAudio[];
   image_url: string;
   video_embed_url: string;
   artist_page_id: string;
@@ -12,11 +12,17 @@ interface Post {
   allow_download: boolean;
 }
 
+interface PostAudio {
+  id: number;
+  public_id: string;
+  _destroy: boolean;
+}
+
 export const editPost = async (post: Post) => {
   const {
     title,
     body,
-    audio_file,
+    audio_uploads,
     image_url,
     video_embed_url,
     artist_page_id,
@@ -35,7 +41,7 @@ export const editPost = async (post: Post) => {
       post: {
         title,
         body,
-        audio_file,
+        audio_uploads_attributes: audio_uploads,
         image_url,
         video_embed_url,
         artist_page_id,

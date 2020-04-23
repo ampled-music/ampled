@@ -15,7 +15,7 @@ json.image_url post.image_url
 if PostPolicy.new(current_user, post).view_details?
   json.body post.body
   json.allow_details true
-  json.audio_file post.audio_file
+  json.audio_uploads post.audio_uploads
 else
   json.body "#{post.body[0..50]}..."
   json.deny_details_lapsed current_user.present? && current_user&.subscribed?(post.artist_page) &&

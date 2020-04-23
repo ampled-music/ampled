@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 2020_04_29_004705) do
     t.string "title"
     t.text "body"
     t.string "image_url"
-    t.string "audio_file"
     t.boolean "is_private", default: false
     t.boolean "allow_download", default: false
     t.string "video_embed_url"

@@ -4,7 +4,6 @@
 #
 #  allow_download  :boolean          default(FALSE)
 #  artist_page_id  :bigint(8)
-#  audio_file      :string
 #  body            :text
 #  created_at      :datetime         not null
 #  id              :bigint(8)        not null, primary key

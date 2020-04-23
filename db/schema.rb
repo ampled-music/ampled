@@ -40,6 +40,15 @@ ActiveRecord::Schema.define(version: 2020_04_29_004705) do
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 
+  create_table "audio_uploads", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.string "public_id", null: false
+    t.text "waveform", default: [], null: false, array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_audio_uploads_on_post_id"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.bigint "post_id"
     t.bigint "user_id"
@@ -149,6 +158,7 @@ ActiveRecord::Schema.define(version: 2020_04_29_004705) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "audio_uploads", "posts"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "plans", "artist_pages"

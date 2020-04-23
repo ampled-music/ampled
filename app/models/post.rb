@@ -30,6 +30,7 @@ class Post < ApplicationRecord
   belongs_to :artist_page
   belongs_to :user
 
+  has_many :audio_uploads, dependent: :destroy
   has_many :comments, dependent: :destroy
 
   # has_attached_file :audio_file

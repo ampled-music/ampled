@@ -605,7 +605,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       }
     }
     if (editMode && artist && !prevProps?.artist?.name && artist.name) {
-      console.log(artist);
+      // console.log(artist);
       const {
         accent_color,
         name,

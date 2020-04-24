@@ -57,6 +57,11 @@ const LazyBrowse = React.lazy(() =>
     default: module.HomeBrowse,
   })),
 );
+const LazyFeed = React.lazy(() =>
+  import('./feed/Feed').then((module) => ({
+    default: module.Feed,
+  })),
+);
 
 const Routes = () => {
   return (
@@ -113,6 +118,7 @@ const Routes = () => {
         path={routePaths.userDetails}
         component={LazyUserDetails}
       />
+      <ProtectedRoute exact path={routePaths.feed} component={LazyFeed} />
       <PublicRoute path={'*'} component={LazyNoArtist} />
     </Switch>
   );

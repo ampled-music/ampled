@@ -361,7 +361,7 @@ class ArtistComponent extends React.Component<Props, any> {
       }
     }
 
-    console.log(loggedUserAccess);
+    // console.log(loggedUserAccess);
 
     if (
       !artists.artist.approved &&

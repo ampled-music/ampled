@@ -85,7 +85,7 @@ class ResetPasswordComponent extends React.Component<any> {
         },
       });
 
-      console.log(data);
+      // console.log(data);
 
       this.props.showToast({
         message: 'Password changed! Please log in with your new password.',
@@ -98,7 +98,7 @@ class ResetPasswordComponent extends React.Component<any> {
         this.props.logout();
       }
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       if (
         e.response &&
         e.response.data &&

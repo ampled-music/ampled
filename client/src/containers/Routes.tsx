@@ -57,6 +57,11 @@ const LazyBrowse = React.lazy(() =>
     default: module.HomeBrowse,
   })),
 );
+const LazyStats = React.lazy(() =>
+  import('./Stats').then((module) => ({
+    default: module.Stats,
+  })),
+);
 
 const Routes = () => {
   return (
@@ -113,6 +118,7 @@ const Routes = () => {
         path={routePaths.userDetails}
         component={LazyUserDetails}
       />
+      <ProtectedRoute exact path={routePaths.stats} component={LazyStats} />
       <PublicRoute path={'*'} component={LazyNoArtist} />
     </Switch>
   );

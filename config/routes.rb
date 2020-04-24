@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   resources :subscriptions, only: %i[create destroy]
   resources :artist_pages
 
-  resources :posts, only: %i[destroy update]
+  resources :posts, only: %i[destroy update index]
 
   resources :artist_pages, only: [] do
     resources :posts, only: %i[create index]
@@ -63,6 +63,7 @@ Rails.application.routes.draw do
   get "/settings", to: "react#index"
   get "/user-details", to: "react#index"
   get "/browse", to: "react#index"
+  get "/feed", to: "react#index"
   get "/stats", to: "react#index"
 
   get "/no_artist", to: "react#render_404"

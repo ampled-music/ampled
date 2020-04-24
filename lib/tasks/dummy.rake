@@ -18,16 +18,17 @@ namespace :dummy do
         twitter: social,
         instagram: social,
         email: Faker::Internet.email,
+        profile_image_url: "https://res.cloudinary.com/ampled-web/image/upload/v1586552080/testing/TestingImage_#{rand(1..30)}.jpg",
         password: password,
         password_confirmation: password
       )
     end
 
     image_url = -> {
-      "https://res.cloudinary.com/ampled-web/image/upload/testing/users/TestingUserImage_#{rand(1..10)}.jpg"
+      "https://res.cloudinary.com/ampled-web/image/upload/v1586552080/testing/TestingImage_#{rand(1..30)}.jpg"
     }
     public_id = -> {
-      "testing/users/TestingUserImage_#{rand(1..30)}"
+      "v1586552080/testing/TestingImage_#{rand(1..30)}"
     }
 
     users.each do |us|

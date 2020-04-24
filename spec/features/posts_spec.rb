@@ -312,3 +312,34 @@ RSpec.describe "Download posts", :vcr, type: :request do
     end
   end
 end
+
+RSpec.describe "GET /posts", type: :request do
+  let(:admin_user) { create(:user, admin: true) }
+
+  context "when user is unauthenticated" do
+    before { get "/posts.json" }
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+
+    it "does not contain any posts" do
+      expect(JSON.parse(response.body)).to eq []
+    end
+  end
+
+  context "when user is an admin" do
+    before do
+      sign_in admin_user
+      get "/posts.json"
+    end
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+
+    it "contains any posts" do
+      expect(JSON.parse(response.body).count).to be > 0
+    end
+  end
+end

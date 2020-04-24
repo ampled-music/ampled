@@ -315,7 +315,9 @@ end
 
 RSpec.describe "GET /posts", type: :request do
   let(:admin_user) { create(:user, admin: true) }
-  let(:post) { create(:post, title: "old title") }
+  let(:author_user) { create(:user) }
+  let(:artist_page) { create(:artist_page) }
+  let(:post) { create(:post, artist_page: artist_page, user: author_user, title: "title") }
 
   context "when user is unauthenticated" do
     before { get "/posts.json" }

@@ -45,6 +45,10 @@ class ArtistPagesController < ApplicationController
     end
   end
 
+  def show_pending
+    render template: "artist_pages/show_pending"
+  end
+
   def new
     @artist_page = ArtistPage.new
   end
@@ -183,7 +187,14 @@ class ArtistPagesController < ApplicationController
   def check_approved
     return if @artist_page&.approved? || current_user&.admin?
 
-    render json: {}, status: :bad_request unless current_user&.owned_pages&.include?(@artist_page)
+    return show_pending unless current_user&.owned_pages&.include?(@artist_page)
+  end
+
+  # We accept both 'images' and 'images_attributes' as artist_page parameters from the frontend.
+  # Here we rename 'images' to 'images_attribures', which is the key that Rails' nested attribute
+  # support expects.
+  def rename_image_params
+    params[:artist_page][:images_attributes] = params[:artist_page][:images] if params[:artist_page]&.include?(:images)
   end
 
   # We accept both 'images' and 'images_attributes' as artist_page parameters from the frontend.

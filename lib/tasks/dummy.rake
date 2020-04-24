@@ -58,10 +58,10 @@ namespace :dummy do
     end
 
     image_url = -> {
-      "https://res.cloudinary.com/ampled-web/image/upload/testing/TestingImage_#{rand(1..30)}.jpg"
+      "https://res.cloudinary.com/ampled-web/image/upload/v1586552080/testing/TestingImage_#{rand(1..30)}.jpg"
     }
     public_id = -> {
-      "/testing/TestingImage_#{rand(1..30)}"
+      "v1586552080/testing/TestingImage_#{rand(1..30)}"
     }
 
     artist_pages.each do |ap|

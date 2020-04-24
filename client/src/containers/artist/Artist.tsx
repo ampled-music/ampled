@@ -25,6 +25,7 @@ import { Texture } from '../shared/texture/Texture';
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
 import { PostForm } from './posts/post-form/PostForm';
+import { ArtistComingSoon } from '../shared/no-artist/ArtistComingSoon';
 import { NoArtist } from '../shared/no-artist/NoArtist';
 import { routePaths } from '../route-paths';
 
@@ -360,7 +361,17 @@ class ArtistComponent extends React.Component<Props, any> {
       }
     }
 
-    if (artists && !artists.loading && artists.error) {
+    console.log(loggedUserAccess);
+
+    if (
+      !artists.artist.approved &&
+      !loggedUserAccess &&
+      !artists.loading &&
+      !artists.error &&
+      !loadingMe
+    ) {
+      return <ArtistComingSoon artist={artist} />;
+    } else if (artists && !artists.loading && artists.error) {
       return <NoArtist />;
     }
 

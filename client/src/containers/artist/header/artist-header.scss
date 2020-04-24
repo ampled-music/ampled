@@ -65,11 +65,11 @@
   &__title {
     font-size: 2rem;
     margin: 2rem auto 3rem;
-    text-transform: uppercase;
     font-weight: bolder;
     text-align: center;
     position: relative;
     display: inline-block;
+    max-width: 75%;
 
     &_flair {
       position: absolute;

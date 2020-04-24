@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[destroy update]
+  before_action :is_admin, only: :index
 
   def create
     @post = Post.new(post_params)
@@ -40,6 +41,15 @@ class PostsController < ApplicationController
     redirect_to @signer.presigned_url(:get_object, bucket: ENV["S3_BUCKET"],
                                       key: @post.audio_file,
                                       response_content_disposition: "attachment; filename=\"#{@post.title}.mp3\"")
+  end
+
+  def index
+    @expand_artist = true
+    @posts = Post.order("created_at DESC").page(params[:page]).per(30)
+  end
+
+  def is_admin
+    return render json: [] unless PostPolicy.new(current_user, nil).view_all?
   end
 
   private

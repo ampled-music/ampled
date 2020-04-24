@@ -197,6 +197,13 @@ class ArtistPagesController < ApplicationController
     params[:artist_page][:images_attributes] = params[:artist_page][:images] if params[:artist_page]&.include?(:images)
   end
 
+  # We accept both 'images' and 'images_attributes' as artist_page parameters from the frontend.
+  # Here we rename 'images' to 'images_attribures', which is the key that Rails' nested attribute
+  # support expects.
+  def rename_image_params
+    params[:artist_page][:images_attributes] = params[:artist_page][:images] if params[:artist_page]&.include?(:images)
+  end
+
   # Only allow a trusted parameter "white list" through.
   def artist_page_params
     rename_image_params

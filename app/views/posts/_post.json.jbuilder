@@ -21,3 +21,11 @@ else
   json.deny_details_lapsed current_user.present? && current_user&.subscribed?(post.artist_page) &&
                            current_user&.card_last4.present? && !current_user&.card_is_valid?
 end
+if @expand_artist
+  json.artist do
+    json.id post.artist_page.id
+    json.name post.artist_page.name
+    json.slug post.artist_page.slug
+    json.accent_color post.artist_page.accent_color
+  end
+end

@@ -21,7 +21,7 @@ class ArtistPaidEmailJob
         template_alias: "artist-paid",
         template_model: {
           artist_name: artist_page.name,
-          amount_paid: format("%.2f", amount_in_cents / 100),
+          amount_paid: format("%.2f", amount_in_cents / 100.0),
           currency_name: currency.upcase,
           arrival_date_formatted: arrival_date_formatted
         }

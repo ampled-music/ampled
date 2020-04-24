@@ -34,12 +34,14 @@ class ArtistPage < ApplicationRecord
 
   has_many :posts, dependent: :destroy
 
-  has_many :images, dependent: :destroy
+  has_many :images, as: :imageable, dependent: :destroy
 
   has_many :subscriptions, dependent: :destroy
   has_many :subscribers, through: :subscriptions, source: :user
 
   has_many :plans, dependent: :destroy
+
+  accepts_nested_attributes_for :images
 
   validate :sluggy_slug
 

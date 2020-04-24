@@ -4,6 +4,13 @@ RSpec.describe ArtistPagesController, type: :request do
   let(:user) { create(:user, confirmed_at: Time.current, email: "creator@ampled.com", name: "Creator") }
   let(:other_artist_page) { create(:artist_page, slug: "test", approved: true) }
 
+  let(:images_attributes) do
+    [
+      { url: "url1", public_id: "first_public_id" },
+      { url: "url2", public_id: "second_public_id" }
+    ]
+  end
+
   let(:create_params) do
     {
       artist_page: {
@@ -11,7 +18,8 @@ RSpec.describe ArtistPagesController, type: :request do
         slug: "testslug7",
         bio: "About me",
         location: "Testville",
-        accent_color: "#aabbcc"
+        accent_color: "#aabbcc",
+        images: images_attributes
       },
       members: [
         {
@@ -22,8 +30,7 @@ RSpec.describe ArtistPagesController, type: :request do
           email: "testfriend@ampled.com",
           firstName: "Friend"
         }
-      ],
-      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+      ]
     }
   end
 
@@ -34,7 +41,8 @@ RSpec.describe ArtistPagesController, type: :request do
         slug: "666",
         bio: "About me",
         location: "Testville",
-        accent_color: "#aabbcc"
+        accent_color: "#aabbcc",
+        images: images_attributes
       },
       members: [
         {
@@ -45,8 +53,7 @@ RSpec.describe ArtistPagesController, type: :request do
           email: "testfriend@ampled.com",
           firstName: "Friend"
         }
-      ],
-      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+      ]
     }
   end
 
@@ -54,13 +61,13 @@ RSpec.describe ArtistPagesController, type: :request do
     {
       artist_page: {
         slug: "sluggy",
-        bio: "About me"
+        bio: "About me",
+        images: images_attributes
       },
       members: [
         { email: "creator@ampled.com", firstName: "Creator" },
         { email: "testfriend@ampled.com", firstName: "Friend" }
-      ],
-      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+      ]
     }
   end
 
@@ -68,7 +75,8 @@ RSpec.describe ArtistPagesController, type: :request do
     {
       artist_page: {
         bio: "About me",
-        video_url: "https://www.youtube.com/watch?v=hHW1oY26kxQ"
+        video_url: "https://www.youtube.com/watch?v=hHW1oY26kxQ",
+        images: [{ url: "updated-url", public_id: "updated-public-id" }]
       },
       members: [
         {
@@ -79,8 +87,7 @@ RSpec.describe ArtistPagesController, type: :request do
           email: "testfriend@ampled.com",
           firstName: "Friend"
         }
-      ],
-      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+      ]
     }
   end
 
@@ -89,7 +96,8 @@ RSpec.describe ArtistPagesController, type: :request do
       artist_page: {
         bio: "About me",
         slug: "newslug",
-        video_url: "https://www.youtube.com/watch?v=hHW1oY26kxQ"
+        video_url: "https://www.youtube.com/watch?v=hHW1oY26kxQ",
+        images: images_attributes
       },
       members: [
         {
@@ -100,8 +108,7 @@ RSpec.describe ArtistPagesController, type: :request do
           email: "testfriend@ampled.com",
           firstName: "Friend"
         }
-      ],
-      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+      ]
     }
   end
 
@@ -109,7 +116,8 @@ RSpec.describe ArtistPagesController, type: :request do
     {
       artist_page: {
         bio: "About me",
-        video_url: "https://vimeo.com/331608175"
+        video_url: "https://vimeo.com/331608175",
+        images: images_attributes
       },
       members: [
         {
@@ -120,8 +128,7 @@ RSpec.describe ArtistPagesController, type: :request do
           email: "testfriend@ampled.com",
           firstName: "Friend"
         }
-      ],
-      images: ["http://ampled-web.herokuapp.com/static/media/ampled_logo_beta.1ce03b01.svg"]
+      ]
     }
   end
 
@@ -134,46 +141,69 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(JSON.parse(response.body)["status"]).to eq "error"
     end
 
-    it "fails on missing mandatory params" do
-      sign_in user
-      post url, params: missing_create_params
+    context "with signed in user" do
+      before do
+        sign_in user
+      end
 
-      expect(JSON.parse(response.body)["status"]).to eq "error"
-    end
+      it "fails on missing mandatory params" do
+        post url, params: missing_create_params
 
-    it "allows confirmed users to create" do
-      sign_in user
-      post url, params: create_params
+        expect(JSON.parse(response.body)["status"]).to eq "error"
+      end
 
-      expect(JSON.parse(response.body)["message"]).to eq "Your page has been created!"
-    end
+      it "allows confirmed users to create" do
+        post url, params: create_params
 
-    it "creates new users for members that do not yet exist" do
-      sign_in user
-      post url, params: create_params
-      expect(User.find_by(email: "testfriend@ampled.com")).not_to be_nil
-    end
+        expect(JSON.parse(response.body)["message"]).to eq "Your page has been created!"
+      end
 
-    it "stops duplicate slugs" do
-      sign_in user
-      post url, params: create_params
-      post url, params: create_params
+      it "creates new users for members that do not yet exist" do
+        post url, params: create_params
+        expect(User.find_by(email: "testfriend@ampled.com")).not_to be_nil
+      end
 
-      expect(JSON.parse(response.body)["status"]).to eq "error"
-    end
+      it "stops duplicate slugs" do
+        post url, params: create_params
+        post url, params: create_params
 
-    it "stops numeric slugs" do
-      sign_in user
-      post url, params: bad_slug_params
+        expect(JSON.parse(response.body)["status"]).to eq "error"
+      end
 
-      expect(JSON.parse(response.body)["status"]).to eq "error"
+      it "stops numeric slugs" do
+        post url, params: bad_slug_params
+
+        expect(JSON.parse(response.body)["status"]).to eq "error"
+      end
+
+      it "rejects the request if no images are provided" do
+        missing_images_params = create_params.dup
+        missing_images_params[:artist_page].delete(:images)
+        post url, params: missing_images_params
+        body = JSON.parse(response.body)
+        expect(body["status"]).to eq("error")
+        expect(body["message"]).to include("image")
+      end
+
+      it "sets all the image attributes via nested attributes" do
+        post url, params: create_params
+
+        created_page = ArtistPage.find_by(slug: create_params[:artist_page][:slug])
+        expect(created_page).to_not be_nil
+        expect(created_page.images.size).to eq(2)
+        created_page.images.each do |image|
+          expect(image.url.present?).to eq(true)
+          expect(image.public_id.present?).to eq(true)
+        end
+      end
     end
   end
 
   context "when updating an artist page" do
     let(:create_url) { "/artist_pages" }
     let(:other_url) { "/artist_pages/#{other_artist_page.id}" }
-    let(:artist_page) { create(:artist_page) }
+    let(:images) { create_list(:image, 3) }
+    let(:artist_page) { create(:artist_page, images: images) }
 
     before do
       user.owned_pages << artist_page
@@ -191,33 +221,42 @@ RSpec.describe ArtistPagesController, type: :request do
     end
 
     it "will let admins edit their own page" do
-      sign_in user
       put "/artist_pages/#{artist_page.id}", params: update_params
       expect(JSON.parse(response.body)["message"]).to eq "Your page has been updated!"
     end
 
     it "won't let admins change their slug" do
-      sign_in user
       put "/artist_pages/#{artist_page.id}", params: bad_update_params
       expect(JSON.parse(response.body)["message"]).to eq "You can't change your URL or name."
     end
 
     it "pulls video screenshot url for youtube" do
-      sign_in user
       put "/artist_pages/#{artist_page.id}", params: update_params
       expect(ArtistPage.find(artist_page.id)[:video_screenshot_url]).to eq "https://img.youtube.com/vi/hHW1oY26kxQ/0.jpg"
     end
 
     it "pulls video screenshot url for vimeo", vcr: true do
-      sign_in user
       put "/artist_pages/#{artist_page.id}", params: vimeo_update_params
       expect(ArtistPage.find(artist_page.id)[:video_screenshot_url]).to eq "https://i.vimeocdn.com/video/777053973_640.jpg"
     end
 
     it "creates new users for members that do not yet exist" do
-      sign_in user
       put "/artist_pages/#{artist_page.id}", params: update_params
       expect(User.find_by(email: "testfriend@ampled.com")).not_to be_nil
+    end
+
+    it "deletes all previous images if new ones are provided" do
+      expect(artist_page.reload.images.map(&:url)).to match_array(images.map(&:url))
+      put "/artist_pages/#{artist_page.id}", params: update_params
+      expect(artist_page.reload.images.map(&:url)).to match_array("updated-url")
+    end
+
+    it "doesn't delete old images if new ones are not provided" do
+      update_params_without_images = update_params.dup
+      update_params_without_images[:artist_page].delete(:images)
+      expect {
+        put "/artist_pages/#{artist_page.id}", params: update_params_without_images
+      }.to_not change(Image, :count)
     end
   end
 

@@ -103,9 +103,14 @@
       &.secondary {
         background: $gray-lighter;
       }
-      &_polaroid {
-        max-width: 130px;
+      &_container {
+        width: 130px;
+        height: 130px;
         margin: 0 auto 1rem;
+        display: block;
+      }
+      img {
+        max-width: 130px;
         display: block;
       }
     }

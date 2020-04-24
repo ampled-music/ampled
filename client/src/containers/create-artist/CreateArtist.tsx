@@ -574,6 +574,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       ...this.state,
       randomColor,
       artistColor: randomColor,
+      artistColorAlpha: randomColor + '33',
     };
   }
 
@@ -1045,12 +1046,12 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   renderColor = () => {
-    const bgColor = this.state.artistColor
-      ? this.state.artistColor
-      : this.state.randomColor;
     return (
       <div className="artist-color">
-        <div className="primary-color" style={{ backgroundColor: bgColor }}>
+        <div
+          className="primary-color"
+          style={{ backgroundColor: this.state.artistColor }}
+        >
           <div className="container">
             <div className="row justify-content-between">
               <div className="col-md-6 col-sm-12">
@@ -1058,14 +1059,13 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                   <div className="create-artist__subtitle">Accent Color</div>
                   <div className="create-artist__copy">
                     <p>
-                      Select a color for your artist page.
-                      {/* This color will be
-                      used as accents on both your page and around the site. */}
+                      Select a color for your artist page. This color will be
+                      used as accents on both your page and around the site.
                     </p>
-                    {/* <p>
+                    <p>
                       The lighter version (20% opacity) of the color is how it
                       will appear in certain rare instances.
-                    </p> */}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1084,7 +1084,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
         </div>
-        {/* <div
+        <div
           className="secondary-color"
           style={{ backgroundColor: this.state.artistColorAlpha }}
         >
@@ -1095,7 +1095,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     );
   };

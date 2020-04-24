@@ -361,7 +361,15 @@ class ArtistComponent extends React.Component<Props, any> {
       }
     }
 
-    if (!artists.artist.approved && !artists.loading && !artists.error) {
+    console.log(loggedUserAccess);
+
+    if (
+      !artists.artist.approved &&
+      !loggedUserAccess &&
+      !artists.loading &&
+      !artists.error &&
+      !loadingMe
+    ) {
       return <ArtistComingSoon artist={artist} />;
     } else if (artists && !artists.loading && artists.error) {
       return <NoArtist />;

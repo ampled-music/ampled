@@ -48,6 +48,7 @@ import { Loading } from '../shared/loading/Loading';
 
 import { deleteFileFromCloudinary } from '../../api/cloudinary/delete-image';
 import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
+import { Image, Transformation } from 'cloudinary-react';
 import { Modal } from '../shared/modal/Modal';
 
 interface CreateArtistProps {
@@ -90,8 +91,11 @@ function a11yProps(index: any) {
 
 interface ImageUploaderProps {
   altText: string;
-  imageURL?: string;
-  setURL: Function;
+  imageObject?: {
+    url: string;
+    public_id: string;
+  };
+  setImage: Function;
   showToast: Function;
 }
 
@@ -100,15 +104,6 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
     loadingImage: false,
     deleteToken: undefined,
     publicId: null,
-  };
-
-  renderPhoto = (image: string, crop: number) => {
-    const crop_url_path = `w_${crop},h_${crop},c_fill`;
-    if (image.includes('https://res.cloudinary')) {
-      return image.replace('upload/', `upload/${crop_url_path}/`);
-    } else {
-      return `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
-    }
   };
 
   processImage = async (e) => {
@@ -143,7 +138,10 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
         loadingImage: false,
         publicId: cloudinaryResponse.public_id,
       });
-      this.props.setURL(cloudinaryResponse.secure_url);
+      this.props.setImage({
+        url: cloudinaryResponse.secure_url,
+        public_id: cloudinaryResponse.public_id,
+      });
     } else {
       this.setState({
         loadingImage: false,
@@ -159,23 +157,35 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
 
   removeImage = async () => {
     deleteFileFromCloudinary(this.state.deleteToken);
-    this.setState({ imageUrl: null, deleteToken: undefined, publicId: null });
-    this.props.setURL(null);
+    this.setState({
+      imageObject: null,
+      deleteToken: undefined,
+      publicId: null,
+    });
+    this.props.setImage(null);
   };
 
   render() {
-    const { altText, imageURL } = this.props;
+    const { altText, imageObject } = this.props;
     const { loadingImage } = this.state;
-
     let body: {};
-    if (imageURL) {
+    if (imageObject) {
       body = (
         <>
-          <img
-            className="image-upload__image_polaroid"
-            src={this.renderPhoto(imageURL, 200)}
-            alt={altText}
-          />
+          <div className="image-upload__image_container">
+            <Image
+              className="image-upload__image_image"
+              publicId={imageObject.public_id}
+              alt={altText}
+            >
+              <Transformation
+                crop="fill"
+                width={130}
+                height={130}
+                responsive_placeholder="blank"
+              />
+            </Image>
+          </div>
           {/* <span className="preview__name">{altText}</span> */}
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <label>
@@ -205,11 +215,13 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
     } else {
       body = (
         <>
-          <img
-            className="image-upload__image_polaroid"
-            src={polaroid}
-            alt={altText}
-          />
+          <div className="image-upload__image_container">
+            <img
+              className="image-upload__image_polaroid"
+              src={polaroid}
+              alt={altText}
+            />
+          </div>
           <label
             htmlFor={`image-file-${altText}`}
             style={{ display: 'flex', justifyContent: 'center' }}
@@ -562,6 +574,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       ...this.state,
       randomColor,
       artistColor: randomColor,
+      artistColorAlpha: randomColor + '33',
     };
   }
 
@@ -986,9 +999,15 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
 
   renderImages = () => {
     const { images } = this.state;
-    const imageSetter = (index) => (url) => {
-      const { images } = this.state;
-      images[index] = url;
+    const imageSetter = (index) => (cloudinary) => {
+      if (cloudinary) {
+        images[index] = {
+          url: cloudinary.url,
+          public_id: cloudinary.public_id,
+        };
+      } else {
+        images[index] = null;
+      }
       this.setState({ images });
     };
 
@@ -1014,8 +1033,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               <div className="col-md-4 col-sm-12" key={index}>
                 <ImageUploader
                   altText={type}
-                  setURL={imageSetter(index)}
-                  imageURL={images[index]}
+                  setImage={imageSetter(index)}
+                  imageObject={images[index]}
                   showToast={this.props.showToast}
                 />
               </div>
@@ -1027,12 +1046,12 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   renderColor = () => {
-    const bgColor = this.state.artistColor
-      ? this.state.artistColor
-      : this.state.randomColor;
     return (
       <div className="artist-color">
-        <div className="primary-color" style={{ backgroundColor: bgColor }}>
+        <div
+          className="primary-color"
+          style={{ backgroundColor: this.state.artistColor }}
+        >
           <div className="container">
             <div className="row justify-content-between">
               <div className="col-md-6 col-sm-12">
@@ -1040,14 +1059,13 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                   <div className="create-artist__subtitle">Accent Color</div>
                   <div className="create-artist__copy">
                     <p>
-                      Select a color for your artist page.
-                      {/* This color will be
-                      used as accents on both your page and around the site. */}
+                      Select a color for your artist page. This color will be
+                      used as accents on both your page and around the site.
                     </p>
-                    {/* <p>
+                    <p>
                       The lighter version (20% opacity) of the color is how it
                       will appear in certain rare instances.
-                    </p> */}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1066,7 +1084,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
         </div>
-        {/* <div
+        <div
           className="secondary-color"
           style={{ backgroundColor: this.state.artistColorAlpha }}
         >
@@ -1077,7 +1095,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     );
   };
@@ -1218,6 +1236,16 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
+    if (
+      images.filter((image) => image !== null && typeof image !== 'undefined')
+        .length === 0
+    ) {
+      return this.props.showToast({
+        message: 'Please add at least one image.',
+        type: 'error',
+      });
+    }
+
     if (/[@:/]/gi.test(artistTwitter) || /[@:/]/gi.test(artistInstagram)) {
       return this.props.showToast({
         message: 'Please check the format of your social handles.',
@@ -1262,8 +1290,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             instagram_handle: artistInstagram,
             twitter_handle: artistTwitter,
             verb_plural: artistVerb !== 'is',
+            images,
           },
-          images,
           members,
         },
       });
@@ -1297,8 +1325,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             instagram_handle: artistInstagram,
             twitter_handle: artistTwitter,
             verb_plural: artistVerb !== 'is',
+            images,
           },
-          images,
           members,
         },
       });

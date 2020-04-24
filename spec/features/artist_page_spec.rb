@@ -4,7 +4,8 @@ RSpec.describe ArtistPagesController, type: :request do
   let(:user) { create(:user, confirmed_at: Time.current) }
   let(:supporter) { create(:user, confirmed_at: Time.current) }
 
-  let(:artist_page) { create(:artist_page, slug: "test", approved: true) }
+  let(:image) { create(:image) }
+  let(:artist_page) { create(:artist_page, slug: "test", approved: true, images: [image]) }
   let(:artist_page_unapproved) { create(:artist_page, slug: "unapproved", approved: false) }
 
   before(:each) do
@@ -88,6 +89,15 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(JSON.parse(response.body)["slug"]).to eq artist_page.slug
     end
 
+    it "responds with JSON including the page images and their attributes" do
+      get url
+
+      body = JSON.parse(response.body)
+      expect(body["images"]).to eq([
+        { "id" => image.id, "url" => image.url, "public_id" => image.public_id }
+      ])
+    end
+
     xit "includes active supporter data" do
       create(:subscription, user: supporter, artist_page: artist_page)
       get url
@@ -107,10 +117,16 @@ RSpec.describe ArtistPagesController, type: :request do
     let(:url) { "/artist_pages/#{artist_page_unapproved.id}.json" }
     let(:slugurl) { "/slug/#{artist_page_unapproved.slug}.json" }
 
-    it "returns 400" do
+    it "returns 200" do
       get url
 
-      expect(response.status).to eq 400
+      expect(response.status).to eq 200
+    end
+
+    it "does not include owner data" do
+      get url
+
+      expect(JSON.parse(response.body)["owners"]).to be_nil
     end
   end
 end

@@ -16,4 +16,6 @@ export const routePaths = {
   createArtist: '/create-artist',
   noArtist: '/no_artist',
   browse: '/browse',
+  stats: '/stats',
+  feed: '/feed',
 };

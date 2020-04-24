@@ -2,12 +2,14 @@ namespace :dummy do
   desc "Generates fake data"
 
   task users: [:environment] do
-    (1..10).map do |_|
+    User.all.map(&:destroy)
+
+    users = (1..10).map do |_|
       first = Faker::Name.first_name
       last = Faker::Name.last_name
       password = Faker::Internet.password
       social = Faker::Twitter.screen_name
-      user = User.create(
+      User.create(
         name: first,
         last_name: last,
         city: Faker::Address.city,
@@ -16,12 +18,21 @@ namespace :dummy do
         twitter: social,
         instagram: social,
         email: Faker::Internet.email,
-        profile_image_url: "https://robohash.org/#{ERB::Util.url_encode first}_#{ERB::Util.url_encode last}.jpg?set=set1&size=100x100",
+        profile_image_url: "https://res.cloudinary.com/ampled-web/image/upload/v1586552080/testing/TestingImage_#{rand(1..30)}.jpg",
         password: password,
         password_confirmation: password
       )
-      user.confirm
-      user
+    end
+
+    image_url = -> {
+      "https://res.cloudinary.com/ampled-web/image/upload/v1586552080/testing/TestingImage_#{rand(1..30)}.jpg"
+    }
+    public_id = -> {
+      "v1586552080/testing/TestingImage_#{rand(1..30)}"
+    }
+
+    users.each do |us|
+      us.image << Image.create(url: image_url.call, public_id: public_id.call)
     end
   end
 
@@ -47,13 +58,16 @@ namespace :dummy do
     end
 
     image_url = -> {
-      "https://dummyimage.com/600x600/#{Faker::Color.hex_color[1..-1]}/fff"
+      "https://res.cloudinary.com/ampled-web/image/upload/v1586552080/testing/TestingImage_#{rand(1..30)}.jpg"
+    }
+    public_id = -> {
+      "v1586552080/testing/TestingImage_#{rand(1..30)}"
     }
 
     artist_pages.each do |ap|
-      ap.images << Image.create(url: image_url.call)
-      ap.images << Image.create(url: image_url.call)
-      ap.images << Image.create(url: image_url.call)
+      ap.images << Image.create(url: image_url.call, public_id: public_id.call)
+      ap.images << Image.create(url: image_url.call, public_id: public_id.call)
+      ap.images << Image.create(url: image_url.call, public_id: public_id.call)
     end
   end
 

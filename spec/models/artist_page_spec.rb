@@ -75,4 +75,31 @@ RSpec.describe ArtistPage, type: :model do
       end
     end
   end
+
+  describe "#images" do
+    let(:image) { create(:image) }
+    let!(:artist_page) { create(:artist_page, images: [image]) }
+
+    it "get deleted when owning Artist Page is deleted" do
+      expect {
+        artist_page.destroy!
+      }.to change { Image.all.count }.by(-1)
+    end
+
+    it "can be set as nested attributes" do
+      page_with_images = described_class.new(
+        name: "Kitten Rock",
+        images_attributes: [
+          { url: "http://first.jpg", public_id: "first_public_id" },
+          { url: "http://second.jpg", public_id: "second_public_id" }
+        ]
+      )
+      expect { page_with_images.save! }.to change { Image.all.count }.by(2)
+      page_with_images.reload
+      page_with_images.images.each do |image|
+        expect(image.url).to_not be_nil
+        expect(image.public_id).to_not be_nil
+      end
+    end
+  end
 end

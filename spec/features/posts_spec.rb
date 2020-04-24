@@ -312,3 +312,71 @@ RSpec.describe "Download posts", :vcr, type: :request do
     end
   end
 end
+
+RSpec.describe "GET /posts", type: :request do
+  let(:admin_user) do
+    create(:user, confirmed_at: Time.current, admin: true)
+  end
+  let(:author_user) { create(:user) }
+  let(:artist_page) { create(:artist_page) }
+  let(:post_params) do
+    {
+      post: {
+        artist_page_id: artist_page.id,
+        title: "test",
+        body: "test test"
+      }
+    }
+  end
+
+  before do
+    sign_in author_user
+    author_user.owned_pages << artist_page
+    post "/artist_pages/#{artist_page.id}/posts", params: post_params
+    sign_out author_user
+  end
+
+  context "when user is unauthenticated" do
+    before do
+      get "/posts.json"
+    end
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+
+    it "does not contain any posts" do
+      expect(JSON.parse(response.body)).to eq []
+    end
+  end
+
+  context "when user is regular" do
+    before do
+      sign_in author_user
+      get "/posts.json"
+    end
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+
+    it "does not contain any posts" do
+      expect(JSON.parse(response.body)).to eq []
+    end
+  end
+
+  context "when user is an admin" do
+    before do
+      sign_in admin_user
+      get "/posts.json"
+    end
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+
+    it "contains any posts" do
+      expect(JSON.parse(response.body).count).to be > 0
+    end
+  end
+end

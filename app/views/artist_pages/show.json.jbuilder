@@ -8,7 +8,7 @@ json.video_url @artist_page.video_url
 json.video_screenshot_url @artist_page.video_screenshot_url
 json.twitter_handle @artist_page.twitter_handle
 json.instagram_handle @artist_page.instagram_handle
-json.images @artist_page.images.map(&:url)
+json.images @artist_page.images, partial: "images/image", as: :image
 json.isStripeSetup @artist_page.is_stripe_ready
 json.approved @artist_page.approved
 
@@ -31,5 +31,7 @@ json.owners @artist_page.page_ownerships do |ownership|
 end
 
 json.supporters @artist_page.active_subscribers, partial: "users/user", as: :user
+
+@expand_artist = false
 
 json.posts @artist_page.posts, partial: "posts/post", as: :post

@@ -26,6 +26,10 @@ class PostPolicy
     !post.is_private || owner? || (subscriber? && card_valid?) || admin?
   end
 
+  def view_all?
+    admin?
+  end
+
   private
 
   def author?

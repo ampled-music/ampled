@@ -8,10 +8,12 @@ class ImageDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    artist_page: Field::BelongsTo,
+    imageable: Field::Polymorphic.with_options(
+      classes: [ArtistPage]
+    ),
     id: Field::Number,
     url: Field::String,
-    order: Field::Number,
+    public_id: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -22,19 +24,19 @@ class ImageDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :artist_page,
+    :imageable,
     :id,
     :url,
-    :order,
+    :public_id,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :artist_page,
+    :imageable,
     :id,
     :url,
-    :order,
+    :public_id,
     :created_at,
     :updated_at,
   ].freeze
@@ -43,9 +45,9 @@ class ImageDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :artist_page,
+    :imageable,
     :url,
-    :order,
+    :public_id,
   ].freeze
 
   # Overwrite this method to customize how images are displayed

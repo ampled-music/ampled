@@ -53,7 +53,11 @@ class ArtistComingSoon extends React.Component<Props, any> {
                   </Image>
                 )}
               </div>
-              <p>Coming Soon.</p>
+              <p>
+                Page under construction.
+                <br />
+                If this page belongs to you, log in to manage.
+              </p>
             </div>
           </div>
         </div>

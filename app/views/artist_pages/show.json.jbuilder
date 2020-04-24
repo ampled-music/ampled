@@ -32,4 +32,6 @@ end
 
 json.supporters @artist_page.active_subscribers, partial: "users/user", as: :user
 
+@expand_artist = false
+
 json.posts @artist_page.posts, partial: "posts/post", as: :post

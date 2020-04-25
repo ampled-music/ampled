@@ -76,6 +76,26 @@ RSpec.describe "DELETE /posts", type: :request do
       expect(Post.find(post.id)).to eq post
     end
   end
+
+  context "when post has audio" do
+    let(:user) { create(:user) }
+    let(:post) { create(:post, user: user, audio_uploads: [AudioUpload.new(public_id: "abc.mp3")]) }
+
+    before(:each) do
+      sign_in user
+    end
+
+    before { delete "/posts/#{post.id}" }
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+
+    it "deletes the audio upload record too" do
+      audio_upload = AudioUpload.where(post_id: post.id).first
+      expect(audio_upload).to eq nil
+    end
+  end
 end
 
 RSpec.describe "PUT /posts", type: :request do
@@ -108,6 +128,48 @@ RSpec.describe "PUT /posts", type: :request do
 
     it "updates the post" do
       expect(Post.find_by(id: post.id).title).to eq "my new title"
+    end
+  end
+
+  context "when a post's audio upload is set to be destroyed" do
+    let(:user) { create(:user) }
+    let(:post) { create(:post, user: user, audio_uploads: [AudioUpload.new(public_id: "abc.mp3")]) }
+
+    before(:each) do
+      sign_in user
+    end
+
+    before do
+      put "/posts/#{post.id}",
+          params: { post: { audio_uploads_attributes: [{ id: post.audio_uploads.first.id, _destroy: true }] } }
+    end
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+
+    it "should delete the audio upload record" do
+      audio_upload = AudioUpload.where(post_id: post.id).first
+      expect(audio_upload).to eq nil
+    end
+  end
+
+  context "when a post has a new audio upload" do
+    let(:user) { create(:user) }
+    let(:post) { create(:post, user: user, audio_uploads: []) }
+
+    before(:each) do
+      sign_in user
+    end
+
+    before { put "/posts/#{post.id}", params: { post: { audio_uploads_attributes: [{ public_id: "abc.mp3" }] } } }
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+
+    it "should create the audio upload record" do
+      expect(Post.find_by(id: post.id).audio_uploads.first.public_id).to eq "abc.mp3"
     end
   end
 end
@@ -168,6 +230,34 @@ RSpec.describe "POST /posts", type: :request do
       get "/artist_pages/#{artist_page.id}.json"
       expect(JSON.parse(response.body)["posts"][0]["title"]).to eq("test")
       expect(JSON.parse(response.body)["posts"][0]["author"]).to eq(owner_user.name)
+    end
+  end
+
+  context "when the post has audio" do
+    before do
+      owner_user.owned_pages << artist_page
+      sign_in owner_user
+
+      post_params = {
+        post: {
+          artist_page_id: artist_page.id,
+          title: "test",
+          body: "test test",
+          audio_uploads_attributes: [{
+            public_id: "abc.mp3"
+          }]
+        }
+      }
+      post "/artist_pages/#{artist_page.id}/posts", params: post_params
+    end
+
+    it "returns 200" do
+      expect(response.status).to eq 200
+    end
+
+    it "should create audio upload record" do
+      get "/artist_pages/#{artist_page.id}.json"
+      expect(JSON.parse(response.body)["posts"][0]["audio_uploads"][0]["public_id"]).to eq("abc.mp3")
     end
   end
 end

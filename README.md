@@ -22,10 +22,10 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
 - [Deploy to Acceptance/Production](#deploy-to-acceptanceproduction)
 - [Database migrations and rollbacks](#database-migrations-and-rollbacks)
 - [Server Environments](#server-environments)
-    - [Hosting](#hosting)
-    - [Environment Variables](#environment-variables)
-    - [Third Party Services](#third-party-services)
-    - [Using the Stripe CLI to test webhooks locally](#using-the-stripe-cli-to-test-webhooks-locally)
+  - [Hosting](#hosting)
+  - [Environment Variables](#environment-variables)
+  - [Third Party Services](#third-party-services)
+  - [Using the Stripe CLI to test webhooks locally](#using-the-stripe-cli-to-test-webhooks-locally)
 - [Internal Tools](#internal-tools)
   - [`application-fee-management`](#application-fee-management)
     - [Installation & setup](#installation--setup)
@@ -167,17 +167,18 @@ command in our app's [Procfile](Procfile).
 Database migrations run automagically ✨ in staging and production as part of the deploy process.
 If you ever need to run a migration or a migration rollback in a Heroku environment, you can
 do so using the `heroku run` command (part of the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)), like this:
+
 ```bash
 $ heroku run rake db:migrate --app ampled-web
 ```
 
 Or, for example, to roll back the most recent migration:
+
 ```bash
 $ heroku run rake db:rollback --app ampled-web
 ```
 
 (replace the app name above with `ampled-web-production` if you need to run this against production)
-
 
 # Server Environments
 
@@ -271,22 +272,34 @@ You'll also need a `.env` file in /tools/application-fee-management/ with `STRIP
 
 ### Use
 
-To list all connected accounts and subscriptions:
+To list all connected accounts:
 
 ```
 yarn start
 ```
 
+To display the account object for a Connected account:
+
+```
+yarn start --getAccount --account acct_00000
+```
+
+To list all connected accounts and subscriptions:
+
+```
+yarn start --listSubs
+```
+
 To list all connected accounts and subscriptions, oldest first:
 
 ```
-yarn start --sort date_asc
+yarn start --listSubs --sort date_asc
 ```
 
 To list all connected accounts and subscriptions, newest first:
 
 ```
-yarn start --sort date_desc
+yarn start --listSubs --sort date_desc
 ```
 
 To add a 13.24% fee to all connected accounts and subscriptions:

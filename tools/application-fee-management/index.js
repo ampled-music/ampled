@@ -11,7 +11,7 @@ const optionDefinitions = [
     name: 'account',
     type: String,
     description:
-      'Optional Stripe Connect account to limit subscription results / changes to. Works with --addFee, --removeFee, and --showProcessedFees',
+      'Optional Stripe Connect account to limit subscription results / changes to. Works with --addFee, --removeFee, --showProcessedFees, and --refundProcessedFees',
   },
   {
     name: 'getAccount',
@@ -39,6 +39,11 @@ const optionDefinitions = [
     type: Boolean,
     description: 'List processed application fees',
   },
+  {
+    name: 'refundProcessedFees',
+    type: Boolean,
+    description: 'Refund processed application fees',
+  },
   { name: 'help', type: Boolean, description: 'Show this help screen' },
   {
     name: 'sort',
@@ -65,6 +70,7 @@ const usageGuide = [
       'addFee',
       'removeFee',
       'help',
+      'refundProcessedFees',
       'showProcessedFees',
       'getAccount',
       'listSubs',
@@ -233,14 +239,15 @@ const getProcessedFees = async (
   const fees = await stripe.applicationFees.list(
     {
       starting_after,
+      limit: 100,
     },
     {
       stripeAccount: account,
     },
   );
 
-  progress.setTotal((index + 1) * 10);
-  progress.update(index * 10);
+  progress.setTotal((index + 1) * 100);
+  progress.update(index * 100);
 
   let { data, has_more } = fees;
 
@@ -255,6 +262,8 @@ const getProcessedFees = async (
       )),
     ];
   }
+  progress.setTotal(data.length);
+  progress.update(data.length);
   return data;
 };
 
@@ -263,7 +272,7 @@ const getAllProcessedFees = async () => {
     {},
     cliProgress.Presets.shades_classic,
   );
-  progress.start(1, 10);
+  progress.start(100, 1);
   let fees = await getProcessedFees(progress);
   progress.stop();
 
@@ -317,6 +326,88 @@ const getAllProcessedFees = async () => {
   console.table(allFees);
 };
 
+const refundFee = async (feeId) =>
+  await stripe.applicationFees.createRefund(feeId);
+
+const refundAllProcessedFees = async () => {
+  console.log('Loading all fees...');
+  const progress = new cliProgress.SingleBar(
+    {},
+    cliProgress.Presets.shades_classic,
+  );
+  progress.start(100, 1);
+  let fees = await getProcessedFees(progress);
+  progress.stop();
+
+  if (options.account) {
+    fees = fees.filter(({ account }) => account === options.account);
+  }
+
+  console.log(`Found ${fees.length} fees charged.`);
+  console.log(
+    `${fees.filter(({ refunded }) => refunded).length} already refunded.`,
+  );
+
+  const allFees = {};
+  fees.map(({ account, amount, amount_refunded }) => {
+    if (allFees[account]) {
+      allFees[account] = {
+        total: allFees[account].total + amount,
+        total_refunded: allFees[account].total_refunded + amount_refunded,
+        count: allFees[account].count + 1,
+      };
+    } else {
+      allFees[account] = {
+        total: amount,
+        total_refunded: amount_refunded,
+        count: 1,
+      };
+    }
+  });
+
+  for (let account in allFees) {
+    allFees[account] = {
+      ...allFees[account],
+      total: `$${(allFees[account].total / 100).toFixed(2)}`,
+      total_refunded: `$${(allFees[account].total_refunded / 100).toFixed(2)}`,
+    };
+  }
+
+  console.table(allFees);
+
+  fees = fees.filter(({ refunded }) => !refunded);
+
+  console.log(`Refunding ${fees.length} fees...`);
+
+  const feeIds = fees.map(({ id, amount }) => ({ id, status: 'todo', amount }));
+  progress.start(feeIds.length, 1);
+  for (let i = 0; i < feeIds.length; i++) {
+    progress.update(i + 1);
+    try {
+      await refundFee(feeIds[i].id);
+      feeIds[i].status = 'ok';
+    } catch (e) {
+      console.error(e);
+      feeIds[i].status = 'failed';
+    }
+  }
+  progress.update(feeIds.length);
+  progress.stop();
+  const successfulRefunds = feeIds.filter((i) => i.status === 'ok');
+  const refundAmount = successfulRefunds.reduce(
+    (acc, { amount }) => amount + acc,
+    0,
+  );
+  console.log(
+    `${(refundAmount / 100).toFixed(2)} (${
+      successfulRefunds.length
+    } fees) refunded.`,
+  );
+  console.log(
+    `${feeIds.filter((i) => i.status === 'failed').length} fee refunds failed.`,
+  );
+};
+
 (async () => {
   if (options.help) {
     console.log(getUsage(usageGuide));
@@ -329,6 +420,9 @@ const getAllProcessedFees = async () => {
     return;
   } else if (options.showProcessedFees) {
     await getAllProcessedFees();
+    return;
+  } else if (options.refundProcessedFees) {
+    await refundAllProcessedFees();
     return;
   }
   let accounts;

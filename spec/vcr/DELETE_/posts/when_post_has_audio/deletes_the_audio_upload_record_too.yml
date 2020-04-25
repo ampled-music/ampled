@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: delete
+    uri: https://ampled-test.s3.amazonaws.com/abc.mp3
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby3/3.44.0 ruby/2.5.7 x86_64-darwin17 aws-sdk-s3/1.30.0
+      Host:
+      - ampled-test.s3.amazonaws.com
+      X-Amz-Date:
+      - 20200425T225347Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=AKIAIRUUSOG6DCDAJOSQ/20200425/us-east-1/s3/aws4_request,
+        SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, Signature=c609397bfe585865a720847f52e5092b6661cf55d1282c3e0f20c39e4d5b25a4
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      X-Amz-Id-2:
+      - RRx7YQCoX8y4IBHPyaScYzIC0KiDvmbYsTuT2WLgxnAxEVh2aR9nWA/vZWTrPVMShs8NCLfjE5c=
+      X-Amz-Request-Id:
+      - 8C9EAA5956035641
+      Date:
+      - Sat, 25 Apr 2020 22:53:48 GMT
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Sat, 25 Apr 2020 22:53:47 GMT
+recorded_with: VCR 4.0.0

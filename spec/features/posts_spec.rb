@@ -77,7 +77,7 @@ RSpec.describe "DELETE /posts", type: :request do
     end
   end
 
-  context "when post has audio" do
+  context "when post has audio", vcr: true do
     let(:user) { create(:user) }
     let(:post) { create(:post, user: user, audio_uploads: [AudioUpload.new(public_id: "abc.mp3")]) }
 
@@ -131,7 +131,7 @@ RSpec.describe "PUT /posts", type: :request do
     end
   end
 
-  context "when a post's audio upload is set to be destroyed" do
+  context "when a post's audio upload is set to be destroyed", vcr: true do
     let(:user) { create(:user) }
     let(:post) { create(:post, user: user, audio_uploads: [AudioUpload.new(public_id: "abc.mp3")]) }
 

@@ -181,17 +181,17 @@ RSpec.describe "Download posts", :vcr, type: :request do
   let(:public_download_post) do
     create(:post, artist_page_id: artist_page.id, title: "test",
            body: "test test", allow_download: true,
-           audio_uploads: [ AudioUpload.new(public_id: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.mp3") ])
+           audio_uploads: [AudioUpload.new(public_id: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.mp3")])
   end
   let(:private_download_post) do
     create(:post, artist_page_id: artist_page.id, title: "test",
            body: "test test", allow_download: true, is_private: true,
-           audio_uploads: [ AudioUpload.new(public_id: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.mp3") ])
+           audio_uploads: [AudioUpload.new(public_id: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.mp3")])
   end
   let(:public_no_download_post) do
     create(:post, artist_page_id: artist_page.id, title: "test",
            body: "test test", allow_download: false,
-           audio_uploads: [ AudioUpload.new(public_id: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.mp3") ])
+           audio_uploads: [AudioUpload.new(public_id: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.mp3")])
   end
   let(:public_no_audio_post) do
     create(:post, artist_page_id: artist_page.id, title: "test",

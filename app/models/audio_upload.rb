@@ -22,6 +22,5 @@ class AudioUpload < ApplicationRecord
   before_destroy :delete_from_s3
 
   def delete_from_s3
-    puts("DELETE FROM S3")
   end
 end

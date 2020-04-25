@@ -34,7 +34,6 @@ class Post < ApplicationRecord
 
   accepts_nested_attributes_for :audio_uploads, allow_destroy: true
 
-
   def author
     user.name
   end

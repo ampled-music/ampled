@@ -20,6 +20,5 @@
 
 FactoryBot.define do
   factory :audio_upload do
-    
   end
 end

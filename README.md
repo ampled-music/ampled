@@ -272,46 +272,8 @@ You'll also need a `.env` file in /tools/application-fee-management/ with `STRIP
 
 ### Use
 
-To list all connected accounts:
+The command-line help provides info on the various commands and options, in addition to providing some examples.
 
 ```
-yarn start
-```
-
-To display the account object for a Connected account:
-
-```
-yarn start --getAccount --account acct_00000
-```
-
-To list all connected accounts and subscriptions:
-
-```
-yarn start --listSubs
-```
-
-To list all connected accounts and subscriptions, oldest first:
-
-```
-yarn start --listSubs --sort date_asc
-```
-
-To list all connected accounts and subscriptions, newest first:
-
-```
-yarn start --listSubs --sort date_desc
-```
-
-To add a 13.24% fee to all connected accounts and subscriptions:
-
-```
-yarn start --addFee 13.24
-```
-
-To remove fees from all connected accounts and subscriptions:
-
-```
-yarn start --addFee 0
-or
-yarn start --removeFee
+yarn start --help
 ```

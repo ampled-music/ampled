@@ -7,7 +7,7 @@
 #  post_id    :bigint(8)        not null
 #  public_id  :string           not null
 #  updated_at :datetime         not null
-#  waveform   :text             default([]), not null, is an Array
+#  waveform   :integer          default([]), not null, is an Array
 #
 # Indexes
 #
@@ -19,11 +19,20 @@
 #
 
 class AudioUpload < ApplicationRecord
-  before_destroy :delete_from_s3
+  before_destroy :delete_audio
+  after_commit :process_audio, on: :create
 
-  def delete_from_s3
+  def processed?
+    waveform.any?
+  end
+
+  def delete_audio
     s3 = Aws::S3::Resource.new
     bucket = s3.bucket(ENV["S3_BUCKET"])
     bucket.object(public_id).delete
+  end
+
+  def process_audio 
+    AudioProcessingJob.perform_async(id)
   end
 end

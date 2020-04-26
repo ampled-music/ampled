@@ -12,6 +12,7 @@
   "dependencies": {
     "cli-progress": "^3.6.0",
     "command-line-args": "^5.1.1",
+    "command-line-usage": "^6.1.0",
     "dotenv": "^8.2.0",
     "stripe": "^8.38.0"
   },

@@ -27,7 +27,7 @@ class AudioProcessingService
     @downsampled_file_path = Rails.root.join("tmp/audio/downsampled_#{@process_id}.wav")
     `ffmpeg -i #{@raw_file_path} -acodec pcm_u8 -ar 1000 -ac 1 #{@downsampled_file_path}`
 
-    error_message = "FFMPEG: failed to transcode and downsample audio upload: #{public_id}"
+    error_message = "FFMPEG: failed to transcode and downsample audio upload: #{@public_id}"
     raise FfmpegError, error_message unless File.exist?(@downsampled_file_path)
 
     # read output file one buffer at a time

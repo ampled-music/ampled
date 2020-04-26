@@ -25,28 +25,28 @@ class AudioProcessingService
   def generate_waveform(waveform_length = 200)
     # process original file
     @downsampled_file_path = Rails.root.join("tmp/audio/downsampled_#{@process_id}.wav")
-    ffmpeg_result = `ffmpeg -i #{@raw_file_path} -acodec pcm_u8 -ar 1000 -ac 1 #{@downsampled_file_path}`
-    raise FfmpegError, "FFMPEG: failed to transcode and downsample audio upload: #{public_id}" unless File.exist?(@downsampled_file_path)
+    `ffmpeg -i #{@raw_file_path} -acodec pcm_u8 -ar 1000 -ac 1 #{@downsampled_file_path}`
+
+    error_message = "FFMPEG: failed to transcode and downsample audio upload: #{public_id}"
+    raise FfmpegError, error_message unless File.exist?(@downsampled_file_path)
 
     # read output file one buffer at a time
-    samples_per_waveform_point = []
+    waveform_buffers = []
     reader = WaveFile::Reader.new(@downsampled_file_path.to_path)
     begin
-      num_samples_per_waveform_point = (reader.total_sample_frames / waveform_length.to_f).ceil
-      while reader.current_sample_frame < reader.total_sample_frames do
-        samples = reader.read(num_samples_per_waveform_point).samples
-        samples_per_waveform_point << samples unless samples.empty?
+      num_samples_per_waveform_buffer = (reader.total_sample_frames / waveform_length.to_f).ceil
+      while reader.current_sample_frame < reader.total_sample_frames
+        buffer_samples = reader.read(num_samples_per_waveform_buffer).samples
+        waveform_buffers << buffer_samples unless buffer_samples.empty?
       end
     ensure
       reader.close
     end
-    
+
     # normalize 8-bit amplitudes so that waveform values range from 0-128
     waveform = []
-    for i in 0..(samples_per_waveform_point.size-1)
-      samples = samples_per_waveform_point[i]
-      samples = samples.map{ |sample| (sample - 128).abs }
-      waveform << samples.max
+    waveform_buffers.each do |buffer|
+      waveform << buffer.map { |sample| (sample - 128).abs }.max
     end
 
     waveform

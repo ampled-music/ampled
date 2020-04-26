@@ -32,7 +32,7 @@ class AudioUpload < ApplicationRecord
     bucket.object(public_id).delete
   end
 
-  def process_audio 
+  def process_audio
     AudioProcessingJob.perform_async(id)
   end
 end

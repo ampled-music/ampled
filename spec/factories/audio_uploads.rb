@@ -7,7 +7,7 @@
 #  post_id    :bigint(8)        not null
 #  public_id  :string           not null
 #  updated_at :datetime         not null
-#  waveform   :text             default([]), not null, is an Array
+#  waveform   :integer          default([]), not null, is an Array
 #
 # Indexes
 #

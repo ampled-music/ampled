@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2020_04_29_004705) do
   create_table "audio_uploads", force: :cascade do |t|
     t.bigint "post_id", null: false
     t.string "public_id", null: false
-    t.text "waveform", default: [], null: false, array: true
+    t.integer "waveform", default: [], null: false, array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_audio_uploads_on_post_id"

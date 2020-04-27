@@ -268,15 +268,17 @@
 
 .single-post {
   .post {
-    width: 70%;
+    max-width: 100%;
     @include mq($tablet) {
       flex-direction: row;
       justify-content: space-between;
     }
-  }
-
-  .comments-list {
-    width: 25%;
+    &__content {
+      width: 70%;
+    }
+    .comments-list {
+      width: 25%;
+    }
   }
 }
 

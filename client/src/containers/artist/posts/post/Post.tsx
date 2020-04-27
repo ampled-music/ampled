@@ -663,16 +663,20 @@ class PostComponent extends React.Component<any, any> {
                       </a>
                     )}
                   >
-                    {parse(post.body, {
-                      replace: (domNode) => {
-                        // FYI, here we can reshape tags as needed
-                        // for presentation. If we simply return,
-                        // the node is unprocessed; otherwise, return
-                        // a new React element that should take the
-                        // place of the node.
-                        return;
-                      },
-                    })}
+                    {// If there are no p tags, this is legacy
+                    // text and should be presented unparsed.
+                    /<p>/gi.test(post.body)
+                      ? parse(post.body, {
+                          replace: (domNode) => {
+                            // FYI, here we can reshape tags as needed
+                            // for presentation. If we simply return,
+                            // the node is unprocessed; otherwise, return
+                            // a new React element that should take the
+                            // place of the node.
+                            return;
+                          },
+                        })
+                      : post.body}
                   </Linkify>
                 </div>
               )}

@@ -13,7 +13,6 @@ import tear from '../../../../images/background_tear.png';
 import { faUnlock, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardActions, Collapse } from '@material-ui/core';
-import CardMedia from '@material-ui/core/CardMedia';
 import { withStyles } from '@material-ui/core/styles';
 import { Modal } from '../../../shared/modal/Modal';
 import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
@@ -28,14 +27,13 @@ import { styles } from './post-style';
 
 import { deletePost } from '../../../../api/post/delete-post';
 
-const renderCloudinaryPhoto = (image: string, crop: number) => {
-  const crop_url_path = `w_${crop},h_${crop},c_fill`;
+const renderCloudinaryPhoto = (image: string) => {
   if (image) {
     if (image.includes('https://res.cloudinary')) {
-      const img_src = image.replace('upload/', `upload/${crop_url_path}/`);
+      const img_src = image.replace('upload/', `upload/`);
       return img_src;
     } else {
-      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${image}`;
       return img_src;
     }
   }
@@ -207,7 +205,6 @@ const PostMedia = ({
     audio_file,
     deny_details_lapsed,
   },
-  classes,
   allowDetails,
   accentColor,
   me,
@@ -223,11 +220,12 @@ const PostMedia = ({
     )}
     {image_url && !has_audio && (
       <div className="post__image-container">
-        <CardMedia
-          className={cx(classes.media, {
+        <img
+          className={cx({
+            post__image: true,
             'blur-image': !allowDetails,
           })}
-          image={renderCloudinaryPhoto(image_url, 500)}
+          src={renderCloudinaryPhoto(image_url)}
         />
         {!allowDetails && (
           <Lock
@@ -243,11 +241,12 @@ const PostMedia = ({
       <div className="post__audio-container">
         <div className="post__image-container">
           {image_url && (
-            <CardMedia
-              className={cx(classes.media, {
+            <img
+              className={cx({
+                post__image: true,
                 'blur-image': !allowDetails,
               })}
-              image={renderCloudinaryPhoto(image_url, 500)}
+              src={renderCloudinaryPhoto(image_url)}
             />
           )}
           {!image_url && !allowDetails && (
@@ -270,7 +269,7 @@ const PostMedia = ({
         {allowDetails && (
           <AudioPlayer
             url={returnPlayableUrl(audio_file)}
-            image={renderCloudinaryPhoto(image_url, 500)}
+            image={renderCloudinaryPhoto(image_url)}
             accentColor={accentColor}
             callback={playerCallback}
           />

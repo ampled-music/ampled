@@ -66,12 +66,6 @@ const StyleOverride = ({
   <style
     dangerouslySetInnerHTML={{
       __html: `
-        ${bgColor &&
-          `
-          body { 
-            background-color: ${hexToRGB(accentColor, '.2')} !important; 
-          }
-        `}
         .btn.btn-read-more,
         .btn.btn-support,
         .private-support__btn > .btn {
@@ -112,6 +106,12 @@ const StyleOverride = ({
         .artist-header__message_container button:hover {
           background-color: ${hexToRGB(accentColor, '.7')};
         }
+        ${bgColor &&
+          `
+          body { 
+            background-color: ${hexToRGB(accentColor, '.2')} !important; 
+          }
+        `}
         ${isSupporter &&
           `
           .user-image { 

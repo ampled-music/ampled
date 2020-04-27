@@ -1,4 +1,5 @@
 .audio-player {
+  position: relative;
   &.with-image {
     .audio-player__play-pause {
       top: 210px;

@@ -568,10 +568,7 @@ class PostComponent extends React.Component<any, any> {
           }}
           title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
         >
-          <div
-            className="post__card"
-            style={{ border: `2px solid ${accentColor}` }}
-          >
+          <div className="post__card" style={{ borderColor: accentColor }}>
             <div className="post__header">
               <div className={classes.postTitle}>
                 {post.authorImage ? (

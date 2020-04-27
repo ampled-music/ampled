@@ -27,6 +27,11 @@
     font-size: 0.8rem;
   }
 
+  &__card {
+    border-width: 2px;
+    border-style: solid;
+  }
+
   &__content {
     background-color: $white;
   }
@@ -61,6 +66,8 @@
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    justify-content: center;
+    align-content: center;
 
     .blur-image {
       -webkit-filter: blur(20px);
@@ -97,7 +104,6 @@
   .private-support {
     width: 100%;
     position: absolute;
-    bottom: 60px;
 
     &__copy {
       font-family: $font-family-sans-serif;
@@ -281,12 +287,15 @@
     @include mq($tablet) {
       flex-direction: row;
       justify-content: space-between;
+      align-items: flex-start;
     }
     &__content {
-      width: 70%;
+      width: 65%;
+    }
+    &__card {
     }
     .comments-list {
-      width: 25%;
+      width: 30%;
     }
   }
 }

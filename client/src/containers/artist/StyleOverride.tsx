@@ -3,6 +3,7 @@ import * as React from 'react';
 type StyleOverrideProps = {
   accentColor: string;
   isSupporter: boolean;
+  bgColor: boolean;
 };
 
 const lightOrDark = (color) => {
@@ -57,61 +58,71 @@ const hexToRGB = (hex: string, alpha: string) => {
   }
 };
 
-const StyleOverride = ({ accentColor, isSupporter }: StyleOverrideProps) => (
+const StyleOverride = ({
+  accentColor,
+  isSupporter,
+  bgColor,
+}: StyleOverrideProps) => (
   <style
     dangerouslySetInnerHTML={{
       __html: `
-              .btn.btn-read-more,
-              .btn.btn-support,
-              .private-support__btn > .btn {
-                border-width: 0px;
-                background-color: ${accentColor};
-                color: ${lightOrDark(accentColor)};
-              }
-              .artist-header__title_flair,
-              .artist-header__banner-icons_icon.active  {
-                background-color: ${accentColor};
-                color: ${lightOrDark(accentColor)};
-              }
-              .new-post button,
-              .edit-page button,
-              .new-post svg,
-              .edit-page svg,
-              .post__change button,
-              .artist-header__photo {
-                background-color: ${accentColor};
-                color: ${lightOrDark(accentColor)};
-              }
-              .btn.btn-read-more:hover,
-              .btn.btn-support:hover,
-              .private-support__btn > .btn:hover,
-              .new-post button:hover,
-              .edit-page button:hover {
-                background-color: ${accentColor};
-              }
-              .supporter__hover-card_bands_name a:hover {
-                color: ${accentColor};
-              }
-              .audio-player__play-pause button,
-              .artist-header__message_container button {
-                background-color: ${hexToRGB(accentColor, '.5')};
-                color: ${lightOrDark(accentColor)};
-              }
-              .audio-player__play-pause button:hover,
-              .artist-header__message_container button:hover {
-                background-color: ${hexToRGB(accentColor, '.7')};
-              }
-              ${isSupporter &&
-                `
-                .user-image { 
-                  border: 1px solid ${accentColor}; 
-                }
-                header .supporter-message { 
-                  display: inline-block !important; 
-                  color: ${accentColor}; 
-                }
-              `}
-            `,
+        ${bgColor &&
+          `
+          body { 
+            background-color: ${hexToRGB(accentColor, '.2')} !important; 
+          }
+        `}
+        .btn.btn-read-more,
+        .btn.btn-support,
+        .private-support__btn > .btn {
+          border-width: 0px;
+          background-color: ${accentColor};
+          color: ${lightOrDark(accentColor)};
+        }
+        .artist-header__title_flair,
+        .artist-header__banner-icons_icon.active  {
+          background-color: ${accentColor};
+          color: ${lightOrDark(accentColor)};
+        }
+        .new-post button,
+        .edit-page button,
+        .new-post svg,
+        .edit-page svg,
+        .post__change button,
+        .artist-header__photo {
+          background-color: ${accentColor};
+          color: ${lightOrDark(accentColor)};
+        }
+        .btn.btn-read-more:hover,
+        .btn.btn-support:hover,
+        .private-support__btn > .btn:hover,
+        .new-post button:hover,
+        .edit-page button:hover {
+          background-color: ${accentColor};
+        }
+        .supporter__hover-card_bands_name a:hover {
+          color: ${accentColor};
+        }
+        .audio-player__play-pause button,
+        .artist-header__message_container button {
+          background-color: ${hexToRGB(accentColor, '.5')};
+          color: ${lightOrDark(accentColor)};
+        }
+        .audio-player__play-pause button:hover,
+        .artist-header__message_container button:hover {
+          background-color: ${hexToRGB(accentColor, '.7')};
+        }
+        ${isSupporter &&
+          `
+          .user-image { 
+            border: 1px solid ${accentColor}; 
+          }
+          header .supporter-message { 
+            display: inline-block !important; 
+            color: ${accentColor}; 
+          }
+        `}
+      `,
     }}
   />
 );

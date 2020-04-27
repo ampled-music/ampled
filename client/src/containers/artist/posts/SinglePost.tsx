@@ -94,7 +94,11 @@ const SinglePostComponent = ({
 
   return (
     <div className="artist-header container">
-      <StyleOverride accentColor={accentColor} isSupporter={false} />
+      <StyleOverride
+        accentColor={accentColor}
+        isSupporter={false}
+        bgColor={true}
+      />
       <div className="artist-header__title">
         <span className="artist-header__title_flair"></span>
         <Link to={`/artist/${artistSlug}`} style={{ textDecoration: 'unset' }}>

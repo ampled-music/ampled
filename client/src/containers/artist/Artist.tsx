@@ -381,6 +381,7 @@ class ArtistComponent extends React.Component<Props, any> {
         <StyleOverride
           accentColor={artist.accent_color}
           isSupporter={isSupporter}
+          bgColor={false}
         />
 
         <Texture

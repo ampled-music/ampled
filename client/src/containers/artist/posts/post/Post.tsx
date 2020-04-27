@@ -513,7 +513,14 @@ class PostComponent extends React.Component<any, any> {
   };
 
   render = () => {
-    const { classes, post, accentColor, me, loggedUserAccess } = this.props;
+    const {
+      classes,
+      post,
+      accentColor,
+      me,
+      loggedUserAccess,
+      artistSlug,
+    } = this.props;
 
     const deny_details_lapsed = post.deny_details_lapsed || false;
 
@@ -555,9 +562,14 @@ class PostComponent extends React.Component<any, any> {
           </Modal>
           <div
             className={cx('post', { 'clickable-post': !allowDetails })}
-            onClick={() =>
-              !deny_details_lapsed && this.handlePrivatePostClick(authenticated)
-            }
+            onClick={(e) => {
+              const target = e.target as HTMLElement;
+              if (target.tagName === 'A') {
+                return;
+              }
+              !deny_details_lapsed &&
+                this.handlePrivatePostClick(authenticated);
+            }}
             title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
           >
             <Card
@@ -579,10 +591,16 @@ class PostComponent extends React.Component<any, any> {
                 </div>
                 <div className={classes.postDate}>
                   {post.created_ago === 'less than a minute' ? (
-                    <div className={classes.postDate}>Just Now</div>
+                    <div className={classes.postDate}>
+                      <Link to={`/artist/${artistSlug}/post/${post.id}`}>
+                        Just Now
+                      </Link>
+                    </div>
                   ) : (
                     <div className={classes.postDate}>
-                      {post.created_ago} ago
+                      <Link to={`/artist/${artistSlug}/post/${post.id}`}>
+                        {post.created_ago} ago
+                      </Link>
                     </div>
                   )}
                 </div>

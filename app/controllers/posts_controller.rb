@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[destroy update]
+  before_action :set_post, only: %i[destroy update show]
   before_action :is_admin, only: :index
 
   def create
@@ -26,6 +26,10 @@ class PostsController < ApplicationController
     else
       render json: { errors: @post.errors }, status: :bad_request
     end
+  end
+
+  def show
+    respond_to :json
   end
 
   def download_post

@@ -111,10 +111,7 @@ const Comments = ({
               />
             ))}
           </Collapse>
-          <CardActions
-            className={cx(classes.actions, 'collapse-actions')}
-            disableSpacing
-          >
+          <CardActions className={cx('collapse-actions')} disableSpacing>
             <button
               className="show-previous-command-btn"
               onClick={handleExpandClick}

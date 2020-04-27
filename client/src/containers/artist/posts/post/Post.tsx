@@ -12,8 +12,7 @@ import avatar from '../../../../images/ampled_avatar.svg';
 import tear from '../../../../images/background_tear.png';
 import { faUnlock, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CardActions, Collapse, Divider } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
+import { CardActions, Collapse } from '@material-ui/core';
 import CardMedia from '@material-ui/core/CardMedia';
 import { withStyles } from '@material-ui/core/styles';
 import { Modal } from '../../../shared/modal/Modal';
@@ -570,8 +569,8 @@ class PostComponent extends React.Component<any, any> {
           }}
           title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
         >
-          <Card
-            className={classes.card}
+          <div
+            className="post__card"
             style={{ border: `2px solid ${accentColor}` }}
           >
             <div className="post__header">
@@ -603,7 +602,6 @@ class PostComponent extends React.Component<any, any> {
                 )}
               </div>
             </div>
-            <Divider />
 
             {canLoggedUserPost &&
               (isPrivate ? (
@@ -682,7 +680,7 @@ class PostComponent extends React.Component<any, any> {
                 </Linkify>
               </div>
             )}
-          </Card>
+          </div>
         </div>
         <Comments
           post={post}

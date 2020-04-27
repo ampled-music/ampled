@@ -1,4 +1,6 @@
 import './post-form.scss';
+// Needed to get some standard styles working in the rich editor.
+import 'draft-js/dist/Draft.css';
 
 import cx from 'classnames';
 import * as React from 'react';
@@ -25,6 +27,9 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import YouTubePlayer from 'react-player/lib/players/YouTube';
 import VimeoPlayer from 'react-player/lib/players/Vimeo';
+import { Editor, EditorState, RichUtils } from 'draft-js';
+import { convertFromHTML, convertToHTML } from 'draft-convert';
+import DOMPurify from 'dompurify';
 
 import tear from '../../../../images/background_tear.png';
 
@@ -58,6 +63,151 @@ type Props = typeof postsInitialState &
   typeof artistsInitialState &
   Dispatchers &
   PostFormProps;
+
+interface RichEditorProps {
+  initialTextAsHTML?: string;
+  callback?: Function;
+}
+
+class RichEditor extends React.Component<RichEditorProps> {
+  state = {
+    editorState: EditorState.createEmpty(),
+    focused: false,
+  };
+
+  editor: any;
+
+  constructor(props) {
+    super(props);
+    if (props.initialTextAsHTML) {
+      this.state = {
+        editorState: EditorState.createWithContent(
+          convertFromHTML(props.initialTextAsHTML),
+        ),
+        focused: false,
+      };
+    }
+  }
+
+  handleKeyCommand = (command, editorState) => {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+    if (newState) {
+      this.onChange(newState);
+      return 'handled';
+    }
+    return 'not-handled';
+  };
+
+  onChange = (editorState) => {
+    this.setState({ editorState });
+    this.props.callback &&
+      this.props.callback(convertToHTML(editorState.getCurrentContent()));
+  };
+
+  setEditor = (editor) => {
+    this.editor = editor;
+  };
+
+  focusEditor = () => {
+    if (this.editor) {
+      this.editor.focus();
+    }
+  };
+
+  onBulletsClick = (e) => {
+    e.preventDefault();
+    this.onChange(
+      RichUtils.toggleBlockType(this.state.editorState, 'unordered-list-item'),
+    );
+  };
+
+  onBoldClick = (e) => {
+    e.preventDefault();
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
+  };
+
+  onItalicClick = (e) => {
+    e.preventDefault();
+    this.onChange(
+      RichUtils.toggleInlineStyle(this.state.editorState, 'ITALIC'),
+    );
+  };
+
+  hasInlineStyle = (style) =>
+    this.state.editorState.getCurrentInlineStyle().has(style);
+
+  hasBlockStyle = (style) =>
+    style ==
+    this.state.editorState
+      .getCurrentContent()
+      .getBlockForKey(this.state.editorState.getSelection().getStartKey())
+      .getType();
+
+  render() {
+    return (
+      <div
+        className="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth rich-editor-container"
+        style={{ marginTop: '20px' }}
+      >
+        <div className="rich-controls">
+          <span
+            title="Bold"
+            role="button"
+            style={{ fontWeight: 'bolder' }}
+            onMouseDown={this.onBoldClick}
+            className={this.hasInlineStyle('BOLD') ? 'active' : 'inactive'}
+          >
+            b
+          </span>
+          <span
+            title="Italic"
+            role="button"
+            style={{ fontStyle: 'italic' }}
+            onMouseDown={this.onItalicClick}
+            className={this.hasInlineStyle('ITALIC') ? 'active' : 'inactive'}
+          >
+            i
+          </span>
+          <span
+            title="Bullets"
+            role="button"
+            style={{}}
+            onMouseDown={this.onBulletsClick}
+            className={
+              this.hasBlockStyle('unordered-list-item') ? 'active' : 'inactive'
+            }
+          >
+            &#x2022;
+          </span>
+          <span className="helper-text">
+            Links will be handled automatically.
+          </span>
+        </div>
+        <div
+          className={`MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline rich-editor${
+            this.state.focused ? ' focused' : ''
+          }`}
+          onClick={this.focusEditor}
+        >
+          <Editor
+            placeholder="Text (3000 character limit)"
+            textAlignment="left"
+            ref={this.setEditor}
+            editorState={this.state.editorState}
+            handleKeyCommand={this.handleKeyCommand}
+            onChange={this.onChange}
+            onFocus={() => {
+              this.setState({ focused: true });
+            }}
+            onBlur={() => {
+              this.setState({ focused: false });
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+}
 
 class PostFormComponent extends React.Component<Props, any> {
   initialState = {
@@ -496,23 +646,23 @@ class PostFormComponent extends React.Component<Props, any> {
                     ),
                   }}
                 />
-                <TextField
-                  name="body"
-                  type="text"
-                  placeholder="Text (3000 character limit)"
-                  fullWidth
-                  multiline
-                  rows="10"
-                  variant="outlined"
-                  inputProps={{
-                    maxLength: 3000,
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  style={{ marginTop: 20 }}
-                  value={body}
-                  onChange={this.handleChange}
+                <RichEditor
+                  initialTextAsHTML={body}
+                  callback={(body) =>
+                    this.setState({
+                      body: DOMPurify.sanitize(body, {
+                        ALLOWED_TAGS: [
+                          'p',
+                          'em',
+                          'strong',
+                          'br',
+                          'ul',
+                          'ol',
+                          'li',
+                        ],
+                      }),
+                    })
+                  }
                 />
               </div>
               <div className="post-form__audio">

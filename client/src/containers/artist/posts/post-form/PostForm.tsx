@@ -114,6 +114,13 @@ class RichEditor extends React.Component<RichEditorProps> {
     }
   };
 
+  onBulletsClick = (e) => {
+    e.preventDefault();
+    this.onChange(
+      RichUtils.toggleBlockType(this.state.editorState, 'unordered-list-item'),
+    );
+  };
+
   onBoldClick = (e) => {
     e.preventDefault();
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
@@ -128,6 +135,13 @@ class RichEditor extends React.Component<RichEditorProps> {
 
   hasInlineStyle = (style) =>
     this.state.editorState.getCurrentInlineStyle().has(style);
+
+  hasBlockStyle = (style) =>
+    style ==
+    this.state.editorState
+      .getCurrentContent()
+      .getBlockForKey(this.state.editorState.getSelection().getStartKey())
+      .getType();
 
   render() {
     return (
@@ -153,6 +167,17 @@ class RichEditor extends React.Component<RichEditorProps> {
             className={this.hasInlineStyle('ITALIC') ? 'active' : 'inactive'}
           >
             i
+          </span>
+          <span
+            title="Bullets"
+            role="button"
+            style={{}}
+            onMouseDown={this.onBulletsClick}
+            className={
+              this.hasBlockStyle('unordered-list-item') ? 'active' : 'inactive'
+            }
+          >
+            &#x2022;
           </span>
           <span className="helper-text">
             Links will be handled automatically.

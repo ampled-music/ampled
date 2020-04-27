@@ -3,7 +3,7 @@ import './post.scss';
 import cx from 'classnames';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { routePaths } from '../../../route-paths';
 import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
@@ -13,7 +13,6 @@ import tear from '../../../../images/background_tear.png';
 import { faUnlock, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardActions, Collapse } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
 import { Modal } from '../../../shared/modal/Modal';
 import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
 import YouTubePlayer from 'react-player/lib/players/YouTube';
@@ -23,7 +22,6 @@ import Linkify from 'react-linkify';
 import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';
 import { PostForm } from '../post-form/PostForm';
-import { styles } from './post-style';
 
 import { deletePost } from '../../../../api/post/delete-post';
 
@@ -63,7 +61,6 @@ const canLoggedUserDeleteComment = (
 
 const Comments = ({
   post,
-  classes,
   expanded,
   handleDeleteComment,
   handleExpandClick,
@@ -155,7 +152,6 @@ const Comments = ({
 Comments.propTypes = {
   post: PropTypes.any,
   expanded: PropTypes.bool,
-  classes: PropTypes.any,
   handleDeleteComment: PropTypes.func,
   handleExpandClick: PropTypes.func,
   handleSubmit: PropTypes.func,
@@ -297,7 +293,6 @@ const PostMedia = ({
 
 PostMedia.propTypes = {
   post: PropTypes.any,
-  classes: PropTypes.any,
   allowDetails: PropTypes.bool,
   accentColor: PropTypes.string,
   me: PropTypes.any,
@@ -508,14 +503,7 @@ class PostComponent extends React.Component<any, any> {
   };
 
   render = () => {
-    const {
-      classes,
-      post,
-      accentColor,
-      me,
-      loggedUserAccess,
-      artistSlug,
-    } = this.props;
+    const { post, accentColor, me, loggedUserAccess, artistSlug } = this.props;
 
     const deny_details_lapsed = post.deny_details_lapsed || false;
 
@@ -567,7 +555,7 @@ class PostComponent extends React.Component<any, any> {
         >
           <div className="post__card" style={{ borderColor: accentColor }}>
             <div className="post__header">
-              <div className={classes.postTitle}>
+              <div className="post__header_title">
                 {post.authorImage ? (
                   <img
                     className="user-image"
@@ -579,19 +567,15 @@ class PostComponent extends React.Component<any, any> {
                 )}
                 <span className="post__header_name">{authorFirstName}</span>
               </div>
-              <div className={classes.postDate}>
+              <div className="post__header_date">
                 {post.created_ago === 'less than a minute' ? (
-                  <div className={classes.postDate}>
-                    <Link to={`/artist/${artistSlug}/post/${post.id}`}>
-                      Just Now
-                    </Link>
-                  </div>
+                  <Link to={`/artist/${artistSlug}/post/${post.id}`}>
+                    Just Now
+                  </Link>
                 ) : (
-                  <div className={classes.postDate}>
-                    <Link to={`/artist/${artistSlug}/post/${post.id}`}>
-                      {post.created_ago} ago
-                    </Link>
-                  </div>
+                  <Link to={`/artist/${artistSlug}/post/${post.id}`}>
+                    {post.created_ago} ago
+                  </Link>
                 )}
               </div>
             </div>
@@ -631,7 +615,6 @@ class PostComponent extends React.Component<any, any> {
             <PostMedia
               doReflow={this.props.doReflow}
               post={post}
-              classes={classes}
               allowDetails={allowDetails}
               me={me}
               accentColor={accentColor}
@@ -678,7 +661,6 @@ class PostComponent extends React.Component<any, any> {
         <Comments
           post={post}
           expanded={this.state.expanded}
-          classes={classes}
           handleDeleteComment={this.handleDeleteComment}
           handleExpandClick={this.handleExpandClick}
           handleSubmit={this.handleSubmit}
@@ -692,6 +674,6 @@ class PostComponent extends React.Component<any, any> {
   };
 }
 
-const Post = withStyles(styles)(withRouter(PostComponent));
+const Post = PostComponent;
 
 export { Post };

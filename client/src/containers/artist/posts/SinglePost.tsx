@@ -93,7 +93,7 @@ const SinglePostComponent = ({
   )?.[0];
 
   return (
-    <div className="artist-header container">
+    <div className="artist-header container single-post">
       <StyleOverride
         accentColor={accentColor}
         isSupporter={false}
@@ -105,10 +105,7 @@ const SinglePostComponent = ({
           {artistName}
         </Link>
       </div>
-      <div
-        className="post-container"
-        style={{ margin: '0 auto', maxWidth: '500px' }}
-      >
+      <div className="post-container">
         <Post
           me={me}
           post={post}

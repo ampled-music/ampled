@@ -536,169 +536,166 @@ class PostComponent extends React.Component<any, any> {
     const isUserSubscribed = this.isUserSubscribed(loggedUserAccess);
 
     return (
-      <div>
-        <div className="post">
-          {this.state.showDeletePostModal && (
-            <Modal
-              open={this.state.showDeletePostModal}
-              onClose={this.closeDeletePostModal}
-            >
-              <DeleteModal
-                onCancel={this.closeDeletePostModal}
-                onConfirm={this.handleDeletePost}
-              />
-            </Modal>
-          )}
+      <div className="post">
+        {this.state.showDeletePostModal && (
           <Modal
-            open={this.state.showEditPostModal}
-            onClose={this.closeEditPostModal}
+            open={this.state.showDeletePostModal}
+            onClose={this.closeDeletePostModal}
           >
-            <PostForm
-              close={this.closeEditPostModal}
-              discardChanges={this.closeEditPostModal}
-              isEdit
-              post={post}
+            <DeleteModal
+              onCancel={this.closeDeletePostModal}
+              onConfirm={this.handleDeletePost}
             />
           </Modal>
-          <div
-            className={cx('post', { 'clickable-post': !allowDetails })}
-            onClick={(e) => {
-              const target = e.target as HTMLElement;
-              if (target.tagName === 'A') {
-                return;
-              }
-              !deny_details_lapsed &&
-                this.handlePrivatePostClick(authenticated);
-            }}
-            title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
+        )}
+        <Modal
+          open={this.state.showEditPostModal}
+          onClose={this.closeEditPostModal}
+        >
+          <PostForm
+            close={this.closeEditPostModal}
+            discardChanges={this.closeEditPostModal}
+            isEdit
+            post={post}
+          />
+        </Modal>
+        <div
+          className={cx('post__content', { 'clickable-post': !allowDetails })}
+          onClick={(e) => {
+            const target = e.target as HTMLElement;
+            if (target.tagName === 'A') {
+              return;
+            }
+            !deny_details_lapsed && this.handlePrivatePostClick(authenticated);
+          }}
+          title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
+        >
+          <Card
+            className={classes.card}
+            style={{ border: `2px solid ${accentColor}` }}
           >
-            <Card
-              className={classes.card}
-              style={{ border: `2px solid ${accentColor}` }}
-            >
-              <div className="post__header">
-                <div className={classes.postTitle}>
-                  {post.authorImage ? (
-                    <img
-                      className="user-image"
-                      src={post.authorImage}
-                      alt={`${authorFirstName}'s avatar`}
-                    />
-                  ) : (
-                    <img className="user-image" src={avatar} alt="Avatar" />
-                  )}
-                  <span className="post__header_name">{authorFirstName}</span>
-                </div>
-                <div className={classes.postDate}>
-                  {post.created_ago === 'less than a minute' ? (
-                    <div className={classes.postDate}>
-                      <Link to={`/artist/${artistSlug}/post/${post.id}`}>
-                        Just Now
-                      </Link>
-                    </div>
-                  ) : (
-                    <div className={classes.postDate}>
-                      <Link to={`/artist/${artistSlug}/post/${post.id}`}>
-                        {post.created_ago} ago
-                      </Link>
-                    </div>
-                  )}
-                </div>
+            <div className="post__header">
+              <div className={classes.postTitle}>
+                {post.authorImage ? (
+                  <img
+                    className="user-image"
+                    src={post.authorImage}
+                    alt={`${authorFirstName}'s avatar`}
+                  />
+                ) : (
+                  <img className="user-image" src={avatar} alt="Avatar" />
+                )}
+                <span className="post__header_name">{authorFirstName}</span>
               </div>
-              <Divider />
-
-              {canLoggedUserPost &&
-                (isPrivate ? (
-                  <div className="post__status">
-                    <FontAwesomeIcon className="unlock" icon={faUnlock} />
-                    Supporters Only
+              <div className={classes.postDate}>
+                {post.created_ago === 'less than a minute' ? (
+                  <div className={classes.postDate}>
+                    <Link to={`/artist/${artistSlug}/post/${post.id}`}>
+                      Just Now
+                    </Link>
                   </div>
                 ) : (
-                  <div className="post__status">Public Post</div>
-                ))}
+                  <div className={classes.postDate}>
+                    <Link to={`/artist/${artistSlug}/post/${post.id}`}>
+                      {post.created_ago} ago
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+            <Divider />
 
-              {isUserSubscribed && !canLoggedUserPost && isPrivate && (
+            {canLoggedUserPost &&
+              (isPrivate ? (
                 <div className="post__status">
                   <FontAwesomeIcon className="unlock" icon={faUnlock} />
                   Supporters Only
                 </div>
-              )}
+              ) : (
+                <div className="post__status">Public Post</div>
+              ))}
 
-              {canLoggedUserEditPost && (
-                <div className="post__change">
-                  <div className="post__change_edit">
-                    <button onClick={this.openEditPostModal}>
-                      <FontAwesomeIcon icon={faPen} />
-                    </button>
-                  </div>
-                  <div className="post__change_delete">
-                    <button onClick={this.openDeletePostModal}>
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </div>
+            {isUserSubscribed && !canLoggedUserPost && isPrivate && (
+              <div className="post__status">
+                <FontAwesomeIcon className="unlock" icon={faUnlock} />
+                Supporters Only
+              </div>
+            )}
+
+            {canLoggedUserEditPost && (
+              <div className="post__change">
+                <div className="post__change_edit">
+                  <button onClick={this.openEditPostModal}>
+                    <FontAwesomeIcon icon={faPen} />
+                  </button>
                 </div>
-              )}
-
-              <PostMedia
-                doReflow={this.props.doReflow}
-                post={post}
-                classes={classes}
-                allowDetails={allowDetails}
-                me={me}
-                accentColor={accentColor}
-                handlePrivatePostClick={this.handlePrivatePostClick}
-                playerCallback={this.props.playerCallback}
-              />
-              {allowDownload && hasAudio && allowDetails && (
-                <div className="download-link">
-                  <a
-                    href={`/artist/${this.props.artistSlug}/post/${post.id}/download`}
-                    download={`${post.title}.mp3`}
-                  >
-                    Download audio
-                  </a>
+                <div className="post__change_delete">
+                  <button onClick={this.openDeletePostModal}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
                 </div>
-              )}
+              </div>
+            )}
 
-              <div className="post__title">{post.title}</div>
+            <PostMedia
+              doReflow={this.props.doReflow}
+              post={post}
+              classes={classes}
+              allowDetails={allowDetails}
+              me={me}
+              accentColor={accentColor}
+              handlePrivatePostClick={this.handlePrivatePostClick}
+              playerCallback={this.props.playerCallback}
+            />
+            {allowDownload && hasAudio && allowDetails && (
+              <div className="download-link">
+                <a
+                  href={`/artist/${this.props.artistSlug}/post/${post.id}/download`}
+                  download={`${post.title}.mp3`}
+                >
+                  Download audio
+                </a>
+              </div>
+            )}
 
-              {post.body && (
-                <div className="post__body">
-                  <Linkify
-                    componentDecorator={(
-                      decoratedHref: string,
-                      decoratedText: string,
-                      key: number,
-                    ) => (
-                      <a
-                        href={decoratedHref}
-                        key={key}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {decoratedText}
-                      </a>
-                    )}
-                  >
-                    {post.body}
-                  </Linkify>
-                </div>
-              )}
-            </Card>
-          </div>
-          <Comments
-            post={post}
-            expanded={this.state.expanded}
-            classes={classes}
-            handleDeleteComment={this.handleDeleteComment}
-            handleExpandClick={this.handleExpandClick}
-            handleSubmit={this.handleSubmit}
-            isUserSubscribed={isUserSubscribed}
-            me={me}
-            handlePrivatePostAction={this.handlePrivatePostAction}
-            loggedUserAccess={loggedUserAccess}
-          />
+            <div className="post__title">{post.title}</div>
+
+            {post.body && (
+              <div className="post__body">
+                <Linkify
+                  componentDecorator={(
+                    decoratedHref: string,
+                    decoratedText: string,
+                    key: number,
+                  ) => (
+                    <a
+                      href={decoratedHref}
+                      key={key}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {decoratedText}
+                    </a>
+                  )}
+                >
+                  {post.body}
+                </Linkify>
+              </div>
+            )}
+          </Card>
         </div>
+        <Comments
+          post={post}
+          expanded={this.state.expanded}
+          classes={classes}
+          handleDeleteComment={this.handleDeleteComment}
+          handleExpandClick={this.handleExpandClick}
+          handleSubmit={this.handleSubmit}
+          isUserSubscribed={isUserSubscribed}
+          me={me}
+          handlePrivatePostAction={this.handlePrivatePostAction}
+          loggedUserAccess={loggedUserAccess}
+        />
       </div>
     );
   };

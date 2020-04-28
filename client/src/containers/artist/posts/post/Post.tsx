@@ -22,6 +22,7 @@ import YouTubePlayer from 'react-player/lib/players/YouTube';
 import VimeoPlayer from 'react-player/lib/players/Vimeo';
 import Linkify from 'react-linkify';
 import parse from 'html-react-parser';
+import DOMPurify from 'dompurify';
 
 import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';
@@ -666,17 +667,30 @@ class PostComponent extends React.Component<any, any> {
                     {// If there are no p tags, this is legacy
                     // text and should be presented unparsed.
                     /<p>/gi.test(post.body)
-                      ? parse(post.body, {
-                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                          replace: (domNode) => {
-                            // FYI, here we can reshape tags as needed
-                            // for presentation. If we simply return,
-                            // the node is unprocessed; otherwise, return
-                            // a new React element that should take the
-                            // place of the node.
-                            return;
+                      ? parse(
+                          DOMPurify.sanitize(post.body, {
+                            ALLOWED_TAGS: [
+                              'p',
+                              'em',
+                              'strong',
+                              'br',
+                              'ul',
+                              'ol',
+                              'li',
+                            ],
+                          }),
+                          {
+                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                            replace: (domNode) => {
+                              // FYI, here we can reshape tags as needed
+                              // for presentation. If we simply return,
+                              // the node is unprocessed; otherwise, return
+                              // a new React element that should take the
+                              // place of the node.
+                              return;
+                            },
                           },
-                        })
+                        )
                       : post.body}
                   </Linkify>
                 </div>

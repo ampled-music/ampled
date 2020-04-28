@@ -25,6 +25,17 @@
           float: right;
           color: $gray-light;
           font-size: 0.8rem;
+
+          .additional {
+            position: absolute;
+            background: white;
+            border: 1px solid $gray-light;
+            z-index: 999;
+            line-height: 20px;
+            padding: 8px;
+            width: 250px;
+            right: 0;
+          }
         }
 
         button,

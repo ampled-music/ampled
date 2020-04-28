@@ -667,6 +667,7 @@ class PostComponent extends React.Component<any, any> {
                     // text and should be presented unparsed.
                     /<p>/gi.test(post.body)
                       ? parse(post.body, {
+                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
                           replace: (domNode) => {
                             // FYI, here we can reshape tags as needed
                             // for presentation. If we simply return,

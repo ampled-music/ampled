@@ -1236,6 +1236,20 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
+    const videoRegex = /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi;
+
+    if (
+      artistVideo &&
+      artistVideo.length > 0 &&
+      !videoRegex.test(artistVideo)
+    ) {
+      return this.props.showToast({
+        message:
+          'Your video message should be a link to a single Youtube or Vimeo video.',
+        type: 'error',
+      });
+    }
+
     if (
       images.filter((image) => image !== null && typeof image !== 'undefined')
         .length === 0

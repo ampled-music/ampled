@@ -349,7 +349,9 @@ class PostFormComponent extends React.Component<Props, any> {
       videoEmbedUrl &&
       videoEmbedUrl.length > 0 &&
       /(www\.)?vimeo.com\/.+/i.test(videoEmbedUrl);
-    const isValidVideo = isYouTube || isVimeo;
+    const isValidVideo = /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi.test(
+      videoEmbedUrl,
+    );
 
     let VideoComponent;
     if (isVimeo) {

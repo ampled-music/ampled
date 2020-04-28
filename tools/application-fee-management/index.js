@@ -3,19 +3,148 @@
 require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const commandLineArgs = require('command-line-args');
+const getUsage = require('command-line-usage');
 const cliProgress = require('cli-progress');
 
 const optionDefinitions = [
-  { name: 'getAccount', type: String },
-  { name: 'listSubs', type: Boolean },
-  { name: 'addFee', alias: 'a', type: Number },
-  { name: 'removeFee', alias: 'r', type: Boolean },
-  { name: 'help', type: Boolean },
-  { name: 'sort', type: String, defaultValue: 'account' },
+  {
+    name: 'account',
+    type: String,
+    description:
+      'Optional Stripe Connect account to limit subscription results / changes to. Works with --addFee, --removeFee, --showProcessedFees, and --refundProcessedFees',
+  },
+  {
+    name: 'getAccount',
+    type: String,
+    description: 'Show the account object for account {underline string}',
+  },
+  {
+    name: 'details',
+    type: Boolean,
+    description: 'Show additional details where available',
+  },
+  { name: 'listSubs', type: Boolean, description: 'List subscriptions' },
+  {
+    name: 'addFee',
+    type: Number,
+    description: 'Add a fee of {underline number}% to subscriptions',
+  },
+  {
+    name: 'removeFee',
+    type: Boolean,
+    description: 'Remove fee from subscriptions',
+  },
+  {
+    name: 'showProcessedFees',
+    type: Boolean,
+    description: 'List processed application fees',
+  },
+  {
+    name: 'refundProcessedFees',
+    type: Boolean,
+    description: 'Refund processed application fees',
+  },
+  { name: 'help', type: Boolean, description: 'Show this help screen' },
+  {
+    name: 'sort',
+    type: String,
+    defaultValue: 'account',
+    description: 'date_asc or date_desc. Works with --listSubs',
+  },
 ];
 const options = commandLineArgs(optionDefinitions);
 
+const usageGuide = [
+  {
+    content: '{green application-fee-management}',
+  },
+  {
+    header: 'TOOLS',
+    optionList: optionDefinitions,
+    hide: ['details', 'sort', 'account'],
+  },
+  {
+    header: 'OPTIONS',
+    optionList: optionDefinitions,
+    hide: [
+      'addFee',
+      'removeFee',
+      'help',
+      'refundProcessedFees',
+      'showProcessedFees',
+      'getAccount',
+      'listSubs',
+    ],
+  },
+  {
+    header: 'EXAMPLES',
+  },
+  {
+    header: '  View accounts & subscriptions',
+    content: [
+      'List all connected accounts:',
+      '{bold yarn start}',
+      '',
+      'List all connected accounts and subscriptions:',
+      '{bold yarn start --listSubs}',
+      '',
+      'List all connected subscriptions for a connected account:',
+      '{bold yarn start --listSubs --account {italic acct_000000}}',
+      '',
+      'List all connected accounts and subscriptions, oldest first:',
+      '{bold yarn start --listSubs --sort date_asc}',
+      '',
+      'List all connected accounts and subscriptions, newest first:',
+      '{bold yarn start --listSubs --sort date_desc}',
+      '',
+      'Display account object for a connected account:',
+      '{bold yarn start --getAccount --account {italic acct_000000}}',
+      '',
+    ],
+  },
+  {
+    header: '  Modify application (platform) fee rates',
+    content: [
+      'Add a 13.24% fee to all subscriptions:',
+      '{bold yarn start --addFee {italic 13.24}}',
+      '',
+      'Add a 13.24% fee to subscriptions for account {underline acct_000000}:',
+      '{bold yarn start --addFee {italic 13.24} --account {italic acct_000000}}',
+      '',
+      'Remove fees from all subscriptions:',
+      '{bold yarn start --addFee {italic 0}}',
+      '',
+      'Remove fees from all subscriptions:',
+      '{bold yarn start --removeFee}',
+      '',
+    ],
+  },
+  {
+    header: '  View processed application (platform) fees',
+    content: [
+      'Display processed platform fees summary by account:',
+      '{bold yarn start --showProcessedFees}',
+      '',
+      'Display all processed platform fees:',
+      '{bold yarn start --showProcessedFees --details}',
+      '',
+      'Display all processed platform fees for a single account:',
+      '{bold yarn start --showProcessedFees --details --account {italic acct_000000}}',
+      '',
+    ],
+  },
+  {
+    header: '  Refund processed application (platform) fees',
+    content: ['TKTK'],
+  },
+];
+
 const addFees = async (subs, fee) => {
+  if (options.account) {
+    subs = subs.filter(
+      ({ stripeAccount }) => stripeAccount === options.account,
+    );
+  }
   const progress = new cliProgress.SingleBar(
     {},
     cliProgress.Presets.shades_classic,
@@ -57,6 +186,16 @@ const getAccount = async (account_id) => {
   return await stripe.accounts.retrieve(account_id);
 };
 
+const getConnectAccount = async (account) => {
+  const data = await stripe.accounts.retrieve(account);
+
+  return {
+    id: data.id,
+    email: data.email,
+    display_name: data.display_name,
+  };
+};
+
 const getConnectAccounts = async (starting_after) => {
   const accounts = await stripe.accounts.list({ starting_after });
   let { data, has_more } = accounts;
@@ -91,30 +230,211 @@ const getAccountSubscriptions = async (accountId, starting_after) => {
   return data;
 };
 
+const getProcessedFees = async (
+  progress,
+  account,
+  starting_after,
+  index = 0,
+) => {
+  const fees = await stripe.applicationFees.list(
+    {
+      starting_after,
+      limit: 100,
+    },
+    {
+      stripeAccount: account,
+    },
+  );
+
+  progress.setTotal((index + 1) * 100);
+  progress.update(index * 100);
+
+  let { data, has_more } = fees;
+
+  if (has_more) {
+    data = [
+      ...data,
+      ...(await getProcessedFees(
+        progress,
+        account,
+        data[data.length - 1].id,
+        index + 1,
+      )),
+    ];
+  }
+  progress.setTotal(data.length);
+  progress.update(data.length);
+  return data;
+};
+
+const getAllProcessedFees = async () => {
+  const progress = new cliProgress.SingleBar(
+    {},
+    cliProgress.Presets.shades_classic,
+  );
+  progress.start(100, 1);
+  let fees = await getProcessedFees(progress);
+  progress.stop();
+
+  const allFees = {};
+  fees.map(({ account, amount, amount_refunded }) => {
+    if (allFees[account]) {
+      allFees[account] = {
+        total: allFees[account].total + amount,
+        total_refunded: allFees[account].total_refunded + amount_refunded,
+        count: allFees[account].count + 1,
+      };
+    } else {
+      allFees[account] = {
+        total: amount,
+        total_refunded: amount_refunded,
+        count: 1,
+      };
+    }
+  });
+
+  for (let account in allFees) {
+    if (options.account && account !== options.account) {
+      delete allFees[account];
+      continue;
+    }
+    allFees[account] = {
+      ...allFees[account],
+      total: `$${(allFees[account].total / 100).toFixed(2)}`,
+      total_refunded: `$${(allFees[account].total_refunded / 100).toFixed(2)}`,
+    };
+  }
+
+  if (options.details) {
+    if (options.account) {
+      fees = fees.filter(({ account }) => account === options.account);
+    }
+    console.table(
+      fees.map(
+        ({ id, account, amount, amount_refunded, created, refunded }) => ({
+          id,
+          account,
+          amount: `$${(amount / 100).toFixed(2)}`,
+          amount_refunded: `$${(amount_refunded / 100).toFixed(2)}`,
+          refunded,
+          created: new Date(created * 1000).toLocaleDateString(),
+        }),
+      ),
+    );
+  }
+
+  console.table(allFees);
+};
+
+const refundFee = async (feeId) =>
+  await stripe.applicationFees.createRefund(feeId);
+
+const refundAllProcessedFees = async () => {
+  console.log('Loading all fees...');
+  const progress = new cliProgress.SingleBar(
+    {},
+    cliProgress.Presets.shades_classic,
+  );
+  progress.start(100, 1);
+  let fees = await getProcessedFees(progress);
+  progress.stop();
+
+  if (options.account) {
+    fees = fees.filter(({ account }) => account === options.account);
+  }
+
+  console.log(`Found ${fees.length} fees charged.`);
+  console.log(
+    `${fees.filter(({ refunded }) => refunded).length} already refunded.`,
+  );
+
+  const allFees = {};
+  fees.map(({ account, amount, amount_refunded }) => {
+    if (allFees[account]) {
+      allFees[account] = {
+        total: allFees[account].total + amount,
+        total_refunded: allFees[account].total_refunded + amount_refunded,
+        count: allFees[account].count + 1,
+      };
+    } else {
+      allFees[account] = {
+        total: amount,
+        total_refunded: amount_refunded,
+        count: 1,
+      };
+    }
+  });
+
+  for (let account in allFees) {
+    allFees[account] = {
+      ...allFees[account],
+      total: `$${(allFees[account].total / 100).toFixed(2)}`,
+      total_refunded: `$${(allFees[account].total_refunded / 100).toFixed(2)}`,
+    };
+  }
+
+  console.table(allFees);
+
+  fees = fees.filter(({ refunded }) => !refunded);
+
+  console.log(`Refunding ${fees.length} fees...`);
+
+  const feeIds = fees.map(({ id, amount }) => ({ id, status: 'todo', amount }));
+  progress.start(feeIds.length, 1);
+  for (let i = 0; i < feeIds.length; i++) {
+    progress.update(i + 1);
+    try {
+      await refundFee(feeIds[i].id);
+      feeIds[i].status = 'ok';
+    } catch (e) {
+      console.error(e);
+      feeIds[i].status = 'failed';
+    }
+  }
+  progress.update(feeIds.length);
+  progress.stop();
+  const successfulRefunds = feeIds.filter((i) => i.status === 'ok');
+  const refundAmount = successfulRefunds.reduce(
+    (acc, { amount }) => amount + acc,
+    0,
+  );
+  console.log(
+    `${(refundAmount / 100).toFixed(2)} (${
+      successfulRefunds.length
+    } fees) refunded.`,
+  );
+  console.log(
+    `${feeIds.filter((i) => i.status === 'failed').length} fee refunds failed.`,
+  );
+};
+
 (async () => {
   if (options.help) {
-    console.log(`
-    application-fee-management
-    
-      List all connected accounts: yarn start
-      List all connected accounts and subscriptions: yarn start --listSubs
-      List all connected accounts and subscriptions, oldest first: yarn start --listSubs --sort date_asc
-      List all connected accounts and subscriptions, newest first: yarn start --listSubs --sort date_desc
-      Display account object for a connected account: yarn start --getAccount acct_000000
-      Add a 13.24% fee to all subscriptions: yarn start --addFee 13.24
-      Remove fees from all subscriptions: yarn start --removeFee
-      Remove fees from all subscriptions: yarn start --addFee 0
-    `);
+    console.log(getUsage(usageGuide));
     return;
   } else if (options.getAccount) {
-    const accountDetails = await getAccount(options.getAccount);
+    const accountDetails = await getAccount(
+      options.getAccount || options.account,
+    );
     console.log(accountDetails);
     return;
+  } else if (options.showProcessedFees) {
+    await getAllProcessedFees();
+    return;
+  } else if (options.refundProcessedFees) {
+    await refundAllProcessedFees();
+    return;
   }
-  console.log('Loading connected accounts...');
-  const accounts = await getConnectAccounts();
-
-  console.table(accounts);
+  let accounts;
+  if (!options.account) {
+    console.log('Loading connected accounts...');
+    accounts = await getConnectAccounts();
+    console.table(accounts);
+  } else {
+    console.log('Loading connected account...');
+    accounts = [await getConnectAccount(options.account)];
+    console.table(accounts);
+  }
 
   if (!(options.addFee || options.removeFee || options.listSubs)) {
     return;

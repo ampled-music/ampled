@@ -73,6 +73,7 @@ class RichEditor extends React.Component<RichEditorProps> {
   state = {
     editorState: EditorState.createEmpty(),
     focused: false,
+    showHyperlinkHelp: false,
   };
 
   editor: any;
@@ -81,10 +82,10 @@ class RichEditor extends React.Component<RichEditorProps> {
     super(props);
     if (props.initialTextAsHTML) {
       this.state = {
+        ...this.state,
         editorState: EditorState.createWithContent(
           convertFromHTML(props.initialTextAsHTML),
         ),
-        focused: false,
       };
     }
   }
@@ -110,9 +111,15 @@ class RichEditor extends React.Component<RichEditorProps> {
 
   focusEditor = () => {
     if (this.editor) {
+      this.setHyperlinkHelp(false);
       this.editor.focus();
     }
   };
+
+  setHyperlinkHelp = (value) => this.setState({ showHyperlinkHelp: value });
+
+  toggleHyperlinkHelp = () =>
+    this.setHyperlinkHelp(!this.state.showHyperlinkHelp);
 
   onBulletsClick = (e) => {
     e.preventDefault();
@@ -180,7 +187,26 @@ class RichEditor extends React.Component<RichEditorProps> {
             &#x2022;
           </span>
           <span className="helper-text">
-            Links will be handled automatically.
+            Hyperlinks enabled{' '}
+            <span
+              style={{
+                cursor: 'pointer',
+                textDecoration: 'underline',
+              }}
+              onClick={this.toggleHyperlinkHelp}
+              onMouseOver={() => this.setHyperlinkHelp(true)}
+              onMouseOut={() => this.setHyperlinkHelp(false)}
+            >
+              [?]
+            </span>
+            {this.state.showHyperlinkHelp ? (
+              <div className="additional">
+                Any URLs you include in your post will automatically be made
+                clickable when the post is published.
+              </div>
+            ) : (
+              ''
+            )}
           </span>
         </div>
         <div
@@ -227,6 +253,8 @@ class PostFormComponent extends React.Component<Props, any> {
     savingPost: false,
     showVideoEmbedField: false,
   };
+
+  editor: any;
 
   constructor(props) {
     super(props);
@@ -627,6 +655,9 @@ class PostFormComponent extends React.Component<Props, any> {
                     shrink: true,
                   }}
                   value={title}
+                  onFocus={() =>
+                    this.editor && this.editor.setHyperlinkHelp(false)
+                  }
                   onChange={this.handleChange}
                   required
                   InputProps={{
@@ -647,6 +678,7 @@ class PostFormComponent extends React.Component<Props, any> {
                   }}
                 />
                 <RichEditor
+                  ref={(editor) => (this.editor = editor)}
                   initialTextAsHTML={body}
                   callback={(body) =>
                     this.setState({

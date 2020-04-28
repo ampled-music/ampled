@@ -40,13 +40,17 @@ jobs:
           paths:
             - ./vendor/bundle
 
-      - run: bundle exec rake db:create db:schema:load # setup database
+      # Setup database
+      - run: bundle exec rake db:create db:schema:load db:migrate
       - run:
-          name: Run tests
+          name: Run Rails tests
+          # Runs default rake tasks, as defined in Rakefile (includes spec, rubocop)
           command: bundle exec rake
-      - run: bundle exec rubocop
       - check-changed-files-or-halt:
           pattern: \.(js|ts|tsx|js|json)$
+      - run:
+          name: Run React tests
+          command: npm run test-ci
       - run:
           name: Build react client
           command: |

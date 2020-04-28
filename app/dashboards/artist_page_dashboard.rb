@@ -29,7 +29,8 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     video_url: Field::String,
     approved: Field::Boolean,
     featured: Field::Boolean,
-    verb_plural: Field::Boolean
+    verb_plural: Field::Boolean,
+    hide_members: Field::Boolean
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -64,7 +65,8 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :video_url,
     :approved,
     :featured,
-    :verb_plural
+    :verb_plural,
+    :hide_members
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -82,7 +84,8 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :video_url,
     :approved,
     :featured,
-    :verb_plural
+    :verb_plural,
+    :hide_members
   ].freeze
 
   # Overwrite this method to customize how artist pages are displayed

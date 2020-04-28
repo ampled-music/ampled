@@ -11,6 +11,7 @@ json.instagram_handle @artist_page.instagram_handle
 json.images @artist_page.images, partial: "images/image", as: :image
 json.isStripeSetup @artist_page.is_stripe_ready
 json.approved @artist_page.approved
+json.hide_members @artist_page.hide_members
 
 json.most_recent_supporter do
   if @artist_page.most_recent_supporter.present?

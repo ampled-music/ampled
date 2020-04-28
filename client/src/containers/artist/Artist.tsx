@@ -502,6 +502,7 @@ class ArtistComponent extends React.Component<Props, any> {
           hash={this.props.history.location.hash}
           posts={artist.posts}
           artistName={artist.name}
+          hideMembers={artist.hide_members}
           artistId={artist.id}
           artistSlug={artist.slug}
           accentColor={artist.accent_color}

@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_18_000002) do
+ActiveRecord::Schema.define(version: 2020_04_28_210113) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "artist_pages", force: :cascade do |t|
@@ -35,6 +36,7 @@ ActiveRecord::Schema.define(version: 2020_04_18_000002) do
     t.boolean "verb_plural", default: false
     t.boolean "approved", default: false
     t.boolean "featured", default: false
+    t.boolean "hide_members", default: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 

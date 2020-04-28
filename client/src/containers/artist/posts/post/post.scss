@@ -6,10 +6,6 @@
   display: flex;
   flex-direction: column;
 
-  @include mq($tablet) {
-    margin-bottom: auto;
-  }
-
   &.clickable-post {
     cursor: pointer;
   }
@@ -200,18 +196,10 @@
   .comments-list {
     background-color: $gray-lightest;
     padding: 20px;
-    margin-bottom: 50px;
     color: $black;
     width: 100%;
-    max-width: 500px;
     display: flex;
     flex-direction: column;
-    margin: -2rem auto 0rem;
-
-    @include mq($tablet) {
-      margin: 0 auto 2rem;
-      max-width: 1000px;
-    }
 
     &:empty {
       display: none;
@@ -290,18 +278,22 @@
 .single-post {
   .post {
     max-width: 100%;
+
+    &__content,
+    .comments-list {
+      width: 100%;
+    }
+
     @include mq($tablet) {
       flex-direction: row;
       justify-content: space-between;
       align-items: flex-start;
-    }
-    &__content {
-      width: 65%;
-    }
-    &__card {
-    }
-    .comments-list {
-      width: 30%;
+      &__content {
+        width: 65%;
+      }
+      .comments-list {
+        width: 30%;
+      }
     }
   }
 }

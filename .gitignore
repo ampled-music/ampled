@@ -32,3 +32,6 @@ package-lock\.json
 .DS_store
 tools/application-fee-management/.env
 .env.test
+
+# Ignore VSCode configs
+.vscode/*

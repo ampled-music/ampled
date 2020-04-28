@@ -12,6 +12,69 @@
     height: auto;
   }
 
+  &__description {
+    .rich-editor-container {
+      .rich-controls {
+        height: 30px;
+        line-height: 28px;
+        font-family: $font-family-monospace;
+        text-align: left;
+
+        span.helper-text {
+          font-style: italic;
+          float: right;
+          color: $gray-light;
+          font-size: 0.8rem;
+
+          .additional {
+            position: absolute;
+            background: white;
+            border: 1px solid $gray-light;
+            z-index: 999;
+            line-height: 20px;
+            padding: 8px;
+            width: 250px;
+            right: 0;
+          }
+        }
+
+        button,
+        span[role='button'] {
+          background: white;
+          border: 1px solid $gray-light;
+          width: 28px;
+          height: 28px;
+          display: inline-block;
+          text-align: center;
+
+          &.active {
+            background: $black;
+            color: white;
+          }
+        }
+      }
+      .rich-editor {
+        border: 1px solid $gray-lighter;
+        height: 200px;
+        max-height: 200px;
+        font-family: LL Replica Light Web, sans-serif;
+        border-radius: 0px;
+        display: block;
+        overflow: auto;
+        padding: 18.5px 14px;
+
+        &:hover {
+          border: 1px solid $black;
+        }
+        &.focused {
+          border: 2px solid $black;
+          padding: 17.5px 13px;
+          font-family: LL Replica Light Web, sans-serif;
+        }
+      }
+    }
+  }
+
   &__container {
     @include mq(0, $tablet) {
       .tear {

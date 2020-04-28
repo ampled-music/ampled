@@ -81,6 +81,13 @@
     padding: 0 1rem 1rem;
     white-space: pre-wrap;
     overflow-wrap: break-word;
+
+    p {
+      margin-bottom: 0;
+    }
+    p:empty {
+      height: 1rem;
+    }
   }
 
   .private-support {

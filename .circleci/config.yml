@@ -42,6 +42,8 @@ jobs:
 
       # Setup database
       - run: bundle exec rake db:create db:schema:load db:migrate
+      - check-changed-files-or-halt:
+          pattern: \.(js|ts|tsx|js|json)$
       - run:
           name: Run Rails tests
           # Runs default rake tasks, as defined in Rakefile (includes spec, rubocop)
@@ -49,8 +51,6 @@ jobs:
       - run:
           name: Run React tests
           command: npm run test-ci
-      - check-changed-files-or-halt:
-          pattern: \.(js|ts|tsx|js|json)$
       - run:
           name: Build react client
           command: |

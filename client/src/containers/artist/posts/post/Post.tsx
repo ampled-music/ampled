@@ -3,7 +3,7 @@ import './post.scss';
 import cx from 'classnames';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { routePaths } from '../../../route-paths';
 import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
@@ -12,10 +12,7 @@ import avatar from '../../../../images/ampled_avatar.svg';
 import tear from '../../../../images/background_tear.png';
 import { faUnlock, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CardActions, Collapse, Divider } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import { withStyles } from '@material-ui/core/styles';
+import { CardActions, Collapse } from '@material-ui/core';
 import { Modal } from '../../../shared/modal/Modal';
 import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
 import YouTubePlayer from 'react-player/lib/players/YouTube';
@@ -27,18 +24,16 @@ import DOMPurify from 'dompurify';
 import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';
 import { PostForm } from '../post-form/PostForm';
-import { styles } from './post-style';
 
 import { deletePost } from '../../../../api/post/delete-post';
 
-const renderCloudinaryPhoto = (image: string, crop: number) => {
-  const crop_url_path = `w_${crop},h_${crop},c_fill`;
+const renderCloudinaryPhoto = (image: string) => {
   if (image) {
     if (image.includes('https://res.cloudinary')) {
-      const img_src = image.replace('upload/', `upload/${crop_url_path}/`);
+      const img_src = image.replace('upload/', `upload/`);
       return img_src;
     } else {
-      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${crop_url_path}/${image}`;
+      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${image}`;
       return img_src;
     }
   }
@@ -68,7 +63,6 @@ const canLoggedUserDeleteComment = (
 
 const Comments = ({
   post,
-  classes,
   expanded,
   handleDeleteComment,
   handleExpandClick,
@@ -116,10 +110,7 @@ const Comments = ({
               />
             ))}
           </Collapse>
-          <CardActions
-            className={cx(classes.actions, 'collapse-actions')}
-            disableSpacing
-          >
+          <CardActions className={cx('collapse-actions')} disableSpacing>
             <button
               className="show-previous-command-btn"
               onClick={handleExpandClick}
@@ -163,7 +154,6 @@ const Comments = ({
 Comments.propTypes = {
   post: PropTypes.any,
   expanded: PropTypes.bool,
-  classes: PropTypes.any,
   handleDeleteComment: PropTypes.func,
   handleExpandClick: PropTypes.func,
   handleSubmit: PropTypes.func,
@@ -210,7 +200,6 @@ const PostMedia = ({
     audio_file,
     deny_details_lapsed,
   },
-  classes,
   allowDetails,
   accentColor,
   me,
@@ -226,11 +215,12 @@ const PostMedia = ({
     )}
     {image_url && !has_audio && (
       <div className="post__image-container">
-        <CardMedia
-          className={cx(classes.media, {
+        <img
+          className={cx({
+            post__image: true,
             'blur-image': !allowDetails,
           })}
-          image={renderCloudinaryPhoto(image_url, 500)}
+          src={renderCloudinaryPhoto(image_url)}
         />
         {!allowDetails && (
           <Lock
@@ -246,11 +236,12 @@ const PostMedia = ({
       <div className="post__audio-container">
         <div className="post__image-container">
           {image_url && (
-            <CardMedia
-              className={cx(classes.media, {
+            <img
+              className={cx({
+                post__image: true,
                 'blur-image': !allowDetails,
               })}
-              image={renderCloudinaryPhoto(image_url, 500)}
+              src={renderCloudinaryPhoto(image_url)}
             />
           )}
           {!image_url && !allowDetails && (
@@ -273,7 +264,7 @@ const PostMedia = ({
         {allowDetails && (
           <AudioPlayer
             url={returnPlayableUrl(audio_file)}
-            image={renderCloudinaryPhoto(image_url, 500)}
+            image={renderCloudinaryPhoto(image_url)}
             accentColor={accentColor}
             callback={playerCallback}
           />
@@ -304,7 +295,6 @@ const PostMedia = ({
 
 PostMedia.propTypes = {
   post: PropTypes.any,
-  classes: PropTypes.any,
   allowDetails: PropTypes.bool,
   accentColor: PropTypes.string,
   me: PropTypes.any,
@@ -515,7 +505,7 @@ class PostComponent extends React.Component<any, any> {
   };
 
   render = () => {
-    const { classes, post, accentColor, me, loggedUserAccess } = this.props;
+    const { post, accentColor, me, loggedUserAccess, artistSlug } = this.props;
 
     const deny_details_lapsed = post.deny_details_lapsed || false;
 
@@ -531,190 +521,188 @@ class PostComponent extends React.Component<any, any> {
     const isUserSubscribed = this.isUserSubscribed(loggedUserAccess);
 
     return (
-      <div>
-        <div className="post">
-          {this.state.showDeletePostModal && (
-            <Modal
-              open={this.state.showDeletePostModal}
-              onClose={this.closeDeletePostModal}
-            >
-              <DeleteModal
-                onCancel={this.closeDeletePostModal}
-                onConfirm={this.handleDeletePost}
-              />
-            </Modal>
-          )}
+      <div className="post">
+        {this.state.showDeletePostModal && (
           <Modal
-            open={this.state.showEditPostModal}
-            onClose={this.closeEditPostModal}
+            open={this.state.showDeletePostModal}
+            onClose={this.closeDeletePostModal}
           >
-            <PostForm
-              close={this.closeEditPostModal}
-              discardChanges={this.closeEditPostModal}
-              isEdit
-              post={post}
+            <DeleteModal
+              onCancel={this.closeDeletePostModal}
+              onConfirm={this.handleDeletePost}
             />
           </Modal>
-          <div
-            className={cx('post', { 'clickable-post': !allowDetails })}
-            onClick={() =>
-              !deny_details_lapsed && this.handlePrivatePostClick(authenticated)
+        )}
+        <Modal
+          open={this.state.showEditPostModal}
+          onClose={this.closeEditPostModal}
+        >
+          <PostForm
+            close={this.closeEditPostModal}
+            discardChanges={this.closeEditPostModal}
+            isEdit
+            post={post}
+          />
+        </Modal>
+        <div
+          className={cx('post__content', { 'clickable-post': !allowDetails })}
+          onClick={(e) => {
+            const target = e.target as HTMLElement;
+            if (target.tagName === 'A') {
+              return;
             }
-            title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
-          >
-            <Card
-              className={classes.card}
-              style={{ border: `2px solid ${accentColor}` }}
-            >
-              <div className="post__header">
-                <div className={classes.postTitle}>
-                  {post.authorImage ? (
-                    <img
-                      className="user-image"
-                      src={post.authorImage}
-                      alt={`${authorFirstName}'s avatar`}
-                    />
-                  ) : (
-                    <img className="user-image" src={avatar} alt="Avatar" />
-                  )}
-                  <span className="post__header_name">{authorFirstName}</span>
-                </div>
-                <div className={classes.postDate}>
-                  {post.created_ago === 'less than a minute' ? (
-                    <div className={classes.postDate}>Just Now</div>
-                  ) : (
-                    <div className={classes.postDate}>
-                      {post.created_ago} ago
-                    </div>
-                  )}
-                </div>
-              </div>
-              <Divider />
-
-              {canLoggedUserPost &&
-                (isPrivate ? (
-                  <div className="post__status">
-                    <FontAwesomeIcon className="unlock" icon={faUnlock} />
-                    Supporters Only
-                  </div>
+            !deny_details_lapsed && this.handlePrivatePostClick(authenticated);
+          }}
+          title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
+        >
+          <div className="post__card" style={{ borderColor: accentColor }}>
+            <div className="post__header">
+              <div className="post__header_title">
+                {post.authorImage ? (
+                  <img
+                    className="user-image"
+                    src={post.authorImage}
+                    alt={`${authorFirstName}'s avatar`}
+                  />
                 ) : (
-                  <div className="post__status">Public Post</div>
-                ))}
+                  <img className="user-image" src={avatar} alt="Avatar" />
+                )}
+                <span className="post__header_name">{authorFirstName}</span>
+              </div>
+              <div className="post__header_date">
+                {post.created_ago === 'less than a minute' ? (
+                  <Link to={`/artist/${artistSlug}/post/${post.id}`}>
+                    Just Now
+                  </Link>
+                ) : (
+                  <Link to={`/artist/${artistSlug}/post/${post.id}`}>
+                    {post.created_ago} ago
+                  </Link>
+                )}
+              </div>
+            </div>
 
-              {isUserSubscribed && !canLoggedUserPost && isPrivate && (
+            {canLoggedUserPost &&
+              (isPrivate ? (
                 <div className="post__status">
                   <FontAwesomeIcon className="unlock" icon={faUnlock} />
                   Supporters Only
                 </div>
-              )}
+              ) : (
+                <div className="post__status">Public Post</div>
+              ))}
 
-              {canLoggedUserEditPost && (
-                <div className="post__change">
-                  <div className="post__change_edit">
-                    <button onClick={this.openEditPostModal}>
-                      <FontAwesomeIcon icon={faPen} />
-                    </button>
-                  </div>
-                  <div className="post__change_delete">
-                    <button onClick={this.openDeletePostModal}>
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </div>
+            {isUserSubscribed && !canLoggedUserPost && isPrivate && (
+              <div className="post__status">
+                <FontAwesomeIcon className="unlock" icon={faUnlock} />
+                Supporters Only
+              </div>
+            )}
+
+            {canLoggedUserEditPost && (
+              <div className="post__change">
+                <div className="post__change_edit">
+                  <button onClick={this.openEditPostModal}>
+                    <FontAwesomeIcon icon={faPen} />
+                  </button>
                 </div>
-              )}
-
-              <PostMedia
-                doReflow={this.props.doReflow}
-                post={post}
-                classes={classes}
-                allowDetails={allowDetails}
-                me={me}
-                accentColor={accentColor}
-                handlePrivatePostClick={this.handlePrivatePostClick}
-                playerCallback={this.props.playerCallback}
-              />
-              {allowDownload && hasAudio && allowDetails && (
-                <div className="download-link">
-                  <a
-                    href={`/artist/${this.props.artistSlug}/post/${post.id}/download`}
-                    download={`${post.title}.mp3`}
-                  >
-                    Download audio
-                  </a>
+                <div className="post__change_delete">
+                  <button onClick={this.openDeletePostModal}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
                 </div>
-              )}
+              </div>
+            )}
 
-              <div className="post__title">{post.title}</div>
+            <PostMedia
+              doReflow={this.props.doReflow}
+              post={post}
+              allowDetails={allowDetails}
+              me={me}
+              accentColor={accentColor}
+              handlePrivatePostClick={this.handlePrivatePostClick}
+              playerCallback={this.props.playerCallback}
+            />
+            {allowDownload && hasAudio && allowDetails && (
+              <div className="download-link">
+                <a
+                  href={`/artist/${this.props.artistSlug}/post/${post.id}/download`}
+                  download={`${post.title}.mp3`}
+                >
+                  Download audio
+                </a>
+              </div>
+            )}
 
-              {post.body && (
-                <div className="post__body">
-                  <Linkify
-                    componentDecorator={(
-                      decoratedHref: string,
-                      decoratedText: string,
-                      key: number,
-                    ) => (
-                      <a
-                        href={decoratedHref}
-                        key={key}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {decoratedText}
-                      </a>
-                    )}
-                  >
-                    {// If there are no p tags, this is legacy
-                    // text and should be presented unparsed.
-                    /<p>/gi.test(post.body)
-                      ? parse(
-                          DOMPurify.sanitize(post.body, {
-                            ALLOWED_TAGS: [
-                              'p',
-                              'em',
-                              'strong',
-                              'br',
-                              'ul',
-                              'ol',
-                              'li',
-                            ],
-                          }),
-                          {
-                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                            replace: (domNode) => {
-                              // FYI, here we can reshape tags as needed
-                              // for presentation. If we simply return,
-                              // the node is unprocessed; otherwise, return
-                              // a new React element that should take the
-                              // place of the node.
-                              return;
-                            },
+            <div className="post__title">{post.title}</div>
+
+            {post.body && (
+              <div className="post__body">
+                <Linkify
+                  componentDecorator={(
+                    decoratedHref: string,
+                    decoratedText: string,
+                    key: number,
+                  ) => (
+                    <a
+                      href={decoratedHref}
+                      key={key}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {decoratedText}
+                    </a>
+                  )}
+                >
+                  {// If there are no p tags, this is legacy
+                  // text and should be presented unparsed.
+                  /<p>/gi.test(post.body)
+                    ? parse(
+                        DOMPurify.sanitize(post.body, {
+                          ALLOWED_TAGS: [
+                            'p',
+                            'em',
+                            'strong',
+                            'br',
+                            'ul',
+                            'ol',
+                            'li',
+                          ],
+                        }),
+                        {
+                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                          replace: (domNode) => {
+                            // FYI, here we can reshape tags as needed
+                            // for presentation. If we simply return,
+                            // the node is unprocessed; otherwise, return
+                            // a new React element that should take the
+                            // place of the node.
+                            return;
                           },
-                        )
-                      : post.body}
-                  </Linkify>
-                </div>
-              )}
-            </Card>
+                        },
+                      )
+                    : post.body}
+                </Linkify>
+              </div>
+            )}
           </div>
-          <Comments
-            post={post}
-            expanded={this.state.expanded}
-            classes={classes}
-            handleDeleteComment={this.handleDeleteComment}
-            handleExpandClick={this.handleExpandClick}
-            handleSubmit={this.handleSubmit}
-            isUserSubscribed={isUserSubscribed}
-            me={me}
-            handlePrivatePostAction={this.handlePrivatePostAction}
-            loggedUserAccess={loggedUserAccess}
-          />
         </div>
+        <Comments
+          post={post}
+          expanded={this.state.expanded}
+          handleDeleteComment={this.handleDeleteComment}
+          handleExpandClick={this.handleExpandClick}
+          handleSubmit={this.handleSubmit}
+          isUserSubscribed={isUserSubscribed}
+          me={me}
+          handlePrivatePostAction={this.handlePrivatePostAction}
+          loggedUserAccess={loggedUserAccess}
+        />
       </div>
     );
   };
 }
 
-const Post = withStyles(styles)(withRouter(PostComponent));
+const Post = PostComponent;
 
 export { Post };

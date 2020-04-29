@@ -13,7 +13,7 @@ class RemoveImageUrlFromPost < ActiveRecord::Migration[5.2]
 
   def migrate_post_image_urls_to_images
     Post.where.not(image_url: nil).each do |post|
-      post.update!(images_attributes: [image_url(post.images_url)])
+      post.update!(images_attributes: [image_url(post.image_url)])
     end
   end
 

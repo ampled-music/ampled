@@ -47,6 +47,7 @@ interface PostsProps {
   artistName: string;
   artistId: number;
   artistSlug: string;
+  hideMembers: boolean;
   playerCallback?(action: string, instance: any): void;
 }
 
@@ -114,6 +115,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
       me,
       openAuthModal,
       artistId,
+      hideMembers,
       // loggedUserAccess,
     } = this.props;
 
@@ -141,6 +143,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
           updateArtist={this.props.updateArtist}
           doReflow={this.updateDimensions}
           playerCallback={this.props.playerCallback}
+          hideMembers={hideMembers}
         />
       </div>
     ));

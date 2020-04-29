@@ -86,6 +86,7 @@ const SinglePostComponent = ({
     name: artistName,
     id: artistId,
     slug: artistSlug,
+    hide_members: hideMembers,
   } = post.artist;
 
   const loggedUserAccess = (me?.artistPages || []).filter(
@@ -120,6 +121,7 @@ const SinglePostComponent = ({
           updateArtist={() => setUpdateCount(updateCount + 1)}
           doReflow={() => null}
           playerCallback={() => null}
+          hideMembers={hideMembers}
         />
       </div>
     </div>

@@ -220,7 +220,7 @@ export class FeaturedImages extends React.Component<Props, any> {
         className="artist-header__photo-container"
         style={{ borderColor: artist.accent_color }}
       >
-        {this.renderOwners()}
+        {!artist.hide_members && this.renderOwners()}
         {this.renderBanners()}
         {artist.images && (
           <div

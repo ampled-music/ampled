@@ -27,5 +27,6 @@ if @expand_artist
     json.name post.artist_page.name
     json.slug post.artist_page.slug
     json.accent_color post.artist_page.accent_color
+    json.hide_members post.artist_page.hide_members
   end
 end

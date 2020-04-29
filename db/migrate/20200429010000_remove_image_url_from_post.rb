@@ -20,6 +20,7 @@ class RemoveImageUrlFromPost < ActiveRecord::Migration[5.2]
   def migrate_images_url_to_post_image_urls
     Image.where(imageable_type: 'Post').each do |image|
       image.imageable.update!(image_url: image.url)
+      image.destroy!
     end
   end
 

@@ -306,6 +306,13 @@
       position: relative;
     }
 
+    &__change {
+      opacity: 1;
+      button {
+        opacity: 1;
+      }
+    }
+
     @include mq(0, $layout-m) {
       &__image-container {
         &.video {

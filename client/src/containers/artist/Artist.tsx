@@ -454,6 +454,7 @@ class ArtistComponent extends React.Component<Props, any> {
           artistName={artist.name}
           artistId={artist.id}
           artistSlug={artist.slug}
+          hideMembers={artist.hide_members}
           accentColor={artist.accent_color}
           updateArtist={this.getArtistInfo}
           loading={artists.loading || loadingMe}

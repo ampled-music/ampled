@@ -16,6 +16,7 @@ export interface ArtistModel {
   supporters: SupportersProps[];
   most_recent_supporter: SupportersProps;
   approved: boolean;
+  hide_members: boolean;
 }
 
 interface OwnersProps {

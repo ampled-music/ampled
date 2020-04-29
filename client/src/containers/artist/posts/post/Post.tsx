@@ -556,19 +556,27 @@ class PostComponent extends React.Component<any, any> {
           title={!allowDetails ? 'SUBSCRIBER-ONLY CONTENT' : ''}
         >
           <div className="post__card" style={{ borderColor: accentColor }}>
-            <div className="post__header">
-              <div className="post__header_title">
-                {post.authorImage ? (
-                  <img
-                    className="user-image"
-                    src={post.authorImage}
-                    alt={`${authorFirstName}'s avatar`}
-                  />
-                ) : (
-                  <img className="user-image" src={avatar} alt="Avatar" />
-                )}
-                <span className="post__header_name">{authorFirstName}</span>
-              </div>
+            <div
+              className={`post__header${
+                this.props.hideMembers ? ' noname' : ''
+              }`}
+            >
+              {this.props.hideMembers ? (
+                ''
+              ) : (
+                <div className="post__header_title">
+                  {post.authorImage ? (
+                    <img
+                      className="user-image"
+                      src={post.authorImage}
+                      alt={`${authorFirstName}'s avatar`}
+                    />
+                  ) : (
+                    <img className="user-image" src={avatar} alt="Avatar" />
+                  )}
+                  <span className="post__header_name">{authorFirstName}</span>
+                </div>
+              )}
               <div className="post__header_date">
                 {post.created_ago === 'less than a minute' ? (
                   <Link to={`/artist/${artistSlug}/post/${post.id}`}>

@@ -201,8 +201,8 @@ class ArtistPagesController < ApplicationController
   def artist_page_params
     rename_image_params
     params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :banner_image_url,
-                                        :slug, :location, :accent_color, :video_url, :verb_plural,
-                                        :members, images_attributes: Image::PERMITTED_PARAMS)
+                                        :slug, :location, :accent_color, :video_url, :verb_plural, :members,
+                                        :hide_members, images_attributes: Image::PERMITTED_PARAMS)
   end
 
   # Helper functions for creating / updating an artist page.

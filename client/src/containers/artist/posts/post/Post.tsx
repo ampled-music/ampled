@@ -558,16 +558,22 @@ class PostComponent extends React.Component<any, any> {
           <div className="post__card" style={{ borderColor: accentColor }}>
             <div className="post__header">
               <div className="post__header_title">
-                {post.authorImage ? (
-                  <img
-                    className="user-image"
-                    src={post.authorImage}
-                    alt={`${authorFirstName}'s avatar`}
-                  />
+                {this.props.hideMembers ? (
+                  ''
                 ) : (
-                  <img className="user-image" src={avatar} alt="Avatar" />
+                  <>
+                    {post.authorImage ? (
+                      <img
+                        className="user-image"
+                        src={post.authorImage}
+                        alt={`${authorFirstName}'s avatar`}
+                      />
+                    ) : (
+                      <img className="user-image" src={avatar} alt="Avatar" />
+                    )}
+                    <span className="post__header_name">{authorFirstName}</span>
+                  </>
                 )}
-                <span className="post__header_name">{authorFirstName}</span>
               </div>
               <div className="post__header_date">
                 {post.created_ago === 'less than a minute' ? (

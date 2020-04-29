@@ -305,6 +305,23 @@
       }
     }
 
+    &__image-container {
+      &.video {
+        height: 400px;
+      }
+    }
+
+    &__card {
+      position: relative;
+    }
+
+    &__change {
+      opacity: 1;
+      button {
+        opacity: 1;
+      }
+    }
+
     &__image {
       object-fit: contain;
       // min-height: 340px;

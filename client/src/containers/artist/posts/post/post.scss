@@ -315,6 +315,10 @@
       }
     }
 
+    &__card {
+      position: relative;
+    }
+
     @include mq(0, $layout-m) {
       &__image-container {
         &.video {

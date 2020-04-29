@@ -634,7 +634,11 @@ class PostComponent extends React.Component<any, any> {
               </div>
             )}
 
-            <div className="post__title">{post.title}</div>
+            <div className="post__title">
+              <Link to={`/artist/${artistSlug}/post/${post.id}`}>
+                {post.title}
+              </Link>  
+            </div>
 
             {post.body && (
               <div className="post__body">

@@ -3,6 +3,7 @@ import './post-form.scss';
 import 'draft-js/dist/Draft.css';
 
 import cx from 'classnames';
+import * as Sentry from '@sentry/browser';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -402,7 +403,7 @@ class PostFormComponent extends React.Component<Props, any> {
       try {
         await deleteFileFromCloudinary(deleteToken);
       } catch (e) {
-        window.Sentry.captureException(e);
+        Sentry.captureException(e);
       }
     }
     if (id) {

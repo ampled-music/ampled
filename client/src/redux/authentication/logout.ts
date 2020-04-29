@@ -1,11 +1,11 @@
 import { createActionThunk } from 'redux-thunk-actions';
-
+import * as Sentry from '@sentry/browser';
 import { logout } from '../../api/login/logout';
 import { actions } from './actions';
 
 export const logoutAction = createActionThunk(actions.logout, () => {
   logout();
-  window.Sentry.configureScope((scope) => scope.setUser(null));
+  Sentry.configureScope((scope) => scope.setUser(null));
 });
 
 export const logoutReducer = {

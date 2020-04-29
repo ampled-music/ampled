@@ -176,7 +176,7 @@ const PostVideo = ({ videoUrl, doReflow }) => {
   return (
     <VideoComponent
       onReady={doReflow}
-      className="react-player"
+      className="react-player embed-responsive-item"
       url={videoUrl}
       width="100%"
       height="100%"
@@ -209,7 +209,7 @@ const PostMedia = ({
 }) => (
   <>
     {has_video_embed && allowDetails && (
-      <div className="post__image-container video">
+      <div className="post__image-container embed-responsive embed-responsive-16by9">
         <PostVideo videoUrl={video_embed_url} doReflow={doReflow} />
       </div>
     )}

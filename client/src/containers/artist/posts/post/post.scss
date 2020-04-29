@@ -44,6 +44,11 @@
     align-items: center;
     justify-content: space-between;
 
+    &.noname {
+      justify-content: center;
+      margin: 8px;
+    }
+
     &_date {
       color: $gray-light;
       font-size: 12px;

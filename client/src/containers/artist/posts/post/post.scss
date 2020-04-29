@@ -34,7 +34,8 @@
 
   &__image {
     display: block;
-    min-height: 340px;
+    // min-height: 340px;
+    object-fit: contain;
     width: 100%;
   }
 
@@ -75,6 +76,10 @@
     overflow: hidden;
     justify-content: center;
     align-content: center;
+
+    &.video {
+      height: 250px;
+    }
 
     .blur-image {
       -webkit-filter: blur(20px);
@@ -290,6 +295,29 @@
 .single-post {
   .post {
     max-width: 100%;
+
+    &__image-container {
+      &.video {
+        height: 400px;
+      }
+    }
+
+    &__card {
+      position: relative;
+    }
+
+    @include mq(0, $layout-m) {
+      &__image-container {
+        &.video {
+          height: 250px;
+        }
+      }
+    }
+
+    &__image {
+      object-fit: contain;
+      // min-height: 340px;
+    }
 
     &__content,
     .comments-list {

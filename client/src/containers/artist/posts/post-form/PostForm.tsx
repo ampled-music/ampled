@@ -633,14 +633,18 @@ class PostFormComponent extends React.Component<Props, any> {
           accept="image/*"
           onChange={this.processImage}
         />
-        {!images.length && !videoEmbedUrl && !showVideoEmbedField && (
+        {!images.length && !videoEmbedUrl && !showVideoEmbedField ? (
           <>
             {this.renderUploader()}
             {this.renderVideoToggle()}
           </>
+        ) : (
+          ''
         )}
-        {!images.length && showVideoEmbedField && this.renderVideoEmbedder()}
-        {images.length && this.renderPreview()}
+        {!images.length && showVideoEmbedField
+          ? this.renderVideoEmbedder()
+          : ''}
+        {images.length > 0 ? this.renderPreview() : ''}
       </div>
     );
   };

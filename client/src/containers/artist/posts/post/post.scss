@@ -78,6 +78,10 @@
     justify-content: center;
     align-content: center;
 
+    &.video {
+      height: 250px;
+    }
+
     .blur-image {
       -webkit-filter: blur(20px);
       -moz-filter: blur(20px);
@@ -302,6 +306,20 @@
       opacity: 1;
       button {
         opacity: 1;
+      }
+    }
+
+    &__image-container {
+      &.video {
+        height: 400px;
+      }
+    }
+
+    @include mq(0, $layout-m) {
+      &__image-container {
+        &.video {
+          height: 250px;
+        }
       }
     }
 

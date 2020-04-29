@@ -209,7 +209,7 @@ const PostMedia = ({
 }) => (
   <>
     {has_video_embed && allowDetails && (
-      <div className="post__image-container embed-responsive embed-responsive-16by9">
+      <div className="post__image-container video">
         <PostVideo videoUrl={video_embed_url} doReflow={doReflow} />
       </div>
     )}
@@ -264,7 +264,7 @@ const PostMedia = ({
         {allowDetails && (
           <AudioPlayer
             url={returnPlayableUrl(audio_file)}
-            image={renderCloudinaryPhoto(images[0].url)}
+            image={renderCloudinaryPhoto(images[0]?.url)}
             accentColor={accentColor}
             callback={playerCallback}
           />
@@ -671,7 +671,7 @@ class PostComponent extends React.Component<any, any> {
                 >
                   {// If there are no p or ul tags, this is legacy
                   // text and should be presented unparsed.
-                  /<p>|<ul>/gi.test(post.body)
+                  /(<p>|<ul>)/gi.test(post.body)
                     ? parse(
                         DOMPurify.sanitize(post.body, {
                           ALLOWED_TAGS: [

@@ -402,7 +402,7 @@ class PostFormComponent extends React.Component<Props, any> {
       try {
         await deleteFileFromCloudinary(deleteToken);
       } catch (e) {
-        console.log(e);
+        window.Sentry.captureException(e);
       }
     }
     if (id) {

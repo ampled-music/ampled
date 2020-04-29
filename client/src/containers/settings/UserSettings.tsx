@@ -381,7 +381,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/`,
+        `/b_rgb:${this.adjustedBackgroundColor(color)}/`,
         this.handleBrokenName(
           artist.name,
           'center',
@@ -401,7 +401,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/social/Grid/Grid3.png`,
+        `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Grid/Grid3.png`,
       ].join(''),
       name: `${cleanArtistName}_Grid3.png`,
       description: '',
@@ -410,7 +410,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/social/Grid/Grid4.png`,
+        `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Grid/Grid4.png`,
       ].join(''),
       name: `${cleanArtistName}_Grid4.png`,
       description: '',
@@ -419,7 +419,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/social/Grid/Grid5.png`,
+        `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Grid/Grid5.png`,
       ].join(''),
       name: `${cleanArtistName}_Grid5.png`,
       description: '',
@@ -431,7 +431,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
         `/l_text:Arial_55_bold:%20${encodeURI(
           'ampled.com%2Fartist%2F' + artist.artistSlug,
         )}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_380/`,
-        `/b_rgb:${color + '33'}/social/Grid/Grid6.png`,
+        `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Grid/Grid6.png`,
       ].join(''),
       name: `${cleanArtistName}_Grid6.png`,
       description: '',
@@ -483,7 +483,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/`,
+        `/b_rgb:${this.adjustedBackgroundColor(color)}/`,
         this.handleBrokenName(
           artist.name,
           'center',
@@ -503,7 +503,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/social/Story/Story3.png`,
+        `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Story/Story3.png`,
       ].join(''),
       name: `${cleanArtistName}_Story3.png`,
       description: '',
@@ -512,7 +512,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/social/Story/Story4.png`,
+        `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Story/Story4.png`,
       ].join(''),
       name: `${cleanArtistName}_Story4.png`,
       description: '',
@@ -521,7 +521,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
-        `/b_rgb:${color + '33'}/social/Story/Story5.png`,
+        `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Story/Story5.png`,
       ].join(''),
       name: `${cleanArtistName}_Story5.png`,
       description: '',
@@ -533,7 +533,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
         `/l_text:Arial_60_bold:%20${encodeURI(
           'ampled.com%2Fartist%2F' + artist.artistSlug,
         )}%20,co_rgb:ffffff,b_rgb:202020,g_center,y_100/`,
-        `/b_rgb:${color + '33'}/social/Story/Story6.png`,
+        `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Story/Story6.png`,
       ].join(''),
       name: `${cleanArtistName}_Story6.png`,
       description: '',
@@ -690,8 +690,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
               />
             </Image>
           ) : (
-              <img src={avatar} className="user-image" alt="Your avatar" />
-            )}
+            <img src={avatar} className="user-image" alt="Your avatar" />
+          )}
         </Link>
       </div>
     );
@@ -826,8 +826,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
               <p className="artist__info_role">
                 {ownedPage.role
                   ? ownedPage.role.charAt(0).toUpperCase() +
-                  ownedPage.role.slice(1) +
-                  ' of'
+                    ownedPage.role.slice(1) +
+                    ' of'
                   : ''}
               </p>
               <p
@@ -896,16 +896,16 @@ class UserSettingsComponent extends React.Component<Props, any> {
                             Edit Payout Details
                           </a>
                         ) : (
-                            <a
-                              href={ownedPage.stripeSignup}
-                              className="details__stripe_link"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              style={{ color: '#d9534f' }}
-                            >
-                              Set Up Payouts
-                            </a>
-                          )}
+                          <a
+                            href={ownedPage.stripeSignup}
+                            className="details__stripe_link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#d9534f' }}
+                          >
+                            Set Up Payouts
+                          </a>
+                        )}
                       </div>
                       <div className="col-12">
                         <a

@@ -12,6 +12,8 @@ import { getArtistAction } from '../../../../redux/artists/get-details';
 import { Store } from '../../../../redux/configure-store';
 import { createPostAction } from '../../../../redux/posts/create';
 import { editPostAction } from '../../../../redux/posts/edit';
+import { Post } from '../../../../api/post/post';
+import { removeImageFromPost } from '../../../../api/post/edit-post';
 import { showToastAction } from '../../../../redux/toast/toast-modal';
 
 import {
@@ -55,7 +57,7 @@ interface PostFormProps {
   close: (hasUnsavedChanges: any) => void;
   discardChanges: () => void;
   isEdit?: boolean;
-  post?: any;
+  post?: Post
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -144,7 +146,7 @@ class RichEditor extends React.Component<RichEditorProps> {
     this.state.editorState.getCurrentInlineStyle().has(style);
 
   hasBlockStyle = (style) =>
-    style ==
+    style ===
     this.state.editorState
       .getCurrentContent()
       .getBlockForKey(this.state.editorState.getSelection().getStartKey())
@@ -245,7 +247,7 @@ class PostFormComponent extends React.Component<Props, any> {
     isPublic: false,
     allowDownload: false,
     isPinned: false,
-    imageUrl: null,
+    images: [],
     publicId: null,
     deleteToken: undefined,
     hasUnsavedChanges: false,
@@ -263,7 +265,7 @@ class PostFormComponent extends React.Component<Props, any> {
         ...this.initialState,
         ...props.post,
         audioFile: props.post.audio_file,
-        imageUrl: props.post.image_url,
+        images: props.post.images,
         videoEmbedUrl: props.post.video_embed_url,
         isPublic: !props.post.is_private,
         showVideoEmbedField: props.post.has_video_embed,
@@ -306,7 +308,7 @@ class PostFormComponent extends React.Component<Props, any> {
       title,
       body,
       audioFile,
-      imageUrl,
+      images,
       videoEmbedUrl,
       isPublic,
       allowDownload,
@@ -318,7 +320,7 @@ class PostFormComponent extends React.Component<Props, any> {
       title,
       body,
       audio_file: audioFile,
-      image_url: imageUrl,
+      images: images,
       video_embed_url: videoEmbedUrl,
       is_private: !isPublic,
       is_pinned: isPinned,
@@ -355,22 +357,23 @@ class PostFormComponent extends React.Component<Props, any> {
 
     this.setState({ loadingImage: true });
 
-    if (this.state.deleteToken) {
-      this.removeImage();
-    }
+    this.removeImage();
 
     const cloudinaryResponse = await uploadFileToCloudinary(imageFile);
 
     if (cloudinaryResponse) {
-      const fileName = imageFile.name;
-
-      this.setState({
-        imageUrl: cloudinaryResponse.secure_url,
-        deleteToken: cloudinaryResponse.delete_token,
-        publicId: cloudinaryResponse.public_id,
-        hasUnsavedChanges: true,
-        loadingImage: false,
-        imageName: fileName,
+      this.setState(state => {
+        const newImageList = state.images.concat({
+            url: cloudinaryResponse.secure_url,
+            public_id: cloudinaryResponse.public_id,
+        })
+        return {
+          images: newImageList,
+          deleteToken: cloudinaryResponse.delete_token,
+          hasUnsavedChanges: true,
+          loadingImage: false,
+          imageName: imageFile.name,
+        }
       });
     } else {
       this.setState({
@@ -385,13 +388,25 @@ class PostFormComponent extends React.Component<Props, any> {
     }
   };
 
+  // If we have an already-saved post and an already-saved image, delete it from the backend.
+  maybeDeleteImageFromBackend = () => {
+    if (this.state.id && this.state.images.length > 0 && this.state.images[0].id) {
+      removeImageFromPost(this.state.id, this.state.images[0].id);
+    }
+  };
+
+  // For now we are assuming at most one image per Post.
   removeImage = () => {
-    deleteFileFromCloudinary(this.state.deleteToken);
+    if (this.state.deleteToken) {
+      // TODO: Sometimes we want to delete an image but there is no longer a delete token.
+      //       Figure this out, perhaps as part of a broader "deleting images" cleanup.
+      deleteFileFromCloudinary(this.state.deleteToken);
+    }
+    this.maybeDeleteImageFromBackend();
     this.setState({
-      imageUrl: null,
-      deleteToken: undefined,
-      publicId: null,
-      hasUnsavedChanges: false,
+        images: [],
+        deleteToken: undefined,
+        hasUnsavedChanges: false,
     });
   };
 
@@ -407,13 +422,13 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   isSaveEnabled = () => {
-    const { title, body, imageUrl, videoEmbedUrl, audioFile } = this.state;
+    const { title, body, images, videoEmbedUrl, audioFile } = this.state;
 
     return (
       title &&
       title.length > 0 &&
       ((audioFile && audioFile.length > 0) ||
-        (imageUrl && imageUrl.length > 0) ||
+        (images && images.length > 0) ||
         (videoEmbedUrl && videoEmbedUrl.length > 0) ||
         (body && body.length > 0))
     );
@@ -437,7 +452,7 @@ class PostFormComponent extends React.Component<Props, any> {
         <div className="preview">
           <img
             className="preview__image"
-            src={this.state.imageUrl}
+            src={this.state.images[0].url}
             alt="Preview"
           />
           <span className="preview__name">{this.state.imageName}</span>
@@ -607,7 +622,7 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   renderVisualUpload = () => {
-    const { imageUrl, videoEmbedUrl, showVideoEmbedField } = this.state;
+    const { images, videoEmbedUrl, showVideoEmbedField } = this.state;
     return (
       <div className="post-form__image">
         <input
@@ -618,14 +633,14 @@ class PostFormComponent extends React.Component<Props, any> {
           accept="image/*"
           onChange={this.processImage}
         />
-        {!imageUrl && !videoEmbedUrl && !showVideoEmbedField && (
+        {!images.length && !videoEmbedUrl && !showVideoEmbedField && (
           <>
             {this.renderUploader()}
             {this.renderVideoToggle()}
           </>
         )}
-        {!imageUrl && showVideoEmbedField && this.renderVideoEmbedder()}
-        {imageUrl && this.renderPreview()}
+        {!images.length && showVideoEmbedField && this.renderVideoEmbedder()}
+        {images.length && this.renderPreview()}
       </div>
     );
   };

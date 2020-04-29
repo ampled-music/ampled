@@ -8,7 +8,7 @@ class PostDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   def display_resource(post)
-    post.id
+    "#{post.artist_page.name} - post #{post.id}"
   end
 
   ATTRIBUTE_TYPES = {

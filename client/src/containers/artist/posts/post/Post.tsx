@@ -193,7 +193,7 @@ PostVideo.propTypes = {
 
 const PostMedia = ({
   post: {
-    image_url,
+    images,
     has_audio,
     has_video_embed,
     video_embed_url,
@@ -213,14 +213,14 @@ const PostMedia = ({
         <PostVideo videoUrl={video_embed_url} doReflow={doReflow} />
       </div>
     )}
-    {image_url && !has_audio && (
+    {images.length > 0 && !has_audio && (
       <div className="post__image-container">
         <img
           className={cx({
             post__image: true,
             'blur-image': !allowDetails,
           })}
-          src={renderCloudinaryPhoto(image_url)}
+          src={renderCloudinaryPhoto(images[0].url)}
         />
         {!allowDetails && (
           <Lock
@@ -235,16 +235,16 @@ const PostMedia = ({
     {has_audio && (
       <div className="post__audio-container">
         <div className="post__image-container">
-          {image_url && (
+          {images.length > 0 && (
             <img
               className={cx({
                 post__image: true,
                 'blur-image': !allowDetails,
               })}
-              src={renderCloudinaryPhoto(image_url)}
+              src={renderCloudinaryPhoto(images[0].url)}
             />
           )}
-          {!image_url && !allowDetails && (
+          {!images.length && !allowDetails && (
             <div
               style={{
                 height: '340px',
@@ -264,7 +264,7 @@ const PostMedia = ({
         {allowDetails && (
           <AudioPlayer
             url={returnPlayableUrl(audio_file)}
-            image={renderCloudinaryPhoto(image_url)}
+            image={renderCloudinaryPhoto(images[0].url)}
             accentColor={accentColor}
             callback={playerCallback}
           />
@@ -272,7 +272,7 @@ const PostMedia = ({
       </div>
     )}
 
-    {!has_audio && !image_url && !allowDetails && (
+    {!has_audio && !images.length && !allowDetails && (
       <div className="post__image-container">
         <div
           style={{

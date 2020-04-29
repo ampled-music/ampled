@@ -248,6 +248,7 @@ class PostFormComponent extends React.Component<Props, any> {
     allowDownload: false,
     isPinned: false,
     images: [],
+    deletedImages: [],
     publicId: null,
     deleteToken: undefined,
     hasUnsavedChanges: false,
@@ -301,7 +302,7 @@ class PostFormComponent extends React.Component<Props, any> {
     this.setState({ [name]: value, hasUnsavedChanges: true });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
     const {
@@ -313,6 +314,7 @@ class PostFormComponent extends React.Component<Props, any> {
       isPublic,
       allowDownload,
       isPinned,
+      deletedImages,
     } = this.state;
     const { isEdit } = this.props;
 
@@ -330,6 +332,11 @@ class PostFormComponent extends React.Component<Props, any> {
     };
 
     this.setState({ savingPost: true });
+    if (deletedImages && deletedImages.length > 0) {
+      for (const deleteImage of deletedImages) {
+        await this.removeImageFromBackendAndCloudinary(deleteImage);
+      }
+    }
     isEdit ? this.props.editPost(post) : this.props.createPost(post);
   };
 
@@ -388,25 +395,40 @@ class PostFormComponent extends React.Component<Props, any> {
     }
   };
 
-  // If we have an already-saved post and an already-saved image, delete it from the backend.
-  maybeDeleteImageFromBackend = () => {
-    if (this.state.id && this.state.images.length > 0 && this.state.images[0].id) {
-      removeImageFromPost(this.state.id, this.state.images[0].id);
+  removeImageFromBackendAndCloudinary = async ({ id, deleteToken }) => {
+    if (deleteToken) {
+      // TODO: Sometimes we want to delete an image but there is no longer a delete token.
+      //       Figure this out, perhaps as part of a broader "deleting images" cleanup.
+      try {
+        await deleteFileFromCloudinary(deleteToken);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    if (id) {
+      await removeImageFromPost(this.state.id, id);
     }
   };
 
   // For now we are assuming at most one image per Post.
   removeImage = () => {
-    if (this.state.deleteToken) {
-      // TODO: Sometimes we want to delete an image but there is no longer a delete token.
-      //       Figure this out, perhaps as part of a broader "deleting images" cleanup.
-      deleteFileFromCloudinary(this.state.deleteToken);
+    // If we have an already-saved post and an already-saved image, queue it for backend deletion.
+    let deletedImages = [];
+    if (
+      this.state.id &&
+      this.state.images.length > 0 &&
+      this.state.images[0].id
+    ) {
+      deletedImages = [
+        { id: this.state.images[0].id, deleteToken: this.state.deleteToken },
+      ];
     }
-    this.maybeDeleteImageFromBackend();
+
     this.setState({
-        images: [],
-        deleteToken: undefined,
-        hasUnsavedChanges: false,
+      images: [],
+      deletedImages,
+      deleteToken: undefined,
+      hasUnsavedChanges: true,
     });
   };
 

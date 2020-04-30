@@ -182,7 +182,7 @@
     }
 
     &_small {
-      margin: 0 6px 0 0;
+      margin: 0 6px 6px 0;
     }
   }
 
@@ -399,6 +399,7 @@
   }
 
   .supporter {
+    position: relative;
     @include mq($layout-m) {
       position: relative;
       display: block;

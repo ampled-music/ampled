@@ -265,6 +265,8 @@ const Members = ({
   removeMember,
   handleChange,
   userData,
+  hideMembers,
+  setHideMembers,
 }) => {
   return (
     <div className="container">
@@ -322,6 +324,30 @@ const Members = ({
             </Card>
           </div>
         </div>
+        <div className="row">
+          <div className="col-md-12 col-sm-12">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="hideMembers"
+                  checked={hideMembers}
+                  onChange={(e) => {
+                    setHideMembers(e.target.checked);
+                  }}
+                />
+              }
+              label="Hide member avatars &amp; names on page &amp; posts"
+            />
+            <br />
+            <span
+              className="create-artist__copy"
+              style={{ fontSize: '0.8rem' }}
+            >
+              Your name and avatar will still appear when posting or replying to
+              comments.
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -334,6 +360,8 @@ Members.propTypes = {
   removeMember: PropTypes.func,
   handleChange: PropTypes.func,
   userData: PropTypes.object,
+  hideMembers: PropTypes.bool,
+  setHideMembers: PropTypes.func,
 };
 
 const Member = ({
@@ -560,6 +588,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     artistVideo: '',
     artistSlug: '',
     artistStripe: '',
+    hideMembers: false,
     members: [],
     images: [],
     loading: true,
@@ -615,6 +644,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         twitter_handle,
         instagram_handle,
         video_url,
+        hide_members,
         slug,
         owners,
         images,
@@ -631,6 +661,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistVideo: video_url,
         artistSlug: slug,
         artistStripe: '',
+        hideMembers: hide_members,
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
           instrument: owner.instrument || '',
@@ -667,6 +698,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         slug,
         owners,
         images,
+        hide_members,
       } = artist;
       this.setState({
         artistColor: accent_color,
@@ -679,6 +711,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistVideo: video_url,
         artistSlug: slug,
         artistStripe: '',
+        hideMembers: hide_members,
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
           instrument: owner.instrument || '',
@@ -1219,6 +1252,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       artistSlug,
       artistVerb,
       artistVideo,
+      hideMembers,
       images,
       members,
     } = this.state;
@@ -1304,6 +1338,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             instagram_handle: artistInstagram,
             twitter_handle: artistTwitter,
             verb_plural: artistVerb !== 'is',
+            hide_members: hideMembers,
             images,
           },
           members,
@@ -1339,6 +1374,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             instagram_handle: artistInstagram,
             twitter_handle: artistTwitter,
             verb_plural: artistVerb !== 'is',
+            hide_members: hideMembers,
             images,
           },
           members,
@@ -1433,6 +1469,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             addMember={this.addMember}
             removeMember={this.removeMemberConfirm}
             userData={this.props.me?.userData}
+            hideMembers={this.state.hideMembers}
+            setHideMembers={(val) => this.setState({ hideMembers: val })}
           />
           {/* {this.renderPayment()} */}
           <div className="container">

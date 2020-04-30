@@ -8,6 +8,7 @@
 #  bio                  :string
 #  created_at           :datetime         not null
 #  featured             :boolean          default(FALSE)
+#  hide_members         :boolean          default(FALSE)
 #  id                   :bigint(8)        not null, primary key
 #  instagram_handle     :string
 #  location             :string

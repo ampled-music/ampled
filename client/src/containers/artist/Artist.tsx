@@ -21,6 +21,7 @@ import { VideoModal } from '../shared/video-modal/VideoModal';
 import { WhyModal } from '../shared/why-modal/WhyModal';
 import { MessageModal } from '../shared/message-modal/MessageModal';
 import { Texture } from '../shared/texture/Texture';
+import StyleOverride from './StyleOverride';
 
 import { ArtistHeader } from './ArtistHeader';
 import { ArtistInfo } from './ArtistInfo';
@@ -377,61 +378,10 @@ class ArtistComponent extends React.Component<Props, any> {
 
     return (
       <div className="App">
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-              .btn.btn-read-more,
-              .btn.btn-support,
-              .private-support__btn > .btn {
-                border-width: 0px;
-                background-color: ${artist.accent_color};
-                color: ${this.lightOrDark(artist.accent_color)};
-              }
-              .artist-header__title_flair,
-              .artist-header__banner-icons_icon.active  {
-                background-color: ${artist.accent_color};
-                color: ${this.lightOrDark(artist.accent_color)};
-              }
-              .new-post button,
-              .edit-page button,
-              .new-post svg,
-              .edit-page svg,
-              .post__change button,
-              .artist-header__photo {
-                background-color: ${artist.accent_color};
-                color: ${this.lightOrDark(artist.accent_color)};
-              }
-              .btn.btn-read-more:hover,
-              .btn.btn-support:hover,
-              .private-support__btn > .btn:hover,
-              .new-post button:hover,
-              .edit-page button:hover {
-                background-color: ${artist.accent_color};
-              }
-              .supporter__hover-card_bands_name a:hover {
-                color: ${artist.accent_color};
-              }
-              .audio-player__play-pause button,
-              .artist-header__message_container button {
-                background-color: ${this.hexToRGB(artist.accent_color, '.5')};
-                color: ${this.lightOrDark(artist.accent_color)};
-              }
-              .audio-player__play-pause button:hover,
-              .artist-header__message_container button:hover {
-                background-color: ${this.hexToRGB(artist.accent_color, '.7')};
-              }
-              ${isSupporter &&
-                `
-                .user-image { 
-                  border: 1px solid ${artist.accent_color}; 
-                }
-                header .supporter-message { 
-                  display: inline-block !important; 
-                  color: ${artist.accent_color}; 
-                }
-              `}
-            `,
-          }}
+        <StyleOverride
+          accentColor={artist.accent_color}
+          isSupporter={isSupporter}
+          bgColor={false}
         />
 
         <Texture
@@ -504,6 +454,7 @@ class ArtistComponent extends React.Component<Props, any> {
           artistName={artist.name}
           artistId={artist.id}
           artistSlug={artist.slug}
+          hideMembers={artist.hide_members}
           accentColor={artist.accent_color}
           updateArtist={this.getArtistInfo}
           loading={artists.loading || loadingMe}

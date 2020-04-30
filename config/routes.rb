@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get "slug/:slug", to: "artist_pages#show"
   post "artist/:slug/request_approval", to: "artist_pages#request_approval"
   get "artist/:slug/post/:postid/download", to: "posts#download_post"
+  get "slug/:slug/post/:id", to: "posts#show"
   get "artists/browse", to: "artist_pages#browse"
   get "stats/summary", to: "stats#summary"
 
@@ -55,6 +56,7 @@ Rails.application.routes.draw do
 
   root to: "react#index"
   get "/artists/*path", to: "react#index"
+  get "/artist/:artist_name/post/:post_id", to: "react#deeplink"
   get "/artist/*artist_name", to: "react#artist_page"
   get "/support/*artist_name", to: "react#artist_page"
   get "/create_post/*path", to: "react#index"

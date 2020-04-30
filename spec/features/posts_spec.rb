@@ -380,3 +380,99 @@ RSpec.describe "GET /posts", type: :request do
     end
   end
 end
+
+RSpec.describe "GET /slug/:artist/post/:postid", :vcr, type: :request do
+  let(:supporter_user) do
+    create(:user, stripe_customer_id: "cus_FfMNyx9ktbGwnx", confirmed_at: Time.current, email: "user@ampled.com")
+  end
+  let(:public_user) { create(:user) }
+  let(:artist_page) { create(:artist_page, approved: true, slug: "test") }
+  let(:public_download_post) do
+    create(:post, artist_page_id: artist_page.id, title: "test",
+           body: "test test", allow_download: true,
+           audio_file: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.")
+  end
+  let(:private_download_post) do
+    create(:post, artist_page_id: artist_page.id, title: "test",
+           body: "test test", allow_download: true, is_private: true,
+           audio_file: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.")
+  end
+  let(:create_sub_url) { "/subscriptions/" }
+
+  let(:create_sub_params) do
+    {
+      artist_page_id: artist_page.id,
+      amount: 10_000
+    }
+  end
+  let(:existing_stripe_auth) { JSON.parse(File.read("stripe_account_stub.json")) }
+
+  context "when user is unauthenticated" do
+    context "viewing a public post" do
+      before { get "/slug/#{artist_page.slug}/post/#{public_download_post.id}.json" }
+      it "shows details of a public post" do
+        expect(response.status).to eq 200
+        expect(JSON.parse(response.body)["allow_details"]).to eq true
+      end
+    end
+
+    context "viewing a private post" do
+      before { get "/slug/#{artist_page.slug}/post/#{private_download_post.id}.json" }
+      it "hides details of a private post" do
+        expect(response.status).to eq 200
+        expect(JSON.parse(response.body)["allow_details"]).to be_nil
+      end
+    end
+  end
+
+  context "when user is authenticated but doesn't support" do
+    before(:each) do
+      sign_in public_user
+    end
+
+    context "viewing a public post" do
+      before { get "/slug/#{artist_page.slug}/post/#{public_download_post.id}.json" }
+      it "shows details of a public post" do
+        expect(response.status).to eq 200
+        expect(JSON.parse(response.body)["allow_details"]).to eq true
+      end
+    end
+
+    context "viewing a private post" do
+      before { get "/slug/#{artist_page.slug}/post/#{private_download_post.id}.json" }
+      it "hides details of a private post" do
+        expect(response.status).to eq 200
+        expect(JSON.parse(response.body)["allow_details"]).to be_nil
+      end
+    end
+  end
+
+  context "when user is a supporter" do
+    before do
+      artist_page.update(stripe_user_id: existing_stripe_auth["stripe_user_id"])
+      sign_in supporter_user
+      # This seems to work to get a subscription going.
+      post create_sub_url, params: create_sub_params
+    end
+
+    before(:each) do
+      sign_in supporter_user
+    end
+
+    context "viewing a public post" do
+      before { get "/slug/#{artist_page.slug}/post/#{public_download_post.id}.json" }
+      it "shows details of a public post" do
+        expect(response.status).to eq 200
+        expect(JSON.parse(response.body)["allow_details"]).to eq true
+      end
+    end
+
+    context "viewing a private post" do
+      before { get "/slug/#{artist_page.slug}/post/#{private_download_post.id}.json" }
+      it "shows details of a private post" do
+        expect(response.status).to eq 200
+        expect(JSON.parse(response.body)["allow_details"]).to eq true
+      end
+    end
+  end
+end

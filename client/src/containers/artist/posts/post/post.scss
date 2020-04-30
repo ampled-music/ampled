@@ -2,19 +2,9 @@
 @import '../../../../theme/mixins.scss';
 
 .post {
-  .download-link {
-    width: 100%;
-    text-align: center;
-    font-family: $font-family-monospace;
-    font-size: 0.8rem;
-  }
-
-  max-width: 500px;
   margin-bottom: 2rem;
-
-  @include mq($tablet) {
-    margin-bottom: auto;
-  }
+  display: flex;
+  flex-direction: column;
 
   &.clickable-post {
     cursor: pointer;
@@ -26,11 +16,46 @@
     }
   }
 
+  .download-link {
+    width: 100%;
+    text-align: center;
+    font-family: $font-family-monospace;
+    font-size: 0.8rem;
+  }
+
+  &__card {
+    border-width: 2px;
+    border-style: solid;
+    min-height: 210px;
+  }
+
+  &__content {
+    background-color: $white;
+  }
+
+  &__image {
+    display: block;
+    // min-height: 340px;
+    object-fit: contain;
+    width: 100%;
+  }
+
   &__header {
     margin: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    &.noname {
+      justify-content: center;
+      margin: 8px;
+    }
+
+    &_date {
+      color: $gray-light;
+      font-size: 12px;
+      font-family: $font-family-monospace;
+    }
 
     &_name {
       font-family: $font-family-sans-serif;
@@ -50,6 +75,8 @@
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    justify-content: center;
+    align-content: center;
 
     .blur-image {
       -webkit-filter: blur(20px);
@@ -81,12 +108,18 @@
     padding: 0 1rem 1rem;
     white-space: pre-wrap;
     overflow-wrap: break-word;
+
+    p {
+      margin-bottom: 0;
+    }
+    p:empty {
+      height: 1rem;
+    }
   }
 
   .private-support {
     width: 100%;
     position: absolute;
-    bottom: 60px;
 
     &__copy {
       font-family: $font-family-sans-serif;
@@ -177,16 +210,11 @@
   .comments-list {
     background-color: $gray-lightest;
     padding: 20px;
-    margin-bottom: 50px;
     color: $black;
-    max-width: 500px;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    margin: -2rem auto 0rem;
-
-    @include mq($tablet) {
-      margin: 0 auto 2rem;
-    }
+    position: relative;
 
     &:empty {
       display: none;
@@ -257,6 +285,49 @@
         .fa-arrow-right {
           margin-left: 0.5rem;
         }
+      }
+    }
+  }
+}
+
+.single-post {
+  .post {
+    max-width: 100%;
+
+    &__card {
+      position: relative;
+    }
+
+    &__change {
+      opacity: 1;
+      button {
+        opacity: 1;
+      }
+    }
+
+    &__image {
+      object-fit: contain;
+      // min-height: 340px;
+    }
+
+    &__content,
+    .comments-list {
+      width: 100%;
+    }
+
+    &__title {
+      font-size: 1.6rem;
+    }
+
+    @include mq($tablet) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      &__content {
+        width: 65%;
+      }
+      .comments-list {
+        width: 30%;
       }
     }
   }

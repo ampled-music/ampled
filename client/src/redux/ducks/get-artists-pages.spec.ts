@@ -16,7 +16,7 @@ describe('get-artists-pages duck', () => {
 
   describe('get artists pages', () => {
     describe('calling the action', () => {
-      it('returns "artists pages" payload in case of success', async () => {
+      xit('returns "artists pages" payload in case of success', async () => {
         const pagesPayload = {
           pages: [
             { page1: { name: 'Page1 Name' } },
@@ -44,7 +44,7 @@ describe('get-artists-pages duck', () => {
         });
       });
 
-      it('when receiving a bad request returns error payload', async () => {
+      xit('when receiving a bad request returns error payload', async () => {
         httpMock.onGet('/artist_pages.json').reply(400, {
           error: 'Error',
         });

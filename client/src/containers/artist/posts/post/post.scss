@@ -315,6 +315,10 @@
       width: 100%;
     }
 
+    &__title {
+      font-size: 1.6rem;
+    }
+
     @include mq($tablet) {
       flex-direction: row;
       justify-content: space-between;

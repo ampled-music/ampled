@@ -399,7 +399,7 @@
   }
 
   .supporter {
-    
+    position: relative;
     @include mq($layout-m) {
       position: relative;
       display: block;

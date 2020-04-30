@@ -176,7 +176,7 @@ const PostVideo = ({ videoUrl, doReflow }) => {
   return (
     <VideoComponent
       onReady={doReflow}
-      className="react-player"
+      className="react-player embed-responsive-item"
       url={videoUrl}
       width="100%"
       height="100%"
@@ -209,7 +209,7 @@ const PostMedia = ({
 }) => (
   <>
     {has_video_embed && allowDetails && (
-      <div className="post__image-container" style={{ height: '250px' }}>
+      <div className="post__image-container embed-responsive embed-responsive-16by9">
         <PostVideo videoUrl={video_embed_url} doReflow={doReflow} />
       </div>
     )}
@@ -642,7 +642,14 @@ class PostComponent extends React.Component<any, any> {
               </div>
             )}
 
-            <div className="post__title">{post.title}</div>
+            <div className="post__title">
+              <Link
+                style={{ textDecoration: 'none' }}
+                to={`/artist/${artistSlug}/post/${post.id}`}
+              >
+                {post.title}
+              </Link>
+            </div>
 
             {post.body && (
               <div className="post__body">
@@ -662,9 +669,9 @@ class PostComponent extends React.Component<any, any> {
                     </a>
                   )}
                 >
-                  {// If there are no p tags, this is legacy
+                  {// If there are no p or ul tags, this is legacy
                   // text and should be presented unparsed.
-                  /<p>/gi.test(post.body)
+                  /<p>|<ul>/gi.test(post.body)
                     ? parse(
                         DOMPurify.sanitize(post.body, {
                           ALLOWED_TAGS: [

@@ -59,16 +59,15 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    Image.rename_params(params, :post)
     params.require(:post).permit(
       :title,
       :body,
       :artist_page_id,
+      :image_url,
       :audio_file,
       :is_private,
       :allow_download,
-      :video_embed_url,
-      images_attributes: Image::PERMITTED_PARAMS
+      :video_embed_url
     ).merge(user_id: current_user&.id)
   end
 
@@ -77,15 +76,14 @@ class PostsController < ApplicationController
   end
 
   def post_update_params
-    Image.rename_params(params, :post)
     params.require(:post).permit(
       :title,
       :body,
+      :image_url,
       :audio_file,
       :is_private,
       :allow_download,
-      :video_embed_url,
-      images_attributes: Image::PERMITTED_PARAMS
+      :video_embed_url
     )
   end
 end

@@ -1,5 +1,4 @@
 import * as store from 'store';
-import * as Sentry from '@sentry/browser';
 
 import { apiAxios } from '../setup-axios';
 
@@ -16,7 +15,7 @@ export const getMeData = async () => {
   if (data && !data.userInfo.id) {
     store.clearAll();
 
-    Sentry.configureScope((scope) => scope.setUser(null));
+    window.Sentry.configureScope((scope) => scope.setUser(null));
 
     return undefined;
   }
@@ -31,9 +30,11 @@ export const getMeData = async () => {
     });
   }
 
-    Sentry.configureScope(function(scope) {
+  if (window.Sentry) {
+    window.Sentry.configureScope(function(scope) {
       scope.setUser({ email, id });
     });
+  }
 
   return {
     ...data.userInfo,

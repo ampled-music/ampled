@@ -11,7 +11,7 @@ json.allow_download post.allow_download
 json.video_embed_url post.video_embed_url
 json.has_audio post.has_audio
 json.has_video_embed post.has_video_embed
-json.images post.images, partial: "images/image", as: :image
+json.image_url post.image_url
 if PostPolicy.new(current_user, post).view_details?
   json.body post.body
   json.allow_details true

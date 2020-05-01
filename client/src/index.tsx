@@ -12,6 +12,7 @@ import { configureStore } from './redux/configure-store';
 declare global {
   interface Window {
     dataLayer: any;
+    Sentry: any;
     Stripe: any;
   }
 }

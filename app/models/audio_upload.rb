@@ -20,11 +20,9 @@
 
 class AudioUpload < ApplicationRecord
   before_destroy :delete_audio
-  after_commit :process_audio, on: :create
+  before_create :set_waveform
 
-  def processed?
-    waveform.any?
-  end
+  class WaveformEmptyError < StandardError; end
 
   def delete_audio
     s3 = Aws::S3::Resource.new
@@ -32,7 +30,13 @@ class AudioUpload < ApplicationRecord
     bucket.object(public_id).delete
   end
 
-  def process_audio
-    AudioProcessingJob.perform_async(id)
+  def set_waveform 
+    audio_processing_service = AudioProcessingService.new(public_id)
+    begin
+      self.waveform = audio_processing_service.generate_waveform
+      raise WaveformEmptyError, "Unable to generate waveform for audio upload with id: #{id}" if self.waveform.empty?
+    ensure
+      audio_processing_service.dispose
+    end
   end
 end

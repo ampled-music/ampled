@@ -22,7 +22,7 @@ class AudioProcessingService
   # The sample rate and bit depth can be fine tuned further.
   # Finally, read output file to build the waveform
 
-  def generate_waveform(waveform_length = 200)
+  def generate_waveform(waveform_length = 300)
     # process original file
     @downsampled_file_path = Rails.root.join("tmp/audio/downsampled_#{@process_id}.wav")
     `ffmpeg -i #{@raw_file_path} -acodec pcm_u8 -ar 1000 -ac 1 #{@downsampled_file_path}`

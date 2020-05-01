@@ -671,7 +671,7 @@ class PostComponent extends React.Component<any, any> {
                 >
                   {// If there are no p or ul tags, this is legacy
                   // text and should be presented unparsed.
-                  /<p>|<ul>/gi.test(post.body)
+                  /(<p>|<ul>)/gi.test(post.body)
                     ? parse(
                         DOMPurify.sanitize(post.body, {
                           ALLOWED_TAGS: [

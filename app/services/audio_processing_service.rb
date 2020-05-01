@@ -15,9 +15,10 @@ class AudioProcessingService
   #
   # Using ffmpeg, process original file:
   #
-  #   1. transcode to PCM (WAV)
-  #   2. downsample to reduce total frames
-  #   3. lower bit depth
+  #   1. transcode to PCM (.wav)
+  #   2. downsample to reduce total frames (-ar 1000)
+  #   3. reduce to 1 channel (-ac 1)
+  #   4. lower bit depth (-acodec pcm_u8)
   #
   # The sample rate and bit depth can be fine tuned further.
   # Finally, read output file to build the waveform

@@ -9,7 +9,7 @@ class ImageDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     imageable: Field::Polymorphic.with_options(
-      classes: [ArtistPage]
+      classes: [ArtistPage, Post]
     ),
     id: Field::Number,
     url: Field::String,

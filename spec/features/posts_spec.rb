@@ -94,20 +94,37 @@ RSpec.describe "PUT /posts", type: :request do
 
   context "when user owns the post" do
     let(:user) { create(:user) }
-    let(:post) { create(:post, user: user, title: "my old title") }
+    let!(:image) { create(:image) }
+    let!(:post) { create(:post, user: user, title: "my old title", images: [image]) }
 
     before(:each) do
       sign_in user
     end
 
-    before { put "/posts/#{post.id}", params: { post: { title: "my new title" } } }
-
     it "returns 200" do
+      put "/posts/#{post.id}", params: { post: { title: "my new title" } }
       expect(response.status).to eq 200
     end
 
     it "updates the post" do
+      put "/posts/#{post.id}", params: { post: { title: "my new title" } }
       expect(Post.find_by(id: post.id).title).to eq "my new title"
+    end
+
+    it "adds images to the post" do
+      expect {
+        put "/posts/#{post.id}", params: { post: { images: [{ url: "http://image1.com", public_id: "public_id" }] } }
+      }.to change(Image, :count).by(1)
+      post.reload
+      expect(post.images.size).to eq(2)
+      expect(post.images.last.url).to eq("http://image1.com")
+      expect(post.images.last.public_id).to eq("public_id")
+    end
+
+    it "deletes images from the post" do
+      expect {
+        put "/posts/#{post.id}", params: { post: { images: [{ id: image.id, _destroy: true }] } }
+      }.to change(Image, :count).by(-1)
     end
   end
 end
@@ -121,7 +138,8 @@ RSpec.describe "POST /posts", type: :request do
       post: {
         artist_page_id: artist_page.id,
         title: "test",
-        body: "test test"
+        body: "test test",
+        images: [{ url: "url1", public_id: "public_id1" }]
       }
     }
   end
@@ -168,6 +186,14 @@ RSpec.describe "POST /posts", type: :request do
       get "/artist_pages/#{artist_page.id}.json"
       expect(JSON.parse(response.body)["posts"][0]["title"]).to eq("test")
       expect(JSON.parse(response.body)["posts"][0]["author"]).to eq(owner_user.name)
+    end
+
+    it "the post appears in the page with correct image data" do
+      get "/artist_pages/#{artist_page.id}.json"
+      image = JSON.parse(response.body)["posts"].first["images"].first
+      expect(image).to include("id")
+      expect(image["url"]).to eq("url1")
+      expect(image["public_id"]).to eq("public_id1")
     end
   end
 end

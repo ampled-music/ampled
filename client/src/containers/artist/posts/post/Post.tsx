@@ -193,7 +193,7 @@ PostVideo.propTypes = {
 
 const PostMedia = ({
   post: {
-    images,
+    image_url,
     has_audio,
     has_video_embed,
     video_embed_url,
@@ -209,18 +209,18 @@ const PostMedia = ({
 }) => (
   <>
     {has_video_embed && allowDetails && (
-      <div className="post__image-container video">
+      <div className="post__image-container embed-responsive embed-responsive-16by9">
         <PostVideo videoUrl={video_embed_url} doReflow={doReflow} />
       </div>
     )}
-    {images.length > 0 && !has_audio && (
+    {image_url && !has_audio && (
       <div className="post__image-container">
         <img
           className={cx({
             post__image: true,
             'blur-image': !allowDetails,
           })}
-          src={renderCloudinaryPhoto(images[0].url)}
+          src={renderCloudinaryPhoto(image_url)}
         />
         {!allowDetails && (
           <Lock
@@ -235,16 +235,16 @@ const PostMedia = ({
     {has_audio && (
       <div className="post__audio-container">
         <div className="post__image-container">
-          {images.length > 0 && (
+          {image_url && (
             <img
               className={cx({
                 post__image: true,
                 'blur-image': !allowDetails,
               })}
-              src={renderCloudinaryPhoto(images[0].url)}
+              src={renderCloudinaryPhoto(image_url)}
             />
           )}
-          {!images.length && !allowDetails && (
+          {!image_url && !allowDetails && (
             <div
               style={{
                 height: '340px',
@@ -264,7 +264,7 @@ const PostMedia = ({
         {allowDetails && (
           <AudioPlayer
             url={returnPlayableUrl(audio_file)}
-            image={renderCloudinaryPhoto(images[0]?.url)}
+            image={renderCloudinaryPhoto(image_url)}
             accentColor={accentColor}
             callback={playerCallback}
           />
@@ -272,7 +272,7 @@ const PostMedia = ({
       </div>
     )}
 
-    {!has_audio && !images.length && !allowDetails && (
+    {!has_audio && !image_url && !allowDetails && (
       <div className="post__image-container">
         <div
           style={{

@@ -50,8 +50,6 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
     artist_page.update(stripe_user_id: existing_stripe_auth["stripe_user_id"])
     other_artist_page.update(stripe_user_id: other_existing_stripe_auth["stripe_user_id"])
     restricted_artist_page.owners << other_user
-    # Using a hardcoded account that is left in restricted mode.
-    restricted_artist_page.update(stripe_user_id: "acct_1GdkndFObJENiB3b")
   end
 
   context "when pulling me.json" do
@@ -288,8 +286,37 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
     end
   end
 
+  context "when attempting to create a subscription for an account with no stripe connection" do
+    let(:url) { "/subscriptions/" }
+    before(:each) do
+      sign_in user
+    end
+
+    it "returns 200" do
+      post url, params: restricted_create_params
+
+      expect(response.status).to eq 200
+    end
+
+    it "returns error text" do
+      post url, params: restricted_create_params
+
+      expect(JSON.parse(response.body)["message"]).to match "Must authenticate as a connected account"
+    end
+
+    it "doesn't saves the subscription in the database" do
+      post url, params: restricted_create_params
+
+      expect(user.subscriptions.active.count).to eq 0
+    end
+  end
+
   context "when attempting to create a subscription for a restricted account" do
     let(:url) { "/subscriptions/" }
+    before do
+      # Using a hardcoded account that is left in restricted mode.
+      restricted_artist_page.update(stripe_user_id: "acct_1GdkndFObJENiB3b")
+    end
     before(:each) do
       sign_in user
     end

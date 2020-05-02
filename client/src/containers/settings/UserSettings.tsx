@@ -310,9 +310,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       // Cycle through and build text plate
       for (let index = 0; index < broken_name.length; index++) {
         // prettier-ignore
-        name_part += `l_text:Arial_${new_font_size}_bold:%20${encodeURIComponent(
-          broken_name[index],
-        )}%20,co_rgb:${color},b_rgb:${bg},g_${position},x_${x},y_${y_index}/`;
+        name_part += `l_text:Arial_${new_font_size}_bold:%20${encodeURI(broken_name[index])}%20,co_rgb:${color},b_rgb:${bg},g_${position},x_${x},y_${y_index}/`;
         y_index += Math.round(new_distance);
       }
       return name_part;
@@ -430,7 +428,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
-        `/l_text:Arial_55_bold:%20ampled.com%2Fartist%2F${artist.artistSlug}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_380/`,
+        `/l_text:Arial_55_bold:%20${encodeURI(
+          'ampled.com%2Fartist%2F' + artist.artistSlug,
+        )}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_380/`,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Grid/Grid6.png`,
       ].join(''),
       name: `${cleanArtistName}_Grid6.png`,
@@ -530,7 +530,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
-        `/l_text:Arial_60_bold:%20ampled.com%2Fartist%2F${artist.artistSlug}%20,co_rgb:ffffff,b_rgb:202020,g_center,y_100/`,
+        `/l_text:Arial_60_bold:%20${encodeURI(
+          'ampled.com%2Fartist%2F' + artist.artistSlug,
+        )}%20,co_rgb:ffffff,b_rgb:202020,g_center,y_100/`,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Story/Story6.png`,
       ].join(''),
       name: `${cleanArtistName}_Story6.png`,
@@ -603,7 +605,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
           'ffffff',
           '202020',
         ),
-        `/l_text:Arial_60_bold:%20ampled.com%2Fartist%2F${artist.artistSlug}%20,co_rgb:ffffff,b_rgb:202020,g_south_east,y_280,x_100/`,
+        `/l_text:Arial_60_bold:%20${encodeURI(
+          'ampled.com%2Fartist%2F' + artist.artistSlug,
+        )}%20,co_rgb:ffffff,b_rgb:202020,g_south_east,y_280,x_100/`,
         this.handlePublicID(artist.image),
       ].join(''),
       name: `${cleanArtistName}_Grid.jpg`,
@@ -625,7 +629,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
           'ffffff',
           '202020',
         ),
-        `/l_text:Arial_65_bold:%20ampled.com%2Fartist%2F${artist.artistSlug}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_500/`,
+        `/l_text:Arial_65_bold:%20${encodeURI(
+          'ampled.com%2Fartist%2F' + artist.artistSlug,
+        )}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_500/`,
         this.handlePublicID(artist.image),
       ].join(''),
       name: `${cleanArtistName}_Story.jpg`,

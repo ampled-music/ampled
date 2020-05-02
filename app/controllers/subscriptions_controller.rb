@@ -11,9 +11,26 @@ class SubscriptionsController < ApplicationController
     UserSupportedArtistEmailJob.perform_async(subscription.id) unless ENV["REDIS_URL"].nil?
     NewSupporterEmailJob.perform_async(subscription.id) unless ENV["REDIS_URL"].nil?
     render json: subscription
+  rescue Stripe::InvalidRequestError => e
+    return account_restricted_error(e) if /disabled_reason/.match?(e.message)
+
+    Raven.capture_exception(e)
+    render json: { status: "error", message: e.message }
   rescue StandardError => e
     Raven.capture_exception(e)
     render json: { status: "error", message: e.message }
+  end
+
+  def account_restricted_error(error)
+    Raven.capture_exception(error)
+    unless ENV["REDIS_URL"].nil?
+      ArtistPageUnsupportableEmailJob.perform_async(current_artist_page.id, subscription_params[:amount].to_i)
+    end
+    render json: {
+      status: "error",
+      message: "#{current_artist_page.name} needs to finalize some things before you can support them.\
+      We've sent them an email to let them know!"
+    }
   end
 
   def allow_destroy

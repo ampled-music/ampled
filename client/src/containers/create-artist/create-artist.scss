@@ -79,6 +79,20 @@
     border-bottom: 1px solid $black;
   }
 
+  .btn-delete {
+    color: $brand-danger;
+    border-color: $brand-danger;
+
+    &:hover {
+      background-color: $brand-danger;
+      color: $white;
+    }
+
+    @include mq($layout-s) {
+      margin-bottom: 12px;
+    }
+  }
+
   .image-upload {
     .loading-circle {
       margin: auto;

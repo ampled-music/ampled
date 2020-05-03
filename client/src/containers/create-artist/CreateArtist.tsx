@@ -5,6 +5,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -42,6 +43,7 @@ import polaroid from '../../images/polaroid.png';
 import { Store } from '../../redux/configure-store';
 
 import { showToastAction } from '../../redux/toast/toast-modal';
+import { deleteArtistAction } from '../../redux/artists/delete';
 
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
@@ -56,6 +58,7 @@ interface CreateArtistProps {
   editMode?: boolean;
   artist?: any;
   showToast: Function;
+  deleteArtist: Function;
 }
 
 interface TabPanelProps {
@@ -594,6 +597,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     loading: true,
     showConfirmRemoveMember: false,
     confirmRemoveMemberIndex: 99,
+    showDeleteModal: false,
   };
 
   constructor(props) {
@@ -613,6 +617,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       artist,
       editMode,
     } = this.props;
+
     const { loading } = this.state;
     if (userData && !prevProps?.me?.userData) {
       const { name, last_name, instagram, twitter, image, email } = userData;
@@ -744,6 +749,42 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           ],
         });
       }
+    }
+  };
+
+  isShowDeleteBtn = () => {
+    if (this.props.artist?.owners && this.props.me?.userData) {
+      const isPageAdmin = this.props.artist.owners.some((owner) => {
+        return owner.id === this.props.me.userData.id;
+      });
+
+      return isPageAdmin && this.props.editMode;
+    }
+
+    return false;
+  };
+
+  deleteArtistPage = async () => {
+    const response = await this.props.deleteArtist(this.props.artist.id);
+
+    if (response && response.data) {
+      if (response.status === 200) {
+        this.props.showToast({
+          message: response.data.message,
+          type: 'success',
+        });
+        window.location.href = '/'; // TODO do this through react router redirect
+      } else {
+        this.props.showToast({
+          message: response.data.message,
+          type: 'error',
+        });
+      }
+    } else {
+      this.props.showToast({
+        message: 'There was an error deleting your artist page.',
+        type: 'error',
+      });
     }
   };
 
@@ -1241,6 +1282,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     });
   };
 
+  onDeleteBtnClicked = () => {
+    this.setState({ showDeleteModal: !this.state.showDeleteModal });
+  };
+
   onSubmit = async () => {
     const {
       artistName,
@@ -1400,6 +1445,73 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     }
   };
 
+  renderSupporterCount = () => {
+    const hasSupporters = this.props.artist?.supporters?.length > 0;
+    if (!hasSupporters) {
+      return;
+    }
+
+    return (
+      <p>
+        You have {this.props.artist.supporters.length} supporter(s) currently.
+        When you delete your page, subscriptions to your page will also be
+        deleted.
+      </p>
+    );
+  };
+
+  renderDeleteModal = () => {
+    return (
+      <Modal
+        open={this.state.showDeleteModal}
+        onClose={() =>
+          this.setState({ showDeleteModal: !this.state.showDeleteModal })
+        }
+      >
+        <div className="delete-post-modal__container">
+          <img className="tear tear__topper" src={tear} alt="" />
+          <div className="delete-post-modal">
+            <div className="delete-post-modal__title">
+              <h4>Are you sure?</h4>
+            </div>
+            <p>
+              Deleting your page is permanent, and any content posted will be
+              deleted permanently as well.
+            </p>
+            {this.renderSupporterCount()}
+            <div className="delete-post-modal__actions action-buttons">
+              <button
+                className="cancel-button"
+                onClick={() => this.setState({ showDeleteModal: false })}
+              >
+                Cancel
+              </button>
+              <button className="delete-button" onClick={this.deleteArtistPage}>
+                Delete Artist Page
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    );
+  };
+
+  renderDeleteBtn() {
+    if (!this.isShowDeleteBtn()) {
+      return;
+    }
+    return (
+      <div className="col-md-6 col-sm-12">
+        <button
+          onClick={this.onDeleteBtnClicked}
+          className="btn btn-ampled btn-delete"
+        >
+          Delete your page
+        </button>
+      </div>
+    );
+  }
+
   render() {
     const {
       me: { userData },
@@ -1420,8 +1532,16 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         </div>
       );
     }
+
+    const showDeleteBtn = this.isShowDeleteBtn();
+    const saveBtnClasses = classnames('col-sm-12', {
+      'col-md-6': showDeleteBtn,
+      'col-md-12': !showDeleteBtn,
+    });
+
     return (
       <div className="create-artist">
+        {this.renderDeleteModal()}
         <Modal
           open={this.state.showConfirmRemoveMember}
           onClose={() => {
@@ -1489,9 +1609,14 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="row">
               <div className="col-md-3 col-sm-1"></div>
               <div className="col-md-6 col-sm-10">
-                <button onClick={this.onSubmit} className="btn btn-ampled">
-                  {this.props.editMode ? 'Save' : 'Create'} your page
-                </button>
+                <div className="row">
+                  {this.renderDeleteBtn()}
+                  <div className={saveBtnClasses}>
+                    <button onClick={this.onSubmit} className="btn btn-ampled">
+                      {this.props.editMode ? 'Save' : 'Create'} your page
+                    </button>
+                  </div>
+                </div>
               </div>
               <div className="col-md-3 col-sm-1"></div>
             </div>
@@ -1510,6 +1635,7 @@ const mapStateToProps = (state: Store) => {
 
 const mapDispatchToProps = (dispatch) => ({
   showToast: bindActionCreators(showToastAction, dispatch),
+  deleteArtist: bindActionCreators(deleteArtistAction, dispatch),
 });
 
 const connectArtist = connect(

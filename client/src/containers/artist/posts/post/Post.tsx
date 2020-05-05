@@ -264,8 +264,8 @@ const PostMedia = ({
         {allowDetails && (
           <AudioPlayer
             url={returnPlayableUrl(audio_uploads[0]?.public_id)}
-            image={renderCloudinaryPhoto(image_url)}
             accentColor={accentColor}
+            waveform={audio_uploads[0]?.waveform}
             callback={playerCallback}
           />
         )}

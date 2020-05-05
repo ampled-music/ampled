@@ -10,11 +10,12 @@ import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { theme } from './theme';
+import AudioWaveform, { WaveformSize } from './AudioWaveform';
 
 interface AudioPlayerProps {
   url: string;
-  image: string;
   accentColor: string;
+  waveform: number[];
   callback?(action: string, instance: any): void;
 }
 interface AudioPlayerState {
@@ -29,22 +30,51 @@ interface AudioPlayerState {
   duration: number;
   durationShow: string;
   loop: boolean;
+  waveformSize: WaveformSize;
 }
 
 class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
-  state = {
-    url: null,
-    playing: false,
-    seeking: false,
-    volume: 0.8,
-    played: 0,
-    playedSeconds: 0,
-    loaded: 0,
-    loadedSeconds: 0,
-    duration: 0,
-    durationShow: null,
-    loop: false,
-  };
+  private waveformContainerRef: React.RefObject<any>
+
+  constructor(props) {
+    super(props);
+    this.waveformContainerRef = React.createRef();
+    this.state = {
+      url: null,
+      playing: false,
+      seeking: false,
+      volume: 0.8,
+      played: 0,
+      playedSeconds: 0,
+      loaded: 0,
+      loadedSeconds: 0,
+      duration: 0,
+      durationShow: null,
+      loop: false,
+      waveformSize: WaveformSize.Unknown,
+    };
+  }
+
+  componentDidMount = () => {
+    this.setWaveformSize();
+    window.addEventListener('resize', this.handleWindowResize)
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.handleWindowResize)
+  }
+
+  handleWindowResize = () => {
+    this.setWaveformSize();
+  }
+
+  setWaveformSize = () => {
+    const waveformContainerWidth = this.waveformContainerRef.current.clientWidth;
+    const waveformSize = waveformContainerWidth > 500 ? WaveformSize.Large : WaveformSize.Small;
+    if (waveformSize !== this.state.waveformSize) {
+      this.setState({ waveformSize });
+    }
+  }
 
   load = () => {
     this.setState({
@@ -56,7 +86,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
 
   player: any;
 
-  ref = (player) => {
+  playerRef = (player) => {
     this.player = player;
   };
 
@@ -87,16 +117,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     this.setState({ volume: parseFloat(e.target.value) });
   };
 
-  // Start and finish only work with mouse up and mouse down events which break the material ui slider
-  startSeeking = () => {
-    this.setState({ seeking: true });
-  };
-
-  finishSeeking = () => {
-    this.setState({ seeking: false });
-  };
-
-  commitSeeking = (event: object, value: number | number[]) => {
+  commitSeeking = (value: number) => {
     this.player.seekTo(value);
   };
 
@@ -113,6 +134,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   handleDuration = (duration) => {
     this.setState({ duration });
   };
+
   formatTime = (seconds) => {
     const date = new Date(seconds * 1000);
     const hh = date.getUTCHours();
@@ -137,95 +159,78 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
       url,
       playing,
       loaded,
+      duration,
       // controls,
       volume,
       loop,
       playedSeconds,
       loadedSeconds,
       durationShow,
+      waveformSize
     } = this.state;
+
     const PlayButton = withStyles({
       root: {
-        color: 'inherit',
-        width: this.props.image ? '70px' : '40px',
-        height: this.props.image ? '70px' : '40px',
+        color: 'white',
+        width: '30px',
+        height: '30px',
         zIndex: 10,
-        marginTop: this.props.image ? '0' : '5px',
-        backgroundColor: 'inherit',
+        marginTop: '5px',
+        backgroundColor: 'black',
         '&:hover': {
-          backgroundColor: 'inherit',
+          backgroundColor: 'black',
         },
       },
     })(IconButton);
-    const AudioSlider = withStyles({
-      root: {
-        color: this.props.accentColor,
-        height: this.props.image ? '20px' : '50px',
-      },
-      thumb: {
-        height: this.props.image ? '35px' : '50px',
-        marginTop: this.props.image ? '-15px' : '0px',
-      },
-      valueLabel: {
-        paddingTop: this.props.image ? '0' : '3px',
-      },
-      track: {
-        height: this.props.image ? '20px' : '50px',
-      },
-      rail: {
-        height: this.props.image ? '20px' : '50px',
-      },
-    })(Slider);
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <div
-          className={cx('audio-player ', { 'with-image': this.props.image })}
-        >
-          <FilePlayer
-            ref={this.ref}
-            url={url}
-            height="100%"
-            width="100%"
-            loop={loop}
-            volume={volume}
-            playing={playing}
-            loaded={loaded}
-            onPause={this.handlePause}
-            onPlay={this.handlePlay}
-            onEnded={this.handleEnded}
-            onProgress={this.handleProgress}
-            onDuration={this.handleDuration}
-            config={{
-              file: {
-                forceAudio: true,
-              },
-            }}
-          />
-          <div className="audio-player__play-pause">
-            <PlayButton
-              onClick={this.handlePlayPause}
-              size={this.props.image ? 'medium' : 'small'}
-              aria-label="Play / Pause"
-            >
-              {playing ? (
-                <FontAwesomeIcon icon={faPause} />
-              ) : (
-                <FontAwesomeIcon icon={faPlay} />
-              )}
-            </PlayButton>
-          </div>
-          <AudioSlider
-            className="audio-player__slider"
-            min={0}
-            max={loadedSeconds}
-            value={playedSeconds}
-            valueLabelDisplay={durationShow}
-            valueLabelFormat={this.valueLabelFormat}
-            onChange={this.commitSeeking}
-          />
+      <div
+        className={cx('audio-player')}
+      >
+        <FilePlayer
+          ref={this.playerRef}
+          url={url}
+          height="100%"
+          width="100%"
+          loop={loop}
+          volume={volume}
+          playing={playing}
+          loaded={loaded}
+          onPause={this.handlePause}
+          onPlay={this.handlePlay}
+          onEnded={this.handleEnded}
+          onProgress={this.handleProgress}
+          onDuration={this.handleDuration}
+          config={{
+            file: {
+              forceAudio: true,
+            },
+          }}
+        />
+        <div className="audio-player__play-pause">
+          <PlayButton
+            onClick={this.handlePlayPause}
+            size='small'
+            aria-label="Play / Pause"
+          >
+            {playing ? (
+              <FontAwesomeIcon icon={faPause} />
+            ) : (
+              <FontAwesomeIcon icon={faPlay} />
+            )}
+          </PlayButton>
         </div>
-      </MuiThemeProvider>
+        <div className="audio-player__waveform" ref={this.waveformContainerRef}>
+          <AudioWaveform 
+            waveform={this.props.waveform}
+            playedSeconds={playedSeconds}
+            loadedSeconds={loadedSeconds}
+            duration={duration}
+            accentColor={this.props.accentColor}
+            onSeek={this.commitSeeking}
+            size={waveformSize}/>
+        </div>
+      </div>
     );
   };
 

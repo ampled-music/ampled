@@ -1,29 +1,22 @@
 .audio-player {
   position: relative;
-  &.with-image {
-    .audio-player__play-pause {
-      top: -210px;
-    }
-  }
+  width: 100%;
   &__play-pause {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    width: 100%;
+    margin: 0 1em;
     svg {
       position: relative;
-      left: 2px;
+      left: 1px;
+      font-size: 0.5em;
     }
   }
-  &__slider {
-    .MuiSlider-thumb {
-      span {
-        width: 60px;
-        background-color: transparent;
-      }
+  &__waveform {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    cursor: pointer;
+
+    canvas {
+      padding: 0.2em;
     }
-  }
-  .MuiSlider-root {
-    padding: 0px;
   }
 }

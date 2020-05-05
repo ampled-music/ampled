@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { hexToRGB } from '../../styles/utils';
 
 type StyleOverrideProps = {
   accentColor: string;
@@ -44,20 +45,6 @@ const lightOrDark = (color) => {
   }
 };
 
-const hexToRGB = (hex: string, alpha: string) => {
-  if (hex) {
-    const r = parseInt(hex.slice(1, 3), 16),
-      g = parseInt(hex.slice(3, 5), 16),
-      b = parseInt(hex.slice(5, 7), 16);
-
-    if (alpha) {
-      return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
-    } else {
-      return 'rgb(' + r + ', ' + g + ', ' + b + ')';
-    }
-  }
-};
-
 const StyleOverride = ({
   accentColor,
   isSupporter,
@@ -97,12 +84,10 @@ const StyleOverride = ({
         .supporter__hover-card_bands_name a:hover {
           color: ${accentColor};
         }
-        .audio-player__play-pause button,
         .artist-header__message_container button {
           background-color: ${hexToRGB(accentColor, '.5')};
           color: ${lightOrDark(accentColor)};
         }
-        .audio-player__play-pause button:hover,
         .artist-header__message_container button:hover {
           background-color: ${hexToRGB(accentColor, '.7')};
         }

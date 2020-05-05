@@ -3,6 +3,7 @@ import './post-form.scss';
 import 'draft-js/dist/Draft.css';
 
 import cx from 'classnames';
+import * as Sentry from '@sentry/browser';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -12,6 +13,8 @@ import { getArtistAction } from '../../../../redux/artists/get-details';
 import { Store } from '../../../../redux/configure-store';
 import { createPostAction } from '../../../../redux/posts/create';
 import { editPostAction } from '../../../../redux/posts/edit';
+import { Post } from '../../../../api/post/post';
+import { removeImageFromPost } from '../../../../api/post/edit-post';
 import { showToastAction } from '../../../../redux/toast/toast-modal';
 
 import {
@@ -55,7 +58,7 @@ interface PostFormProps {
   close: (hasUnsavedChanges: any) => void;
   discardChanges: () => void;
   isEdit?: boolean;
-  post?: any;
+  post?: Post
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -144,7 +147,7 @@ class RichEditor extends React.Component<RichEditorProps> {
     this.state.editorState.getCurrentInlineStyle().has(style);
 
   hasBlockStyle = (style) =>
-    style ==
+    style ===
     this.state.editorState
       .getCurrentContent()
       .getBlockForKey(this.state.editorState.getSelection().getStartKey())
@@ -245,7 +248,8 @@ class PostFormComponent extends React.Component<Props, any> {
     isPublic: false,
     allowDownload: false,
     isPinned: false,
-    imageUrl: null,
+    images: [],
+    deletedImages: [],
     publicId: null,
     deleteToken: undefined,
     hasUnsavedChanges: false,
@@ -263,7 +267,7 @@ class PostFormComponent extends React.Component<Props, any> {
         ...this.initialState,
         ...props.post,
         audioFile: props.post.audio_file,
-        imageUrl: props.post.image_url,
+        images: props.post.images,
         videoEmbedUrl: props.post.video_embed_url,
         isPublic: !props.post.is_private,
         showVideoEmbedField: props.post.has_video_embed,
@@ -299,18 +303,19 @@ class PostFormComponent extends React.Component<Props, any> {
     this.setState({ [name]: value, hasUnsavedChanges: true });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
     const {
       title,
       body,
       audioFile,
-      imageUrl,
+      images,
       videoEmbedUrl,
       isPublic,
       allowDownload,
       isPinned,
+      deletedImages,
     } = this.state;
     const { isEdit } = this.props;
 
@@ -318,7 +323,7 @@ class PostFormComponent extends React.Component<Props, any> {
       title,
       body,
       audio_file: audioFile,
-      image_url: imageUrl,
+      images: images,
       video_embed_url: videoEmbedUrl,
       is_private: !isPublic,
       is_pinned: isPinned,
@@ -328,6 +333,11 @@ class PostFormComponent extends React.Component<Props, any> {
     };
 
     this.setState({ savingPost: true });
+    if (deletedImages && deletedImages.length > 0) {
+      for (const deleteImage of deletedImages) {
+        await this.removeImageFromBackendAndCloudinary(deleteImage);
+      }
+    }
     isEdit ? this.props.editPost(post) : this.props.createPost(post);
   };
 
@@ -355,22 +365,23 @@ class PostFormComponent extends React.Component<Props, any> {
 
     this.setState({ loadingImage: true });
 
-    if (this.state.deleteToken) {
-      this.removeImage();
-    }
+    this.removeImage();
 
     const cloudinaryResponse = await uploadFileToCloudinary(imageFile);
 
     if (cloudinaryResponse) {
-      const fileName = imageFile.name;
-
-      this.setState({
-        imageUrl: cloudinaryResponse.secure_url,
-        deleteToken: cloudinaryResponse.delete_token,
-        publicId: cloudinaryResponse.public_id,
-        hasUnsavedChanges: true,
-        loadingImage: false,
-        imageName: fileName,
+      this.setState(state => {
+        const newImageList = state.images.concat({
+            url: cloudinaryResponse.secure_url,
+            public_id: cloudinaryResponse.public_id,
+        })
+        return {
+          images: newImageList,
+          deleteToken: cloudinaryResponse.delete_token,
+          hasUnsavedChanges: true,
+          loadingImage: false,
+          imageName: imageFile.name,
+        }
       });
     } else {
       this.setState({
@@ -385,13 +396,40 @@ class PostFormComponent extends React.Component<Props, any> {
     }
   };
 
+  removeImageFromBackendAndCloudinary = async ({ id, deleteToken }) => {
+    if (deleteToken) {
+      // TODO: Sometimes we want to delete an image but there is no longer a delete token.
+      //       Figure this out, perhaps as part of a broader "deleting images" cleanup.
+      try {
+        await deleteFileFromCloudinary(deleteToken);
+      } catch (e) {
+        Sentry.captureException(e);
+      }
+    }
+    if (id) {
+      await removeImageFromPost(this.state.id, id);
+    }
+  };
+
+  // For now we are assuming at most one image per Post.
   removeImage = () => {
-    deleteFileFromCloudinary(this.state.deleteToken);
+    // If we have an already-saved post and an already-saved image, queue it for backend deletion.
+    let deletedImages = [];
+    if (
+      this.state.id &&
+      this.state.images.length > 0 &&
+      this.state.images[0].id
+    ) {
+      deletedImages = [
+        { id: this.state.images[0].id, deleteToken: this.state.deleteToken },
+      ];
+    }
+
     this.setState({
-      imageUrl: null,
+      images: [],
+      deletedImages,
       deleteToken: undefined,
-      publicId: null,
-      hasUnsavedChanges: false,
+      hasUnsavedChanges: true,
     });
   };
 
@@ -407,13 +445,13 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   isSaveEnabled = () => {
-    const { title, body, imageUrl, videoEmbedUrl, audioFile } = this.state;
+    const { title, body, images, videoEmbedUrl, audioFile } = this.state;
 
     return (
       title &&
       title.length > 0 &&
       ((audioFile && audioFile.length > 0) ||
-        (imageUrl && imageUrl.length > 0) ||
+        (images && images.length > 0) ||
         (videoEmbedUrl && videoEmbedUrl.length > 0) ||
         (body && body.length > 0))
     );
@@ -437,7 +475,7 @@ class PostFormComponent extends React.Component<Props, any> {
         <div className="preview">
           <img
             className="preview__image"
-            src={this.state.imageUrl}
+            src={this.state.images[0].url}
             alt="Preview"
           />
           <span className="preview__name">{this.state.imageName}</span>
@@ -607,7 +645,7 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   renderVisualUpload = () => {
-    const { imageUrl, videoEmbedUrl, showVideoEmbedField } = this.state;
+    const { images, videoEmbedUrl, showVideoEmbedField } = this.state;
     return (
       <div className="post-form__image">
         <input
@@ -618,14 +656,18 @@ class PostFormComponent extends React.Component<Props, any> {
           accept="image/*"
           onChange={this.processImage}
         />
-        {!imageUrl && !videoEmbedUrl && !showVideoEmbedField && (
+        {!images.length && !videoEmbedUrl && !showVideoEmbedField ? (
           <>
             {this.renderUploader()}
             {this.renderVideoToggle()}
           </>
+        ) : (
+          ''
         )}
-        {!imageUrl && showVideoEmbedField && this.renderVideoEmbedder()}
-        {imageUrl && this.renderPreview()}
+        {!images.length && showVideoEmbedField
+          ? this.renderVideoEmbedder()
+          : ''}
+        {images.length > 0 ? this.renderPreview() : ''}
       </div>
     );
   };

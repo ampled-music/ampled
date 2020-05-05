@@ -170,6 +170,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
         leaved={scaleDown.leaved}
         gutterWidth={15}
         gutterHeight={15}
+        monitorImagesLoaded={true}
       >
         {this.renderPosts()}
       </StackGrid>

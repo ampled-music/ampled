@@ -8,7 +8,7 @@ class PostDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   def display_resource(post)
-    post.id
+    "#{post.artist_page.name} - post #{post.id}"
   end
 
   ATTRIBUTE_TYPES = {
@@ -19,7 +19,7 @@ class PostDashboard < Administrate::BaseDashboard
     updated_at: Field::DateTime,
     title: Field::String,
     body: Field::Text,
-    image_url: Field::String,
+    images: Field::HasMany
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -32,6 +32,7 @@ class PostDashboard < Administrate::BaseDashboard
     :user,
     :id,
     :created_at,
+    :images
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -44,7 +45,7 @@ class PostDashboard < Administrate::BaseDashboard
     :updated_at,
     :title,
     :body,
-    :image_url,
+    :images
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -54,8 +55,7 @@ class PostDashboard < Administrate::BaseDashboard
     :artist_page,
     :user,
     :title,
-    :body,
-    :image_url,
+    :body
   ].freeze
 
   # Overwrite this method to customize how posts are displayed

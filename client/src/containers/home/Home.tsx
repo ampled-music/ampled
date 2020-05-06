@@ -10,9 +10,29 @@ import { HomeHow } from './HomeHow';
 import { Texture } from '../shared/texture/Texture';
 
 class Home extends React.Component<any> {
+
+  renderSticky = (message: any) => (
+    <div className="artistAlertHeader">{message}</div>
+  );
+
   render() {
     return (
       <div className="home-section">
+        {this.renderSticky(
+          <span>
+            As a response to COVID-19, artists will receive 100% of support
+            through the platform. We will waive artist membership dues for the
+            rest of 2020.{' '}
+            <a
+              href="https://app.ampled.com/zine/ampled-artist-membership-is-now-open-join-today"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Learn more
+            </a>
+            .
+          </span>,
+        )}
         <HomeHeader />
         <Texture
           positionTop25={false}

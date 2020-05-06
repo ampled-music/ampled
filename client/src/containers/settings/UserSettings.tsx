@@ -225,6 +225,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
   };
 
   handlePublicID = (image: string) => {
+    if (!image) {
+      return '';
+    }
     const url = image.split('/');
     const part_1 = url[url.length - 2];
     const part_2 = url[url.length - 1];
@@ -321,6 +324,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
   };
 
   renderSocialImages = (artist) => {
+    if (!artist.image) {
+      return;
+    }
     const BASE_UPLOAD_URL =
       'https://res.cloudinary.com/ampled-web/image/upload';
     let color = artist.artistColor;

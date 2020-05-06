@@ -13,7 +13,7 @@ json.userInfo do
   json.ship_state current_user&.ship_state
   json.ship_zip current_user&.ship_zip
   json.ship_country current_user&.ship_country
-  json.image current_user&.profile_image_url
+  json.image current_user&.image, partial: "images/image", as: :image
   json.created_at current_user&.created_at
   json.email current_user&.email
   json.email_confirmed current_user&.confirmed_at.present?

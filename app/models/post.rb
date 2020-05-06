@@ -43,7 +43,7 @@ class Post < ApplicationRecord
   end
 
   def author_image
-    user.profile_image_url
+    user.image&.url
   end
 
   def has_audio

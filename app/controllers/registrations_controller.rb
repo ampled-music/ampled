@@ -29,10 +29,16 @@ class RegistrationsController < Devise::RegistrationsController
     @user.skip_confirmation_notification!
   end
 
+  # Allow the image parameter to be passed in as "image", in addition to "image_attributes".
+  def maybe_rename_image_params
+    params[:image_attributes] = params[:image] if params.include?(:image)
+  end
+
   def user_params
-    params.permit(:profile_image_url, :name, :last_name, :city, :country, :twitter, :instagram, :bio,
+    maybe_rename_image_params
+    params.permit(:name, :last_name, :city, :country, :twitter, :instagram, :bio,
                   :ship_address, :ship_address2, :ship_city, :ship_state, :ship_country, :ship_zip,
-                  :email)
+                  :email, image_attributes: Image::PERMITTED_PARAMS)
   end
 
   def password_params

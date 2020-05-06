@@ -9,29 +9,47 @@ import { HomeHeader } from './HomeHeader';
 import { HomeHow } from './HomeHow';
 import { Texture } from '../shared/texture/Texture';
 
+import { IconButton } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 class Home extends React.Component<any> {
 
   renderSticky = (message: any) => (
     <div className="artistAlertHeader">{message}</div>
   );
 
+  closeBanner = () => {
+    // Set cookie and prop?
+  };
+
   render() {
     return (
       <div className="home-section">
         {this.renderSticky(
-          <span>
-            As a response to COVID-19, artists will receive 100% of support
-            through the platform. We will waive artist membership dues for the
-            rest of 2020.{' '}
-            <a
-              href="https://app.ampled.com/zine/ampled-artist-membership-is-now-open-join-today"
-              target="_blank"
-              rel="noopener noreferrer"
+          <div>
+            <span>
+              As a response to COVID-19, artists will receive 100% of support
+              through the platform. We will waive artist membership dues for the
+              rest of 2020.{' '}
+              <a
+                href="https://app.ampled.com/zine/ampled-artist-membership-is-now-open-join-today"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn more
+              </a>
+              .
+            </span>
+            <IconButton
+              className="artistAlertHeader__close-button"
+              aria-label="close"
+              onClick={this.closeBanner}
+              style={{ width: '50px', height: '50px' }}
             >
-              Learn more
-            </a>
-            .
-          </span>,
+              <FontAwesomeIcon icon={faTimes} />
+            </IconButton>
+          </div>,
         )}
         <HomeHeader />
         <Texture

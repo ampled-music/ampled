@@ -13,6 +13,26 @@
       font-size: 2.5rem;
     }
   }
+  .artistAlertHeader {
+    position: relative;
+    padding-right: 50px;
+    span {
+      display: block;
+      padding: 5px 15px;
+    }
+    &__close-button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      .MuiIconButton-label {
+        padding: 0px !important;
+      }
+      svg {
+        fill: $white;
+        color: $white;
+      }
+    }
+  }
 }
 
 .home-header {

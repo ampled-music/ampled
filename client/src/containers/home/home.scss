@@ -523,6 +523,69 @@
   }
 }
 
+.home-garden {
+  padding: 1rem 1rem 2rem;
+  background-color: $white;
+
+  h3 {
+    font-family: $font-family-sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 2rem auto;
+  }
+
+  &__logo {
+    border: 1px solid $black;
+    height: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform $speed;
+    max-width: 300px;
+    margin: 0 auto 30px;
+
+    &_image {
+      width: 60%;
+    }
+    &_contain {
+      &:nth-child(1n) {
+        .home-garden__logo {
+          transform: rotate(3deg);
+        }
+      }
+      &:nth-child(2n) {
+        .home-garden__logo {
+          transform: rotate(-3deg);
+        }
+      }
+      &:nth-child(3n) {
+        .home-garden__logo {
+          transform: rotate(2deg);
+        }
+      }
+      &:nth-child(4n) {
+        .home-garden__logo {
+          transform: rotate(-1deg);
+        }
+      }
+      &:nth-child(5n) {
+        .home-garden__logo {
+          transform: rotate(2deg);
+        }
+      }
+      &:nth-child(6n) {
+        .home-garden__logo {
+          transform: rotate(-3deg);
+        }
+      }
+    }
+
+    &:hover {
+      transform: rotate(0deg) !important;
+    }
+  }
+}
+
 .home-membership {
   padding: 2rem;
   font-family: $font-family-monospace;

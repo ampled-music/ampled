@@ -7,6 +7,7 @@ import { HomeArtists } from './HomeArtists';
 import { HomeFor } from './HomeFor';
 import { HomeHeader } from './HomeHeader';
 import { HomeHow } from './HomeHow';
+import { HomeGarden } from './HomeGarden';
 import { Texture } from '../shared/texture/Texture';
 
 class Home extends React.Component<any> {
@@ -27,6 +28,7 @@ class Home extends React.Component<any> {
           positionFlip={true}
         />
         <HomeArtists />
+        <HomeGarden />
         {/* <HomeBrowse /> */}
         <Footer />
       </div>

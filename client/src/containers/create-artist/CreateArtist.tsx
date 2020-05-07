@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { Redirect } from 'react-router-dom';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -598,6 +599,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     showConfirmRemoveMember: false,
     confirmRemoveMemberIndex: 99,
     showDeleteModal: false,
+    isDeletedPage: false,
   };
 
   constructor(props) {
@@ -773,7 +775,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           message: response.data.message,
           type: 'success',
         });
-        window.location.href = '/'; // TODO do this through react router redirect
+
+        this.setState({ isDeletedPage: true });
+        // window.location.href = '/';
       } else {
         this.props.showToast({
           message: response.data.message,
@@ -1517,7 +1521,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       me: { userData },
     } = this.props;
 
-    if (this.state.loading) {
+    if (this.state.isDeletedPage) {
+      return <Redirect to="/" />;
+    } else if (this.state.loading) {
       return <Loading artistLoading={true} />;
     } else if (userData && !userData.email_confirmed) {
       return (

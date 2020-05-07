@@ -1,6 +1,7 @@
 import './home.scss';
 
 import * as React from 'react';
+import cx from 'classnames';
 
 import { Footer } from '../footer/Footer';
 import { HomeArtists } from './HomeArtists';
@@ -14,43 +15,44 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 class Home extends React.Component<any> {
+  state = {
+    showBanner: window.localStorage.getItem('close-banner') ? false : true,
+  };
 
-  renderSticky = (message: any) => (
-    <div className="artistAlertHeader">{message}</div>
+  renderSticky = () => (
+    <div className={cx('artistAlertHeader', { active: this.state.showBanner })}>
+      <span>
+        As a response to COVID-19, artists will receive 100% of support through
+        Ampled. We will waive artist membership dues for the rest of 2020.{' '}
+        <a
+          href="https://app.ampled.com/zine/ampled-artist-membership-is-now-open-join-today"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn more
+        </a>
+        .
+      </span>
+      <IconButton
+        className="artistAlertHeader__close-button"
+        aria-label="close"
+        onClick={this.closeBanner}
+        style={{ width: '30px', height: '30px' }}
+      >
+        <FontAwesomeIcon icon={faTimes} />
+      </IconButton>
+    </div>
   );
 
   closeBanner = () => {
-    // Set cookie and prop?
+    window.localStorage.setItem('close-banner', 'true');
+    this.setState({ showBanner: false });
   };
 
   render() {
     return (
       <div className="home-section">
-        {this.renderSticky(
-          <div>
-            <span>
-              As a response to COVID-19, artists will receive 100% of support
-              through the platform. We will waive artist membership dues for the
-              rest of 2020.{' '}
-              <a
-                href="https://app.ampled.com/zine/ampled-artist-membership-is-now-open-join-today"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Learn more
-              </a>
-              .
-            </span>
-            <IconButton
-              className="artistAlertHeader__close-button"
-              aria-label="close"
-              onClick={this.closeBanner}
-              style={{ width: '50px', height: '50px' }}
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </IconButton>
-          </div>,
-        )}
+        {this.renderSticky()}
         <HomeHeader />
         <Texture
           positionTop25={false}

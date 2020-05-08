@@ -3,7 +3,10 @@
 # Table name: audio_uploads
 #
 #  created_at :datetime         not null
+#  duration   :integer
+#  hashKey    :string
 #  id         :bigint(8)        not null, primary key
+#  name       :string
 #  post_id    :bigint(8)        not null
 #  public_id  :string           not null
 #  updated_at :datetime         not null

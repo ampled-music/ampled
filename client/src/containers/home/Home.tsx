@@ -2,6 +2,7 @@ import './home.scss';
 
 import * as React from 'react';
 import cx from 'classnames';
+import * as store from 'store';
 
 import { Footer } from '../footer/Footer';
 import { HomeArtists } from './HomeArtists';
@@ -17,7 +18,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 class Home extends React.Component<any> {
   state = {
-    showBanner: window.localStorage.getItem('close-banner') ? false : true,
+    showBanner: store.get('close-banner') ? false : true,
   };
 
   renderSticky = () => (
@@ -46,7 +47,7 @@ class Home extends React.Component<any> {
   );
 
   closeBanner = () => {
-    window.localStorage.setItem('close-banner', 'true');
+    store.set('close-banner', true);
     this.setState({ showBanner: false });
   };
 

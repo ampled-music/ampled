@@ -230,6 +230,16 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
           )}
         </div>
         <div className="audio-player__waveform" ref={this.waveformContainerRef}>
+          {durationShow === 'on' && (
+            <div className="audio-player__duration">
+              <div className="audio-player__duration_start">
+                {this.formatTime(playedSeconds)}
+              </div>
+              <div className="audio-player__duration_end">
+                {this.formatTime(duration)}
+              </div>
+            </div>
+          )}
           <AudioWaveform
             waveform={this.props.waveform}
             playedSeconds={playedSeconds}

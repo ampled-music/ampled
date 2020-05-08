@@ -158,7 +158,7 @@ const AudioWaveform = (props: AudioWaveformProps) => {
 
   return (
     <canvas
-      width={props.size == WaveformSize.Large ? '450px' : '300px'}
+      width={props.size == WaveformSize.Large ? '450px' : '320px'}
       height={`${WAVEFORM_HEIGHT}px`}
       style={{ borderBottom: `2px solid ${props.accentColor}`}}
       onMouseMove={handleMouseMove}

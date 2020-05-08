@@ -56,11 +56,16 @@ class AudioProcessingService
       reader.close
     end
 
-    # normalize 8-bit amplitudes so that waveform values range from 0-128
+    # reduce to one positive amplitude value per waveform unit
     waveform = []
     waveform_buffers.each do |buffer|
       waveform << buffer.map { |sample| (sample - 128).abs }.max
     end
+
+    # peak normalization
+    peak = waveform.max
+    gain = 128 - peak
+    waveform = waveform.map { |sample| sample + gain }
 
     waveform
   end

@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 
 import { RGB_Linear_Shade, hexToRGB } from '../../../styles/utils'
 
-const WAVEFORM_HEIGHT = 40;
+const WAVEFORM_HEIGHT = 30;
 const WAVEFORM_SAMPLE_COUNT_LO = 50;
 const WAVEFORM_SAMPLE_COUNT_HI = 75;
 const MAX_SEEK_FREQUENCY_IN_MS = 200;

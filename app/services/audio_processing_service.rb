@@ -11,18 +11,30 @@ class AudioProcessingService
     @s3.bucket(ENV["S3_BUCKET"]).object(public_id).get(response_target: @raw_file_path)
   end
 
+  # generate SHA256 hash from file
+  def generate_hash
+    sha256 = Digest::SHA256.file @raw_file_path
+    sha256.hexdigest
+  end
+
+  # probe file for duration
+  def get_duration
+    duration = `ffprobe -i #{@raw_file_path} -show_entries format=duration -v quiet -of csv="p=0"`
+    duration.to_i
+  end
+
   # == Generate Waveform
   #
   # Using ffmpeg, process original file:
   #
   #   1. transcode to PCM (.wav)
-  #   2. downsample to reduce total frames (-ar 1000)
-  #   3. reduce to 1 channel (-ac 1)
-  #   4. lower bit depth (-acodec pcm_u8)
+  #   2. downsample to 1000 Hz to reduce total frames (-ar 1000)
+  #   3. reduce stereo to one channel (-ac 1)
+  #   4. lower bit depth to 8-bit unsigned (-acodec pcm_u8)
   #
   # The sample rate and bit depth can be fine tuned further.
-  # Finally, read output file to build the waveform
-
+  # Finally, read output file to build the waveform using peak normalization.
+  #
   def generate_waveform(waveform_length = 300)
     # process original file
     @downsampled_file_path = Rails.root.join("tmp/audio/downsampled_#{@process_id}.wav")

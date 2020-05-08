@@ -23,8 +23,10 @@
 
 class AudioUpload < ApplicationRecord
   before_destroy :delete_audio
-  before_create :set_waveform
+  before_create :process_audio
 
+  class HashGenerationError < StandardError; end
+  class DurationNotFoundError < StandardError; end
   class WaveformEmptyError < StandardError; end
 
   def delete_audio
@@ -33,9 +35,17 @@ class AudioUpload < ApplicationRecord
     bucket.object(public_id).delete
   end
 
-  def set_waveform 
+  private
+
+  def process_audio
     audio_processing_service = AudioProcessingService.new(public_id)
     begin
+      self.hashKey = audio_processing_service.generate_hash
+      raise HashGenerationError, "Unable to generate sha256 hash for audio upload with id: #{id}" if self.hashKey.empty?
+
+      self.duration = audio_processing_service.get_duration
+      raise DurationNotFoundError, "Unable to get duration for audio upload with id: #{id}" if self.duration <= 0
+
       self.waveform = audio_processing_service.generate_waveform
       raise WaveformEmptyError, "Unable to generate waveform for audio upload with id: #{id}" if self.waveform.empty?
     ensure

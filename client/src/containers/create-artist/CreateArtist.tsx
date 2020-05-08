@@ -664,7 +664,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         hideMembers: hide_members,
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
-          instrument: owner.instrument || '',
+          role: owner.instrument || '',
           email: owner.email || '',
           lastName: owner.lastName || '',
           isAdmin: owner.role === 'admin',
@@ -714,7 +714,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         hideMembers: hide_members,
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
-          instrument: owner.instrument || '',
+          role: owner.instrument || '',
           email: owner.email || '',
           lastName: owner.lastName || '',
           isAdmin: owner.role === 'admin',

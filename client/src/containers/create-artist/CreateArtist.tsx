@@ -1319,6 +1319,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
+    // hotfix accidental image deletion while we find better solution
+    const fixImages = images
+      .filter((image) => image !== null && typeof image !== 'undefined')
+      .map(({ public_id, url }) => ({ public_id, url }));
+
     // create page
     this.setState({
       loading: true,
@@ -1339,7 +1344,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             twitter_handle: artistTwitter,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
-            images,
+            images: fixImages,
           },
           members,
         },
@@ -1375,7 +1380,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             twitter_handle: artistTwitter,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
-            images,
+            images: fixImages,
           },
           members,
         },

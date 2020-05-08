@@ -74,7 +74,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
       axios.request(options).then(() => {
         this.fetchPlayableUrl();
-        this.props.onComplete(this.state.key);
+        this.props.onComplete(this.state.key, this.state.fileName);
       });
     });
   };

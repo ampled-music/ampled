@@ -348,9 +348,9 @@ class PostFormComponent extends React.Component<Props, any> {
     }
   };
 
-  setAudioUpload = (public_id) => {
+  setAudioUpload = (publicId, fileName) => {
     this.setState({
-      audioUploads: public_id ? [{ public_id }] : [],
+      audioUploads: publicId ? [{ public_id: publicId, name: fileName }] : [],
       hasUnsavedChanges: true,
     });
   };
@@ -509,7 +509,7 @@ class PostFormComponent extends React.Component<Props, any> {
               <span
                 className="remove-button"
                 title="Remove audio"
-                onClick={() => this.setAudioUpload(null)}
+                onClick={() => this.setAudioUpload(null, null)}
               >
                 Remove
               </span>

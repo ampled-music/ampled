@@ -67,7 +67,7 @@ class PostsController < ApplicationController
       :is_private,
       :allow_download,
       :video_embed_url,
-      audio_uploads_attributes: %i[public_id id]
+      audio_uploads_attributes: %i[name public_id id]
     ).merge(user_id: current_user&.id)
   end
 
@@ -83,7 +83,7 @@ class PostsController < ApplicationController
       :is_private,
       :allow_download,
       :video_embed_url,
-      audio_uploads_attributes: %i[public_id id _destroy]
+      audio_uploads_attributes: %i[name public_id id _destroy]
     )
   end
 end

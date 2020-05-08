@@ -770,7 +770,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     const response = await this.props.deleteArtist(this.props.artist.id);
 
     if (response && response.data) {
-      if (response.status === 200) {
+      if (response.status === 200 && response.data?.status !== 'error') {
         this.props.showToast({
           message: response.data.message,
           type: 'success',

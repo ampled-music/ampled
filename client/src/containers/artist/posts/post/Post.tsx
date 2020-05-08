@@ -213,7 +213,7 @@ const PostMedia = ({
         <PostVideo videoUrl={video_embed_url} doReflow={doReflow} />
       </div>
     )}
-    {images.length > 0 && !has_audio && (
+    {images?.length > 0 && !has_audio && (
       <div className="post__image-container">
         <img
           className={cx({
@@ -235,7 +235,7 @@ const PostMedia = ({
     {has_audio && (
       <div className="post__audio-container">
         <div className="post__image-container">
-          {images.length > 0 && (
+          {images?.length > 0 && (
             <img
               className={cx({
                 post__image: true,

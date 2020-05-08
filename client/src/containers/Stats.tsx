@@ -15,14 +15,18 @@ class Stats extends React.Component {
   }
 
   loadData = async () => {
-    const { data } = await apiAxios({
-      method: 'get',
-      url: `/stats/summary.json`,
-    });
-    this.setState({
-      loading: false,
-      ...data,
-    });
+    try {
+      const { data } = await apiAxios({
+        method: 'get',
+        url: `/stats/summary.json`,
+      });
+      this.setState({
+        loading: false,
+        ...data,
+      });
+    } catch (e) {
+      this.setState({ loading: false });
+    }
   };
 
   render() {

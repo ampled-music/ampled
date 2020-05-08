@@ -464,7 +464,7 @@ const Member = ({
             <div className="col-md-9 col-sm-12">
               <TextField
                 name="email"
-                label="Email"
+                placeholder="Email"
                 id="email"
                 value={email || ''}
                 onChange={(e) => handleChange(e, index)}
@@ -483,7 +483,7 @@ const Member = ({
             <div className="col-md-9 col-sm-12">
               <TextField
                 name="role"
-                label={'e.g. "singer", "drums"'}
+                placeholder={'e.g. "singer", "drums"'}
                 id="role"
                 value={role || ''}
                 onChange={(e) => handleChange(e, index)}
@@ -897,13 +897,13 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         <div className="artist-custom">
           <div className="row">
             <div className="col-md-4 col-sm-12">
-              <div className="create-artist__subtitle">Artist or Band name</div>
+              <div className="create-artist__subtitle">Artist or Band Name</div>
               <h6>Required</h6>
             </div>
             <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistName"
-                label="Name"
+                placeholder="Name"
                 id="name"
                 value={this.state.artistName || ''}
                 onChange={this.handleChange}
@@ -917,7 +917,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Your Custom Link</div>
               <h6>Required</h6>
-              <h6>Letters and dashes only</h6>
+              <h6>Letters and dashes only.</h6>
             </div>
             <div className="col-md-8 col-sm-12">
               <TextField
@@ -943,7 +943,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="row">
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">
-                What Sounds more Accurate?
+                What Sounds More Accurate?
               </div>
               <h6>Required</h6>
             </div>
@@ -974,7 +974,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistLocation"
-                label="Location"
+                placeholder="Location"
                 id="location"
                 value={this.state.artistLocation || ''}
                 onChange={this.handleChange}
@@ -987,8 +987,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               <div className="create-artist__subtitle">Written Message</div>
               <h6>Required</h6>
               <h6>
-                This message is featured on your artist page. You can edit this
-                later.
+                This message is featured on your artist page.
+                <br />
+                You can edit this later.
               </h6>
             </div>
             <div className="col-md-8 col-sm-12">
@@ -1055,8 +1056,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Video Message</div>
               <h6>
-                This video is featured on your artist page. You can add this
-                later.
+                This video is featured on your artist page.
+                <br />
+                You can add this later.
               </h6>
             </div>
             <div className="col-md-8 col-sm-12">
@@ -1097,7 +1099,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="row">
             <div className="col-md-6 col-sm-12">
               <div className="create-artist__subtitle">Featured Images</div>
-              <h6>Minimum resolution: 700 X 700 Maximum size: 5mb</h6>
+              <h6>
+                Minimum resolution: 700 X 700
+                <br />
+                Maximum size: 5mb
+              </h6>
               {/* <div className="create-artist__copy">
                 You can have several photos for your profile, but there can be
                 only one profile photo, which will be used to identify you to

@@ -5,6 +5,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { Redirect } from 'react-router-dom';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -42,6 +44,7 @@ import polaroid from '../../images/polaroid.png';
 import { Store } from '../../redux/configure-store';
 
 import { showToastAction } from '../../redux/toast/toast-modal';
+import { deleteArtistAction } from '../../redux/artists/delete';
 
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
@@ -56,6 +59,7 @@ interface CreateArtistProps {
   editMode?: boolean;
   artist?: any;
   showToast: Function;
+  deleteArtist: Function;
 }
 
 interface TabPanelProps {
@@ -460,7 +464,7 @@ const Member = ({
             <div className="col-md-9 col-sm-12">
               <TextField
                 name="email"
-                label="Email"
+                placeholder="Email"
                 id="email"
                 value={email || ''}
                 onChange={(e) => handleChange(e, index)}
@@ -479,7 +483,7 @@ const Member = ({
             <div className="col-md-9 col-sm-12">
               <TextField
                 name="role"
-                label={'e.g. "singer", "drums"'}
+                placeholder={'e.g. "singer", "drums"'}
                 id="role"
                 value={role || ''}
                 onChange={(e) => handleChange(e, index)}
@@ -594,6 +598,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     loading: true,
     showConfirmRemoveMember: false,
     confirmRemoveMemberIndex: 99,
+    showDeleteModal: false,
+    isDeletedPage: false,
   };
 
   constructor(props) {
@@ -613,6 +619,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       artist,
       editMode,
     } = this.props;
+
     const { loading } = this.state;
     if (userData && !prevProps?.me?.userData) {
       const { name, last_name, instagram, twitter, image, email } = userData;
@@ -747,6 +754,44 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     }
   };
 
+  isShowDeleteBtn = () => {
+    if (this.props.artist?.owners && this.props.me?.userData) {
+      const isPageAdmin = this.props.artist.owners.some((owner) => {
+        return owner.id === this.props.me.userData.id;
+      });
+
+      return isPageAdmin && this.props.editMode;
+    }
+
+    return false;
+  };
+
+  deleteArtistPage = async () => {
+    const response = await this.props.deleteArtist(this.props.artist.id);
+
+    if (response && response.data) {
+      if (response.status === 200 && response.data?.status !== 'error') {
+        this.props.showToast({
+          message: response.data.message,
+          type: 'success',
+        });
+
+        this.setState({ isDeletedPage: true });
+        // window.location.href = '/';
+      } else {
+        this.props.showToast({
+          message: response.data.message,
+          type: 'error',
+        });
+      }
+    } else {
+      this.props.showToast({
+        message: 'There was an error deleting your artist page.',
+        type: 'error',
+      });
+    }
+  };
+
   handleColorChange = (color) => {
     this.setState({
       artistColor: color.hex,
@@ -852,13 +897,13 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         <div className="artist-custom">
           <div className="row">
             <div className="col-md-4 col-sm-12">
-              <div className="create-artist__subtitle">Artist or Band name</div>
+              <div className="create-artist__subtitle">Artist or Band Name</div>
               <h6>Required</h6>
             </div>
             <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistName"
-                label="Name"
+                placeholder="Name"
                 id="name"
                 value={this.state.artistName || ''}
                 onChange={this.handleChange}
@@ -872,7 +917,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Your Custom Link</div>
               <h6>Required</h6>
-              <h6>Letters and dashes only</h6>
+              <h6>Letters and dashes only.</h6>
             </div>
             <div className="col-md-8 col-sm-12">
               <TextField
@@ -898,7 +943,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="row">
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">
-                What Sounds more Accurate?
+                What Sounds More Accurate?
               </div>
               <h6>Required</h6>
             </div>
@@ -929,7 +974,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-8 col-sm-12">
               <TextField
                 name="artistLocation"
-                label="Location"
+                placeholder="Location"
                 id="location"
                 value={this.state.artistLocation || ''}
                 onChange={this.handleChange}
@@ -942,8 +987,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               <div className="create-artist__subtitle">Written Message</div>
               <h6>Required</h6>
               <h6>
-                This message is featured on your artist page. You can edit this
-                later.
+                This message is featured on your artist page.
+                <br />
+                You can edit this later.
               </h6>
             </div>
             <div className="col-md-8 col-sm-12">
@@ -1010,8 +1056,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Video Message</div>
               <h6>
-                This video is featured on your artist page. You can add this
-                later.
+                This video is featured on your artist page.
+                <br />
+                You can add this later.
               </h6>
             </div>
             <div className="col-md-8 col-sm-12">
@@ -1052,7 +1099,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="row">
             <div className="col-md-6 col-sm-12">
               <div className="create-artist__subtitle">Featured Images</div>
-              <h6>Minimum resolution: 700 X 700 Maximum size: 5mb</h6>
+              <h6>
+                Minimum resolution: 700 X 700
+                <br />
+                Maximum size: 5mb
+              </h6>
               {/* <div className="create-artist__copy">
                 You can have several photos for your profile, but there can be
                 only one profile photo, which will be used to identify you to
@@ -1241,6 +1292,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     });
   };
 
+  onDeleteBtnClicked = () => {
+    this.setState({ showDeleteModal: !this.state.showDeleteModal });
+  };
+
   onSubmit = async () => {
     const {
       artistName,
@@ -1405,12 +1460,81 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     }
   };
 
+  renderSupporterCount = () => {
+    const hasSupporters = this.props.artist?.supporters?.length > 0;
+    if (!hasSupporters) {
+      return;
+    }
+
+    return (
+      <p>
+        You have {this.props.artist.supporters.length} supporter(s) currently.
+        When you delete your page, subscriptions to your page will also be
+        deleted.
+      </p>
+    );
+  };
+
+  renderDeleteModal = () => {
+    return (
+      <Modal
+        open={this.state.showDeleteModal}
+        onClose={() =>
+          this.setState({ showDeleteModal: !this.state.showDeleteModal })
+        }
+      >
+        <div className="delete-post-modal__container">
+          <img className="tear tear__topper" src={tear} alt="" />
+          <div className="delete-post-modal">
+            <div className="delete-post-modal__title">
+              <h4>Are you sure?</h4>
+            </div>
+            <p>
+              Deleting your page is permanent, and any content posted will be
+              deleted permanently as well.
+            </p>
+            {this.renderSupporterCount()}
+            <div className="delete-post-modal__actions action-buttons">
+              <button
+                className="cancel-button"
+                onClick={() => this.setState({ showDeleteModal: false })}
+              >
+                Cancel
+              </button>
+              <button className="delete-button" onClick={this.deleteArtistPage}>
+                Delete Artist Page
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    );
+  };
+
+  renderDeleteBtn() {
+    if (!this.isShowDeleteBtn()) {
+      return;
+    }
+    return (
+      <div className="col-md-6 col-sm-12">
+        <button
+          onClick={this.onDeleteBtnClicked}
+          className="btn btn-ampled btn-delete"
+        >
+          Delete your page
+        </button>
+      </div>
+    );
+  }
+
   render() {
     const {
       me: { userData },
     } = this.props;
 
-    if (this.state.loading) {
+    if (this.state.isDeletedPage) {
+      return <Redirect to="/" />;
+    } else if (this.state.loading) {
       return <Loading artistLoading={true} />;
     } else if (userData && !userData.email_confirmed) {
       return (
@@ -1425,8 +1549,16 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         </div>
       );
     }
+
+    const showDeleteBtn = this.isShowDeleteBtn();
+    const saveBtnClasses = classnames('col-sm-12', {
+      'col-md-6': showDeleteBtn,
+      'col-md-12': !showDeleteBtn,
+    });
+
     return (
       <div className="create-artist">
+        {this.renderDeleteModal()}
         <Modal
           open={this.state.showConfirmRemoveMember}
           onClose={() => {
@@ -1482,7 +1614,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             {!this.props.editMode && (
               <div className="row">
                 <div className="col-md-3 col-sm-1"></div>
-                <div className="col-md-6 col-sm-10 create-artist__copy">
+                <div className="col-md-6 col-sm-10 create-artist__bottomcopy">
                   Your page will initially only be visible to you and any other
                   members you&#39;ve added. The Ampled team does a quick spot
                   check of all pages before they become visible to the general
@@ -1494,9 +1626,14 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="row">
               <div className="col-md-3 col-sm-1"></div>
               <div className="col-md-6 col-sm-10">
-                <button onClick={this.onSubmit} className="btn btn-ampled">
-                  {this.props.editMode ? 'Save' : 'Create'} your page
-                </button>
+                <div className="row">
+                  {this.renderDeleteBtn()}
+                  <div className={saveBtnClasses}>
+                    <button onClick={this.onSubmit} className="btn btn-ampled">
+                      {this.props.editMode ? 'Save' : 'Create'} your page
+                    </button>
+                  </div>
+                </div>
               </div>
               <div className="col-md-3 col-sm-1"></div>
             </div>
@@ -1515,6 +1652,7 @@ const mapStateToProps = (state: Store) => {
 
 const mapDispatchToProps = (dispatch) => ({
   showToast: bindActionCreators(showToastAction, dispatch),
+  deleteArtist: bindActionCreators(deleteArtistAction, dispatch),
 });
 
 const connectArtist = connect(

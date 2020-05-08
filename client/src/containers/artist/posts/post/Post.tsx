@@ -218,8 +218,6 @@ const PostMedia = ({
       </div>
     )}
 
-    {video_embed_url}
-
     {image_url && !has_audio && (
       <div className="post__image-container">
         <img

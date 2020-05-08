@@ -199,8 +199,12 @@ const PostMedia = ({
     video_embed_url,
     audio_uploads,
     deny_details_lapsed,
+    allow_download,
+    id,
+    title,
   },
   allowDetails,
+  artistSlug,
   accentColor,
   me,
   handlePrivatePostClick,
@@ -213,6 +217,9 @@ const PostMedia = ({
         <PostVideo videoUrl={video_embed_url} doReflow={doReflow} />
       </div>
     )}
+
+    {video_embed_url}
+
     {image_url && !has_audio && (
       <div className="post__image-container">
         <img
@@ -267,8 +274,13 @@ const PostMedia = ({
             accentColor={accentColor}
             waveform={audio_uploads[0]?.waveform}
             callback={playerCallback}
+            download={allow_download}
+            postId={id}
+            songTitle={title}
+            artistSlug={artistSlug}
           />
         )}
+
       </div>
     )}
 
@@ -296,6 +308,7 @@ const PostMedia = ({
 PostMedia.propTypes = {
   post: PropTypes.any,
   allowDetails: PropTypes.bool,
+  artistSlug: PropTypes.string,
   accentColor: PropTypes.string,
   me: PropTypes.any,
   handlePrivatePostClick: PropTypes.func,
@@ -511,8 +524,6 @@ class PostComponent extends React.Component<any, any> {
 
     const allowDetails = post.allow_details;
     const isPrivate = post.is_private;
-    const allowDownload = post.allow_download;
-    const hasAudio = post.has_audio;
     const authenticated = !!me;
 
     const authorFirstName = this.returnFirstName(post.author);
@@ -631,17 +642,6 @@ class PostComponent extends React.Component<any, any> {
               handlePrivatePostClick={this.handlePrivatePostClick}
               playerCallback={this.props.playerCallback}
             />
-            {allowDownload && hasAudio && allowDetails && (
-              <div className="download-link">
-                <a
-                  href={`/artist/${this.props.artistSlug}/post/${post.id}/download`}
-                  download={`${post.title}.mp3`}
-                >
-                  Download audio
-                </a>
-              </div>
-            )}
-
             <div className="post__title">
               <Link
                 style={{ textDecoration: 'none' }}

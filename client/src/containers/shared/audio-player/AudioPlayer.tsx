@@ -1,15 +1,13 @@
 import './audio-player.scss';
 
 import * as React from 'react';
-import cx from 'classnames';
 
 import FilePlayer from 'react-player/lib/players/FilePlayer';
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
-import { IconButton, Slider } from '@material-ui/core/';
+import { withStyles } from '@material-ui/core/styles';
+import { IconButton } from '@material-ui/core/';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { theme } from './theme';
 import AudioWaveform, { WaveformSize } from './AudioWaveform';
 
 interface AudioPlayerProps {
@@ -17,6 +15,10 @@ interface AudioPlayerProps {
   accentColor: string;
   waveform: number[];
   callback?(action: string, instance: any): void;
+  download: boolean;
+  postId: number;
+  songTitle: string;
+  artistSlug: string;
 }
 interface AudioPlayerState {
   url: string;
@@ -58,15 +60,15 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   componentDidMount = () => {
     this.setWaveformSize();
     window.addEventListener('resize', this.handleWindowResize)
-  }
+  };
 
   componentWillUnmount = () => {
     window.removeEventListener('resize', this.handleWindowResize)
-  }
+  };
 
   handleWindowResize = () => {
     this.setWaveformSize();
-  }
+  };
 
   setWaveformSize = () => {
     const waveformContainerWidth = this.waveformContainerRef.current.clientWidth;
@@ -74,7 +76,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     if (waveformSize !== this.state.waveformSize) {
       this.setState({ waveformSize });
     }
-  }
+  };
 
   load = () => {
     this.setState({
@@ -166,7 +168,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
       playedSeconds,
       loadedSeconds,
       durationShow,
-      waveformSize
+      waveformSize,
     } = this.state;
 
     const PlayButton = withStyles({
@@ -184,9 +186,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     })(IconButton);
 
     return (
-      <div
-        className={cx('audio-player')}
-      >
+      <div className="audio-player">
         <FilePlayer
           ref={this.playerRef}
           url={url}
@@ -210,7 +210,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
         <div className="audio-player__play-pause">
           <PlayButton
             onClick={this.handlePlayPause}
-            size='small'
+            size="small"
             aria-label="Play / Pause"
           >
             {playing ? (
@@ -219,16 +219,26 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
               <FontAwesomeIcon icon={faPlay} />
             )}
           </PlayButton>
+          {this.props.download && (
+            <a
+              className="audio-player__download"
+              href={`/artist/${this.props.artistSlug}/post/${this.props.postId}/download`}
+              download={`${this.props.postId}.mp3`}
+            >
+              Download audio
+            </a>
+          )}
         </div>
         <div className="audio-player__waveform" ref={this.waveformContainerRef}>
-          <AudioWaveform 
+          <AudioWaveform
             waveform={this.props.waveform}
             playedSeconds={playedSeconds}
             loadedSeconds={loadedSeconds}
             duration={duration}
             accentColor={this.props.accentColor}
             onSeek={this.commitSeeking}
-            size={waveformSize}/>
+            size={waveformSize}
+          />
         </div>
       </div>
     );

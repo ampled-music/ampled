@@ -8,7 +8,7 @@ namespace :db do
   desc "Dumps the database to backups with specified backup name"
   task :dump, [:name] => [:environment] do |task,args|
       cmd = nil
-      with_config do |app, host, db, user|
+      with_config do | host, db |
           cmd = "pg_dump -F c -v -h #{host} -d #{db} -f #{Rails.root}/db/backups/#{args[:name]}.psql"
       end
       puts cmd
@@ -18,14 +18,17 @@ namespace :db do
   desc "Restores the database from backups"
   task :restore, [:name] => :environment do |task,args|
       if args.name.present?
-          cmd = nil
-          with_config do |app, host, db, user|
-              cmd = "pg_restore -F c -v -d #{db} #{Rails.root}/db/backups/#{args[:name]}.psql"
+          restoreCmd = nil
+          dropCmd = nil
+          createCmd = nil
+          with_config do | host, db |
+              restoreCmd = "pg_restore -F c -v -d #{db} #{Rails.root}/db/backups/#{args[:name]}.psql"
+              dropCmd = "dropdb #{db}"
+              createCmd = "createdb #{db}"
           end
-          Rake::Task["db:drop"].invoke
-          Rake::Task["db:create"].invoke
-          puts cmd
-          exec cmd
+          cmd = "#{dropCmd} && #{createCmd} && #{restoreCmd}"
+          puts cmd 
+          exec cmd 
       else
           puts 'Please provide backup name to restore.'
       end
@@ -34,9 +37,7 @@ namespace :db do
   private
 
   def with_config
-      yield Rails.application.class.parent_name.underscore,
-      ActiveRecord::Base.connection_config[:host],
-      ActiveRecord::Base.connection_config[:database],
-      ActiveRecord::Base.connection_config[:username]
+    yield ActiveRecord::Base.connection_config[:host],
+    ActiveRecord::Base.connection_config[:database]
   end
 end

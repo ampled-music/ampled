@@ -13,7 +13,6 @@
 ActiveRecord::Schema.define(version: 2020_04_29_004705) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "artist_pages", force: :cascade do |t|
@@ -43,9 +42,9 @@ ActiveRecord::Schema.define(version: 2020_04_29_004705) do
   create_table "audio_uploads", force: :cascade do |t|
     t.bigint "post_id", null: false
     t.string "public_id", null: false
-    t.string "hashKey"
+    t.string "hashKey", null: false
     t.string "name"
-    t.integer "duration"
+    t.integer "duration", null: false
     t.integer "waveform", default: [], null: false, array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

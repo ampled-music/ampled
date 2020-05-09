@@ -19,8 +19,6 @@ import { showToastAction } from '../../../../redux/toast/toast-modal';
 
 import {
   Button,
-  DialogActions,
-  DialogContent,
   TextField,
   InputAdornment,
   IconButton,
@@ -672,8 +670,104 @@ class PostFormComponent extends React.Component<Props, any> {
     );
   };
 
+  renderTitle = () => {
+    const { title } = this.state;
+    return (
+      <TextField
+        autoFocus
+        name="title"
+        placeholder="Post title"
+        type="text"
+        fullWidth
+        InputLabelProps={{
+          shrink: true,
+        }}
+        value={title}
+        onFocus={() => this.editor && this.editor.setHyperlinkHelp(false)}
+        onChange={this.handleChange}
+        required
+        InputProps={{
+          endAdornment: !(title && title.length > 0) ? (
+            <InputAdornment position="end">
+              <span
+                style={{
+                  color: 'rgba(0, 0, 0, 0.42)',
+                  fontSize: '0.8rem',
+                }}
+              >
+                (required)
+              </span>
+            </InputAdornment>
+          ) : (
+            undefined
+          ),
+        }}
+      />
+    );
+  };
+
+  renderDescription = () => {
+    const { body } = this.state;
+    return (
+      <RichEditor
+        ref={(editor) => (this.editor = editor)}
+        initialTextAsHTML={body}
+        callback={(body) =>
+          this.setState({
+            body: DOMPurify.sanitize(body, {
+              ALLOWED_TAGS: ['p', 'em', 'strong', 'br', 'ul', 'ol', 'li'],
+            }),
+          })
+        }
+      />
+    );
+  };
+
+  renderAudio = () => {
+    const { audioFile } = this.state;
+    const {
+      artist: { isStripeSetup },
+    } = this.props;
+    return (
+      <>
+        <Upload onComplete={this.updateAudioFile} />
+        
+        <div className="post-form__checkboxes">
+          <div className="row justify-content-between">
+            {audioFile && audioFile.length > 0 && (
+              <div className="col-auto">
+                <label
+                  className="make-public-label"
+                  htmlFor="allow-download"
+                >
+                  <input
+                    aria-label="Allow download"
+                    name="allowDownload"
+                    id="allow-download"
+                    type="checkbox"
+                    onChange={this.handleAllowDownloadChange}
+                    checked={this.state.allowDownload}
+                  />
+                  Allow download
+                </label>
+              </div>
+            )}
+          </div>
+          
+          {!isStripeSetup && (
+            <small>
+              <br />
+              You need to set up your payout destination to make private
+              posts.
+            </small>
+          )}
+        </div>
+      </>
+    );
+  };
+
   render() {
-    const { hasUnsavedChanges, title, body, audioFile } = this.state;
+    const { hasUnsavedChanges, audioFile } = this.state;
     const { isEdit } = this.props;
     const {
       artist: { isStripeSetup },
@@ -685,154 +779,62 @@ class PostFormComponent extends React.Component<Props, any> {
       <div className="post-form__container">
         <img className="tear tear__topper" src={tear} alt="" />
         <div className="post-form">
-          <DialogContent>
-            <h4>{isEdit ? 'EDIT POST' : 'NEW POST'}</h4>
-            <form onSubmit={this.handleSubmit}>
-              <div className="post-form__description">
-                <TextField
-                  autoFocus
-                  name="title"
-                  placeholder="Post title"
-                  type="text"
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={title}
-                  onFocus={() =>
-                    this.editor && this.editor.setHyperlinkHelp(false)
-                  }
-                  onChange={this.handleChange}
-                  required
-                  InputProps={{
-                    endAdornment: !(title && title.length > 0) ? (
-                      <InputAdornment position="end">
-                        <span
-                          style={{
-                            color: 'rgba(0, 0, 0, 0.42)',
-                            fontSize: '0.8rem',
-                          }}
-                        >
-                          (required)
-                        </span>
-                      </InputAdornment>
-                    ) : (
-                      undefined
-                    ),
-                  }}
-                />
-                <RichEditor
-                  ref={(editor) => (this.editor = editor)}
-                  initialTextAsHTML={body}
-                  callback={(body) =>
-                    this.setState({
-                      body: DOMPurify.sanitize(body, {
-                        ALLOWED_TAGS: [
-                          'p',
-                          'em',
-                          'strong',
-                          'br',
-                          'ul',
-                          'ol',
-                          'li',
-                        ],
-                      }),
-                    })
-                  }
-                />
-              </div>
-              <div className="post-form__audio">
-                {isEdit &&
-                this.props.post &&
-                this.props.post.audio_file &&
-                this.state.audioFile &&
-                this.state.audio_file &&
-                this.state.audioFile === this.state.audio_file ? (
-                  this.renderExistingAudio()
-                ) : (
-                  <Upload onComplete={this.updateAudioFile} />
-                )}
-              </div>
-              {this.renderVisualUpload()}
-              <div className="post-form__checkboxes">
-                <div className="row justify-content-between">
-                  <div className="col-auto">
-                    <label className="make-public-label" htmlFor="make-public">
-                      <input
-                        aria-label="Make public"
-                        name="make-public"
-                        id="make-public"
-                        type="checkbox"
-                        onChange={this.handleMakePublicChange}
-                        checked={this.state.isPublic}
-                      />
-                      Make public
-                    </label>
-                  </div>
+          <h4>{isEdit ? 'Edit Post' : 'Create a new post'}</h4>
+          <form onSubmit={this.handleSubmit}>
 
-                  {audioFile && audioFile.length > 0 && (
-                    <div className="col-auto">
-                      <label
-                        className="make-public-label"
-                        htmlFor="allow-download"
-                      >
-                        <input
-                          aria-label="Allow download"
-                          name="allowDownload"
-                          id="allow-download"
-                          type="checkbox"
-                          onChange={this.handleAllowDownloadChange}
-                          checked={this.state.allowDownload}
-                        />
-                        Allow download
-                      </label>
-                    </div>
-                  )}
-                  <div className="col-auto">
-                    {/* <label className="pin-post-label" htmlFor="pin-post">
-                      <input
-                        name="pin-post"
-                        id="pin-post"
-                        type="checkbox"
-                        aria-label="Pin post"
-                      // onChange={this.state.isPinned}
-                      // checked={this.state.isPinned}
-                      />
-                      Pin post
-                    </label> */}
-                  </div>
-                </div>
-                {!isStripeSetup && (
-                  <small>
-                    <br />
-                    You need to set up your payout destination to make private
-                    posts.
-                  </small>
-                )}
+            <div className="post-form__description">
+              {this.renderTitle()}
+              {this.renderDescription()}
+            </div>
+
+            <div className="post-form__audio">
+              {isEdit &&
+              this.props.post &&
+              this.props.post.audio_file &&
+              this.state.audioFile &&
+              this.state.audio_file &&
+              this.state.audioFile === this.state.audio_file ? this.renderExistingAudio() : this.renderAudio() }
+            </div>
+
+            {this.renderVisualUpload()}
+            
+
+            <div className="col-auto">
+              <label className="make-public-label" htmlFor="make-public">
+                <input
+                  aria-label="Make public"
+                  name="make-public"
+                  id="make-public"
+                  type="checkbox"
+                  onChange={this.handleMakePublicChange}
+                  checked={this.state.isPublic}
+                />
+                Make public
+              </label>
+            </div>
+
+            <div className="post-form__actions">
+              <div className="action-buttons">
+                <Button
+                  className="cancel-button"
+                  style={{ textAlign: 'left' }}
+                  onClick={() => this.props.close(hasUnsavedChanges)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className={cx('post-button finished-button', {
+                    disabled: !isSaveEnabled,
+                  })}
+                  disabled={!isSaveEnabled}
+                >
+                  Finished
+                </Button>
               </div>
 
-              <div className="post-form__actions">
-                <DialogActions className="action-buttons">
-                  <Button
-                    className="cancel-button"
-                    style={{ textAlign: 'left' }}
-                    onClick={() => this.props.close(hasUnsavedChanges)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    className={cx('post-button finished-button', {
-                      disabled: !isSaveEnabled,
-                    })}
-                    disabled={!isSaveEnabled}
-                  >
-                    Finished
-                  </Button>
-                </DialogActions>
-              </div>
-            </form>
-          </DialogContent>
+            </div>
+          </form>
         </div>
       </div>
     );

@@ -154,58 +154,6 @@ class RichEditor extends React.Component<RichEditorProps> {
   render() {
     return (
       <div className="rich-editor-container">
-        <div className="rich-controls">
-          <span
-            title="Bold"
-            role="button"
-            style={{ fontWeight: 'bolder' }}
-            onMouseDown={this.onBoldClick}
-            className={this.hasInlineStyle('BOLD') ? 'active' : 'inactive'}
-          >
-            b
-          </span>
-          <span
-            title="Italic"
-            role="button"
-            style={{ fontStyle: 'italic' }}
-            onMouseDown={this.onItalicClick}
-            className={this.hasInlineStyle('ITALIC') ? 'active' : 'inactive'}
-          >
-            i
-          </span>
-          <span
-            title="Bullets"
-            role="button"
-            onMouseDown={this.onBulletsClick}
-            className={
-              this.hasBlockStyle('unordered-list-item') ? 'active' : 'inactive'
-            }
-          >
-            &#x2022;
-          </span>
-          <span className="helper-text">
-            Hyperlinks enabled{' '}
-            <span
-              style={{
-                cursor: 'pointer',
-                textDecoration: 'underline',
-              }}
-              onClick={this.toggleHyperlinkHelp}
-              onMouseOver={() => this.setHyperlinkHelp(true)}
-              onMouseOut={() => this.setHyperlinkHelp(false)}
-            >
-              [?]
-            </span>
-            {this.state.showHyperlinkHelp ? (
-              <div className="additional">
-                Any URLs you include in your post will automatically be made
-                clickable when the post is published.
-              </div>
-            ) : (
-              ''
-            )}
-          </span>
-        </div>
         <div
           className={`MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline rich-editor${
             this.state.focused ? ' focused' : ''
@@ -213,7 +161,7 @@ class RichEditor extends React.Component<RichEditorProps> {
           onClick={this.focusEditor}
         >
           <Editor
-            placeholder="Text (3000 character limit)"
+            placeholder="Body Text"
             textAlignment="left"
             ref={this.setEditor}
             editorState={this.state.editorState}
@@ -226,7 +174,61 @@ class RichEditor extends React.Component<RichEditorProps> {
               this.setState({ focused: false });
             }}
           />
+          <div className="rich-controls">
+            <span
+              title="Bold"
+              role="button"
+              style={{ fontWeight: 'bolder' }}
+              onMouseDown={this.onBoldClick}
+              className={this.hasInlineStyle('BOLD') ? 'active' : 'inactive'}
+            >
+              b
+            </span>
+            <span
+              title="Italic"
+              role="button"
+              style={{ fontStyle: 'italic' }}
+              onMouseDown={this.onItalicClick}
+              className={this.hasInlineStyle('ITALIC') ? 'active' : 'inactive'}
+            >
+              i
+            </span>
+            <span
+              title="Bullets"
+              role="button"
+              onMouseDown={this.onBulletsClick}
+              className={
+                this.hasBlockStyle('unordered-list-item')
+                  ? 'active'
+                  : 'inactive'
+              }
+            >
+              &#x2022;
+            </span>
+          </div>
         </div>
+        <span className="helper-text">
+          Hyperlinks enabled{' '}
+          <span
+            style={{
+              cursor: 'pointer',
+              textDecoration: 'underline',
+            }}
+            onClick={this.toggleHyperlinkHelp}
+            onMouseOver={() => this.setHyperlinkHelp(true)}
+            onMouseOut={() => this.setHyperlinkHelp(false)}
+          >
+            [?]
+          </span>
+          {this.state.showHyperlinkHelp ? (
+            <div className="additional">
+              Any URLs you include in your post will automatically be made
+              clickable when the post is published.
+            </div>
+          ) : (
+            ''
+          )}
+        </span>
       </div>
     );
   }
@@ -249,7 +251,6 @@ class PostFormComponent extends React.Component<Props, any> {
     hasUnsavedChanges: false,
     loadingImage: false,
     savingPost: false,
-    showVideoEmbedField: false,
   };
 
   editor: any;
@@ -264,7 +265,6 @@ class PostFormComponent extends React.Component<Props, any> {
         images: props.post.images,
         videoEmbedUrl: props.post.video_embed_url,
         isPublic: !props.post.is_private,
-        showVideoEmbedField: props.post.has_video_embed,
       };
     } else {
       this.state = this.initialState;
@@ -453,7 +453,7 @@ class PostFormComponent extends React.Component<Props, any> {
 
   renderButtons = () => {
     return (
-      <div className="post-control">
+      <div className="post-form__controls">
         <Button className="btn">Text</Button>
         <Button className="btn">Audio</Button>
         <Button className="btn">Video</Button>
@@ -475,7 +475,7 @@ class PostFormComponent extends React.Component<Props, any> {
     );
   }
 
-  renderPreview(): React.ReactNode {
+  renderImagePreview(): React.ReactNode {
     return (
       <div className="post-image">
         <div className="preview">
@@ -557,6 +557,7 @@ class PostFormComponent extends React.Component<Props, any> {
       videoEmbedUrl &&
       videoEmbedUrl.length > 0 &&
       /(www\.)?vimeo.com\/.+/i.test(videoEmbedUrl);
+    // @todo: revalidate
     const isValidVideo = /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi.test(
       videoEmbedUrl,
     );
@@ -605,7 +606,6 @@ class PostFormComponent extends React.Component<Props, any> {
                     aria-label="Toggle video input"
                     onClick={() =>
                       this.setState({
-                        showVideoEmbedField: false,
                         videoEmbedUrl: null,
                       })
                     }
@@ -622,29 +622,12 @@ class PostFormComponent extends React.Component<Props, any> {
     );
   };
 
-  renderVisualUpload = () => {
-    const { images, videoEmbedUrl, showVideoEmbedField } = this.state;
+  renderImageUpload = () => {
+    const { images } = this.state;
     return (
       <div className="post-form__image">
-        <input
-          id="image-file"
-          type="file"
-          aria-label="Image file"
-          accept="image/*"
-          onChange={this.processImage}
-        />
-        {!images.length && !videoEmbedUrl && !showVideoEmbedField ? (
-          <>
-            {this.renderUploader()}
-            {this.renderVideoPreview()}
-          </>
-        ) : (
-          ''
-        )}
-        {!images.length && showVideoEmbedField
-          ? this.renderVideoEmbedder()
-          : ''}
-        {images.length > 0 ? this.renderPreview() : ''}
+        {!images.length && this.renderUploader()}
+        {images.length > 0 ? this.renderImagePreview() : ''}
       </div>
     );
   };
@@ -688,17 +671,19 @@ class PostFormComponent extends React.Component<Props, any> {
   renderDescription = () => {
     const { body } = this.state;
     return (
-      <RichEditor
-        ref={(editor) => (this.editor = editor)}
-        initialTextAsHTML={body}
-        callback={(body) =>
-          this.setState({
-            body: DOMPurify.sanitize(body, {
-              ALLOWED_TAGS: ['p', 'em', 'strong', 'br', 'ul', 'ol', 'li'],
-            }),
-          })
-        }
-      />
+      <div className="post-form__description">
+        <RichEditor
+          ref={(editor) => (this.editor = editor)}
+          initialTextAsHTML={body}
+          callback={(body) =>
+            this.setState({
+              body: DOMPurify.sanitize(body, {
+                ALLOWED_TAGS: ['p', 'em', 'strong', 'br', 'ul', 'ol', 'li'],
+              }),
+            })
+          }
+        />
+      </div>
     );
   };
 
@@ -754,11 +739,6 @@ class PostFormComponent extends React.Component<Props, any> {
           <h4>{isEdit ? 'Edit Post' : 'Create a new post'}</h4>
           {this.renderButtons()}
           <form onSubmit={this.handleSubmit}>
-            <div className="post-form__description">
-              {this.renderTitle()}
-              {this.renderDescription()}
-            </div>
-
             <div className="post-form__audio">
               {isEdit &&
               this.props.post &&
@@ -770,9 +750,11 @@ class PostFormComponent extends React.Component<Props, any> {
                 : this.renderAudio()}
             </div>
 
-            {this.renderVisualUpload()}
+            {this.renderImageUpload()}
+            {this.renderTitle()}
+            {this.renderDescription()}
 
-            <div className="col-auto">
+            {/* <div className="col-auto">
               <label className="make-public-label" htmlFor="make-public">
                 <input
                   aria-label="Make public"
@@ -784,27 +766,24 @@ class PostFormComponent extends React.Component<Props, any> {
                 />
                 Make public
               </label>
-            </div>
+            </div> */}
 
             <div className="post-form__actions">
-              <div className="action-buttons">
-                <Button
-                  className="cancel-button"
-                  style={{ textAlign: 'left' }}
-                  onClick={() => this.props.close(hasUnsavedChanges)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  className={cx('post-button finished-button', {
-                    disabled: !isSaveEnabled,
-                  })}
-                  disabled={!isSaveEnabled}
-                >
-                  Finished
-                </Button>
-              </div>
+              <Button
+                className="cancel-button"
+                onClick={() => this.props.close(hasUnsavedChanges)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className={cx('post-button', {
+                  disabled: !isSaveEnabled,
+                })}
+                disabled={!isSaveEnabled}
+              >
+                Publish Post
+              </Button>
             </div>
           </form>
         </div>

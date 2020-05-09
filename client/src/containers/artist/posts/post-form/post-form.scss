@@ -7,36 +7,46 @@
   text-align: center;
   background-color: $white;
   height: 100vh;
+  padding: 1rem;
 
   @include mq($tablet) {
     height: auto;
   }
 
+  &__controls {
+    display: flex;
+    margin: 1rem;
+  }
+
   &__description {
+    margin: 0.5rem auto;
     .rich-editor-container {
+      .helper-text {
+        font-style: italic;
+        float: right;
+        color: $gray-light;
+        font-size: 0.8rem;
+
+        .additional {
+          position: absolute;
+          background: white;
+          border: 1px solid $gray-light;
+          z-index: 999;
+          line-height: 20px;
+          padding: 8px;
+          width: 250px;
+          right: 0;
+        }
+      }
+
       .rich-controls {
         height: 30px;
         line-height: 28px;
         font-family: $font-family-monospace;
         text-align: left;
-
-        span.helper-text {
-          font-style: italic;
-          float: right;
-          color: $gray-light;
-          font-size: 0.8rem;
-
-          .additional {
-            position: absolute;
-            background: white;
-            border: 1px solid $gray-light;
-            z-index: 999;
-            line-height: 20px;
-            padding: 8px;
-            width: 250px;
-            right: 0;
-          }
-        }
+        position: absolute;
+        bottom: 0;
+        right: 0;
 
         button,
         span[role='button'] {

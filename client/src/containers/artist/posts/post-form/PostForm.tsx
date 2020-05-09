@@ -153,27 +153,29 @@ class RichEditor extends React.Component<RichEditorProps> {
 
   render() {
     return (
-      <div className="rich-editor-container">
-        <div
-          className={`MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline rich-editor${
-            this.state.focused ? ' focused' : ''
-          }`}
-          onClick={this.focusEditor}
-        >
-          <Editor
-            placeholder="Body Text"
-            textAlignment="left"
-            ref={this.setEditor}
-            editorState={this.state.editorState}
-            handleKeyCommand={this.handleKeyCommand}
-            onChange={this.onChange}
-            onFocus={() => {
-              this.setState({ focused: true });
-            }}
-            onBlur={() => {
-              this.setState({ focused: false });
-            }}
-          />
+      <div className="post-form__description">
+        <div className="rich-editor-container">
+          <div
+            className={`MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline rich-editor${
+              this.state.focused ? ' focused' : ''
+            }`}
+            onClick={this.focusEditor}
+          >
+            <Editor
+              placeholder="Body Text"
+              textAlignment="left"
+              ref={this.setEditor}
+              editorState={this.state.editorState}
+              handleKeyCommand={this.handleKeyCommand}
+              onChange={this.onChange}
+              onFocus={() => {
+                this.setState({ focused: true });
+              }}
+              onBlur={() => {
+                this.setState({ focused: false });
+              }}
+            />
+          </div>
           <div className="rich-controls">
             <span
               title="Bold"
@@ -679,19 +681,17 @@ class PostFormComponent extends React.Component<Props, any> {
   renderDescription = () => {
     const { body } = this.state;
     return (
-      <div className="post-form__description">
-        <RichEditor
-          ref={(editor) => (this.editor = editor)}
-          initialTextAsHTML={body}
-          callback={(body) =>
-            this.setState({
-              body: DOMPurify.sanitize(body, {
-                ALLOWED_TAGS: ['p', 'em', 'strong', 'br', 'ul', 'ol', 'li'],
-              }),
-            })
-          }
-        />
-      </div>
+      <RichEditor
+        ref={(editor) => (this.editor = editor)}
+        initialTextAsHTML={body}
+        callback={(body) =>
+          this.setState({
+            body: DOMPurify.sanitize(body, {
+              ALLOWED_TAGS: ['p', 'em', 'strong', 'br', 'ul', 'ol', 'li'],
+            }),
+          })
+        }
+      />
     );
   };
 

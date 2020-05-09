@@ -56,7 +56,7 @@ interface PostFormProps {
   close: (hasUnsavedChanges: any) => void;
   discardChanges: () => void;
   isEdit?: boolean;
-  post?: Post
+  post?: Post;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -368,18 +368,18 @@ class PostFormComponent extends React.Component<Props, any> {
     const cloudinaryResponse = await uploadFileToCloudinary(imageFile);
 
     if (cloudinaryResponse) {
-      this.setState(state => {
+      this.setState((state) => {
         const newImageList = state.images.concat({
-            url: cloudinaryResponse.secure_url,
-            public_id: cloudinaryResponse.public_id,
-        })
+          url: cloudinaryResponse.secure_url,
+          public_id: cloudinaryResponse.public_id,
+        });
         return {
           images: newImageList,
           deleteToken: cloudinaryResponse.delete_token,
           hasUnsavedChanges: true,
           loadingImage: false,
           imageName: imageFile.name,
-        }
+        };
       });
     } else {
       this.setState({
@@ -731,15 +731,12 @@ class PostFormComponent extends React.Component<Props, any> {
     return (
       <>
         <Upload onComplete={this.updateAudioFile} />
-        
+
         <div className="post-form__checkboxes">
           <div className="row justify-content-between">
             {audioFile && audioFile.length > 0 && (
               <div className="col-auto">
-                <label
-                  className="make-public-label"
-                  htmlFor="allow-download"
-                >
+                <label className="make-public-label" htmlFor="allow-download">
                   <input
                     aria-label="Allow download"
                     name="allowDownload"
@@ -753,12 +750,11 @@ class PostFormComponent extends React.Component<Props, any> {
               </div>
             )}
           </div>
-          
+
           {!isStripeSetup && (
             <small>
               <br />
-              You need to set up your payout destination to make private
-              posts.
+              You need to set up your payout destination to make private posts.
             </small>
           )}
         </div>
@@ -781,7 +777,6 @@ class PostFormComponent extends React.Component<Props, any> {
         <div className="post-form">
           <h4>{isEdit ? 'Edit Post' : 'Create a new post'}</h4>
           <form onSubmit={this.handleSubmit}>
-
             <div className="post-form__description">
               {this.renderTitle()}
               {this.renderDescription()}
@@ -793,11 +788,12 @@ class PostFormComponent extends React.Component<Props, any> {
               this.props.post.audio_file &&
               this.state.audioFile &&
               this.state.audio_file &&
-              this.state.audioFile === this.state.audio_file ? this.renderExistingAudio() : this.renderAudio() }
+              this.state.audioFile === this.state.audio_file
+                ? this.renderExistingAudio()
+                : this.renderAudio()}
             </div>
 
             {this.renderVisualUpload()}
-            
 
             <div className="col-auto">
               <label className="make-public-label" htmlFor="make-public">
@@ -832,7 +828,6 @@ class PostFormComponent extends React.Component<Props, any> {
                   Finished
                 </Button>
               </div>
-
             </div>
           </form>
         </div>

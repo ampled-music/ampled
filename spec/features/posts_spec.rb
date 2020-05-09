@@ -79,7 +79,7 @@ RSpec.describe "DELETE /posts", type: :request do
 
   context "when post has audio", vcr: true do
     let(:user) { create(:user) }
-    let(:post) { create(:post, user: user, audio_uploads: [AudioUpload.new(public_id: "abc.mp3")]) }
+    let(:post) { create(:post, user: user, audio_uploads: [AudioUpload.new(public_id: "c9598952-0a29-4ce9-88cd-e33591d8ebda.mp3")]) }
 
     before(:each) do
       sign_in user
@@ -233,7 +233,7 @@ RSpec.describe "POST /posts", type: :request do
     end
   end
 
-  context "when the post has audio" do
+  context "when the post has audio", vcr: true do
     before do
       owner_user.owned_pages << artist_page
       sign_in owner_user
@@ -244,10 +244,11 @@ RSpec.describe "POST /posts", type: :request do
           title: "test",
           body: "test test",
           audio_uploads_attributes: [{
-            public_id: "abc.mp3"
+            public_id: "c9598952-0a29-4ce9-88cd-e33591d8ebda.mp3"
           }]
         }
       }
+
       post "/artist_pages/#{artist_page.id}/posts", params: post_params
     end
 
@@ -257,7 +258,7 @@ RSpec.describe "POST /posts", type: :request do
 
     it "should create audio upload record" do
       get "/artist_pages/#{artist_page.id}.json"
-      expect(JSON.parse(response.body)["posts"][0]["audio_uploads"][0]["public_id"]).to eq("abc.mp3")
+      expect(JSON.parse(response.body)["posts"][0]["audio_uploads"][0]["public_id"]).to eq("c9598952-0a29-4ce9-88cd-e33591d8ebda.mp3")
     end
   end
 end
@@ -271,17 +272,17 @@ RSpec.describe "Download posts", :vcr, type: :request do
   let(:public_download_post) do
     create(:post, artist_page_id: artist_page.id, title: "test",
            body: "test test", allow_download: true,
-           audio_uploads: [AudioUpload.new(public_id: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.mp3")])
+           audio_uploads: [AudioUpload.new(public_id: "c9598952-0a29-4ce9-88cd-e33591d8ebda.mp3")])
   end
   let(:private_download_post) do
     create(:post, artist_page_id: artist_page.id, title: "test",
            body: "test test", allow_download: true, is_private: true,
-           audio_uploads: [AudioUpload.new(public_id: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.mp3")])
+           audio_uploads: [AudioUpload.new(public_id: "c9598952-0a29-4ce9-88cd-e33591d8ebda.mp3")])
   end
   let(:public_no_download_post) do
     create(:post, artist_page_id: artist_page.id, title: "test",
            body: "test test", allow_download: false,
-           audio_uploads: [AudioUpload.new(public_id: "62278a79-1221-4f5a-85b3-9c21af6ffbf8.mp3")])
+           audio_uploads: [AudioUpload.new(public_id: "c9598952-0a29-4ce9-88cd-e33591d8ebda.mp3")])
   end
   let(:public_no_audio_post) do
     create(:post, artist_page_id: artist_page.id, title: "test",

@@ -158,8 +158,8 @@ class Upload extends React.Component<UploadProps, UploadState> {
   renderUploadButton(): React.ReactNode {
     return (
       <label htmlFor="raised-button-file">
-        <Button className="btn btn-ampled audio-button" component="span">
-          Add MP3 audio
+        <Button className="btn" component="span">
+          Upload MP3 audio
         </Button>
       </label>
     );

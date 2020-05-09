@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import tear from '../../../../images/background_tear.png';
+import tear from '../../../../images/backgrounds/background_tear.png';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Divider } from '@material-ui/core';

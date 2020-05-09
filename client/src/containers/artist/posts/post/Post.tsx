@@ -8,8 +8,8 @@ import { routePaths } from '../../../route-paths';
 import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
 
-import avatar from '../../../../images/ampled_avatar.svg';
-import tear from '../../../../images/background_tear.png';
+import avatar from '../../../../images/avatars/Avatar_Blank.svg';
+import tear from '../../../../images/backgrounds/background_tear.png';
 import { faUnlock, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardActions, Collapse } from '@material-ui/core';

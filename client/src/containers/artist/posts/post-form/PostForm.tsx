@@ -32,7 +32,7 @@ import { Editor, EditorState, RichUtils } from 'draft-js';
 import { convertFromHTML, convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
-import tear from '../../../../images/background_tear.png';
+import tear from '../../../../images/backgrounds/background_tear.png';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
@@ -153,10 +153,7 @@ class RichEditor extends React.Component<RichEditorProps> {
 
   render() {
     return (
-      <div
-        className="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth rich-editor-container"
-        style={{ marginTop: '20px' }}
-      >
+      <div className="rich-editor-container">
         <div className="rich-controls">
           <span
             title="Bold"
@@ -179,7 +176,6 @@ class RichEditor extends React.Component<RichEditorProps> {
           <span
             title="Bullets"
             role="button"
-            style={{}}
             onMouseDown={this.onBulletsClick}
             className={
               this.hasBlockStyle('unordered-list-item') ? 'active' : 'inactive'
@@ -455,9 +451,21 @@ class PostFormComponent extends React.Component<Props, any> {
     );
   };
 
+  renderButtons = () => {
+    return (
+      <div className="post-control">
+        <Button className="btn">Text</Button>
+        <Button className="btn">Audio</Button>
+        <Button className="btn">Video</Button>
+        <Button className="btn">Photo</Button>
+        <Button className="btn">Link</Button>
+      </div>
+    );
+  };
+
   renderUploader(): React.ReactNode {
     return (
-      <div className="uploader" style={{ width: '45%' }}>
+      <div className="uploader">
         {this.state.loadingImage ? (
           <CircularProgress />
         ) : (
@@ -499,8 +507,8 @@ class PostFormComponent extends React.Component<Props, any> {
   renderUploadButton(): React.ReactNode {
     return (
       <label htmlFor="image-file">
-        <Button className="btn btn-ampled image-button" component="span">
-          Add Image
+        <Button className="btn" component="span">
+          Add Photo
         </Button>
       </label>
     );
@@ -538,20 +546,6 @@ class PostFormComponent extends React.Component<Props, any> {
     );
   }
 
-  renderVideoToggle = () => {
-    return (
-      <div className="uploader" style={{ width: '45%' }}>
-        <Button
-          className="btn btn-ampled image-button"
-          component="span"
-          onClick={() => this.setState({ showVideoEmbedField: true })}
-        >
-          Add Video
-        </Button>
-      </div>
-    );
-  };
-
   renderVideoPreview = () => {
     const { videoEmbedUrl } = this.state;
 
@@ -574,20 +568,6 @@ class PostFormComponent extends React.Component<Props, any> {
       VideoComponent = YouTubePlayer;
     }
 
-    if (!isValidVideo) {
-      return (
-        <div className="uploader">
-          <span
-            style={{
-              fontFamily: '"Courier", Courier, monospace',
-              fontSize: '0.8rem',
-            }}
-          >
-            No supported video detected.
-          </span>
-        </div>
-      );
-    }
     return (
       <div className="uploader">
         <VideoComponent
@@ -605,7 +585,7 @@ class PostFormComponent extends React.Component<Props, any> {
 
     return (
       <>
-        <div className="uploader" style={{ display: 'block' }}>
+        <div className="uploader">
           <TextField
             autoFocus
             name="videoEmbedUrl"
@@ -647,7 +627,6 @@ class PostFormComponent extends React.Component<Props, any> {
     return (
       <div className="post-form__image">
         <input
-          style={{ display: 'none' }}
           id="image-file"
           type="file"
           aria-label="Image file"
@@ -657,7 +636,7 @@ class PostFormComponent extends React.Component<Props, any> {
         {!images.length && !videoEmbedUrl && !showVideoEmbedField ? (
           <>
             {this.renderUploader()}
-            {this.renderVideoToggle()}
+            {this.renderVideoPreview()}
           </>
         ) : (
           ''
@@ -763,11 +742,8 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { hasUnsavedChanges, audioFile } = this.state;
+    const { hasUnsavedChanges } = this.state;
     const { isEdit } = this.props;
-    const {
-      artist: { isStripeSetup },
-    } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
 
@@ -776,6 +752,7 @@ class PostFormComponent extends React.Component<Props, any> {
         <img className="tear tear__topper" src={tear} alt="" />
         <div className="post-form">
           <h4>{isEdit ? 'Edit Post' : 'Create a new post'}</h4>
+          {this.renderButtons()}
           <form onSubmit={this.handleSubmit}>
             <div className="post-form__description">
               {this.renderTitle()}

@@ -626,6 +626,14 @@ class PostFormComponent extends React.Component<Props, any> {
     const { images } = this.state;
     return (
       <div className="post-form__image">
+        <input
+          id="image-file"
+          type="file"
+          aria-label="Image file"
+          style={{ display: 'none' }}
+          accept="image/*"
+          onChange={this.processImage}
+        />
         {!images.length && this.renderUploader()}
         {images.length > 0 ? this.renderImagePreview() : ''}
       </div>

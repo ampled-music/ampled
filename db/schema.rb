@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2020_04_29_004705) do
   create_table "audio_uploads", force: :cascade do |t|
     t.bigint "post_id", null: false
     t.string "public_id", null: false
-    t.string "hashKey", null: false
+    t.string "hash_key", null: false
     t.string "name"
     t.integer "duration", null: false
     t.integer "waveform", default: [], null: false, array: true

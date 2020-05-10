@@ -4,7 +4,7 @@
 #
 #  created_at :datetime         not null
 #  duration   :integer          not null
-#  hashKey    :string           not null
+#  hash_key   :string           not null
 #  id         :bigint(8)        not null, primary key
 #  name       :string
 #  post_id    :bigint(8)        not null
@@ -40,8 +40,8 @@ class AudioUpload < ApplicationRecord
   def process_audio
     audio_processing_service = AudioProcessingService.new(public_id)
     begin
-      self.hashKey = audio_processing_service.generate_hash
-      raise HashGenerationError, "Unable to generate sha256 hash for audio upload with id: #{id}" if self.hashKey.empty?
+      self.hash_key = audio_processing_service.generate_hash
+      raise HashGenerationError, "Unable to generate sha256 hash for audio upload with id: #{id}" if self.hash_key.empty?
 
       self.duration = audio_processing_service.get_duration
       raise DurationNotFoundError, "Unable to get duration for audio upload with id: #{id}" if self.duration <= 0

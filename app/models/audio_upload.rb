@@ -41,13 +41,13 @@ class AudioUpload < ApplicationRecord
     audio_processing_service = AudioProcessingService.new(public_id)
     begin
       self.hash_key = audio_processing_service.generate_hash
-      raise HashGenerationError, "Unable to generate sha256 hash for audio upload with id: #{id}" if self.hash_key.empty?
+      hash_key.empty? && (raise HashGenerationError, "Unable to generate sha256 hash for audio upload with id: #{id}")
 
-      self.duration = audio_processing_service.get_duration
-      raise DurationNotFoundError, "Unable to get duration for audio upload with id: #{id}" if self.duration <= 0
+      self.duration = audio_processing_service.duration
+      duration <= 0 && (raise DurationNotFoundError, "Unable to get duration for audio upload with id: #{id}")
 
       self.waveform = audio_processing_service.generate_waveform
-      raise WaveformEmptyError, "Unable to generate waveform for audio upload with id: #{id}" if self.waveform.empty?
+      waveform.empty? && (raise WaveformEmptyError, "Unable to generate waveform for audio upload with id: #{id}")
     ensure
       audio_processing_service.dispose
     end

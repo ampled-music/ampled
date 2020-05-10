@@ -18,7 +18,7 @@ class AudioProcessingService
   end
 
   # probe file for duration
-  def get_duration
+  def duration
     duration = `ffprobe -i #{@raw_file_path} -show_entries format=duration -v quiet -of csv="p=0"`
     duration.to_i
   end

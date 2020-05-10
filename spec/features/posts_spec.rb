@@ -79,7 +79,7 @@ RSpec.describe "DELETE /posts", type: :request do
 
   context "when post has audio" do
     let(:user) { create(:user) }
-    let(:post) { create(:post, user: user)}
+    let(:post) { create(:post, user: user) }
     let(:s3_bucket) { double }
     let(:s3_object) { double }
 
@@ -89,7 +89,7 @@ RSpec.describe "DELETE /posts", type: :request do
       audio_processing_service = double
       allow(AudioProcessingService).to receive(:new) { audio_processing_service }
       allow(audio_processing_service).to receive(:generate_hash) { "fake_hash" }
-      allow(audio_processing_service).to receive(:get_duration) { 123 }
+      allow(audio_processing_service).to receive(:duration) { 123 }
       allow(audio_processing_service).to receive(:generate_waveform) { [1] }
       allow(audio_processing_service).to receive(:dispose)
 
@@ -172,7 +172,7 @@ RSpec.describe "PUT /posts", type: :request do
       audio_processing_service = double
       allow(AudioProcessingService).to receive(:new) { audio_processing_service }
       allow(audio_processing_service).to receive(:generate_hash) { "fake_hash" }
-      allow(audio_processing_service).to receive(:get_duration) { 123 }
+      allow(audio_processing_service).to receive(:duration) { 123 }
       allow(audio_processing_service).to receive(:generate_waveform) { [0] }
       allow(audio_processing_service).to receive(:dispose)
 
@@ -209,7 +209,7 @@ RSpec.describe "PUT /posts", type: :request do
       audio_processing_service = double
       allow(AudioProcessingService).to receive(:new) { audio_processing_service }
       allow(audio_processing_service).to receive(:generate_hash) { "fake_hash" }
-      allow(audio_processing_service).to receive(:get_duration) { 123 }
+      allow(audio_processing_service).to receive(:duration) { 123 }
       allow(audio_processing_service).to receive(:generate_waveform) { [0] }
       allow(audio_processing_service).to receive(:dispose)
     end
@@ -308,7 +308,7 @@ RSpec.describe "POST /posts", type: :request do
 
       allow(AudioProcessingService).to receive(:new) { audio_processing_service }
       allow(audio_processing_service).to receive(:generate_hash) { hash_key }
-      allow(audio_processing_service).to receive(:get_duration) { duration }
+      allow(audio_processing_service).to receive(:duration) { duration }
       allow(audio_processing_service).to receive(:generate_waveform) { waveform }
       allow(audio_processing_service).to receive(:dispose)
 
@@ -334,7 +334,7 @@ RSpec.describe "POST /posts", type: :request do
 
     it "should get duration from audio processing service" do
       expect(AudioProcessingService).to have_received(:new).with("abc.mp3")
-      expect(audio_processing_service).to have_received(:get_duration)
+      expect(audio_processing_service).to have_received(:duration)
 
       get "/artist_pages/#{artist_page.id}.json"
       expect(JSON.parse(response.body)["posts"][0]["audio_uploads"][0]["duration"]).to eq(duration)
@@ -357,16 +357,42 @@ RSpec.describe "Download posts", :vcr, type: :request do
   let(:public_user) { create(:user) }
   let(:artist_page) { create(:artist_page, approved: true, slug: "test") }
   let(:public_download_post) do
-    create(:post, artist_page_id: artist_page.id, title: "test", body: "test test", allow_download: true)
+    create(
+      :post,
+      artist_page_id: artist_page.id,
+      title: "test",
+      body: "test test",
+      allow_download: true
+    )
   end
   let(:private_download_post) do
-    create(:post, artist_page_id: artist_page.id, title: "test", body: "test test", allow_download: true, is_private: true)
+    create(
+      :post,
+      artist_page_id: artist_page.id,
+      title: "test",
+      body: "test test",
+      allow_download: true,
+      is_private: true
+    )
   end
   let(:public_no_download_post) do
-    create(:post, artist_page_id: artist_page.id, title: "test", body: "test test", allow_download: false)
+    create(
+      :post,
+      artist_page_id: artist_page.id,
+      title: "test",
+      body: "test test",
+      allow_download: false
+    )
   end
   let(:public_no_audio_post) do
-    create(:post, artist_page_id: artist_page.id, title: "test", body: "test test", allow_download: true, is_private: true)
+    create(
+      :post,
+      artist_page_id: artist_page.id,
+      title: "test",
+      body: "test test",
+      allow_download: true,
+      is_private: true
+    )
   end
   let(:create_sub_url) { "/subscriptions/" }
 
@@ -382,7 +408,7 @@ RSpec.describe "Download posts", :vcr, type: :request do
     audio_processing_service = double
     allow(AudioProcessingService).to receive(:new) { audio_processing_service }
     allow(audio_processing_service).to receive(:generate_hash) { "fake_hash" }
-    allow(audio_processing_service).to receive(:get_duration) { 123 }
+    allow(audio_processing_service).to receive(:duration) { 123 }
     allow(audio_processing_service).to receive(:generate_waveform) { [0] }
     allow(audio_processing_service).to receive(:dispose)
 
@@ -593,7 +619,7 @@ RSpec.describe "GET /slug/:artist/post/:postid", :vcr, type: :request do
     audio_processing_service = double
     allow(AudioProcessingService).to receive(:new) { audio_processing_service }
     allow(audio_processing_service).to receive(:generate_hash) { "fake_hash" }
-    allow(audio_processing_service).to receive(:get_duration) { 123 }
+    allow(audio_processing_service).to receive(:duration) { 123 }
     allow(audio_processing_service).to receive(:generate_waveform) { [0] }
     allow(audio_processing_service).to receive(:dispose)
 

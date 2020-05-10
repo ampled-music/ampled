@@ -79,19 +79,23 @@ RSpec.describe "DELETE /posts", type: :request do
 
   context "when post has audio", vcr: true do
     let(:user) { create(:user) }
-    let(:post) { create(:post, user: user, audio_uploads: [AudioUpload.new(public_id: "c9598952-0a29-4ce9-88cd-e33591d8ebda.mp3")]) }
+    let(:post) { create(:post, user: user) }
 
     before(:each) do
       sign_in user
     end
 
-    before { delete "/posts/#{post.id}" }
-
     it "returns 200" do
+      post.audio_uploads << AudioUpload.new(public_id: "263b6426-4414-4585-a019-adc62f075a9f.mp3")
+      post.save!
+      delete "/posts/#{post.id}"
       expect(response.status).to eq 200
     end
 
     it "deletes the audio upload record too" do
+      post.audio_uploads << AudioUpload.new(public_id: "35e5b2f2-73e8-451c-be41-51f750f653e4.mp3")
+      post.save!
+      delete "/posts/#{post.id}"
       audio_upload = AudioUpload.where(post_id: post.id).first
       expect(audio_upload).to eq nil
     end

@@ -669,6 +669,18 @@ class PostFormComponent extends React.Component<Props, any> {
             width="100%"
             height="100%"
           />
+          <IconButton
+            aria-label="Cancel video input"
+            className="cancel-button"
+            onClick={() =>
+              this.setState({
+                videoEmbedUrl: '',
+              })
+            }
+            size="small"
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </IconButton>
         </div>
       );
     } else if (!isValidVideo) {
@@ -693,22 +705,6 @@ class PostFormComponent extends React.Component<Props, any> {
             value={videoEmbedUrl || ''}
             onChange={this.handleChange}
             required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="Toggle video input"
-                    onClick={() =>
-                      this.setState({
-                        videoEmbedUrl: null,
-                      })
-                    }
-                  >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
           />
           {videoEmbedUrl.length > 0 && this.renderVideoPreview()}
         </div>
@@ -749,6 +745,7 @@ class PostFormComponent extends React.Component<Props, any> {
         value={title}
         onFocus={() => this.editor && this.editor.setHyperlinkHelp(false)}
         onChange={this.handleChange}
+        className="post-form__title"
         required
         InputProps={{
           endAdornment: !(title && title.length > 0) ? (

@@ -34,6 +34,10 @@
     }
   }
 
+  &__title {
+    margin-bottom: 0.5rem;
+  }
+
   &__description {
     margin: 0.5rem auto;
     .rich-editor-container {
@@ -141,6 +145,7 @@
   &__video {
     display: flex;
     flex-direction: column;
+    margin-bottom: 0.5rem;
   }
 
   &__actions {
@@ -363,6 +368,7 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+    position: relative;
 
     label {
       width: 100%;
@@ -390,6 +396,21 @@
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.04);
+      }
+
+      &.cancel-button {
+        position: absolute;
+        z-index: 10;
+        top: -1px;
+        right: 0;
+
+        &:hover {
+          background-color: $gray-lightest;
+        }
+        svg {
+          color: $black;
+          fill: $black;
+        }
       }
     }
   }

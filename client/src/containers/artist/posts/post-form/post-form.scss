@@ -35,6 +35,14 @@
       border: 0px solid $black;
       margin: 0 0.5rem;
       opacity: 0.5;
+      font-size: 0.8rem;
+      min-width: 50px;
+      font-family: $font-family-sans-serif;
+
+      @include mq($tablet) {
+        font-size: 1rem;
+      }
+
       &:hover {
         opacity: 1;
       }
@@ -45,6 +53,10 @@
       span {
         display: flex;
         flex-direction: column;
+      }
+      .btn__icon {
+        width: 100%;
+        max-width: 60px;
       }
     }
   }

@@ -486,7 +486,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={TextIcon} height={50} width={50} />
+          <img src={TextIcon} className="btn__icon" />
           Text
         </Button>
         <Button
@@ -503,7 +503,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={AudioIcon} height={50} width={50} />
+          <img src={AudioIcon} className="btn__icon" />
           Audio
         </Button>
         <Button
@@ -520,7 +520,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={VideoIcon} height={50} width={50} />
+          <img src={VideoIcon} className="btn__icon" />
           Video
         </Button>
         <Button
@@ -537,7 +537,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={PhotoIcon} height={50} width={50} />
+          <img src={PhotoIcon} className="btn__icon" />
           Photo
         </Button>
         <Button
@@ -554,7 +554,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={Link2Icon} height={50} width={50} />
+          <img src={Link2Icon} className="btn__icon" />
           Link
         </Button>
       </div>

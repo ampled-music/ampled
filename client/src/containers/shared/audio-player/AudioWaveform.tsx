@@ -1,3 +1,5 @@
+import './audio-waveform.scss';
+
 import React, { useRef, useState, useEffect } from 'react'
 
 import { RGB_Linear_Shade, hexToRGB } from '../../../styles/utils'
@@ -42,6 +44,7 @@ interface AudioWaveformProps {
   duration: number;
   size: WaveformSize;
   onSeek: (number) => void;
+  children?: React.ReactNode;
 }
 
 const AudioWaveform = (props: AudioWaveformProps) => {
@@ -187,15 +190,24 @@ const AudioWaveform = (props: AudioWaveformProps) => {
   }
 
   return (
-    <canvas
-      width={`${SizeConfiguration(props.size)?.canvasWidth}px`}
-      height={`${WAVEFORM_MAX_HEIGHT}px`}
-      style={{ borderBottom: `2px solid ${props.accentColor}`}}
-      onMouseMove={handleMouseMove}
-      onMouseOut={handleMouseOut}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      ref={canvasRef}/>
+    <div 
+      className="audio-waveform"
+      style={{
+        width: `${SizeConfiguration(props.size)?.canvasWidth}px`,
+        height: `${WAVEFORM_MAX_HEIGHT}px`
+      }}
+    >
+      {props.children}
+      <canvas
+        width={`${SizeConfiguration(props.size)?.canvasWidth}px`}
+        height={`${WAVEFORM_MAX_HEIGHT}px`}
+        style={{ borderBottom: `2px solid ${props.accentColor}`}}
+        onMouseMove={handleMouseMove}
+        onMouseOut={handleMouseOut}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        ref={canvasRef}/>
+    </div>
   )
 }
 

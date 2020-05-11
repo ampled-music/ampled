@@ -9,6 +9,7 @@ import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import AudioWaveform, { WaveformSize } from './AudioWaveform';
+import { setFlagsFromString } from 'v8';
 
 interface AudioPlayerProps {
   url: string;
@@ -116,6 +117,9 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
 
   commitSeeking = (value: number) => {
     this.player.seekTo(value);
+    this.setState({
+      playedSeconds: (this.props.duration * value)
+    })
   };
 
   // Progress updates state
@@ -188,8 +192,9 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
           }}
         />
 
-        <div className="audio-player__play-pause">
+        <div className="audio-player__header">
           <PlayButton
+            className="audio-player__header__play-pause"
             onClick={this.handlePlayPause}
             size="small"
             aria-label="Play / Pause"
@@ -207,15 +212,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
           )}
         </div>
 
-        <div className="audio-player__waveform" ref={this.waveformContainerRef}>
-          {showPlaybackTime && (
-            <div className="audio-player__time audio-player__start">
-              {this.formatTime(playedSeconds)}
-            </div>
-          )}
-          <div className="audio-player__time audio-player__end">
-            {this.formatTime(this.props.duration)}
-          </div>
+        <div className="audio-player__track" ref={this.waveformContainerRef}>
           <AudioWaveform
             waveform={this.props.waveform}
             playedSeconds={playedSeconds}
@@ -224,7 +221,16 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
             accentColor={this.props.accentColor}
             onSeek={this.commitSeeking}
             size={waveformSize}
-          />
+          >
+            {showPlaybackTime && (
+              <div className="audio-player__time audio-player__start">
+                {this.formatTime(playedSeconds)}
+              </div>
+            )}
+            <div className="audio-player__time audio-player__end">
+              {this.formatTime(this.props.duration)}
+            </div>
+          </AudioWaveform>
         </div>
       </div>
     );

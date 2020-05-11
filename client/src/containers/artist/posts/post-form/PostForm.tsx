@@ -251,7 +251,7 @@ class PostFormComponent extends React.Component<Props, any> {
     link: '',
     audioFile: '',
     imageName: '',
-    videoEmbedUrl: '',
+    videoEmbedUrl: null,
     isPublic: false,
     allowDownload: false,
     isPinned: false,
@@ -687,7 +687,7 @@ class PostFormComponent extends React.Component<Props, any> {
             className="cancel-button"
             onClick={() =>
               this.setState({
-                videoEmbedUrl: '',
+                videoEmbedUrl: null,
               })
             }
             size="small"
@@ -714,7 +714,7 @@ class PostFormComponent extends React.Component<Props, any> {
           InputLabelProps={{
             shrink: true,
           }}
-          value={videoEmbedUrl || ''}
+          value={videoEmbedUrl ? videoEmbedUrl : ''}
           onChange={this.handleChange}
           required
           InputProps={{
@@ -734,7 +734,7 @@ class PostFormComponent extends React.Component<Props, any> {
             ),
           }}
         />
-        {videoEmbedUrl.length > 0 && this.renderVideoPreview()}
+        {videoEmbedUrl && this.renderVideoPreview()}
       </div>
     );
   };

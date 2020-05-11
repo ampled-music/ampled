@@ -69,25 +69,6 @@
         }
       }
     }
-
-    .helper-text {
-      font-style: italic;
-      float: right;
-      color: $gray-light;
-      font-size: 0.8rem;
-      margin: 0.5rem 0;
-
-      .additional {
-        position: absolute;
-        background: white;
-        border: 1px solid $gray-light;
-        z-index: 999;
-        line-height: 20px;
-        padding: 8px;
-        width: 250px;
-        right: 0;
-      }
-    }
   }
 
   &__container {
@@ -137,6 +118,11 @@
     }
   }
 
+  &__video {
+    display: flex;
+    flex-direction: column;
+  }
+
   .file-actions {
     font-family: $font-family-monospace;
     color: $brand-primary;
@@ -175,6 +161,26 @@
       &:hover {
         text-decoration: none;
       }
+    }
+  }
+
+  .helper-text {
+    font-style: italic;
+    float: right;
+    color: $gray-light;
+    font-size: 0.8rem;
+    margin: 0.5rem 0;
+    font-family: $font-family-monospace;
+
+    .additional {
+      position: absolute;
+      background: white;
+      border: 1px solid $gray-light;
+      z-index: 999;
+      line-height: 20px;
+      padding: 8px;
+      width: 250px;
+      right: 0;
     }
   }
 

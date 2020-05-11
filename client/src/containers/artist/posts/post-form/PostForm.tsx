@@ -242,7 +242,7 @@ class PostFormComponent extends React.Component<Props, any> {
     body: '',
     audioFile: '',
     imageName: '',
-    videoEmbedUrl: null,
+    videoEmbedUrl: '',
     isPublic: false,
     allowDownload: false,
     isPinned: false,
@@ -559,7 +559,6 @@ class PostFormComponent extends React.Component<Props, any> {
       videoEmbedUrl &&
       videoEmbedUrl.length > 0 &&
       /(www\.)?vimeo.com\/.+/i.test(videoEmbedUrl);
-    // @todo: revalidate
     const isValidVideo = /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi.test(
       videoEmbedUrl,
     );
@@ -571,16 +570,20 @@ class PostFormComponent extends React.Component<Props, any> {
       VideoComponent = YouTubePlayer;
     }
 
-    return (
-      <div className="uploader">
-        <VideoComponent
-          className="react-player"
-          url={videoEmbedUrl}
-          width="100%"
-          height="100%"
-        />
-      </div>
-    );
+    if (isValidVideo) {
+      return (
+        <div className="uploader">
+          <VideoComponent
+            className="react-player"
+            url={videoEmbedUrl}
+            width="100%"
+            height="100%"
+          />
+        </div>
+      );
+    } else if (!isValidVideo) {
+      return <div className="helper-text">No supported video detected.</div>;
+    }
   };
 
   renderVideoEmbedder = () => {
@@ -588,9 +591,8 @@ class PostFormComponent extends React.Component<Props, any> {
 
     return (
       <>
-        <div className="uploader">
+        <div className="post-form__video">
           <TextField
-            autoFocus
             name="videoEmbedUrl"
             placeholder="YouTube or Vimeo URL"
             type="text"
@@ -618,7 +620,7 @@ class PostFormComponent extends React.Component<Props, any> {
               ),
             }}
           />
-          {this.renderVideoPreview()}
+          {videoEmbedUrl.length > 0 && this.renderVideoPreview()}
         </div>
       </>
     );
@@ -760,6 +762,7 @@ class PostFormComponent extends React.Component<Props, any> {
 
             {this.renderImageUpload()}
             {this.renderTitle()}
+            {this.renderVideoEmbedder()}
             {this.renderDescription()}
 
             {/* <div className="col-auto">

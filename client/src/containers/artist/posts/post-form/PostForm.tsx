@@ -34,7 +34,11 @@ import DOMPurify from 'dompurify';
 
 import tear from '../../../../images/backgrounds/background_tear.png';
 import TextIcon from '../../../../images/icons/Icon_Text.svg';
-import LinkIcon from '../../../../images/icons/Icon_Link_1.svg';
+import AudioIcon from '../../../../images/icons/Icon_Audio.png';
+import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
+import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
+import PhotoIcon from '../../../../images/icons/Icon_Photo.png';
+import VideoIcon from '../../../../images/icons/Icon_Video.png';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
@@ -480,7 +484,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={TextIcon} height={25} width={25} />
+          <img src={TextIcon} height={50} width={50} />
           Text
         </Button>
         <Button
@@ -497,6 +501,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
+          <img src={AudioIcon} height={50} width={50} />
           Audio
         </Button>
         <Button
@@ -513,6 +518,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
+          <img src={VideoIcon} height={50} width={50} />
           Video
         </Button>
         <Button
@@ -529,6 +535,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
+          <img src={PhotoIcon} height={50} width={50} />
           Photo
         </Button>
         <Button
@@ -545,7 +552,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={LinkIcon} height={25} width={25} />
+          <img src={Link2Icon} height={50} width={50} />
           Link
         </Button>
       </div>

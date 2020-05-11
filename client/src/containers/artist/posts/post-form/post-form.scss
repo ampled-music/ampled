@@ -17,12 +17,19 @@
     display: flex;
     margin: 0 -0.5rem 1rem;
     button {
-      display: flex;
-      flex-direction: row;
       border: 0px solid $black;
       margin: 0 0.5rem;
+      opacity: 0.5;
+      &:hover {
+        opacity: 1;
+      }
       &.active {
         border-width: 1px;
+        opacity: 1;
+      }
+      span {
+        display: flex;
+        flex-direction: column;
       }
     }
   }

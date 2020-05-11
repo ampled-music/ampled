@@ -15,7 +15,16 @@
 
   &__controls {
     display: flex;
-    margin: 1rem;
+    margin: 0 -0.5rem 1rem;
+    button {
+      display: flex;
+      flex-direction: row;
+      border: 0px solid $black;
+      margin: 0 0.5rem;
+      &.active {
+        border-width: 1px;
+      }
+    }
   }
 
   &__description {

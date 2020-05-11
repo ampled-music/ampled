@@ -34,6 +34,7 @@ import DOMPurify from 'dompurify';
 
 import tear from '../../../../images/backgrounds/background_tear.png';
 import TextIcon from '../../../../images/icons/Icon_Text.svg';
+import LinkIcon from '../../../../images/icons/Icon_Link_1.svg';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
@@ -255,6 +256,7 @@ class PostFormComponent extends React.Component<Props, any> {
     hasUnsavedChanges: false,
     loadingImage: false,
     savingPost: false,
+    activePostType: 'Text',
     showAudio: false,
     showVideo: false,
     showImage: false,
@@ -465,9 +467,12 @@ class PostFormComponent extends React.Component<Props, any> {
     return (
       <div className="post-form__controls">
         <Button
-          className="btn"
+          className={cx('btn', {
+            active: this.state.activePostType === 'Text',
+          })}
           onClick={() =>
             this.setState({
+              activePostType: 'Text',
               showAudio: false,
               showVideo: false,
               showImage: false,
@@ -479,9 +484,12 @@ class PostFormComponent extends React.Component<Props, any> {
           Text
         </Button>
         <Button
-          className="btn"
+          className={cx('btn', {
+            active: this.state.activePostType === 'Audio',
+          })}
           onClick={() =>
             this.setState({
+              activePostType: 'Audio',
               showAudio: true,
               showVideo: false,
               showImage: true,
@@ -492,9 +500,12 @@ class PostFormComponent extends React.Component<Props, any> {
           Audio
         </Button>
         <Button
-          className="btn"
+          className={cx('btn', {
+            active: this.state.activePostType === 'Video',
+          })}
           onClick={() =>
             this.setState({
+              activePostType: 'Video',
               showAudio: false,
               showVideo: true,
               showImage: false,
@@ -505,9 +516,12 @@ class PostFormComponent extends React.Component<Props, any> {
           Video
         </Button>
         <Button
-          className="btn"
+          className={cx('btn', {
+            active: this.state.activePostType === 'Photo',
+          })}
           onClick={() =>
             this.setState({
+              activePostType: 'Photo',
               showAudio: false,
               showVideo: false,
               showImage: true,
@@ -518,9 +532,12 @@ class PostFormComponent extends React.Component<Props, any> {
           Photo
         </Button>
         <Button
-          className="btn"
+          className={cx('btn', {
+            active: this.state.activePostType === 'Link',
+          })}
           onClick={() =>
             this.setState({
+              activePostType: 'Link',
               showAudio: false,
               showVideo: false,
               showImage: false,
@@ -528,6 +545,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
+          <img src={LinkIcon} height={25} width={25} />
           Link
         </Button>
       </div>

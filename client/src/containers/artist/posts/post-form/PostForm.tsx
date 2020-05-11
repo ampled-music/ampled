@@ -33,6 +33,7 @@ import { convertFromHTML, convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
 import tear from '../../../../images/backgrounds/background_tear.png';
+import TextIcon from '../../../../images/icons/Icon_Text.svg';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
@@ -240,6 +241,7 @@ class PostFormComponent extends React.Component<Props, any> {
   initialState = {
     title: '',
     body: '',
+    link: '',
     audioFile: '',
     imageName: '',
     videoEmbedUrl: '',
@@ -253,6 +255,10 @@ class PostFormComponent extends React.Component<Props, any> {
     hasUnsavedChanges: false,
     loadingImage: false,
     savingPost: false,
+    showAudio: false,
+    showVideo: false,
+    showImage: false,
+    showLink: false,
   };
 
   editor: any;
@@ -305,6 +311,7 @@ class PostFormComponent extends React.Component<Props, any> {
     const {
       title,
       body,
+      link,
       audioFile,
       images,
       videoEmbedUrl,
@@ -318,6 +325,7 @@ class PostFormComponent extends React.Component<Props, any> {
     const post = {
       title,
       body,
+      link,
       audio_file: audioFile,
       images: images,
       video_embed_url: videoEmbedUrl,
@@ -456,11 +464,72 @@ class PostFormComponent extends React.Component<Props, any> {
   renderButtons = () => {
     return (
       <div className="post-form__controls">
-        <Button className="btn">Text</Button>
-        <Button className="btn">Audio</Button>
-        <Button className="btn">Video</Button>
-        <Button className="btn">Photo</Button>
-        <Button className="btn">Link</Button>
+        <Button
+          className="btn"
+          onClick={() =>
+            this.setState({
+              showAudio: false,
+              showVideo: false,
+              showImage: false,
+              showLink: false,
+            })
+          }
+        >
+          <img src={TextIcon} height={25} width={25} />
+          Text
+        </Button>
+        <Button
+          className="btn"
+          onClick={() =>
+            this.setState({
+              showAudio: true,
+              showVideo: false,
+              showImage: true,
+              showLink: false,
+            })
+          }
+        >
+          Audio
+        </Button>
+        <Button
+          className="btn"
+          onClick={() =>
+            this.setState({
+              showAudio: false,
+              showVideo: true,
+              showImage: false,
+              showLink: false,
+            })
+          }
+        >
+          Video
+        </Button>
+        <Button
+          className="btn"
+          onClick={() =>
+            this.setState({
+              showAudio: false,
+              showVideo: false,
+              showImage: true,
+              showLink: false,
+            })
+          }
+        >
+          Photo
+        </Button>
+        <Button
+          className="btn"
+          onClick={() =>
+            this.setState({
+              showAudio: false,
+              showVideo: false,
+              showImage: false,
+              showLink: true,
+            })
+          }
+        >
+          Link
+        </Button>
       </div>
     );
   };
@@ -536,11 +605,6 @@ class PostFormComponent extends React.Component<Props, any> {
               >
                 Remove
               </span>
-              {/* <label htmlFor="audio-file">
-                <span className="replace-button" title="Change audio">
-                  Replace
-                </span>
-              </label> */}
             </div>
           </div>
         </div>
@@ -736,6 +800,24 @@ class PostFormComponent extends React.Component<Props, any> {
     );
   };
 
+  renderLink = () => {
+    const { link } = this.state;
+    return (
+      <TextField
+        name="link"
+        placeholder="Type or Paste a URL"
+        type="text"
+        fullWidth
+        InputLabelProps={{
+          shrink: true,
+        }}
+        value={link}
+        onFocus={() => this.editor && this.editor.setHyperlinkHelp(false)}
+        onChange={this.handleChange}
+      />
+    );
+  };
+
   render() {
     const { hasUnsavedChanges } = this.state;
     const { isEdit } = this.props;
@@ -749,20 +831,23 @@ class PostFormComponent extends React.Component<Props, any> {
           <h4>{isEdit ? 'Edit Post' : 'Create a new post'}</h4>
           {this.renderButtons()}
           <form onSubmit={this.handleSubmit}>
-            <div className="post-form__audio">
-              {isEdit &&
-              this.props.post &&
-              this.props.post.audio_file &&
-              this.state.audioFile &&
-              this.state.audio_file &&
-              this.state.audioFile === this.state.audio_file
-                ? this.renderExistingAudio()
-                : this.renderAudio()}
-            </div>
+            {this.state.showAudio && (
+              <div className="post-form__audio">
+                {isEdit &&
+                this.props.post &&
+                this.props.post.audio_file &&
+                this.state.audioFile &&
+                this.state.audio_file &&
+                this.state.audioFile === this.state.audio_file
+                  ? this.renderExistingAudio()
+                  : this.renderAudio()}
+              </div>
+            )}
 
-            {this.renderImageUpload()}
+            {this.state.showImage && this.renderImageUpload()}
             {this.renderTitle()}
-            {this.renderVideoEmbedder()}
+            {this.state.showVideo && this.renderVideoEmbedder()}
+            {this.state.showLink && this.renderLink()}
             {this.renderDescription()}
 
             {/* <div className="col-auto">

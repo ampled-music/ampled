@@ -1,7 +1,9 @@
 import axios from 'axios';
 import * as React from 'react';
 
-import { Button } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import AudioIcon from '../../../../images/icons/Icon_Audio.png';
 
@@ -119,18 +121,15 @@ class Upload extends React.Component<UploadProps, UploadState> {
           </div>
 
           <div className="file-actions" data-progress={progress}>
-            <span
-              className="remove-button"
+            <IconButton
+              aria-label="Cancel audio input"
+              className="cancel-button"
               title="Remove audio"
               onClick={this.removeFile}
+              size="small"
             >
-              Remove
-            </span>
-            <label htmlFor="raised-button-file">
-              <span className="replace-button" title="Change audio">
-                Replace
-              </span>
-            </label>
+              <FontAwesomeIcon icon={faTimes} />
+            </IconButton>
           </div>
         </div>
 

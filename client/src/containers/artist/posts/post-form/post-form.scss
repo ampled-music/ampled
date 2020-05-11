@@ -65,6 +65,7 @@
         display: block;
         overflow: auto;
         padding: 10px;
+        color: $gray-lighter;
 
         &:hover {
           border: 1px solid $black;
@@ -118,6 +119,20 @@
 
   &__audio {
     margin-bottom: 0.5rem;
+    &_allow-checkbox {
+      display: flex;
+      max-width: 500px;
+      margin: 0.5rem auto 00;
+
+      input[type='checkbox'] {
+        width: 15px;
+        margin-right: 0.5rem;
+      }
+      svg {
+        font-size: 1rem;
+        fill: $black;
+      }
+    }
   }
 
   &__image {
@@ -131,20 +146,9 @@
       width: 100%;
     }
 
-    .post-image {
-      display: flex;
-      justify-content: space-between;
-      align-content: center;
-      margin-bottom: 1rem;
-
-      .preview {
-        font-size: 0.8rem;
-        margin-right: 1rem;
-
-        &__image {
-          width: 40px;
-          margin-right: 1rem;
-        }
+    .preview {
+      &__image {
+        width: 100%;
       }
     }
   }
@@ -167,6 +171,10 @@
       width: 15px;
       margin-right: 0.5rem;
     }
+    svg {
+      font-size: 1rem;
+      fill: $black;
+    }
   }
 
   &__actions {
@@ -178,9 +186,15 @@
         width: auto;
         margin-right: 1rem;
       }
-      &.publish-button:not(.disabled) {
-        color: $white;
-        background-color: $black;
+      &.publish-button {
+        max-width: 100%;
+        &.disabled {
+          border-color: $gray-lighter;
+        }
+        &:not(.disabled) {
+          color: $white;
+          background-color: $black;
+        }
       }
     }
   }
@@ -189,8 +203,8 @@
     font-family: $font-family-monospace;
     color: $brand-primary;
     font-size: 0.8rem;
-    display: flex;
-    align-content: center;
+    display: block;
+    width: 40px;
 
     &[data-progress] {
       display: none;
@@ -200,29 +214,13 @@
       display: inherit;
     }
 
-    .remove-button {
-      text-decoration: underline;
-      cursor: pointer;
-      margin-right: 1rem;
-      align-self: center;
-
-      &:hover {
-        text-decoration: none;
-      }
+    .cancel-button {
+      width: 40px;
     }
 
     label {
       align-self: center;
       margin: 0;
-    }
-
-    .replace-button {
-      text-decoration: underline;
-      cursor: pointer;
-
-      &:hover {
-        text-decoration: none;
-      }
     }
   }
 
@@ -267,6 +265,7 @@
       font-family: $font-family-monospace;
       font-size: 13px;
       justify-content: space-between;
+      border: 1px solid $black;
 
       &[data-progress] {
         display: none;
@@ -292,7 +291,8 @@
         }
 
         &_song {
-          max-width: 220px;
+          text-align: left;
+          max-width: 310px;
         }
       }
     }
@@ -412,12 +412,15 @@
       margin: 0 auto;
       padding: 10px 15px;
       outline: none;
-      max-width: 335px;
+
+      &:hover {
+        background-color: $gray-lightest;
+      }
 
       &.cancel-button {
         position: absolute;
         z-index: 10;
-        top: -1px;
+        top: 0px;
         right: 0;
 
         &:hover {

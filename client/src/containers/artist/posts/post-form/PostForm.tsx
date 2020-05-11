@@ -16,6 +16,7 @@ import { editPostAction } from '../../../../redux/posts/edit';
 import { Post } from '../../../../api/post/post';
 import { removeImageFromPost } from '../../../../api/post/edit-post';
 import { showToastAction } from '../../../../redux/toast/toast-modal';
+import { Image, Transformation } from 'cloudinary-react';
 
 import {
   Button,
@@ -573,30 +574,31 @@ class PostFormComponent extends React.Component<Props, any> {
   }
 
   renderImagePreview(): React.ReactNode {
+    console.log(this.state.images[0]);
     return (
-      <div className="post-image">
-        <div className="preview">
-          <img
-            className="preview__image"
-            src={this.state.images[0].url}
-            alt="Preview"
+      <div className="uploader">
+        <Image
+          className="preview__image"
+          key={this.state.images[0].name}
+          publicId={this.state.images[0].public_id}
+          alt={this.state.images[0].name}
+        >
+          <Transformation
+            crop="fill"
+            width={500}
+            height={150}
+            responsive_placeholder="blank"
           />
-          <span className="preview__name">{this.state.imageName}</span>
-        </div>
-        <div className="file-actions">
-          <span
-            className="remove-button"
-            title="Remove image"
-            onClick={this.removeImage}
-          >
-            Remove
-          </span>
-          <label htmlFor="image-file">
-            <span className="replace-button" title="Change image">
-              Replace
-            </span>
-          </label>
-        </div>
+        </Image>
+        <IconButton
+          aria-label="Cancel image input"
+          className="cancel-button"
+          title="Remove image"
+          onClick={this.removeImage}
+          size="small"
+        >
+          <FontAwesomeIcon icon={faTimes} />
+        </IconButton>
       </div>
     );
   }
@@ -796,32 +798,27 @@ class PostFormComponent extends React.Component<Props, any> {
       <>
         <Upload onComplete={this.updateAudioFile} />
 
-        <div className="post-form__checkboxes">
-          <div className="row justify-content-between">
-            {audioFile && audioFile.length > 0 && (
-              <div className="col-auto">
-                <FormControlLabel
-                  className="alow-download-label"
-                  control={
-                    <Checkbox
-                      onChange={this.handleAllowDownloadChange}
-                      checked={this.state.allowDownload}
-                      color="default"
-                    />
-                  }
-                  label="Allow Download"
+        <div className="post-form__audio_allow-checkbox">
+          {audioFile && audioFile.length > 0 && (
+            <FormControlLabel
+              className="alow-download-label"
+              control={
+                <Checkbox
+                  onChange={this.handleAllowDownloadChange}
+                  checked={this.state.allowDownload}
+                  color="default"
                 />
-              </div>
-            )}
-          </div>
-
-          {!isStripeSetup && (
-            <small>
-              <br />
-              You need to set up your payout destination to make private posts.
-            </small>
+              }
+              label="Allow Download"
+            />
           )}
         </div>
+
+        {!isStripeSetup && (
+          <small>
+            You need to set up your payout destination to make private posts.
+          </small>
+        )}
       </>
     );
   };

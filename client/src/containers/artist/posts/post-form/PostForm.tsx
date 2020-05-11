@@ -34,7 +34,6 @@ import { Editor, EditorState, RichUtils } from 'draft-js';
 import { convertFromHTML, convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
-import tear from '../../../../images/backgrounds/background_tear.png';
 import TextIcon from '../../../../images/icons/Icon_Text.svg';
 import AudioIcon from '../../../../images/icons/Icon_Audio.png';
 import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
@@ -851,7 +850,6 @@ class PostFormComponent extends React.Component<Props, any> {
 
     return (
       <div className="post-form__container">
-        <img className="tear tear__topper" src={tear} alt="" />
         <div className="post-form">
           <h4>{isEdit ? 'Edit Post' : 'Create a new post'}</h4>
           {this.renderButtons()}

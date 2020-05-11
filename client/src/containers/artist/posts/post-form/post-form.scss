@@ -7,15 +7,28 @@
   text-align: center;
   background-color: $white;
   height: 100vh;
-  padding: 1rem;
+  background: url('../../../../images/backgrounds/background_texture_post.png');
+  background-repeat: repeat-x;
+  background-position: top center;
+  background-size: cover;
 
   @include mq($tablet) {
     height: auto;
   }
 
+  h4 {
+    text-transform: uppercase;
+    margin-top: 1rem;
+  }
+
+  form {
+    background: $white;
+    padding: 1rem;
+  }
+
   &__controls {
     display: flex;
-    margin: 0 -0.5rem 1rem;
+    margin: 0 1rem 1rem;
     button {
       border: 0px solid $black;
       margin: 0 0.5rem;
@@ -395,10 +408,6 @@
       padding: 10px 15px;
       outline: none;
       max-width: 335px;
-
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.04);
-      }
 
       &.cancel-button {
         position: absolute;

@@ -637,13 +637,15 @@ class PostFormComponent extends React.Component<Props, any> {
             </div>
 
             <div className="file-actions">
-              <span
-                className="remove-button"
+              <IconButton
+                aria-label="Cancel audio input"
+                className="cancel-button"
                 title="Remove audio"
                 onClick={() => this.updateAudioFile(null)}
+                size="small"
               >
-                Remove
-              </span>
+                <FontAwesomeIcon icon={faTimes} />
+              </IconButton>
             </div>
           </div>
         </div>

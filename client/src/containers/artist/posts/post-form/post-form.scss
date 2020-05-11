@@ -211,8 +211,10 @@
     font-family: $font-family-monospace;
     color: $brand-primary;
     font-size: 0.8rem;
-    display: block;
+    display: flex;
     width: 40px;
+    justify-content: center;
+    align-items: center;
 
     &[data-progress] {
       display: none;
@@ -224,6 +226,7 @@
 
     .cancel-button {
       width: 40px;
+      height: 40px;
     }
 
     label {

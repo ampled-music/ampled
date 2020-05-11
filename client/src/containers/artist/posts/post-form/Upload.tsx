@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { Button } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import AudioIcon from '../../../../images/icons/Icon_Audio.png';
 
 interface UploadState {
   progress: number;
@@ -157,8 +158,9 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
   renderUploadButton(): React.ReactNode {
     return (
-      <label htmlFor="raised-button-file">
-        <Button className="btn" component="span">
+      <label htmlFor="audio-file">
+        <Button className="btn">
+          <img className="btn__icon" src={AudioIcon} height={25} width={25} />
           Upload MP3 audio
         </Button>
       </label>
@@ -176,7 +178,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
         <input
           style={{ display: 'none' }}
-          id="raised-button-file"
+          id="audio-file"
           type="file"
           accept=".mp3"
           aria-label="Audio file"

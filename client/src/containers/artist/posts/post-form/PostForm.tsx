@@ -603,7 +603,8 @@ class PostFormComponent extends React.Component<Props, any> {
   renderUploadButton(): React.ReactNode {
     return (
       <label htmlFor="image-file">
-        <Button className="btn" component="span">
+        <Button className="btn">
+          <img className="btn__icon" src={PhotoIcon} height={25} width={25} />
           Add Photo
         </Button>
       </label>
@@ -894,11 +895,11 @@ class PostFormComponent extends React.Component<Props, any> {
                 className="cancel-button"
                 onClick={() => this.props.close(hasUnsavedChanges)}
               >
-                Cancel
+                <FontAwesomeIcon icon={faTimes} />
               </Button>
               <Button
                 type="submit"
-                className={cx('post-button', {
+                className={cx('publish-button', {
                   disabled: !isSaveEnabled,
                 })}
                 disabled={!isSaveEnabled}

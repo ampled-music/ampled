@@ -47,14 +47,13 @@
         border-radius: 0px;
         display: block;
         overflow: auto;
-        padding: 18.5px 14px;
+        padding: 10px;
 
         &:hover {
           border: 1px solid $black;
         }
         &.focused {
-          border: 2px solid $black;
-          padding: 17.5px 13px;
+          border: 1px solid $black;
           font-family: LL Replica Light Web, sans-serif;
         }
       }
@@ -66,18 +65,23 @@
       font-family: $font-family-monospace;
       text-align: left;
       position: absolute;
-      bottom: 0;
+      bottom: -2px;
       right: 0;
       z-index: 10;
 
       button,
       span[role='button'] {
         background: white;
-        border: 1px solid $gray-light;
+        border: 1px solid $gray-lighter;
         width: 28px;
         height: 28px;
         display: inline-block;
         text-align: center;
+        cursor: pointer;
+
+        &:hover {
+          border: 1px solid $black;
+        }
 
         &.active {
           background: $black;
@@ -139,6 +143,22 @@
     flex-direction: column;
   }
 
+  &__actions {
+    display: flex;
+    width: 100%;
+    button {
+      border: 1px solid $black;
+      &.cancel-button {
+        width: auto;
+        margin-right: 1rem;
+      }
+      &.publish-button:not(.disabled) {
+        color: $white;
+        background-color: $black;
+      }
+    }
+  }
+
   .file-actions {
     font-family: $font-family-monospace;
     color: $brand-primary;
@@ -187,6 +207,7 @@
     font-size: 0.8rem;
     margin: 0.5rem 0;
     font-family: $font-family-monospace;
+    position: relative;
 
     .additional {
       position: absolute;
@@ -196,7 +217,8 @@
       line-height: 20px;
       padding: 8px;
       width: 250px;
-      right: 0;
+      right: 0px;
+      top: -100px;
     }
   }
 
@@ -340,7 +362,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1rem;
+    margin: 0 auto;
 
     label {
       width: 100%;
@@ -352,35 +374,22 @@
       height: 25px;
     }
 
-    .audio-button,
-    .image-button {
+    .btn__icon {
+      margin-right: 0.5rem;
+    }
+
+    button {
       text-transform: capitalize;
-      min-height: 55px;
       border: 1px solid $black;
       background-color: $white;
       border-radius: 0px;
-      text-transform: capitalize;
       margin: 0 auto;
-      padding: 15px 0;
+      padding: 10px 15px;
       outline: none;
+      max-width: 335px;
 
       &:hover {
-        color: $white;
-        background-color: $black;
-      }
-
-      .finished-button {
-        border: 1px solid $black;
-        color: $black;
-
-        .MuiButton-label {
-          color: $black;
-        }
-
-        &.disabled {
-          border: 1px solid $gray-light;
-          color: $gray-light;
-        }
+        background-color: rgba(0, 0, 0, 0.04);
       }
     }
   }

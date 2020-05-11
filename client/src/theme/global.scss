@@ -125,7 +125,7 @@ h6 {
     }
   }
 
-  .post-button,
+  .publish-button,
   .continue-button,
   .add-media,
   .delete-button,
@@ -133,7 +133,7 @@ h6 {
     color: $black;
     background-color: $white;
     border-radius: 0px;
-    border: 2px solid $black;
+    border: 1px solid $black;
     padding: 8px 20px;
     margin-left: 25px;
     letter-spacing: 0.7px;
@@ -154,6 +154,11 @@ h6 {
       @include mq(0, $layout-m) {
         margin: auto;
       }
+    }
+    &.disabled {
+      border-color: $gray-light;
+      color: $gray;
+      background-color: $white;
     }
   }
 

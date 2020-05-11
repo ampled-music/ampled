@@ -7,6 +7,7 @@
   text-align: center;
   background-color: $white;
   height: 100vh;
+  width: 100%;
   background: url('../../../../images/backgrounds/background_texture_post.png');
   background-repeat: repeat-x;
   background-position: top center;
@@ -14,6 +15,7 @@
 
   @include mq($tablet) {
     height: auto;
+    width: 520px;
   }
 
   h4 {
@@ -49,10 +51,14 @@
 
   &__title {
     margin-bottom: 0.5rem;
+    input[placeholder] {
+      color: $gray;
+    }
   }
 
   &__description {
     margin: 0.5rem auto;
+
     .rich-editor-container {
       position: relative;
 
@@ -65,7 +71,6 @@
         display: block;
         overflow: auto;
         padding: 10px;
-        color: $gray-lighter;
 
         &:hover {
           border: 1px solid $black;
@@ -106,6 +111,9 @@
           color: $white;
         }
       }
+    }
+    .public-DraftEditorPlaceholder-root {
+      color: $gray-lighter;
     }
   }
 
@@ -384,10 +392,12 @@
 
   .uploader {
     width: 100%;
+    max-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
 
     label {
       width: 100%;

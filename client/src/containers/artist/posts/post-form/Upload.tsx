@@ -158,12 +158,22 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
   renderUploadButton(): React.ReactNode {
     return (
-      <label htmlFor="audio-file">
-        <Button className="btn">
-          <img className="btn__icon" src={AudioIcon} height={25} width={25} />
-          Upload MP3 audio
-        </Button>
-      </label>
+      <div className="uploader">
+        <input
+          style={{ display: 'none' }}
+          id="audio-file"
+          type="file"
+          accept=".mp3"
+          aria-label="Audio file"
+          onChange={this.processFile}
+        />
+        <label htmlFor="audio-file">
+          <Button className="btn" component="span">
+            <img className="btn__icon" src={AudioIcon} height={25} width={25} />
+            Upload MP3 audio
+          </Button>
+        </label>
+      </div>
     );
   }
 
@@ -175,18 +185,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
         <div className="upload-error">
           {this.state.uploadError && <h5>{this.state.uploadError}</h5>}
         </div>
-
-        <input
-          style={{ display: 'none' }}
-          id="audio-file"
-          type="file"
-          accept=".mp3"
-          aria-label="Audio file"
-          onChange={this.processFile}
-        />
-        <div className="uploader">
-          {fileName ? this.renderPreview() : this.renderUploadButton()}
-        </div>
+        {fileName ? this.renderPreview() : this.renderUploadButton()}
       </div>
     );
   }

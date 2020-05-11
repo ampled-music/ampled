@@ -717,6 +717,22 @@ class PostFormComponent extends React.Component<Props, any> {
           value={videoEmbedUrl || ''}
           onChange={this.handleChange}
           required
+          InputProps={{
+            endAdornment: !(videoEmbedUrl && videoEmbedUrl.length > 0) ? (
+              <InputAdornment position="end">
+                <span
+                  style={{
+                    color: 'rgba(0, 0, 0, 0.42)',
+                    fontSize: '0.8rem',
+                  }}
+                >
+                  (required)
+                </span>
+              </InputAdornment>
+            ) : (
+              undefined
+            ),
+          }}
         />
         {videoEmbedUrl.length > 0 && this.renderVideoPreview()}
       </div>
@@ -835,6 +851,23 @@ class PostFormComponent extends React.Component<Props, any> {
         value={link}
         onFocus={() => this.editor && this.editor.setHyperlinkHelp(false)}
         onChange={this.handleChange}
+        required
+        InputProps={{
+          endAdornment: !(link && link.length > 0) ? (
+            <InputAdornment position="end">
+              <span
+                style={{
+                  color: 'rgba(0, 0, 0, 0.42)',
+                  fontSize: '0.8rem',
+                }}
+              >
+                (required)
+              </span>
+            </InputAdornment>
+          ) : (
+            undefined
+          ),
+        }}
       />
     );
   };

@@ -23,6 +23,8 @@ import {
   InputAdornment,
   IconButton,
   CircularProgress,
+  FormControlLabel,
+  Checkbox,
 } from '@material-ui/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -797,17 +799,17 @@ class PostFormComponent extends React.Component<Props, any> {
           <div className="row justify-content-between">
             {audioFile && audioFile.length > 0 && (
               <div className="col-auto">
-                <label className="make-public-label" htmlFor="allow-download">
-                  <input
-                    aria-label="Allow download"
-                    name="allowDownload"
-                    id="allow-download"
-                    type="checkbox"
-                    onChange={this.handleAllowDownloadChange}
-                    checked={this.state.allowDownload}
-                  />
-                  Allow download
-                </label>
+                <FormControlLabel
+                  className="alow-download-label"
+                  control={
+                    <Checkbox
+                      onChange={this.handleAllowDownloadChange}
+                      checked={this.state.allowDownload}
+                      color="default"
+                    />
+                  }
+                  label="Allow Download"
+                />
               </div>
             )}
           </div>
@@ -873,19 +875,19 @@ class PostFormComponent extends React.Component<Props, any> {
             {this.state.showLink && this.renderLink()}
             {this.renderDescription()}
 
-            {/* <div className="col-auto">
-              <label className="make-public-label" htmlFor="make-public">
-                <input
-                  aria-label="Make public"
-                  name="make-public"
-                  id="make-public"
-                  type="checkbox"
-                  onChange={this.handleMakePublicChange}
-                  checked={this.state.isPublic}
-                />
-                Make public
-              </label>
-            </div> */}
+            <div className="post-form__public">
+              <FormControlLabel
+                className="make-public-label"
+                control={
+                  <Checkbox
+                    onChange={this.handleMakePublicChange}
+                    checked={this.state.isPublic}
+                    color="default"
+                  />
+                }
+                label="Make Public"
+              />
+            </div>
 
             <div className="post-form__actions">
               <Button

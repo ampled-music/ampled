@@ -13,8 +13,6 @@ export const getMeData = async () => {
     url: '/me.json',
   });
 
-  console.log('data: ' + data.userInfo.image);
-
   if (data && !data.userInfo.id) {
     store.clearAll();
 
@@ -36,9 +34,6 @@ export const getMeData = async () => {
     Sentry.configureScope(function(scope) {
       scope.setUser({ email, id });
     });
-
-  console.log('data.userInfo: ' + data.userInfo);
-  console.log('data.userInfo.image: ' + data.userInfo.image);
 
   return {
     ...data.userInfo,

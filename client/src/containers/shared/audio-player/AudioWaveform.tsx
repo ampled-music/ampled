@@ -2,12 +2,37 @@ import React, { useRef, useState, useEffect } from 'react'
 
 import { RGB_Linear_Shade, hexToRGB } from '../../../styles/utils'
 
-const WAVEFORM_HEIGHT = 30;
-const WAVEFORM_SAMPLE_COUNT_LO = 50;
-const WAVEFORM_SAMPLE_COUNT_HI = 75;
+const WAVEFORM_MAX_HEIGHT = 30;
 const MAX_SEEK_FREQUENCY_IN_MS = 200;
 
 enum WaveformSize { Unknown, Small, Large }
+
+// IMPORTANT: these config values are highly calibrated for each size.
+//
+// If you change one value for a particular size, at least one other value
+// for that size likely needs to be changed as well. This complexity is largely
+// due to resampling by modulo operator in combination with measuring mouse pointer
+// against canvas width to calculate progress.
+const SizeConfiguration = (size: WaveformSize) => {
+  switch(size) {
+    case WaveformSize.Large:
+      return {
+        samplingModulo: 4,          // 300 % 4      = 75 samples
+        barWidth: 4,                // 4 * 75       = 300 px
+        barSpacing: 2,              // 2 * (75-1)   = 148 px
+        canvasWidth: 448,           // 300 + 148    = 448 px
+      };
+    case WaveformSize.Small:
+      return {
+        samplingModulo: 6,          // 300 % 6      = 50 samples
+        barWidth: 4,                // 4 * 50       = 200 px
+        barSpacing: 2,              // 2 * (50-1)   = 98 px
+        canvasWidth: 298,           // 200 + 98     = 298 px
+      };
+    default:
+      return null;
+  }
+}
 
 interface AudioWaveformProps {
   waveform: number[];
@@ -28,7 +53,6 @@ const AudioWaveform = (props: AudioWaveformProps) => {
   const [animation, setAnimation] = useState(false);
 
   // Helper functions
-  const getSampleCount = () => props.size === WaveformSize.Large ? WAVEFORM_SAMPLE_COUNT_HI : WAVEFORM_SAMPLE_COUNT_LO;
   const updateWaveformSamples = (updateSample) => { 
     if (waveformSamples.length === 0) return;
     setWaveformSamples(waveformSamples.map(updateSample)); 
@@ -37,6 +61,13 @@ const AudioWaveform = (props: AudioWaveformProps) => {
     if (lastSeekCommit && lastSeekCommit >= (Date.now() - MAX_SEEK_FREQUENCY_IN_MS)) return;
     props.onSeek(progress);
     setLastSeekCommit(Date.now());
+  }
+  const drawWaveformSample = (ctx, x, height) => {
+    ctx.fillRect(
+      0 + (x * (SizeConfiguration(props.size).barWidth + SizeConfiguration(props.size).barSpacing)), 
+      WAVEFORM_MAX_HEIGHT, 
+      SizeConfiguration(props.size).barWidth, 
+      -height);
   }
 
   // Set color palette
@@ -50,11 +81,10 @@ const AudioWaveform = (props: AudioWaveformProps) => {
   }, [props.accentColor]);
 
   // Resample on size change
-  // TODO: restore progress immediately on resample
   useEffect(() => {
     if (props.size !== WaveformSize.Unknown) {
       setWaveformSamples(props.waveform
-        .filter((_, i) => props.size === WaveformSize.Large ? i%4 === 0 : i%6 === 0)
+        .filter((_, i) => i%(SizeConfiguration(props.size).samplingModulo) === 0)
         .map((amplitude) => ({ amplitude, loaded: false, played: false, hovered: false, animated: false }))
       );
       setAnimation(true);
@@ -69,7 +99,7 @@ const AudioWaveform = (props: AudioWaveformProps) => {
     const ctx = canvasRef.current.getContext('2d');
     ctx.fillStyle = colorPalette.loading;
     waveformSamples.forEach((sample, x) => {
-      const normalizedAmplitude = Math.ceil((sample.amplitude  / 128) * WAVEFORM_HEIGHT);
+      const normalizedAmplitude = Math.ceil((sample.amplitude  / 128) * WAVEFORM_MAX_HEIGHT);
       const fill = (height) => {
         // base case (sample animation complete)
         if (height > normalizedAmplitude) {
@@ -77,7 +107,7 @@ const AudioWaveform = (props: AudioWaveformProps) => {
           return;
         }
         // recursion
-        ctx.fillRect(0 + (x * 6), WAVEFORM_HEIGHT, 4, -height);
+        drawWaveformSample(ctx, x, height);
         height++;
         setTimeout(() => fill(height), Math.abs(height-20));
       }
@@ -98,9 +128,9 @@ const AudioWaveform = (props: AudioWaveformProps) => {
 
     const ctx = canvasRef.current.getContext('2d');
     waveformSamples.forEach((sample, i) => {
-      const normalizedAmplitude = (sample.amplitude  / 128) * WAVEFORM_HEIGHT;
+      const normalizedAmplitude = (sample.amplitude  / 128) * WAVEFORM_MAX_HEIGHT;
       ctx.fillStyle = getSampleColor(sample);
-      ctx.fillRect(0 + (i * 6), WAVEFORM_HEIGHT, 4, -Math.ceil(normalizedAmplitude));
+      drawWaveformSample(ctx, i, Math.ceil(normalizedAmplitude));
     })
   }, [waveformSamples])
 
@@ -108,9 +138,9 @@ const AudioWaveform = (props: AudioWaveformProps) => {
   useEffect(() => {
     if (seeking) return;
     const loadedProgress = props.loadedSeconds / props.duration;
-    const loadedSamples = Math.floor(loadedProgress * getSampleCount())
+    const loadedSamples = Math.floor(loadedProgress * waveformSamples.length)
     const playedProgress = props.playedSeconds / props.duration;
-    const playedSamples = Math.floor(playedProgress * getSampleCount())
+    const playedSamples = Math.floor(playedProgress * waveformSamples.length)
 
     const updateSample = (sample, i) => ({
       ...sample,
@@ -126,7 +156,7 @@ const AudioWaveform = (props: AudioWaveformProps) => {
   const handleMouseMove = (e) => {
     const canvasX = e.clientX - canvasRef.current.getBoundingClientRect().x;
     const progress = canvasX / canvasRef.current.clientWidth;
-    const samples = Math.floor(progress * getSampleCount())
+    const samples = Math.floor(progress * waveformSamples.length)
 
     if (seeking){
       updateWaveformSamples((sample, i) => ({ ...sample, played: i <= samples }));
@@ -139,7 +169,7 @@ const AudioWaveform = (props: AudioWaveformProps) => {
   const handleMouseDown = (e) => {
     const canvasX = e.clientX - canvasRef.current.getBoundingClientRect().x;
     const progress = canvasX / canvasRef.current.clientWidth;
-    const samples = Math.floor(progress * getSampleCount())
+    const samples = Math.floor(progress * waveformSamples.length)
 
     updateWaveformSamples((sample, i) => ({ ...sample, played: i <= samples }));
     commitSeek(progress);
@@ -158,8 +188,8 @@ const AudioWaveform = (props: AudioWaveformProps) => {
 
   return (
     <canvas
-      width={props.size == WaveformSize.Large ? '450px' : '320px'}
-      height={`${WAVEFORM_HEIGHT}px`}
+      width={`${SizeConfiguration(props.size)?.canvasWidth}px`}
+      height={`${WAVEFORM_MAX_HEIGHT}px`}
       style={{ borderBottom: `2px solid ${props.accentColor}`}}
       onMouseMove={handleMouseMove}
       onMouseOut={handleMouseOut}

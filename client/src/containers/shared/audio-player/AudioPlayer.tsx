@@ -13,24 +13,22 @@ import AudioWaveform, { WaveformSize } from './AudioWaveform';
 interface AudioPlayerProps {
   url: string;
   accentColor: string;
+  duration: number;
   waveform: number[];
   callback?(action: string, instance: any): void;
   download: boolean;
   postId: number;
-  songTitle: string;
   artistSlug: string;
 }
 interface AudioPlayerState {
   url: string;
   playing: boolean;
-  seeking: boolean;
   volume: number;
   played: number;
   playedSeconds: number;
   loaded: number;
   loadedSeconds: number;
-  duration: number;
-  durationShow: string;
+  showPlaybackTime: boolean;
   loop: boolean;
   waveformSize: WaveformSize;
 }
@@ -44,14 +42,12 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     this.state = {
       url: null,
       playing: false,
-      seeking: false,
       volume: 0.8,
       played: 0,
       playedSeconds: 0,
       loaded: 0,
       loadedSeconds: 0,
-      duration: 0,
-      durationShow: null,
+      showPlaybackTime: false,
       loop: false,
       waveformSize: WaveformSize.Unknown,
     };
@@ -94,7 +90,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
 
   // Actions for handling audio
   handlePlayPause = () => {
-    this.setState({ playing: !this.state.playing, durationShow: 'on' });
+    this.setState({ playing: !this.state.playing, showPlaybackTime: true });
     this.load();
   };
   handlePlay = () => {
@@ -111,12 +107,11 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   };
   handleEnded = () => {
     this.props.callback && this.props.callback('ended', this);
-    this.setState({ playing: this.state.loop, durationShow: null });
+    this.setState({ playing: this.state.loop, showPlaybackTime: false });
   };
-
-  // @todo: Add a volume adjuster
-  handleVolumeChange = (e) => {
-    this.setState({ volume: parseFloat(e.target.value) });
+  handleProgress = (state) => {
+    this.props.callback && this.props.callback('progress', this);
+    this.setState(state);
   };
 
   commitSeeking = (value: number) => {
@@ -124,19 +119,6 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   };
 
   // Progress updates state
-  handleProgress = (state) => {
-    // We only want to update time slider if we are not currently seeking
-    if (!this.state.seeking) {
-      this.props.callback && this.props.callback('progress', this);
-      this.setState(state);
-    }
-  };
-
-  // Show duration and total time on play
-  handleDuration = (duration) => {
-    this.setState({ duration });
-  };
-
   formatTime = (seconds) => {
     const date = new Date(seconds * 1000);
     const hh = date.getUTCHours();
@@ -152,7 +134,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   };
   valueLabelFormat = (value) => {
     return (
-      this.formatTime(value) + ` / ` + this.formatTime(this.state.duration)
+      this.formatTime(value) + ` / ` + this.formatTime(this.props.duration)
     );
   };
 
@@ -161,13 +143,12 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
       url,
       playing,
       loaded,
-      duration,
       // controls,
       volume,
       loop,
       playedSeconds,
       loadedSeconds,
-      durationShow,
+      showPlaybackTime,
       waveformSize,
     } = this.state;
 
@@ -200,24 +181,20 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
           onPlay={this.handlePlay}
           onEnded={this.handleEnded}
           onProgress={this.handleProgress}
-          onDuration={this.handleDuration}
           config={{
             file: {
               forceAudio: true,
             },
           }}
         />
+
         <div className="audio-player__play-pause">
           <PlayButton
             onClick={this.handlePlayPause}
             size="small"
             aria-label="Play / Pause"
           >
-            {playing ? (
-              <FontAwesomeIcon icon={faPause} />
-            ) : (
-              <FontAwesomeIcon icon={faPlay} />
-            )}
+            <FontAwesomeIcon icon={playing ? faPause : faPlay} />
           </PlayButton>
           {this.props.download && (
             <a
@@ -229,22 +206,21 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
             </a>
           )}
         </div>
+
         <div className="audio-player__waveform" ref={this.waveformContainerRef}>
-          {durationShow === 'on' && (
-            <div className="audio-player__duration">
-              <div className="audio-player__duration_start">
-                {this.formatTime(playedSeconds)}
-              </div>
-              <div className="audio-player__duration_end">
-                {this.formatTime(duration)}
-              </div>
+          {showPlaybackTime && (
+            <div className="audio-player__time audio-player__start">
+              {this.formatTime(playedSeconds)}
             </div>
           )}
+          <div className="audio-player__time audio-player__end">
+            {this.formatTime(this.props.duration)}
+          </div>
           <AudioWaveform
             waveform={this.props.waveform}
             playedSeconds={playedSeconds}
             loadedSeconds={loadedSeconds}
-            duration={duration}
+            duration={this.props.duration}
             accentColor={this.props.accentColor}
             onSeek={this.commitSeeking}
             size={waveformSize}

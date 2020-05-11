@@ -16,6 +16,7 @@
     }
   }
   &__waveform {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -34,21 +35,21 @@
     font-family: $font-family-monospace;
     font-size: $font-size-sm;
   }
-  &__duration {
+
+  &__time {
     position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2px;
-    &_start,
-    &_end {
-      font-family: $font-family-monospace;
-      font-size: $font-size-xs;
-      color: $white;
-      background-color: $black;
-      min-width: 40px;
-      padding: 0 2px;
-      text-align: center;
-    }
+    font-family: $font-family-monospace;
+    font-size: $font-size-xs;
+    color: $white;
+    background-color: $black;
+    min-width: 40px;
+    padding: 0 2px;
+    text-align: center;
+  }
+  &__start {
+    left: 1px;
+  }
+  &__end {
+    right: 1px;
   }
 }

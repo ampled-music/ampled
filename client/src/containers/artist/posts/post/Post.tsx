@@ -270,11 +270,11 @@ const PostMedia = ({
           <AudioPlayer
             url={returnPlayableUrl(audio_uploads[0]?.public_id)}
             accentColor={accentColor}
+            duration={audio_uploads[0]?.duration}
             waveform={audio_uploads[0]?.waveform}
             callback={playerCallback}
             download={allow_download}
             postId={id}
-            songTitle={title}
             artistSlug={artistSlug}
           />
         )}

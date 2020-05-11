@@ -3,7 +3,7 @@ import * as React from 'react';
 import tear from '../../../../images/backgrounds/background_tear.png';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Divider } from '@material-ui/core';
+import { Divider, Button, IconButton } from '@material-ui/core';
 import { Modal } from '../../../shared/modal/Modal';
 import Linkify from 'react-linkify';
 
@@ -45,10 +45,10 @@ const renderDeleteModal = ({ deleteComment, commentId, setShowModal }) => (
         <h4>Are you sure?</h4>
       </div>
       <div className="delete-post-modal__actions action-buttons">
-        <button className="cancel-button" onClick={() => setShowModal(false)}>
+        <Button className="cancel-button" onClick={() => setShowModal(false)}>
           Cancel
-        </button>
-        <button
+        </Button>
+        <Button
           className="delete-button"
           onClick={() => {
             deleteComment(commentId);
@@ -56,20 +56,20 @@ const renderDeleteModal = ({ deleteComment, commentId, setShowModal }) => (
           }}
         >
           Delete Comment
-        </button>
+        </Button>
       </div>
     </div>
   </div>
 );
 
 const renderDeleteButton = ({ setShowModal }) => (
-  <span onClick={() => setShowModal(true)} className="comment__delete">
+  <IconButton onClick={() => setShowModal(true)} className="comment__delete">
     <FontAwesomeIcon
       className="delete-icon"
       icon={faTrashAlt}
       title="Delete comment"
     />
-  </span>
+  </IconButton>
 );
 
 const Comment = ({ comment, canDelete, deleteComment } = this.props) => {

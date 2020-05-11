@@ -169,35 +169,20 @@
   }
 
   &__change {
-    position: absolute;
-    right: 0;
-    z-index: 10;
-    padding: 0.5rem 0.5rem 0 0;
-    opacity: 1;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    opacity: 0.4;
     transition: opacity $speed;
-
-    @include mq($tablet) {
-      opacity: 0;
+    margin-top: 0.25rem;
+    &:hover {
+      opacity: 1;
     }
 
     button {
-      width: 40px;
-      height: 40px;
-      background-color: $brand-primary;
-      border-radius: 100%;
-      display: flex;
-      align-content: center;
-      justify-content: center;
-      border: 0px;
-      color: $white;
-      margin-bottom: 0.5rem;
-      opacity: 0.7;
-      transition: opacity $speed;
-      cursor: pointer;
-
-      &:hover {
-        opacity: 1;
-      }
+      width: 30px;
+      height: 30px;
 
       &.disabled {
         cursor: not-allowed;
@@ -206,7 +191,7 @@
       }
 
       svg {
-        align-self: center;
+        width: 15px !important;
       }
     }
   }

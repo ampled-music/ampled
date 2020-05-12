@@ -176,6 +176,8 @@
     opacity: 0.4;
     transition: opacity $speed;
     margin-top: 0.25rem;
+    right: -8px;
+
     &:hover {
       opacity: 1;
     }

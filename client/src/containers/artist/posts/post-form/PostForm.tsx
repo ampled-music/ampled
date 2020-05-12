@@ -41,6 +41,7 @@ import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
 import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
 import PhotoIcon from '../../../../images/icons/Icon_Photo.svg';
 import VideoIcon from '../../../../images/icons/Icon_Video.svg';
+import Speaker from '../../../../images/home/home_how_speaker.png';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
@@ -262,7 +263,7 @@ class PostFormComponent extends React.Component<Props, any> {
     hasUnsavedChanges: false,
     loadingImage: false,
     savingPost: false,
-    activePostType: 'Text',
+    activePostType: '',
     showAudio: false,
     showVideo: false,
     showImage: false,
@@ -874,6 +875,18 @@ class PostFormComponent extends React.Component<Props, any> {
     );
   };
 
+  renderEmptyType = () => {
+    return (
+      <div className="post-form__empty">
+        <img className="post-form__empty_image" src={Speaker} />
+        <div className="post-form__empty_copy">
+          <div>Not sure what to post?</div>
+          <div>Here are some ideas.</div>
+        </div>
+      </div>
+    );
+  };
+
   render() {
     const { hasUnsavedChanges } = this.state;
     const { isEdit } = this.props;
@@ -899,43 +912,48 @@ class PostFormComponent extends React.Component<Props, any> {
               </div>
             )}
 
-            {this.state.showImage && this.renderImageUpload()}
-            {this.renderTitle()}
-            {this.state.showVideo && this.renderVideoEmbedder()}
-            {this.state.showLink && this.renderLink()}
-            {this.renderDescription()}
-
-            <div className="post-form__public">
-              <FormControlLabel
-                className="make-public-label"
-                control={
-                  <Checkbox
-                    onChange={this.handleMakePublicChange}
-                    checked={this.state.isPublic}
-                    color="default"
+            {this.state.activePostType ? (
+              <div>
+                {this.state.showImage && this.renderImageUpload()}
+                {this.renderTitle()}
+                {this.state.showVideo && this.renderVideoEmbedder()}
+                {this.state.showLink && this.renderLink()}
+                {this.renderDescription()}
+                <div className="post-form__public">
+                  <FormControlLabel
+                    className="make-public-label"
+                    control={
+                      <Checkbox
+                        onChange={this.handleMakePublicChange}
+                        checked={this.state.isPublic}
+                        color="default"
+                      />
+                    }
+                    label="Make Public"
                   />
-                }
-                label="Make Public"
-              />
-            </div>
+                </div>
 
-            <div className="post-form__actions">
-              <Button
-                className="cancel-button"
-                onClick={() => this.props.close(hasUnsavedChanges)}
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </Button>
-              <Button
-                type="submit"
-                className={cx('publish-button', {
-                  disabled: !isSaveEnabled,
-                })}
-                disabled={!isSaveEnabled}
-              >
-                Publish Post
-              </Button>
-            </div>
+                <div className="post-form__actions">
+                  <Button
+                    className="cancel-button"
+                    onClick={() => this.props.close(hasUnsavedChanges)}
+                  >
+                    <FontAwesomeIcon icon={faTimes} />
+                  </Button>
+                  <Button
+                    type="submit"
+                    className={cx('publish-button', {
+                      disabled: !isSaveEnabled,
+                    })}
+                    disabled={!isSaveEnabled}
+                  >
+                    Publish Post
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div>{this.renderEmptyType()}</div>
+            )}
           </form>
         </div>
       </div>

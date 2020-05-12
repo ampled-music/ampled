@@ -852,6 +852,7 @@ class PostFormComponent extends React.Component<Props, any> {
         value={link}
         onFocus={() => this.editor && this.editor.setHyperlinkHelp(false)}
         onChange={this.handleChange}
+        className="post-form__link"
         required
         InputProps={{
           endAdornment: !(link && link.length > 0) ? (

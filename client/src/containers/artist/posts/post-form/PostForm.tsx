@@ -824,7 +824,7 @@ class PostFormComponent extends React.Component<Props, any> {
                   color="default"
                 />
               }
-              label="Allow Download"
+              label="Enable Download"
             />
           )}
         </div>

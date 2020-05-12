@@ -130,10 +130,10 @@
   }
 
   &__container {
-    @include mq(0, $tablet) {
-      .tear {
-        display: none;
-      }
+    margin: auto;
+    width: 100%;
+    @include mq($tablet) {
+      width: 550px;
     }
   }
 
@@ -142,7 +142,11 @@
     &_allow-checkbox {
       display: flex;
       max-width: 500px;
-      margin: 0.5rem auto 00;
+      margin: 0.5rem auto 0;
+
+      label {
+        margin: 0px 0px 0px -11px;
+      }
 
       input[type='checkbox'] {
         width: 15px;

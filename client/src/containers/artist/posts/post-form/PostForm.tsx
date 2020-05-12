@@ -574,7 +574,6 @@ class PostFormComponent extends React.Component<Props, any> {
   }
 
   renderImagePreview(): React.ReactNode {
-    console.log(this.state.images[0]);
     return (
       <div className="uploader">
         <Image
@@ -881,61 +880,63 @@ class PostFormComponent extends React.Component<Props, any> {
     const isSaveEnabled = this.isSaveEnabled();
 
     return (
-      <div className="post-form">
-        <h4>{isEdit ? 'Edit Post' : 'Create a new post'}</h4>
-        {this.renderButtons()}
-        <form onSubmit={this.handleSubmit}>
-          {this.state.showAudio && (
-            <div className="post-form__audio">
-              {isEdit &&
-              this.props.post &&
-              this.props.post.audio_file &&
-              this.state.audioFile &&
-              this.state.audio_file &&
-              this.state.audioFile === this.state.audio_file
-                ? this.renderExistingAudio()
-                : this.renderAudio()}
+      <div className="post-form__container">
+        <div className="post-form">
+          <h4>{isEdit ? 'Edit Post' : 'Create a new post'}</h4>
+          {this.renderButtons()}
+          <form onSubmit={this.handleSubmit}>
+            {this.state.showAudio && (
+              <div className="post-form__audio">
+                {isEdit &&
+                this.props.post &&
+                this.props.post.audio_file &&
+                this.state.audioFile &&
+                this.state.audio_file &&
+                this.state.audioFile === this.state.audio_file
+                  ? this.renderExistingAudio()
+                  : this.renderAudio()}
+              </div>
+            )}
+
+            {this.state.showImage && this.renderImageUpload()}
+            {this.renderTitle()}
+            {this.state.showVideo && this.renderVideoEmbedder()}
+            {this.state.showLink && this.renderLink()}
+            {this.renderDescription()}
+
+            <div className="post-form__public">
+              <FormControlLabel
+                className="make-public-label"
+                control={
+                  <Checkbox
+                    onChange={this.handleMakePublicChange}
+                    checked={this.state.isPublic}
+                    color="default"
+                  />
+                }
+                label="Make Public"
+              />
             </div>
-          )}
 
-          {this.state.showImage && this.renderImageUpload()}
-          {this.renderTitle()}
-          {this.state.showVideo && this.renderVideoEmbedder()}
-          {this.state.showLink && this.renderLink()}
-          {this.renderDescription()}
-
-          <div className="post-form__public">
-            <FormControlLabel
-              className="make-public-label"
-              control={
-                <Checkbox
-                  onChange={this.handleMakePublicChange}
-                  checked={this.state.isPublic}
-                  color="default"
-                />
-              }
-              label="Make Public"
-            />
-          </div>
-
-          <div className="post-form__actions">
-            <Button
-              className="cancel-button"
-              onClick={() => this.props.close(hasUnsavedChanges)}
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </Button>
-            <Button
-              type="submit"
-              className={cx('publish-button', {
-                disabled: !isSaveEnabled,
-              })}
-              disabled={!isSaveEnabled}
-            >
-              Publish Post
-            </Button>
-          </div>
-        </form>
+            <div className="post-form__actions">
+              <Button
+                className="cancel-button"
+                onClick={() => this.props.close(hasUnsavedChanges)}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </Button>
+              <Button
+                type="submit"
+                className={cx('publish-button', {
+                  disabled: !isSaveEnabled,
+                })}
+                disabled={!isSaveEnabled}
+              >
+                Publish Post
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

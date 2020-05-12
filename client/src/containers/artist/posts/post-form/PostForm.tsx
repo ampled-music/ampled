@@ -36,11 +36,11 @@ import { convertFromHTML, convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
 import TextIcon from '../../../../images/icons/Icon_Text.svg';
-import AudioIcon from '../../../../images/icons/Icon_Audio.png';
+import AudioIcon from '../../../../images/icons/Icon_Audio.svg';
 import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
 import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
-import PhotoIcon from '../../../../images/icons/Icon_Photo.png';
-import VideoIcon from '../../../../images/icons/Icon_Video.png';
+import PhotoIcon from '../../../../images/icons/Icon_Photo.svg';
+import VideoIcon from '../../../../images/icons/Icon_Video.svg';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';

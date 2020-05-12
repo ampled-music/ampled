@@ -6,7 +6,7 @@ import { Dialog } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
-import { faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { theme } from './theme';
@@ -27,14 +27,16 @@ class Modal extends React.Component<Props, any> {
           onClose={this.props.onClose}
           fullScreen={this.props.fullScreen}
         >
-          {
-            this.props.fullScreen && 
-            (<IconButton className="fullscreen-close" aria-label="close" color="primary" onClick={this.props.onClose}>
-              <FontAwesomeIcon
-                icon={faTimes}
-              />
-            </IconButton>)  
-          }
+          {this.props.fullScreen && (
+            <IconButton
+              className="fullscreen-close"
+              aria-label="close"
+              color="primary"
+              onClick={this.props.onClose}
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </IconButton>
+          )}
           {this.props.children}
         </Dialog>
       </MuiThemeProvider>
@@ -44,6 +46,4 @@ class Modal extends React.Component<Props, any> {
 
 const ModalComponent = withMobileDialog()(Modal);
 
-export {
-  ModalComponent as Modal
-};
+export { ModalComponent as Modal };

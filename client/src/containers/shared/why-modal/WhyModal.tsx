@@ -64,7 +64,7 @@ class WhyModalComponent extends React.Component<Props, any> {
             <IconButton
               className="close-x"
               aria-label="close"
-              color="primary"
+              color="default"
               style={{
                 margin: '-10px -10px 0 0',
               }}

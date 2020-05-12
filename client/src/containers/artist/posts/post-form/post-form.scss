@@ -15,7 +15,6 @@
 
   @include mq($tablet) {
     height: auto;
-    width: 520px;
   }
 
   h4 {
@@ -32,7 +31,7 @@
     display: flex;
     margin: 0 1rem 1rem;
     button {
-      border: 0px solid $black;
+      border: 1px solid transparent;
       margin: 0 0.5rem;
       opacity: 0.5;
       font-size: 0.8rem;
@@ -45,9 +44,10 @@
 
       &:hover {
         opacity: 1;
+        background: $white;
       }
       &.active {
-        border-width: 1px;
+        border: 1px solid $black;
         opacity: 1;
       }
       span {

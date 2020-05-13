@@ -24,6 +24,7 @@
 class AudioUpload < ApplicationRecord
   before_destroy :delete_audio
   before_create :process_audio
+  after_find :ensure_waveform
 
   class HashGenerationError < StandardError; end
   class DurationNotFoundError < StandardError; end
@@ -36,6 +37,19 @@ class AudioUpload < ApplicationRecord
   end
 
   private
+
+  def ensure_waveform
+    return if self.waveform.length == AudioProcessingService::DEFAULT_WAVEFORM_LENGTH
+
+    audio_processing_service = AudioProcessingService.new(public_id)
+    begin
+      self.waveform = audio_processing_service.generate_waveform
+      waveform.empty? && (raise WaveformEmptyError, "Unable to generate waveform for audio upload with id: #{id}")
+      self.save!
+    ensure
+      audio_processing_service.dispose
+    end
+  end
 
   def process_audio
     audio_processing_service = AudioProcessingService.new(public_id)

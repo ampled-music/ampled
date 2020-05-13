@@ -1,4 +1,6 @@
 class AudioProcessingService
+  DEFAULT_WAVEFORM_LENGTH = 1000 
+
   class FfmpegError < StandardError; end
 
   def initialize(public_id)

@@ -249,7 +249,7 @@ class PostFormComponent extends React.Component<Props, any> {
   initialState = {
     title: '',
     body: '',
-    link: '',
+    link: null,
     audioFile: '',
     imageName: '',
     videoEmbedUrl: null,
@@ -484,6 +484,10 @@ class PostFormComponent extends React.Component<Props, any> {
               showVideo: false,
               showImage: false,
               showLink: false,
+              videoEmbedUrl: null,
+              link: null,
+              audioFile: '',
+              imageName: '',
             })
           }
         >
@@ -501,6 +505,8 @@ class PostFormComponent extends React.Component<Props, any> {
               showVideo: false,
               showImage: true,
               showLink: false,
+              videoEmbedUrl: null,
+              link: null,
             })
           }
         >
@@ -518,6 +524,9 @@ class PostFormComponent extends React.Component<Props, any> {
               showVideo: true,
               showImage: false,
               showLink: false,
+              link: null,
+              audioFile: '',
+              imageName: '',
             })
           }
         >
@@ -535,6 +544,9 @@ class PostFormComponent extends React.Component<Props, any> {
               showVideo: false,
               showImage: true,
               showLink: false,
+              videoEmbedUrl: null,
+              link: null,
+              imageName: '',
             })
           }
         >
@@ -552,6 +564,9 @@ class PostFormComponent extends React.Component<Props, any> {
               showVideo: false,
               showImage: false,
               showLink: true,
+              videoEmbedUrl: null,
+              audioFile: '',
+              imageName: '',
             })
           }
         >

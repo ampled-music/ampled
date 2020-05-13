@@ -37,7 +37,7 @@ class AudioProcessingService
   # The sample rate and bit depth can be fine tuned further.
   # Finally, read output file to build the waveform using peak normalization.
   #
-  def generate_waveform(waveform_length = 300)
+  def generate_waveform(waveform_length = nil)
     # process original file
     @downsampled_file_path = Rails.root.join("tmp/audio/downsampled_#{@process_id}.wav")
     `ffmpeg -i #{@raw_file_path} -acodec pcm_u8 -ar 1000 -ac 1 #{@downsampled_file_path}`
@@ -49,9 +49,20 @@ class AudioProcessingService
     waveform_buffers = []
     reader = WaveFile::Reader.new(@downsampled_file_path.to_path)
     begin
-      num_samples_per_waveform_buffer = (reader.total_sample_frames / waveform_length.to_f).ceil
+      num_samples_per_waveform_buffer = (reader.total_sample_frames / (waveform_length || DEFAULT_WAVEFORM_LENGTH).to_f)
+      uncertainty = num_samples_per_waveform_buffer - num_samples_per_waveform_buffer.to_i
+      propagated_uncertainty = 0.0
+
       while reader.current_sample_frame < reader.total_sample_frames
-        buffer_samples = reader.read(num_samples_per_waveform_buffer).samples
+        num_samples = num_samples_per_waveform_buffer.to_i
+        propagated_uncertainty += uncertainty
+
+        if propagated_uncertainty >= 0.999999999
+          propagated_uncertainty -= 1
+          num_samples += 1
+        end
+
+        buffer_samples = reader.read(num_samples).samples
         waveform_buffers << buffer_samples unless buffer_samples.empty?
       end
     ensure

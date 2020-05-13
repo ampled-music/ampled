@@ -4,10 +4,10 @@ import React, { useRef, useState, useEffect } from 'react'
 
 import { RGB_Linear_Shade, hexToRGB } from '../../../styles/utils'
 
-const WAVEFORM_MAX_HEIGHT = 30;
+const WAVEFORM_MAX_HEIGHT = 35;
 const MAX_SEEK_FREQUENCY_IN_MS = 200;
 
-enum WaveformSize { Unknown, Small, Large }
+enum WaveformSize { Unknown, XSmall, Small, Medium, Large, XLarge }
 
 // IMPORTANT: these config values are highly calibrated for each size.
 //
@@ -17,19 +17,40 @@ enum WaveformSize { Unknown, Small, Large }
 // against canvas width to calculate progress.
 const SizeConfiguration = (size: WaveformSize) => {
   switch(size) {
+    case WaveformSize.XLarge:
+      return {
+        samplingModulo: 9,          // 1000 % 9     = 112 samples
+        barWidth: 4,                // 4 * 112      = 448 px
+        barSpacing: 2,              // 2 * (112-1)  = 222 px
+        canvasWidth: 670,           // 448 + 222    = 670 px
+      };
     case WaveformSize.Large:
       return {
-        samplingModulo: 4,          // 300 % 4      = 75 samples
-        barWidth: 4,                // 4 * 75       = 300 px
-        barSpacing: 2,              // 2 * (75-1)   = 148 px
-        canvasWidth: 448,           // 300 + 148    = 448 px
+        samplingModulo: 10,         // 1000 % 10    = 100 samples
+        barWidth: 4,                // 4 * 100      = 400 px
+        barSpacing: 2,              // 2 * (100-1)  = 198 px
+        canvasWidth: 598,           // 400 + 198    = 598 px
+      };
+    case WaveformSize.Medium:
+      return {
+        samplingModulo: 12,         // 1000 % 12    = 84 samples
+        barWidth: 4,                // 4 * 84       = 336 px
+        barSpacing: 2,              // 2 * (84-1)   = 166 px
+        canvasWidth: 502,           // 336 + 166    = 502 px
       };
     case WaveformSize.Small:
       return {
-        samplingModulo: 6,          // 300 % 6      = 50 samples
-        barWidth: 4,                // 4 * 50       = 200 px
-        barSpacing: 2,              // 2 * (50-1)   = 98 px
-        canvasWidth: 298,           // 200 + 98     = 298 px
+        samplingModulo: 14,         // 1000 % 15    = 72 samples
+        barWidth: 4,                // 4 * 72       = 288 px
+        barSpacing: 2,              // 2 * (72-1)   = 142 px
+        canvasWidth: 430,           // 288 + 142    = 430 px
+      };
+    case WaveformSize.XSmall:
+      return {
+        samplingModulo: 18,         // 1000 % 18    = 56 samples
+        barWidth: 4,                // 4 * 56       = 224 px
+        barSpacing: 2,              // 2 * (56-1)   = 110 px
+        canvasWidth: 334,           // 224 + 110    = 334 px
       };
     default:
       return null;
@@ -98,9 +119,9 @@ const AudioWaveform = (props: AudioWaveformProps) => {
   useEffect(() => {
     if (!animation) return;
     if (waveformSamples.every((sample) => sample.animated)) return;
-    console.log("ANIMATING");
     const ctx = canvasRef.current.getContext('2d');
     ctx.fillStyle = colorPalette.loading;
+    ctx.clearRect(0, 0, SizeConfiguration(props.size).canvasWidth, WAVEFORM_MAX_HEIGHT);
     waveformSamples.forEach((sample, x) => {
       const normalizedAmplitude = Math.ceil((sample.amplitude  / 128) * WAVEFORM_MAX_HEIGHT);
       const fill = (height) => {

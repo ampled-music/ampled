@@ -69,7 +69,24 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
 
   setWaveformSize = () => {
     const containerWidth = this.containerRef.current.clientWidth;
-    const waveformSize = containerWidth > 500 ? WaveformSize.Large : WaveformSize.Small;
+
+    let waveformSize = WaveformSize.Unknown;
+    if (containerWidth <= 400) {
+      waveformSize = WaveformSize.XSmall;
+    }
+    else if (containerWidth <= 500) {
+      waveformSize = WaveformSize.Small;
+    }
+    else if (containerWidth <= 600) {
+      waveformSize = WaveformSize.Medium;
+    }
+    else if (containerWidth <= 675) {
+      waveformSize = WaveformSize.Large;
+    }
+    else {
+      waveformSize = WaveformSize.XLarge
+    }
+
     if (waveformSize !== this.state.waveformSize) {
       this.setState({ waveformSize });
     }

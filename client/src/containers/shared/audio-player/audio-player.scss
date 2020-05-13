@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
   padding: 0.2em 0;
+  overflow: hidden;
 
   &__body {
     flex: initial;
@@ -15,7 +16,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5em;
+    margin: 0.5em;
 
     &__play-pause {
       span {
@@ -50,9 +51,9 @@
     text-align: center;
   }
   &__start {
-    left: 0.5em;
+    left: 0.75em;
   }
   &__end {
-    right: 0.5em;
+    right: 0.75em;
   }
 }

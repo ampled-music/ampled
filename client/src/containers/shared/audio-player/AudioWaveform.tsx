@@ -201,7 +201,6 @@ const AudioWaveform = (props: AudioWaveformProps) => {
       <canvas
         width={`${SizeConfiguration(props.size)?.canvasWidth}px`}
         height={`${WAVEFORM_MAX_HEIGHT}px`}
-        style={{ borderBottom: `2px solid ${props.accentColor}`}}
         onMouseMove={handleMouseMove}
         onMouseOut={handleMouseOut}
         onMouseDown={handleMouseDown}

@@ -171,7 +171,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     })(IconButton);
 
     return (
-      <div className="audio-player" ref={this.containerRef}>
+      <div className="audio-player" ref={this.containerRef} style={{ borderBottom: `2px solid ${this.props.accentColor}`}}>
         <FilePlayer
           ref={this.playerRef}
           url={url}

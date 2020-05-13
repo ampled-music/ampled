@@ -264,6 +264,7 @@ class PostFormComponent extends React.Component<Props, any> {
     loadingImage: false,
     savingPost: false,
     activePostType: '',
+    showText: false,
     showAudio: false,
     showVideo: false,
     showImage: false,

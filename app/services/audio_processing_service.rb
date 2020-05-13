@@ -1,5 +1,5 @@
 class AudioProcessingService
-  DEFAULT_WAVEFORM_LENGTH = 1000 
+  DEFAULT_WAVEFORM_LENGTH = 1000
 
   class FfmpegError < StandardError; end
 
@@ -37,7 +37,7 @@ class AudioProcessingService
   # The sample rate and bit depth can be fine tuned further.
   # Finally, read output file to build the waveform using peak normalization.
   #
-  def generate_waveform(waveform_length = nil)
+  def generate_waveform
     # process original file
     @downsampled_file_path = Rails.root.join("tmp/audio/downsampled_#{@process_id}.wav")
     `ffmpeg -i #{@raw_file_path} -acodec pcm_u8 -ar 1000 -ac 1 #{@downsampled_file_path}`
@@ -45,11 +45,36 @@ class AudioProcessingService
     error_message = "FFMPEG: failed to transcode and downsample audio upload: #{@public_id}"
     raise FfmpegError, error_message unless File.exist?(@downsampled_file_path)
 
-    # read output file one buffer at a time
+    # ready output file buffers
+    waveform_buffers = read_waveform_buffers
+
+    # reduce to one positive amplitude value per waveform buffer
+    waveform = []
+    waveform_buffers.each do |buffer|
+      waveform << buffer.map { |sample| (sample - 128).abs }.max
+    end
+
+    # peak normalization
+    peak = waveform.max
+    gain = 128 - peak
+    waveform = waveform.map { |sample| sample + gain }
+
+    waveform
+  end
+
+  def dispose
+    # clean up / remove audio files from disk
+    File.delete(@raw_file_path) if File.exist?(@raw_file_path)
+    File.delete(@downsampled_file_path) if File.exist?(@downsampled_file_path)
+  end
+
+  private
+
+  def read_waveform_buffers
     waveform_buffers = []
     reader = WaveFile::Reader.new(@downsampled_file_path.to_path)
     begin
-      num_samples_per_waveform_buffer = (reader.total_sample_frames / (waveform_length || DEFAULT_WAVEFORM_LENGTH).to_f)
+      num_samples_per_waveform_buffer = (reader.total_sample_frames / DEFAULT_WAVEFORM_LENGTH.to_f)
       uncertainty = num_samples_per_waveform_buffer - num_samples_per_waveform_buffer.to_i
       propagated_uncertainty = 0.0
 
@@ -69,23 +94,6 @@ class AudioProcessingService
       reader.close
     end
 
-    # reduce to one positive amplitude value per waveform unit
-    waveform = []
-    waveform_buffers.each do |buffer|
-      waveform << buffer.map { |sample| (sample - 128).abs }.max
-    end
-
-    # peak normalization
-    peak = waveform.max
-    gain = 128 - peak
-    waveform = waveform.map { |sample| sample + gain }
-
-    waveform
-  end
-
-  def dispose
-    # clean up / remove audio files from disk
-    File.delete(@raw_file_path) if File.exist?(@raw_file_path)
-    File.delete(@downsampled_file_path) if File.exist?(@downsampled_file_path)
+    waveform_buffers
   end
 end

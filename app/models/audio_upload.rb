@@ -39,13 +39,13 @@ class AudioUpload < ApplicationRecord
   private
 
   def ensure_waveform
-    return if self.waveform.length == AudioProcessingService::DEFAULT_WAVEFORM_LENGTH
+    return if waveform.length == AudioProcessingService::DEFAULT_WAVEFORM_LENGTH
 
     audio_processing_service = AudioProcessingService.new(public_id)
     begin
       self.waveform = audio_processing_service.generate_waveform
       waveform.empty? && (raise WaveformEmptyError, "Unable to generate waveform for audio upload with id: #{id}")
-      self.save!
+      save!
     ensure
       audio_processing_service.dispose
     end

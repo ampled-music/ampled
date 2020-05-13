@@ -3,16 +3,22 @@
 
 .audio-player {
   position: relative;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  &__body {
+    flex: initial;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1em;
 
     &__play-pause {
-      margin: 1em 0 0 5%;
-
+      span {
+        text-align: center;
+      }
       svg {
         position: relative;
         font-size: 0.5em;

@@ -35,11 +35,11 @@ interface AudioPlayerState {
 }
 
 class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
-  private waveformContainerRef: React.RefObject<any>
+  private containerRef: React.RefObject<any>
 
   constructor(props) {
     super(props);
-    this.waveformContainerRef = React.createRef();
+    this.containerRef = React.createRef();
     this.state = {
       url: null,
       playing: false,
@@ -68,8 +68,8 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   };
 
   setWaveformSize = () => {
-    const waveformContainerWidth = this.waveformContainerRef.current.clientWidth;
-    const waveformSize = waveformContainerWidth > 500 ? WaveformSize.Large : WaveformSize.Small;
+    const containerWidth = this.containerRef.current.clientWidth;
+    const waveformSize = containerWidth > 500 ? WaveformSize.Large : WaveformSize.Small;
     if (waveformSize !== this.state.waveformSize) {
       this.setState({ waveformSize });
     }
@@ -171,12 +171,12 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     })(IconButton);
 
     return (
-      <div className="audio-player">
+      <div className="audio-player" ref={this.containerRef}>
         <FilePlayer
           ref={this.playerRef}
           url={url}
           height="100%"
-          width="100%"
+          width="0"
           loop={loop}
           volume={volume}
           playing={playing}
@@ -192,46 +192,54 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
           }}
         />
 
-        <div className="audio-player__header">
-          <PlayButton
-            className="audio-player__header__play-pause"
-            onClick={this.handlePlayPause}
-            size="small"
-            aria-label="Play / Pause"
-          >
-            <FontAwesomeIcon icon={playing ? faPause : faPlay} />
-          </PlayButton>
-          {this.props.download && (
-            <a
-              className="audio-player__download"
-              href={`/artist/${this.props.artistSlug}/post/${this.props.postId}/download`}
-              download={`${this.props.postId}.mp3`}
+        <div className="audio-player__body">
+          <div className="audio-player__header">
+            <PlayButton
+              className="audio-player__header__play-pause"
+              onClick={this.handlePlayPause}
+              size="small"
+              aria-label="Play / Pause"
             >
-              Download audio
-            </a>
-          )}
+              {playing ? (
+                <FontAwesomeIcon icon={faPause}/>
+              ) : (
+                <FontAwesomeIcon icon={faPlay} style={{ left: "1px" }}/>
+              )}
+            </PlayButton>
+            {this.props.download && (
+              <a
+                className="audio-player__download"
+                href={`/artist/${this.props.artistSlug}/post/${this.props.postId}/download`}
+                download={`${this.props.postId}.mp3`}
+              >
+                Download audio
+              </a>
+            )}
+          </div>
+
+          <div className="audio-player__track">
+            <AudioWaveform
+              waveform={this.props.waveform}
+              playedSeconds={playedSeconds}
+              loadedSeconds={loadedSeconds}
+              duration={this.props.duration}
+              accentColor={this.props.accentColor}
+              onSeek={this.commitSeeking}
+              size={waveformSize}
+            >
+              {showPlaybackTime && (
+                <div className="audio-player__time audio-player__start">
+                  {this.formatTime(playedSeconds)}
+                </div>
+              )}
+              <div className="audio-player__time audio-player__end">
+                {this.formatTime(this.props.duration)}
+              </div>
+            </AudioWaveform>
+          </div>
+
         </div>
 
-        <div className="audio-player__track" ref={this.waveformContainerRef}>
-          <AudioWaveform
-            waveform={this.props.waveform}
-            playedSeconds={playedSeconds}
-            loadedSeconds={loadedSeconds}
-            duration={this.props.duration}
-            accentColor={this.props.accentColor}
-            onSeek={this.commitSeeking}
-            size={waveformSize}
-          >
-            {showPlaybackTime && (
-              <div className="audio-player__time audio-player__start">
-                {this.formatTime(playedSeconds)}
-              </div>
-            )}
-            <div className="audio-player__time audio-player__end">
-              {this.formatTime(this.props.duration)}
-            </div>
-          </AudioWaveform>
-        </div>
       </div>
     );
   };

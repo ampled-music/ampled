@@ -677,7 +677,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
         <Link to="/user-details">
           {userData.image ? (
             <Image
-              publicId={userData.public_id}
+              publicId={userData.image.url}
               alt={userData.name}
               className="user-image"
             >

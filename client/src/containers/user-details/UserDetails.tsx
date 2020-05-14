@@ -305,7 +305,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
         <button onClick={this.showUserPhotoModal} aria-label="Edit avatar">
           {userData.image ? (
             <img
-              src={userData.image}
+              src={userData.image.url}
               className="user-image"
               alt="Your avatar"
             />
@@ -369,7 +369,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     }
 
     const placeholderImage = userData.image ? (
-      <img src={userData.image} className="image-preview" alt="Avatar" />
+      <img src={userData.image.url} className="image-preview" alt="Avatar" />
     ) : (
       <img src={avatar} className="image-preview" alt="Avatar" />
     );

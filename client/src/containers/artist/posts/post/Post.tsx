@@ -61,6 +61,21 @@ const canLoggedUserDeleteComment = (
   );
 };
 
+const PostTitle = ({ 
+  artistSlug, 
+  postId, 
+  title 
+}) => (
+  <div className="post__title">
+    <Link
+      style={{ textDecoration: 'none' }}
+      to={`/artist/${artistSlug}/post/${postId}`}
+    >
+      {title}
+    </Link>
+  </div>
+);
+
 const Comments = ({
   post,
   expanded,
@@ -219,22 +234,25 @@ const PostMedia = ({
     )}
 
     {image_url && !has_audio && (
-      <div className="post__image-container">
-        <img
-          className={cx({
-            post__image: true,
-            'blur-image': !allowDetails,
-          })}
-          src={renderCloudinaryPhoto(image_url)}
-        />
-        {!allowDetails && (
-          <Lock
-            isLapsed={deny_details_lapsed}
-            me={me}
-            handlePrivatePostClick={handlePrivatePostClick}
+      <>
+        <div className="post__image-container">
+          <img
+            className={cx({
+              post__image: true,
+              'blur-image': !allowDetails,
+            })}
+            src={renderCloudinaryPhoto(image_url)}
           />
-        )}
-      </div>
+          {!allowDetails && (
+            <Lock
+              isLapsed={deny_details_lapsed}
+              me={me}
+              handlePrivatePostClick={handlePrivatePostClick}
+            />
+          )}
+        </div>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+      </>
     )}
 
     {has_audio && (
@@ -266,6 +284,9 @@ const PostMedia = ({
             />
           )}
         </div>
+
+        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+
         {allowDetails && (
           <AudioPlayer
             url={returnPlayableUrl(audio_uploads[0]?.public_id)}
@@ -278,27 +299,31 @@ const PostMedia = ({
             artistSlug={artistSlug}
           />
         )}
-
       </div>
     )}
 
-    {!has_audio && !image_url && !allowDetails && (
-      <div className="post__image-container">
-        <div
-          style={{
-            height: '340px',
-            background:
-              'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
-          }}
-        />
-        {
-          <Lock
-            isLapsed={deny_details_lapsed}
-            me={me}
-            handlePrivatePostClick={handlePrivatePostClick}
-          />
-        }
-      </div>
+    {!has_audio && !image_url && (
+      <>
+        {!allowDetails && (
+          <div className="post__image-container">
+            <div
+              style={{
+                height: '340px',
+                background:
+                  'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
+              }}
+            />
+            {
+              <Lock
+                isLapsed={deny_details_lapsed}
+                me={me}
+                handlePrivatePostClick={handlePrivatePostClick}
+              />
+            }
+          </div>
+        )}
+        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+      </>
     )}
   </>
 );
@@ -639,15 +664,8 @@ class PostComponent extends React.Component<any, any> {
               accentColor={accentColor}
               handlePrivatePostClick={this.handlePrivatePostClick}
               playerCallback={this.props.playerCallback}
+              artistSlug={artistSlug}
             />
-            <div className="post__title">
-              <Link
-                style={{ textDecoration: 'none' }}
-                to={`/artist/${artistSlug}/post/${post.id}`}
-              >
-                {post.title}
-              </Link>
-            </div>
 
             {post.body && (
               <div className="post__body">

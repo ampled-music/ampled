@@ -40,6 +40,7 @@ To run the specs or fire up the server, be sure you have these installed (and ru
 - Ruby 2.5 (see [.ruby-version](.ruby-version)).
 - PostgreSQL 10.3+ (`brew install postgresql`).
 - Heroku CLI (`brew tap heroku/brew && brew install heroku`).
+- ffmpeg (`brew install ffmpeg`)
 
 ### First Time Setup
 

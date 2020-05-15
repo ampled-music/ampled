@@ -243,6 +243,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
   };
 
   handleSubmit = async (e) => {
+    console.log('submit?');
     const { showToast } = this.props;
     e.preventDefault();
 
@@ -464,8 +465,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
   updateUserPhoto = () => {
     this.closeUserPhotoModal();
 
-    if (this.props.updatedData.profileImageUrl) {
-      this.props.setMe({ image: this.props.updatedData.profileImageUrl });
+    if (this.props.updatedData.image) {
+      this.props.setMe({ image: this.props.updatedData.image });
       this.props.showToast({
         message: 'User photo updated!',
         type: 'success',

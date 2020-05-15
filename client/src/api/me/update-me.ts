@@ -7,6 +7,5 @@ export const updateMe = async (me) => {
     data: me,
   });
 
-  const profileImageUrl = me.image ? me.image.url : null;
-  return { profileImageUrl: profileImageUrl, data };
+  return { image: me.image, data };
 };

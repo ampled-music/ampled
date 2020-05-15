@@ -29,7 +29,7 @@ export class Supporters extends React.Component<Props, any> {
     return (
       <div className="supporter__hover-card">
         <div className="supporter__hover-card_header">
-          {supporter.image && (
+          {supporter.image?.public_id && (
             <div className="supporter__hover-card_header_photo">
               <Image
                 publicId={supporter.image.public_id}

@@ -243,7 +243,6 @@ class UserDetailsComponent extends React.Component<Props, any> {
   };
 
   handleSubmit = async (e) => {
-    console.log('submit?');
     const { showToast } = this.props;
     e.preventDefault();
 

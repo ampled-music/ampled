@@ -350,7 +350,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
         <div className="processing-image">
           <CircularProgress size={80} />
           <img
-            src={userData.image}
+            src={userData.image.url}
             className="image-preview loading-image"
             alt="Loading"
           />

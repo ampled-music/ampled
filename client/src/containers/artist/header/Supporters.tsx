@@ -120,7 +120,7 @@ export class Supporters extends React.Component<Props, any> {
               : 'supporter-image artist-header__person'
           }
         >
-          {supporter.image ? (
+          {supporter.image?.public_id ? (
             <Image
               publicId={supporter.image.public_id}
               alt={supporter.name}

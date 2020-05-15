@@ -124,7 +124,7 @@ export class FeaturedImages extends React.Component<Props, any> {
             >
               <div className="member-image">
                 <RenderOwnerHover owner={owner} />
-                {owner.image ? (
+                {owner.image?.public_id ? (
                   <Image
                     className="artist-header__person_image member"
                     key={owner.name}

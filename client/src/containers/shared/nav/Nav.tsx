@@ -96,8 +96,6 @@ class NavComponent extends React.Component<Props, any> {
 
   renderUserImage = () => {
     const { userData } = this.props;
-    console.log('UserData: ' + userData);
-    console.log('image: ' + userData.image);
 
     return userData.image ? (
       <Link to="/settings">

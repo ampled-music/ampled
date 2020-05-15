@@ -304,7 +304,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     return (
       <div className="user-image-container">
         <button onClick={this.showUserPhotoModal} aria-label="Edit avatar">
-          {userData.image ? (
+          {userData.image?.url ? (
             <img
               src={userData.image.url}
               className="user-image"
@@ -345,7 +345,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     const { photoBody, processingImage } = this.state;
     const { userData } = this.props;
 
-    if (processingImage && userData.image) {
+    if (processingImage && userData.image?.url) {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
@@ -369,7 +369,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       );
     }
 
-    const placeholderImage = userData.image ? (
+    const placeholderImage = userData.image?.url ? (
       <img src={userData.image.url} className="image-preview" alt="Avatar" />
     ) : (
       <img src={avatar} className="image-preview" alt="Avatar" />

@@ -675,9 +675,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return (
       <div className="user-image-container">
         <Link to="/user-details">
-          {userData.image ? (
+          {userData.image?.public_id ? (
             <Image
-              publicId={userData.image.url}
+              publicId={userData.image.public_id}
               alt={userData.name}
               className="user-image"
             >

@@ -97,7 +97,7 @@ class NavComponent extends React.Component<Props, any> {
   renderUserImage = () => {
     const { userData } = this.props;
 
-    return userData.image ? (
+    return userData.image?.public_id ? (
       <Link to="/settings">
         <Image
           publicId={userData.image.public_id}

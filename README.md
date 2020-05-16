@@ -14,6 +14,7 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
     - [Git](#git)
     - [Code Style](#code-style)
   - [Additional/Optional Development Details](#additionaloptional-development-details)
+    - [Backup/Restore Database](#backuprestore-database)
     - [Code Coverage (local)](#code-coverage-local)
     - [Using Guard](#using-guard)
     - [Using Mailcatcher](#using-mailcatcher)
@@ -108,7 +109,7 @@ Rubocop is configured to enforce the style guide for this project.
 
 ## Additional/Optional Development Details
 
-### Backup & Restore Database
+### Backup/Restore Database
 
 To backup your postgres database run:
 

@@ -88,6 +88,11 @@ const AudioWaveform = (props: AudioWaveformProps) => {
     setLastSeekCommit(Date.now());
   }
   const drawWaveformSample = (ctx, x, height) => {
+    ctx.clearRect(
+      0 + (x * (SizeConfiguration(props.size).barWidth + SizeConfiguration(props.size).barSpacing)), 
+      WAVEFORM_MAX_HEIGHT, 
+      SizeConfiguration(props.size).barWidth, 
+      -height);
     ctx.fillRect(
       0 + (x * (SizeConfiguration(props.size).barWidth + SizeConfiguration(props.size).barSpacing)), 
       WAVEFORM_MAX_HEIGHT, 
@@ -99,7 +104,7 @@ const AudioWaveform = (props: AudioWaveformProps) => {
   useEffect(() => {
     setColorPalette({
       loaded: props.accentColor,
-      loading: RGB_Linear_Shade(0.2, hexToRGB(props.accentColor, 1)),
+      loading: hexToRGB(props.accentColor, 0.8),
       hover: RGB_Linear_Shade(-0.2, hexToRGB(props.accentColor, 1)),
       played: RGB_Linear_Shade(-0.4, hexToRGB(props.accentColor, 1)),
     })

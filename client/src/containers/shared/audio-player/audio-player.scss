@@ -3,20 +3,14 @@
 
 .audio-player {
   position: relative;
-  display: flex;
-  justify-content: center;
   padding: 0.2em 0;
   overflow: hidden;
-
-  &__body {
-    flex: initial;
-  }
 
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0.5em;
+    padding: 0.5rem 1rem;
 
     &__play-pause {
       span {

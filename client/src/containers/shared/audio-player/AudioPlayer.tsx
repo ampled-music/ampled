@@ -209,54 +209,50 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
           }}
         />
 
-        <div className="audio-player__body">
-          <div className="audio-player__header">
-            <PlayButton
-              className="audio-player__header__play-pause"
-              onClick={this.handlePlayPause}
-              size="small"
-              aria-label="Play / Pause"
-            >
-              {playing ? (
-                <FontAwesomeIcon icon={faPause}/>
-              ) : (
-                <FontAwesomeIcon icon={faPlay} style={{ left: "1px" }}/>
-              )}
-            </PlayButton>
-            {this.props.download && (
-              <a
-                className="audio-player__download"
-                href={`/artist/${this.props.artistSlug}/post/${this.props.postId}/download`}
-                download={`${this.props.postId}.mp3`}
-              >
-                Download audio
-              </a>
+        <div className="audio-player__header">
+          <PlayButton
+            className="audio-player__header__play-pause"
+            onClick={this.handlePlayPause}
+            size="small"
+            aria-label="Play / Pause"
+          >
+            {playing ? (
+              <FontAwesomeIcon icon={faPause}/>
+            ) : (
+              <FontAwesomeIcon icon={faPlay} style={{ left: "1px" }}/>
             )}
-          </div>
-
-          <div className="audio-player__track">
-            <AudioWaveform
-              waveform={this.props.waveform}
-              playedSeconds={playedSeconds}
-              loadedSeconds={loadedSeconds}
-              duration={this.props.duration}
-              accentColor={this.props.accentColor}
-              onSeek={this.commitSeeking}
-              size={waveformSize}
+          </PlayButton>
+          {this.props.download && (
+            <a
+              className="audio-player__download"
+              href={`/artist/${this.props.artistSlug}/post/${this.props.postId}/download`}
+              download={`${this.props.postId}.mp3`}
             >
-              {showPlaybackTime && (
-                <div className="audio-player__time audio-player__start">
-                  {this.formatTime(playedSeconds)}
-                </div>
-              )}
-              <div className="audio-player__time audio-player__end">
-                {this.formatTime(this.props.duration)}
-              </div>
-            </AudioWaveform>
-          </div>
-
+              Download audio
+            </a>
+          )}
         </div>
 
+        <div className="audio-player__track">
+          <AudioWaveform
+            waveform={this.props.waveform}
+            playedSeconds={playedSeconds}
+            loadedSeconds={loadedSeconds}
+            duration={this.props.duration}
+            accentColor={this.props.accentColor}
+            onSeek={this.commitSeeking}
+            size={waveformSize}
+          >
+            {showPlaybackTime && (
+              <div className="audio-player__time audio-player__start">
+                {this.formatTime(playedSeconds)}
+              </div>
+            )}
+            <div className="audio-player__time audio-player__end">
+              {this.formatTime(this.props.duration)}
+            </div>
+          </AudioWaveform>
+        </div>
       </div>
     );
   };

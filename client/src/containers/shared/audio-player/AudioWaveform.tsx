@@ -70,6 +70,7 @@ interface AudioWaveformProps {
 
 const AudioWaveform = (props: AudioWaveformProps) => {
   const canvasRef = useRef(null);
+  const animationTimeouts = useRef([]);
   const [waveformSamples, setWaveformSamples]= useState([]);
   const [colorPalette, setColorPalette] = useState(null);
   const [lastSeekCommit, setLastSeekCommit] = useState(null);
@@ -113,6 +114,10 @@ const AudioWaveform = (props: AudioWaveformProps) => {
       );
       setAnimation(true);
     }
+
+    return () => {
+      animationTimeouts.current.forEach(timeout => clearTimeout(timeout));
+    }
   }, [props.size])
 
   // Draw waveform animation
@@ -133,7 +138,7 @@ const AudioWaveform = (props: AudioWaveformProps) => {
         // recursion
         drawWaveformSample(ctx, x, height);
         height++;
-        setTimeout(() => fill(height), Math.abs(height-20));
+        animationTimeouts.current.push(setTimeout(() => fill(height), Math.abs(height-20)));
       }
       fill(0);
     })

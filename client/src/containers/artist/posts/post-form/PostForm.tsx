@@ -333,6 +333,11 @@ class PostFormComponent extends React.Component<Props, any> {
     };
 
     this.setState({ savingPost: true });
+    if (deletedImages && deletedImages.length > 0) {
+      for (const deleteImage of deletedImages) {
+        await this.removeImageFromBackendAndCloudinary(deleteImage);
+      }
+    }
 
     if (isEdit) {
       const currentPublicIds = post.audio_uploads.map((au) => au.public_id);
@@ -351,12 +356,6 @@ class PostFormComponent extends React.Component<Props, any> {
     } else {
       this.props.createPost(post);
     }
-    if (deletedImages && deletedImages.length > 0) {
-      for (const deleteImage of deletedImages) {
-        await this.removeImageFromBackendAndCloudinary(deleteImage);
-      }
-    }
-    isEdit ? this.props.editPost(post) : this.props.createPost(post);
   };
 
   setAudioUpload = (publicId, fileName) => {

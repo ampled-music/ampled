@@ -30,6 +30,10 @@ RSpec.describe AudioProcessingService, type: :service do
           .and_return(s3_object)
 
         allow(s3_object)
+          .to receive(:exists?)
+          .and_return(true)
+
+        allow(s3_object)
           .to receive(:get)
           .and_return(s3_object_resource)
 
@@ -81,6 +85,10 @@ RSpec.describe AudioProcessingService, type: :service do
           .to receive(:object)
           .with(public_id)
           .and_return(s3_object)
+
+        allow(s3_object)
+          .to receive(:exists?)
+          .and_return(true)
 
         s3_object_resource = double
         allow(s3_object)
@@ -142,6 +150,10 @@ RSpec.describe AudioProcessingService, type: :service do
           .with(public_id)
           .and_return(s3_object)
 
+        allow(s3_object)
+          .to receive(:exists?)
+          .and_return(true)
+
         s3_object_resource = double
         allow(s3_object)
           .to receive(:get)
@@ -199,6 +211,10 @@ RSpec.describe AudioProcessingService, type: :service do
           .to receive(:object)
           .with(public_id)
           .and_return(s3_object)
+
+        allow(s3_object)
+          .to receive(:exists?)
+          .and_return(true)
 
         s3_object_resource = double
         allow(s3_object)
@@ -294,6 +310,10 @@ RSpec.describe AudioProcessingService, type: :service do
           .to receive(:object)
           .with(public_id)
           .and_return(s3_object)
+
+        allow(s3_object)
+          .to receive(:exists?)
+          .and_return(true)
 
         s3_object_resource = double
         allow(s3_object)

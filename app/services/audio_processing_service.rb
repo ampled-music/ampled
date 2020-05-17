@@ -1,14 +1,18 @@
 class AudioProcessingService
   class FfmpegError < StandardError; end
+  class S3ObjectNotFound < StandardError; end
 
   def initialize(public_id)
     @public_id = public_id
     @process_id = SecureRandom.uuid
     @raw_file_path = Rails.root.join("tmp/audio/raw_#{@process_id}")
+
     @s3 = Aws::S3::Resource.new
+    object = @s3.bucket(ENV["S3_BUCKET"]).object(public_id)
+    raise S3ObjectNotFound unless object.exists?
 
     # save audio to disk
-    @s3.bucket(ENV["S3_BUCKET"]).object(public_id).get(response_target: @raw_file_path)
+    object.get(response_target: @raw_file_path)
   end
 
   # generate SHA256 hash from file

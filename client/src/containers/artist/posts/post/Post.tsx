@@ -301,8 +301,6 @@ const PostMedia = ({
       </div>
     )}
 
-    {!has_audio && !images.length && !allowDetails && (
-      <>
     {!has_audio && !images.length && (
       <>
         {!allowDetails && (

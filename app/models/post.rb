@@ -30,10 +30,10 @@ class Post < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   has_many :audio_uploads, dependent: :destroy
+  has_many :images, as: :imageable, dependent: :destroy
 
   accepts_nested_attributes_for :audio_uploads, allow_destroy: true
   accepts_nested_attributes_for :images, allow_destroy: true
-  has_many :images, as: :imageable, dependent: :destroy
 
   def author
     user.name

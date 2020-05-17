@@ -60,6 +60,7 @@ class PostsController < ApplicationController
 
   def post_params
     Image.rename_params(params, :post)
+    AudioUpload.rename_params(params, :post)
     params.require(:post).permit(
       :title,
       :body,
@@ -80,6 +81,7 @@ class PostsController < ApplicationController
 
   def post_update_params
     Image.rename_params(params, :post)
+    AudioUpload.rename_params(params, :post)
     params.require(:post).permit(
       :title,
       :body,

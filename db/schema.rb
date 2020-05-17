@@ -11,6 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_04_29_010000) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,9 +42,9 @@ ActiveRecord::Schema.define(version: 2020_04_29_010000) do
   create_table "audio_uploads", force: :cascade do |t|
     t.bigint "post_id", null: false
     t.string "public_id", null: false
-    t.string "hash_key", null: false
+    t.string "hash_key"
     t.string "name"
-    t.integer "duration", null: false
+    t.integer "duration"
     t.integer "waveform", default: [], null: false, array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -95,8 +96,6 @@ ActiveRecord::Schema.define(version: 2020_04_29_010000) do
     t.datetime "updated_at", null: false
     t.string "title"
     t.text "body"
-    t.string "image_url"
-    t.string "audio_file"
     t.boolean "is_private", default: false
     t.boolean "allow_download", default: false
     t.string "video_embed_url"

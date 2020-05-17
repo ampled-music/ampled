@@ -1,6 +1,4 @@
 class AudioProcessingService
-  DEFAULT_WAVEFORM_LENGTH = 1000
-
   class FfmpegError < StandardError; end
 
   def initialize(public_id)
@@ -21,7 +19,7 @@ class AudioProcessingService
 
   # probe file for duration
   def duration
-    duration = `ffprobe -i #{@raw_file_path} -show_entries format=duration -v quiet -of csv="p=0"`
+    duration = FFMPEG.probe(@raw_file_path, "duration")
     duration.to_i
   end
 
@@ -37,16 +35,16 @@ class AudioProcessingService
   # The sample rate and bit depth can be fine tuned further.
   # Finally, read output file to build the waveform using peak normalization.
   #
-  def generate_waveform
+  def generate_waveform(waveform_length)
     # process original file
     @downsampled_file_path = Rails.root.join("tmp/audio/downsampled_#{@process_id}.wav")
-    `ffmpeg -i #{@raw_file_path} -acodec pcm_u8 -ar 1000 -ac 1 #{@downsampled_file_path}`
+    FFMPEG.run(@raw_file_path, @downsampled_file_path, "pcm_u8", 1000, 1)
 
     error_message = "FFMPEG: failed to transcode and downsample audio upload: #{@public_id}"
     raise FfmpegError, error_message unless File.exist?(@downsampled_file_path)
 
-    # ready output file buffers
-    waveform_buffers = read_waveform_buffers
+    # read output file buffers
+    waveform_buffers = distribute_frames_across_buffers(waveform_length)
 
     # reduce to one positive amplitude value per waveform buffer
     waveform = []
@@ -70,11 +68,23 @@ class AudioProcessingService
 
   private
 
-  def read_waveform_buffers
+  # == Distribute frames across N buffers as evenly as possible
+  #
+  # example:
+  # If the file contains the frames [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  # and we want to distribute frames evenly into 3 different buckets.
+  #
+  # This method will return
+  #   [
+  #     [0, 1, 2],      // buffer 1
+  #     [3, 4, 5],      // buffer 2
+  #     [6, 7, 8, 9],   // buffer 3
+  #   ]
+  def distribute_frames_across_buffers(buffer_count)
     waveform_buffers = []
     reader = WaveFile::Reader.new(@downsampled_file_path.to_path)
     begin
-      num_samples_per_waveform_buffer = (reader.total_sample_frames / DEFAULT_WAVEFORM_LENGTH.to_f)
+      num_samples_per_waveform_buffer = (reader.total_sample_frames / buffer_count.to_f)
       uncertainty = num_samples_per_waveform_buffer - num_samples_per_waveform_buffer.to_i
       propagated_uncertainty = 0.0
 

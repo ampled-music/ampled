@@ -22,6 +22,8 @@
 #
 
 class AudioUpload < ApplicationRecord
+  DEFAULT_WAVEFORM_LENGTH = 1000
+
   before_destroy :delete_audio
   before_create :process_audio
   after_find :ensure_waveform
@@ -39,11 +41,11 @@ class AudioUpload < ApplicationRecord
   private
 
   def ensure_waveform
-    return if waveform.length == AudioProcessingService::DEFAULT_WAVEFORM_LENGTH
+    return if waveform.length == DEFAULT_WAVEFORM_LENGTH
 
     audio_processing_service = AudioProcessingService.new(public_id)
     begin
-      self.waveform = audio_processing_service.generate_waveform
+      self.waveform = audio_processing_service.generate_waveform(DEFAULT_WAVEFORM_LENGTH)
       waveform.empty? && (raise WaveformEmptyError, "Unable to generate waveform for audio upload with id: #{id}")
       save!
     ensure
@@ -60,7 +62,7 @@ class AudioUpload < ApplicationRecord
       self.duration = audio_processing_service.duration
       duration <= 0 && (raise DurationNotFoundError, "Unable to get duration for audio upload with id: #{id}")
 
-      self.waveform = audio_processing_service.generate_waveform
+      self.waveform = audio_processing_service.generate_waveform(DEFAULT_WAVEFORM_LENGTH)
       waveform.empty? && (raise WaveformEmptyError, "Unable to generate waveform for audio upload with id: #{id}")
     ensure
       audio_processing_service.dispose

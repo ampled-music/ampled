@@ -52,6 +52,8 @@ class AudioProcessingService
       waveform << buffer.map { |sample| (sample - 128).abs }.max
     end
 
+    return waveform if waveform.empty?
+
     # peak normalization
     peak = waveform.max
     gain = 128 - peak

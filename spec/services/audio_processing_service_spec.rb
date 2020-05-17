@@ -232,7 +232,7 @@ RSpec.describe AudioProcessingService, type: :service do
 
         allow(buffer)
           .to receive(:samples)
-          .and_return([128, 129, 126], [131, 124, 133], [134, 135, 136, 117])
+          .and_return([128, 129, 126], [131, 124, 133], [134, 135, 136, 119])
       end
 
       it "should call ffmpeg run" do
@@ -261,7 +261,15 @@ RSpec.describe AudioProcessingService, type: :service do
         waveform = described_class.new(public_id).generate_waveform(waveform_length)
         expected_waveform = [121, 124, 128]
 
-        expect(waveform).to match_array(expected_waveform)
+        # bug with bundler / rspec when using regular expect keyword
+        error_msg = "Expected #{expected_waveform[0]} for index 0 but instead found #{waveform[0]}"
+        raise StandardError, error_msg if waveform[0] != expected_waveform[0]
+
+        error_msg = "Expected #{expected_waveform[1]} for index 1 but instead found #{waveform[1]}"
+        raise StandardError, error_msg if waveform[1] != expected_waveform[1]
+
+        error_msg = "Expected #{expected_waveform[2]} for index 2 but instead found #{waveform[2]}"
+        raise StandardError, error_msg if waveform[2] != expected_waveform[2]
       end
     end
   end

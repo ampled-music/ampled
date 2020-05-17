@@ -828,7 +828,10 @@ class PostFormComponent extends React.Component<Props, any> {
     } = this.props;
     return (
       <div>
-        <Upload onComplete={this.updateAudioFile} />
+        <Upload
+          onComplete={this.updateAudioFile}
+          onRemove={() => this.updateAudioFile(null)}
+        />
 
         <div className="post-form__audio_allow-checkbox">
           {audioFile && audioFile.length > 0 && (

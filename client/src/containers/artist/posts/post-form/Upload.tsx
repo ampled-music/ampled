@@ -15,6 +15,7 @@ interface UploadState {
 
 interface UploadProps {
   onComplete: Function;
+  onRemove: Function;
 }
 
 class Upload extends React.Component<UploadProps, UploadState> {
@@ -95,7 +96,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
     return axios.get(`/uploads/sign?contentType=${file.type}`);
   }
 
-  removeFile = () =>
+  removeFile = () => {
     this.setState({
       progress: 0,
       complete: false,
@@ -104,6 +105,8 @@ class Upload extends React.Component<UploadProps, UploadState> {
       fileName: undefined,
       uploadError: undefined,
     });
+    this.props.onRemove();
+  }
 
   renderPreview(): React.ReactNode {
     const { progress } = this.state;

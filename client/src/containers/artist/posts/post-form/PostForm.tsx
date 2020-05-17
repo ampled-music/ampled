@@ -732,7 +732,10 @@ class PostFormComponent extends React.Component<Props, any> {
                   this.state.audio_uploads[0].id ? (
                   this.renderExistingAudio()
                 ) : (
-                  <Upload onComplete={this.setAudioUpload} />
+                  <Upload 
+                    onComplete={this.setAudioUpload} 
+                    onRemove={() => this.setAudioUpload(null, null)}
+                  />
                 )}
               </div>
               {this.renderVisualUpload()}

@@ -50,12 +50,12 @@ class HomeBrowse extends React.Component {
     const { artists, loading, canLoadMore } = this.state;
 
     const loadMore = (
-      <a
+      <button
         onClick={this.loadMore}
         className="home-artists__button btn btn-ampled center"
       >
         Load More
-      </a>
+      </button>
     );
 
     return (

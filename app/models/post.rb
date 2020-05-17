@@ -7,7 +7,6 @@
 #  body            :text
 #  created_at      :datetime         not null
 #  id              :bigint(8)        not null, primary key
-#  image_url       :string
 #  is_private      :boolean          default(FALSE)
 #  title           :string
 #  updated_at      :datetime         not null
@@ -33,6 +32,8 @@ class Post < ApplicationRecord
   has_many :audio_uploads, dependent: :destroy
 
   accepts_nested_attributes_for :audio_uploads, allow_destroy: true
+  accepts_nested_attributes_for :images, allow_destroy: true
+  has_many :images, as: :imageable, dependent: :destroy
 
   def author
     user.name

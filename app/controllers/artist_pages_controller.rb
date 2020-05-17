@@ -77,10 +77,7 @@ class ArtistPagesController < ApplicationController
     old_image_ids = @artist_page.images.map(&:id)
     if @artist_page.update(artist_page_params)
       Image.where(id: old_image_ids).delete_all unless has_no_images
-      unless has_no_members
-        @artist_page.owners.clear
-        set_members
-      end
+      set_members unless has_no_members
       render json: { status: "ok", message: "Your page has been updated!" }
     else
       render json: { status: "error", message: "Something went wrong." }
@@ -91,6 +88,12 @@ class ArtistPagesController < ApplicationController
     unless @role == "admin" || current_user&.admin?
       return render json: { status: "error", message: "You don't have that permission." }
     end
+
+    # This param will be set when the Delete your page button is click by the Artist admin
+    # but not when a site admin is deleting a page. When an Artist admin initiates the deletion,
+    # we want to let them do that and first cancel any subscriptions.
+    cancel_subs = params[:cancel_subscriptions] && params[:cancel_subscriptions] == "true"
+    @artist_page.subscriptions.each(&:cancel!) if cancel_subs
 
     render json: { status: "ok", message: "Your page has been deleted!" } if @artist_page.destroy
   end
@@ -190,16 +193,9 @@ class ArtistPagesController < ApplicationController
     return show_pending unless current_user&.owned_pages&.include?(@artist_page)
   end
 
-  # We accept both 'images' and 'images_attributes' as artist_page parameters from the frontend.
-  # Here we rename 'images' to 'images_attribures', which is the key that Rails' nested attribute
-  # support expects.
-  def rename_image_params
-    params[:artist_page][:images_attributes] = params[:artist_page][:images] if params[:artist_page]&.include?(:images)
-  end
-
   # Only allow a trusted parameter "white list" through.
   def artist_page_params
-    rename_image_params
+    Image.rename_params(params, :artist_page)
     params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :banner_image_url,
                                         :slug, :location, :accent_color, :video_url, :verb_plural, :members,
                                         :hide_members, images_attributes: Image::PERMITTED_PARAMS)
@@ -207,8 +203,13 @@ class ArtistPagesController < ApplicationController
 
   # Helper functions for creating / updating an artist page.
   def set_members
+    # Store existing owners for later checking if they were already in the band.
+    existing_owners = @artist_page.owners.map(&:id)
+    @artist_page.owners.clear
+
     params[:members].map do |member|
       member_user = User.find_by(email: member[:email])
+
       new_member = false
       if member_user.nil?
         new_member = true
@@ -220,16 +221,21 @@ class ArtistPagesController < ApplicationController
                             artist_page_id: @artist_page[:id]).update(instrument: member[:role],
                                                                       role: member[:isAdmin] ? "admin" : "member")
 
-      # Skip emails if we're not in an environment where they work.
-      next if ENV["REDIS_URL"].nil?
+      # Skip emails if we're not in an environment where they work
+      # or if the user was already part of the band.
+      next if ENV["REDIS_URL"].nil? || existing_owners.include?(member_user.id)
 
-      if new_member
-        ArtistPageMemberCreatedJob.perform_async(@artist_page.id, member_user.id, current_user.id)
-      elsif member_user.id != current_user.id
-        ArtistPageMemberAddedJob.perform_async(@artist_page.id, member_user.id, current_user.id)
-      end
+      send_member_add_email(@artist_page.id, member_user.id, current_user.id, new_member)
     end
     @artist_page.save
+  end
+
+  def send_member_add_email(artist_page_id, member_user_id, current_user_id, new_member)
+    if new_member
+      ArtistPageMemberCreatedJob.perform_async(artist_page_id, member_user_id, current_user_id)
+    elsif member_user_id != current_user_id
+      ArtistPageMemberAddedJob.perform_async(artist_page_id, member_user_id, current_user_id)
+    end
   end
 
   def create_member(member)

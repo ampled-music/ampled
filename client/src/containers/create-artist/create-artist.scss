@@ -69,6 +69,12 @@
     margin: 2rem 0 0;
   }
 
+  &__bottomcopy {
+    font-family: $font-family-monospace;
+    width: 100%;
+    margin: 2rem 0 0;
+  }
+
   .artist-about,
   .artist-custom,
   .artist-members,
@@ -77,6 +83,20 @@
     margin-bottom: 2rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid $black;
+  }
+
+  .btn-delete {
+    color: $brand-danger;
+    border-color: $brand-danger;
+
+    &:hover {
+      background-color: $brand-danger;
+      color: $white;
+    }
+
+    @include mq($layout-s) {
+      margin-bottom: 12px;
+    }
   }
 
   .image-upload {

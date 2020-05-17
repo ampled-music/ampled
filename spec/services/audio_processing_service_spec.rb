@@ -267,7 +267,6 @@ RSpec.describe AudioProcessingService, type: :service do
     end
   end
 
-
   describe "dispose" do
     context "when disposing service" do
       let(:public_id) { "abc.mp3" }

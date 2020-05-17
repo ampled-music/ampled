@@ -169,7 +169,7 @@ RSpec.describe AudioProcessingService, type: :service do
   end
 
   describe "generate_waveform" do
-    context "waveform test" do
+    context "waveform" do
       let(:public_id) { "abc.mp3" }
       let(:process_id) { SecureRandom.uuid }
       let(:raw_file_path) { Rails.root.join("tmp/audio/raw_#{process_id}") }
@@ -258,18 +258,73 @@ RSpec.describe AudioProcessingService, type: :service do
       end
 
       it "should generate correct waveform values" do
-        waveform = described_class.new(public_id).generate_waveform(waveform_length)
+        service = described_class.new(public_id)
+        waveform = service.generate_waveform(waveform_length)
         expected_waveform = [121, 124, 128]
 
-        # bug with bundler / rspec when using regular expect keyword
-        error_msg = "Expected #{expected_waveform[0]} for index 0 but instead found #{waveform[0]}"
-        raise StandardError, error_msg if waveform[0] != expected_waveform[0]
+        expect(waveform).to match_array(expected_waveform)
+      end
+    end
+  end
 
-        error_msg = "Expected #{expected_waveform[1]} for index 1 but instead found #{waveform[1]}"
-        raise StandardError, error_msg if waveform[1] != expected_waveform[1]
 
-        error_msg = "Expected #{expected_waveform[2]} for index 2 but instead found #{waveform[2]}"
-        raise StandardError, error_msg if waveform[2] != expected_waveform[2]
+  describe "dispose" do
+    context "when disposing service" do
+      let(:public_id) { "abc.mp3" }
+      let(:process_id) { SecureRandom.uuid }
+      let(:raw_file_path) { Rails.root.join("tmp/audio/raw_#{process_id}") }
+
+      before(:each) do
+        allow(SecureRandom)
+          .to receive(:uuid)
+          .and_return(process_id)
+
+        s3 = double
+        allow(Aws::S3::Resource)
+          .to receive(:new)
+          .and_return(s3)
+
+        s3_bucket = double
+        allow(s3)
+          .to receive(:bucket)
+          .with(ENV["S3_BUCKET"])
+          .and_return(s3_bucket)
+
+        s3_object = double
+        allow(s3_bucket)
+          .to receive(:object)
+          .with(public_id)
+          .and_return(s3_object)
+
+        s3_object_resource = double
+        allow(s3_object)
+          .to receive(:get)
+          .and_return(s3_object_resource)
+
+        allow(File)
+          .to receive(:exist?)
+          .and_return(true)
+
+        allow(File)
+          .to receive(:delete)
+      end
+
+      it "should delete raw file" do
+        described_class.new(public_id).dispose
+
+        expect(File)
+          .to have_received(:delete)
+          .with(raw_file_path)
+      end
+
+      it "should delete downsampled file" do
+        service = described_class.new(public_id)
+        service.instance_variable_set(:@downsampled_file_path, "test")
+        service.dispose
+
+        expect(File)
+          .to have_received(:delete)
+          .with("test")
       end
     end
   end

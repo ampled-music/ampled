@@ -83,4 +83,69 @@ RSpec.describe AudioUpload, type: :model do
       end
     end
   end
+
+  describe "after find" do
+    let(:post) { create(:post) }
+    let(:audio_processing_service) { double }
+    let(:waveform_size) { 1000 }
+
+    before(:each) do
+      allow(AudioProcessingService).to receive(:new) { audio_processing_service }
+      allow(audio_processing_service).to receive(:generate_hash) { "fake_hash" }
+      allow(audio_processing_service).to receive(:duration) { 123 }
+      allow(audio_processing_service).to receive(:dispose)
+      allow(audio_processing_service).to receive(:generate_waveform) { Array.new(waveform_size) }
+    end
+
+    context "when waveform length matches default length" do
+      before do
+        post.audio_uploads << AudioUpload.new(public_id: "abc.mp3")
+        post.save!
+        RSpec::Mocks.space.proxy_for(AudioProcessingService).reset
+        RSpec::Mocks.space.proxy_for(audio_processing_service).reset
+        allow(AudioProcessingService).to receive(:new) { audio_processing_service }
+        allow(audio_processing_service).to receive(:generate_hash) { "fake_hash" }
+        allow(audio_processing_service).to receive(:duration) { 123 }
+        allow(audio_processing_service).to receive(:dispose)
+        allow(audio_processing_service).to receive(:generate_waveform) { Array.new(waveform_size) }
+
+        AudioUpload.find(post.audio_uploads.first.id)
+      end
+
+      it "should not call audio processing service" do
+        expect(AudioProcessingService).to_not have_received(:new)
+      end
+    end
+
+    context "when waveform lenght does not match default length" do
+      before do
+        allow(audio_processing_service).to receive(:generate_waveform) { Array.new(50) }
+        post.audio_uploads << AudioUpload.new(public_id: "abc.mp3")
+        post.save!
+        RSpec::Mocks.space.proxy_for(AudioProcessingService).reset
+        RSpec::Mocks.space.proxy_for(audio_processing_service).reset
+        allow(AudioProcessingService).to receive(:new) { audio_processing_service }
+        allow(audio_processing_service).to receive(:generate_hash) { "fake_hash" }
+        allow(audio_processing_service).to receive(:duration) { 123 }
+        allow(audio_processing_service).to receive(:dispose)
+        allow(audio_processing_service).to receive(:generate_waveform) { Array.new(waveform_size) }
+        AudioUpload.find(post.audio_uploads.first.id)
+      end
+
+      it "should construct audio processing service with public_id" do
+        expect(AudioProcessingService)
+          .to have_received(:new)
+          .with("abc.mp3")
+      end
+
+      it "should call generate_waveform on audio processing service" do
+        expect(audio_processing_service)
+          .to have_received(:generate_waveform)
+      end
+
+      it "should have new waveform size" do
+        expect(post.audio_uploads.first.waveform.size).to equal(waveform_size)
+      end
+    end
+  end
 end

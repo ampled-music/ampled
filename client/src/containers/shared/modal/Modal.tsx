@@ -15,6 +15,7 @@ interface Props {
   open: any;
   fullScreen: boolean;
   onClose?: () => void;
+  className?: string;
 }
 
 class Modal extends React.Component<Props, any> {
@@ -22,6 +23,7 @@ class Modal extends React.Component<Props, any> {
     return (
       <MuiThemeProvider theme={theme}>
         <Dialog
+          className={this.props.className}
           open={this.props.open}
           aria-labelledby="form-dialog-title"
           onClose={this.props.onClose}

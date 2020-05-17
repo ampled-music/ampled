@@ -536,6 +536,7 @@ class PostComponent extends React.Component<any, any> {
         <Modal
           open={this.state.showEditPostModal}
           onClose={this.closeEditPostModal}
+          className="post-modal"
         >
           <PostForm
             close={this.closeEditPostModal}

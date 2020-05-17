@@ -338,3 +338,11 @@ h6 {
     border-radius: 0px;
   }
 }
+
+.post-modal {
+  .MuiPaper-root {
+    @include mq($tablet) {
+      min-height: 750px;
+    }
+  }
+}

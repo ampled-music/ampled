@@ -143,7 +143,7 @@
   }
 
   &__container {
-    margin: auto;
+    margin: 0 auto;
     width: 100%;
     @include mq($tablet) {
       width: 550px;
@@ -465,6 +465,7 @@
       margin: 0 auto;
       padding: 10px 15px;
       outline: none;
+      max-width: 600px;
 
       &:hover {
         background-color: $gray-lightest;

@@ -18,7 +18,6 @@ namespace :dummy do
         twitter: social,
         instagram: social,
         email: Faker::Internet.email,
-        profile_image_url: "https://res.cloudinary.com/ampled-web/image/upload/v1586552080/testing/TestingImage_#{rand(1..30)}.jpg",
         password: password,
         password_confirmation: password
       )

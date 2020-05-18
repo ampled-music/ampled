@@ -7,90 +7,171 @@
   text-align: center;
   background-color: $white;
   height: 100vh;
+  width: 100%;
+  background: url('../../../../images/backgrounds/background_texture_post.png');
+  background-repeat: repeat-x;
+  background-position: top center;
+  background-size: cover;
 
   @include mq($tablet) {
     height: auto;
   }
 
-  &__description {
-    .rich-editor-container {
-      .rich-controls {
-        height: 30px;
-        line-height: 28px;
-        font-family: $font-family-monospace;
-        text-align: left;
+  h4 {
+    text-transform: uppercase;
+    margin: 1rem auto;
+  }
 
-        span.helper-text {
-          font-style: italic;
-          float: right;
-          color: $gray-light;
-          font-size: 0.8rem;
+  form {
+    background: $white;
+    padding: 1rem;
+  }
 
-          .additional {
-            position: absolute;
-            background: white;
-            border: 1px solid $gray-light;
-            z-index: 999;
-            line-height: 20px;
-            padding: 8px;
-            width: 250px;
-            right: 0;
-          }
-        }
+  &__controls {
+    display: flex;
+    margin: 0 1rem 1rem;
+    button {
+      border: 1px solid transparent;
+      margin: 0 0.5rem;
+      opacity: 0.5;
+      font-size: 0.8rem;
+      min-width: 50px;
+      font-family: $font-family-sans-serif;
 
-        button,
-        span[role='button'] {
-          background: white;
-          border: 1px solid $gray-light;
-          width: 28px;
-          height: 28px;
-          display: inline-block;
-          text-align: center;
-
-          &.active {
-            background: $black;
-            color: white;
-          }
-        }
+      @include mq($tablet) {
+        font-size: 1rem;
       }
+
+      &:hover {
+        opacity: 1;
+        background: $white;
+      }
+      &.active {
+        border: 1px solid $black;
+        opacity: 1;
+      }
+      span {
+        display: flex;
+        flex-direction: column;
+      }
+      .btn__icon {
+        width: 100%;
+        max-width: 60px;
+      }
+    }
+  }
+
+  &__title {
+    margin-bottom: 1rem;
+    input {
+      font-family: $font-family-sans-serif;
+      font-size: 1.2rem;
+      &[placeholder] {
+        color: $gray;
+      }
+    }
+  }
+
+  &__description {
+    margin: 0 auto 1rem;
+
+    .rich-editor-container {
+      position: relative;
+
       .rich-editor {
         border: 1px solid $gray-lighter;
         height: 200px;
-        max-height: 200px;
-        font-family: LL Replica Light Web, sans-serif;
+        font-family: $font-family-sans-serif-light;
         border-radius: 0px;
         display: block;
         overflow: auto;
-        padding: 18.5px 14px;
+        padding: 10px;
 
         &:hover {
           border: 1px solid $black;
         }
         &.focused {
-          border: 2px solid $black;
-          padding: 17.5px 13px;
-          font-family: LL Replica Light Web, sans-serif;
+          border: 1px solid $black;
+          font-family: $font-family-sans-serif-light;
         }
+        &.large {
+          height: 342px;
+        }
+      }
+    }
+
+    .rich-controls {
+      height: 30px;
+      line-height: 28px;
+      font-family: $font-family-monospace;
+      text-align: left;
+      position: absolute;
+      bottom: -2px;
+      right: 0;
+      z-index: 10;
+
+      button,
+      span[role='button'] {
+        background: $white;
+        border: 1px solid $gray-lighter;
+        width: 28px;
+        height: 28px;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+          border: 1px solid $black;
+        }
+
+        &.active {
+          background: $black;
+          color: $white;
+        }
+      }
+    }
+    .public-DraftEditorPlaceholder-root {
+      color: $gray-lighter;
+    }
+  }
+
+  &__link {
+    margin-bottom: 1rem;
+    input {
+      &[placeholder] {
+        color: $gray;
       }
     }
   }
 
   &__container {
-    @include mq(0, $tablet) {
-      .tear {
-        display: none;
-      }
+    margin: 0 auto;
+    width: 100%;
+    @include mq($tablet) {
+      width: 550px;
     }
   }
 
-  &__checkboxes {
-    font-family: $font-family-monospace;
-    font-weight: bold;
+  &__audio {
     margin-bottom: 1rem;
+    &_allow-checkbox {
+      display: flex;
+      max-width: 500px;
+      margin: 0.5rem 0 0;
+      align-self: flex-start;
 
-    input[type='checkbox'] {
-      width: 15px;
-      margin-right: 0.5rem;
+      label {
+        margin: 0px 0px 0px -11px;
+      }
+
+      input[type='checkbox'] {
+        width: 15px;
+        margin-right: 0.5rem;
+      }
+      svg {
+        font-size: 1rem;
+        fill: $black;
+      }
     }
   }
 
@@ -99,26 +180,73 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    margin-bottom: 1rem;
 
-    .uploader {
-      margin: 0 0 1rem !important;
+    &_upload {
+      width: 100%;
     }
 
-    .post-image {
-      display: flex;
-      justify-content: space-between;
-      align-content: center;
-      margin-bottom: 1rem;
+    .preview {
+      &__image {
+        width: 100%;
+      }
+    }
+  }
 
-      .preview {
-        font-size: 0.8rem;
+  &__video {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    .uploader {
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__public {
+    display: flex;
+    font-family: $font-family-monospace;
+    font-weight: bold;
+
+    input[type='checkbox'] {
+      width: 15px;
+      margin-right: 0.5rem;
+    }
+    svg {
+      font-size: 1rem;
+      fill: $black;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    width: 100%;
+    button {
+      border: 1px solid $black;
+      &.cancel-button {
+        width: auto;
         margin-right: 1rem;
-
-        &__image {
-          width: 40px;
-          margin-right: 1rem;
+      }
+      &.publish-button {
+        max-width: 100%;
+        &.disabled {
+          border-color: $gray-lighter;
+        }
+        &:not(.disabled) {
+          color: $white;
+          background-color: $black;
         }
       }
+    }
+  }
+
+  &__empty {
+    margin: 2rem auto;
+    &_image {
+      margin-bottom: 2rem;
+      width: 40%;
+    }
+    &_copy {
+      font-family: $font-family-monospace;
     }
   }
 
@@ -127,7 +255,9 @@
     color: $brand-primary;
     font-size: 0.8rem;
     display: flex;
-    align-content: center;
+    width: 40px;
+    justify-content: center;
+    align-items: center;
 
     &[data-progress] {
       display: none;
@@ -137,29 +267,36 @@
       display: inherit;
     }
 
-    .remove-button {
-      text-decoration: underline;
-      cursor: pointer;
-      margin-right: 1rem;
-      align-self: center;
-
-      &:hover {
-        text-decoration: none;
-      }
+    .cancel-button {
+      width: 40px;
+      height: 40px;
     }
 
     label {
       align-self: center;
       margin: 0;
     }
+  }
 
-    .replace-button {
-      text-decoration: underline;
-      cursor: pointer;
+  .helper-text {
+    font-style: italic;
+    float: right;
+    color: $gray-light;
+    font-size: 0.8rem;
+    margin: 1.5rem 0;
+    font-family: $font-family-monospace;
+    position: relative;
 
-      &:hover {
-        text-decoration: none;
-      }
+    .additional {
+      position: absolute;
+      background: white;
+      border: 1px solid $gray-light;
+      z-index: 999;
+      line-height: 20px;
+      padding: 8px;
+      width: 250px;
+      right: 0px;
+      top: -100px;
     }
   }
 
@@ -167,12 +304,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: 1rem;
     align-items: center;
-
-    label {
-      margin: 0px;
-    }
 
     .progress-container {
       width: 100%;
@@ -183,6 +315,7 @@
       font-family: $font-family-monospace;
       font-size: 13px;
       justify-content: space-between;
+      border: 1px solid $black;
 
       &[data-progress] {
         display: none;
@@ -208,7 +341,8 @@
         }
 
         &_song {
-          max-width: 220px;
+          text-align: left;
+          max-width: 310px;
         }
       }
     }
@@ -300,10 +434,12 @@
 
   .uploader {
     width: 100%;
+    max-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1rem;
+    position: relative;
+    overflow: hidden;
 
     label {
       width: 100%;
@@ -315,34 +451,44 @@
       height: 25px;
     }
 
-    .audio-button,
-    .image-button {
+    .helper-text {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      margin: 0;
+    }
+
+    .btn__icon {
+      margin-right: 0.5rem;
+    }
+
+    button,
+    span[role='button'] {
       text-transform: capitalize;
-      min-height: 55px;
       border: 1px solid $black;
       background-color: $white;
       border-radius: 0px;
-      text-transform: capitalize;
       margin: 0 auto;
-      padding: 15px 0;
+      padding: 10px 15px;
       outline: none;
+      max-width: 600px;
 
       &:hover {
-        color: $white;
-        background-color: $black;
+        background-color: $gray-lightest;
       }
 
-      .finished-button {
-        border: 1px solid $black;
-        color: $black;
+      &.cancel-button {
+        position: absolute;
+        z-index: 10;
+        top: 0px;
+        right: 0;
 
-        .MuiButton-label {
-          color: $black;
+        &:hover {
+          background-color: $gray-lightest;
         }
-
-        &.disabled {
-          border: 1px solid $gray-light;
-          color: $gray-light;
+        svg {
+          color: $black;
+          fill: $black;
         }
       }
     }

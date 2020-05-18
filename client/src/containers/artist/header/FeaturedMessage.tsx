@@ -3,8 +3,8 @@ import './artist-header.scss';
 import * as React from 'react';
 import cx from 'classnames';
 import TextTruncate from 'react-text-truncate';
-import paper_sm from '../../../images/background_paper_sm.png';
-import paper_md from '../../../images/background_paper_md.png';
+import paper_sm from '../../../images/backgrounds/background_paper_sm.png';
+import paper_md from '../../../images/backgrounds/background_paper_md.png';
 
 interface Props {
   artist: any;

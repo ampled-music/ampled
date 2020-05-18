@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import tear from '../../../images/background_tear.png';
+import tear from '../../../images/backgrounds/background_tear.png';
 
 import './why-modal.scss';
 
@@ -64,7 +64,7 @@ class WhyModalComponent extends React.Component<Props, any> {
             <IconButton
               className="close-x"
               aria-label="close"
-              color="primary"
+              color="default"
               style={{
                 margin: '-10px -10px 0 0',
               }}

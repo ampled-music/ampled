@@ -82,7 +82,6 @@ const StyleOverride = ({
         .edit-page button,
         .new-post svg,
         .edit-page svg,
-        .post__change button,
         .artist-header__photo {
           background-color: ${accentColor};
           color: ${lightOrDark(accentColor)};

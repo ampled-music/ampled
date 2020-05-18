@@ -19,7 +19,7 @@ import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
 
 import { config } from '../../../config';
-import menu from '../../../images/menu.svg';
+import menu from '../../../images/icons/Icon_Menu.svg';
 import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import { routePaths } from '../../route-paths';

@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as R from 'ramda';
 import { Image, Transformation } from 'cloudinary-react';
 import { UserRoles } from '../../shared/user-roles';
-import avatar from '../../../images/ampled_avatar.svg';
+import avatar from '../../../images/avatars/Avatar_Blank.svg';
 
 interface Props {
   artist: any;

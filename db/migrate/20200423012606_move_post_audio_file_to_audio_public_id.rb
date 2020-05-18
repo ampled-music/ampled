@@ -3,7 +3,7 @@ class MovePostAudioFileToAudioPublicId < ActiveRecord::Migration[5.2]
   # record with that value.
   def up 
     Post.where.not(audio_file: nil).each do |post| 
-      next unless post.audio_file
+      next unless post.audio_file.present?
       post.audio_uploads << AudioUpload.new(public_id: post.audio_file)
       post.save!
     end

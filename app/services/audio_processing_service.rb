@@ -5,7 +5,7 @@ class AudioProcessingService
   def initialize(public_id)
     @public_id = public_id
     @process_id = SecureRandom.uuid
-    @raw_file_path = Rails.root.join("tmp/audio/raw_#{@process_id}")
+    @raw_file_path = Rails.root.join("tmp/raw_#{@process_id}")
 
     @s3 = Aws::S3::Resource.new
     object = @s3.bucket(ENV["S3_BUCKET"]).object(public_id)
@@ -41,7 +41,7 @@ class AudioProcessingService
   #
   def generate_waveform(waveform_length)
     # process original file
-    @downsampled_file_path = Rails.root.join("tmp/audio/downsampled_#{@process_id}.wav")
+    @downsampled_file_path = Rails.root.join("tmp/downsampled_#{@process_id}.wav")
     FFMPEG.run(@raw_file_path, @downsampled_file_path, "pcm_u8", 1000, 1)
 
     error_message = "FFMPEG: failed to transcode and downsample audio upload: #{@public_id}"

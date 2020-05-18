@@ -37,7 +37,7 @@ import {
   faCcVisa,
   faCcStripe,
 } from '@fortawesome/free-brands-svg-icons';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import Edit from '../../images/icons/Icon_Edit.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
@@ -313,7 +313,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
             <img src={avatar} className="user-image" alt="Your avatar" />
           )}
           <b className="tag">
-            <FontAwesomeIcon icon={faEdit} />
+            <img src={Edit} />
           </b>
         </button>
       </div>

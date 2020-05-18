@@ -27,7 +27,6 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import YouTubePlayer from 'react-player/lib/players/YouTube';
 import VimeoPlayer from 'react-player/lib/players/Vimeo';
 import { Editor, EditorState, RichUtils } from 'draft-js';

@@ -17,11 +17,8 @@ import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
 
-import {
-  faEdit,
-  faMapMarkerAlt,
-  faImage,
-} from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt, faImage } from '@fortawesome/free-solid-svg-icons';
+import Edit from '../../images/icons/Icon_Edit.svg';
 import {
   faTwitter,
   faInstagram,
@@ -746,7 +743,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           */}
 
           <Link to="/user-details" className="user-content__edit-profile">
-            <FontAwesomeIcon icon={faEdit} /> Edit Profile
+            <img src={Edit} /> Edit Profile
           </Link>
           <button
             onClick={() => this.setState({ showPasswordModal: true })}

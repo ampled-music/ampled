@@ -2,7 +2,9 @@ import './artist.scss';
 
 import * as React from 'react';
 
-import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import Edit from '../../images/icons/Icon_Edit.svg';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from '../../redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
@@ -71,7 +73,7 @@ export class ArtistHeader extends React.Component<Props, any> {
           }}
         >
           <span>Edit Page</span>
-          <FontAwesomeIcon icon={faEdit} color="#ffffff" />
+          <img src={Edit} />
         </button>
       </div>
     );

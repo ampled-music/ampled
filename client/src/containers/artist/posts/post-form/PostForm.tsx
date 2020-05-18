@@ -277,15 +277,20 @@ class PostFormComponent extends React.Component<Props, any> {
     super(props);
     if (props.post) {
       const { post } = props;
-      let activePostType;
+      let activePostType, showText, showAudio, showVideo, showImage;
       if (post.audio_file) {
         activePostType = 'Audio';
+        showAudio = true;
+        showImage = true;
       } else if (post.images && post.images.length > 0) {
         activePostType = 'Photo';
+        showImage = true;
       } else if (post.video_embed_url) {
         activePostType = 'Video';
+        showVideo = true;
       } else {
         activePostType = 'Text';
+        showText = true;
       }
 
       this.state = {
@@ -295,7 +300,12 @@ class PostFormComponent extends React.Component<Props, any> {
         images: props.post.images,
         videoEmbedUrl: props.post.video_embed_url,
         isPublic: !props.post.is_private,
+        allowDownload: props.post.allow_download,
         activePostType,
+        showText,
+        showAudio,
+        showVideo,
+        showImage,
       };
     } else {
       this.state = this.initialState;
@@ -499,10 +509,6 @@ class PostFormComponent extends React.Component<Props, any> {
               showVideo: false,
               showImage: false,
               showLink: false,
-              videoEmbedUrl: null,
-              link: null,
-              audioFile: '',
-              imageName: '',
             })
           }
         >
@@ -520,8 +526,6 @@ class PostFormComponent extends React.Component<Props, any> {
               showVideo: false,
               showImage: true,
               showLink: false,
-              videoEmbedUrl: null,
-              link: null,
             })
           }
         >
@@ -539,9 +543,6 @@ class PostFormComponent extends React.Component<Props, any> {
               showVideo: true,
               showImage: false,
               showLink: false,
-              link: null,
-              audioFile: '',
-              imageName: '',
             })
           }
         >
@@ -559,9 +560,6 @@ class PostFormComponent extends React.Component<Props, any> {
               showVideo: false,
               showImage: true,
               showLink: false,
-              videoEmbedUrl: null,
-              link: null,
-              imageName: '',
             })
           }
         >
@@ -579,9 +577,6 @@ class PostFormComponent extends React.Component<Props, any> {
               showVideo: false,
               showImage: false,
               showLink: true,
-              videoEmbedUrl: null,
-              audioFile: '',
-              imageName: '',
             })
           }
         >
@@ -656,6 +651,7 @@ class PostFormComponent extends React.Component<Props, any> {
   }
 
   renderExistingAudio(): React.ReactNode {
+    const { audioFile } = this.state;
     return (
       <div className="upload">
         <div className="progress-container">
@@ -680,6 +676,22 @@ class PostFormComponent extends React.Component<Props, any> {
             </div>
           </div>
         </div>
+
+        {audioFile && audioFile.length > 0 && (
+          <div className="post-form__audio_allow-checkbox">
+            <FormControlLabel
+              className="alow-download-label"
+              control={
+                <Checkbox
+                  onChange={this.handleAllowDownloadChange}
+                  checked={this.state.allowDownload}
+                  color="default"
+                />
+              }
+              label="Enable Download"
+            />
+          </div>
+        )}
       </div>
     );
   }
@@ -847,9 +859,8 @@ class PostFormComponent extends React.Component<Props, any> {
           onComplete={this.updateAudioFile}
           onRemove={() => this.updateAudioFile(null)}
         />
-
-        <div className="post-form__audio_allow-checkbox">
-          {audioFile && audioFile.length > 0 && (
+        {audioFile && audioFile.length > 0 && (
+          <div className="post-form__audio_allow-checkbox">
             <FormControlLabel
               className="alow-download-label"
               control={
@@ -861,9 +872,8 @@ class PostFormComponent extends React.Component<Props, any> {
               }
               label="Enable Download"
             />
-          )}
-        </div>
-
+          </div>
+        )}
         {!isStripeSetup && (
           <small>
             You need to set up your payout destination to make private posts.

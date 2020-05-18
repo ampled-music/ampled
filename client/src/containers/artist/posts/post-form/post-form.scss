@@ -155,7 +155,8 @@
     &_allow-checkbox {
       display: flex;
       max-width: 500px;
-      margin: 0.5rem auto 0;
+      margin: 0.5rem 0 0;
+      align-self: flex-start;
 
       label {
         margin: 0px 0px 0px -11px;
@@ -302,10 +303,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    label {
-      margin: 0px;
-    }
 
     .progress-container {
       width: 100%;

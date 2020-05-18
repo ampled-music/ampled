@@ -77,6 +77,7 @@ type Props = typeof postsInitialState &
 interface RichEditorProps {
   initialTextAsHTML?: string;
   callback?: Function;
+  postType: string;
 }
 
 class RichEditor extends React.Component<RichEditorProps> {
@@ -165,9 +166,9 @@ class RichEditor extends React.Component<RichEditorProps> {
       <div className="post-form__description">
         <div className="rich-editor-container">
           <div
-            className={`MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline rich-editor${
-              this.state.focused ? ' focused' : ''
-            }`}
+            className={`MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline rich-editor 
+            ${this.state.focused ? 'focused' : ' '}
+            ${this.props.postType === 'Text' && 'large'}`}
             onClick={this.focusEditor}
           >
             <Editor
@@ -832,7 +833,7 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   renderDescription = () => {
-    const { body } = this.state;
+    const { body, activePostType } = this.state;
     return (
       <RichEditor
         ref={(editor) => (this.editor = editor)}
@@ -844,6 +845,7 @@ class PostFormComponent extends React.Component<Props, any> {
             }),
           })
         }
+        postType={activePostType}
       />
     );
   };

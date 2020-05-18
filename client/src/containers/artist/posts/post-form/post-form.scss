@@ -81,7 +81,6 @@
       .rich-editor {
         border: 1px solid $gray-lighter;
         height: 200px;
-        max-height: 200px;
         font-family: $font-family-sans-serif-light;
         border-radius: 0px;
         display: block;
@@ -94,6 +93,9 @@
         &.focused {
           border: 1px solid $black;
           font-family: $font-family-sans-serif-light;
+        }
+        &.large {
+          height: 350px;
         }
       }
     }

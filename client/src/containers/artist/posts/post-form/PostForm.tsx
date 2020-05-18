@@ -567,7 +567,7 @@ class PostFormComponent extends React.Component<Props, any> {
           <img src={PhotoIcon} className="btn__icon" />
           Photo
         </Button>
-        <Button
+        {/* <Button
           className={cx('btn', {
             active: this.state.activePostType === 'Link',
           })}
@@ -583,7 +583,7 @@ class PostFormComponent extends React.Component<Props, any> {
         >
           <img src={Link2Icon} className="btn__icon" />
           Link
-        </Button>
+        </Button> */}
       </div>
     );
   };

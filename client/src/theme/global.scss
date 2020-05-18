@@ -341,6 +341,7 @@ h6 {
 
 .post-modal {
   .MuiPaper-root {
+    background: transparent;
     @include mq($tablet) {
       min-height: 750px;
     }

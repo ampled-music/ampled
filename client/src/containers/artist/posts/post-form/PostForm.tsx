@@ -620,6 +620,7 @@ class PostFormComponent extends React.Component<Props, any> {
             responsive_placeholder="blank"
           />
         </Image>
+        <div className="helper-text">(Preview)</div>
         <IconButton
           aria-label="Cancel image input"
           className="cancel-button"

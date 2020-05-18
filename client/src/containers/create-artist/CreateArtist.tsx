@@ -27,7 +27,9 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import Close from '../../images/icons/Icon_Close-Cancel.svg';
+
 import {
   faTwitter,
   faInstagram,
@@ -399,7 +401,7 @@ const Member = ({
                 // style={{}}
                 onClick={() => removeMember(index)}
               >
-                <FontAwesomeIcon icon={faTimes} />
+                <img src={Close} />
               </IconButton>
             )}
           </div>

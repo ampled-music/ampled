@@ -6,8 +6,7 @@ import { Dialog } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Close from '../../../images/icons/Icon_Close-Cancel.svg';
 
 import { theme } from './theme';
 
@@ -36,7 +35,7 @@ class Modal extends React.Component<Props, any> {
               color="primary"
               onClick={this.props.onClose}
             >
-              <FontAwesomeIcon icon={faTimes} />
+              <img src={Close} />
             </IconButton>
           )}
           {this.props.children}

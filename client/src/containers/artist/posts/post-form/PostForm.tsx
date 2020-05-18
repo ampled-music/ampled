@@ -27,7 +27,6 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@material-ui/core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import YouTubePlayer from 'react-player/lib/players/YouTube';
 import VimeoPlayer from 'react-player/lib/players/Vimeo';
@@ -35,6 +34,7 @@ import { Editor, EditorState, RichUtils } from 'draft-js';
 import { convertFromHTML, convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
+import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
 import TextIcon from '../../../../images/icons/Icon_Text.svg';
 import AudioIcon from '../../../../images/icons/Icon_Audio.svg';
 import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
@@ -624,7 +624,7 @@ class PostFormComponent extends React.Component<Props, any> {
           onClick={this.removeImage}
           size="small"
         >
-          <FontAwesomeIcon icon={faTimes} />
+          <img src={Close} />
         </IconButton>
       </div>
     );
@@ -672,7 +672,7 @@ class PostFormComponent extends React.Component<Props, any> {
                 onClick={() => this.updateAudioFile(null)}
                 size="small"
               >
-                <FontAwesomeIcon icon={faTimes} />
+                <img src={Close} />
               </IconButton>
             </div>
           </div>
@@ -738,7 +738,7 @@ class PostFormComponent extends React.Component<Props, any> {
             }
             size="small"
           >
-            <FontAwesomeIcon icon={faTimes} />
+            <img src={Close} />
           </IconButton>
         </div>
       );
@@ -984,7 +984,7 @@ class PostFormComponent extends React.Component<Props, any> {
                     className="cancel-button"
                     onClick={() => this.props.close(hasUnsavedChanges)}
                   >
-                    <FontAwesomeIcon icon={faTimes} />
+                    <img src={Close} />
                   </Button>
                   <Button
                     type="submit"

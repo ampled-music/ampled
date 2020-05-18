@@ -13,8 +13,7 @@ import { HomeGarden } from './HomeGarden';
 import { Texture } from '../shared/texture/Texture';
 
 import { IconButton } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import Close from '../../images/icons/Icon_Close-Cancel.svg';
 
 class Home extends React.Component<any> {
   state = {
@@ -41,7 +40,7 @@ class Home extends React.Component<any> {
         onClick={this.closeBanner}
         style={{ width: '30px', height: '30px' }}
       >
-        <FontAwesomeIcon icon={faTimes} />
+        <img src={Close} />
       </IconButton>
     </div>
   );

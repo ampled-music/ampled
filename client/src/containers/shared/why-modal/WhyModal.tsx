@@ -3,8 +3,7 @@ import * as React from 'react';
 import { Dialog } from '@material-ui/core';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Close from '../../../images/icons/Icon_Close-Cancel.svg';
 
 import tear from '../../../images/backgrounds/background_tear.png';
 
@@ -70,7 +69,7 @@ class WhyModalComponent extends React.Component<Props, any> {
               }}
               onClick={(e) => this.props.onClose(e)}
             >
-              <FontAwesomeIcon icon={faTimes} />
+              <img src={Close} />
             </IconButton>
           </div>
         </div>

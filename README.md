@@ -14,6 +14,7 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
     - [Git](#git)
     - [Code Style](#code-style)
   - [Additional/Optional Development Details](#additionaloptional-development-details)
+    - [Backup/Restore Database](#backuprestore-database)
     - [Code Coverage (local)](#code-coverage-local)
     - [Using Guard](#using-guard)
     - [Using Mailcatcher](#using-mailcatcher)
@@ -40,6 +41,7 @@ To run the specs or fire up the server, be sure you have these installed (and ru
 - Ruby 2.5 (see [.ruby-version](.ruby-version)).
 - PostgreSQL 10.3+ (`brew install postgresql`).
 - Heroku CLI (`brew tap heroku/brew && brew install heroku`).
+- ffmpeg (`brew install ffmpeg`)
 
 ### First Time Setup
 
@@ -106,6 +108,20 @@ This will also automatically compile and js or css changes live on the fly.
 Rubocop is configured to enforce the style guide for this project.
 
 ## Additional/Optional Development Details
+
+### Backup/Restore Database
+
+To backup your postgres database run:
+
+    $ bundle exec rake db:dump[backup_name]
+
+To restore run:
+
+    $ bundle exec rake db:restore[backup_name]
+
+The backup files are stored in `/db/backups/` directory. If you use zsh, your rake task parameter brackets must be escaped.
+
+IMPORTANT: These commands will connect to whatever DB your rails environment is configured with.
 
 ### Code Coverage (local)
 

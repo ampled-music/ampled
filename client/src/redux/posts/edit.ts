@@ -3,7 +3,9 @@ import { createActionThunk } from 'redux-thunk-actions';
 import { editPost } from '../../api/post/edit-post';
 import { actions } from './actions';
 
-export const editPostAction = createActionThunk(actions.createPost, (post) => editPost(post));
+export const editPostAction = createActionThunk(actions.createPost, (post) =>
+  editPost(post),
+);
 
 export const editPostReducer = {
   [editPostAction.STARTED]: (state) => ({

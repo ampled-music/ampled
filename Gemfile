@@ -29,6 +29,7 @@ gem "sentry-raven"
 gem "sidekiq"
 gem "skylight"
 gem "stripe"
+gem "wavefile"
 gem "zencoder"
 
 # Front-endy

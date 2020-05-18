@@ -1,29 +1,53 @@
+@import '../../../theme/vars.scss';
+@import '../../../theme/mixins.scss';
+
 .audio-player {
   position: relative;
-  &.with-image {
-    .audio-player__play-pause {
-      top: -210px;
-    }
-  }
-  &__play-pause {
+  padding: 0.2em 0;
+  overflow: hidden;
+
+  &__header {
     display: flex;
-    justify-content: center;
-    position: absolute;
-    width: 100%;
-    svg {
-      position: relative;
-      left: 2px;
-    }
-  }
-  &__slider {
-    .MuiSlider-thumb {
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+
+    &__play-pause {
       span {
-        width: 60px;
-        background-color: transparent;
+        text-align: center;
+      }
+      svg {
+        position: relative;
+        font-size: 0.5em;
       }
     }
   }
-  .MuiSlider-root {
-    padding: 0px;
+  &__track {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__download {
+    font-family: $font-family-monospace;
+    font-size: $font-size-sm;
+  }
+
+  &__time {
+    position: absolute;
+    font-family: $font-family-monospace;
+    font-size: $font-size-xs;
+    color: $white;
+    background-color: $black;
+    min-width: 40px;
+    padding: 0 2px;
+    text-align: center;
+  }
+  &__start {
+    left: 0;
+  }
+  &__end {
+    right: 0;
   }
 }

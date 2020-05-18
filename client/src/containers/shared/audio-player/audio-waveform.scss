@@ -1,0 +1,12 @@
+.audio-waveform {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  
+  canvas {
+    padding: 0.2em;
+  }
+}

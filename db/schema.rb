@@ -13,7 +13,6 @@
 ActiveRecord::Schema.define(version: 2020_05_06_001526) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "artist_pages", force: :cascade do |t|
@@ -38,6 +37,18 @@ ActiveRecord::Schema.define(version: 2020_05_06_001526) do
     t.boolean "featured", default: false
     t.boolean "hide_members", default: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
+  end
+
+  create_table "audio_uploads", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.string "public_id", null: false
+    t.string "hash_key"
+    t.string "name"
+    t.integer "duration"
+    t.integer "waveform", default: [], null: false, array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_audio_uploads_on_post_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -85,7 +96,6 @@ ActiveRecord::Schema.define(version: 2020_05_06_001526) do
     t.datetime "updated_at", null: false
     t.string "title"
     t.text "body"
-    t.string "audio_file"
     t.boolean "is_private", default: false
     t.boolean "allow_download", default: false
     t.string "video_embed_url"
@@ -147,6 +157,7 @@ ActiveRecord::Schema.define(version: 2020_05_06_001526) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "audio_uploads", "posts"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "plans", "artist_pages"

@@ -15,6 +15,9 @@ client/.env
 /db/local_database_volume
 latest.dump
 
+# Ignore database backups 
+/db/backups/
+
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp

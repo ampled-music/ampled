@@ -1092,6 +1092,7 @@ GEM
       dry-configurable (~> 0.5)
       jwt (~> 2.1)
       warden (~> 1.2)
+    wavefile (1.1.1)
     webmock (3.5.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -1165,6 +1166,7 @@ DEPENDENCIES
   stripe
   uglifier
   vcr
+  wavefile
   webmock
   zencoder
 

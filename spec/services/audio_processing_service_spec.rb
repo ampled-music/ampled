@@ -51,7 +51,7 @@ RSpec.describe AudioProcessingService, type: :service do
       it "should write file to correct path and filename" do
         expect(s3_object)
           .to have_received(:get)
-          .with(response_target: Rails.root.join("tmp/audio/raw_#{process_id}"))
+          .with(response_target: Rails.root.join("tmp/raw_#{process_id}"))
       end
     end
   end
@@ -60,7 +60,7 @@ RSpec.describe AudioProcessingService, type: :service do
     context "generate sha256" do
       let(:public_id) { "abc.mp3" }
       let(:process_id) { SecureRandom.uuid }
-      let(:raw_file_path) { Rails.root.join("tmp/audio/raw_#{process_id}") }
+      let(:raw_file_path) { Rails.root.join("tmp/raw_#{process_id}") }
       let(:sha256) { double }
       let(:hexdigest) { "hexhash" }
 
@@ -125,7 +125,7 @@ RSpec.describe AudioProcessingService, type: :service do
     context "generate sha256" do
       let(:public_id) { "abc.mp3" }
       let(:process_id) { SecureRandom.uuid }
-      let(:raw_file_path) { Rails.root.join("tmp/audio/raw_#{process_id}") }
+      let(:raw_file_path) { Rails.root.join("tmp/raw_#{process_id}") }
       let(:duration) { 124_314.12 }
 
       before(:each) do
@@ -184,8 +184,8 @@ RSpec.describe AudioProcessingService, type: :service do
     context "waveform" do
       let(:public_id) { "abc.mp3" }
       let(:process_id) { SecureRandom.uuid }
-      let(:raw_file_path) { Rails.root.join("tmp/audio/raw_#{process_id}") }
-      let(:downsampled_file_path) { Rails.root.join("tmp/audio/downsampled_#{process_id}.wav") }
+      let(:raw_file_path) { Rails.root.join("tmp/raw_#{process_id}") }
+      let(:downsampled_file_path) { Rails.root.join("tmp/downsampled_#{process_id}.wav") }
       let(:wavefile_reader) { double }
       let(:buffer) { double }
       let(:waveform_length) { 3 }
@@ -287,7 +287,7 @@ RSpec.describe AudioProcessingService, type: :service do
     context "when disposing service" do
       let(:public_id) { "abc.mp3" }
       let(:process_id) { SecureRandom.uuid }
-      let(:raw_file_path) { Rails.root.join("tmp/audio/raw_#{process_id}") }
+      let(:raw_file_path) { Rails.root.join("tmp/raw_#{process_id}") }
 
       before(:each) do
         allow(SecureRandom)

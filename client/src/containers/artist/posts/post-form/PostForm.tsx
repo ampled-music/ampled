@@ -276,6 +276,18 @@ class PostFormComponent extends React.Component<Props, any> {
   constructor(props) {
     super(props);
     if (props.post) {
+      const { post } = props;
+      let activePostType;
+      if (post.audio_file) {
+        activePostType = 'Audio';
+      } else if (post.images && post.images.length > 0) {
+        activePostType = 'Photo';
+      } else if (post.video_embed_url) {
+        activePostType = 'Video';
+      } else {
+        activePostType = 'Text';
+      }
+
       this.state = {
         ...this.initialState,
         ...props.post,
@@ -283,6 +295,7 @@ class PostFormComponent extends React.Component<Props, any> {
         images: props.post.images,
         videoEmbedUrl: props.post.video_embed_url,
         isPublic: !props.post.is_private,
+        activePostType,
       };
     } else {
       this.state = this.initialState;
@@ -319,6 +332,7 @@ class PostFormComponent extends React.Component<Props, any> {
     event.preventDefault();
 
     const {
+      activePostType,
       title,
       body,
       link,
@@ -336,12 +350,12 @@ class PostFormComponent extends React.Component<Props, any> {
       title,
       body,
       link,
-      audio_file: audioFile,
-      images: images,
-      video_embed_url: videoEmbedUrl,
+      audio_file: activePostType === 'Audio' ? audioFile : null,
+      images: ['Audio', 'Photo'].includes(activePostType) ? images : [],
+      video_embed_url: activePostType === 'Video' ? videoEmbedUrl : null,
       is_private: !isPublic,
       is_pinned: isPinned,
-      allow_download: allowDownload,
+      allow_download: activePostType === 'Audio' ? allowDownload : null,
       artist_page_id: this.props.artist.id,
       id: this.state.id,
     };

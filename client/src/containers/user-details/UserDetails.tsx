@@ -303,9 +303,9 @@ class UserDetailsComponent extends React.Component<Props, any> {
     return (
       <div className="user-image-container">
         <button onClick={this.showUserPhotoModal} aria-label="Edit avatar">
-          {userData.image ? (
+          {userData.image?.url ? (
             <img
-              src={userData.image}
+              src={userData.image.url}
               className="user-image"
               alt="Your avatar"
             />
@@ -344,12 +344,12 @@ class UserDetailsComponent extends React.Component<Props, any> {
     const { photoBody, processingImage } = this.state;
     const { userData } = this.props;
 
-    if (processingImage && userData.image) {
+    if (processingImage && userData.image?.url) {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
           <img
-            src={userData.image}
+            src={userData.image.url}
             className="image-preview loading-image"
             alt="Loading"
           />
@@ -368,8 +368,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
       );
     }
 
-    const placeholderImage = userData.image ? (
-      <img src={userData.image} className="image-preview" alt="Avatar" />
+    const placeholderImage = userData.image?.url ? (
+      <img src={userData.image.url} className="image-preview" alt="Avatar" />
     ) : (
       <img src={avatar} className="image-preview" alt="Avatar" />
     );
@@ -464,8 +464,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
   updateUserPhoto = () => {
     this.closeUserPhotoModal();
 
-    if (this.props.updatedData.profileImageUrl) {
-      this.props.setMe({ image: this.props.updatedData.profileImageUrl });
+    if (this.props.updatedData.image) {
+      this.props.setMe({ image: this.props.updatedData.image });
       this.props.showToast({
         message: 'User photo updated!',
         type: 'success',

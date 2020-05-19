@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import Instagram from '../../images/icons/Icon_Instagram.svg';
+import Twitter from '../../images/icons/Icon_Twitter.svg';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -32,7 +32,7 @@ export class ArtistInfo extends React.Component<Props, any> {
             style={{ color: 'black' }}
             aria-label={`${twitterHandle} on Twitter`}
           >
-            <FontAwesomeIcon className="icon" icon={faTwitter} />
+            <img className="icon" src={Twitter} />
             <span>@{twitterHandle}</span>
           </a>
         </div>

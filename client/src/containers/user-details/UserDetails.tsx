@@ -29,7 +29,6 @@ import {
   CardContent,
 } from '@material-ui/core';
 import {
-  faTwitter,
   faCcAmex,
   faCcDiscover,
   faCcMastercard,
@@ -38,6 +37,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import Edit from '../../images/icons/Icon_Edit.svg';
 import Instagram from '../../images/icons/Icon_Instagram.svg';
+import Twitter from '../../images/icons/Icon_Twitter.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
@@ -608,7 +608,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <FontAwesomeIcon className="icon" icon={faTwitter} />
+                          <img className="icon" src={Twitter} />
                         </InputAdornment>
                       ),
                     }}

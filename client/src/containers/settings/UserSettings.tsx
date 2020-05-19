@@ -18,7 +18,7 @@ import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
 
 import { faMapMarkerAlt, faImage } from '@fortawesome/free-solid-svg-icons';
-import { faTwitter, faStripe } from '@fortawesome/free-brands-svg-icons';
+import { faStripe } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import tear from '../../images/backgrounds/background_tear.png';
 import tear_black from '../../images/backgrounds/background_tear_black.png';
@@ -27,6 +27,7 @@ import avatar from '../../images/avatars/Avatar_Blank.svg';
 
 import Edit from '../../images/icons/Icon_Edit.svg';
 import Instagram from '../../images/icons/Icon_Instagram.svg';
+import Twitter from '../../images/icons/Icon_Twitter.svg';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -724,8 +725,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           )}
           {userData.twitter && (
             <div className="user-content__social">
-              <FontAwesomeIcon className="icon" icon={faTwitter} />{' '}
-              {userData.twitter}
+              <img className="icon" src={Twitter} /> {userData.twitter}
             </div>
           )}
           {userData.instagram && (

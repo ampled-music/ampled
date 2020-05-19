@@ -25,6 +25,7 @@
 .edit-page {
   position: fixed;
   z-index: 100;
+  transition: opacity $speed;
 
   @include mq(0, $layout-m) {
     bottom: 0px;
@@ -34,8 +35,12 @@
 
   @include mq($layout-m) {
     text-align: right;
-    right: 10px;
+    right: 0px;
     top: 70px;
+    opacity: 0.4;
+    &:hover {
+      opacity: 1;
+    }
   }
 
   button {
@@ -47,6 +52,7 @@
     border-radius: 0px;
     text-transform: capitalize;
     min-width: 120px;
+    padding-right: 10px;
 
     @include mq($layout-m) {
       width: auto;

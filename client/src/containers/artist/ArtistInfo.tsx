@@ -2,8 +2,7 @@ import * as React from 'react';
 
 import Instagram from '../../images/icons/Icon_Instagram.svg';
 import Twitter from '../../images/icons/Icon_Twitter.svg';
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Location from '../../images/icons/Icon_Location.svg';
 
 interface Props {
   location: string;
@@ -15,7 +14,7 @@ interface Props {
 export class ArtistInfo extends React.Component<Props, any> {
   renderArtistLocation = () => (
     <div className="artist-info__location">
-      <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} />
+      <img className="icon" src={Location} />
       {this.props.location}
     </div>
   );

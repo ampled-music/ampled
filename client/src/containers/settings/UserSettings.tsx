@@ -17,7 +17,7 @@ import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
 
-import { faMapMarkerAlt, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { faStripe } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import tear from '../../images/backgrounds/background_tear.png';
@@ -28,6 +28,7 @@ import avatar from '../../images/avatars/Avatar_Blank.svg';
 import Edit from '../../images/icons/Icon_Edit.svg';
 import Instagram from '../../images/icons/Icon_Instagram.svg';
 import Twitter from '../../images/icons/Icon_Twitter.svg';
+import Location from '../../images/icons/Icon_Location.svg';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -712,7 +713,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           </div>
           {userData.city && (
             <div className="user-content__city">
-              <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} />{' '}
+              <img className="icon" src={Location} />
               {userData.city}
             </div>
           )}
@@ -725,12 +726,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
           )}
           {userData.twitter && (
             <div className="user-content__social">
-              <img className="icon" src={Twitter} /> {userData.twitter}
+              <img className="icon" src={Twitter} />
+              {userData.twitter}
             </div>
           )}
           {userData.instagram && (
             <div className="user-content__social">
-              <img className="icon" src={Instagram} /> {userData.instagram}
+              <img className="icon" src={Instagram} />
+              {userData.instagram}
             </div>
           )}
           {/*
@@ -740,7 +743,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
           */}
 
           <Link to="/user-details" className="user-content__edit-profile">
-            <img src={Edit} /> Edit Profile
+            <img className="icon" src={Edit} />
+            Edit Profile
           </Link>
           <button
             onClick={() => this.setState({ showPasswordModal: true })}

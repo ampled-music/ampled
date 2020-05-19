@@ -2,9 +2,9 @@ import './artist.scss';
 
 import * as React from 'react';
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import Edit from '../../images/icons/Icon_Edit.svg';
-
+import { Button } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from '../../redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
@@ -57,24 +57,28 @@ export class ArtistHeader extends React.Component<Props, any> {
   renderFloatingNewPostButton = () =>
     this.canLoggedUserPost() && (
       <div className="new-post">
-        <button onClick={this.props.openPostModal}>
-          <span>New Post</span>
-          <FontAwesomeIcon icon={faPlus} color="#ffffff" />
-        </button>
+        <Button
+          onClick={this.props.openPostModal}
+          endIcon={<FontAwesomeIcon icon={faPlus} color="#ffffff" />}
+          size="small"
+        >
+          New Post
+        </Button>
       </div>
     );
 
   renderFloatingEditButton = () =>
     this.canLoggedUserAdmin() && (
       <div className="edit-page">
-        <button
+        <Button
           onClick={() => {
             window.location.href = `${window.location.pathname}/edit`;
           }}
+          endIcon={<FontAwesomeIcon icon={faEdit} color="#ffffff" />}
+          size="small"
         >
-          <span>Edit Page</span>
-          <img className="icon" src={Edit} />
-        </button>
+          Edit Page
+        </Button>
       </div>
     );
 

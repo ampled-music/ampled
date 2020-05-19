@@ -623,7 +623,7 @@ class PostFormComponent extends React.Component<Props, any> {
           onClick={this.removeImage}
           size="small"
         >
-          <img src={Close} />
+          <img className="icon" src={Close} />
         </IconButton>
       </div>
     );
@@ -671,7 +671,7 @@ class PostFormComponent extends React.Component<Props, any> {
                 onClick={() => this.updateAudioFile(null)}
                 size="small"
               >
-                <img src={Close} />
+                <img className="icon" src={Close} />
               </IconButton>
             </div>
           </div>
@@ -737,7 +737,7 @@ class PostFormComponent extends React.Component<Props, any> {
             }
             size="small"
           >
-            <img src={Close} />
+            <img className="icon" src={Close} />
           </IconButton>
         </div>
       );
@@ -983,7 +983,7 @@ class PostFormComponent extends React.Component<Props, any> {
                     className="cancel-button"
                     onClick={() => this.props.close(hasUnsavedChanges)}
                   >
-                    <img src={Close} />
+                    <img className="icon" src={Close} />
                   </Button>
                   <Button
                     type="submit"

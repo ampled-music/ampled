@@ -73,7 +73,7 @@ export class ArtistHeader extends React.Component<Props, any> {
           }}
         >
           <span>Edit Page</span>
-          <img src={Edit} />
+          <img className="icon" src={Edit} />
         </button>
       </div>
     );

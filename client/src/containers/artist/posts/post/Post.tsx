@@ -10,7 +10,9 @@ import { config } from '../../../../config';
 
 import avatar from '../../../../images/avatars/Avatar_Blank.svg';
 import tear from '../../../../images/backgrounds/background_tear.png';
-import { faUnlock, faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import Edit from '../../../../images/icons/Icon_Edit.svg';
+import Remove from '../../../../images/icons/Icon_Remove-Delete.svg';
+import { faUnlock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, IconButton, CardActions, Collapse } from '@material-ui/core';
 import { Modal } from '../../../shared/modal/Modal';
@@ -595,13 +597,13 @@ class PostComponent extends React.Component<any, any> {
                       className="post__change_edit"
                       onClick={this.openEditPostModal}
                     >
-                      <FontAwesomeIcon icon={faPen} />
+                      <img className="icon" src={Edit} />
                     </IconButton>
                     <IconButton
                       className="post__change_delete"
                       onClick={this.openDeletePostModal}
                     >
-                      <FontAwesomeIcon icon={faTrashAlt} />
+                      <img className="icon" src={Remove} />
                     </IconButton>
                   </div>
                 )}

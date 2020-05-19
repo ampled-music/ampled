@@ -38,6 +38,11 @@
     top: 70px;
   }
 
+  .icon {
+    width: 30px;
+    fill: $white;
+  }
+
   button,
   .edit-button {
     cursor: pointer;
@@ -49,7 +54,6 @@
 
     span {
       visibility: visible;
-      margin-right: 0.5rem;
     }
 
     @include mq($layout-m) {

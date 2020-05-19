@@ -30,7 +30,6 @@ import {
 } from '@material-ui/core';
 import {
   faTwitter,
-  faInstagram,
   faCcAmex,
   faCcDiscover,
   faCcMastercard,
@@ -38,6 +37,7 @@ import {
   faCcStripe,
 } from '@fortawesome/free-brands-svg-icons';
 import Edit from '../../images/icons/Icon_Edit.svg';
+import Instagram from '../../images/icons/Icon_Instagram.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
@@ -625,10 +625,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <FontAwesomeIcon
-                            className="icon"
-                            icon={faInstagram}
-                          />
+                          <img className="icon" src={Instagram} />
                         </InputAdornment>
                       ),
                     }}

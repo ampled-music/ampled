@@ -29,12 +29,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import Close from '../../images/icons/Icon_Close-Cancel.svg';
+import Instagram from '../../images/icons/Icon_Instagram.svg';
 
-import {
-  faTwitter,
-  faInstagram,
-  faStripe,
-} from '@fortawesome/free-brands-svg-icons';
+import { faTwitter, faStripe } from '@fortawesome/free-brands-svg-icons';
 import ChromePicker from 'react-color/lib/Chrome';
 
 import { theme } from './theme';
@@ -531,7 +528,7 @@ const Member = ({
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FontAwesomeIcon className="icon" icon={faInstagram} />
+                      <img className="icon" src={Instagram} />
                     </InputAdornment>
                   ),
                 }}
@@ -1000,7 +997,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FontAwesomeIcon className="icon" icon={faInstagram} />
+                      <img className="icon" src={Instagram} />
                     </InputAdornment>
                   ),
                 }}

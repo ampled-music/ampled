@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import Instagram from '../../images/icons/Icon_Instagram.svg';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -13,7 +13,6 @@ interface Props {
 }
 
 export class ArtistInfo extends React.Component<Props, any> {
-  
   renderArtistLocation = () => (
     <div className="artist-info__location">
       <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} />
@@ -23,7 +22,7 @@ export class ArtistInfo extends React.Component<Props, any> {
 
   renderTwitter = () => {
     const { twitterHandle } = this.props;
-    if ( twitterHandle ) {
+    if (twitterHandle) {
       return (
         <div className="artist-info__social_twitter">
           <a
@@ -43,7 +42,7 @@ export class ArtistInfo extends React.Component<Props, any> {
 
   renderInstagram = () => {
     const { instagramHandle } = this.props;
-    if ( instagramHandle ) {
+    if (instagramHandle) {
       return (
         <div className="artist-info__social_instagram">
           <a
@@ -53,7 +52,7 @@ export class ArtistInfo extends React.Component<Props, any> {
             style={{ color: 'black' }}
             aria-label={`${instagramHandle} on Instagram`}
           >
-            <FontAwesomeIcon className="icon" icon={faInstagram} />
+            <img className="icon" src={Instagram} />
             <span>@{instagramHandle}</span>
           </a>
         </div>

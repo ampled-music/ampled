@@ -399,7 +399,6 @@
   }
 
   .supporter {
-    
     @include mq($layout-m) {
       position: relative;
       display: block;
@@ -410,7 +409,7 @@
       .member-image {
         display: block;
         position: relative;
-    
+
         @include mq($layout-m) {
           &:before,
           &:after {
@@ -424,12 +423,12 @@
             top: -18px;
             left: 27%;
           }
-  
+
           &:before {
             box-shadow: 1px 1px 3px $gray-light;
             z-index: 1;
           }
-  
+
           &:after {
             z-index: 301;
             transform: rotate(0deg);
@@ -580,6 +579,7 @@
 
   .icon {
     margin: 0 0.5rem 0 0;
+    width: 30px;
   }
 
   &__location {

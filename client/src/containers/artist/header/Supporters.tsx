@@ -4,7 +4,15 @@ import * as React from 'react';
 import * as R from 'ramda';
 import { Image, Transformation } from 'cloudinary-react';
 import { UserRoles } from '../../shared/user-roles';
-import avatar from '../../../images/avatars/Avatar_Blank.svg';
+import avatar1 from '../../../images/avatars/Avatar_Head_1.png';
+import avatar2 from '../../../images/avatars/Avatar_Head_2.png';
+import avatar3 from '../../../images/avatars/Avatar_Head_3.png';
+import avatar4 from '../../../images/avatars/Avatar_Head_4.png';
+import avatar5 from '../../../images/avatars/Avatar_Head_5.png';
+import avatar6 from '../../../images/avatars/Avatar_Head_6.png';
+import avatar7 from '../../../images/avatars/Avatar_Head_7.png';
+import avatar8 from '../../../images/avatars/Avatar_Head_8.png';
+import avatar9 from '../../../images/avatars/Avatar_Head_9.png';
 
 interface Props {
   artist: any;
@@ -29,6 +37,22 @@ export class Supporters extends React.Component<Props, any> {
     const part_1 = url[url.length - 2];
     const part_2 = url[url.length - 1];
     return part_1 + '/' + part_2;
+  };
+
+  randomAvatar = () => {
+    const avatars = [
+      avatar1,
+      avatar2,
+      avatar3,
+      avatar4,
+      avatar5,
+      avatar6,
+      avatar7,
+      avatar8,
+      avatar9,
+    ];
+    const avatar = avatars[Math.floor(Math.random() * avatars.length)];
+    return avatar;
   };
 
   renderSupporterHover = ({ supporter }) => {
@@ -145,7 +169,7 @@ export class Supporters extends React.Component<Props, any> {
           ) : (
             <img
               className="artist-header__person_svg"
-              src={avatar}
+              src={this.randomAvatar()}
               alt={supporter.name}
               style={style}
             />

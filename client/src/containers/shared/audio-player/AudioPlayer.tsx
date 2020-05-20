@@ -9,7 +9,6 @@ import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import AudioWaveform, { WaveformSize } from './AudioWaveform';
-import { setFlagsFromString } from 'v8';
 
 interface AudioPlayerProps {
   url: string;

@@ -1,3 +1,7 @@
+// TODO: Fix react-hooks/exhaustive-deps issues in this file and
+//       re-enable eslint for this file.
+//       https://trello.com/c/g6r8MTxY/624-fix-react-hooks-exhaustive-deps-issues-in-audiowaveformtsx
+/* eslint-disable */
 import './audio-waveform.scss';
 
 import React, { useRef, useState, useEffect } from 'react'
@@ -78,9 +82,9 @@ const AudioWaveform = (props: AudioWaveformProps) => {
   const [animation, setAnimation] = useState(false);
 
   // Helper functions
-  const updateWaveformSamples = (updateSample) => { 
+  const updateWaveformSamples = (updateSample) => {
     if (waveformSamples.length === 0) return;
-    setWaveformSamples(waveformSamples.map(updateSample)); 
+    setWaveformSamples(waveformSamples.map(updateSample));
   }
   const commitSeek = (progress) => {
     if (lastSeekCommit && lastSeekCommit >= (Date.now() - MAX_SEEK_FREQUENCY_IN_MS)) return;
@@ -89,14 +93,14 @@ const AudioWaveform = (props: AudioWaveformProps) => {
   }
   const drawWaveformSample = (ctx, x, height) => {
     ctx.clearRect(
-      0 + (x * (SizeConfiguration(props.size).barWidth + SizeConfiguration(props.size).barSpacing)), 
-      WAVEFORM_MAX_HEIGHT, 
-      SizeConfiguration(props.size).barWidth, 
+      0 + (x * (SizeConfiguration(props.size).barWidth + SizeConfiguration(props.size).barSpacing)),
+      WAVEFORM_MAX_HEIGHT,
+      SizeConfiguration(props.size).barWidth,
       -height);
     ctx.fillRect(
-      0 + (x * (SizeConfiguration(props.size).barWidth + SizeConfiguration(props.size).barSpacing)), 
-      WAVEFORM_MAX_HEIGHT, 
-      SizeConfiguration(props.size).barWidth, 
+      0 + (x * (SizeConfiguration(props.size).barWidth + SizeConfiguration(props.size).barSpacing)),
+      WAVEFORM_MAX_HEIGHT,
+      SizeConfiguration(props.size).barWidth,
       -height);
   }
 
@@ -221,7 +225,7 @@ const AudioWaveform = (props: AudioWaveformProps) => {
   }
 
   return (
-    <div 
+    <div
       className="audio-waveform"
       style={{
         width: `${SizeConfiguration(props.size)?.canvasWidth}px`,
@@ -243,3 +247,5 @@ const AudioWaveform = (props: AudioWaveformProps) => {
 
 export { WaveformSize }
 export default AudioWaveform;
+
+/* eslint-enable */

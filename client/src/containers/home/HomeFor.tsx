@@ -11,36 +11,58 @@ export const HomeFor = () => (
         <div className="col-md-12">
           <h1 className="home-for__title">Made for music</h1>
           <p className="home-for__mission">
-            We’re an ethical platform owned by its users.
+            A platform designed to put artists first.
           </p>
-          <hr className="hr__thick"/>
+          <hr className="hr__thick" />
         </div>
       </div>
 
       <div className="row justify-content-center">
         <div className="col-md-4">
-          <img className="home-for__image" src={owned_by} alt="Artist Owned Co-op"/>
+          <img
+            className="home-for__image"
+            src={owned_by}
+            alt="Artist Owned Co-op"
+          />
           <h3 className="home-for__sub-title">Artist Owned Co-op</h3>
           <p className="home-for__copy">
-            100% owned by artists, workers, and community - not vulture capitalists.
+            100% owned by artists, workers, and community - not vulture
+            capitalists.
           </p>
-          <a href="http://app.ampled.com/coop"><button className="home-for__button btn btn-ampled">Read More</button></a>
+          <a href="http://app.ampled.com/coop">
+            <button className="home-for__button btn btn-ampled">
+              Read More
+            </button>
+          </a>
         </div>
         <div className="col-md-4">
-          <img className="home-for__image" src={transparent} alt="Transparent"/>
+          <img
+            className="home-for__image"
+            src={transparent}
+            alt="Transparent"
+          />
           <h3 className="home-for__sub-title">Transparent</h3>
           <p className="home-for__copy">
             We’ve opened up our books to stay accountable to our members.
           </p>
-          <a href="http://app.ampled.com/transparency"><button className="home-for__button btn btn-ampled">Learn More</button></a>
+          <a href="http://app.ampled.com/transparency">
+            <button className="home-for__button btn btn-ampled">
+              Learn More
+            </button>
+          </a>
         </div>
         <div className="col-md-4">
-          <img className="home-for__image" src={mission} alt="Mission-Driven"/>
+          <img className="home-for__image" src={mission} alt="Mission-Driven" />
           <h3 className="home-for__sub-title">Mission-Driven</h3>
           <p className="home-for__copy">
-            We’re making music more equitable for artists in an ethical and transparent way.
+            We’re making music more equitable for artists in an ethical and
+            transparent way.
           </p>
-          <a href="http://app.ampled.com/our-mission"><button className="home-for__button btn btn-ampled">Our Vision</button></a>
+          <a href="http://app.ampled.com/our-mission">
+            <button className="home-for__button btn btn-ampled">
+              Our Vision
+            </button>
+          </a>
         </div>
       </div>
     </div>

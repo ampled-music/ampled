@@ -412,7 +412,7 @@ const refundAllProcessedFees = async () => {
   if (options.help) {
     console.log(getUsage(usageGuide));
     return;
-  } else if (options.getAccount) {
+  } else if (options.hasOwnProperty('getAccount')) {
     const accountDetails = await getAccount(
       options.getAccount || options.account,
     );

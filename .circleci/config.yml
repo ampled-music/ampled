@@ -9,7 +9,7 @@ commands:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.5.7-node-browsers
+      - image: circleci/ruby:2.5.8-node-browsers
         environment:
           PGHOST: 127.0.0.1
           PGUSER: postgres

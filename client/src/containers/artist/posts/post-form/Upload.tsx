@@ -108,11 +108,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
       fileName: undefined,
       uploadError: undefined,
     });
-    this.props.onRemove();
-  }
-
     // TODO: remove file from S3 somehow
-
     this.props.onRemove && this.props.onRemove();
   };
 
@@ -176,7 +172,13 @@ class Upload extends React.Component<UploadProps, UploadState> {
         />
         <label htmlFor="audio-file">
           <Button className="btn" component="span">
-            <img className="btn__icon" src={AudioIcon} height={25} width={25} />
+            <img
+              className="btn__icon"
+              src={AudioIcon}
+              height={25}
+              width={25}
+              alt="Upload MP3"
+            />
             Upload MP3 audio
           </Button>
         </label>

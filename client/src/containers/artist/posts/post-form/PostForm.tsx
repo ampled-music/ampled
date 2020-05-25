@@ -37,8 +37,8 @@ import DOMPurify from 'dompurify';
 
 import TextIcon from '../../../../images/icons/Icon_Text.svg';
 import AudioIcon from '../../../../images/icons/Icon_Audio.svg';
-import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
-import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
+// import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
+// import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
 import PhotoIcon from '../../../../images/icons/Icon_Photo.svg';
 import VideoIcon from '../../../../images/icons/Icon_Video.svg';
 import Speaker from '../../../../images/home/home_how_speaker.png';
@@ -509,7 +509,7 @@ class PostFormComponent extends React.Component<Props, any> {
     return (
       title &&
       title.length > 0 &&
-      ((audioUploads && 
+      ((audioUploads &&
         audioUploads.length > 0 &&
         audioUploads[0].public_id.length > 0) ||
         (images && images.length > 0) ||
@@ -535,7 +535,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={TextIcon} className="btn__icon" />
+          <img src={TextIcon} className="btn__icon" alt="" />
           Text
         </Button>
         <Button
@@ -552,7 +552,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={AudioIcon} className="btn__icon" />
+          <img src={AudioIcon} className="btn__icon" alt="" />
           Audio
         </Button>
         <Button
@@ -569,7 +569,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={VideoIcon} className="btn__icon" />
+          <img src={VideoIcon} className="btn__icon" alt="" />
           Video
         </Button>
         <Button
@@ -586,7 +586,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={PhotoIcon} className="btn__icon" />
+          <img src={PhotoIcon} className="btn__icon" alt="" />
           Photo
         </Button>
         {/* <Button
@@ -603,7 +603,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={Link2Icon} className="btn__icon" />
+          <img src={Link2Icon} className="btn__icon" alt=""/>
           Link
         </Button> */}
       </div>
@@ -665,7 +665,13 @@ class PostFormComponent extends React.Component<Props, any> {
         />
         <label htmlFor="image-file">
           <Button className="btn" component="span">
-            <img className="btn__icon" src={PhotoIcon} height={25} width={25} />
+            <img
+              className="btn__icon"
+              src={PhotoIcon}
+              height={25}
+              width={25}
+              alt=""
+            />
             Add Photo
           </Button>
         </label>
@@ -700,7 +706,7 @@ class PostFormComponent extends React.Component<Props, any> {
           </div>
         </div>
 
-        {audioFile && audioFile.length > 0 && (
+        {audioUpload && (
           <div className="post-form__audio_allow-checkbox">
             <FormControlLabel
               className="alow-download-label"
@@ -873,17 +879,17 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   renderAudio = () => {
-    const { audioFile } = this.state;
+    const { audioUploads } = this.state;
     const {
       artist: { isStripeSetup },
     } = this.props;
     return (
       <div>
         <Upload
-          onComplete={this.updateAudioFile}
-          onRemove={() => this.updateAudioFile(null)}
+          onComplete={this.setAudioUpload}
+          onRemove={() => this.setAudioUpload(null, null)}
         />
-        {audioFile && audioFile.length > 0 && (
+        {audioUploads.length > 0 && (
           <div className="post-form__audio_allow-checkbox">
             <FormControlLabel
               className="alow-download-label"
@@ -946,7 +952,7 @@ class PostFormComponent extends React.Component<Props, any> {
   renderEmptyType = () => {
     return (
       <div className="post-form__empty">
-        <img className="post-form__empty_image" src={Speaker} />
+        <img className="post-form__empty_image" src={Speaker} alt="Speaker" />
         <div className="post-form__empty_copy">
           <div>Not sure what to post?</div>
           <div>Here are some ideas.</div>
@@ -956,7 +962,7 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { hasUnsavedChanges, title, body, audioUploads } = this.state;
+    const { hasUnsavedChanges } = this.state;
     const { isEdit } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
@@ -974,8 +980,7 @@ class PostFormComponent extends React.Component<Props, any> {
                 this.props.post.audio_uploads.length > 0 &&
                 this.state.audioUploads.length > 0 &&
                 this.state.audio_uploads[0].id &&
-                this.state.audioUploads[0].id ===
-                  this.state.audio_uploads[0].id
+                this.state.audioUploads[0].id === this.state.audio_uploads[0].id
                   ? this.renderExistingAudio()
                   : this.renderAudio()}
               </div>

@@ -52,7 +52,8 @@
     "test": "react-scripts test --env=jsdom",
     "test-ci": "react-scripts test --env=jsdom --watchAll=false",
     "eject": "react-scripts eject",
-    "test-coverage": "npm run test -- --coverage && cat ./coverage/lcov.info | coveralls"
+    "test-coverage": "npm run test -- --coverage && cat ./coverage/lcov.info | coveralls",
+    "lint": "tsc --noEmit && eslint src/**/*.{js,ts,tsx}"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",
@@ -76,6 +77,7 @@
     "coveralls": "^3.0.2",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
+    "jest-canvas-mock": "^2.2.0",
     "prettier": "^1.15.3",
     "react-color": "^2.17.3",
     "redux-actions": "^2.6.4",

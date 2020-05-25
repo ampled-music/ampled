@@ -2,7 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Heroku uses the ruby version to configure your application"s runtime.
-ruby "2.5.7"
+ruby "2.5.8"
 
 # Back-endy
 gem "administrate"
@@ -29,6 +29,7 @@ gem "sentry-raven"
 gem "sidekiq"
 gem "skylight"
 gem "stripe"
+gem "wavefile"
 gem "zencoder"
 
 # Front-endy

@@ -1,5 +1,5 @@
-import './../artist/posts/post/post.scss';
 import './../artist/posts/post-container.scss';
+import './../artist/posts/post/post.scss';
 
 import * as React from 'react';
 import { connect } from 'react-redux';

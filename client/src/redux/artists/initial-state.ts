@@ -1,3 +1,5 @@
+import { Image } from '../../api/image/image';
+
 export interface ArtistModel {
   slug: string;
   name: string;
@@ -11,7 +13,7 @@ export interface ArtistModel {
   instagram_handle: string;
   isStripeSetup: boolean;
   posts: [];
-  images: [];
+  images: [Image];
   owners: OwnersProps[];
   supporters: SupportersProps[];
   most_recent_supporter: SupportersProps;
@@ -22,12 +24,12 @@ export interface ArtistModel {
 interface OwnersProps {
   id: string;
   name: string;
-  profile_image_url: string;
+  image: Image;
 }
 interface SupportersProps {
   id: string;
   name: string;
-  profile_image_url: string;
+  image: Image;
 }
 
 export const initialState = {

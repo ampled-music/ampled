@@ -74,7 +74,7 @@ class ResetPasswordComponent extends React.Component<any> {
     }
 
     try {
-      const { data } = await apiAxios({
+      await apiAxios({
         method: 'put',
         url,
         headers: {
@@ -84,8 +84,6 @@ class ResetPasswordComponent extends React.Component<any> {
           user: passwordPackage,
         },
       });
-
-      // console.log(data);
 
       this.props.showToast({
         message: 'Password changed! Please log in with your new password.',
@@ -98,7 +96,6 @@ class ResetPasswordComponent extends React.Component<any> {
         this.props.logout();
       }
     } catch (e) {
-      // console.log(e);
       if (
         e.response &&
         e.response.data &&

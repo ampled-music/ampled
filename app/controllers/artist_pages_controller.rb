@@ -89,6 +89,12 @@ class ArtistPagesController < ApplicationController
       return render json: { status: "error", message: "You don't have that permission." }
     end
 
+    # This param will be set when the Delete your page button is click by the Artist admin
+    # but not when a site admin is deleting a page. When an Artist admin initiates the deletion,
+    # we want to let them do that and first cancel any subscriptions.
+    cancel_subs = params[:cancel_subscriptions] && params[:cancel_subscriptions] == "true"
+    @artist_page.subscriptions.each(&:cancel!) if cancel_subs
+
     render json: { status: "ok", message: "Your page has been deleted!" } if @artist_page.destroy
   end
 

@@ -43,7 +43,7 @@ jobs:
       # Setup database
       - run: bundle exec rake db:create db:schema:load db:migrate
       - run:
-          name: Run Rails tests
+          name: Run Rails tests + Rubocop linting
           # Runs default rake tasks, as defined in Rakefile (includes spec, rubocop)
           command: bundle exec rake
       - check-changed-files-or-halt:
@@ -53,9 +53,8 @@ jobs:
           command: npm run test-ci
       - run:
           name: Build react client
-          command: |
-            unset CI
-            npm run build-client
+          # With process.env.CI = true, lint warnings will break the build.
+          command: npm run build-client
 
   deploy:
     machine:

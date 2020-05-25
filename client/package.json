@@ -52,7 +52,8 @@
     "test": "react-scripts test --env=jsdom",
     "test-ci": "react-scripts test --env=jsdom --watchAll=false",
     "eject": "react-scripts eject",
-    "test-coverage": "npm run test -- --coverage && cat ./coverage/lcov.info | coveralls"
+    "test-coverage": "npm run test -- --coverage && cat ./coverage/lcov.info | coveralls",
+    "lint": "tsc --noEmit && eslint src/**/*.{js,ts,tsx}"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",

@@ -61,10 +61,10 @@ const canLoggedUserDeleteComment = (
   );
 };
 
-const PostTitle = ({ 
-  artistSlug, 
-  postId, 
-  title 
+const PostTitle = ({
+  artistSlug,
+  postId,
+  title
 }) => (
   <div className="post__title">
     <Link
@@ -241,6 +241,7 @@ const PostMedia = ({
               'blur-image': !allowDetails,
             })}
             src={renderCloudinaryPhoto(images[0].url)}
+            alt=""
           />
           {!allowDetails && (
             <Lock
@@ -264,6 +265,7 @@ const PostMedia = ({
                 'blur-image': !allowDetails,
               })}
               src={renderCloudinaryPhoto(images[0].url)}
+              alt=""
             />
           )}
           {!images.length && !allowDetails && (

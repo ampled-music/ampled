@@ -23,10 +23,10 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
 - [Deploy to Acceptance/Production](#deploy-to-acceptanceproduction)
 - [Database migrations and rollbacks](#database-migrations-and-rollbacks)
 - [Server Environments](#server-environments)
-  - [Hosting](#hosting)
-  - [Environment Variables](#environment-variables)
-  - [Third Party Services](#third-party-services)
-  - [Using the Stripe CLI to test webhooks locally](#using-the-stripe-cli-to-test-webhooks-locally)
+    - [Hosting](#hosting)
+    - [Environment Variables](#environment-variables)
+    - [Third Party Services](#third-party-services)
+    - [Using the Stripe CLI to test webhooks locally](#using-the-stripe-cli-to-test-webhooks-locally)
 - [Internal Tools](#internal-tools)
   - [`application-fee-management`](#application-fee-management)
     - [Installation & setup](#installation--setup)
@@ -106,6 +106,8 @@ This will also automatically compile and js or css changes live on the fly.
 ### Code Style
 
 Rubocop is configured to enforce the style guide for this project.
+
+On the client-side, the default `react-scripts` eslint configuration is ran during the build process. There is also an additional custom `.eslintrc.js` configuration in `client/`, but this is not enforced (as of May 2020). You can run the custom lint configuration with `yarn lint` (add `--fix` to the command, if you want to auto-fix errors).
 
 ## Additional/Optional Development Details
 

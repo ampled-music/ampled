@@ -7,7 +7,7 @@ class ArtistPagesController < ApplicationController
   before_action :check_update_okay, only: :update
 
   def index
-    @artist_pages = ArtistPage.joins(:images).approved.where(featured: true).where.not(images: nil).uniq.take(3)
+    @artist_pages = ArtistPage.includes(:images).approved.where(featured: true).where.not(images: nil).uniq.take(3)
 
     respond_to do |format|
       format.html do
@@ -114,7 +114,9 @@ class ArtistPagesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_artist_page
     @artist_page = if params[:slug]
-                     ArtistPage.find_by(slug: params[:slug])
+                     ArtistPage.includes(page_ownerships: [user: %i[image page_ownerships owned_pages]], \
+                               posts: [:audio_uploads, :images, user: [:image], comments: [:user]])
+                       .find_by(slug: params[:slug])
                    else
                      ArtistPage.find(params[:id])
                    end

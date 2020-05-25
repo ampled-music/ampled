@@ -5,7 +5,7 @@ json.authorImage @post.author_image
 json.title @post.title
 json.created_at @post.created_at.to_i
 json.created_ago time_ago_in_words(@post.created_at)
-json.comments @post.comments, partial: "comments/comment", as: :comment
+json.comments @post.comments.includes([:user]), partial: "comments/comment", as: :comment
 json.is_private @post.is_private
 json.allow_download @post.allow_download
 json.video_embed_url @post.video_embed_url

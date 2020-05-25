@@ -78,4 +78,10 @@ Rails.application.configure do
     },
     bucket: ENV["S3_BUCKET"]
   }
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.rails_logger = true
+    Bullet.bullet_logger = true
+  end
 end

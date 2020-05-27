@@ -39,6 +39,7 @@ import tear from '../../../../images/background_tear.png';
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
 import { Upload } from './Upload';
+import { Loading } from '../../../shared/loading/Loading';
 
 const mapStateToProps = (state: Store) => ({
   ...state.posts,
@@ -285,18 +286,17 @@ class PostFormComponent extends React.Component<Props, any> {
   }
 
   componentDidUpdate() {
-    if (!this.props.postCreated && !this.state.savingPost) {
-      return;
+    // When update or create is complete, refetch artist / post data
+    if (this.state.savingPost && !this.props.postCreated && !this.props.creatingPost && !this.props.loading && !this.state.artistRefreshing) {
+      // TODO (Optimization/609):
+      //    * instead of waiting for server response to show card, lazy load the new/updated card
+      //    * instead of making a separate GET request to load the new data, have the PUT or POST request return the data
+      this.props.getArtist(this.props.artist.id);
+      this.setState({ artistRefreshing: true })
+
+      this.props.discardChanges();
     }
-
-    this.refreshArtist();
   }
-
-  refreshArtist = () => {
-    // this.setState(this.initialState);
-    window.setTimeout(() => this.props.getArtist(this.props.artist.id), 1000);
-    this.props.discardChanges();
-  };
 
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -696,13 +696,15 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { hasUnsavedChanges, title, body, audioUploads } = this.state;
+    const { hasUnsavedChanges, title, body, audioUploads, savingPost } = this.state;
     const { isEdit } = this.props;
     const {
       artist: { isStripeSetup },
     } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
+
+    if (savingPost) return <Loading artistLoading={true}/>
 
     return (
       <div className="post-form__container">

@@ -285,15 +285,13 @@ class PostFormComponent extends React.Component<Props, any> {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     // When update or create is complete, refetch artist / post data
-    if (this.state.savingPost && !this.props.postCreated && !this.props.creatingPost && !this.props.loading && !this.state.artistRefreshing) {
+    if (this.state.savingPost && prevProps.creatingPost && !this.props.creatingPost) {
       // TODO (Optimization/609):
       //    * instead of waiting for server response to show card, lazy load the new/updated card
       //    * instead of making a separate GET request to load the new data, have the PUT or POST request return the data
       this.props.getArtist(this.props.artist.id);
-      this.setState({ artistRefreshing: true })
-
       this.props.discardChanges();
     }
   }

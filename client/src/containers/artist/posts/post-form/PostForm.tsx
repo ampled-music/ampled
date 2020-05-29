@@ -239,7 +239,7 @@ class RichEditor extends React.Component<RichEditorProps> {
   }
 }
 
-class PostFormComponent extends React.Component<Props, any> {
+export default class PostFormComponent extends React.Component<Props, any> {
   initialState = {
     title: '',
     body: '',

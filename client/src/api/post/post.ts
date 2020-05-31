@@ -19,7 +19,7 @@ export interface Post {
   audio_uploads: AudioUpload[];
   // Although the backend API supports multiple images per Post, for now all code can
   // assume zero or at most 1 image per in this Array.
-  images: [Image];
+  images: Image[];
   video_embed_url: string;
   artist_page_id: string;
   is_private: boolean;

@@ -323,7 +323,11 @@ export default class PostFormComponent extends React.Component<Props, any> {
 
   componentDidUpdate(prevProps) {
     // When update or create is complete, refetch artist / post data
-    if (this.state.savingPost && prevProps.creatingPost && !this.props.creatingPost) {
+    if (
+      this.state.savingPost &&
+      prevProps.creatingPost &&
+      !this.props.creatingPost
+    ) {
       // TODO (Optimization/609):
       //    * instead of waiting for server response to show card, lazy load the new/updated card
       //    * instead of making a separate GET request to load the new data, have the PUT or POST request return the data
@@ -878,9 +882,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
 
   renderAudio = () => {
     const { audioUploads } = this.state;
-    const {
-      artist: { isStripeSetup },
-    } = this.props;
     return (
       <div>
         <Upload
@@ -901,11 +902,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
               label="Enable Download"
             />
           </div>
-        )}
-        {!isStripeSetup && (
-          <small>
-            You need to set up your payout destination to make private posts.
-          </small>
         )}
       </div>
     );
@@ -960,12 +956,15 @@ export default class PostFormComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { hasUnsavedChanges, title, body, audioUploads, savingPost } = this.state;
-    const { isEdit } = this.props;
+    const { hasUnsavedChanges, savingPost } = this.state;
+    const {
+      isEdit,
+      artist: { isStripeSetup },
+    } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
 
-    if (savingPost) return <Loading artistLoading={true}/>
+    if (savingPost) return <Loading artistLoading={true} />;
 
     return (
       <div className="post-form__container">
@@ -1005,6 +1004,12 @@ export default class PostFormComponent extends React.Component<Props, any> {
                     }
                     label="Make Public"
                   />
+                  {!isStripeSetup && (
+                    <small>
+                      You need to set up your payout destination to make private
+                      posts.
+                    </small>
+                  )}
                 </div>
 
                 <div className="post-form__actions">

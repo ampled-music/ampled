@@ -46,6 +46,7 @@ import Speaker from '../../../../images/home/home_how_speaker.png';
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
 import { Upload } from './Upload';
+import { Loading } from '../../../shared/loading/Loading';
 
 const mapStateToProps = (state: Store) => ({
   ...state.posts,
@@ -246,7 +247,7 @@ class RichEditor extends React.Component<RichEditorProps> {
   }
 }
 
-class PostFormComponent extends React.Component<Props, any> {
+export default class PostFormComponent extends React.Component<Props, any> {
   initialState = {
     title: '',
     body: '',
@@ -320,19 +321,16 @@ class PostFormComponent extends React.Component<Props, any> {
     }
   }
 
-  componentDidUpdate() {
-    if (!this.props.postCreated && !this.state.savingPost) {
-      return;
+  componentDidUpdate(prevProps) {
+    // When update or create is complete, refetch artist / post data
+    if (this.state.savingPost && prevProps.creatingPost && !this.props.creatingPost) {
+      // TODO (Optimization/609):
+      //    * instead of waiting for server response to show card, lazy load the new/updated card
+      //    * instead of making a separate GET request to load the new data, have the PUT or POST request return the data
+      this.props.getArtist(this.props.artist.id);
+      this.props.discardChanges();
     }
-
-    this.refreshArtist();
   }
-
-  refreshArtist = () => {
-    // this.setState(this.initialState);
-    window.setTimeout(() => this.props.getArtist(this.props.artist.id), 1000);
-    this.props.discardChanges();
-  };
 
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -962,10 +960,12 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { hasUnsavedChanges } = this.state;
+    const { hasUnsavedChanges, title, body, audioUploads, savingPost } = this.state;
     const { isEdit } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
+
+    if (savingPost) return <Loading artistLoading={true}/>
 
     return (
       <div className="post-form__container">

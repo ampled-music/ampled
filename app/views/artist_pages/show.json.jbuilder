@@ -31,7 +31,7 @@ json.owners @artist_page.page_ownerships do |ownership|
   json.instrument ownership.instrument
 end
 
-json.supporters @artist_page.active_subscribers, partial: "users/user", as: :user
+json.supporters @artist_page.active_subscribers.shuffle.take(16), partial: "users/user", as: :user
 
 @expand_artist = false
 

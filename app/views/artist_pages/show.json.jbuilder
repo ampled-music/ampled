@@ -12,6 +12,7 @@ json.images @artist_page.images, partial: "images/image", as: :image
 json.isStripeSetup @artist_page.is_stripe_ready
 json.approved @artist_page.approved
 json.hide_members @artist_page.hide_members
+json.supporter_count @artist_page.subscriber_count
 
 json.most_recent_supporter do
   if @artist_page.most_recent_supporter.present?
@@ -31,7 +32,8 @@ json.owners @artist_page.page_ownerships do |ownership|
   json.instrument ownership.instrument
 end
 
-json.supporters @artist_page.active_subscribers.shuffle.take(16), partial: "users/user", as: :user
+json.supporters @artist_page.active_subscribers.includes(%i[image page_ownerships owned_pages])
+  .shuffle.take(16), partial: "users/user", as: :user
 
 @expand_artist = false
 

@@ -43,11 +43,9 @@ RSpec.describe "POST /users", type: :request do
   end
 
   context "when updating a user" do
-    let(:user) do
-      create(:user, confirmed_at: Time.current, profile_image_url: "old_image")
-    end
+    let(:user) { create(:user, confirmed_at: Time.current, image: create(:image)) }
 
-    let(:update_params) { { profile_image_url: "http://some.image.jpg" } }
+    let(:update_params) { { image: { url: "http://some.image.jpg", public_id: "new_public_id" } } }
 
     let(:url) { "/users" }
 
@@ -61,10 +59,21 @@ RSpec.describe "POST /users", type: :request do
       expect(response.status).to eq 200
     end
 
-    it "saves the subscription in the database" do
+    it "saves the updated parameters in the database" do
       put url, params: update_params
 
-      expect(user.profile_image_url).to eq "http://some.image.jpg"
+      user.reload
+      expect(user.image.url).to eq "http://some.image.jpg"
+      expect(user.image.public_id).to eq "new_public_id"
+    end
+
+    it "deletes the nested image, if requested" do
+      expect {
+        put url, params: { image: { id: user.image.id, _destroy: true } }
+      }.to change(Image, :count).by(-1)
+
+      user.reload
+      expect(user.image).to eq(nil)
     end
   end
 end

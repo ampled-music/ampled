@@ -4,7 +4,6 @@
 #
 #  allow_download  :boolean          default(FALSE)
 #  artist_page_id  :bigint(8)
-#  audio_file      :string
 #  body            :text
 #  created_at      :datetime         not null
 #  id              :bigint(8)        not null, primary key
@@ -30,24 +29,22 @@ class Post < ApplicationRecord
   belongs_to :user
 
   has_many :comments, dependent: :destroy
-
+  has_many :audio_uploads, dependent: :destroy
   has_many :images, as: :imageable, dependent: :destroy
 
+  accepts_nested_attributes_for :audio_uploads, allow_destroy: true
   accepts_nested_attributes_for :images, allow_destroy: true
-
-  # has_attached_file :audio_file
-  # validates_attachment_content_type :audio_file, content_type: /\Aaudio\/.*\z/
 
   def author
     user.name
   end
 
   def author_image
-    user.profile_image_url
+    user.image&.url
   end
 
   def has_audio
-    return true if audio_file.present?
+    return true if audio_uploads.any?
 
     false
   end

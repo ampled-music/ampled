@@ -23,7 +23,6 @@
 #  last_name              :string
 #  locked_at              :datetime
 #  name                   :string           not null
-#  profile_image_url      :string
 #  redirect_uri           :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
@@ -64,6 +63,10 @@ class User < ApplicationRecord
   has_many :subscribed_artists, through: :subscriptions, source: :artist_page
 
   has_many :posts, dependent: :destroy
+
+  has_one :image, as: :imageable, dependent: :destroy
+
+  accepts_nested_attributes_for :image, allow_destroy: true
 
   def supported_artists
     subscribed_artists.merge(Subscription.active)

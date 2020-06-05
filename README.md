@@ -14,6 +14,7 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
     - [Git](#git)
     - [Code Style](#code-style)
   - [Additional/Optional Development Details](#additionaloptional-development-details)
+    - [Backup/Restore Database](#backuprestore-database)
     - [Code Coverage (local)](#code-coverage-local)
     - [Using Guard](#using-guard)
     - [Using Mailcatcher](#using-mailcatcher)
@@ -22,10 +23,10 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
 - [Deploy to Acceptance/Production](#deploy-to-acceptanceproduction)
 - [Database migrations and rollbacks](#database-migrations-and-rollbacks)
 - [Server Environments](#server-environments)
-  - [Hosting](#hosting)
-  - [Environment Variables](#environment-variables)
-  - [Third Party Services](#third-party-services)
-  - [Using the Stripe CLI to test webhooks locally](#using-the-stripe-cli-to-test-webhooks-locally)
+    - [Hosting](#hosting)
+    - [Environment Variables](#environment-variables)
+    - [Third Party Services](#third-party-services)
+    - [Using the Stripe CLI to test webhooks locally](#using-the-stripe-cli-to-test-webhooks-locally)
 - [Internal Tools](#internal-tools)
   - [`application-fee-management`](#application-fee-management)
     - [Installation & setup](#installation--setup)
@@ -40,6 +41,7 @@ To run the specs or fire up the server, be sure you have these installed (and ru
 - Ruby 2.5 (see [.ruby-version](.ruby-version)).
 - PostgreSQL 10.3+ (`brew install postgresql`).
 - Heroku CLI (`brew tap heroku/brew && brew install heroku`).
+- ffmpeg (`brew install ffmpeg`)
 
 ### First Time Setup
 
@@ -105,7 +107,23 @@ This will also automatically compile and js or css changes live on the fly.
 
 Rubocop is configured to enforce the style guide for this project.
 
+On the client-side, the default `react-scripts` eslint configuration is ran during the build process. There is also an additional custom `.eslintrc.js` configuration in `client/`, but this is not enforced (as of May 2020). You can run the custom lint configuration with `yarn lint` (add `--fix` to the command, if you want to auto-fix errors).
+
 ## Additional/Optional Development Details
+
+### Backup/Restore Database
+
+To backup your postgres database run:
+
+    $ bundle exec rake db:dump[backup_name]
+
+To restore run:
+
+    $ bundle exec rake db:restore[backup_name]
+
+The backup files are stored in `/db/backups/` directory. If you use zsh, your rake task parameter brackets must be escaped.
+
+IMPORTANT: These commands will connect to whatever DB your rails environment is configured with.
 
 ### Code Coverage (local)
 

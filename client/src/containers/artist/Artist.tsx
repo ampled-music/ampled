@@ -268,20 +268,6 @@ class ArtistComponent extends React.Component<Props, any> {
     }
   };
 
-  hexToRGB = (hex, alpha) => {
-    if (hex) {
-      const r = parseInt(hex.slice(1, 3), 16),
-        g = parseInt(hex.slice(3, 5), 16),
-        b = parseInt(hex.slice(5, 7), 16);
-
-      if (alpha) {
-        return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
-      } else {
-        return 'rgb(' + r + ', ' + g + ', ' + b + ')';
-      }
-    }
-  };
-
   handleSupportClick = () => {
     let supportUrl;
     if (this.props.artists.artist.slug) {
@@ -411,6 +397,10 @@ class ArtistComponent extends React.Component<Props, any> {
                     role="button"
                     onClick={this.requestApproval}
                     style={{ textDecoration: 'underline', cursor: 'pointer' }}
+                    // Hack to circumvent jsx-a11y lint rule. Ideally this entire <a> should
+                    // be replaced with a <button>. See:
+                    // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md
+                    href="#/"
                   >
                     click here
                   </a>{' '}

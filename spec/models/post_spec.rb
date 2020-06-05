@@ -37,4 +37,21 @@ RSpec.describe Post, type: :model do
       expect(post.reload.images.size).to eq(0)
     end
   end
+
+  describe "#author_image" do
+    let(:author_image) { create(:image) }
+    let(:author) { create(:user) }
+    let(:post) { create(:post, user: author) }
+
+    it "returns the author's image url" do
+      allow(author).to receive(:image).and_return(author_image)
+      expect(author_image).to receive(:url).and_return(:the_image_url)
+      expect(post.author_image).to eq(:the_image_url)
+    end
+
+    it "returns nil if the author has no image" do
+      expect(author).to receive(:image).and_return(nil)
+      expect(post.author_image).to eq(nil)
+    end
+  end
 end

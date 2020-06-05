@@ -24,7 +24,8 @@ class UploadsController < ApplicationController
 
   def file_extension
     {
-      "audio/mp3" => "mp3"
+      "audio/mp3" => "mp3",
+      "audio/mpeg" => "mp3"
     }[content_type]
   end
 

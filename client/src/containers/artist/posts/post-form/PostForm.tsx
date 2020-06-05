@@ -39,6 +39,7 @@ import tear from '../../../../images/background_tear.png';
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
 import { Upload } from './Upload';
+import { Loading } from '../../../shared/loading/Loading';
 
 const mapStateToProps = (state: Store) => ({
   ...state.posts,
@@ -238,11 +239,11 @@ class RichEditor extends React.Component<RichEditorProps> {
   }
 }
 
-class PostFormComponent extends React.Component<Props, any> {
+export default class PostFormComponent extends React.Component<Props, any> {
   initialState = {
     title: '',
     body: '',
-    audioFile: '',
+    audioUploads: [],
     imageName: '',
     videoEmbedUrl: null,
     isPublic: false,
@@ -266,7 +267,7 @@ class PostFormComponent extends React.Component<Props, any> {
       this.state = {
         ...this.initialState,
         ...props.post,
-        audioFile: props.post.audio_file,
+        audioUploads: props.post.audio_uploads,
         images: props.post.images,
         videoEmbedUrl: props.post.video_embed_url,
         isPublic: !props.post.is_private,
@@ -284,19 +285,16 @@ class PostFormComponent extends React.Component<Props, any> {
     }
   }
 
-  componentDidUpdate() {
-    if (!this.props.postCreated && !this.state.savingPost) {
-      return;
+  componentDidUpdate(prevProps) {
+    // When update or create is complete, refetch artist / post data
+    if (this.state.savingPost && prevProps.creatingPost && !this.props.creatingPost) {
+      // TODO (Optimization/609):
+      //    * instead of waiting for server response to show card, lazy load the new/updated card
+      //    * instead of making a separate GET request to load the new data, have the PUT or POST request return the data
+      this.props.getArtist(this.props.artist.id);
+      this.props.discardChanges();
     }
-
-    this.refreshArtist();
   }
-
-  refreshArtist = () => {
-    // this.setState(this.initialState);
-    window.setTimeout(() => this.props.getArtist(this.props.artist.id), 1000);
-    this.props.discardChanges();
-  };
 
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -309,7 +307,7 @@ class PostFormComponent extends React.Component<Props, any> {
     const {
       title,
       body,
-      audioFile,
+      audioUploads,
       images,
       videoEmbedUrl,
       isPublic,
@@ -322,7 +320,7 @@ class PostFormComponent extends React.Component<Props, any> {
     const post = {
       title,
       body,
-      audio_file: audioFile,
+      audio_uploads: audioUploads,
       images: images,
       video_embed_url: videoEmbedUrl,
       is_private: !isPublic,
@@ -338,11 +336,31 @@ class PostFormComponent extends React.Component<Props, any> {
         await this.removeImageFromBackendAndCloudinary(deleteImage);
       }
     }
-    isEdit ? this.props.editPost(post) : this.props.createPost(post);
+
+    if (isEdit) {
+      const currentPublicIds = post.audio_uploads.map((au) => au.public_id);
+      const removedUploads = this.props.post.audio_uploads.filter(
+        (au) => !currentPublicIds.includes(au.public_id),
+      );
+
+      removedUploads.forEach((ru) => {
+        post.audio_uploads.push({
+          ...ru,
+          _destroy: true,
+        });
+      });
+
+      this.props.editPost(post);
+    } else {
+      this.props.createPost(post);
+    }
   };
 
-  updateAudioFile = (audioFile) => {
-    this.setState({ audioFile, hasUnsavedChanges: true });
+  setAudioUpload = (publicId, fileName) => {
+    this.setState({
+      audioUploads: publicId ? [{ public_id: publicId, name: fileName }] : [],
+      hasUnsavedChanges: true,
+    });
   };
 
   processImage = async (e) => {
@@ -445,12 +463,14 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   isSaveEnabled = () => {
-    const { title, body, images, videoEmbedUrl, audioFile } = this.state;
+    const { title, body, images, videoEmbedUrl, audioUploads } = this.state;
 
     return (
       title &&
       title.length > 0 &&
-      ((audioFile && audioFile.length > 0) ||
+      ((audioUploads && 
+        audioUploads.length > 0 &&
+        audioUploads[0].public_id.length > 0) ||
         (images && images.length > 0) ||
         (videoEmbedUrl && videoEmbedUrl.length > 0) ||
         (body && body.length > 0))
@@ -509,6 +529,7 @@ class PostFormComponent extends React.Component<Props, any> {
   }
 
   renderExistingAudio(): React.ReactNode {
+    const audioUpload = this.props.post.audio_uploads[0];
     return (
       <div className="upload">
         <div className="progress-container">
@@ -516,7 +537,7 @@ class PostFormComponent extends React.Component<Props, any> {
             <div className="progress-info__name">
               <div className="progress-info__name_mp3">Mp3</div>
               <div className="progress-info__name_song">
-                {this.props.post.audio_file}
+                {audioUpload.public_id}
               </div>
             </div>
 
@@ -524,7 +545,7 @@ class PostFormComponent extends React.Component<Props, any> {
               <span
                 className="remove-button"
                 title="Remove audio"
-                onClick={() => this.updateAudioFile(null)}
+                onClick={() => this.setAudioUpload(null, null)}
               >
                 Remove
               </span>
@@ -673,13 +694,15 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { hasUnsavedChanges, title, body, audioFile } = this.state;
+    const { hasUnsavedChanges, title, body, audioUploads, savingPost } = this.state;
     const { isEdit } = this.props;
     const {
       artist: { isStripeSetup },
     } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
+
+    if (savingPost) return <Loading artistLoading={true}/>
 
     return (
       <div className="post-form__container">
@@ -744,13 +767,17 @@ class PostFormComponent extends React.Component<Props, any> {
               <div className="post-form__audio">
                 {isEdit &&
                 this.props.post &&
-                this.props.post.audio_file &&
-                this.state.audioFile &&
-                this.state.audio_file &&
-                this.state.audioFile === this.state.audio_file ? (
+                this.props.post.audio_uploads.length > 0 &&
+                this.state.audioUploads.length > 0 &&
+                this.state.audio_uploads[0].id &&
+                this.state.audioUploads[0].id ===
+                  this.state.audio_uploads[0].id ? (
                   this.renderExistingAudio()
                 ) : (
-                  <Upload onComplete={this.updateAudioFile} />
+                  <Upload 
+                    onComplete={this.setAudioUpload} 
+                    onRemove={() => this.setAudioUpload(null, null)}
+                  />
                 )}
               </div>
               {this.renderVisualUpload()}
@@ -770,7 +797,7 @@ class PostFormComponent extends React.Component<Props, any> {
                     </label>
                   </div>
 
-                  {audioFile && audioFile.length > 0 && (
+                  {audioUploads.length > 0 && (
                     <div className="col-auto">
                       <label
                         className="make-public-label"

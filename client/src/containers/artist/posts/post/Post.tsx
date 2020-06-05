@@ -510,6 +510,7 @@ class PostComponent extends React.Component<any, any> {
 
   handleDeletePost = async () => {
     await deletePost(this.props.post.id);
+    this.closeDeletePostModal();
     this.props.updateArtist();
   };
 

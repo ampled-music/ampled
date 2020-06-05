@@ -187,7 +187,7 @@ export class Supporters extends React.Component<Props, any> {
         {artist.supporters.length > 0 && (
           <div>
             <div className="artist-header__supporters_title">
-              {artist.supporters.length} Supporters
+              {artist.supporter_count} Supporters
             </div>
             <div className="row">
               <div className="artist-header__supporters_recent col-4">

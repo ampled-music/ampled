@@ -1627,7 +1627,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               <div className="col-md-3 col-sm-1"></div>
               <div className="col-md-6 col-sm-10">
                 <div className="row">
-                  {this.renderDeleteBtn()}
+                  {/* {this.renderDeleteBtn()} */}
                   <div className={saveBtnClasses}>
                     <button onClick={this.onSubmit} className="btn btn-ampled">
                       {this.props.editMode ? 'Save' : 'Create'} your page

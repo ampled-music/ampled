@@ -3,6 +3,8 @@ import * as React from 'react';
 import npr from '../../images/logos/npr-logo.png';
 import salon from '../../images/logos/salon-logo.png';
 import vice from '../../images/logos/vice-logo.png';
+import adhoc from '../../images/logos/adhoc-logo.png';
+import pitchfork from '../../images/logos/pitchfork-logo.png';
 
 export const HomeGarden = () => (
   <div className="home-garden">
@@ -51,7 +53,37 @@ export const HomeGarden = () => (
                   <img
                     className="home-garden__logo_image"
                     src={vice}
-                    alt="vice"
+                    alt="Vice"
+                  />
+                </div>
+              </a>
+            </div>
+            <div className="col-md-4 home-garden__logo_contain">
+              <a
+                href="https://www.adhoc.fm/post/ampled-helps-support-artists/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="home-garden__logo">
+                  <img
+                    className="home-garden__logo_image"
+                    src={adhoc}
+                    alt="AdHoc"
+                  />
+                </div>
+              </a>
+            </div>
+            <div className="col-md-4 home-garden__logo_contain">
+              <a
+                href="https://pitchfork.com/thepitch/how-much-more-money-artists-earn-from-bandcamp-compared-to-spotify-apple-music-youtube/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="home-garden__logo">
+                  <img
+                    className="home-garden__logo_image"
+                    src={pitchfork}
+                    alt="Pitchfork"
                   />
                 </div>
               </a>

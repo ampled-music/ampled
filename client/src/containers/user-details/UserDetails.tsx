@@ -44,7 +44,7 @@ import { Loading } from '../shared/loading/Loading';
 import { UploadFile } from '../shared/upload/UploadFile';
 import { StripePaymentProvider } from '../artist/support/StripePaymentProvider';
 
-import avatar from '../../images/ampled_avatar.svg';
+import avatar from '../../images/avatars/Avatar_Blank.svg';
 
 import { theme } from './theme';
 

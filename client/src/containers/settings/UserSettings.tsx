@@ -28,10 +28,10 @@ import {
   faStripe,
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import tear from '../../images/background_tear.png';
-import tear_black from '../../images/background_tear_black.png';
+import tear from '../../images/backgrounds/background_tear.png';
+import tear_black from '../../images/backgrounds/background_tear_black.png';
 
-import avatar from '../../images/ampled_avatar.svg';
+import avatar from '../../images/avatars/Avatar_Blank.svg';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';

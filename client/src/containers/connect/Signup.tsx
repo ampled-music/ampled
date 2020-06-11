@@ -17,7 +17,7 @@ import { initialState as authenticationInitialState } from '../../redux/authenti
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as signupInitialState } from '../../redux/signup/initial-state';
 
-import tear from '../../images/background_tear.png';
+import tear from '../../images/backgrounds/background_tear.png';
 
 import { once } from 'ramda';
 

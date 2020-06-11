@@ -12,7 +12,7 @@ import { logoutAction } from '../../redux/authentication/logout';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { routePaths } from './../route-paths';
 
-import tear from '../../images/background_tear.png';
+import tear from '../../images/backgrounds/background_tear.png';
 
 import { apiAxios } from '../../api/setup-axios';
 

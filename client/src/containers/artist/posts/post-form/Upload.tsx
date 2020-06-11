@@ -1,8 +1,11 @@
 import axios from 'axios';
 import * as React from 'react';
 
-import { Button } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import AudioIcon from '../../../../images/icons/Icon_Audio.png';
 
 interface UploadState {
   progress: number;
@@ -15,7 +18,7 @@ interface UploadState {
 
 interface UploadProps {
   onComplete: Function;
-  onRemove: Function;
+  onRemove?: Function;
 }
 
 class Upload extends React.Component<UploadProps, UploadState> {
@@ -105,8 +108,9 @@ class Upload extends React.Component<UploadProps, UploadState> {
       fileName: undefined,
       uploadError: undefined,
     });
-    this.props.onRemove();
-  }
+    // TODO: remove file from S3 somehow
+    this.props.onRemove && this.props.onRemove();
+  };
 
   renderPreview(): React.ReactNode {
     const { progress } = this.state;
@@ -121,18 +125,15 @@ class Upload extends React.Component<UploadProps, UploadState> {
           </div>
 
           <div className="file-actions" data-progress={progress}>
-            <span
-              className="remove-button"
+            <IconButton
+              aria-label="Cancel audio input"
+              className="cancel-button"
               title="Remove audio"
               onClick={this.removeFile}
+              size="small"
             >
-              Remove
-            </span>
-            <label htmlFor="raised-button-file">
-              <span className="replace-button" title="Change audio">
-                Replace
-              </span>
-            </label>
+              <FontAwesomeIcon icon={faTimes} />
+            </IconButton>
           </div>
         </div>
 
@@ -160,11 +161,28 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
   renderUploadButton(): React.ReactNode {
     return (
-      <label htmlFor="raised-button-file">
-        <Button className="btn btn-ampled audio-button" component="span">
-          Add MP3 audio
-        </Button>
-      </label>
+      <div className="uploader">
+        <input
+          style={{ display: 'none' }}
+          id="audio-file"
+          type="file"
+          accept=".mp3"
+          aria-label="Audio file"
+          onChange={this.processFile}
+        />
+        <label htmlFor="audio-file">
+          <Button className="btn" component="span">
+            <img
+              className="btn__icon"
+              src={AudioIcon}
+              height={25}
+              width={25}
+              alt="Upload MP3"
+            />
+            Upload MP3 audio
+          </Button>
+        </label>
+      </div>
     );
   }
 
@@ -176,18 +194,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
         <div className="upload-error">
           {this.state.uploadError && <h5>{this.state.uploadError}</h5>}
         </div>
-
-        <input
-          style={{ display: 'none' }}
-          id="raised-button-file"
-          type="file"
-          accept=".mp3"
-          aria-label="Audio file"
-          onChange={this.processFile}
-        />
-        <div className="uploader">
-          {fileName ? this.renderPreview() : this.renderUploadButton()}
-        </div>
+        {fileName ? this.renderPreview() : this.renderUploadButton()}
       </div>
     );
   }

@@ -15,7 +15,7 @@ import { declineStepAction } from '../../../redux/subscriptions/decline-step';
 import { startSubscriptionAction } from '../../../redux/subscriptions/start-subscription';
 import { Helmet } from 'react-helmet';
 
-import avatar from '../../../images/ampled_avatar.svg';
+import avatar from '../../../images/avatars/Avatar_Blank.svg';
 
 import {
   initialState as artistsInitialState,

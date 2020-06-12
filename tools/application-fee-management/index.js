@@ -14,6 +14,18 @@ const optionDefinitions = [
       'Optional Stripe Connect account to limit subscription results / changes to. Works with --addFee, --removeFee, --showProcessedFees, and --refundProcessedFees',
   },
   {
+    name: 'starting',
+    type: String,
+    description:
+      'Beginning of date range (mm/dd/yyyy). Works with --showProcessedFees and --refundProcessedFees',
+  },
+  {
+    name: 'ending',
+    type: String,
+    description:
+      'End of date range (mm/dd/yyyy). Works with --showProcessedFees and --refundProcessedFees',
+  },
+  {
     name: 'getAccount',
     type: String,
     description: 'Show the account object for account {underline string}',
@@ -61,7 +73,7 @@ const usageGuide = [
   {
     header: 'TOOLS',
     optionList: optionDefinitions,
-    hide: ['details', 'sort', 'account'],
+    hide: ['details', 'sort', 'account', 'starting', 'ending'],
   },
   {
     header: 'OPTIONS',
@@ -236,10 +248,20 @@ const getProcessedFees = async (
   starting_after,
   index = 0,
 ) => {
+  const created = {};
+  if (options.starting) {
+    created.gte = new Date(options.starting).valueOf() / 1000;
+  }
+
+  if (options.ending) {
+    created.lte = new Date(options.ending).valueOf() / 1000;
+  }
+
   const fees = await stripe.applicationFees.list(
     {
       starting_after,
       limit: 100,
+      created,
     },
     {
       stripeAccount: account,
@@ -277,6 +299,7 @@ const getAllProcessedFees = async () => {
   progress.stop();
 
   const allFees = {};
+
   fees.map(({ account, amount, amount_refunded }) => {
     if (allFees[account]) {
       allFees[account] = {

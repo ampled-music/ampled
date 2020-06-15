@@ -7,7 +7,8 @@ class ArtistPagesController < ApplicationController
   before_action :check_update_okay, only: :update
 
   def index
-    @artist_pages = ArtistPage.includes(:images).approved.where(featured: true).where.not(images: nil).uniq.take(3)
+    @artist_pages = ArtistPage.includes(:images).approved.where(featured: true).where.not(images: nil).uniq.take(8)
+    @artist_page_count = ArtistPage.approved.count
 
     respond_to do |format|
       format.html do
@@ -30,7 +31,7 @@ class ArtistPagesController < ApplicationController
     if params.has_key?(:seed)
       seed = params[:seed].to_f
       ArtistPage.connection.execute ArtistPage.sanitize_sql_like("SELECT setseed(#{seed})")
-      @artist_pages = ArtistPage.approved.order(Arel.sql("random()")).page(params[:page]).per(6)
+      @artist_pages = ArtistPage.approved.order(Arel.sql("random()")).page(params[:page]).per(8)
     end
 
     render template: "artist_pages/index"

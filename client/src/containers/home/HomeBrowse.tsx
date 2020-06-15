@@ -20,11 +20,13 @@ class HomeBrowse extends React.Component {
   loadData = async (page) => {
     let { canLoadMore } = this.state;
     this.setState({ loading: true });
-    const { data } = await apiAxios({
+    const {
+      data: { pages: data },
+    } = await apiAxios({
       method: 'get',
       url: `/artists/browse.json?page=${page}&seed=${this.state.seed}`,
     });
-    if (data.length < 6) {
+    if (data.length < 8) {
       canLoadMore = false;
     }
     this.setState({
@@ -80,7 +82,7 @@ class HomeBrowse extends React.Component {
     return artistsPages && artistsPages.length
       ? artistsPages.map((page) => {
           return (
-            <div className="col-sm-6 col-md-4 home-artists__item" key={page.id}>
+            <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
               <Link to={`/artist/${page.slug}`}>
                 <div className="home-artists__item_title">{page.name}</div>
                 <div

@@ -24,7 +24,7 @@ RSpec.describe ArtistPagesController, type: :request do
     it "responds with a JSON array" do
       get url
 
-      expect(JSON.parse(response.body)).to be_a(Array)
+      expect(JSON.parse(response.body)["pages"]).to be_a(Array)
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.describe ArtistPagesController, type: :request do
     end
 
     it "responds with a JSON array" do
-      expect(JSON.parse(response.body)).to be_a(Array)
+      expect(JSON.parse(response.body)["pages"]).to be_a(Array)
     end
 
     it "responds consistently given the same seed" do

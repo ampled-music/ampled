@@ -30,7 +30,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import AddPlus from '../../images/icons/Icon_Add-Plus.svg';
 import Close from '../../images/icons/Icon_Close-Cancel.svg';
 import Instagram from '../../images/icons/Icon_Instagram.svg';
 import Twitter from '../../images/icons/Icon_Twitter.svg';
@@ -319,11 +319,7 @@ const Members = ({
             <Card className="artist-members__card">
               <CardContent>
                 <div className="artist-members__card_add" onClick={addMember}>
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faPlusCircle}
-                    size="3x"
-                  />
+                  <ReactSVG className="icon icon_black icon_lg" src={AddPlus} />
                   <span>Add a Member</span>
                 </div>
               </CardContent>

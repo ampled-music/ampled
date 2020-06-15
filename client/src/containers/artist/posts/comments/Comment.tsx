@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import tear from '../../../../images/backgrounds/background_tear.png';
 import Remove from '../../../../images/icons/Icon_Remove-Delete.svg';
@@ -63,7 +64,7 @@ const renderDeleteModal = ({ deleteComment, commentId, setShowModal }) => (
 
 const renderDeleteButton = ({ setShowModal }) => (
   <IconButton onClick={() => setShowModal(true)} className="comment__delete">
-    <img className="delete-icon" src={Remove} title="Delete comment" />
+    <ReactSVG className="icon icon_black icon_sm" src={Remove} />
   </IconButton>
 );
 

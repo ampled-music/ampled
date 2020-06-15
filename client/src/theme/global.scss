@@ -176,6 +176,16 @@ h6 {
 .icon {
   width: 25px;
   height: 25px;
+
+  &_sm {
+    width: 20px;
+    height: 20px;
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
   &_white {
     svg {
       fill: $white;

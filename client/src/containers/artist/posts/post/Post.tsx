@@ -629,13 +629,19 @@ class PostComponent extends React.Component<any, any> {
                       className="post__change_edit"
                       onClick={this.openEditPostModal}
                     >
-                      <ReactSVG className="icon icon_black" src={Edit} />
+                      <ReactSVG
+                        className="icon icon_black icon_sm"
+                        src={Edit}
+                      />
                     </IconButton>
                     <IconButton
                       className="post__change_delete"
                       onClick={this.openDeletePostModal}
                     >
-                      <ReactSVG className="icon icon_black" src={Remove} />
+                      <ReactSVG
+                        className="icon icon_black icon_sm"
+                        src={Remove}
+                      />
                     </IconButton>
                   </div>
                 )}

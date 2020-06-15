@@ -45,6 +45,7 @@ class ArtistComingSoon extends React.Component<Props, any> {
                     alt={artist.name}
                   >
                     <Transformation
+                      fetchFormat="auto"
                       crop="fill"
                       width={450}
                       height={450}

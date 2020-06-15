@@ -183,6 +183,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
               alt={altText}
             >
               <Transformation
+                fetchFormat="auto"
                 crop="fill"
                 width={130}
                 height={130}

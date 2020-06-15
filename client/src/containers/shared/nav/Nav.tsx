@@ -105,6 +105,7 @@ class NavComponent extends React.Component<Props, any> {
           className="user-image"
         >
           <Transformation
+            fetchFormat="auto"
             crop="fill"
             width={60}
             height={60}

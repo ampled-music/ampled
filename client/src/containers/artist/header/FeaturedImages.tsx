@@ -133,6 +133,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                     style={{ borderColor: artist.accent_color }}
                   >
                     <Transformation
+                      fetchFormat="auto"
                       crop="fill"
                       width={60}
                       height={60}
@@ -168,6 +169,7 @@ export class FeaturedImages extends React.Component<Props, any> {
               >
                 <Image publicId={image.public_id} key={image.public_id}>
                   <Transformation
+                    fetchFormat="auto"
                     crop="fill"
                     width={800}
                     height={800}

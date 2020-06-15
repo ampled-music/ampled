@@ -15,7 +15,7 @@ interface Props {
 export class ArtistInfo extends React.Component<Props, any> {
   renderArtistLocation = () => (
     <div className="artist-info__location">
-      <ReactSVG className="icon" src={Location} />
+      <ReactSVG className="icon icon_black" src={Location} />
       {this.props.location}
     </div>
   );
@@ -32,7 +32,7 @@ export class ArtistInfo extends React.Component<Props, any> {
             style={{ color: 'black' }}
             aria-label={`${twitterHandle} on Twitter`}
           >
-            <ReactSVG className="icon" src={Twitter} />
+            <ReactSVG className="icon icon_black" src={Twitter} />
             <span>@{twitterHandle}</span>
           </a>
         </div>
@@ -52,7 +52,7 @@ export class ArtistInfo extends React.Component<Props, any> {
             style={{ color: 'black' }}
             aria-label={`${instagramHandle} on Instagram`}
           >
-            <ReactSVG className="icon" src={Instagram} />
+            <ReactSVG className="icon icon_black" src={Instagram} />
             <span>@{instagramHandle}</span>
           </a>
         </div>

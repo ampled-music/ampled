@@ -13,8 +13,7 @@ import avatar from '../../../../images/avatars/Avatar_Blank.svg';
 import tear from '../../../../images/backgrounds/background_tear.png';
 import Edit from '../../../../images/icons/Icon_Edit.svg';
 import Remove from '../../../../images/icons/Icon_Remove-Delete.svg';
-import { faUnlock } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Unlock from '../../../../images/icons/Icon_Lock.svg';
 import { Button, IconButton, CardActions, Collapse } from '@material-ui/core';
 import { Modal } from '../../../shared/modal/Modal';
 import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
@@ -630,13 +629,13 @@ class PostComponent extends React.Component<any, any> {
                       className="post__change_edit"
                       onClick={this.openEditPostModal}
                     >
-                      <ReactSVG className="icon" src={Edit} />
+                      <ReactSVG className="icon icon_black" src={Edit} />
                     </IconButton>
                     <IconButton
                       className="post__change_delete"
                       onClick={this.openDeletePostModal}
                     >
-                      <ReactSVG className="icon" src={Remove} />
+                      <ReactSVG className="icon icon_black" src={Remove} />
                     </IconButton>
                   </div>
                 )}
@@ -646,7 +645,7 @@ class PostComponent extends React.Component<any, any> {
             {canLoggedUserPost &&
               (isPrivate ? (
                 <div className="post__status">
-                  <FontAwesomeIcon className="unlock" icon={faUnlock} />
+                  <ReactSVG className="icon icon_white" src={Unlock} />
                   Supporters Only
                 </div>
               ) : (
@@ -655,7 +654,7 @@ class PostComponent extends React.Component<any, any> {
 
             {isUserSubscribed && !canLoggedUserPost && isPrivate && (
               <div className="post__status">
-                <FontAwesomeIcon className="unlock" icon={faUnlock} />
+                <ReactSVG className="icon icon_white" src={Unlock} />
                 Supporters Only
               </div>
             )}

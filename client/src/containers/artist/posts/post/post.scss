@@ -162,6 +162,9 @@
     font-weight: bold;
     padding: 5px;
     background-color: $gray-lighter;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .unlock {
       margin-right: 0.5rem;
@@ -191,9 +194,10 @@
         opacity: 0.7;
         background-color: $gray-lighter;
       }
-
+      .icon,
       svg {
-        width: 15px !important;
+        width: 20px;
+        height: 20px;
       }
     }
   }

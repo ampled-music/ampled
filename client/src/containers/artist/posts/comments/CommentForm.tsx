@@ -60,7 +60,7 @@ class CommentForm extends React.Component<Props, any> {
                 disabled={this.state.comment.length > 0 ? false : true}
                 className="comment-input-button"
               >
-                Post <ReactSVG className="icon" src={Arrow} />
+                Post <ReactSVG className="icon icon_white" src={Arrow} />
               </Button>
             </InputAdornment>
           }

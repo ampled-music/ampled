@@ -184,6 +184,14 @@ h6 {
       }
     }
   }
+  &_black {
+    svg {
+      fill: $black;
+      path {
+        fill: $black;
+      }
+    }
+  }
 
   div:first-child {
     font-size: 0px;

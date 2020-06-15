@@ -672,13 +672,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return (
       <div className="user-image-container">
         <Link to="/user-details">
-          {userData.image ? (
+          {userData.image?.public_id ? (
             <Image
-              publicId={this.handlePublicID(userData.image)}
+              publicId={userData.image.public_id}
               alt={userData.name}
               className="user-image"
             >
               <Transformation
+                fetchFormat="auto"
                 crop="fill"
                 width={120}
                 height={120}
@@ -807,6 +808,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                 className="artist__image"
               >
                 <Transformation
+                  fetchFormat="auto"
                   crop="fill"
                   width={250}
                   height={250}
@@ -943,6 +945,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
               className="artist__image"
             >
               <Transformation
+                fetchFormat="auto"
                 crop="fill"
                 width={250}
                 height={250}

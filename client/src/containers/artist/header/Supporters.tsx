@@ -24,27 +24,21 @@ export class Supporters extends React.Component<Props, any> {
     );
   };
 
-  handlePublicID = (image: string) => {
-    const url = image.split('/');
-    const part_1 = url[url.length - 2];
-    const part_2 = url[url.length - 1];
-    return part_1 + '/' + part_2;
-  };
-
   renderSupporterHover = ({ supporter }) => {
     const artist_name = this.props.artist.name;
     return (
       <div className="supporter__hover-card">
         <div className="supporter__hover-card_header">
-          {supporter.profile_image_url && (
+          {supporter.image?.public_id && (
             <div className="supporter__hover-card_header_photo">
               <Image
-                publicId={this.handlePublicID(supporter.profile_image_url)}
+                publicId={supporter.image.public_id}
                 alt={supporter.name}
                 key={`hover-${supporter.name}`}
                 className="supporter__hover-card_header_photo_image"
               >
                 <Transformation
+                  fetchFormat="auto"
                   crop="fill"
                   width={100}
                   height={100}
@@ -127,15 +121,16 @@ export class Supporters extends React.Component<Props, any> {
               : 'supporter-image artist-header__person'
           }
         >
-          {supporter.profile_image_url ? (
+          {supporter.image?.public_id ? (
             <Image
-              publicId={this.handlePublicID(supporter.profile_image_url)}
+              publicId={supporter.image.public_id}
               alt={supporter.name}
               key={supporter.name}
               className="artist-header__person_image"
               style={style}
             >
               <Transformation
+                fetchFormat="auto"
                 crop="fill"
                 width={60}
                 height={60}
@@ -194,7 +189,7 @@ export class Supporters extends React.Component<Props, any> {
         {artist.supporters.length > 0 && (
           <div>
             <div className="artist-header__supporters_title">
-              {artist.supporters.length} Supporters
+              {artist.supporter_count} Supporters
             </div>
             <div className="row">
               <div className="artist-header__supporters_recent col-4">

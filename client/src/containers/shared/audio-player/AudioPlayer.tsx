@@ -1,49 +1,94 @@
 import './audio-player.scss';
 
 import * as React from 'react';
-import cx from 'classnames';
 
 import FilePlayer from 'react-player/lib/players/FilePlayer';
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
-import { IconButton, Slider } from '@material-ui/core/';
+import { withStyles } from '@material-ui/core/styles';
+import { IconButton } from '@material-ui/core/';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { theme } from './theme';
+import AudioWaveform, { WaveformSize } from './AudioWaveform';
 
 interface AudioPlayerProps {
   url: string;
-  image: string;
   accentColor: string;
+  duration: number;
+  waveform: number[];
   callback?(action: string, instance: any): void;
+  download: boolean;
+  postId: number;
+  artistSlug: string;
 }
 interface AudioPlayerState {
   url: string;
   playing: boolean;
-  seeking: boolean;
   volume: number;
   played: number;
   playedSeconds: number;
   loaded: number;
   loadedSeconds: number;
-  duration: number;
-  durationShow: string;
+  showPlaybackTime: boolean;
   loop: boolean;
+  waveformSize: WaveformSize;
 }
 
 class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
-  state = {
-    url: null,
-    playing: false,
-    seeking: false,
-    volume: 0.8,
-    played: 0,
-    playedSeconds: 0,
-    loaded: 0,
-    loadedSeconds: 0,
-    duration: 0,
-    durationShow: null,
-    loop: false,
+  private containerRef: React.RefObject<any>
+
+  constructor(props) {
+    super(props);
+    this.containerRef = React.createRef();
+    this.state = {
+      url: null,
+      playing: false,
+      volume: 0.8,
+      played: 0,
+      playedSeconds: 0,
+      loaded: 0,
+      loadedSeconds: 0,
+      showPlaybackTime: false,
+      loop: false,
+      waveformSize: WaveformSize.Unknown,
+    };
+  }
+
+  componentDidMount = () => {
+    this.setWaveformSize();
+    window.addEventListener('resize', this.handleWindowResize)
+  };
+
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.handleWindowResize)
+  };
+
+  handleWindowResize = () => {
+    this.setWaveformSize();
+  };
+
+  setWaveformSize = () => {
+    const containerWidth = this.containerRef.current.clientWidth;
+
+    let waveformSize = WaveformSize.Unknown;
+    if (containerWidth <= 400) {
+      waveformSize = WaveformSize.XSmall;
+    }
+    else if (containerWidth <= 500) {
+      waveformSize = WaveformSize.Small;
+    }
+    else if (containerWidth <= 600) {
+      waveformSize = WaveformSize.Medium;
+    }
+    else if (containerWidth <= 675) {
+      waveformSize = WaveformSize.Large;
+    }
+    else {
+      waveformSize = WaveformSize.XLarge
+    }
+
+    if (waveformSize !== this.state.waveformSize) {
+      this.setState({ waveformSize });
+    }
   };
 
   load = () => {
@@ -56,13 +101,13 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
 
   player: any;
 
-  ref = (player) => {
+  playerRef = (player) => {
     this.player = player;
   };
 
   // Actions for handling audio
   handlePlayPause = () => {
-    this.setState({ playing: !this.state.playing, durationShow: 'on' });
+    this.setState({ playing: !this.state.playing, showPlaybackTime: true });
     this.load();
   };
   handlePlay = () => {
@@ -79,40 +124,21 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   };
   handleEnded = () => {
     this.props.callback && this.props.callback('ended', this);
-    this.setState({ playing: this.state.loop, durationShow: null });
+    this.setState({ playing: this.state.loop, showPlaybackTime: false });
+  };
+  handleProgress = (state) => {
+    this.props.callback && this.props.callback('progress', this);
+    this.setState(state);
   };
 
-  // @todo: Add a volume adjuster
-  handleVolumeChange = (e) => {
-    this.setState({ volume: parseFloat(e.target.value) });
-  };
-
-  // Start and finish only work with mouse up and mouse down events which break the material ui slider
-  startSeeking = () => {
-    this.setState({ seeking: true });
-  };
-
-  finishSeeking = () => {
-    this.setState({ seeking: false });
-  };
-
-  commitSeeking = (event: object, value: number | number[]) => {
+  commitSeeking = (value: number) => {
     this.player.seekTo(value);
+    this.setState({
+      playedSeconds: (this.props.duration * value)
+    })
   };
 
   // Progress updates state
-  handleProgress = (state) => {
-    // We only want to update time slider if we are not currently seeking
-    if (!this.state.seeking) {
-      this.props.callback && this.props.callback('progress', this);
-      this.setState(state);
-    }
-  };
-
-  // Show duration and total time on play
-  handleDuration = (duration) => {
-    this.setState({ duration });
-  };
   formatTime = (seconds) => {
     const date = new Date(seconds * 1000);
     const hh = date.getUTCHours();
@@ -128,7 +154,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   };
   valueLabelFormat = (value) => {
     return (
-      this.formatTime(value) + ` / ` + this.formatTime(this.state.duration)
+      this.formatTime(value) + ` / ` + this.formatTime(this.props.duration)
     );
   };
 
@@ -142,90 +168,91 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
       loop,
       playedSeconds,
       loadedSeconds,
-      durationShow,
+      showPlaybackTime,
+      waveformSize,
     } = this.state;
+
     const PlayButton = withStyles({
       root: {
-        color: 'inherit',
-        width: this.props.image ? '70px' : '40px',
-        height: this.props.image ? '70px' : '40px',
+        color: 'white',
+        width: '30px',
+        height: '30px',
         zIndex: 10,
-        marginTop: this.props.image ? '0' : '5px',
-        backgroundColor: 'inherit',
+        marginTop: '5px',
+        backgroundColor: 'black',
         '&:hover': {
-          backgroundColor: 'inherit',
+          backgroundColor: 'black',
         },
       },
     })(IconButton);
-    const AudioSlider = withStyles({
-      root: {
-        color: this.props.accentColor,
-        height: this.props.image ? '20px' : '50px',
-      },
-      thumb: {
-        height: this.props.image ? '35px' : '50px',
-        marginTop: this.props.image ? '-15px' : '0px',
-      },
-      valueLabel: {
-        paddingTop: this.props.image ? '0' : '3px',
-      },
-      track: {
-        height: this.props.image ? '20px' : '50px',
-      },
-      rail: {
-        height: this.props.image ? '20px' : '50px',
-      },
-    })(Slider);
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <div
-          className={cx('audio-player ', { 'with-image': this.props.image })}
-        >
-          <FilePlayer
-            ref={this.ref}
-            url={url}
-            height="100%"
-            width="100%"
-            loop={loop}
-            volume={volume}
-            playing={playing}
-            loaded={loaded}
-            onPause={this.handlePause}
-            onPlay={this.handlePlay}
-            onEnded={this.handleEnded}
-            onProgress={this.handleProgress}
-            onDuration={this.handleDuration}
-            config={{
-              file: {
-                forceAudio: true,
-              },
-            }}
-          />
-          <div className="audio-player__play-pause">
-            <PlayButton
-              onClick={this.handlePlayPause}
-              size={this.props.image ? 'medium' : 'small'}
-              aria-label="Play / Pause"
+      <div className="audio-player" ref={this.containerRef} style={{ borderBottom: `2px solid ${this.props.accentColor}`}}>
+        <FilePlayer
+          ref={this.playerRef}
+          url={url}
+          height="100%"
+          width="0"
+          loop={loop}
+          volume={volume}
+          playing={playing}
+          loaded={loaded}
+          onPause={this.handlePause}
+          onPlay={this.handlePlay}
+          onEnded={this.handleEnded}
+          onProgress={this.handleProgress}
+          config={{
+            file: {
+              forceAudio: true,
+            },
+          }}
+        />
+
+        <div className="audio-player__header">
+          <PlayButton
+            className="audio-player__header__play-pause"
+            onClick={this.handlePlayPause}
+            size="small"
+            aria-label="Play / Pause"
+          >
+            {playing ? (
+              <FontAwesomeIcon icon={faPause}/>
+            ) : (
+              <FontAwesomeIcon icon={faPlay} style={{ left: "1px" }}/>
+            )}
+          </PlayButton>
+          {this.props.download && (
+            <a
+              className="audio-player__download"
+              href={`/artist/${this.props.artistSlug}/post/${this.props.postId}/download`}
+              download={`${this.props.postId}.mp3`}
             >
-              {playing ? (
-                <FontAwesomeIcon icon={faPause} />
-              ) : (
-                <FontAwesomeIcon icon={faPlay} />
-              )}
-            </PlayButton>
-          </div>
-          <AudioSlider
-            className="audio-player__slider"
-            min={0}
-            max={loadedSeconds}
-            value={playedSeconds}
-            valueLabelDisplay={durationShow}
-            valueLabelFormat={this.valueLabelFormat}
-            onChange={this.commitSeeking}
-          />
+              Download audio
+            </a>
+          )}
         </div>
-      </MuiThemeProvider>
+
+        <div className="audio-player__track">
+          <AudioWaveform
+            waveform={this.props.waveform}
+            playedSeconds={playedSeconds}
+            loadedSeconds={loadedSeconds}
+            duration={this.props.duration}
+            accentColor={this.props.accentColor}
+            onSeek={this.commitSeeking}
+            size={waveformSize}
+          >
+            {showPlaybackTime && (
+              <div className="audio-player__time audio-player__start">
+                {this.formatTime(playedSeconds)}
+              </div>
+            )}
+            <div className="audio-player__time audio-player__end">
+              {this.formatTime(this.props.duration)}
+            </div>
+          </AudioWaveform>
+        </div>
+      </div>
     );
   };
 

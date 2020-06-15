@@ -7,7 +7,8 @@ class ArtistPagesController < ApplicationController
   before_action :check_update_okay, only: :update
 
   def index
-    @artist_pages = ArtistPage.joins(:images).approved.where(featured: true).where.not(images: nil).uniq.take(3)
+    @artist_pages = ArtistPage.includes(:images).approved.where(featured: true).where.not(images: nil).uniq.take(8)
+    @artist_page_count = ArtistPage.approved.count
 
     respond_to do |format|
       format.html do
@@ -30,7 +31,7 @@ class ArtistPagesController < ApplicationController
     if params.has_key?(:seed)
       seed = params[:seed].to_f
       ArtistPage.connection.execute ArtistPage.sanitize_sql_like("SELECT setseed(#{seed})")
-      @artist_pages = ArtistPage.approved.order(Arel.sql("random()")).page(params[:page]).per(6)
+      @artist_pages = ArtistPage.approved.order(Arel.sql("random()")).page(params[:page]).per(8)
     end
 
     render template: "artist_pages/index"
@@ -89,6 +90,12 @@ class ArtistPagesController < ApplicationController
       return render json: { status: "error", message: "You don't have that permission." }
     end
 
+    # This param will be set when the Delete your page button is click by the Artist admin
+    # but not when a site admin is deleting a page. When an Artist admin initiates the deletion,
+    # we want to let them do that and first cancel any subscriptions.
+    cancel_subs = params[:cancel_subscriptions] && params[:cancel_subscriptions] == "true"
+    @artist_page.subscriptions.each(&:cancel!) if cancel_subs
+
     render json: { status: "ok", message: "Your page has been deleted!" } if @artist_page.destroy
   end
 
@@ -108,7 +115,9 @@ class ArtistPagesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_artist_page
     @artist_page = if params[:slug]
-                     ArtistPage.find_by(slug: params[:slug])
+                     ArtistPage.includes(page_ownerships: [user: %i[image page_ownerships owned_pages]], \
+                               posts: [:audio_uploads, :images, user: [:image], comments: [:user]])
+                       .find_by(slug: params[:slug])
                    else
                      ArtistPage.find(params[:id])
                    end

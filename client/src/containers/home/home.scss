@@ -163,6 +163,10 @@
     text-transform: uppercase;
     text-align: center;
     margin: 1rem 0;
+
+    &.no-caps {
+      text-transform: unset;
+    }
   }
 
   &__copy {
@@ -433,7 +437,8 @@
     }
 
     &_title {
-      font-family: $font-family-monospace;
+      font-family: $font-family-sans-serif;
+      font-size: 12px;
       color: white;
       background-color: $black;
       display: inline;

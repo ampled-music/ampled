@@ -77,7 +77,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
 
       axios.request(options).then(() => {
         this.fetchPlayableUrl();
-        this.props.onComplete(this.state.key);
+        this.props.onComplete(this.state.key, this.state.fileName);
       });
     });
   };
@@ -107,6 +107,9 @@ class Upload extends React.Component<UploadProps, UploadState> {
       fileName: undefined,
       uploadError: undefined,
     });
+    // TODO: remove file from S3 somehow
+    this.props.onRemove && this.props.onRemove();
+  };
 
     // TODO: remove file from S3 somehow
 

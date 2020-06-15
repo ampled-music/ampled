@@ -22,7 +22,7 @@ class UserDashboard < Administrate::BaseDashboard
     locked_at: Field::DateTime,
     name: Field::String,
     last_name: Field::String,
-    profile_image_url: Field::String,
+    image: Field::HasOne,
     city: Field::String,
     country: Field::String,
     twitter: Field::String,
@@ -75,6 +75,7 @@ class UserDashboard < Administrate::BaseDashboard
     :ship_zip,
     :ship_country,
     :admin,
+    :image
   ].freeze
 
   # FORM_ATTRIBUTES

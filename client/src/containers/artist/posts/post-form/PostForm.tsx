@@ -41,10 +41,18 @@ import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
 import PhotoIcon from '../../../../images/icons/Icon_Photo.svg';
 import VideoIcon from '../../../../images/icons/Icon_Video.svg';
 import Speaker from '../../../../images/home/home_how_speaker.png';
+import TextIcon from '../../../../images/icons/Icon_Text.svg';
+import AudioIcon from '../../../../images/icons/Icon_Audio.svg';
+// import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
+// import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
+import PhotoIcon from '../../../../images/icons/Icon_Photo.svg';
+import VideoIcon from '../../../../images/icons/Icon_Video.svg';
+import Speaker from '../../../../images/home/home_how_speaker.png';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
 import { Upload } from './Upload';
+import { Loading } from '../../../shared/loading/Loading';
 
 const mapStateToProps = (state: Store) => ({
   ...state.posts,
@@ -245,12 +253,12 @@ class RichEditor extends React.Component<RichEditorProps> {
   }
 }
 
-class PostFormComponent extends React.Component<Props, any> {
+export default class PostFormComponent extends React.Component<Props, any> {
   initialState = {
     title: '',
     body: '',
     link: null,
-    audioFile: '',
+    audioUploads: [],
     imageName: '',
     videoEmbedUrl: null,
     isPublic: false,
@@ -296,7 +304,7 @@ class PostFormComponent extends React.Component<Props, any> {
       this.state = {
         ...this.initialState,
         ...props.post,
-        audioFile: props.post.audio_file,
+        audioUploads: props.post.audio_uploads,
         images: props.post.images,
         videoEmbedUrl: props.post.video_embed_url,
         isPublic: !props.post.is_private,
@@ -319,19 +327,20 @@ class PostFormComponent extends React.Component<Props, any> {
     }
   }
 
-  componentDidUpdate() {
-    if (!this.props.postCreated && !this.state.savingPost) {
-      return;
+  componentDidUpdate(prevProps) {
+    // When update or create is complete, refetch artist / post data
+    if (
+      this.state.savingPost &&
+      prevProps.creatingPost &&
+      !this.props.creatingPost
+    ) {
+      // TODO (Optimization/609):
+      //    * instead of waiting for server response to show card, lazy load the new/updated card
+      //    * instead of making a separate GET request to load the new data, have the PUT or POST request return the data
+      this.props.getArtist(this.props.artist.id);
+      this.props.discardChanges();
     }
-
-    this.refreshArtist();
   }
-
-  refreshArtist = () => {
-    // this.setState(this.initialState);
-    window.setTimeout(() => this.props.getArtist(this.props.artist.id), 1000);
-    this.props.discardChanges();
-  };
 
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -346,7 +355,7 @@ class PostFormComponent extends React.Component<Props, any> {
       title,
       body,
       link,
-      audioFile,
+      audioUploads,
       images,
       videoEmbedUrl,
       isPublic,
@@ -360,7 +369,7 @@ class PostFormComponent extends React.Component<Props, any> {
       title,
       body,
       link,
-      audio_file: activePostType === 'Audio' ? audioFile : null,
+      audio_uploads: audioUploads,
       images: ['Audio', 'Photo'].includes(activePostType) ? images : [],
       video_embed_url: activePostType === 'Video' ? videoEmbedUrl : null,
       is_private: !isPublic,
@@ -376,11 +385,31 @@ class PostFormComponent extends React.Component<Props, any> {
         await this.removeImageFromBackendAndCloudinary(deleteImage);
       }
     }
-    isEdit ? this.props.editPost(post) : this.props.createPost(post);
+
+    if (isEdit) {
+      const currentPublicIds = post.audio_uploads.map((au) => au.public_id);
+      const removedUploads = this.props.post.audio_uploads.filter(
+        (au) => !currentPublicIds.includes(au.public_id),
+      );
+
+      removedUploads.forEach((ru) => {
+        post.audio_uploads.push({
+          ...ru,
+          _destroy: true,
+        });
+      });
+
+      this.props.editPost(post);
+    } else {
+      this.props.createPost(post);
+    }
   };
 
-  updateAudioFile = (audioFile) => {
-    this.setState({ audioFile, hasUnsavedChanges: true });
+  setAudioUpload = (publicId, fileName) => {
+    this.setState({
+      audioUploads: publicId ? [{ public_id: publicId, name: fileName }] : [],
+      hasUnsavedChanges: true,
+    });
   };
 
   processImage = async (e) => {
@@ -483,12 +512,14 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   isSaveEnabled = () => {
-    const { title, body, images, videoEmbedUrl, audioFile } = this.state;
+    const { title, body, images, videoEmbedUrl, audioUploads } = this.state;
 
     return (
       title &&
       title.length > 0 &&
-      ((audioFile && audioFile.length > 0) ||
+      ((audioUploads &&
+        audioUploads.length > 0 &&
+        audioUploads[0].public_id.length > 0) ||
         (images && images.length > 0) ||
         (videoEmbedUrl && videoEmbedUrl.length > 0) ||
         (body && body.length > 0))
@@ -512,7 +543,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={TextIcon} className="btn__icon" />
+          <img src={TextIcon} className="btn__icon" alt="" />
           Text
         </Button>
         <Button
@@ -529,7 +560,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={AudioIcon} className="btn__icon" />
+          <img src={AudioIcon} className="btn__icon" alt="" />
           Audio
         </Button>
         <Button
@@ -546,7 +577,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={VideoIcon} className="btn__icon" />
+          <img src={VideoIcon} className="btn__icon" alt="" />
           Video
         </Button>
         <Button
@@ -563,7 +594,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={PhotoIcon} className="btn__icon" />
+          <img src={PhotoIcon} className="btn__icon" alt="" />
           Photo
         </Button>
         {/* <Button
@@ -580,7 +611,7 @@ class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={Link2Icon} className="btn__icon" />
+          <img src={Link2Icon} className="btn__icon" alt=""/>
           Link
         </Button> */}
       </div>
@@ -609,6 +640,7 @@ class PostFormComponent extends React.Component<Props, any> {
           alt={this.state.images[0].name}
         >
           <Transformation
+            fetchFormat="auto"
             crop="fill"
             width={500}
             height={150}
@@ -623,7 +655,7 @@ class PostFormComponent extends React.Component<Props, any> {
           onClick={this.removeImage}
           size="small"
         >
-          <img className="icon" src={Close} />
+          <FontAwesomeIcon icon={faTimes} />
         </IconButton>
       </div>
     );
@@ -642,7 +674,13 @@ class PostFormComponent extends React.Component<Props, any> {
         />
         <label htmlFor="image-file">
           <Button className="btn" component="span">
-            <img className="btn__icon" src={PhotoIcon} height={25} width={25} />
+            <img
+              className="btn__icon"
+              src={PhotoIcon}
+              height={25}
+              width={25}
+              alt=""
+            />
             Add Photo
           </Button>
         </label>
@@ -651,7 +689,7 @@ class PostFormComponent extends React.Component<Props, any> {
   }
 
   renderExistingAudio(): React.ReactNode {
-    const { audioFile } = this.state;
+    const audioUpload = this.props.post.audio_uploads[0];
     return (
       <div className="upload">
         <div className="progress-container">
@@ -659,7 +697,7 @@ class PostFormComponent extends React.Component<Props, any> {
             <div className="progress-info__name">
               <div className="progress-info__name_mp3">Mp3</div>
               <div className="progress-info__name_song">
-                {this.props.post.audio_file}
+                {audioUpload.public_id}
               </div>
             </div>
 
@@ -668,16 +706,16 @@ class PostFormComponent extends React.Component<Props, any> {
                 aria-label="Cancel audio input"
                 className="cancel-button"
                 title="Remove audio"
-                onClick={() => this.updateAudioFile(null)}
+                onClick={() => this.setAudioUpload(null, null)}
                 size="small"
               >
-                <img className="icon" src={Close} />
+                <FontAwesomeIcon icon={faTimes} />
               </IconButton>
             </div>
           </div>
         </div>
 
-        {audioFile && audioFile.length > 0 && (
+        {audioUpload && (
           <div className="post-form__audio_allow-checkbox">
             <FormControlLabel
               className="alow-download-label"
@@ -737,7 +775,7 @@ class PostFormComponent extends React.Component<Props, any> {
             }
             size="small"
           >
-            <img className="icon" src={Close} />
+            <FontAwesomeIcon icon={faTimes} />
           </IconButton>
         </div>
       );
@@ -850,17 +888,14 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   renderAudio = () => {
-    const { audioFile } = this.state;
-    const {
-      artist: { isStripeSetup },
-    } = this.props;
+    const { audioUploads } = this.state;
     return (
       <div>
         <Upload
-          onComplete={this.updateAudioFile}
-          onRemove={() => this.updateAudioFile(null)}
+          onComplete={this.setAudioUpload}
+          onRemove={() => this.setAudioUpload(null, null)}
         />
-        {audioFile && audioFile.length > 0 && (
+        {audioUploads.length > 0 && (
           <div className="post-form__audio_allow-checkbox">
             <FormControlLabel
               className="alow-download-label"
@@ -874,11 +909,6 @@ class PostFormComponent extends React.Component<Props, any> {
               label="Enable Download"
             />
           </div>
-        )}
-        {!isStripeSetup && (
-          <small>
-            You need to set up your payout destination to make private posts.
-          </small>
         )}
       </div>
     );
@@ -923,7 +953,7 @@ class PostFormComponent extends React.Component<Props, any> {
   renderEmptyType = () => {
     return (
       <div className="post-form__empty">
-        <img className="post-form__empty_image" src={Speaker} />
+        <img className="post-form__empty_image" src={Speaker} alt="Speaker" />
         <div className="post-form__empty_copy">
           <div>Not sure what to post?</div>
           <div>Here are some ideas.</div>
@@ -933,10 +963,15 @@ class PostFormComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { hasUnsavedChanges } = this.state;
-    const { isEdit } = this.props;
+    const { hasUnsavedChanges, savingPost } = this.state;
+    const {
+      isEdit,
+      artist: { isStripeSetup },
+    } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
+
+    if (savingPost) return <Loading artistLoading={true} />;
 
     return (
       <div className="post-form__container">
@@ -948,10 +983,10 @@ class PostFormComponent extends React.Component<Props, any> {
               <div className="post-form__audio">
                 {isEdit &&
                 this.props.post &&
-                this.props.post.audio_file &&
-                this.state.audioFile &&
-                this.state.audio_file &&
-                this.state.audioFile === this.state.audio_file
+                this.props.post.audio_uploads.length > 0 &&
+                this.state.audioUploads.length > 0 &&
+                this.state.audio_uploads[0].id &&
+                this.state.audioUploads[0].id === this.state.audio_uploads[0].id
                   ? this.renderExistingAudio()
                   : this.renderAudio()}
               </div>
@@ -976,6 +1011,12 @@ class PostFormComponent extends React.Component<Props, any> {
                     }
                     label="Make Public"
                   />
+                  {!isStripeSetup && (
+                    <small>
+                      You need to set up your payout destination to make private
+                      posts.
+                    </small>
+                  )}
                 </div>
 
                 <div className="post-form__actions">
@@ -983,7 +1024,7 @@ class PostFormComponent extends React.Component<Props, any> {
                     className="cancel-button"
                     onClick={() => this.props.close(hasUnsavedChanges)}
                   >
-                    <img className="icon" src={Close} />
+                    <FontAwesomeIcon icon={faTimes} />
                   </Button>
                   <Button
                     type="submit"

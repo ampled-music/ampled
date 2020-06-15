@@ -94,24 +94,18 @@ class NavComponent extends React.Component<Props, any> {
     }
   };
 
-  handlePublicID = (image: string) => {
-    const url = image.split('/');
-    const part_1 = url[url.length - 2];
-    const part_2 = url[url.length - 1];
-    return part_1 + '/' + part_2;
-  };
-
   renderUserImage = () => {
     const { userData } = this.props;
 
-    return userData.image ? (
+    return userData.image?.public_id ? (
       <Link to="/settings">
         <Image
-          publicId={this.handlePublicID(userData.image)}
+          publicId={userData.image.public_id}
           alt={userData.name}
           className="user-image"
         >
           <Transformation
+            fetchFormat="auto"
             crop="fill"
             width={60}
             height={60}

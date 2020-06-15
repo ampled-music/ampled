@@ -5,6 +5,7 @@ import 'draft-js/dist/Draft.css';
 import cx from 'classnames';
 import * as Sentry from '@sentry/browser';
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deleteFileFromCloudinary } from '../../../../api/cloudinary/delete-image';
@@ -34,13 +35,6 @@ import { convertFromHTML, convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
 import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
-import TextIcon from '../../../../images/icons/Icon_Text.svg';
-import AudioIcon from '../../../../images/icons/Icon_Audio.svg';
-import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
-import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
-import PhotoIcon from '../../../../images/icons/Icon_Photo.svg';
-import VideoIcon from '../../../../images/icons/Icon_Video.svg';
-import Speaker from '../../../../images/home/home_how_speaker.png';
 import TextIcon from '../../../../images/icons/Icon_Text.svg';
 import AudioIcon from '../../../../images/icons/Icon_Audio.svg';
 // import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
@@ -655,7 +649,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
           onClick={this.removeImage}
           size="small"
         >
-          <FontAwesomeIcon icon={faTimes} />
+          <ReactSVG className="icon" src={Close} />
         </IconButton>
       </div>
     );
@@ -709,7 +703,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
                 onClick={() => this.setAudioUpload(null, null)}
                 size="small"
               >
-                <FontAwesomeIcon icon={faTimes} />
+                <ReactSVG className="icon" src={Close} />
               </IconButton>
             </div>
           </div>
@@ -775,7 +769,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
             }
             size="small"
           >
-            <FontAwesomeIcon icon={faTimes} />
+            <ReactSVG className="icon" src={Close} />
           </IconButton>
         </div>
       );
@@ -1024,7 +1018,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
                     className="cancel-button"
                     onClick={() => this.props.close(hasUnsavedChanges)}
                   >
-                    <FontAwesomeIcon icon={faTimes} />
+                    <ReactSVG className="icon" src={Close} />
                   </Button>
                   <Button
                     type="submit"

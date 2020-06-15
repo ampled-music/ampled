@@ -111,11 +111,6 @@ class Upload extends React.Component<UploadProps, UploadState> {
     this.props.onRemove && this.props.onRemove();
   };
 
-    // TODO: remove file from S3 somehow
-
-    this.props.onRemove && this.props.onRemove();
-  };
-
   renderPreview(): React.ReactNode {
     const { progress } = this.state;
     return (

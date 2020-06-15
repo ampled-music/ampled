@@ -7,6 +7,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Store } from '../../redux/configure-store';
+import { ReactSVG } from 'react-svg';
 
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
@@ -608,7 +609,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <img className="icon" src={Twitter} />
+                          <ReactSVG className="icon" src={Twitter} />
                         </InputAdornment>
                       ),
                     }}
@@ -625,7 +626,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <img className="icon" src={Instagram} />
+                          <ReactSVG className="icon" src={Instagram} />
                         </InputAdornment>
                       ),
                     }}

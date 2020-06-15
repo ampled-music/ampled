@@ -1,11 +1,11 @@
 import './artist.scss';
 
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
-import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import Edit from '../../images/icons/Icon_Edit.svg';
+import Plus from '../../images/icons/Icon_Add-Plus.svg';
 import { Button } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArtistModel } from '../../redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
 
@@ -59,7 +59,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       <div className="new-post">
         <Button
           onClick={this.props.openPostModal}
-          endIcon={<FontAwesomeIcon icon={faPlus} color="#ffffff" />}
+          endIcon={<ReactSVG className="icon icon_white" src={Plus} />}
           size="small"
         >
           New Post
@@ -74,7 +74,7 @@ export class ArtistHeader extends React.Component<Props, any> {
           onClick={() => {
             window.location.href = `${window.location.pathname}/edit`;
           }}
-          endIcon={<FontAwesomeIcon icon={faEdit} color="#ffffff" />}
+          endIcon={<ReactSVG className="icon icon_white" src={Edit} />}
           size="small"
         >
           Edit Page

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import Instagram from '../../images/icons/Icon_Instagram.svg';
 import Twitter from '../../images/icons/Icon_Twitter.svg';
@@ -14,7 +15,7 @@ interface Props {
 export class ArtistInfo extends React.Component<Props, any> {
   renderArtistLocation = () => (
     <div className="artist-info__location">
-      <img className="icon" src={Location} />
+      <ReactSVG className="icon" src={Location} />
       {this.props.location}
     </div>
   );
@@ -31,7 +32,7 @@ export class ArtistInfo extends React.Component<Props, any> {
             style={{ color: 'black' }}
             aria-label={`${twitterHandle} on Twitter`}
           >
-            <img className="icon" src={Twitter} />
+            <ReactSVG className="icon" src={Twitter} />
             <span>@{twitterHandle}</span>
           </a>
         </div>
@@ -51,7 +52,7 @@ export class ArtistInfo extends React.Component<Props, any> {
             style={{ color: 'black' }}
             aria-label={`${instagramHandle} on Instagram`}
           >
-            <img className="icon" src={Instagram} />
+            <ReactSVG className="icon" src={Instagram} />
             <span>@{instagramHandle}</span>
           </a>
         </div>

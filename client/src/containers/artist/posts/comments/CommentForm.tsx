@@ -1,6 +1,7 @@
 import './comment.scss';
 
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import Arrow from '../../../../images/icons/Icon_Arrow.svg';
 import { InputAdornment, InputBase, Button } from '@material-ui/core';
@@ -59,7 +60,7 @@ class CommentForm extends React.Component<Props, any> {
                 disabled={this.state.comment.length > 0 ? false : true}
                 className="comment-input-button"
               >
-                Post <img className="icon" src={Arrow} />
+                Post <ReactSVG className="icon" src={Arrow} />
               </Button>
             </InputAdornment>
           }

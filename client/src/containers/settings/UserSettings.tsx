@@ -3,6 +3,7 @@ import './user-settings.scss';
 
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { ReactSVG } from 'react-svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -714,7 +715,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           </div>
           {userData.city && (
             <div className="user-content__city">
-              <img className="icon" src={Location} />
+              <ReactSVG className="icon" src={Location} />
               {userData.city}
             </div>
           )}
@@ -727,13 +728,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
           )}
           {userData.twitter && (
             <div className="user-content__social">
-              <img className="icon" src={Twitter} />
+              <ReactSVG className="icon" src={Twitter} />
               {userData.twitter}
             </div>
           )}
           {userData.instagram && (
             <div className="user-content__social">
-              <img className="icon" src={Instagram} />
+              <ReactSVG className="icon" src={Instagram} />
               {userData.instagram}
             </div>
           )}
@@ -744,7 +745,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           */}
 
           <Link to="/user-details" className="user-content__edit-profile">
-            <img className="icon" src={Edit} />
+            <ReactSVG className="icon" src={Edit} />
             Edit Profile
           </Link>
           <button

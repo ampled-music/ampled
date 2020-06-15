@@ -176,6 +176,18 @@ h6 {
 .icon {
   width: 25px;
   height: 25px;
+  &_white {
+    svg {
+      fill: $white;
+      path {
+        fill: $white;
+      }
+    }
+  }
+
+  div:first-child {
+    font-size: 0px;
+  }
 }
 
 .link {

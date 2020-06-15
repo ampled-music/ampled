@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Redirect } from 'react-router-dom';
+import { ReactSVG } from 'react-svg';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -517,7 +518,7 @@ const Member = ({
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <img className="icon" src={Twitter} />
+                      <ReactSVG className="icon" src={Twitter} />
                     </InputAdornment>
                   ),
                 }}
@@ -534,7 +535,7 @@ const Member = ({
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <img className="icon" src={Instagram} />
+                      <ReactSVG className="icon" src={Instagram} />
                     </InputAdornment>
                   ),
                 }}
@@ -1028,7 +1029,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <img className="icon" src={Twitter} />
+                      <ReactSVG className="icon" src={Twitter} />
                     </InputAdornment>
                   ),
                 }}
@@ -1045,7 +1046,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <img className="icon" src={Instagram} />
+                      <ReactSVG className="icon" src={Instagram} />
                     </InputAdornment>
                   ),
                 }}

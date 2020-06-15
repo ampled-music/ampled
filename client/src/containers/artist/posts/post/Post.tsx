@@ -7,6 +7,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { routePaths } from '../../../route-paths';
 import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
+import { ReactSVG } from 'react-svg';
 
 import avatar from '../../../../images/avatars/Avatar_Blank.svg';
 import tear from '../../../../images/backgrounds/background_tear.png';
@@ -63,11 +64,7 @@ const canLoggedUserDeleteComment = (
   );
 };
 
-const PostTitle = ({
-  artistSlug,
-  postId,
-  title
-}) => (
+const PostTitle = ({ artistSlug, postId, title }) => (
   <div className="post__title">
     <Link
       style={{ textDecoration: 'none' }}
@@ -253,7 +250,7 @@ const PostMedia = ({
             />
           )}
         </div>
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
       </>
     )}
 
@@ -288,7 +285,7 @@ const PostMedia = ({
           )}
         </div>
 
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
 
         {allowDetails && (
           <AudioPlayer
@@ -325,7 +322,7 @@ const PostMedia = ({
             }
           </div>
         )}
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
       </>
     )}
   </>
@@ -633,13 +630,13 @@ class PostComponent extends React.Component<any, any> {
                       className="post__change_edit"
                       onClick={this.openEditPostModal}
                     >
-                      <img className="icon" src={Edit} />
+                      <ReactSVG className="icon" src={Edit} />
                     </IconButton>
                     <IconButton
                       className="post__change_delete"
                       onClick={this.openDeletePostModal}
                     >
-                      <img className="icon" src={Remove} />
+                      <ReactSVG className="icon" src={Remove} />
                     </IconButton>
                   </div>
                 )}

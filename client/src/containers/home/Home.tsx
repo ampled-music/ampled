@@ -3,6 +3,7 @@ import './home.scss';
 import * as React from 'react';
 import cx from 'classnames';
 import * as store from 'store';
+import { ReactSVG } from 'react-svg';
 
 import { Footer } from '../footer/Footer';
 import { HomeArtists } from './HomeArtists';
@@ -40,7 +41,7 @@ class Home extends React.Component<any> {
         onClick={this.closeBanner}
         style={{ width: '30px', height: '30px' }}
       >
-        <img src={Close} />
+        <ReactSVG className="icon" src={Close} />
       </IconButton>
     </div>
   );

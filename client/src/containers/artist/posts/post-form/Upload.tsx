@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import { Button, IconButton } from '@material-ui/core';
 import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
@@ -131,7 +132,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
               onClick={this.removeFile}
               size="small"
             >
-              <img src={Close} />
+              <ReactSVG className="icon" src={Close} />
             </IconButton>
           </div>
         </div>
@@ -171,7 +172,13 @@ class Upload extends React.Component<UploadProps, UploadState> {
         />
         <label htmlFor="audio-file">
           <Button className="btn" component="span">
-            <img className="btn__icon" src={AudioIcon} height={25} width={25} />
+            <img
+              className="btn__icon"
+              src={AudioIcon}
+              height={25}
+              width={25}
+              alt="Headphones Icon"
+            />
             Upload MP3 audio
           </Button>
         </label>

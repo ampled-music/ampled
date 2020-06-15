@@ -395,13 +395,11 @@ const Member = ({
           >
             {!isMe && (
               <IconButton
-                // className="close-x"
                 aria-label="close"
                 color="primary"
-                // style={{}}
                 onClick={() => removeMember(index)}
               >
-                <img src={Close} />
+                <ReactSVG className="icon" src={Close} />
               </IconButton>
             )}
           </div>

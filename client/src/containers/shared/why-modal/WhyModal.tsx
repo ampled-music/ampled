@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import { Dialog } from '@material-ui/core';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
@@ -69,7 +70,7 @@ class WhyModalComponent extends React.Component<Props, any> {
               }}
               onClick={(e) => this.props.onClose(e)}
             >
-              <img src={Close} />
+              <ReactSVG className="icon" src={Close} />
             </IconButton>
           </div>
         </div>

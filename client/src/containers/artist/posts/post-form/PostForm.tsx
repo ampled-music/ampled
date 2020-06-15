@@ -673,7 +673,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
               src={PhotoIcon}
               height={25}
               width={25}
-              alt=""
+              alt="Camera Icon"
             />
             Add Photo
           </Button>

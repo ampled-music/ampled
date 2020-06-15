@@ -5,6 +5,7 @@ import { Dialog } from '@material-ui/core';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '../../../images/icons/Icon_Close-Cancel.svg';
+import { ReactSVG } from 'react-svg';
 
 import YouTubePlayer from 'react-player/lib/players/YouTube';
 import VimeoPlayer from 'react-player/lib/players/Vimeo';
@@ -55,7 +56,7 @@ class VideoModalComponent extends React.Component<Props, any> {
               aria-label="close"
               onClick={(e) => this.props.onClose(e)}
             >
-              <img src={Close} />
+              <ReactSVG className="icon" src={Close} />
             </IconButton>
           )}
         </Dialog>

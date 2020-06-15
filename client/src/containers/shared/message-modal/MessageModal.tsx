@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Dialog } from '@material-ui/core';
@@ -50,7 +51,7 @@ class MessageModalComponent extends React.Component<Props, any> {
             color="primary"
             onClick={(e) => this.props.onClose(e)}
           >
-            <img src={Close} />
+            <ReactSVG className="icon" src={Close} />
           </IconButton>
         </Dialog>
       </MuiThemeProvider>

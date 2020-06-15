@@ -1,6 +1,7 @@
 import './modal.scss';
 
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import { Dialog } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -35,7 +36,7 @@ class Modal extends React.Component<Props, any> {
               color="primary"
               onClick={this.props.onClose}
             >
-              <img src={Close} />
+              <ReactSVG className="icon" src={Close} />
             </IconButton>
           )}
           {this.props.children}

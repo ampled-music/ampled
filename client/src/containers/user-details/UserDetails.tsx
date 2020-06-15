@@ -314,7 +314,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
             <img src={avatar} className="user-image" alt="Your avatar" />
           )}
           <b className="tag">
-            <img src={Edit} />
+            <ReactSVG className="icon" src={Edit} />
           </b>
         </button>
       </div>

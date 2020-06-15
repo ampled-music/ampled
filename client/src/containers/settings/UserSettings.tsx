@@ -715,7 +715,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           </div>
           {userData.city && (
             <div className="user-content__city">
-              <ReactSVG className="icon" src={Location} />
+              <ReactSVG className="icon icon_sm" src={Location} />
               {userData.city}
             </div>
           )}
@@ -728,13 +728,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
           )}
           {userData.twitter && (
             <div className="user-content__social">
-              <ReactSVG className="icon" src={Twitter} />
+              <ReactSVG className="icon icon_sm" src={Twitter} />
               {userData.twitter}
             </div>
           )}
           {userData.instagram && (
             <div className="user-content__social">
-              <ReactSVG className="icon" src={Instagram} />
+              <ReactSVG className="icon icon_sm" src={Instagram} />
               {userData.instagram}
             </div>
           )}
@@ -745,7 +745,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           */}
 
           <Link to="/user-details" className="user-content__edit-profile">
-            <ReactSVG className="icon" src={Edit} />
+            <ReactSVG className="icon icon_sm" src={Edit} />
             Edit Profile
           </Link>
           <button

@@ -1,10 +1,11 @@
 import './artist-header.scss';
 
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core/';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Play from '../../../images/icons/Icon_Play.svg';
+
 import tear from '../../../images/paper_header.png';
 
 import { theme } from './theme';
@@ -40,9 +41,9 @@ export class FeaturedVideo extends React.Component<Props, any> {
               className="artist-header__play"
               aria-label="Play video message"
             >
-              <FontAwesomeIcon
-                className="artist-header__play_svg"
-                icon={faPlay}
+              <ReactSVG
+                className="icon_white artist-header__play_svg "
+                src={Play}
               />
             </PlayButton>
             <div className="artist-header__message_video">

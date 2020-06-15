@@ -634,6 +634,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
           alt={this.state.images[0].name}
         >
           <Transformation
+            fetchFormat="auto"
             crop="fill"
             width={500}
             height={150}

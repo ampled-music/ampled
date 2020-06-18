@@ -7,9 +7,9 @@ import { bindActionCreators } from 'redux';
 import { logoutAction } from '../../../redux/authentication/logout';
 import { Store } from '../../../redux/configure-store';
 import * as store from 'store';
+import { ReactSVG } from 'react-svg';
 
-import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Settings from '../../../images/icons/Icon_Settings.svg';
 import { Divider } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -113,7 +113,8 @@ class MenuListComposition extends React.Component<Props, State> {
     return (
       <div className="menu-items">
         <Link to={routePaths.settings}>
-          <FontAwesomeIcon icon={faCog} /> <b>My Profile</b>
+          <ReactSVG className="icon icon_black" src={Settings} />{' '}
+          <b>My Profile</b>
         </Link>
         <Divider />
         <button className="link" onClick={this.logout}>

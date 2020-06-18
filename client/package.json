@@ -38,6 +38,7 @@
     "react-scripts": "3.4.0",
     "react-stack-grid": "^0.7.1",
     "react-stripe-elements": "^3.0.0",
+    "react-svg": "^11.0.26",
     "react-swipeable-views": "^0.13.3",
     "react-text-truncate": "^0.15.0",
     "redux": "^4.0.1",

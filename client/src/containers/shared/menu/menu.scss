@@ -17,6 +17,10 @@
       display: flex;
       flex-direction: column;
 
+      .icon {
+        margin-right: 0.5rem;
+      }
+
       a,
       button {
         padding: 0.5rem;
@@ -33,6 +37,8 @@
         text-align: left;
         white-space: nowrap;
         font-family: Courier, 'Courier New', monospace !important;
+        display: flex;
+        align-items: center;
       }
 
       a:hover,

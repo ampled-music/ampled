@@ -50,6 +50,11 @@
         padding: 30px 1rem 1rem;
         font-size: 0.9rem;
 
+        &__city,
+        &__social {
+          display: flex;
+        }
+
         &__name {
           font-size: 1.3rem;
           font-weight: bold;
@@ -80,10 +85,11 @@
           font-size: 0.7rem;
           margin-top: 1rem;
           text-align: center;
+          align-items: center;
+        }
 
-          svg {
-            margin-right: 0.5rem;
-          }
+        .icon {
+          margin-right: 0.5rem;
         }
 
         &__change-password {

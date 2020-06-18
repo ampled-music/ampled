@@ -1,4 +1,4 @@
-json.array! @artist_pages do |artist_page|
+json.pages @artist_pages do |artist_page|
   json.id artist_page.id
   json.name artist_page.name
   json.slug artist_page.slug
@@ -7,3 +7,4 @@ json.array! @artist_pages do |artist_page|
   json.accent_color artist_page.accent_color
   json.image artist_page.images[0][:url]
 end
+json.count @artist_page_count

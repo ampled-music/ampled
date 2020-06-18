@@ -1,9 +1,9 @@
 import axios from 'axios';
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import { Button, IconButton } from '@material-ui/core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import AudioIcon from '../../../../images/icons/Icon_Audio.png';
 
@@ -132,7 +132,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
               onClick={this.removeFile}
               size="small"
             >
-              <FontAwesomeIcon icon={faTimes} />
+              <ReactSVG className="icon" src={Close} />
             </IconButton>
           </div>
         </div>
@@ -177,7 +177,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
               src={AudioIcon}
               height={25}
               width={25}
-              alt="Upload MP3"
+              alt="Headphones Icon"
             />
             Upload MP3 audio
           </Button>

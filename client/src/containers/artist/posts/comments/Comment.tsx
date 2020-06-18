@@ -1,8 +1,8 @@
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import tear from '../../../../images/backgrounds/background_tear.png';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Remove from '../../../../images/icons/Icon_Remove-Delete.svg';
 import { Divider, Button, IconButton } from '@material-ui/core';
 import { Modal } from '../../../shared/modal/Modal';
 import Linkify from 'react-linkify';
@@ -64,11 +64,7 @@ const renderDeleteModal = ({ deleteComment, commentId, setShowModal }) => (
 
 const renderDeleteButton = ({ setShowModal }) => (
   <IconButton onClick={() => setShowModal(true)} className="comment__delete">
-    <FontAwesomeIcon
-      className="delete-icon"
-      icon={faTrashAlt}
-      title="Delete comment"
-    />
+    <ReactSVG className="icon icon_black icon_sm" src={Remove} />
   </IconButton>
 );
 

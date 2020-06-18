@@ -1,9 +1,9 @@
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
-import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Instagram from '../../images/icons/Icon_Instagram.svg';
+import Twitter from '../../images/icons/Icon_Twitter.svg';
+import Location from '../../images/icons/Icon_Location.svg';
 
 interface Props {
   location: string;
@@ -13,17 +13,16 @@ interface Props {
 }
 
 export class ArtistInfo extends React.Component<Props, any> {
-  
   renderArtistLocation = () => (
     <div className="artist-info__location">
-      <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} />
+      <ReactSVG className="icon icon_black" src={Location} />
       {this.props.location}
     </div>
   );
 
   renderTwitter = () => {
     const { twitterHandle } = this.props;
-    if ( twitterHandle ) {
+    if (twitterHandle) {
       return (
         <div className="artist-info__social_twitter">
           <a
@@ -33,7 +32,7 @@ export class ArtistInfo extends React.Component<Props, any> {
             style={{ color: 'black' }}
             aria-label={`${twitterHandle} on Twitter`}
           >
-            <FontAwesomeIcon className="icon" icon={faTwitter} />
+            <ReactSVG className="icon icon_black" src={Twitter} />
             <span>@{twitterHandle}</span>
           </a>
         </div>
@@ -43,7 +42,7 @@ export class ArtistInfo extends React.Component<Props, any> {
 
   renderInstagram = () => {
     const { instagramHandle } = this.props;
-    if ( instagramHandle ) {
+    if (instagramHandle) {
       return (
         <div className="artist-info__social_instagram">
           <a
@@ -53,7 +52,7 @@ export class ArtistInfo extends React.Component<Props, any> {
             style={{ color: 'black' }}
             aria-label={`${instagramHandle} on Instagram`}
           >
-            <FontAwesomeIcon className="icon" icon={faInstagram} />
+            <ReactSVG className="icon icon_black" src={Instagram} />
             <span>@{instagramHandle}</span>
           </a>
         </div>

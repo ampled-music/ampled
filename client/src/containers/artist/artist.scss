@@ -25,6 +25,7 @@
 .edit-page {
   position: fixed;
   z-index: 100;
+  transition: opacity $speed;
 
   @include mq(0, $layout-m) {
     bottom: 0px;
@@ -34,48 +35,31 @@
 
   @include mq($layout-m) {
     text-align: right;
-    right: 10px;
-    top: 70px;
+    right: 0px;
+    top: 55px;
+    opacity: 0.4;
+    &:hover {
+      opacity: 1;
+    }
   }
 
-  button,
-  .edit-button {
-    cursor: pointer;
+  button {
+    font-family: $font-family-sans-serif;
     background-color: $brand-primary;
     border-width: 0px;
     width: 100%;
     height: 50px;
-    transition: background-color $speed;
-
-    span {
-      visibility: visible;
-      margin-right: 0.5rem;
-    }
+    border-radius: 0px;
+    text-transform: capitalize;
+    min-width: 120px;
+    padding-right: 10px;
 
     @include mq($layout-m) {
       width: auto;
       height: 36px;
-      padding: 0 10px;
+      padding: 0 15px;
       outline: none;
-      border-radius: 20px;
-
-      span {
-        visibility: visible;
-        padding-right: 20px;
-        padding-left: 5px;
-        max-width: 150px;
-        transition: max-width $speed;
-        display: inline-block;
-        vertical-align: top;
-        white-space: nowrap;
-        overflow: hidden;
-        margin-right: 0;
-      }
     }
-  }
-
-  span {
-    visibility: hidden;
   }
 }
 .new-post {
@@ -91,6 +75,6 @@
   }
 
   @include mq($layout-m) {
-    top: 115px;
+    top: 95px;
   }
 }

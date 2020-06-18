@@ -13,22 +13,14 @@ interface Props {
   getArtistsPages: Function;
   artistsPages: {
     loading: boolean;
-    pages: [];
+    pages: {
+      pages: [];
+      count: number;
+    };
   };
 }
 
-interface State {
-  artistPages: [];
-}
-
-class HomeArtistsComponent extends React.Component<Props, State> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      artistPages: [],
-    };
-  }
-
+class HomeArtistsComponent extends React.Component<Props> {
   componentDidMount() {
     this.props.getArtistsPages();
   }
@@ -42,7 +34,8 @@ class HomeArtistsComponent extends React.Component<Props, State> {
 
   render() {
     const loading = this.props.artistsPages.loading;
-    const artistsPages = this.props.artistsPages.pages;
+    const artistsPages = this.props.artistsPages.pages.pages;
+    const artistCount = this.props.artistsPages.pages.count;
 
     if (loading) {
       return <div className="loading">Loading Artists...</div>;
@@ -52,7 +45,11 @@ class HomeArtistsComponent extends React.Component<Props, State> {
       <div>
         <img className="tear tear_2" src={tear_2} alt="" />
         <div className="home-artists">
-          <h1 className="home-artists__title">Featured Artists</h1>
+          <h1 className="home-artists__title">
+            Join {artistCount} artists on Ampled
+          </h1>
+          <hr className="hr__thick" />
+          <h3 className="home-for__sub-title no-caps">Featured artists</h3>
           <div className="container">
             <div className="row justify-content-center">
               {this.getArtistsList(artistsPages)}
@@ -62,7 +59,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
                 href={config.menuUrls.createArtist}
                 className="home-artists__button btn btn-ampled center"
               >
-                Create Your Artist Page
+                CREATE YOUR ARTIST PAGE
               </a>
             </div>
           </div>
@@ -77,7 +74,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
       artistsPages.length &&
       artistsPages.map((page) => {
         return (
-          <div className="col-sm-6 col-md-4 home-artists__item" key={page.id}>
+          <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
             <Link to={`/artist/${page.slug}`}>
               <div className="home-artists__item_title">{page.name}</div>
               <div
@@ -90,6 +87,7 @@ class HomeArtistsComponent extends React.Component<Props, State> {
                   key={page.image}
                 >
                   <Transformation
+                    fetchFormat="auto"
                     crop="fill"
                     width={800}
                     height={800}

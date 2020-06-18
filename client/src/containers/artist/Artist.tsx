@@ -415,6 +415,7 @@ class ArtistComponent extends React.Component<Props, any> {
           open={this.state.openPostModal}
           onClose={this.closePostModal}
           className="post-modal"
+          disableBackdropClick={true}
         >
           <PostForm
             close={this.getUserConfirmation}

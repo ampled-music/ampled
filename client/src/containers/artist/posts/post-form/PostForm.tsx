@@ -950,7 +950,16 @@ export default class PostFormComponent extends React.Component<Props, any> {
         <img className="post-form__empty_image" src={Speaker} alt="Speaker" />
         <div className="post-form__empty_copy">
           <div>Not sure what to post?</div>
-          <div>Here are some ideas.</div>
+          <div>
+            <a
+              href="http://app.ampled.com/what-to-post"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Here
+            </a>{' '}
+            are some ideas.
+          </div>
         </div>
       </div>
     );

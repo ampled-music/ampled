@@ -31,9 +31,8 @@
     display: flex;
     margin: 0 1rem 1rem;
     button {
-      border: 1px solid transparent;
+      border: 1px solid $white;
       margin: 0 0.5rem;
-      opacity: 0.5;
       font-size: 0.8rem;
       min-width: 50px;
       font-family: $font-family-sans-serif;
@@ -42,13 +41,24 @@
         font-size: 1rem;
       }
 
+      .MuiButton-label {
+        opacity: 0.5;
+        transition: opacity $speed;
+      }
+
       &:hover {
-        opacity: 1;
+        border: 1px solid $black;
         background: $white;
+
+        .MuiButton-label {
+          opacity: 1;
+        }
       }
       &.active {
         border: 1px solid $black;
-        opacity: 1;
+        .MuiButton-label {
+          opacity: 1;
+        }
       }
       span {
         display: flex;
@@ -84,7 +94,6 @@
         font-family: $font-family-sans-serif-light;
         border-radius: 0px;
         display: block;
-        overflow: auto;
         padding: 10px;
 
         &:hover {
@@ -204,6 +213,7 @@
 
   &__public {
     display: flex;
+    flex-direction: column;
     font-family: $font-family-monospace;
     font-weight: bold;
 
@@ -214,6 +224,11 @@
     svg {
       font-size: 1rem;
       fill: $black;
+    }
+    small {
+      text-align: left;
+      margin-bottom: 1rem;
+      padding-right: 0.5rem;
     }
   }
 

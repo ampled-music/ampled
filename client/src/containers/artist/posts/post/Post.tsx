@@ -61,11 +61,7 @@ const canLoggedUserDeleteComment = (
   );
 };
 
-const PostTitle = ({
-  artistSlug,
-  postId,
-  title
-}) => (
+const PostTitle = ({ artistSlug, postId, title }) => (
   <div className="post__title">
     <Link
       style={{ textDecoration: 'none' }}
@@ -251,7 +247,7 @@ const PostMedia = ({
             />
           )}
         </div>
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
       </>
     )}
 
@@ -286,7 +282,7 @@ const PostMedia = ({
           )}
         </div>
 
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
 
         {allowDetails && (
           <AudioPlayer
@@ -323,7 +319,7 @@ const PostMedia = ({
             }
           </div>
         )}
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
       </>
     )}
   </>

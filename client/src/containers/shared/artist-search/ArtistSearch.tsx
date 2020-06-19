@@ -1,7 +1,6 @@
 import './ArtistSearch.scss';
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { apiAxios } from '../../../api/setup-axios';
 import { TextField, InputAdornment } from '@material-ui/core';
 import { Image, Transformation } from 'cloudinary-react';
@@ -55,7 +54,7 @@ class ArtistSearch extends React.Component {
         <div className="results">
           {this.state.results.map((page) => (
             <div key={page.id} className="result">
-              <Link to={`/artist/${page.slug}`}>
+              <a href={`/artist/${page.slug}`}>
                 <Image
                   publicId={page.cloudinaryImage.public_id}
                   alt={page.name}
@@ -71,7 +70,7 @@ class ArtistSearch extends React.Component {
                 </Image>
 
                 <span className="name">{page.name}</span>
-              </Link>
+              </a>
             </div>
           ))}
         </div>

@@ -7,10 +7,10 @@ import { bindActionCreators } from 'redux';
 import { logoutAction } from '../../../redux/authentication/logout';
 import { Store } from '../../../redux/configure-store';
 import * as store from 'store';
-import { ReactSVG } from 'react-svg';
+// import { ReactSVG } from 'react-svg';
 
-import Settings from '../../../images/icons/Icon_Settings.svg';
-import { Divider } from '@material-ui/core';
+// import Settings from '../../../images/icons/Icon_Settings.svg';
+// import { Divider } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import MenuList from '@material-ui/core/MenuList';
@@ -23,6 +23,8 @@ import menu from '../../../images/icons/Icon_Menu.svg';
 import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import { routePaths } from '../../route-paths';
+
+import { ArtistSearch } from '../artist-search/ArtistSearch';
 
 const styles = (theme) => ({
   root: {
@@ -105,6 +107,7 @@ class MenuListComposition extends React.Component<Props, State> {
         <div className="divider" />
         <a href={config.menuUrls.blog}>Blog</a>
         <a href={config.menuUrls.about}>About us</a>
+        <ArtistSearch />
       </div>
     );
   };
@@ -113,13 +116,14 @@ class MenuListComposition extends React.Component<Props, State> {
     return (
       <div className="menu-items">
         <Link to={routePaths.settings}>
-          <ReactSVG className="icon icon_black" src={Settings} />{' '}
+          {/* <ReactSVG className="icon icon_black" src={Settings} />{' '} */}
           <b>My Profile</b>
         </Link>
-        <Divider />
+        {/* <Divider /> */}
         <button className="link" onClick={this.logout}>
           Logout
         </button>
+        <ArtistSearch />
       </div>
     );
   };

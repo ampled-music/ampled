@@ -6,5 +6,6 @@ json.pages @artist_pages do |artist_page|
   json.bio artist_page.bio
   json.accent_color artist_page.accent_color
   json.image artist_page.images[0][:url]
+  json.cloudinaryImage artist_page.images[0]
 end
 json.count @artist_page_count

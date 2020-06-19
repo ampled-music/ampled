@@ -38,7 +38,12 @@ class ArtistPagesController < ApplicationController
   end
 
   def typeahead
-    @artist_pages = ArtistPage.approved.where("name LIKE ?", "%#{params[:query]}%")
+    if params[:query].empty?
+      @artist_pages = []
+    else
+      query = ArtistPage.sanitize_sql_like(params[:query])
+      @artist_pages = ArtistPage.approved.where("lower(name) LIKE ?", "%#{query}%")
+    end
     @artist_page_count = @artist_pages.count
     render template: "artist_pages/index"
   end

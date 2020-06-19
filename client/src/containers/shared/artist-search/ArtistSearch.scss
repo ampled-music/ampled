@@ -1,0 +1,55 @@
+@import '../../../theme/vars.scss';
+@import '../../../theme/mixins.scss';
+
+.artist-search {
+  padding: 0.5rem 8px;
+
+  .MuiInput-root {
+    font-family: $font-family-monospace !important;
+    padding-left: 8px;
+    border: 1px solid $gray-light;
+  }
+
+  .MuiInput-underline::before,
+  .MuiInput-underline:hover::before,
+  .MuiInput-underline:focus::before {
+    border: unset !important;
+  }
+
+  .Mui-focused::before {
+    border-bottom: unset !important;
+  }
+  .MuiInput-underline::after {
+    display: none;
+  }
+
+  .results {
+    position: absolute;
+    background: white;
+    width: 284px;
+
+    .result {
+      padding: 12px;
+      height: 60px;
+      border-bottom: 1px solid $gray-light;
+      border-left: 1px solid $gray-light;
+      border-right: 1px solid $gray-light;
+
+      .artist-image {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border-width: 0;
+        margin-right: 12px;
+      }
+
+      a {
+        height: 36px;
+        padding: 0;
+        margin-top: 0 !important;
+        font-family: $font-family-sans-serif !important;
+        text-decoration: none;
+      }
+    }
+  }
+}

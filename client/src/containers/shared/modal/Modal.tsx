@@ -1,13 +1,13 @@
 import './modal.scss';
 
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import { Dialog } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Close from '../../../images/icons/Icon_Close-Cancel.svg';
 
 import { theme } from './theme';
 
@@ -16,6 +16,7 @@ interface Props {
   fullScreen: boolean;
   onClose?: () => void;
   className?: string;
+  disableBackdropClick?: boolean;
 }
 
 class Modal extends React.Component<Props, any> {
@@ -28,6 +29,7 @@ class Modal extends React.Component<Props, any> {
           aria-labelledby="form-dialog-title"
           onClose={this.props.onClose}
           fullScreen={this.props.fullScreen}
+          disableBackdropClick={this.props.disableBackdropClick}
         >
           {this.props.fullScreen && (
             <IconButton
@@ -36,7 +38,7 @@ class Modal extends React.Component<Props, any> {
               color="primary"
               onClick={this.props.onClose}
             >
-              <FontAwesomeIcon icon={faTimes} />
+              <ReactSVG className="icon" src={Close} />
             </IconButton>
           )}
           {this.props.children}

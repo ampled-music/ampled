@@ -163,6 +163,10 @@
     text-transform: uppercase;
     text-align: center;
     margin: 1rem 0;
+
+    &.no-caps {
+      text-transform: unset;
+    }
   }
 
   &__copy {

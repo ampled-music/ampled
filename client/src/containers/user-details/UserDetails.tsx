@@ -7,6 +7,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Store } from '../../redux/configure-store';
+import { ReactSVG } from 'react-svg';
 
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
@@ -29,15 +30,15 @@ import {
   CardContent,
 } from '@material-ui/core';
 import {
-  faTwitter,
-  faInstagram,
   faCcAmex,
   faCcDiscover,
   faCcMastercard,
   faCcVisa,
   faCcStripe,
 } from '@fortawesome/free-brands-svg-icons';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import Edit from '../../images/icons/Icon_Edit.svg';
+import Instagram from '../../images/icons/Icon_Instagram.svg';
+import Twitter from '../../images/icons/Icon_Twitter.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
@@ -313,7 +314,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
             <img src={avatar} className="user-image" alt="Your avatar" />
           )}
           <b className="tag">
-            <FontAwesomeIcon icon={faEdit} />
+            <ReactSVG className="icon" src={Edit} />
           </b>
         </button>
       </div>
@@ -608,7 +609,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <FontAwesomeIcon className="icon" icon={faTwitter} />
+                          <ReactSVG className="icon" src={Twitter} />
                         </InputAdornment>
                       ),
                     }}
@@ -625,10 +626,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <FontAwesomeIcon
-                            className="icon"
-                            icon={faInstagram}
-                          />
+                          <ReactSVG className="icon" src={Instagram} />
                         </InputAdornment>
                       ),
                     }}

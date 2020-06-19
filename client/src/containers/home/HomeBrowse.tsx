@@ -95,6 +95,7 @@ class HomeBrowse extends React.Component {
                     key={page.image}
                   >
                     <Transformation
+                      fetchFormat="auto"
                       crop="fill"
                       width={800}
                       height={800}

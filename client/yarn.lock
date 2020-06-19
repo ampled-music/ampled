@@ -914,6 +914,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.10.2":
+  version "7.10.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.10.2.tgz#d103f21f2602497d38348a32e008637d506db839"
+  integrity sha512-6sF3uQw2ivImfVIl62RZ7MXhO2tap69WeWK57vAaimT6AZbE4FbqjdEJIN1UqoD6wI6B+1n9UiagafH1sxjOtg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.4.0", "@babel/template@^7.8.3", "@babel/template@^7.8.6":
   version "7.8.6"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.8.6.tgz#86b22af15f828dfb086474f964dcc3e39c43ce2b"
@@ -1449,6 +1456,13 @@
     "@svgr/plugin-jsx" "^4.3.3"
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
+
+"@tanem/svg-injector@^8.0.53":
+  version "8.0.54"
+  resolved "https://registry.yarnpkg.com/@tanem/svg-injector/-/svg-injector-8.0.54.tgz#3d845d99d658676659298ccc9d8dba76a27a361b"
+  integrity sha512-65B/lWodHDReTgQ/bGpXn12DPjxrj/Oy3d8Gohg21kwHJdG+4hPb/D6j5ggZr3nkYNYfO8w+1TdcoZId2EbClw==
+  dependencies:
+    "@babel/runtime" "^7.10.2"
 
 "@types/babel__core@^7.1.0":
   version "7.1.6"
@@ -9912,6 +9926,15 @@ react-stripe-elements@^3.0.0:
   integrity sha512-zGY/Oc8KmI175cCrV+9VXY2wPJeo2l9t53XGnvqknfO3X+dJyvQi2+xS3Tv/lSPB26aDMD6Jor68YB2KXHcDMA==
   dependencies:
     prop-types "^15.5.10"
+
+react-svg@^11.0.26:
+  version "11.0.26"
+  resolved "https://registry.yarnpkg.com/react-svg/-/react-svg-11.0.26.tgz#3dbe22f8a07a7994c93ccf3f76a314793e82a356"
+  integrity sha512-4+MjsPoz7qhsTijFt6byqwcX+m7WstOx/t6pENis2QijlNP5vJqeKpr07c9sE1t0Km5fk1pKpTXoKkYWeMdmSg==
+  dependencies:
+    "@babel/runtime" "^7.10.2"
+    "@tanem/svg-injector" "^8.0.53"
+    prop-types "^15.7.2"
 
 react-swipeable-views-core@^0.13.7:
   version "0.13.7"

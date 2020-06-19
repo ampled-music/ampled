@@ -38,6 +38,7 @@ export class Supporters extends React.Component<Props, any> {
                 className="supporter__hover-card_header_photo_image"
               >
                 <Transformation
+                  fetchFormat="auto"
                   crop="fill"
                   width={100}
                   height={100}
@@ -129,6 +130,7 @@ export class Supporters extends React.Component<Props, any> {
               style={style}
             >
               <Transformation
+                fetchFormat="auto"
                 crop="fill"
                 width={60}
                 height={60}

@@ -87,6 +87,7 @@ class HomeArtistsComponent extends React.Component<Props> {
                   key={page.image}
                 >
                   <Transformation
+                    fetchFormat="auto"
                     crop="fill"
                     width={800}
                     height={800}

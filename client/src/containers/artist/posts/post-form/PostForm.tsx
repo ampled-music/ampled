@@ -5,6 +5,7 @@ import 'draft-js/dist/Draft.css';
 import cx from 'classnames';
 import * as Sentry from '@sentry/browser';
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deleteFileFromCloudinary } from '../../../../api/cloudinary/delete-image';
@@ -27,14 +28,13 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@material-ui/core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import YouTubePlayer from 'react-player/lib/players/YouTube';
 import VimeoPlayer from 'react-player/lib/players/Vimeo';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { convertFromHTML, convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
+import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
 import TextIcon from '../../../../images/icons/Icon_Text.svg';
 import AudioIcon from '../../../../images/icons/Icon_Audio.svg';
 // import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
@@ -634,6 +634,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
           alt={this.state.images[0].name}
         >
           <Transformation
+            fetchFormat="auto"
             crop="fill"
             width={500}
             height={150}
@@ -648,7 +649,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
           onClick={this.removeImage}
           size="small"
         >
-          <FontAwesomeIcon icon={faTimes} />
+          <ReactSVG className="icon" src={Close} />
         </IconButton>
       </div>
     );
@@ -672,7 +673,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
               src={PhotoIcon}
               height={25}
               width={25}
-              alt=""
+              alt="Camera Icon"
             />
             Add Photo
           </Button>
@@ -702,7 +703,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
                 onClick={() => this.setAudioUpload(null, null)}
                 size="small"
               >
-                <FontAwesomeIcon icon={faTimes} />
+                <ReactSVG className="icon" src={Close} />
               </IconButton>
             </div>
           </div>
@@ -768,7 +769,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
             }
             size="small"
           >
-            <FontAwesomeIcon icon={faTimes} />
+            <ReactSVG className="icon" src={Close} />
           </IconButton>
         </div>
       );
@@ -949,7 +950,16 @@ export default class PostFormComponent extends React.Component<Props, any> {
         <img className="post-form__empty_image" src={Speaker} alt="Speaker" />
         <div className="post-form__empty_copy">
           <div>Not sure what to post?</div>
-          <div>Here are some ideas.</div>
+          <div>
+            <a
+              href="http://app.ampled.com/what-to-post"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Here
+            </a>{' '}
+            are some ideas.
+          </div>
         </div>
       </div>
     );
@@ -1017,7 +1027,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
                     className="cancel-button"
                     onClick={() => this.props.close(hasUnsavedChanges)}
                   >
-                    <FontAwesomeIcon icon={faTimes} />
+                    <ReactSVG className="icon" src={Close} />
                   </Button>
                   <Button
                     type="submit"

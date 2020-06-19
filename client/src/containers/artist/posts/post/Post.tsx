@@ -7,11 +7,13 @@ import { Link, withRouter } from 'react-router-dom';
 import { routePaths } from '../../../route-paths';
 import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
+import { ReactSVG } from 'react-svg';
 
 import avatar from '../../../../images/avatars/Avatar_Blank.svg';
 import tear from '../../../../images/backgrounds/background_tear.png';
-import { faUnlock, faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Edit from '../../../../images/icons/Icon_Edit.svg';
+import Remove from '../../../../images/icons/Icon_Remove-Delete.svg';
+import Unlock from '../../../../images/icons/Icon_Lock.svg';
 import { Button, IconButton, CardActions, Collapse } from '@material-ui/core';
 import { Modal } from '../../../shared/modal/Modal';
 import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
@@ -61,11 +63,7 @@ const canLoggedUserDeleteComment = (
   );
 };
 
-const PostTitle = ({
-  artistSlug,
-  postId,
-  title
-}) => (
+const PostTitle = ({ artistSlug, postId, title }) => (
   <div className="post__title">
     <Link
       style={{ textDecoration: 'none' }}
@@ -251,7 +249,7 @@ const PostMedia = ({
             />
           )}
         </div>
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
       </>
     )}
 
@@ -286,7 +284,7 @@ const PostMedia = ({
           )}
         </div>
 
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
 
         {allowDetails && (
           <AudioPlayer
@@ -323,7 +321,7 @@ const PostMedia = ({
             }
           </div>
         )}
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
       </>
     )}
   </>
@@ -573,6 +571,7 @@ class PostComponent extends React.Component<any, any> {
           open={this.state.showEditPostModal}
           onClose={this.closeEditPostModal}
           className="post-modal"
+          disableBackdropClick={true}
         >
           <PostForm
             close={this.closeEditPostModal}
@@ -631,13 +630,19 @@ class PostComponent extends React.Component<any, any> {
                       className="post__change_edit"
                       onClick={this.openEditPostModal}
                     >
-                      <FontAwesomeIcon icon={faPen} />
+                      <ReactSVG
+                        className="icon icon_black icon_sm"
+                        src={Edit}
+                      />
                     </IconButton>
                     <IconButton
                       className="post__change_delete"
                       onClick={this.openDeletePostModal}
                     >
-                      <FontAwesomeIcon icon={faTrashAlt} />
+                      <ReactSVG
+                        className="icon icon_black icon_sm"
+                        src={Remove}
+                      />
                     </IconButton>
                   </div>
                 )}
@@ -647,7 +652,7 @@ class PostComponent extends React.Component<any, any> {
             {canLoggedUserPost &&
               (isPrivate ? (
                 <div className="post__status">
-                  <FontAwesomeIcon className="unlock" icon={faUnlock} />
+                  <ReactSVG className="icon icon_white" src={Unlock} />
                   Supporters Only
                 </div>
               ) : (
@@ -656,7 +661,7 @@ class PostComponent extends React.Component<any, any> {
 
             {isUserSubscribed && !canLoggedUserPost && isPrivate && (
               <div className="post__status">
-                <FontAwesomeIcon className="unlock" icon={faUnlock} />
+                <ReactSVG className="icon icon_white" src={Unlock} />
                 Supporters Only
               </div>
             )}

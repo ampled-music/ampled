@@ -793,6 +793,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     <MenuItem value="Colorado">Colorado</MenuItem>
                     <MenuItem value="Connecticut">Connecticut</MenuItem>
                     <MenuItem value="Delaware">Delaware</MenuItem>
+                    <MenuItem value="DC">District of Columbia</MenuItem>
                     <MenuItem value="Florida">Florida</MenuItem>
                     <MenuItem value="Georgia">Georgia</MenuItem>
                     <MenuItem value="Hawaii">Hawaii</MenuItem>

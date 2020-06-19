@@ -37,6 +37,12 @@ class ArtistPagesController < ApplicationController
     render template: "artist_pages/index"
   end
 
+  def typeahead
+    @artist_pages = ArtistPage.approved.where("name LIKE ?", "%#{params[:query]}%")
+    @artist_page_count = @artist_pages.count
+    render template: "artist_pages/index"
+  end
+
   def show
     respond_to do |format|
       format.html do

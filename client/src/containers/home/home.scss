@@ -406,7 +406,14 @@
     font-family: $font-family-sans-serif;
     text-align: center;
     text-transform: uppercase;
-    margin: 0 auto 2rem;
+    margin: 1rem auto 2rem;
+  }
+
+  &__sub-title {
+    font-family: $font-family-sans-serif;
+    text-transform: capitalize;
+    text-align: center;
+    margin: 1rem 0 2.5rem;
   }
 
   &__item {

@@ -49,7 +49,7 @@ class HomeArtistsComponent extends React.Component<Props> {
             Join {artistCount} artists on Ampled
           </h1>
           <hr className="hr__thick" />
-          <h3 className="home-for__sub-title no-caps">Featured artists</h3>
+          <h3 className="home-artists__sub-title">Featured artists</h3>
           <div className="container">
             <div className="row justify-content-center">
               {this.getArtistsList(artistsPages)}

@@ -112,7 +112,7 @@
       margin: 1rem;
       padding: 1rem;
       border-radius: 5px;
-      border: 2px solid $black;
+      border: 1px solid $black;
 
       &.primary {
         background: $gray-light;
@@ -129,6 +129,10 @@
       img {
         max-width: 130px;
         display: block;
+      }
+      .btn-ampled {
+        border-width: 1px;
+        border-radius: 3px;
       }
     }
   }

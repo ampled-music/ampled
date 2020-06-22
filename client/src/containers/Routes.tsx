@@ -58,7 +58,7 @@ const LazyBrowse = React.lazy(() =>
   })),
 );
 const LazyStats = React.lazy(() =>
-  import('./Stats').then((module) => ({
+  import('./stats/Stats').then((module) => ({
     default: module.Stats,
   })),
 );
@@ -133,7 +133,7 @@ const Routes = () => {
         path={routePaths.userDetails}
         component={LazyUserDetails}
       />
-      <ProtectedRoute exact path={routePaths.stats} component={LazyStats} />
+      <PublicRoute exact path={routePaths.stats} component={LazyStats} />
       <ProtectedRoute exact path={routePaths.feed} component={LazyFeed} />
       <PublicRoute path={'*'} component={LazyNoArtist} />
     </Switch>

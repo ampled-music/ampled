@@ -34,13 +34,13 @@ import AddPlus from '../../images/icons/Icon_Add-Plus.svg';
 import Close from '../../images/icons/Icon_Close-Cancel.svg';
 import Instagram from '../../images/icons/Icon_Instagram.svg';
 import Twitter from '../../images/icons/Icon_Twitter.svg';
+import PhotoIcon from '../../images/icons/Icon_Photo.svg';
 
 import { faStripe } from '@fortawesome/free-brands-svg-icons';
 import ChromePicker from 'react-color/lib/Chrome';
 
 import { theme } from './theme';
 import tear from '../../images/full_page_tear.png';
-import polaroid from '../../images/polaroid.png';
 
 import { Store } from '../../redux/configure-store';
 
@@ -222,18 +222,14 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
       body = (
         <>
           <div className="image-upload__image_container">
-            <img
-              className="image-upload__image_polaroid"
-              src={polaroid}
-              alt={altText}
-            />
+            <ReactSVG className="icon icon_black icon_100" src={PhotoIcon} />
           </div>
           <label
             htmlFor={`image-file-${altText}`}
             style={{ display: 'flex', justifyContent: 'center' }}
           >
             <Button
-              className="btn btn-upload"
+              className="btn btn-ampled"
               variant="outlined"
               component="span"
             >

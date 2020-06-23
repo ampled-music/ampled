@@ -57,9 +57,9 @@ class Stats extends React.Component {
     return (
       <div>
         <div className="stats">
-          <h1>Our Stats</h1>
+          <h1>Our Metrics</h1>
           <p>
-            This is a snapshot of Ampled's current usage and financial statistics.
+            This is a snapshot of Ampled's current usage and financial metrics.
           </p>
           <p>
             As of this moment, we have:

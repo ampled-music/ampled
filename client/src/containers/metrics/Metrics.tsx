@@ -1,8 +1,8 @@
-import './stats.scss';
+import './metrics.scss';
 import * as React from 'react';
 import { apiAxios } from '../../api/setup-axios';
 
-class Stats extends React.Component {
+class Metrics extends React.Component {
   state = {
     counts: {},
     status: 'loading',
@@ -56,7 +56,7 @@ class Stats extends React.Component {
 
     return (
       <div>
-        <div className="stats">
+        <div className="metrics">
           <h1>Our Metrics</h1>
           <p>
             This is a snapshot of Ampled's current usage and financial metrics.
@@ -71,4 +71,4 @@ class Stats extends React.Component {
   }
 }
 
-export { Stats };
+export { Metrics };

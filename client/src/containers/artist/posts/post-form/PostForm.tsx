@@ -945,6 +945,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
   };
 
   renderEmptyType = () => {
+    const { hasUnsavedChanges } = this.state;
     return (
       <div className="post-form__empty">
         <img className="post-form__empty_image" src={Speaker} alt="Speaker" />
@@ -960,6 +961,12 @@ export default class PostFormComponent extends React.Component<Props, any> {
             </a>{' '}
             are some ideas.
           </div>
+          <button
+            className="post-form__empty_cancel"
+            onClick={() => this.props.close(hasUnsavedChanges)}
+          >
+            Cancel
+          </button>
         </div>
       </div>
     );

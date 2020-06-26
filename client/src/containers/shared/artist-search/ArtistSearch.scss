@@ -2,11 +2,11 @@
 @import '../../../theme/mixins.scss';
 
 .artist-search {
-  padding: 0.5rem 8px;
+  margin: 1rem;
 
   .MuiInput-root {
     font-family: $font-family-monospace !important;
-    padding-left: 8px;
+    padding-left: 0px;
     border: 1px solid $gray-light;
   }
 
@@ -23,29 +23,36 @@
     display: none;
   }
 
+  input {
+    padding-left: 0.5rem;
+  }
+
   .results {
-    position: absolute;
+    position: relative;
     background: white;
-    width: 284px;
+    width: 100%;
 
     .result {
-      padding: 12px;
-      height: 60px;
       border-bottom: 1px solid $gray-light;
       border-left: 1px solid $gray-light;
       border-right: 1px solid $gray-light;
 
       .artist-image {
-        width: 36px;
-        height: 36px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         border-width: 0;
         margin-right: 12px;
       }
+      .name {
+        font-size: 0.9rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
       a {
-        height: 36px;
-        padding: 0;
+        height: auto;
+        padding: 0.5rem;
         margin-top: 0 !important;
         font-family: $font-family-sans-serif !important;
         text-decoration: none;

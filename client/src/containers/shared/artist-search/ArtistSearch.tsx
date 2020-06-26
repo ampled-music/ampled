@@ -2,11 +2,12 @@ import './ArtistSearch.scss';
 
 import * as React from 'react';
 import { apiAxios } from '../../../api/setup-axios';
+
 import { TextField, InputAdornment } from '@material-ui/core';
 import { Image, Transformation } from 'cloudinary-react';
 import debounce from 'lodash.debounce';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactSVG } from 'react-svg';
+import Plus from '../../../images/icons/Icon_Add-Plus.svg';
 
 class ArtistSearch extends React.Component {
   state = {
@@ -46,7 +47,7 @@ class ArtistSearch extends React.Component {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <FontAwesomeIcon icon={faSearch} />
+                <ReactSVG className="icon icon_black" src={Plus} />
               </InputAdornment>
             ),
           }}
@@ -63,8 +64,8 @@ class ArtistSearch extends React.Component {
                   <Transformation
                     fetchFormat="auto"
                     crop="fill"
-                    width={60}
-                    height={60}
+                    width={30}
+                    height={30}
                     responsive_placeholder="blank"
                   />
                 </Image>

@@ -53,6 +53,7 @@
       a {
         height: auto;
         padding: 0.5rem;
+        width: calc(100% - 1rem);
         margin-top: 0 !important;
         font-family: $font-family-sans-serif !important;
         text-decoration: none;

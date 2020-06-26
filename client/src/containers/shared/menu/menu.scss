@@ -16,6 +16,8 @@
     .menu-items {
       display: flex;
       flex-direction: column;
+      position: relative;
+      box-sizing: border-box;
 
       .icon {
         margin-right: 0.5rem;
@@ -23,11 +25,10 @@
 
       a,
       button {
-        padding: 0.5rem;
-        padding-left: 16px;
-        padding-right: 16px;
+        padding: 1rem;
+        box-sizing: border-box;
         color: rgba(0, 0, 0, 0.87);
-        width: auto;
+        width: calc(100% - 2rem);
         height: 24px;
         overflow: hidden;
         font-size: 1rem;
@@ -45,11 +46,6 @@
       button:hover {
         text-decoration: none;
         background-color: rgba(0, 0, 0, 0.08);
-      }
-
-      a:first-of-type {
-        margin-top: 20px;
-        font-size: 17px;
       }
     }
   }

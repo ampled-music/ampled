@@ -8,10 +8,25 @@
     width: 38px;
   }
 
+  .menu-box {
+    .MuiMenu-paper {
+      top: 50px !important;
+
+      @include mq(0, $layout-m) {
+        left: 0px !important;
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+
   .menu-list {
     border-radius: 0;
-    margin-right: 15px;
-    width: 300px;
+    width: 100%;
+
+    @include mq($layout-m) {
+      width: 300px;
+    }
 
     .menu-items {
       display: flex;
@@ -21,6 +36,12 @@
 
       .icon {
         margin-right: 0.5rem;
+      }
+
+      .hide-desktop {
+        @include mq($layout-m) {
+          display: none;
+        }
       }
 
       a,
@@ -40,6 +61,7 @@
         font-family: Courier, 'Courier New', monospace !important;
         display: flex;
         align-items: center;
+        text-decoration: underline;
       }
 
       a:hover,

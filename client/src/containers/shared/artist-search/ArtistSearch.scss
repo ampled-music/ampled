@@ -23,6 +23,15 @@
     display: none;
   }
 
+  .empty {
+    .MuiInput-root {
+      border-color: $brand-danger;
+      input {
+        color: $brand-danger;
+      }
+    }
+  }
+
   input {
     padding-left: 0.5rem;
   }
@@ -58,6 +67,16 @@
         font-family: $font-family-sans-serif !important;
         text-decoration: none;
       }
+    }
+    .result-empty {
+      border-bottom: 1px solid $brand-danger;
+      border-left: 1px solid $brand-danger;
+      border-right: 1px solid $brand-danger;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 0.5rem;
+      font-style: italic;
+      color: $brand-danger;
     }
   }
 }

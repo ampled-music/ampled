@@ -33,6 +33,10 @@ class ArtistSearch extends React.Component {
     this.fetchResults();
   };
 
+  emptySearch = () => {
+    return this.state.query.length > 0 && this.state.results.length === 0;
+  };
+
   render() {
     return (
       <div className="artist-search">
@@ -44,6 +48,7 @@ class ArtistSearch extends React.Component {
           fullWidth
           value={this.state.query}
           onChange={this.updateSearchQuery}
+          className={this.emptySearch() && 'empty'}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -74,6 +79,9 @@ class ArtistSearch extends React.Component {
               </a>
             </div>
           ))}
+          {this.emptySearch() && (
+            <div className="result-empty">No Artists Found</div>
+          )}
         </div>
       </div>
     );

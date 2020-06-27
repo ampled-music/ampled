@@ -124,6 +124,10 @@
       }
     }
   }
+  .input-group {
+    max-width: 350px;
+    margin: auto;
+  }
 }
 
 .home-for {
@@ -136,6 +140,9 @@
     text-align: center;
     text-transform: uppercase;
     margin: 2rem auto;
+  }
+  a {
+    text-decoration: none;
   }
 
   &__mission {

@@ -59,7 +59,7 @@ class HomeArtistsComponent extends React.Component<Props> {
                 href={config.menuUrls.createArtist}
                 className="home-artists__button btn btn-ampled center"
               >
-                CREATE YOUR ARTIST PAGE
+                Create Your Artist Page
               </a>
             </div>
           </div>

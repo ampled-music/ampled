@@ -8,7 +8,7 @@ class ArtistPagesController < ApplicationController
 
   def index
     @artist_pages = ArtistPage.includes(:images).approved.where(featured: true).where.not(images: nil).uniq.take(8)
-    @artist_page_count = ArtistPage.approved.count
+    @artist_page_count = ArtistPage.count
 
     respond_to do |format|
       format.html do

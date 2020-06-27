@@ -1,5 +1,8 @@
-import '../../styles/App.css';
+import '../../theme/vars.scss';
+import '../../theme/mixins.scss';
+import '../../theme/global.scss';
 import '../shared/toast/toast.scss';
+import '../../styles/App.css';
 
 import * as React from 'react';
 import { connect } from 'react-redux';

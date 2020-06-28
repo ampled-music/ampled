@@ -19,16 +19,43 @@ a {
   }
 }
 
+h1 {
+  font-family: $font-family-sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+h2,
+h3 {
+  font-family: $font-family-sans-serif;
+}
 h4 {
   font-family: $font-family-sans-serif;
 }
-
 h6 {
   font-size: 0.7rem;
 }
 
 .page {
   margin-top: 50px;
+  background-color: $white;
+  &__title {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  &__content {
+    margin: 2rem auto;
+    font-family: $font-family-monospace;
+    h2,
+    h3 {
+      margin: 1rem auto;
+    }
+  }
+  .page-container {
+    max-width: 1000px;
+    width: 100%;
+    padding: 1rem;
+    margin: auto;
+  }
 }
 
 .btn {

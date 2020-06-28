@@ -1,6 +1,3 @@
-import './../artist/posts/post-container.scss';
-import './../artist/posts/post/post.scss';
-
 import * as React from 'react';
 
 import { apiAxios } from '../../api/setup-axios';
@@ -36,10 +33,10 @@ class AboutUs extends React.Component<any> {
       return <Loading artistLoading={true} />;
     }
     return (
-      <div className="post-container">
-        <h1>{this.state.title}</h1>
+      <div className="page-container">
+        <h1 className="page__title">{this.state.title}</h1>
         <div
-          className="container"
+          className="page__content"
           dangerouslySetInnerHTML={{ __html: this.state.content }}
         ></div>
       </div>

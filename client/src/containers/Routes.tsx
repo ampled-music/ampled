@@ -72,6 +72,11 @@ const LazySinglePost = React.lazy(() =>
     default: module.SinglePost,
   })),
 );
+const LazyAboutUs = React.lazy(() =>
+  import('./pages/AboutUs').then((module) => ({
+    default: module.AboutUs,
+  })),
+);
 
 const Routes = () => {
   return (
@@ -135,6 +140,7 @@ const Routes = () => {
       />
       <ProtectedRoute exact path={routePaths.stats} component={LazyStats} />
       <ProtectedRoute exact path={routePaths.feed} component={LazyFeed} />
+      <PublicRoute exact path={routePaths.aboutUs} component={LazyAboutUs} />
       <PublicRoute path={'*'} component={LazyNoArtist} />
     </Switch>
   );

@@ -19,4 +19,5 @@ export const routePaths = {
   browse: '/browse',
   stats: '/stats',
   feed: '/feed',
+  aboutUs: '/about-us',
 };

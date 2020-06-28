@@ -2,11 +2,12 @@ import './ArtistSearch.scss';
 
 import * as React from 'react';
 import { apiAxios } from '../../../api/setup-axios';
+
 import { TextField, InputAdornment } from '@material-ui/core';
 import { Image, Transformation } from 'cloudinary-react';
 import debounce from 'lodash.debounce';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactSVG } from 'react-svg';
+import Search from '../../../images/icons/Icon_Search.svg';
 
 class ArtistSearch extends React.Component {
   state = {
@@ -32,6 +33,10 @@ class ArtistSearch extends React.Component {
     this.fetchResults();
   };
 
+  emptySearch = () => {
+    return this.state.query.length > 0 && this.state.results.length === 0;
+  };
+
   render() {
     return (
       <div className="artist-search">
@@ -43,10 +48,11 @@ class ArtistSearch extends React.Component {
           fullWidth
           value={this.state.query}
           onChange={this.updateSearchQuery}
+          className={this.emptySearch() && 'empty'}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <FontAwesomeIcon icon={faSearch} />
+                <ReactSVG className="icon icon_black" src={Search} />
               </InputAdornment>
             ),
           }}
@@ -63,8 +69,8 @@ class ArtistSearch extends React.Component {
                   <Transformation
                     fetchFormat="auto"
                     crop="fill"
-                    width={60}
-                    height={60}
+                    width={30}
+                    height={30}
                     responsive_placeholder="blank"
                   />
                 </Image>
@@ -73,6 +79,9 @@ class ArtistSearch extends React.Component {
               </a>
             </div>
           ))}
+          {this.emptySearch() && (
+            <div className="result-empty">No Artists Found</div>
+          )}
         </div>
       </div>
     );

@@ -961,12 +961,12 @@ export default class PostFormComponent extends React.Component<Props, any> {
             </a>{' '}
             are some ideas.
           </div>
-          <button
+          <Button
             className="post-form__empty_cancel"
             onClick={() => this.props.close(hasUnsavedChanges)}
           >
             Cancel
-          </button>
+          </Button>
         </div>
       </div>
     );

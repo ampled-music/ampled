@@ -23,10 +23,8 @@ class AboutUs extends React.Component<any> {
     loading: true,
     page: 1,
   };
-  players: Set<any>;
 
   componentDidMount = () => {
-    this.players = new Set();
     this.loadData(this.state.page);
   };
 
@@ -53,25 +51,6 @@ class AboutUs extends React.Component<any> {
       title: data.title.rendered,
       content: data.content.rendered,
     });
-  };
-
-  playerCallback = (action: string, instance: any) => {
-    const { players } = this;
-    if (action === 'play') {
-      // Pause all active players
-      players.forEach((player) => {
-        // handlePause instance method both pauses audio *and* triggers
-        // the 'pause' callback below
-        player.handlePause();
-      });
-
-      // Add newly active player to set
-      players.add(instance);
-    } else if (action === 'pause') {
-      // Triggered after player has already been paused;
-      // remove paused player from set
-      players.delete(instance);
-    }
   };
 
   render() {

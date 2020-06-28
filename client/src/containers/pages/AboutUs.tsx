@@ -2,16 +2,6 @@ import './../artist/posts/post-container.scss';
 import './../artist/posts/post/post.scss';
 
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-// import { Link } from 'react-router-dom';
-
-import { Store } from '../../redux/configure-store';
-
-import { showToastAction } from '../../redux/toast/toast-modal';
-import { createCommentAction } from '../../redux/comments/create';
-import { deleteCommentAction } from '../../redux/comments/delete';
-// import { Post } from '../artist/posts/post/Post';
 
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
@@ -46,10 +36,7 @@ class AboutUs extends React.Component<any> {
       return <Loading artistLoading={true} />;
     }
     return (
-      <div
-        className="post-container"
-        style={{ maxWidth: '525px', width: '525px', margin: '0 auto' }}
-      >
+      <div className="post-container">
         <h1>{this.state.title}</h1>
         <div
           className="container"
@@ -60,18 +47,4 @@ class AboutUs extends React.Component<any> {
   }
 }
 
-const mapStateToProps = (state: Store) => {
-  return {
-    me: state.me,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  showToast: bindActionCreators(showToastAction, dispatch),
-  addComment: bindActionCreators(createCommentAction, dispatch),
-  deleteComment: bindActionCreators(deleteCommentAction, dispatch),
-});
-
-const connectAboutUs = connect(mapStateToProps, mapDispatchToProps)(AboutUs);
-
-export { connectAboutUs as AboutUs };
+export { AboutUs };

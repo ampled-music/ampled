@@ -21,25 +21,13 @@ class AboutUs extends React.Component<any> {
     content: '',
     title: '',
     loading: true,
-    page: 1,
   };
 
   componentDidMount = () => {
-    this.loadData(this.state.page);
+    this.loadData();
   };
 
-  nextPage = () => {
-    this.loadData(+this.state.page + 1);
-  };
-
-  prevPage = () => {
-    if (this.state.page === 1) {
-      return;
-    }
-    this.loadData(+this.state.page - 1);
-  };
-
-  loadData = async (page) => {
+  loadData = async () => {
     this.setState({ loading: true });
     const { data } = await apiAxios({
       method: 'get',
@@ -62,14 +50,7 @@ class AboutUs extends React.Component<any> {
         className="post-container"
         style={{ maxWidth: '525px', width: '525px', margin: '0 auto' }}
       >
-        <h1
-          style={{
-            textAlign: 'center',
-            fontFamily: "'LL Replica Bold Web', sans-serif",
-          }}
-        >
-          POSTS
-        </h1>
+        <h1>{this.state.title}</h1>
         <div
           className="container"
           dangerouslySetInnerHTML={{ __html: this.state.content }}

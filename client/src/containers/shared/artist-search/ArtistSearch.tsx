@@ -7,7 +7,7 @@ import { TextField, InputAdornment } from '@material-ui/core';
 import { Image, Transformation } from 'cloudinary-react';
 import debounce from 'lodash.debounce';
 import { ReactSVG } from 'react-svg';
-import Plus from '../../../images/icons/Icon_Add-Plus.svg';
+import Search from '../../../images/icons/Icon_Search.svg';
 
 class ArtistSearch extends React.Component {
   state = {
@@ -52,7 +52,7 @@ class ArtistSearch extends React.Component {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <ReactSVG className="icon icon_black" src={Plus} />
+                <ReactSVG className="icon icon_black" src={Search} />
               </InputAdornment>
             ),
           }}

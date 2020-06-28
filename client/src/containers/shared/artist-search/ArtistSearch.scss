@@ -30,6 +30,9 @@
         color: $brand-danger;
       }
     }
+    .icon svg path {
+      fill: $brand-danger;
+    }
   }
 
   input {

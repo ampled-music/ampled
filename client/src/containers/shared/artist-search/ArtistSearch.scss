@@ -55,6 +55,8 @@
         border-radius: 50%;
         border-width: 0;
         margin-right: 12px;
+        display: block;
+        flex-shrink: 0;
       }
       .name {
         font-size: 0.9rem;

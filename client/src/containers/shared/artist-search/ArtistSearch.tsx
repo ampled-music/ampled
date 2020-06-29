@@ -49,6 +49,7 @@ class ArtistSearch extends React.Component {
           value={this.state.query}
           onChange={this.updateSearchQuery}
           className={this.emptySearch() && 'empty'}
+          placeholder="Search for an artist"
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

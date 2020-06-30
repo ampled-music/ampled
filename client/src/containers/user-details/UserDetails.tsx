@@ -4,6 +4,7 @@ import '../settings/user-settings.scss';
 
 import * as loadImage from 'blueimp-load-image';
 import * as React from 'react';
+import Cropper from 'react-easy-crop';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Store } from '../../redux/configure-store';
@@ -204,6 +205,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     country_error: false,
     social_error: false,
     showEditForm: false,
+    crop: { x: 0, y: 0 },
   };
 
   handleChange = (e) => {
@@ -299,6 +301,30 @@ class UserDetailsComponent extends React.Component<Props, any> {
     }
   }
 
+  onCropChange = (crop) => {
+    this.setState({ crop });
+  };
+
+  onCropComplete = (croppedArea, croppedAreaPixels) => {
+    console.log('croppy', croppedArea);
+    console.log(croppedAreaPixels.width / croppedAreaPixels.height);
+  };
+
+  renderCropper = (photoBody) => {
+    return (
+      <div style={{ position: 'relative', height: '300px', width: '300px' }}>
+        <Cropper
+          image={photoBody}
+          showGrid={false}
+          crop={this.state.crop}
+          onCropChange={this.onCropChange}
+          onCropComplete={this.onCropComplete}
+          cropShape="round"
+        />
+      </div>
+    );
+  };
+
   renderUserImage = () => {
     const { userData } = this.props;
     return (
@@ -375,11 +401,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       <img src={avatar} className="image-preview" alt="Avatar" />
     );
 
-    return photoBody ? (
-      <img src={photoBody} className="image-preview" alt="Avatar" />
-    ) : (
-      placeholderImage
-    );
+    return photoBody ? this.renderCropper(photoBody) : placeholderImage;
   };
 
   renderPhotoSelector = () => {

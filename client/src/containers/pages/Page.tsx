@@ -3,7 +3,7 @@ import * as React from 'react';
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
 
-class AboutUs extends React.Component<any> {
+class Page extends React.Component<any> {
   state = {
     content: '',
     title: '',
@@ -11,14 +11,14 @@ class AboutUs extends React.Component<any> {
   };
 
   componentDidMount = () => {
-    this.loadData();
+    this.loadPages(21);
   };
 
-  loadData = async () => {
+  loadPages = async (id: number) => {
     this.setState({ loading: true });
     const { data } = await apiAxios({
       method: 'get',
-      url: `http://3.17.10.215/wp-json/wp/v2/pages/21`,
+      url: `http://3.17.10.215/wp-json/wp/v2/pages/${id}`,
     });
     console.log(data);
     this.setState({
@@ -44,4 +44,4 @@ class AboutUs extends React.Component<any> {
   }
 }
 
-export { AboutUs };
+export { Page };

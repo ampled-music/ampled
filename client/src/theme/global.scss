@@ -64,6 +64,10 @@ h6 {
     width: 100%;
     padding: 1rem;
     margin: auto;
+    background-color: $white;
+    @include mq($layout-m) {
+      padding: 2rem 5rem;
+    }
   }
 }
 

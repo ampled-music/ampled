@@ -7,16 +7,17 @@ interface ArtistSocialProps {
 
 class ArtistSocial extends React.Component<ArtistSocialProps, any> {
   state = {
+    artistName: '',
     promoteSquare: [],
     promoteStory: [],
     promoteFacebook: [],
     supportShare: [],
   };
 
-  componentDidUpdate = async () => {
+  componentDidUpdate = async (prevProp) => {
     const { artist } = this.props;
-    console.log(artist);
-    if (artist) {
+    if (prevProp.artist.id !== artist.id) {
+      this.state.artistName = this.props.artist.name;
       this.renderSupporterShareImages(artist);
       this.renderSocialImages(artist);
       console.log('update: ', this.state);

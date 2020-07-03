@@ -60,6 +60,6 @@ json.ownedPages @owned_pages do |page|
   json.lastPost page.page.last_post_date
   json.lastPayout page.page.last_payout
   json.stripeSignup page.role == "admin" ? page.page.stripe_signup_url : json.null
-  json.stripeDashboard page.role == "admin" ? page.page.stripe_dashboard_url : json.null
+  # json.stripeDashboard page.role == "admin" ? page.page.stripe_dashboard_url : json.null
   json.isStripeSetup page.page.is_stripe_ready
 end

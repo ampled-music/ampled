@@ -12,7 +12,7 @@ import avatar from '../../../images/avatars/Avatar_Blank.svg';
 import { initialState as loginInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import { routePaths } from '../../route-paths';
-import { Menu } from '../menu/Menu';
+import { MenuEx } from '../menu/Menu';
 import { UserRoles } from '../user-roles';
 import { Image, Transformation } from 'cloudinary-react';
 
@@ -160,7 +160,7 @@ class NavComponent extends React.Component<Props, any> {
         <div className="menus">
           <div className="supporter-message">You are a supporter</div>
           <div className="loginLink">{this.renderNavLink()}</div>
-          <Menu renderLoginLink={this.renderLoginLink} />
+          <MenuEx renderLoginLink={this.renderLoginLink} />
         </div>
         {this.showSupportButton() && (
           <div className="stickySupport">

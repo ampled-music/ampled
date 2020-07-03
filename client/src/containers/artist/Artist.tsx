@@ -30,6 +30,8 @@ import { ArtistComingSoon } from '../shared/no-artist/ArtistComingSoon';
 import { NoArtist } from '../shared/no-artist/NoArtist';
 import { routePaths } from '../route-paths';
 
+import { ArtistSocial } from '../shared/artist-social';
+
 const mapStateToProps = (state: Store) => {
   return {
     artists: state.artists,
@@ -449,6 +451,8 @@ class ArtistComponent extends React.Component<Props, any> {
           <Confetti active={showConfetti} config={this.getConfettiConfig()} />
         </div>
         <Loading artistLoading={artists.loading || loadingMe} />
+
+        {artist && <ArtistSocial artist={artist} />}
       </div>
     );
   }

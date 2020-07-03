@@ -1,8 +1,28 @@
 import * as React from 'react';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArtistModel } from '../../redux/artists/initial-state';
 
-class ArtistSocial extends React.Component<any> {
+interface ArtistSocialProps {
+  artist: ArtistModel;
+}
+
+class ArtistSocial extends React.Component<ArtistSocialProps, any> {
+  state = {
+    promoteSquare: [],
+    promoteStory: [],
+    promoteFacebook: [],
+    supportShare: [],
+  };
+
+  componentDidUpdate = async () => {
+    const { artist } = this.props;
+    console.log(artist);
+    if (artist) {
+      this.renderSupporterShareImages(artist);
+      this.renderSocialImages(artist);
+      console.log('update: ', this.state);
+    }
+  };
+
   adjustedBackgroundColor = (accentColor: string, opacity = 0.2) => {
     // @accentColor: RGB eg 'aabbcc' *NOT* RGBA
     // @opacity: float e.g. 0.2 for 20%
@@ -19,16 +39,6 @@ class ArtistSocial extends React.Component<any> {
     const b = adjustedChannel(accentColor.substr(4, 2));
 
     return `${r}${g}${b}`;
-  };
-
-  handlePublicID = (image: string) => {
-    if (!image) {
-      return '';
-    }
-    const url = image.split('/');
-    const part_1 = url[url.length - 2];
-    const part_2 = url[url.length - 1];
-    return part_1 + '/' + part_2;
   };
 
   buildBrokenName = (artistname: string) => {
@@ -121,22 +131,16 @@ class ArtistSocial extends React.Component<any> {
   };
 
   renderSocialImages = (artist) => {
-    if (!artist.image) {
-      return;
-    }
     const BASE_UPLOAD_URL =
       'https://res.cloudinary.com/ampled-web/image/upload';
-    let color = artist.artistColor;
+    let color = artist.accent_color;
     color = color.replace('#', '');
     const cleanArtistName = artist.name
       .replace(/[^a-z0-9]/gi, '_')
       .toLowerCase();
-    const promoteSquare = [];
-    const promoteStory = [];
-    const promoteFacebook = [];
 
     // Facebook
-    promoteFacebook.push({
+    this.state.promoteFacebook.push({
       url: [
         BASE_UPLOAD_URL,
         `/c_fill,h_630,w_1200/c_scale,g_south_east,l_social:AmpledLogo,w_200,x_50,y_50/`,
@@ -151,17 +155,17 @@ class ArtistSocial extends React.Component<any> {
           '202020',
         ),
         `/`,
-        this.handlePublicID(artist.image),
+        artist.images[0].public_id,
       ].join(''),
       name: `${cleanArtistName}_Facebook.jpg`,
       description: '',
     });
-    // if (promoteFacebook.length > 0) {
-    //   console.log(promoteFacebook);
+    // if (this.state.promoteFacebook.length > 0) {
+    //   console.log(this.state.promoteFacebook);
     // }
 
     // Square
-    promoteSquare.push({
+    this.state.promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
         `/c_fill,h_1500,w_1500/l_social:Grid:Grid1/`,
@@ -176,13 +180,13 @@ class ArtistSocial extends React.Component<any> {
           '202020',
         ),
         `/`,
-        this.handlePublicID(artist.image),
+        artist.images[0].public_id,
       ].join(''),
       name: `${cleanArtistName}_Grid1.jpg`,
       description: '',
     });
 
-    promoteSquare.push({
+    this.state.promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/`,
@@ -202,7 +206,7 @@ class ArtistSocial extends React.Component<any> {
       description: '',
     });
 
-    promoteSquare.push({
+    this.state.promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Grid/Grid3.png`,
@@ -211,7 +215,7 @@ class ArtistSocial extends React.Component<any> {
       description: '',
     });
 
-    promoteSquare.push({
+    this.state.promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Grid/Grid4.png`,
@@ -220,7 +224,7 @@ class ArtistSocial extends React.Component<any> {
       description: '',
     });
 
-    promoteSquare.push({
+    this.state.promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Grid/Grid5.png`,
@@ -229,10 +233,10 @@ class ArtistSocial extends React.Component<any> {
       description: '',
     });
 
-    promoteSquare.push({
+    this.state.promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
-        `/l_text:Arial_55_bold:%20ampled.com%252Fartist%252F${artist.artistSlug}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_380/`,
+        `/l_text:Arial_55_bold:%20ampled.com%252Fartist%252F${artist.slug}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_380/`,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Grid/Grid6.png`,
       ].join(''),
       name: `${cleanArtistName}_Grid6.png`,
@@ -240,7 +244,7 @@ class ArtistSocial extends React.Component<any> {
     });
 
     // Story
-    promoteStory.push({
+    this.state.promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
         `/c_fill,h_2666,w_1500/l_social:Story:StoryBlank/`,
@@ -255,13 +259,13 @@ class ArtistSocial extends React.Component<any> {
           '202020',
         ),
         `/`,
-        this.handlePublicID(artist.image),
+        artist.images[0].public_id,
       ].join(''),
       name: `${cleanArtistName}_StoryBlank.jpg`,
       description: '',
     });
 
-    promoteStory.push({
+    this.state.promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
         `/c_fill,h_2666,w_1500/l_social:Story:Story1/`,
@@ -276,13 +280,13 @@ class ArtistSocial extends React.Component<any> {
           '202020',
         ),
         `/`,
-        this.handlePublicID(artist.image),
+        artist.images[0].public_id,
       ].join(''),
       name: `${cleanArtistName}_Story1.jpg`,
       description: '',
     });
 
-    promoteStory.push({
+    this.state.promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/`,
@@ -302,7 +306,7 @@ class ArtistSocial extends React.Component<any> {
       description: '',
     });
 
-    promoteStory.push({
+    this.state.promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Story/Story3.png`,
@@ -311,7 +315,7 @@ class ArtistSocial extends React.Component<any> {
       description: '',
     });
 
-    promoteStory.push({
+    this.state.promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Story/Story4.png`,
@@ -320,7 +324,7 @@ class ArtistSocial extends React.Component<any> {
       description: '',
     });
 
-    promoteStory.push({
+    this.state.promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Story/Story5.png`,
@@ -329,57 +333,57 @@ class ArtistSocial extends React.Component<any> {
       description: '',
     });
 
-    promoteStory.push({
+    this.state.promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
-        `/l_text:Arial_60_bold:%20ampled.com%252Fartist%252F${artist.artistSlug}%20,co_rgb:ffffff,b_rgb:202020,g_center,y_100/`,
+        `/l_text:Arial_60_bold:%20ampled.com%252Fartist%252F${artist.slug}%20,co_rgb:ffffff,b_rgb:202020,g_center,y_100/`,
         `/b_rgb:${this.adjustedBackgroundColor(color)}/social/Story/Story6.png`,
       ].join(''),
       name: `${cleanArtistName}_Story6.png`,
       description: '',
     });
 
-    return (
-      <div>
-        <div className="details__info_title">Promote Your Page</div>
-        <div className="row no-gutters">
-          <div className="col-6">
-            <div className="details__info_title sm">Square</div>
-            <div className="details__promote_container">
-              {promoteSquare.map((promoImage) => (
-                <a
-                  key={promoImage.name}
-                  className="details__promote_link"
-                  href={promoImage.url}
-                  download={promoImage.name}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FontAwesomeIcon icon={faImage} title={promoImage.name} />
-                </a>
-              ))}
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="details__info_title sm">Stories</div>
-            <div className="details__promote_container">
-              {promoteStory.map((promoImage) => (
-                <a
-                  key={promoImage.name}
-                  className="details__promote_link"
-                  href={promoImage.url}
-                  download={promoImage.name}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FontAwesomeIcon icon={faImage} title={promoImage.name} />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    // return (
+    //   <div>
+    //     <div className="details__info_title">Promote Your Page</div>
+    //     <div className="row no-gutters">
+    //       <div className="col-6">
+    //         <div className="details__info_title sm">Square</div>
+    //         <div className="details__promote_container">
+    //           {this.state.promoteSquare.map((promoImage) => (
+    //             <a
+    //               key={promoImage.name}
+    //               className="details__promote_link"
+    //               href={promoImage.url}
+    //               download={promoImage.name}
+    //               target="_blank"
+    //               rel="noopener noreferrer"
+    //             >
+    //               <FontAwesomeIcon icon={faImage} title={promoImage.name} />
+    //             </a>
+    //           ))}
+    //         </div>
+    //       </div>
+    //       <div className="col-6">
+    //         <div className="details__info_title sm">Stories</div>
+    //         <div className="details__promote_container">
+    //           {this.state.promoteStory.map((promoImage) => (
+    //             <a
+    //               key={promoImage.name}
+    //               className="details__promote_link"
+    //               href={promoImage.url}
+    //               download={promoImage.name}
+    //               target="_blank"
+    //               rel="noopener noreferrer"
+    //             >
+    //               <FontAwesomeIcon icon={faImage} title={promoImage.name} />
+    //             </a>
+    //           ))}
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // );
   };
 
   renderSupporterShareImages = (artist) => {
@@ -388,10 +392,9 @@ class ArtistSocial extends React.Component<any> {
     const cleanArtistName = artist.name
       .replace(/[^a-z0-9]/gi, '_')
       .toLowerCase();
-    const supportShare = [];
 
     // Square
-    supportShare.push({
+    this.state.supportShare.push({
       url: [
         BASE_UPLOAD_URL,
         `/c_fill,h_1500,w_1500/l_social:Supporter:Grid/`,
@@ -405,15 +408,15 @@ class ArtistSocial extends React.Component<any> {
           'ffffff',
           '202020',
         ),
-        `/l_text:Arial_60_bold:%20ampled.com%252Fartist%252F${artist.artistSlug}%20,co_rgb:ffffff,b_rgb:202020,g_south_east,y_280,x_100/`,
-        this.handlePublicID(artist.image),
+        `/l_text:Arial_60_bold:%20ampled.com%252Fartist%252F${artist.slug}%20,co_rgb:ffffff,b_rgb:202020,g_south_east,y_280,x_100/`,
+        artist.images[0].public_id,
       ].join(''),
       name: `${cleanArtistName}_Grid.jpg`,
       description: '',
     });
 
     // Story
-    supportShare.push({
+    this.state.supportShare.push({
       url: [
         BASE_UPLOAD_URL,
         `/c_fill,h_2666,w_1500/l_social:Supporter:Story/`,
@@ -427,37 +430,41 @@ class ArtistSocial extends React.Component<any> {
           'ffffff',
           '202020',
         ),
-        `/l_text:Arial_65_bold:%20ampled.com%252Fartist%252F${artist.artistSlug}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_500/`,
-        this.handlePublicID(artist.image),
+        `/l_text:Arial_65_bold:%20ampled.com%252Fartist%252F${artist.slug}%20,co_rgb:ffffff,b_rgb:202020,g_south,y_500/`,
+        artist.images[0].public_id,
       ].join(''),
       name: `${cleanArtistName}_Story.jpg`,
       description: '',
     });
 
-    return (
-      <div>
-        <div className="details__info_title">Promote This Page</div>
-        <div className="row">
-          <div className="col-12">
-            <div className="details__promote_container">
-              {supportShare.map((promoImage) => (
-                <a
-                  key={promoImage.name}
-                  className="details__promote_link"
-                  href={promoImage.url}
-                  download={promoImage.name}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FontAwesomeIcon icon={faImage} title={promoImage.name} />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    // return (
+    //   <div>
+    //     <div className="details__info_title">Promote This Page</div>
+    //     <div className="row">
+    //       <div className="col-12">
+    //         <div className="details__promote_container">
+    //           {this.state.supportShare.map((promoImage) => (
+    //             <a
+    //               key={promoImage.name}
+    //               className="details__promote_link"
+    //               href={promoImage.url}
+    //               download={promoImage.name}
+    //               target="_blank"
+    //               rel="noopener noreferrer"
+    //             >
+    //               <FontAwesomeIcon icon={faImage} title={promoImage.name} />
+    //             </a>
+    //           ))}
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // );
   };
+
+  render() {
+    return <div></div>;
+  }
 }
 
 export { ArtistSocial };

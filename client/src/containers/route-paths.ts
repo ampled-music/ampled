@@ -19,5 +19,5 @@ export const routePaths = {
   browse: '/browse',
   metrics: '/metrics',
   feed: '/feed',
-  page: '/page/:pageId',
+  page: '/page/:slug',
 };

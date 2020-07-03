@@ -6,7 +6,7 @@ import { Loading } from '../shared/loading/Loading';
 interface PageProps {
   match: {
     params: {
-      pageId: string;
+      slug: string;
     };
   };
 }
@@ -31,7 +31,7 @@ class Page extends React.Component<PageProps, any> {
 
     data.map(
       (page) =>
-        page.slug === this.props.match.params.pageId &&
+        page.slug === this.props.match.params.slug &&
         this.setState({
           loading: false,
           title: page.title.rendered,

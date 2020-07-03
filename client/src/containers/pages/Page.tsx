@@ -3,7 +3,15 @@ import * as React from 'react';
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
 
-class Page extends React.Component<any> {
+interface PageProps {
+  match: {
+    params: {
+      pageId: string;
+    };
+  };
+}
+
+class Page extends React.Component<PageProps, any> {
   state = {
     content: '',
     title: '',
@@ -11,21 +19,25 @@ class Page extends React.Component<any> {
   };
 
   componentDidMount = () => {
-    this.loadPages(21);
+    this.loadPages();
   };
 
-  loadPages = async (id: number) => {
+  loadPages = async () => {
     this.setState({ loading: true });
     const { data } = await apiAxios({
       method: 'get',
-      url: `http://3.17.10.215/wp-json/wp/v2/pages/${id}`,
+      url: `http://3.17.10.215/wp-json/wp/v2/pages/`,
     });
-    console.log(data);
-    this.setState({
-      loading: false,
-      title: data.title.rendered,
-      content: data.content.rendered,
-    });
+
+    data.map(
+      (page) =>
+        page.slug === this.props.match.params.pageId &&
+        this.setState({
+          loading: false,
+          title: page.title.rendered,
+          content: page.content.rendered,
+        }),
+    );
   };
 
   render() {

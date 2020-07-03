@@ -263,6 +263,19 @@
     &_copy {
       font-family: $font-family-monospace;
     }
+    &_cancel {
+      margin-top: 2rem;
+      text-decoration: underline;
+      font-size: 1rem;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      width: 220px;
+      &:hover {
+        color: rgba($black, 0.7);
+        text-decoration: none;
+      }
+    }
   }
 
   .file-actions {

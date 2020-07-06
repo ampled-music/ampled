@@ -8,22 +8,48 @@
     width: 38px;
   }
 
+  .menu-box {
+    .MuiMenu-paper {
+      top: 50px !important;
+
+      @include mq(0, $layout-m) {
+        left: 0px !important;
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+
   .menu-list {
     border-radius: 0;
-    margin-right: 15px;
-    width: 300px;
+    width: 100%;
+
+    @include mq($layout-m) {
+      width: 300px;
+    }
 
     .menu-items {
       display: flex;
       flex-direction: column;
+      position: relative;
+      box-sizing: border-box;
+
+      .icon {
+        margin-right: 0.5rem;
+      }
+
+      .hide-desktop {
+        @include mq($layout-m) {
+          display: none;
+        }
+      }
 
       a,
       button {
-        padding: 0.5rem;
-        padding-left: 16px;
-        padding-right: 16px;
+        padding: 1rem;
+        box-sizing: border-box;
         color: rgba(0, 0, 0, 0.87);
-        width: auto;
+        width: calc(100% - 2rem);
         height: 24px;
         overflow: hidden;
         font-size: 1rem;
@@ -33,17 +59,15 @@
         text-align: left;
         white-space: nowrap;
         font-family: Courier, 'Courier New', monospace !important;
+        display: flex;
+        align-items: center;
+        text-decoration: underline;
       }
 
       a:hover,
       button:hover {
         text-decoration: none;
         background-color: rgba(0, 0, 0, 0.08);
-      }
-
-      a:first-of-type {
-        margin-top: 20px;
-        font-size: 17px;
       }
     }
   }

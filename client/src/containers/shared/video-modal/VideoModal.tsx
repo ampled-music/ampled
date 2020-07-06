@@ -4,8 +4,8 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Dialog } from '@material-ui/core';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Close from '../../../images/icons/Icon_Close-Cancel.svg';
+import { ReactSVG } from 'react-svg';
 
 import YouTubePlayer from 'react-player/lib/players/YouTube';
 import VimeoPlayer from 'react-player/lib/players/Vimeo';
@@ -56,7 +56,7 @@ class VideoModalComponent extends React.Component<Props, any> {
               aria-label="close"
               onClick={(e) => this.props.onClose(e)}
             >
-              <FontAwesomeIcon icon={faTimes} />
+              <ReactSVG className="icon" src={Close} />
             </IconButton>
           )}
         </Dialog>

@@ -45,10 +45,15 @@
         flex-direction: column;
         width: 100%;
         max-width: 350px;
-        background-image: url(../../images/background_post.svg);
+        background-image: url(../../images/backgrounds/background_post.svg);
         align-items: center;
         padding: 30px 1rem 1rem;
         font-size: 0.9rem;
+
+        &__city,
+        &__social {
+          display: flex;
+        }
 
         &__name {
           font-size: 1.3rem;
@@ -80,10 +85,11 @@
           font-size: 0.7rem;
           margin-top: 1rem;
           text-align: center;
+          align-items: center;
+        }
 
-          svg {
-            margin-right: 0.5rem;
-          }
+        .icon {
+          margin-right: 0.5rem;
         }
 
         &__change-password {
@@ -124,8 +130,7 @@
       }
 
       .pages {
-        padding-top: 1rem;
-        width: 100%;
+        padding: 1rem;
         display: flex;
         flex-wrap: wrap;
       }

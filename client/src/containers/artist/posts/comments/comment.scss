@@ -32,17 +32,18 @@
   }
   &__delete {
     position: absolute;
-    right: 20px;
+    right: 14px;
     margin-top: 23px;
-    opacity: 0.7;
+    opacity: 0.4;
     transition: opacity $speed;
+    width: 30px;
+    height: 30px;
     &:hover {
       opacity: 1;
     }
-  }
 
-  .delete-icon {
-    margin: 0.5rem 0;
-    cursor: pointer;
+    svg {
+      width: 15px !important;
+    }
   }
 }

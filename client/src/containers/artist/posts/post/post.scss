@@ -130,7 +130,7 @@
       text-transform: uppercase;
       text-align: center;
       color: $white;
-      background: url(../../../../images/lock_icon.svg);
+      background: url(../../../../images/icons/Icon_Unlock.svg);
       background-repeat: no-repeat;
       background-position: center;
       padding: 54px 0 0;
@@ -162,6 +162,9 @@
     font-weight: bold;
     padding: 5px;
     background-color: $gray-lighter;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .unlock {
       margin-right: 0.5rem;
@@ -169,44 +172,27 @@
   }
 
   &__change {
-    position: absolute;
-    right: 0;
-    z-index: 10;
-    padding: 0.5rem 0.5rem 0 0;
-    opacity: 1;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    opacity: 0.4;
     transition: opacity $speed;
+    margin-top: 0.25rem;
+    right: -8px;
 
-    @include mq($tablet) {
-      opacity: 0;
+    &:hover {
+      opacity: 1;
     }
 
     button {
-      width: 40px;
-      height: 40px;
-      background-color: $brand-primary;
-      border-radius: 100%;
-      display: flex;
-      align-content: center;
-      justify-content: center;
-      border: 0px;
-      color: $white;
-      margin-bottom: 0.5rem;
-      opacity: 0.7;
-      transition: opacity $speed;
-      cursor: pointer;
-
-      &:hover {
-        opacity: 1;
-      }
+      width: 30px;
+      height: 30px;
 
       &.disabled {
         cursor: not-allowed;
         opacity: 0.7;
         background-color: $gray-lighter;
-      }
-
-      svg {
-        align-self: center;
       }
     }
   }
@@ -286,8 +272,10 @@
           background-color: $gray-light;
         }
 
-        .fa-arrow-right {
-          margin-left: 0.5rem;
+        .icon {
+          width: 20px;
+          height: 20px;
+          margin-left: 5px;
         }
       }
     }

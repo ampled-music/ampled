@@ -3,6 +3,7 @@ import './user-settings.scss';
 
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { ReactSVG } from 'react-svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -17,21 +18,18 @@ import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
 
-import {
-  faEdit,
-  faMapMarkerAlt,
-  faImage,
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  faTwitter,
-  faInstagram,
-  faStripe,
-} from '@fortawesome/free-brands-svg-icons';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { faStripe } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import tear from '../../images/background_tear.png';
-import tear_black from '../../images/background_tear_black.png';
+import tear from '../../images/backgrounds/background_tear.png';
+import tear_black from '../../images/backgrounds/background_tear_black.png';
 
-import avatar from '../../images/ampled_avatar.svg';
+import avatar from '../../images/avatars/Avatar_Blank.svg';
+
+import Edit from '../../images/icons/Icon_Edit.svg';
+import Instagram from '../../images/icons/Icon_Instagram.svg';
+import Twitter from '../../images/icons/Icon_Twitter.svg';
+import Location from '../../images/icons/Icon_Location.svg';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -545,7 +543,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return (
       <div>
         <div className="details__info_title">Promote Your Page</div>
-        <div className="row">
+        <div className="row no-gutters">
           <div className="col-6">
             <div className="details__info_title sm">Square</div>
             <div className="details__promote_container">
@@ -682,6 +680,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
               className="user-image"
             >
               <Transformation
+                fetchFormat="auto"
                 crop="fill"
                 width={120}
                 height={120}
@@ -716,7 +715,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           </div>
           {userData.city && (
             <div className="user-content__city">
-              <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} />{' '}
+              <ReactSVG className="icon icon_sm" src={Location} />
               {userData.city}
             </div>
           )}
@@ -729,13 +728,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
           )}
           {userData.twitter && (
             <div className="user-content__social">
-              <FontAwesomeIcon className="icon" icon={faTwitter} />{' '}
+              <ReactSVG className="icon icon_sm" src={Twitter} />
               {userData.twitter}
             </div>
           )}
           {userData.instagram && (
             <div className="user-content__social">
-              <FontAwesomeIcon className="icon" icon={faInstagram} />{' '}
+              <ReactSVG className="icon icon_sm" src={Instagram} />
               {userData.instagram}
             </div>
           )}
@@ -746,7 +745,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
           */}
 
           <Link to="/user-details" className="user-content__edit-profile">
-            <FontAwesomeIcon icon={faEdit} /> Edit Profile
+            <ReactSVG className="icon icon_sm" src={Edit} />
+            Edit Profile
           </Link>
           <button
             onClick={() => this.setState({ showPasswordModal: true })}
@@ -800,7 +800,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
       {this.renderPagesTitle('MY ARTIST PAGES')}
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
-          <div key={`artist-${ownedPage.artistId}`} className="artist col-sm-4">
+          <div
+            key={`artist-${ownedPage.artistId}`}
+            className="artist col-sm-6 col-md-4"
+          >
             {ownedPage.image && (
               <Image
                 publicId={this.handlePublicID(ownedPage.image)}
@@ -809,6 +812,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                 className="artist__image"
               >
                 <Transformation
+                  fetchFormat="auto"
                   crop="fill"
                   width={250}
                   height={250}
@@ -837,7 +841,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
               </p>
               <div className="details">
                 <div className="details__info">
-                  <div className="row no-gutter">
+                  <div className="row no-gutters">
                     <div className="col-6">
                       <div className="details__info_title">Supporters</div>
                       <div className="details__info_value">
@@ -851,7 +855,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       </div>
                     </div>
                   </div>
-                  <div className="row no-gutter">
+                  <div className="row no-gutters">
                     <div className="col-6">
                       <div className="details__info_title">Last Post</div>
                       <div className="details__info_value">
@@ -868,7 +872,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                 </div>
                 {ownedPage.approved && (
                   <div className="details__promote">
-                    <div className="row no-gutter">
+                    <div className="row no-gutters">
                       <div className="col-12">
                         {this.renderSocialImages(ownedPage)}
                       </div>
@@ -877,7 +881,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                 )}
                 {ownedPage.role === 'admin' && (
                   <div className="details__stripe">
-                    <div className="row no-gutter align-items-center">
+                    <div className="row no-gutters align-items-center">
                       <div className="col-4">
                         <FontAwesomeIcon
                           className="icon details__stripe_icon"
@@ -936,7 +940,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
         {this.props.userData.subscriptions.map((subscription) => (
           <div
             key={`artist-${subscription.artistPageId}`}
-            className="artist col-sm-4"
+            className="artist col-sm-6 col-md-4"
           >
             <Image
               publicId={this.handlePublicID(subscription.image)}
@@ -945,6 +949,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
               className="artist__image"
             >
               <Transformation
+                fetchFormat="auto"
                 crop="fill"
                 width={250}
                 height={250}
@@ -966,7 +971,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
               </p>
               <div className="details">
                 <div className="details__info">
-                  <div className="row no-gutter">
+                  <div className="row no-gutters">
                     <div className="col-8">
                       <div className="details__info_title">Supporting At</div>
                       <div className="details__info_value details__info_value_large">
@@ -988,7 +993,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       </button>
                     </div>
                   </div>
-                  <div className="row no-gutter">
+                  <div className="row no-gutters">
                     <div className="col-6">
                       <div className="details__info_title">Support Date</div>
                       <div className="details__info_value">
@@ -1004,7 +1009,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                   </div>
                   {subscription.artistApproved && (
                     <div className="details__promote">
-                      <div className="row no-gutter">
+                      <div className="row no-gutters">
                         <div className="col-12">
                           {this.renderSupporterShareImages(subscription)}
                         </div>

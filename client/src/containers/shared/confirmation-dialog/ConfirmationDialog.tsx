@@ -24,16 +24,31 @@ class ResponsiveDialog extends React.Component<Props, any> {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <Dialog open={this.props.open} aria-labelledby="responsive-dialog-title">
-          <DialogTitle id="responsive-dialog-title">You have unsaved changes</DialogTitle>
+        <Dialog
+          open={this.props.open}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title">
+            You have unsaved changes
+          </DialogTitle>
           <DialogContent>
-            <DialogContentText>Your changes have not been saved, if you leave now they will be lost.</DialogContentText>
+            <DialogContentText>
+              Your changes have not been saved, if you leave now they will be
+              lost.
+            </DialogContentText>
           </DialogContent>
           <DialogActions className="action-buttons">
-            <Button className="discard-button" onClick={this.props.discardChanges}>
+            <Button
+              className="discard-button"
+              onClick={this.props.discardChanges}
+            >
               Discard changes
             </Button>
-            <Button className="continue-button" onClick={this.props.closeConfirmationDialog} autoFocus>
+            <Button
+              className="continue-button"
+              onClick={this.props.closeConfirmationDialog}
+              autoFocus
+            >
               Continue editing
             </Button>
           </DialogActions>

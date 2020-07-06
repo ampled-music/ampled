@@ -1,6 +1,5 @@
 @import '../../../theme/vars.scss';
 @import '../../../theme/mixins.scss';
-@import '../../../theme/global.scss';
 
 .artistAlertHeader {
   font-family: $font-family-monospace;
@@ -583,6 +582,7 @@
 
   &__location {
     margin: 0 1rem;
+    display: flex;
   }
 
   &__social {
@@ -600,6 +600,11 @@
     &_twitter,
     &_instagram {
       margin: 0 0 0 0.5rem;
+      display: flex;
+
+      a {
+        display: flex;
+      }
 
       @include mq($layout-m) {
         margin: 0 1rem;

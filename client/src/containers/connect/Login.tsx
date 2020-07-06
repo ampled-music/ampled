@@ -15,7 +15,7 @@ import * as store from 'store';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { routePaths } from '../route-paths';
 
-import tear from '../../images/background_tear.png';
+import tear from '../../images/backgrounds/background_tear.png';
 
 import { apiAxios } from '../../api/setup-axios';
 

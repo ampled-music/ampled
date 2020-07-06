@@ -67,12 +67,13 @@ const StyleOverride = ({
         }
         .new-post button,
         .edit-page button,
-        .new-post svg,
-        .edit-page svg,
-        .post__change button,
         .artist-header__photo {
           background-color: ${accentColor};
           color: ${lightOrDark(accentColor)};
+        }
+        .new-post svg path,
+        .edit-page svg path {
+          fill: ${lightOrDark(accentColor)};
         }
         .btn.btn-read-more:hover,
         .btn.btn-support:hover,

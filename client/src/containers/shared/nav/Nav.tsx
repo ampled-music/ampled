@@ -8,11 +8,11 @@ import { openAuthModalAction } from '../../../redux/authentication/authenticatio
 import { Store } from '../../../redux/configure-store';
 
 import logo from '../../../images/ampled_logo_beta.svg';
-import avatar from '../../../images/ampled_avatar.svg';
+import avatar from '../../../images/avatars/Avatar_Blank.svg';
 import { initialState as loginInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import { routePaths } from '../../route-paths';
-import { Menu } from '../menu/Menu';
+import { MenuEx } from '../menu/Menu';
 import { UserRoles } from '../user-roles';
 import { Image, Transformation } from 'cloudinary-react';
 
@@ -105,6 +105,7 @@ class NavComponent extends React.Component<Props, any> {
           className="user-image"
         >
           <Transformation
+            fetchFormat="auto"
             crop="fill"
             width={60}
             height={60}
@@ -159,7 +160,7 @@ class NavComponent extends React.Component<Props, any> {
         <div className="menus">
           <div className="supporter-message">You are a supporter</div>
           <div className="loginLink">{this.renderNavLink()}</div>
-          <Menu renderLoginLink={this.renderLoginLink} />
+          <MenuEx renderLoginLink={this.renderLoginLink} />
         </div>
         {this.showSupportButton() && (
           <div className="stickySupport">

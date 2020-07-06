@@ -1,12 +1,12 @@
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import { Dialog } from '@material-ui/core';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Close from '../../../images/icons/Icon_Close-Cancel.svg';
 
-import tear from '../../../images/background_tear.png';
+import tear from '../../../images/backgrounds/background_tear.png';
 
 import './why-modal.scss';
 
@@ -64,13 +64,13 @@ class WhyModalComponent extends React.Component<Props, any> {
             <IconButton
               className="close-x"
               aria-label="close"
-              color="primary"
+              color="default"
               style={{
                 margin: '-10px -10px 0 0',
               }}
               onClick={(e) => this.props.onClose(e)}
             >
-              <FontAwesomeIcon icon={faTimes} />
+              <ReactSVG className="icon" src={Close} />
             </IconButton>
           </div>
         </div>

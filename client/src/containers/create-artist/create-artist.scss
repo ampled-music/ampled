@@ -103,9 +103,6 @@
     .loading-circle {
       margin: auto;
     }
-    .btn-upload {
-      background-color: $white;
-    }
     &__image {
       display: flex;
       height: 230px;
@@ -132,6 +129,10 @@
       img {
         max-width: 130px;
         display: block;
+      }
+      .btn-ampled {
+        border-width: 1px;
+        border-radius: 3px;
       }
     }
   }

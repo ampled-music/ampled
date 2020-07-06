@@ -34,7 +34,7 @@ interface AudioPlayerState {
 }
 
 class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
-  private containerRef: React.RefObject<any>
+  private containerRef: React.RefObject<any>;
 
   constructor(props) {
     super(props);
@@ -55,11 +55,11 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
 
   componentDidMount = () => {
     this.setWaveformSize();
-    window.addEventListener('resize', this.handleWindowResize)
+    window.addEventListener('resize', this.handleWindowResize);
   };
 
   componentWillUnmount = () => {
-    window.removeEventListener('resize', this.handleWindowResize)
+    window.removeEventListener('resize', this.handleWindowResize);
   };
 
   handleWindowResize = () => {
@@ -72,18 +72,14 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     let waveformSize = WaveformSize.Unknown;
     if (containerWidth <= 400) {
       waveformSize = WaveformSize.XSmall;
-    }
-    else if (containerWidth <= 500) {
+    } else if (containerWidth <= 500) {
       waveformSize = WaveformSize.Small;
-    }
-    else if (containerWidth <= 600) {
+    } else if (containerWidth <= 600) {
       waveformSize = WaveformSize.Medium;
-    }
-    else if (containerWidth <= 675) {
+    } else if (containerWidth <= 675) {
       waveformSize = WaveformSize.Large;
-    }
-    else {
-      waveformSize = WaveformSize.XLarge
+    } else {
+      waveformSize = WaveformSize.XLarge;
     }
 
     if (waveformSize !== this.state.waveformSize) {
@@ -134,8 +130,8 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
   commitSeeking = (value: number) => {
     this.player.seekTo(value);
     this.setState({
-      playedSeconds: (this.props.duration * value)
-    })
+      playedSeconds: this.props.duration * value,
+    });
   };
 
   // Progress updates state
@@ -187,7 +183,11 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
     })(IconButton);
 
     return (
-      <div className="audio-player" ref={this.containerRef} style={{ borderBottom: `2px solid ${this.props.accentColor}`}}>
+      <div
+        className="audio-player"
+        ref={this.containerRef}
+        style={{ borderBottom: `2px solid ${this.props.accentColor}` }}
+      >
         <FilePlayer
           ref={this.playerRef}
           url={url}
@@ -216,9 +216,9 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
             aria-label="Play / Pause"
           >
             {playing ? (
-              <FontAwesomeIcon icon={faPause}/>
+              <FontAwesomeIcon icon={faPause} />
             ) : (
-              <FontAwesomeIcon icon={faPlay} style={{ left: "1px" }}/>
+              <FontAwesomeIcon icon={faPlay} style={{ left: '1px' }} />
             )}
           </PlayButton>
           {this.props.download && (

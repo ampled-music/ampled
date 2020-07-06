@@ -8,35 +8,17 @@ import { logoutAction } from '../../../redux/authentication/logout';
 import { Store } from '../../../redux/configure-store';
 import * as store from 'store';
 
-import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Divider } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
+import Menu from '@material-ui/core/Menu';
 import MenuList from '@material-ui/core/MenuList';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import { withStyles } from '@material-ui/core/styles';
 
 import { config } from '../../../config';
-import menu from '../../../images/menu.svg';
+import menu from '../../../images/icons/Icon_Menu.svg';
 import { initialState as authenticationInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import { routePaths } from '../../route-paths';
 
-const styles = (theme) => ({
-  root: {
-    display: 'flex',
-  },
-  paper: {
-    marginRight: theme.spacing(2),
-  },
-  hideDesktop: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
-});
+import { ArtistSearch } from '../artist-search/ArtistSearch';
 
 interface State {
   open: boolean;
@@ -45,9 +27,6 @@ interface State {
 
 interface menuProps {
   renderLoginLink: any;
-  classes: {
-    hideDesktop: string;
-  };
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -96,7 +75,7 @@ class MenuListComposition extends React.Component<Props, State> {
   renderDefaultMenu = () => {
     return (
       <div className="menu-items">
-        <div className={this.props.classes.hideDesktop}>
+        <div className="hide-desktop">
           {!this.props.userData && this.props.renderLoginLink()}
         </div>
         <a href={config.menuUrls.createArtist}>
@@ -105,6 +84,7 @@ class MenuListComposition extends React.Component<Props, State> {
         <div className="divider" />
         <a href={config.menuUrls.blog}>Blog</a>
         <a href={config.menuUrls.about}>About us</a>
+        <ArtistSearch />
       </div>
     );
   };
@@ -113,12 +93,12 @@ class MenuListComposition extends React.Component<Props, State> {
     return (
       <div className="menu-items">
         <Link to={routePaths.settings}>
-          <FontAwesomeIcon icon={faCog} /> <b>My Profile</b>
+          <b>My Profile</b>
         </Link>
-        <Divider />
         <button className="link" onClick={this.logout}>
           Logout
         </button>
+        <ArtistSearch />
       </div>
     );
   };
@@ -137,27 +117,20 @@ class MenuListComposition extends React.Component<Props, State> {
           ref="menu"
         />
 
-        <Popper open={open} anchorEl={anchorEl} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === 'bottom' ? 'center top' : 'center bottom',
-              }}
-            >
-              <Paper className="menu-list">
-                <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList>
-                    {userData
-                      ? this.renderUserMenu()
-                      : this.renderDefaultMenu()}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+        <Menu
+          open={open}
+          anchorEl={anchorEl}
+          className="menu-box"
+          disablePortal
+        >
+          <div className="menu-list">
+            <ClickAwayListener onClickAway={this.handleClose}>
+              <MenuList>
+                {userData ? this.renderUserMenu() : this.renderDefaultMenu()}
+              </MenuList>
+            </ClickAwayListener>
+          </div>
+        </Menu>
       </div>
     );
   }
@@ -174,7 +147,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const MenuComponent = withStyles(styles)(MenuListComposition);
-const Menu = connect(mapStateToProps, mapDispatchToProps)(MenuComponent);
+const MenuComponent = MenuListComposition;
+const MenuEx = connect(mapStateToProps, mapDispatchToProps)(MenuComponent);
 
-export { Menu };
+export { MenuEx };

@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Redirect } from 'react-router-dom';
+import { ReactSVG } from 'react-svg';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -29,17 +30,17 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
-import {
-  faTwitter,
-  faInstagram,
-  faStripe,
-} from '@fortawesome/free-brands-svg-icons';
+import AddPlus from '../../images/icons/Icon_Add-Plus.svg';
+import Close from '../../images/icons/Icon_Close-Cancel.svg';
+import Instagram from '../../images/icons/Icon_Instagram.svg';
+import Twitter from '../../images/icons/Icon_Twitter.svg';
+import PhotoIcon from '../../images/icons/Icon_Photo.svg';
+
+import { faStripe } from '@fortawesome/free-brands-svg-icons';
 import ChromePicker from 'react-color/lib/Chrome';
 
 import { theme } from './theme';
 import tear from '../../images/full_page_tear.png';
-import polaroid from '../../images/polaroid.png';
 
 import { Store } from '../../redux/configure-store';
 
@@ -183,6 +184,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
               alt={altText}
             >
               <Transformation
+                fetchFormat="auto"
                 crop="fill"
                 width={130}
                 height={130}
@@ -220,18 +222,14 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
       body = (
         <>
           <div className="image-upload__image_container">
-            <img
-              className="image-upload__image_polaroid"
-              src={polaroid}
-              alt={altText}
-            />
+            <ReactSVG className="icon icon_black icon_100" src={PhotoIcon} />
           </div>
           <label
             htmlFor={`image-file-${altText}`}
             style={{ display: 'flex', justifyContent: 'center' }}
           >
             <Button
-              className="btn btn-upload"
+              className="btn btn-ampled"
               variant="outlined"
               component="span"
             >
@@ -317,11 +315,7 @@ const Members = ({
             <Card className="artist-members__card">
               <CardContent>
                 <div className="artist-members__card_add" onClick={addMember}>
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faPlusCircle}
-                    size="3x"
-                  />
+                  <ReactSVG className="icon icon_black icon_lg" src={AddPlus} />
                   <span>Add a Member</span>
                 </div>
               </CardContent>
@@ -397,13 +391,11 @@ const Member = ({
           >
             {!isMe && (
               <IconButton
-                // className="close-x"
                 aria-label="close"
                 color="primary"
-                // style={{}}
                 onClick={() => removeMember(index)}
               >
-                <FontAwesomeIcon icon={faTimes} />
+                <ReactSVG className="icon" src={Close} />
               </IconButton>
             )}
           </div>
@@ -516,7 +508,7 @@ const Member = ({
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FontAwesomeIcon className="icon" icon={faTwitter} />
+                      <ReactSVG className="icon" src={Twitter} />
                     </InputAdornment>
                   ),
                 }}
@@ -533,7 +525,7 @@ const Member = ({
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FontAwesomeIcon className="icon" icon={faInstagram} />
+                      <ReactSVG className="icon" src={Instagram} />
                     </InputAdornment>
                   ),
                 }}
@@ -1027,7 +1019,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FontAwesomeIcon className="icon" icon={faTwitter} />
+                      <ReactSVG className="icon" src={Twitter} />
                     </InputAdornment>
                   ),
                 }}
@@ -1044,7 +1036,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FontAwesomeIcon className="icon" icon={faInstagram} />
+                      <ReactSVG className="icon" src={Instagram} />
                     </InputAdornment>
                   ),
                 }}

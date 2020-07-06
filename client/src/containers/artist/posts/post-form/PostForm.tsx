@@ -5,6 +5,7 @@ import 'draft-js/dist/Draft.css';
 import cx from 'classnames';
 import * as Sentry from '@sentry/browser';
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deleteFileFromCloudinary } from '../../../../api/cloudinary/delete-image';
@@ -16,25 +17,31 @@ import { editPostAction } from '../../../../redux/posts/edit';
 import { Post } from '../../../../api/post/post';
 import { removeImageFromPost } from '../../../../api/post/edit-post';
 import { showToastAction } from '../../../../redux/toast/toast-modal';
+import { Image, Transformation } from 'cloudinary-react';
 
 import {
   Button,
-  DialogActions,
-  DialogContent,
   TextField,
   InputAdornment,
   IconButton,
   CircularProgress,
+  FormControlLabel,
+  Checkbox,
 } from '@material-ui/core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import YouTubePlayer from 'react-player/lib/players/YouTube';
 import VimeoPlayer from 'react-player/lib/players/Vimeo';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { convertFromHTML, convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
-import tear from '../../../../images/background_tear.png';
+import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
+import TextIcon from '../../../../images/icons/Icon_Text.svg';
+import AudioIcon from '../../../../images/icons/Icon_Audio.svg';
+// import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
+// import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
+import PhotoIcon from '../../../../images/icons/Icon_Photo.svg';
+import VideoIcon from '../../../../images/icons/Icon_Video.svg';
+import Speaker from '../../../../images/home/home_how_speaker.png';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
@@ -59,7 +66,7 @@ interface PostFormProps {
   close: (hasUnsavedChanges: any) => void;
   discardChanges: () => void;
   isEdit?: boolean;
-  post?: Post
+  post?: Post;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -71,6 +78,7 @@ type Props = typeof postsInitialState &
 interface RichEditorProps {
   initialTextAsHTML?: string;
   callback?: Function;
+  postType: string;
 }
 
 class RichEditor extends React.Component<RichEditorProps> {
@@ -156,84 +164,84 @@ class RichEditor extends React.Component<RichEditorProps> {
 
   render() {
     return (
-      <div
-        className="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth rich-editor-container"
-        style={{ marginTop: '20px' }}
-      >
-        <div className="rich-controls">
-          <span
-            title="Bold"
-            role="button"
-            style={{ fontWeight: 'bolder' }}
-            onMouseDown={this.onBoldClick}
-            className={this.hasInlineStyle('BOLD') ? 'active' : 'inactive'}
+      <div className="post-form__description">
+        <div className="rich-editor-container">
+          <div
+            className={`MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline rich-editor 
+            ${this.state.focused ? 'focused' : ' '}
+            ${this.props.postType === 'Text' && 'large'}`}
+            onClick={this.focusEditor}
           >
-            b
-          </span>
-          <span
-            title="Italic"
-            role="button"
-            style={{ fontStyle: 'italic' }}
-            onMouseDown={this.onItalicClick}
-            className={this.hasInlineStyle('ITALIC') ? 'active' : 'inactive'}
-          >
-            i
-          </span>
-          <span
-            title="Bullets"
-            role="button"
-            style={{}}
-            onMouseDown={this.onBulletsClick}
-            className={
-              this.hasBlockStyle('unordered-list-item') ? 'active' : 'inactive'
-            }
-          >
-            &#x2022;
-          </span>
-          <span className="helper-text">
-            Hyperlinks enabled{' '}
-            <span
-              style={{
-                cursor: 'pointer',
-                textDecoration: 'underline',
+            <Editor
+              placeholder="Body Text"
+              textAlignment="left"
+              ref={this.setEditor}
+              editorState={this.state.editorState}
+              handleKeyCommand={this.handleKeyCommand}
+              onChange={this.onChange}
+              onFocus={() => {
+                this.setState({ focused: true });
               }}
-              onClick={this.toggleHyperlinkHelp}
-              onMouseOver={() => this.setHyperlinkHelp(true)}
-              onMouseOut={() => this.setHyperlinkHelp(false)}
+              onBlur={() => {
+                this.setState({ focused: false });
+              }}
+            />
+          </div>
+          <div className="rich-controls">
+            <span
+              title="Bold"
+              role="button"
+              style={{ fontWeight: 'bolder' }}
+              onMouseDown={this.onBoldClick}
+              className={this.hasInlineStyle('BOLD') ? 'active' : 'inactive'}
             >
-              [?]
+              b
             </span>
-            {this.state.showHyperlinkHelp ? (
-              <div className="additional">
-                Any URLs you include in your post will automatically be made
-                clickable when the post is published.
-              </div>
-            ) : (
-              ''
-            )}
+            <span
+              title="Italic"
+              role="button"
+              style={{ fontStyle: 'italic' }}
+              onMouseDown={this.onItalicClick}
+              className={this.hasInlineStyle('ITALIC') ? 'active' : 'inactive'}
+            >
+              i
+            </span>
+            <span
+              title="Bullets"
+              role="button"
+              onMouseDown={this.onBulletsClick}
+              className={
+                this.hasBlockStyle('unordered-list-item')
+                  ? 'active'
+                  : 'inactive'
+              }
+            >
+              &#x2022;
+            </span>
+          </div>
+        </div>
+        <span className="helper-text">
+          Hyperlinks enabled{' '}
+          <span
+            style={{
+              cursor: 'pointer',
+              textDecoration: 'underline',
+            }}
+            onClick={this.toggleHyperlinkHelp}
+            onMouseOver={() => this.setHyperlinkHelp(true)}
+            onMouseOut={() => this.setHyperlinkHelp(false)}
+          >
+            [?]
           </span>
-        </div>
-        <div
-          className={`MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline rich-editor${
-            this.state.focused ? ' focused' : ''
-          }`}
-          onClick={this.focusEditor}
-        >
-          <Editor
-            placeholder="Text (3000 character limit)"
-            textAlignment="left"
-            ref={this.setEditor}
-            editorState={this.state.editorState}
-            handleKeyCommand={this.handleKeyCommand}
-            onChange={this.onChange}
-            onFocus={() => {
-              this.setState({ focused: true });
-            }}
-            onBlur={() => {
-              this.setState({ focused: false });
-            }}
-          />
-        </div>
+          {this.state.showHyperlinkHelp ? (
+            <div className="additional">
+              Any URLs you include in your post will automatically be made
+              clickable when the post is published.
+            </div>
+          ) : (
+            ''
+          )}
+        </span>
       </div>
     );
   }
@@ -243,6 +251,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
   initialState = {
     title: '',
     body: '',
+    link: null,
     audioUploads: [],
     imageName: '',
     videoEmbedUrl: null,
@@ -256,7 +265,12 @@ export default class PostFormComponent extends React.Component<Props, any> {
     hasUnsavedChanges: false,
     loadingImage: false,
     savingPost: false,
-    showVideoEmbedField: false,
+    activePostType: '',
+    showText: false,
+    showAudio: false,
+    showVideo: false,
+    showImage: false,
+    showLink: false,
   };
 
   editor: any;
@@ -264,6 +278,23 @@ export default class PostFormComponent extends React.Component<Props, any> {
   constructor(props) {
     super(props);
     if (props.post) {
+      const { post } = props;
+      let activePostType, showText, showAudio, showVideo, showImage;
+      if (post.audio_file) {
+        activePostType = 'Audio';
+        showAudio = true;
+        showImage = true;
+      } else if (post.images && post.images.length > 0) {
+        activePostType = 'Photo';
+        showImage = true;
+      } else if (post.video_embed_url) {
+        activePostType = 'Video';
+        showVideo = true;
+      } else {
+        activePostType = 'Text';
+        showText = true;
+      }
+
       this.state = {
         ...this.initialState,
         ...props.post,
@@ -271,7 +302,12 @@ export default class PostFormComponent extends React.Component<Props, any> {
         images: props.post.images,
         videoEmbedUrl: props.post.video_embed_url,
         isPublic: !props.post.is_private,
-        showVideoEmbedField: props.post.has_video_embed,
+        allowDownload: props.post.allow_download,
+        activePostType,
+        showText,
+        showAudio,
+        showVideo,
+        showImage,
       };
     } else {
       this.state = this.initialState;
@@ -287,7 +323,11 @@ export default class PostFormComponent extends React.Component<Props, any> {
 
   componentDidUpdate(prevProps) {
     // When update or create is complete, refetch artist / post data
-    if (this.state.savingPost && prevProps.creatingPost && !this.props.creatingPost) {
+    if (
+      this.state.savingPost &&
+      prevProps.creatingPost &&
+      !this.props.creatingPost
+    ) {
       // TODO (Optimization/609):
       //    * instead of waiting for server response to show card, lazy load the new/updated card
       //    * instead of making a separate GET request to load the new data, have the PUT or POST request return the data
@@ -305,8 +345,10 @@ export default class PostFormComponent extends React.Component<Props, any> {
     event.preventDefault();
 
     const {
+      activePostType,
       title,
       body,
+      link,
       audioUploads,
       images,
       videoEmbedUrl,
@@ -320,12 +362,13 @@ export default class PostFormComponent extends React.Component<Props, any> {
     const post = {
       title,
       body,
+      link,
       audio_uploads: audioUploads,
-      images: images,
-      video_embed_url: videoEmbedUrl,
+      images: ['Audio', 'Photo'].includes(activePostType) ? images : [],
+      video_embed_url: activePostType === 'Video' ? videoEmbedUrl : null,
       is_private: !isPublic,
       is_pinned: isPinned,
-      allow_download: allowDownload,
+      allow_download: activePostType === 'Audio' ? allowDownload : null,
       artist_page_id: this.props.artist.id,
       id: this.state.id,
     };
@@ -388,18 +431,18 @@ export default class PostFormComponent extends React.Component<Props, any> {
     const cloudinaryResponse = await uploadFileToCloudinary(imageFile);
 
     if (cloudinaryResponse) {
-      this.setState(state => {
+      this.setState((state) => {
         const newImageList = state.images.concat({
-            url: cloudinaryResponse.secure_url,
-            public_id: cloudinaryResponse.public_id,
-        })
+          url: cloudinaryResponse.secure_url,
+          public_id: cloudinaryResponse.public_id,
+        });
         return {
           images: newImageList,
           deleteToken: cloudinaryResponse.delete_token,
           hasUnsavedChanges: true,
           loadingImage: false,
           imageName: imageFile.name,
-        }
+        };
       });
     } else {
       this.setState({
@@ -468,7 +511,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
     return (
       title &&
       title.length > 0 &&
-      ((audioUploads && 
+      ((audioUploads &&
         audioUploads.length > 0 &&
         audioUploads[0].public_id.length > 0) ||
         (images && images.length > 0) ||
@@ -477,9 +520,101 @@ export default class PostFormComponent extends React.Component<Props, any> {
     );
   };
 
+  renderButtons = () => {
+    return (
+      <div className="post-form__controls">
+        <Button
+          className={cx('btn', {
+            active: this.state.activePostType === 'Text',
+          })}
+          onClick={() =>
+            this.setState({
+              activePostType: 'Text',
+              showAudio: false,
+              showVideo: false,
+              showImage: false,
+              showLink: false,
+            })
+          }
+        >
+          <img src={TextIcon} className="btn__icon" alt="" />
+          Text
+        </Button>
+        <Button
+          className={cx('btn', {
+            active: this.state.activePostType === 'Audio',
+          })}
+          onClick={() =>
+            this.setState({
+              activePostType: 'Audio',
+              showAudio: true,
+              showVideo: false,
+              showImage: true,
+              showLink: false,
+            })
+          }
+        >
+          <img src={AudioIcon} className="btn__icon" alt="" />
+          Audio
+        </Button>
+        <Button
+          className={cx('btn', {
+            active: this.state.activePostType === 'Video',
+          })}
+          onClick={() =>
+            this.setState({
+              activePostType: 'Video',
+              showAudio: false,
+              showVideo: true,
+              showImage: false,
+              showLink: false,
+            })
+          }
+        >
+          <img src={VideoIcon} className="btn__icon" alt="" />
+          Video
+        </Button>
+        <Button
+          className={cx('btn', {
+            active: this.state.activePostType === 'Photo',
+          })}
+          onClick={() =>
+            this.setState({
+              activePostType: 'Photo',
+              showAudio: false,
+              showVideo: false,
+              showImage: true,
+              showLink: false,
+            })
+          }
+        >
+          <img src={PhotoIcon} className="btn__icon" alt="" />
+          Photo
+        </Button>
+        {/* <Button
+          className={cx('btn', {
+            active: this.state.activePostType === 'Link',
+          })}
+          onClick={() =>
+            this.setState({
+              activePostType: 'Link',
+              showAudio: false,
+              showVideo: false,
+              showImage: false,
+              showLink: true,
+            })
+          }
+        >
+          <img src={Link2Icon} className="btn__icon" alt=""/>
+          Link
+        </Button> */}
+      </div>
+    );
+  };
+
   renderUploader(): React.ReactNode {
     return (
-      <div className="uploader" style={{ width: '45%' }}>
+      <div className="uploader">
         {this.state.loadingImage ? (
           <CircularProgress />
         ) : (
@@ -489,42 +624,61 @@ export default class PostFormComponent extends React.Component<Props, any> {
     );
   }
 
-  renderPreview(): React.ReactNode {
+  renderImagePreview(): React.ReactNode {
     return (
-      <div className="post-image">
-        <div className="preview">
-          <img
-            className="preview__image"
-            src={this.state.images[0].url}
-            alt="Preview"
+      <div className="uploader">
+        <Image
+          className="preview__image"
+          key={this.state.images[0].name}
+          publicId={this.state.images[0].public_id}
+          alt={this.state.images[0].name}
+        >
+          <Transformation
+            fetchFormat="auto"
+            crop="fill"
+            width={500}
+            height={150}
+            responsive_placeholder="blank"
           />
-          <span className="preview__name">{this.state.imageName}</span>
-        </div>
-        <div className="file-actions">
-          <span
-            className="remove-button"
-            title="Remove image"
-            onClick={this.removeImage}
-          >
-            Remove
-          </span>
-          <label htmlFor="image-file">
-            <span className="replace-button" title="Change image">
-              Replace
-            </span>
-          </label>
-        </div>
+        </Image>
+        <div className="helper-text">(Preview)</div>
+        <IconButton
+          aria-label="Cancel image input"
+          className="cancel-button"
+          title="Remove image"
+          onClick={this.removeImage}
+          size="small"
+        >
+          <ReactSVG className="icon" src={Close} />
+        </IconButton>
       </div>
     );
   }
 
   renderUploadButton(): React.ReactNode {
     return (
-      <label htmlFor="image-file">
-        <Button className="btn btn-ampled image-button" component="span">
-          Add Image
-        </Button>
-      </label>
+      <div className="post-form__image_upload">
+        <input
+          id="image-file"
+          type="file"
+          aria-label="Image file"
+          style={{ display: 'none' }}
+          accept="image/*"
+          onChange={this.processImage}
+        />
+        <label htmlFor="image-file">
+          <Button className="btn" component="span">
+            <img
+              className="btn__icon"
+              src={PhotoIcon}
+              height={25}
+              width={25}
+              alt="Camera Icon"
+            />
+            Add Photo
+          </Button>
+        </label>
+      </div>
     );
   }
 
@@ -542,38 +696,37 @@ export default class PostFormComponent extends React.Component<Props, any> {
             </div>
 
             <div className="file-actions">
-              <span
-                className="remove-button"
+              <IconButton
+                aria-label="Cancel audio input"
+                className="cancel-button"
                 title="Remove audio"
                 onClick={() => this.setAudioUpload(null, null)}
+                size="small"
               >
-                Remove
-              </span>
-              {/* <label htmlFor="audio-file">
-                <span className="replace-button" title="Change audio">
-                  Replace
-                </span>
-              </label> */}
+                <ReactSVG className="icon" src={Close} />
+              </IconButton>
             </div>
           </div>
         </div>
+
+        {audioUpload && (
+          <div className="post-form__audio_allow-checkbox">
+            <FormControlLabel
+              className="alow-download-label"
+              control={
+                <Checkbox
+                  onChange={this.handleAllowDownloadChange}
+                  checked={this.state.allowDownload}
+                  color="default"
+                />
+              }
+              label="Enable Download"
+            />
+          </div>
+        )}
       </div>
     );
   }
-
-  renderVideoToggle = () => {
-    return (
-      <div className="uploader" style={{ width: '45%' }}>
-        <Button
-          className="btn btn-ampled image-button"
-          component="span"
-          onClick={() => this.setState({ showVideoEmbedField: true })}
-        >
-          Add Video
-        </Button>
-      </div>
-    );
-  };
 
   renderVideoPreview = () => {
     const { videoEmbedUrl } = this.state;
@@ -597,269 +750,307 @@ export default class PostFormComponent extends React.Component<Props, any> {
       VideoComponent = YouTubePlayer;
     }
 
-    if (!isValidVideo) {
+    if (isValidVideo) {
       return (
         <div className="uploader">
-          <span
-            style={{
-              fontFamily: '"Courier", Courier, monospace',
-              fontSize: '0.8rem',
-            }}
+          <VideoComponent
+            className="react-player"
+            url={videoEmbedUrl}
+            width="100%"
+            height="100%"
+          />
+          <IconButton
+            aria-label="Cancel video input"
+            className="cancel-button"
+            onClick={() =>
+              this.setState({
+                videoEmbedUrl: null,
+              })
+            }
+            size="small"
           >
-            No supported video detected.
-          </span>
+            <ReactSVG className="icon" src={Close} />
+          </IconButton>
         </div>
       );
+    } else if (!isValidVideo) {
+      return <div className="helper-text">No supported video detected.</div>;
     }
-    return (
-      <div className="uploader">
-        <VideoComponent
-          className="react-player"
-          url={videoEmbedUrl}
-          width="100%"
-          height="100%"
-        />
-      </div>
-    );
   };
 
   renderVideoEmbedder = () => {
     const { videoEmbedUrl } = this.state;
 
     return (
-      <>
-        <div className="uploader" style={{ display: 'block' }}>
-          <TextField
-            autoFocus
-            name="videoEmbedUrl"
-            placeholder="YouTube or Vimeo URL"
-            type="text"
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            value={videoEmbedUrl || ''}
-            onChange={this.handleChange}
-            required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="Toggle video input"
-                    onClick={() =>
-                      this.setState({
-                        showVideoEmbedField: false,
-                        videoEmbedUrl: null,
-                      })
-                    }
-                  >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          {this.renderVideoPreview()}
-        </div>
-      </>
+      <div className="post-form__video">
+        <TextField
+          name="videoEmbedUrl"
+          placeholder="YouTube or Vimeo URL"
+          type="text"
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={videoEmbedUrl ? videoEmbedUrl : ''}
+          onChange={this.handleChange}
+          required
+          InputProps={{
+            endAdornment: !(videoEmbedUrl && videoEmbedUrl.length > 0) ? (
+              <InputAdornment position="end">
+                <span
+                  style={{
+                    color: 'rgba(0, 0, 0, 0.42)',
+                    fontSize: '0.8rem',
+                  }}
+                >
+                  (required)
+                </span>
+              </InputAdornment>
+            ) : (
+              undefined
+            ),
+          }}
+        />
+        {videoEmbedUrl && this.renderVideoPreview()}
+      </div>
     );
   };
 
-  renderVisualUpload = () => {
-    const { images, videoEmbedUrl, showVideoEmbedField } = this.state;
+  renderImageUpload = () => {
+    const { images } = this.state;
     return (
       <div className="post-form__image">
-        <input
-          style={{ display: 'none' }}
-          id="image-file"
-          type="file"
-          aria-label="Image file"
-          accept="image/*"
-          onChange={this.processImage}
+        {!images.length && this.renderUploader()}
+        {images.length > 0 ? this.renderImagePreview() : ''}
+      </div>
+    );
+  };
+
+  renderTitle = () => {
+    const { title } = this.state;
+    return (
+      <TextField
+        autoFocus
+        name="title"
+        placeholder="Post title"
+        type="text"
+        fullWidth
+        InputLabelProps={{
+          shrink: true,
+        }}
+        value={title}
+        onFocus={() => this.editor && this.editor.setHyperlinkHelp(false)}
+        onChange={this.handleChange}
+        className="post-form__title"
+        required
+        InputProps={{
+          endAdornment: !(title && title.length > 0) ? (
+            <InputAdornment position="end">
+              <span
+                style={{
+                  color: 'rgba(0, 0, 0, 0.42)',
+                  fontSize: '0.8rem',
+                }}
+              >
+                (required)
+              </span>
+            </InputAdornment>
+          ) : (
+            undefined
+          ),
+        }}
+      />
+    );
+  };
+
+  renderDescription = () => {
+    const { body, activePostType } = this.state;
+    return (
+      <RichEditor
+        ref={(editor) => (this.editor = editor)}
+        initialTextAsHTML={body}
+        callback={(body) =>
+          this.setState({
+            body: DOMPurify.sanitize(body, {
+              ALLOWED_TAGS: ['p', 'em', 'strong', 'br', 'ul', 'ol', 'li'],
+            }),
+          })
+        }
+        postType={activePostType}
+      />
+    );
+  };
+
+  renderAudio = () => {
+    const { audioUploads } = this.state;
+    return (
+      <div>
+        <Upload
+          onComplete={this.setAudioUpload}
+          onRemove={() => this.setAudioUpload(null, null)}
         />
-        {!images.length && !videoEmbedUrl && !showVideoEmbedField ? (
-          <>
-            {this.renderUploader()}
-            {this.renderVideoToggle()}
-          </>
-        ) : (
-          ''
+        {audioUploads.length > 0 && (
+          <div className="post-form__audio_allow-checkbox">
+            <FormControlLabel
+              className="alow-download-label"
+              control={
+                <Checkbox
+                  onChange={this.handleAllowDownloadChange}
+                  checked={this.state.allowDownload}
+                  color="default"
+                />
+              }
+              label="Enable Download"
+            />
+          </div>
         )}
-        {!images.length && showVideoEmbedField
-          ? this.renderVideoEmbedder()
-          : ''}
-        {images.length > 0 ? this.renderPreview() : ''}
+      </div>
+    );
+  };
+
+  renderLink = () => {
+    const { link } = this.state;
+    return (
+      <TextField
+        name="link"
+        placeholder="Type or Paste a URL"
+        type="text"
+        fullWidth
+        InputLabelProps={{
+          shrink: true,
+        }}
+        value={link}
+        onFocus={() => this.editor && this.editor.setHyperlinkHelp(false)}
+        onChange={this.handleChange}
+        className="post-form__link"
+        required
+        InputProps={{
+          endAdornment: !(link && link.length > 0) ? (
+            <InputAdornment position="end">
+              <span
+                style={{
+                  color: 'rgba(0, 0, 0, 0.42)',
+                  fontSize: '0.8rem',
+                }}
+              >
+                (required)
+              </span>
+            </InputAdornment>
+          ) : (
+            undefined
+          ),
+        }}
+      />
+    );
+  };
+
+  renderEmptyType = () => {
+    const { hasUnsavedChanges } = this.state;
+    return (
+      <div className="post-form__empty">
+        <img className="post-form__empty_image" src={Speaker} alt="Speaker" />
+        <div className="post-form__empty_copy">
+          <div>Not sure what to post?</div>
+          <div>
+            <a
+              href="http://app.ampled.com/what-to-post"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Here
+            </a>{' '}
+            are some ideas.
+          </div>
+          <Button
+            className="post-form__empty_cancel"
+            onClick={() => this.props.close(hasUnsavedChanges)}
+          >
+            Cancel
+          </Button>
+        </div>
       </div>
     );
   };
 
   render() {
-    const { hasUnsavedChanges, title, body, audioUploads, savingPost } = this.state;
-    const { isEdit } = this.props;
+    const { hasUnsavedChanges, savingPost } = this.state;
     const {
+      isEdit,
       artist: { isStripeSetup },
     } = this.props;
 
     const isSaveEnabled = this.isSaveEnabled();
 
-    if (savingPost) return <Loading artistLoading={true}/>
+    if (savingPost) return <Loading artistLoading={true} />;
 
     return (
       <div className="post-form__container">
-        <img className="tear tear__topper" src={tear} alt="" />
         <div className="post-form">
-          <DialogContent>
-            <h4>{isEdit ? 'EDIT POST' : 'NEW POST'}</h4>
-            <form onSubmit={this.handleSubmit}>
-              <div className="post-form__description">
-                <TextField
-                  autoFocus
-                  name="title"
-                  placeholder="Post title"
-                  type="text"
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={title}
-                  onFocus={() =>
-                    this.editor && this.editor.setHyperlinkHelp(false)
-                  }
-                  onChange={this.handleChange}
-                  required
-                  InputProps={{
-                    endAdornment: !(title && title.length > 0) ? (
-                      <InputAdornment position="end">
-                        <span
-                          style={{
-                            color: 'rgba(0, 0, 0, 0.42)',
-                            fontSize: '0.8rem',
-                          }}
-                        >
-                          (required)
-                        </span>
-                      </InputAdornment>
-                    ) : (
-                      undefined
-                    ),
-                  }}
-                />
-                <RichEditor
-                  ref={(editor) => (this.editor = editor)}
-                  initialTextAsHTML={body}
-                  callback={(body) =>
-                    this.setState({
-                      body: DOMPurify.sanitize(body, {
-                        ALLOWED_TAGS: [
-                          'p',
-                          'em',
-                          'strong',
-                          'br',
-                          'ul',
-                          'ol',
-                          'li',
-                        ],
-                      }),
-                    })
-                  }
-                />
-              </div>
+          <h4>{isEdit ? 'Edit Post' : 'Create a new post'}</h4>
+          {this.renderButtons()}
+          <form onSubmit={this.handleSubmit}>
+            {this.state.showAudio && (
               <div className="post-form__audio">
                 {isEdit &&
                 this.props.post &&
                 this.props.post.audio_uploads.length > 0 &&
                 this.state.audioUploads.length > 0 &&
                 this.state.audio_uploads[0].id &&
-                this.state.audioUploads[0].id ===
-                  this.state.audio_uploads[0].id ? (
-                  this.renderExistingAudio()
-                ) : (
-                  <Upload 
-                    onComplete={this.setAudioUpload} 
-                    onRemove={() => this.setAudioUpload(null, null)}
-                  />
-                )}
+                this.state.audioUploads[0].id === this.state.audio_uploads[0].id
+                  ? this.renderExistingAudio()
+                  : this.renderAudio()}
               </div>
-              {this.renderVisualUpload()}
-              <div className="post-form__checkboxes">
-                <div className="row justify-content-between">
-                  <div className="col-auto">
-                    <label className="make-public-label" htmlFor="make-public">
-                      <input
-                        aria-label="Make public"
-                        name="make-public"
-                        id="make-public"
-                        type="checkbox"
+            )}
+
+            {this.state.activePostType ? (
+              <div>
+                {this.state.showImage && this.renderImageUpload()}
+                {this.renderTitle()}
+                {this.state.showVideo && this.renderVideoEmbedder()}
+                {this.state.showLink && this.renderLink()}
+                {this.renderDescription()}
+                <div className="post-form__public">
+                  <FormControlLabel
+                    className="make-public-label"
+                    control={
+                      <Checkbox
                         onChange={this.handleMakePublicChange}
                         checked={this.state.isPublic}
+                        color="default"
                       />
-                      Make public
-                    </label>
-                  </div>
-
-                  {audioUploads.length > 0 && (
-                    <div className="col-auto">
-                      <label
-                        className="make-public-label"
-                        htmlFor="allow-download"
-                      >
-                        <input
-                          aria-label="Allow download"
-                          name="allowDownload"
-                          id="allow-download"
-                          type="checkbox"
-                          onChange={this.handleAllowDownloadChange}
-                          checked={this.state.allowDownload}
-                        />
-                        Allow download
-                      </label>
-                    </div>
+                    }
+                    label="Make Public"
+                  />
+                  {!isStripeSetup && (
+                    <small>
+                      You need to set up your payout destination to make private
+                      posts.
+                    </small>
                   )}
-                  <div className="col-auto">
-                    {/* <label className="pin-post-label" htmlFor="pin-post">
-                      <input
-                        name="pin-post"
-                        id="pin-post"
-                        type="checkbox"
-                        aria-label="Pin post"
-                      // onChange={this.state.isPinned}
-                      // checked={this.state.isPinned}
-                      />
-                      Pin post
-                    </label> */}
-                  </div>
                 </div>
-                {!isStripeSetup && (
-                  <small>
-                    <br />
-                    You need to set up your payout destination to make private
-                    posts.
-                  </small>
-                )}
-              </div>
 
-              <div className="post-form__actions">
-                <DialogActions className="action-buttons">
+                <div className="post-form__actions">
                   <Button
                     className="cancel-button"
-                    style={{ textAlign: 'left' }}
                     onClick={() => this.props.close(hasUnsavedChanges)}
                   >
-                    Cancel
+                    <ReactSVG className="icon" src={Close} />
                   </Button>
                   <Button
                     type="submit"
-                    className={cx('post-button finished-button', {
+                    className={cx('publish-button', {
                       disabled: !isSaveEnabled,
                     })}
                     disabled={!isSaveEnabled}
                   >
-                    Finished
+                    Publish Post
                   </Button>
-                </DialogActions>
+                </div>
               </div>
-            </form>
-          </DialogContent>
+            ) : (
+              <div>{this.renderEmptyType()}</div>
+            )}
+          </form>
         </div>
       </div>
     );

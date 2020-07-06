@@ -10,7 +10,7 @@ import {
 } from '../../redux/authentication/authentication-modal';
 import { showToastAction } from '../../redux/toast/toast-modal';
 
-import tear from '../../images/background_tear.png';
+import tear from '../../images/backgrounds/background_tear.png';
 
 import { apiAxios } from '../../api/setup-axios';
 

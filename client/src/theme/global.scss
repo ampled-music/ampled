@@ -1,3 +1,6 @@
+@import 'vars.scss';
+@import 'mixins.scss';
+
 .container {
   max-width: 1140px;
 }
@@ -125,7 +128,7 @@ h6 {
     }
   }
 
-  .post-button,
+  .publish-button,
   .continue-button,
   .add-media,
   .delete-button,
@@ -133,7 +136,7 @@ h6 {
     color: $black;
     background-color: $white;
     border-radius: 0px;
-    border: 2px solid $black;
+    border: 1px solid $black;
     padding: 8px 20px;
     margin-left: 25px;
     letter-spacing: 0.7px;
@@ -155,6 +158,11 @@ h6 {
         margin: auto;
       }
     }
+    &.disabled {
+      border-color: $gray-light;
+      color: $gray;
+      background-color: $white;
+    }
   }
 
   .add-media {
@@ -165,6 +173,57 @@ h6 {
 
   .disabled {
     border: 1px solid $gray-light;
+  }
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+
+  &_sm {
+    width: 20px;
+    height: 20px;
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  &_lg {
+    width: 50px;
+    height: 50px;
+    svg {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  &_100 {
+    width: 100%;
+    height: 100%;
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &_white {
+    svg {
+      fill: $white;
+      path {
+        fill: $white;
+      }
+    }
+  }
+  &_black {
+    svg {
+      fill: $black;
+      path {
+        fill: $black;
+      }
+    }
+  }
+
+  div:first-child {
+    font-size: 0px;
   }
 }
 
@@ -197,7 +256,7 @@ h6 {
 }
 
 .bg-texture {
-  background-image: url('../images/background_texture.png');
+  background-image: url('../images/backgrounds/background_texture.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
@@ -211,7 +270,7 @@ h6 {
   }
 
   &__flip {
-    background-image: url('../images/background_texture_flip.png');
+    background-image: url('../images/backgrounds/background_texture_flip.png');
   }
 
   &__absolute {
@@ -318,8 +377,8 @@ h6 {
 .fullscreen-close,
 .close-x {
   position: absolute !important;
-  right: 1rem;
-  top: 1rem;
+  right: 0.5rem;
+  top: 0.5rem;
   height: 50px;
   width: 50px;
 }
@@ -331,5 +390,12 @@ h6 {
   }
   input {
     border-radius: 0px;
+  }
+}
+
+.post-modal {
+  .MuiPaper-root {
+    background: transparent;
+    align-self: self-start;
   }
 }

@@ -7,12 +7,14 @@ import { Link, withRouter } from 'react-router-dom';
 import { routePaths } from '../../../route-paths';
 import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
+import { ReactSVG } from 'react-svg';
 
-import avatar from '../../../../images/ampled_avatar.svg';
-import tear from '../../../../images/background_tear.png';
-import { faUnlock, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CardActions, Collapse } from '@material-ui/core';
+import avatar from '../../../../images/avatars/Avatar_Blank.svg';
+import tear from '../../../../images/backgrounds/background_tear.png';
+import Edit from '../../../../images/icons/Icon_Edit.svg';
+import Remove from '../../../../images/icons/Icon_Remove-Delete.svg';
+import Unlock from '../../../../images/icons/Icon_Lock.svg';
+import { Button, IconButton, CardActions, Collapse } from '@material-ui/core';
 import { Modal } from '../../../shared/modal/Modal';
 import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
 import YouTubePlayer from 'react-player/lib/players/YouTube';
@@ -61,11 +63,7 @@ const canLoggedUserDeleteComment = (
   );
 };
 
-const PostTitle = ({
-  artistSlug,
-  postId,
-  title
-}) => (
+const PostTitle = ({ artistSlug, postId, title }) => (
   <div className="post__title">
     <Link
       style={{ textDecoration: 'none' }}
@@ -126,14 +124,14 @@ const Comments = ({
             ))}
           </Collapse>
           <CardActions className={cx('collapse-actions')} disableSpacing>
-            <button
+            <Button
               className="show-previous-command-btn"
               onClick={handleExpandClick}
             >
               <b>
                 {expanded ? 'Hide Previous Comments' : 'View Previous Comments'}
               </b>
-            </button>
+            </Button>
           </CardActions>
         </div>
       )}
@@ -147,7 +145,7 @@ const Comments = ({
             fontSize: '13px',
           }}
         >
-          <button
+          <Button
             onClick={() => handlePrivatePostAction(authenticated)}
             style={{
               textDecoration: 'underline',
@@ -158,7 +156,7 @@ const Comments = ({
             }}
           >
             {authenticated ? 'Support' : 'Log in'}
-          </button>{' '}
+          </Button>{' '}
           to comment
         </div>
       )}
@@ -251,7 +249,7 @@ const PostMedia = ({
             />
           )}
         </div>
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
       </>
     )}
 
@@ -286,7 +284,7 @@ const PostMedia = ({
           )}
         </div>
 
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
 
         {allowDetails && (
           <AudioPlayer
@@ -323,7 +321,7 @@ const PostMedia = ({
             }
           </div>
         )}
-        <PostTitle artistSlug={artistSlug} postId={id} title={title}/>
+        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
       </>
     )}
   </>
@@ -354,12 +352,12 @@ const Lock = ({ isLapsed = false, me, handlePrivatePostClick }) => {
             Update Payment Details
           </Link>
         ) : (
-          <button
+          <Button
             className="btn btn-ampled"
             onClick={() => handlePrivatePostClick(authenticated)}
           >
             Support To Unlock
-          </button>
+          </Button>
         )}
       </div>
     </div>
@@ -380,12 +378,12 @@ const DeleteModal = ({ onCancel, onConfirm }) => (
         <h4>Are you sure?</h4>
       </div>
       <div className="delete-post-modal__actions action-buttons">
-        <button className="cancel-button" onClick={onCancel}>
+        <Button className="cancel-button" onClick={onCancel}>
           Cancel
-        </button>
-        <button className="delete-button" onClick={onConfirm}>
+        </Button>
+        <Button className="delete-button" onClick={onConfirm}>
           Delete Post
-        </button>
+        </Button>
       </div>
     </div>
   </div>
@@ -572,6 +570,8 @@ class PostComponent extends React.Component<any, any> {
         <Modal
           open={this.state.showEditPostModal}
           onClose={this.closeEditPostModal}
+          className="post-modal"
+          disableBackdropClick={true}
         >
           <PostForm
             close={this.closeEditPostModal}
@@ -623,13 +623,36 @@ class PostComponent extends React.Component<any, any> {
                     {post.created_ago} ago
                   </Link>
                 )}
+
+                {canLoggedUserEditPost && (
+                  <div className="post__change">
+                    <IconButton
+                      className="post__change_edit"
+                      onClick={this.openEditPostModal}
+                    >
+                      <ReactSVG
+                        className="icon icon_black icon_sm"
+                        src={Edit}
+                      />
+                    </IconButton>
+                    <IconButton
+                      className="post__change_delete"
+                      onClick={this.openDeletePostModal}
+                    >
+                      <ReactSVG
+                        className="icon icon_black icon_sm"
+                        src={Remove}
+                      />
+                    </IconButton>
+                  </div>
+                )}
               </div>
             </div>
 
             {canLoggedUserPost &&
               (isPrivate ? (
                 <div className="post__status">
-                  <FontAwesomeIcon className="unlock" icon={faUnlock} />
+                  <ReactSVG className="icon icon_white" src={Unlock} />
                   Supporters Only
                 </div>
               ) : (
@@ -638,23 +661,8 @@ class PostComponent extends React.Component<any, any> {
 
             {isUserSubscribed && !canLoggedUserPost && isPrivate && (
               <div className="post__status">
-                <FontAwesomeIcon className="unlock" icon={faUnlock} />
+                <ReactSVG className="icon icon_white" src={Unlock} />
                 Supporters Only
-              </div>
-            )}
-
-            {canLoggedUserEditPost && (
-              <div className="post__change">
-                <div className="post__change_edit">
-                  <button onClick={this.openEditPostModal}>
-                    <FontAwesomeIcon icon={faPen} />
-                  </button>
-                </div>
-                <div className="post__change_delete">
-                  <button onClick={this.openDeletePostModal}>
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
-                </div>
               </div>
             )}
 

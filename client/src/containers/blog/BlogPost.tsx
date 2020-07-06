@@ -13,8 +13,8 @@ interface PostProps {
 
 class BlogPost extends React.Component<PostProps, any> {
   state = {
-    content: '',
     title: '',
+    content: '',
     excerpt: '',
     loading: true,
   };
@@ -27,19 +27,17 @@ class BlogPost extends React.Component<PostProps, any> {
     this.setState({ loading: true });
     const { data } = await apiAxios({
       method: 'get',
-      url: `http://cms.ampled.com/wp-json/wp/v2/post/`,
+      url: `http://cms.ampled.com/wp-json/wp/v2/posts?slug=${this.props.match.params.slug}`,
     });
 
-    data.map(
-      (post) =>
-        post.slug === this.props.match.params.slug &&
-        this.setState({
-          loading: false,
-          title: post.title.rendered,
-          content: post.content.rendered,
-          excerpt: post.excerpt.rendered,
-        }),
-    );
+    if (data[0].slug === this.props.match.params.slug) {
+      this.setState({
+        loading: false,
+        title: data[0].title.rendered,
+        content: data[0].content.rendered,
+        excerpt: data[0].excerpt.rendered,
+      });
+    }
   };
 
   render() {

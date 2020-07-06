@@ -41,12 +41,16 @@ class Feed extends React.Component<any> {
   };
 
   loadData = async (page) => {
-    this.setState({ loading: true });
-    const { data } = await apiAxios({
-      method: 'get',
-      url: `/posts.json?page=${page}`,
-    });
-    this.setState({ loading: false, posts: data, page });
+    try {
+      this.setState({ loading: true });
+      const { data } = await apiAxios({
+        method: 'get',
+        url: `/posts.json?page=${page}`,
+      });
+      this.setState({ loading: false, posts: data, page });
+    } catch (e) {
+      this.setState({ loading: false });
+    }
   };
 
   playerCallback = (action: string, instance: any) => {

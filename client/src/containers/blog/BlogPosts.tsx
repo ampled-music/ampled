@@ -37,16 +37,21 @@ class BlogPosts extends React.Component<PostsProps, any> {
   };
 
   loadPosts = async (page) => {
-    this.setState({ loading: true });
-    const { data } = await apiAxios({
-      method: 'get',
-      url: `http://cms.ampled.com/wp-json/wp/v2/posts?page=${page}`,
-    });
+    try {
+      this.setState({ loading: true });
+      const { data } = await apiAxios({
+        method: 'get',
+        url: `http://cms.ampled.com/wp-json/wp/v2/posts?page=${page}`,
+      });
 
-    this.setState({
-      loading: false,
-      posts: data,
-    });
+      this.setState({
+        loading: false,
+        posts: data,
+      });
+    } catch (e) {
+      console.log(e);
+      this.setState({ loading: false });
+    }
   };
 
   render() {

@@ -26,18 +26,23 @@ class Page extends React.Component<PageProps, any> {
   };
 
   loadPages = async () => {
-    this.setState({ loading: true });
-    const { data } = await apiAxios({
-      method: 'get',
-      url: `http://cms.ampled.com/wp-json/wp/v2/pages?slug=${this.props.match.params.slug}`,
-    });
-    if (data[0].slug === this.props.match.params.slug) {
-      this.setState({
-        loading: false,
-        title: data[0].title.rendered,
-        content: data[0].content.rendered,
-        excerpt: data[0].excerpt.rendered,
+    try {
+      this.setState({ loading: true });
+      const { data } = await apiAxios({
+        method: 'get',
+        url: `http://cms.ampled.com/wp-json/wp/v2/pages?slug=${this.props.match.params.slug}`,
       });
+      if (data[0].slug === this.props.match.params.slug) {
+        this.setState({
+          loading: false,
+          title: data[0].title.rendered,
+          content: data[0].content.rendered,
+          excerpt: data[0].excerpt.rendered,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      this.setState({ loading: false });
     }
   };
 

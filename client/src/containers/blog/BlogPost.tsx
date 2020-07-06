@@ -25,18 +25,23 @@ class BlogPost extends React.Component<PostProps, any> {
   };
 
   loadPost = async () => {
-    this.setState({ loading: true });
-    const { data } = await apiAxios({
-      method: 'get',
-      url: `http://cms.ampled.com/wp-json/wp/v2/posts?slug=${this.props.match.params.slug}`,
-    });
-
-    if (data[0].slug === this.props.match.params.slug) {
-      this.setState({
-        loading: false,
-        title: data[0].title.rendered,
-        content: data[0].content.rendered,
+    try {
+      this.setState({ loading: true });
+      const { data } = await apiAxios({
+        method: 'get',
+        url: `http://cms.ampled.com/wp-json/wp/v2/posts?slug=${this.props.match.params.slug}`,
       });
+
+      if (data[0].slug === this.props.match.params.slug) {
+        this.setState({
+          loading: false,
+          title: data[0].title.rendered,
+          content: data[0].content.rendered,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      this.setState({ loading: false });
     }
   };
 

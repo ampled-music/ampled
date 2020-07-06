@@ -9,7 +9,7 @@ export const config = {
   menuUrls: {
     createArtist: process.env.REACT_APP_URL_CREATE_ARTIST || '/create-artist',
     blog: process.env.REACT_APP_URL_BLOG || '/blog',
-    about: process.env.REACT_APP_URL_ABOUT || '/page/about',
+    about: process.env.REACT_APP_URL_ABOUT || '/page/about-us',
   },
   cloudinary: {
     uploadImageUrl: 'https://api.cloudinary.com/v1_1/ampled-web/upload',

@@ -1,3 +1,5 @@
+import './blog.scss';
+
 import * as React from 'react';
 
 import { apiAxios } from '../../api/setup-axios';
@@ -53,16 +55,19 @@ class BlogPosts extends React.Component<PostsProps, any> {
     }
     return (
       <div className="container posts">
-        <div className="row">
+        <div className="row justify-content-center">
           {this.state.posts.map((post) => (
-            <div className="col-md-6 posts__tease" key={post.id}>
+            <div className="col-md-4 posts__tease" key={post.id}>
               <Link to={`/blog/${post.id}`}>
-                <h2 className="posts__title">{post.title.rendered}</h2>
+                <h2
+                  className="posts__title"
+                  dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                />
               </Link>
               <div
                 className="posts__excerpt"
                 dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-              ></div>
+              />
             </div>
           ))}
         </div>

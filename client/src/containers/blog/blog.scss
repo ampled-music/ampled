@@ -1,0 +1,14 @@
+@import '../../theme/vars.scss';
+@import '../../theme/mixins.scss';
+
+.posts {
+  background-color: $white;
+  min-height: calc(100vh - 280px);
+  padding: 1rem;
+  margin: 50px auto 0;
+  @include mq($layout-m) {
+    padding: 2rem 5rem;
+    border-left: 1px solid $black;
+    border-right: 1px solid $black;
+  }
+}

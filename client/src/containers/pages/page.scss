@@ -1,0 +1,42 @@
+@import '../../theme/vars.scss';
+@import '../../theme/mixins.scss';
+
+.page {
+  background-color: $white;
+  min-height: calc(100vh - 280px);
+  padding: 1rem;
+  margin: 50px auto 0;
+  @include mq($layout-m) {
+    padding: 2rem 5rem;
+    border-left: 1px solid $black;
+    border-right: 1px solid $black;
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  &__content {
+    margin: 2rem auto;
+    font-family: $font-family-monospace;
+    h2,
+    h3 {
+      margin: 1rem auto;
+    }
+
+    a {
+      color: $black;
+      text-decoration: underline;
+      transition: color $speed;
+      &:hover {
+        color: rgba($black, 0.7);
+        text-decoration: none;
+      }
+    }
+    .wp-block-image {
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,3 +1,5 @@
+import './page.scss';
+
 import * as React from 'react';
 
 import { apiAxios } from '../../api/setup-axios';
@@ -47,12 +49,16 @@ class Page extends React.Component<PageProps, any> {
       return <Loading artistLoading={true} />;
     }
     return (
-      <div className="page-container">
-        <h1 className="page__title">{this.state.title}</h1>
-        <div
-          className="page__content"
-          dangerouslySetInnerHTML={{ __html: this.state.content }}
-        ></div>
+      <div className="container page">
+        <div className="row justify-content-center">
+          <div className="col-8">
+            <h1 className="page__title">{this.state.title}</h1>
+            <div
+              className="page__content"
+              dangerouslySetInnerHTML={{ __html: this.state.content }}
+            />
+          </div>
+        </div>
       </div>
     );
   }

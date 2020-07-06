@@ -43,7 +43,7 @@ class Footer extends React.Component<Props, any> {
             <div className="col-6 col-md-2">
               <div className="title">Get Started</div>
               <a href="/page/about-us">About Us</a>
-              <a href="/zine/">Blog</a>
+              <a href="/blog/">Blog</a>
               <a href="https://docs.ampled.com/coop/">The Co-Op</a>
               <a href="/page/contact">Contact</a>
             </div>

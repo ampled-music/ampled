@@ -29,7 +29,7 @@ export const HomeFor = () => (
             100% owned by artists, workers, and community - not vulture
             capitalists.
           </p>
-          <a href="http://app.ampled.com/coop">
+          <a href="https://docs.ampled.com/coop/">
             <button className="home-for__button btn btn-ampled">
               Read More
             </button>
@@ -45,7 +45,7 @@ export const HomeFor = () => (
           <p className="home-for__copy">
             We’ve opened up our books to stay accountable to our members.
           </p>
-          <a href="http://app.ampled.com/transparency">
+          <a href="/page/open-dashboard">
             <button className="home-for__button btn btn-ampled">
               Learn More
             </button>
@@ -58,7 +58,7 @@ export const HomeFor = () => (
             We’re making music more equitable for artists in an ethical and
             transparent way.
           </p>
-          <a href="http://app.ampled.com/our-mission">
+          <a href="/page/who-we-are/">
             <button className="home-for__button btn btn-ampled">
               Our Vision
             </button>

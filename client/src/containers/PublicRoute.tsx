@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Route } from 'react-router-dom';
 import { CloudinaryContext } from 'cloudinary-react';
 import { Nav } from './shared/nav/Nav';
+import { Footer } from './shared/footer/Footer';
 
 export const PublicRoute = ({ component: Component, ...rest }) => {
   const randomColor = () => {
@@ -25,6 +26,7 @@ export const PublicRoute = ({ component: Component, ...rest }) => {
             <main>
               <Component {...props} />
             </main>
+            <Footer />
           </CloudinaryContext>
         </div>
       </div>

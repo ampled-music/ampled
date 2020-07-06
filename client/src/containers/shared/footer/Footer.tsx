@@ -2,9 +2,9 @@ import './footer.scss';
 
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { config } from '../../config';
+import { config } from '../../../config';
 
-import logo from '../../images/ampled_logo.svg';
+import logo from '../../../images/ampled_logo.svg';
 
 interface Props {}
 
@@ -42,30 +42,26 @@ class Footer extends React.Component<Props, any> {
             </div>
             <div className="col-6 col-md-2">
               <div className="title">Get Started</div>
-              <a href="https://app.ampled.com/about">About Us</a>
-              <a href="https://app.ampled.com/zine">Blog</a>
-              <a href="https://app.ampled.com/coop">The Co-Op</a>
-              <a href="https://app.ampled.com/contact-us">Contact</a>
+              <a href="/page/about-us">About Us</a>
+              <a href="/blog/">Blog</a>
+              <a href="https://docs.ampled.com/coop/">The Co-Op</a>
+              <a href="/page/contact">Contact</a>
             </div>
             <div className="col-6 col-md-2">
               <div className="title">Get Involved</div>
               <a href={config.menuUrls.createArtist}>Create Artist Page</a>
-              <a href="https://app.ampled.com/membership">Become a Member</a>
-              <a href="https://app.ampled.com/contribute">Jobs</a>
-              <a href="https://app.ampled.com/press">Press</a>
-              <a href="https://app.ampled.com/members">
-                Members Only{' '}
-                <span role="img" aria-label="Lock">
-                  🔒
-                </span>
-              </a>
+              <a href="/page/join-the-co-op">Become a Member</a>
+              <a href="/page/become-a-contributor">Jobs</a>
+              <a href="/page/press">Press</a>
             </div>
             <div className="col-6 col-md-2">
               <div className="title">Get Informed</div>
-              <a href="https://app.ampled.com/transparency">Transparency</a>
-              <a href="https://app.ampled.com/faq">FAQs</a>
-              <a href="https://app.ampled.com/terms-of-use">Terms of Use</a>
-              <a href="https://app.ampled.com/policy">Policy</a>
+              <a href="/page/open-dashboard">Transparency</a>
+              <a href="/page/faq">FAQs</a>
+              <a href="https://docs.ampled.com/policy/terms-of-use">
+                Terms of Use
+              </a>
+              <a href="https://docs.ampled.com/policy/">Policy</a>
             </div>
             <div className="col-6 col-md-2">
               <Link to="/">

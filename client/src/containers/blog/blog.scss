@@ -1,0 +1,50 @@
+@import '../../theme/vars.scss';
+@import '../../theme/mixins.scss';
+
+.posts,
+.post {
+  background-color: $white;
+  min-height: calc(100vh - 280px);
+  padding: 1rem;
+  margin: 50px auto 0;
+  @include mq($layout-m) {
+    padding: 2rem 5rem;
+    border-left: 1px solid $black;
+    border-right: 1px solid $black;
+  }
+
+  a {
+    color: $black;
+    text-decoration: underline;
+    transition: color $speed;
+    &:hover {
+      color: rgba($black, 0.7);
+      text-decoration: none;
+    }
+  }
+  &__header {
+    margin-bottom: 2rem;
+    text-align: center;
+    font-family: $font-family-sans-serif;
+  }
+  &__title {
+    margin-bottom: 2rem;
+    font-family: $font-family-sans-serif;
+  }
+  .post {
+    &__title {
+      text-align: center;
+    }
+  }
+  &__excerpt {
+    margin: 2rem auto;
+    font-family: $font-family-monospace;
+  }
+
+  .wp-block-image {
+    img {
+      width: 100%;
+    }
+    margin-bottom: 2rem;
+  }
+}

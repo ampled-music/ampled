@@ -93,7 +93,7 @@ class AppComponent extends React.Component<Props, any> {
     const { toast } = this.props;
     if (this.state.hasError) {
       return (
-        <div className="page">
+        <div>
           <Helmet>
             <title>Ampled | Direct Community Support For Music Artists</title>
             {process.env.NODE_ENV === 'development' && (
@@ -114,7 +114,7 @@ class AppComponent extends React.Component<Props, any> {
       );
     }
     return (
-      <div className="page">
+      <div>
         <Helmet>
           <title>Ampled | Direct Community Support For Music Artists</title>
           {process.env.NODE_ENV === 'development' && (

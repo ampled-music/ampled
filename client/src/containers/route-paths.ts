@@ -19,4 +19,7 @@ export const routePaths = {
   browse: '/browse',
   metrics: '/metrics',
   feed: '/feed',
+  page: '/page/:slug',
+  blog: '/blog',
+  blogPost: '/blog/:slug',
 };

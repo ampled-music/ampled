@@ -289,7 +289,7 @@ export class SupportComponent extends React.Component<Props, any> {
               This is due to our payment processor's service fee. More details
               can be found{' '}
               <a
-                href="https://app.ampled.com/payment-processing"
+                href="https://docs.ampled.com/finances/pricing"
                 target="_blank"
                 rel="noopener noreferrer"
               >

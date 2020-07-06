@@ -28,8 +28,13 @@
     font-family: $font-family-sans-serif;
   }
   &__title {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     font-family: $font-family-sans-serif;
+  }
+  .post {
+    &__title {
+      text-align: center;
+    }
   }
   &__excerpt {
     margin: 2rem auto;

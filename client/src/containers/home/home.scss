@@ -12,6 +12,10 @@
       font-size: 2.5rem;
     }
   }
+  .btn {
+    border-radius: 0;
+    border: 2px solid $black;
+  }
   .artistAlertHeader {
     position: relative;
     padding-right: 50px;
@@ -126,6 +130,10 @@
   .input-group {
     max-width: 350px;
     margin: auto;
+
+    @include mq($desktop) {
+      margin: 0;
+    }
   }
 }
 
@@ -182,6 +190,10 @@
     @include mq($tablet) {
       min-height: 80px;
     }
+  }
+  &__button {
+    display: block;
+    margin: auto;
   }
 }
 

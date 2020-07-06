@@ -151,6 +151,8 @@
       button {
         width: 240px;
         text-transform: uppercase;
+        border-radius: 0;
+        font-family: $font-family-monospace;
       }
     }
   }

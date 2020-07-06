@@ -29,19 +29,16 @@ class Page extends React.Component<PageProps, any> {
     this.setState({ loading: true });
     const { data } = await apiAxios({
       method: 'get',
-      url: `http://cms.ampled.com/wp-json/wp/v2/pages/`,
+      url: `http://cms.ampled.com/wp-json/wp/v2/pages?slug=${this.props.match.params.slug}`,
     });
-
-    data.map(
-      (page) =>
-        page.slug === this.props.match.params.slug &&
-        this.setState({
-          loading: false,
-          title: page.title.rendered,
-          content: page.content.rendered,
-          excerpt: page.excerpt.rendered,
-        }),
-    );
+    if (data[0].slug === this.props.match.params.slug) {
+      this.setState({
+        loading: false,
+        title: data[0].title.rendered,
+        content: data[0].content.rendered,
+        excerpt: data[0].excerpt.rendered,
+      });
+    }
   };
 
   render() {

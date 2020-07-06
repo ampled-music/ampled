@@ -5,7 +5,6 @@ import cx from 'classnames';
 import * as store from 'store';
 import { ReactSVG } from 'react-svg';
 
-import { Footer } from '../footer/Footer';
 import { HomeArtists } from './HomeArtists';
 import { HomeFor } from './HomeFor';
 import { HomeHeader } from './HomeHeader';
@@ -71,7 +70,6 @@ class Home extends React.Component<any> {
         <HomeArtists />
         <HomeGarden />
         {/* <HomeBrowse /> */}
-        <Footer />
       </div>
     );
   }

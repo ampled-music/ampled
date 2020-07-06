@@ -7,11 +7,9 @@ export const config = {
     token: 'token',
   },
   menuUrls: {
-    createArtist:
-      process.env.REACT_APP_URL_CREATE_ARTIST ||
-      'https://ampled.com/create-artist',
-    blog: process.env.REACT_APP_URL_BLOG || 'https://ampled.com/zine',
-    about: process.env.REACT_APP_URL_ABOUT || 'https://ampled.com/page/about',
+    createArtist: process.env.REACT_APP_URL_CREATE_ARTIST || '/create-artist',
+    blog: process.env.REACT_APP_URL_BLOG || '/zine',
+    about: process.env.REACT_APP_URL_ABOUT || '/page/about',
   },
   cloudinary: {
     uploadImageUrl: 'https://api.cloudinary.com/v1_1/ampled-web/upload',

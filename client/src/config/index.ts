@@ -9,9 +9,9 @@ export const config = {
   menuUrls: {
     createArtist:
       process.env.REACT_APP_URL_CREATE_ARTIST ||
-      'https://app.ampled.com/create-an-artist-page',
-    blog: process.env.REACT_APP_URL_BLOG || 'https://app.ampled.com/zine',
-    about: process.env.REACT_APP_URL_ABOUT || 'https://app.ampled.com/about',
+      'https://ampled.com/create-artist',
+    blog: process.env.REACT_APP_URL_BLOG || 'https://ampled.com/zine',
+    about: process.env.REACT_APP_URL_ABOUT || 'https://ampled.com/page/about',
   },
   cloudinary: {
     uploadImageUrl: 'https://api.cloudinary.com/v1_1/ampled-web/upload',

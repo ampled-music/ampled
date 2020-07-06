@@ -282,7 +282,7 @@ class SignupComponent extends React.Component<Props, any> {
               />
               You agree to our{' '}
               <a
-                href="https://app.ampled.com/terms-of-use"
+                href="https://docs.ampled.com/policy/terms-of-use"
                 rel="noopener noreferrer"
                 target="_blank"
               >

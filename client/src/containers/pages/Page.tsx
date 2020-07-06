@@ -15,6 +15,7 @@ class Page extends React.Component<PageProps, any> {
   state = {
     content: '',
     title: '',
+    excerpt: '',
     loading: true,
   };
 
@@ -26,7 +27,7 @@ class Page extends React.Component<PageProps, any> {
     this.setState({ loading: true });
     const { data } = await apiAxios({
       method: 'get',
-      url: `http://3.17.10.215/wp-json/wp/v2/pages/`,
+      url: `http://cms.ampled.com/wp-json/wp/v2/pages/`,
     });
 
     data.map(
@@ -36,6 +37,7 @@ class Page extends React.Component<PageProps, any> {
           loading: false,
           title: page.title.rendered,
           content: page.content.rendered,
+          excerpt: page.excerpt.rendered,
         }),
     );
   };

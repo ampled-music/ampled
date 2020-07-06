@@ -321,8 +321,11 @@ const getAllProcessedFees = async () => {
       delete allFees[account];
       continue;
     }
+    const accountObj = await getConnectAccount(account);
     allFees[account] = {
       ...allFees[account],
+      name: accountObj.display_name || accountObj.email,
+      email: accountObj.email,
       total: `$${(allFees[account].total / 100).toFixed(2)}`,
       total_refunded: `$${(allFees[account].total_refunded / 100).toFixed(2)}`,
     };

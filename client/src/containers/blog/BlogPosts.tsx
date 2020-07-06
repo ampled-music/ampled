@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
+import { Link } from 'react-router-dom';
 
 interface PostsProps {
   match: {
@@ -13,33 +14,37 @@ interface PostsProps {
 
 class BlogPosts extends React.Component<PostsProps, any> {
   state = {
-    content: '',
-    title: '',
-    excerpt: '',
+    posts: [],
     loading: true,
+    page: 1,
   };
 
   componentDidMount = () => {
-    this.loadPosts();
+    this.loadPosts(this.state.page);
   };
 
-  loadPosts = async () => {
+  nextPage = () => {
+    this.loadPosts(+this.state.page + 1);
+  };
+
+  prevPage = () => {
+    if (this.state.page === 1) {
+      return;
+    }
+    this.loadPosts(+this.state.page - 1);
+  };
+
+  loadPosts = async (page) => {
     this.setState({ loading: true });
     const { data } = await apiAxios({
       method: 'get',
-      url: `http://cms.ampled.com/wp-json/wp/v2/posts/`,
+      url: `http://cms.ampled.com/wp-json/wp/v2/posts?page=${page}`,
     });
 
-    data.map(
-      (post) =>
-        post.slug === this.props.match.params.slug &&
-        this.setState({
-          loading: false,
-          title: post.title.rendered,
-          content: post.content.rendered,
-          excerpt: post.excerpt.rendered,
-        }),
-    );
+    this.setState({
+      loading: false,
+      posts: data,
+    });
   };
 
   render() {
@@ -47,12 +52,31 @@ class BlogPosts extends React.Component<PostsProps, any> {
       return <Loading artistLoading={true} />;
     }
     return (
-      <div className="page-container">
-        <h1 className="post__title">{this.state.title}</h1>
-        <div
-          className="post__content"
-          dangerouslySetInnerHTML={{ __html: this.state.content }}
-        ></div>
+      <div className="container posts">
+        <div className="row">
+          {this.state.posts.map((post) => (
+            <div className="col-md-6 posts__tease" key={post.id}>
+              <Link to={`/blog/${post.id}`}>
+                <h2 className="posts__title">{post.title.rendered}</h2>
+              </Link>
+              <div
+                className="posts__excerpt"
+                dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
+              ></div>
+            </div>
+          ))}
+        </div>
+
+        {this.state.page > 1 && (
+          <button onClick={this.prevPage} className="btn btn-ampled">
+            Prev Page
+          </button>
+        )}
+        {this.state.posts.length === 10 && (
+          <button onClick={this.nextPage} className="btn btn-ampled">
+            Next Page
+          </button>
+        )}
       </div>
     );
   }

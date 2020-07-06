@@ -72,11 +72,16 @@ const LazySinglePost = React.lazy(() =>
     default: module.SinglePost,
   })),
 );
-const LazyBlogPost = React.lazy(() =>
-  import('./blog/BlogPost').then((module) => ({
-    default: module.BlogPost,
+const LazyBlog = React.lazy(() =>
+  import('./blog/BlogPosts').then((module) => ({
+    default: module.BlogPosts,
   })),
 );
+// const LazyBlogPost = React.lazy(() =>
+//   import('./blog/BlogPost').then((module) => ({
+//     default: module.BlogPost,
+//   })),
+// );
 const LazyPage = React.lazy(() =>
   import('./pages/Page').then((module) => ({
     default: module.Page,
@@ -146,7 +151,7 @@ const Routes = () => {
       <PublicRoute exact path={routePaths.metrics} component={LazyMetrics} />
       <ProtectedRoute exact path={routePaths.feed} component={LazyFeed} />
       <PublicRoute exact path={routePaths.page} component={LazyPage} />
-      <PublicRoute exact path={routePaths.blog} component={LazyBlogPost} />
+      <PublicRoute exact path={routePaths.blog} component={LazyBlog} />
       <PublicRoute path={'*'} component={LazyNoArtist} />
     </Switch>
   );

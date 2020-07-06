@@ -51,7 +51,7 @@ class Page extends React.Component<PageProps, any> {
     return (
       <div className="container page">
         <div className="row justify-content-center">
-          <div className="col-8">
+          <div className="col-md-8">
             <h1 className="page__title">{this.state.title}</h1>
             <div
               className="page__content"

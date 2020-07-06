@@ -1,3 +1,5 @@
+import './blog.scss';
+
 import * as React from 'react';
 
 import { apiAxios } from '../../api/setup-axios';
@@ -15,7 +17,6 @@ class BlogPost extends React.Component<PostProps, any> {
   state = {
     title: '',
     content: '',
-    excerpt: '',
     loading: true,
   };
 
@@ -35,7 +36,6 @@ class BlogPost extends React.Component<PostProps, any> {
         loading: false,
         title: data[0].title.rendered,
         content: data[0].content.rendered,
-        excerpt: data[0].excerpt.rendered,
       });
     }
   };
@@ -45,12 +45,19 @@ class BlogPost extends React.Component<PostProps, any> {
       return <Loading artistLoading={true} />;
     }
     return (
-      <div className="page-container">
-        <h1 className="post__title">{this.state.title}</h1>
-        <div
-          className="post__content"
-          dangerouslySetInnerHTML={{ __html: this.state.content }}
-        ></div>
+      <div className="container post">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            <h1
+              className="post__title"
+              dangerouslySetInnerHTML={{ __html: this.state.title }}
+            />
+            <div
+              className="post__content"
+              dangerouslySetInnerHTML={{ __html: this.state.content }}
+            />
+          </div>
+        </div>
       </div>
     );
   }

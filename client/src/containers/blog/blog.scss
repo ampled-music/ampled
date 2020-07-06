@@ -1,7 +1,8 @@
 @import '../../theme/vars.scss';
 @import '../../theme/mixins.scss';
 
-.posts {
+.posts,
+.post {
   background-color: $white;
   min-height: calc(100vh - 280px);
   padding: 1rem;
@@ -32,10 +33,12 @@
   &__excerpt {
     margin: 2rem auto;
     font-family: $font-family-monospace;
-    .wp-block-image {
-      img {
-        width: 100%;
-      }
+  }
+
+  .wp-block-image {
+    img {
+      width: 100%;
     }
+    margin-bottom: 2rem;
   }
 }

@@ -20,4 +20,5 @@ export const routePaths = {
   metrics: '/metrics',
   feed: '/feed',
   page: '/page/:slug',
+  blog: '/blog/:id',
 };

@@ -7,7 +7,10 @@ const createSignature = (timestamp) => {
 
   return sha1(hashString);
 };
-export const uploadFileToCloudinary = async (file: any) => {
+export const uploadFileToCloudinary = async (
+  file: any,
+  coordinates?: string,
+) => {
   const timestamp = Date.now();
   const signature = createSignature(timestamp);
 
@@ -16,6 +19,7 @@ export const uploadFileToCloudinary = async (file: any) => {
   formData.append('timestamp', timestamp.toString());
   formData.append('signature', signature);
   formData.append('file', file);
+  formData.append('custom_coordinates', coordinates);
   formData.append('return_delete_token', 'true');
   const reqConfig = {
     headers: { 'X-Requested-With': 'XMLHttpRequest' },

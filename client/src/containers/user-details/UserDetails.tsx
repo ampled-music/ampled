@@ -206,6 +206,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     social_error: false,
     showEditForm: false,
     crop: { x: 0, y: 0 },
+    croppedAreaPixels: { x: '', y: '', height: '', width: '' },
   };
 
   handleChange = (e) => {
@@ -306,13 +307,10 @@ class UserDetailsComponent extends React.Component<Props, any> {
   };
 
   onCropComplete = (croppedArea, croppedAreaPixels) => {
-    console.log('croppy', croppedArea);
-    console.log(croppedAreaPixels.width / croppedAreaPixels.height);
+    this.setState({ croppedAreaPixels });
   };
 
   renderCropper = (photoBody) => {
-    console.log({ photoBody });
-
     return (
       <div style={{ position: 'relative', width: '100%', height: '400px' }}>
         <Cropper
@@ -473,6 +471,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
   saveUserPhoto = () => {
     const me = {
       file: this.state.photoContent.file,
+      coordinates: `${this.state.croppedAreaPixels.x},${this.state.croppedAreaPixels.y},${this.state.croppedAreaPixels.width},${this.state.croppedAreaPixels.height}`,
     };
     this.props.updateMe(me);
   };
@@ -490,6 +489,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
       this.setState({
         photoContent: undefined,
         photoBody: undefined,
+        crop: {},
       });
       this.props.showToast({
         message:
@@ -504,7 +504,11 @@ class UserDetailsComponent extends React.Component<Props, any> {
     this.setState({ showUserPhotoModal: true });
   };
   closeUserPhotoModal = () =>
-    this.setState({ showUserPhotoModal: false, photoBody: undefined });
+    this.setState({
+      showUserPhotoModal: false,
+      photoBody: undefined,
+      crop: {},
+    });
 
   renderEmailAddress = () => {
     return (

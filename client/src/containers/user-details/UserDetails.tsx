@@ -311,10 +311,13 @@ class UserDetailsComponent extends React.Component<Props, any> {
   };
 
   renderCropper = (photoBody) => {
+    console.log({ photoBody });
+
     return (
-      <div style={{ position: 'relative', height: '300px', width: '300px' }}>
+      <div style={{ position: 'relative', width: '100%', height: '400px' }}>
         <Cropper
           image={photoBody}
+          aspect={1}
           showGrid={false}
           crop={this.state.crop}
           onCropChange={this.onCropChange}
@@ -375,22 +378,12 @@ class UserDetailsComponent extends React.Component<Props, any> {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
-          <img
-            src={userData.image.url}
-            className="image-preview loading-image"
-            alt="Loading"
-          />
         </div>
       );
     } else if (processingImage) {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
-          <img
-            src={avatar}
-            className="image-preview loading-image"
-            alt="Loading"
-          />
         </div>
       );
     }
@@ -510,7 +503,8 @@ class UserDetailsComponent extends React.Component<Props, any> {
     e.preventDefault();
     this.setState({ showUserPhotoModal: true });
   };
-  closeUserPhotoModal = () => this.setState({ showUserPhotoModal: false });
+  closeUserPhotoModal = () =>
+    this.setState({ showUserPhotoModal: false, photoBody: undefined });
 
   renderEmailAddress = () => {
     return (

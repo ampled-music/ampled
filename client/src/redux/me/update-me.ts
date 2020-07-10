@@ -15,7 +15,12 @@ export const updateMeAction = createActionThunk(
         // TODO: handle error when cloudinary request errors once we can pass along error messages
         return () => undefined;
       }
-      return updateMe({ image: { url: cloudinaryResponse.secure_url, public_id: cloudinaryResponse.public_id }});
+      return updateMe({
+        image: {
+          url: cloudinaryResponse.secure_url,
+          public_id: cloudinaryResponse.public_id,
+        },
+      });
     }
 
     return updateMe({

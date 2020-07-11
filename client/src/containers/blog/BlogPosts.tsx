@@ -59,19 +59,19 @@ class BlogPosts extends React.Component<PostsProps, any> {
       return <Loading artistLoading={true} />;
     }
     return (
-      <div className="container posts">
-        <h1 className="posts__header">Blog Posts</h1>
+      <div className="container blog-posts">
+        <h1 className="blog-posts__header">Blog Posts</h1>
         <div className="row justify-content-center">
           {this.state.posts.map((post) => (
-            <div className="col-md-4 posts__tease" key={post.id}>
+            <div className="col-md-4 blog-posts__tease" key={post.id}>
               <Link to={`/blog/${post.slug}`}>
                 <h2
-                  className="posts__title"
+                  className="blog-posts__title"
                   dangerouslySetInnerHTML={{ __html: post.title.rendered }}
                 />
               </Link>
               <div
-                className="posts__excerpt"
+                className="blog-posts__excerpt"
                 dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
               />
             </div>

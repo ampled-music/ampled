@@ -26,7 +26,11 @@ class BlogPost extends React.Component<PostProps, any> {
     featured_image: '',
     photo_credit: {
       photo_by: '',
-      site: '',
+      photo_url: '',
+    },
+    guest_author: {
+      guest_by: '',
+      guest_url: '',
     },
     loading: true,
   };
@@ -51,12 +55,16 @@ class BlogPost extends React.Component<PostProps, any> {
           title: content.title.rendered,
           body: content.content.rendered,
           author: content._embedded.author[0].name,
-          excerpt: content.excerpt.rendered,
+          excerpt: content.custom_excerpt,
           date: content.date,
-          featured_image: content._embedded['wp:featuredmedia'][0].source_url,
+          featured_image: content.featured_image_url,
           photo_credit: {
             photo_by: content.acf.photo_by,
-            site: content.acf.site,
+            photo_url: content.acf.photo_url,
+          },
+          guest_author: {
+            guest_by: content.acf.guest_author,
+            guest_url: content.acf.guest_url,
           },
         });
       }
@@ -72,35 +80,60 @@ class BlogPost extends React.Component<PostProps, any> {
     }
     return (
       <div>
+        {this.state.featured_image && (
+          <div
+            className="blog-post__featured-image"
+            style={{ backgroundImage: `url(${this.state.featured_image})` }}
+          ></div>
+        )}
         <div
-          className="blog-post__featured-image"
-          style={{ backgroundImage: `url(${this.state.featured_image})` }}
-        ></div>
-        <div className="container blog-post">
+          className={
+            this.state.featured_image
+              ? 'container blog-post fi-margin'
+              : 'container blog-post'
+          }
+        >
           <div className="blog-post__content">
             <h1
               className="blog-post__title"
               dangerouslySetInnerHTML={{ __html: this.state.title }}
             />
             {this.state.excerpt && (
-              <div
-                className="blog-post__excerpt"
-                dangerouslySetInnerHTML={{ __html: this.state.excerpt }}
-              />
+              <div className="blog-post__excerpt">
+                <p>{this.state.excerpt}</p>
+              </div>
             )}
 
             <div className="blog-post__info">
-              <div className="blog-post__info_author">{this.state.author}</div>
+              {this.state.guest_author.guest_by ? (
+                <div className="blog-post__info_author">
+                  {this.state.guest_author.guest_url ? (
+                    <>
+                      by{' '}
+                      <a href={this.state.guest_author.guest_url}>
+                        {this.state.guest_author.guest_by}
+                      </a>
+                    </>
+                  ) : (
+                    <>by {this.state.guest_author.guest_by}</>
+                  )}
+                </div>
+              ) : (
+                <div className="blog-post__info_author">
+                  by {this.state.author}
+                </div>
+              )}
+
               <div className="blog-post__info_date">
-                {Moment(this.state.date).format('MMMM do, YYYY')}
+                {Moment(this.state.date).format('MMMM Do, YYYY')}
               </div>
             </div>
 
             {this.state.photo_credit.photo_by && (
               <div className="blog-post__photo_credit">
                 <ReactSVG className="icon icon_black" src={PhotoIcon} />
-                {this.state.photo_credit.site ? (
-                  <a href={this.state.photo_credit.site}>
+                {this.state.photo_credit.photo_url ? (
+                  <a href={this.state.photo_credit.photo_url}>
                     {this.state.photo_credit.photo_by}
                   </a>
                 ) : (

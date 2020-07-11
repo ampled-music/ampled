@@ -33,9 +33,13 @@
 
 .blog-post {
   min-height: calc(100vh - 280px);
-  margin: -25vh auto 0;
+  margin: 0 auto;
   position: relative;
   margin-bottom: 2rem;
+
+  &.fi-margin {
+    margin-top: -25vh;
+  }
 
   a {
     color: $black;
@@ -74,6 +78,10 @@
     border: 1px solid $black;
     display: inline-block;
     margin-left: 3rem;
+    a {
+      position: relative;
+      z-index: 10;
+    }
     @include mq(0, $layout-m) {
       min-width: 250px;
       &:before {

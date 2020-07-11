@@ -1,17 +1,11 @@
 @import '../../theme/vars.scss';
 @import '../../theme/mixins.scss';
 
-.posts,
-.post {
+.blog-posts {
   background-color: $white;
   min-height: calc(100vh - 280px);
   padding: 1rem;
   margin: 50px auto 0;
-  @include mq($layout-m) {
-    padding: 2rem 5rem;
-    border-left: 1px solid $black;
-    border-right: 1px solid $black;
-  }
 
   a {
     color: $black;
@@ -31,20 +25,203 @@
     margin-bottom: 2rem;
     font-family: $font-family-sans-serif;
   }
-  .post {
-    &__title {
-      text-align: center;
-    }
-  }
   &__excerpt {
     margin: 2rem auto;
     font-family: $font-family-monospace;
   }
+}
 
-  .wp-block-image {
+.blog-post {
+  min-height: calc(100vh - 280px);
+  margin: -25vh auto 0;
+  position: relative;
+  margin-bottom: 2rem;
+
+  a {
+    color: $black;
+    text-decoration: underline;
+    transition: color $speed;
+    &:hover {
+      color: rgba($black, 0.7);
+      text-decoration: none;
+    }
+  }
+  &__content {
+    background-color: $white;
+    padding: 1rem;
+    width: 100%;
+
+    @include mq($layout-m) {
+      width: 70%;
+      padding: 1rem 2rem;
+    }
+  }
+  &__header {
+    margin-bottom: 2rem;
+    text-align: center;
+    font-family: $font-family-sans-serif;
+  }
+  &__title {
+    margin-bottom: 2rem;
+    font-family: $font-family-sans-serif;
+    text-transform: capitalize;
+  }
+
+  &__info {
+    background-color: $white;
+    padding: 1rem;
+    width: auto;
+    border: 1px solid $black;
+    display: inline-block;
+    margin-left: 3rem;
+    @include mq(0, $layout-m) {
+      min-width: 250px;
+      &:before {
+        content: '';
+        width: 4rem;
+        height: 1rem;
+        background-color: $black;
+        display: block;
+        position: absolute;
+        left: 0;
+      }
+    }
+    @include mq($layout-m) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 20%;
+      height: 90px;
+      position: absolute;
+      right: 5%;
+      top: 20px;
+      &:before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        border: 1px solid $black;
+        position: absolute;
+        top: -5px;
+        left: -7px;
+      }
+    }
+    &_author {
+      font-family: $font-family-sans-serif;
+    }
+    &_date {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      font-family: $font-family-monospace;
+    }
+  }
+
+  &__photo_credit {
+    background-color: $white;
+    padding: 1rem 0;
+    font-family: $font-family-sans-serif;
+    font-size: 0.9rem;
+    display: flex;
+    margin-left: 3rem;
+    @include mq($layout-m) {
+      width: 20%;
+      padding: 1rem;
+      position: absolute;
+      right: 5%;
+      top: 130px;
+    }
+    .icon {
+      display: inline-block;
+      margin-right: 0.5rem;
+      position: relative;
+      top: -1px;
+    }
+  }
+
+  &__featured-image {
+    height: 70vh;
+    width: 100%;
+    max-width: 1500px;
+    margin: 50px auto 0;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  &__excerpt {
+    margin: 2rem auto;
+    font-family: $font-family-monospace;
+    font-style: italic;
+    font-size: 1.1rem;
+    @include mq($layout-m) {
+      font-size: 1.3rem;
+      &:after {
+        content: '';
+        width: 250px;
+        height: 1rem;
+        background-color: $black;
+        display: block;
+        left: -100px;
+        position: relative;
+      }
+    }
+  }
+
+  &__body {
+    font-family: $font-family-monospace;
+    b,
+    strong {
+      font-family: $font-family-sans-serif;
+    }
+  }
+
+  // Wordpress block content styling
+
+  // Images
+  figure.wp-block-image {
     img {
       width: 100%;
     }
-    margin-bottom: 2rem;
+    figcaption {
+      background-color: $white;
+      padding: 1rem;
+      font-family: $font-family-monospace;
+      font-size: 0.8rem;
+      text-align: center;
+      @include mq($layout-m) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 20%;
+        position: absolute;
+        right: 5%;
+        margin-top: -10%;
+        text-align: left;
+        &:before {
+          content: '';
+          width: 100%;
+          height: 100%;
+          border: 1px solid $black;
+          position: absolute;
+          top: -5px;
+          left: -3px;
+        }
+      }
+    }
+  }
+  .wp-block-group__inner-container {
+    @include mq($layout-m) {
+      display: flex;
+    }
+    figure.wp-block-image {
+      padding: 0.5rem;
+    }
+  }
+  hr {
+    width: 250px;
+    height: 1rem;
+    background-color: $black;
+    display: block;
+    left: -100px;
+    position: relative;
+    margin: 2rem 0;
   }
 }

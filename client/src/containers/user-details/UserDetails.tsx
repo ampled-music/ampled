@@ -207,6 +207,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     showEditForm: false,
     crop: { x: 0, y: 0 },
     croppedAreaPixels: { x: '', y: '', height: '', width: '' },
+    zoom: 1,
   };
 
   handleChange = (e) => {
@@ -310,6 +311,10 @@ class UserDetailsComponent extends React.Component<Props, any> {
     this.setState({ croppedAreaPixels });
   };
 
+  onZoomChange = (zoom) => {
+    this.setState({ zoom });
+  };
+
   renderCropper = (photoBody) => {
     return (
       <div style={{ position: 'relative', width: '100%', height: '400px' }}>
@@ -318,9 +323,11 @@ class UserDetailsComponent extends React.Component<Props, any> {
           aspect={1}
           showGrid={false}
           crop={this.state.crop}
+          zoom={this.state.zoom}
           onCropChange={this.onCropChange}
           onCropComplete={this.onCropComplete}
           cropShape="round"
+          onZoomChange={this.onZoomChange}
         />
       </div>
     );

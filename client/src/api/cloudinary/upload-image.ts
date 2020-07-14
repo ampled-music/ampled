@@ -9,7 +9,7 @@ const createSignature = (timestamp) => {
 };
 export const uploadFileToCloudinary = async (
   file: any,
-  coordinates?: string,
+  coordinates?: string, // comma-separated x,y,width,height
 ) => {
   const timestamp = Date.now();
   const signature = createSignature(timestamp);

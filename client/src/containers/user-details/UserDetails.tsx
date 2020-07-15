@@ -5,6 +5,7 @@ import '../settings/user-settings.scss';
 import * as loadImage from 'blueimp-load-image';
 import * as React from 'react';
 import Cropper from 'react-easy-crop';
+import { Slider } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Store } from '../../redux/configure-store';
@@ -317,19 +318,31 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   renderCropper = (photoBody) => {
     return (
-      <div style={{ position: 'relative', width: '100%', height: '400px' }}>
-        <Cropper
-          image={photoBody}
-          aspect={1}
-          showGrid={false}
-          crop={this.state.crop}
-          zoom={this.state.zoom}
-          onCropChange={this.onCropChange}
-          onCropComplete={this.onCropComplete}
-          cropShape="round"
-          onZoomChange={this.onZoomChange}
-        />
-      </div>
+      <>
+        <div className="cropper">
+          <Cropper
+            image={photoBody}
+            aspect={1}
+            showGrid={false}
+            crop={this.state.crop}
+            zoom={this.state.zoom}
+            onCropChange={this.onCropChange}
+            onCropComplete={this.onCropComplete}
+            cropShape="round"
+            onZoomChange={this.onZoomChange}
+          />
+        </div>
+        <div className="slider">
+          <Slider
+            value={this.state.zoom}
+            min={1}
+            max={3}
+            step={0.1}
+            aria-labelledby="zoom"
+            onChange={(e, zoom) => this.onZoomChange(zoom)}
+          />
+        </div>
+      </>
     );
   };
 

@@ -340,12 +340,12 @@ class CloudinaryImageHelper
     return "" unless broken_name.length < 5 && broken_name.length.positive?
 
     # Adjust font size for long names
-    broken_name_adjustment = 1 + (0.2 * [broken_name.length - 3, 1].max)
+    broken_name_adjustment = 1 + (0.2 * [broken_name.length - 3, 0].max)
     font_size = (font_size / broken_name_adjustment).round
     distance = (distance / broken_name_adjustment).round
 
     # Adjust positioning for certain cases
-    y_index = adjust_name_positioning y_index, distance if position == "center" && xpos.zero?
+    y_index = adjust_name_positioning y_index, distance, broken_name if position == "center" && xpos.zero?
 
     name_part = ""
 
@@ -390,14 +390,21 @@ class CloudinaryImageHelper
     name_array
   end
 
-  def adjust_name_positioning(y_index, distance)
+  def adjust_name_positioning(y_index, distance, broken_name)
+    offset = 0
     if y_index == -180
       # Grid 2
-      y_index - (distance / 2).round
+      offset = (distance / 2).round
     elsif y_index == -400
       # Story 2
-      -460
+      offset = 60
     end
+
+    broken_name.each_with_index do |word, index|
+      y_index -= offset unless index == 0
+    end
+
+    y_index
   end
 
   def push_and_strip(name_array, name_string)

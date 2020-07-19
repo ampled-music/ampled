@@ -400,8 +400,8 @@ class CloudinaryImageHelper
       offset = 60
     end
 
-    broken_name.each_with_index do |word, index|
-      y_index -= offset unless index == 0
+    broken_name.each_with_index do |_, index|
+      y_index -= offset unless index.zero?
     end
 
     y_index

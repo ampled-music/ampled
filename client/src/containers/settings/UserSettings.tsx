@@ -357,11 +357,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
       name: `${cleanArtistName}_Facebook.jpg`,
       description: '',
     });
-    // if (promoteFacebook.length > 0) {
-    //   console.log(promoteFacebook);
-    // }
 
-    // Square
+    // Square 1
     promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
@@ -383,6 +380,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       description: '',
     });
 
+    // Square 2
     promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
@@ -403,6 +401,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       description: '',
     });
 
+    // Square 3
     promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
@@ -412,6 +411,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       description: '',
     });
 
+    // Square 4
     promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
@@ -420,7 +420,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
       name: `${cleanArtistName}_Grid4.png`,
       description: '',
     });
-
+    
+    // Square 5
     promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
@@ -430,6 +431,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       description: '',
     });
 
+    // Square 6
     promoteSquare.push({
       url: [
         BASE_UPLOAD_URL,
@@ -440,7 +442,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       description: '',
     });
 
-    // Story
+    // Story 'Blank'
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
@@ -462,6 +464,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       description: '',
     });
 
+    // Story 1
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
@@ -483,6 +486,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       description: '',
     });
 
+    // Story 2
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
@@ -503,6 +507,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       description: '',
     });
 
+    // Story 3
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
@@ -512,6 +517,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       description: '',
     });
 
+    // Story 4
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
@@ -521,6 +527,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       description: '',
     });
 
+    // Story 5
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,
@@ -530,6 +537,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       description: '',
     });
 
+    // Story 6
     promoteStory.push({
       url: [
         BASE_UPLOAD_URL,

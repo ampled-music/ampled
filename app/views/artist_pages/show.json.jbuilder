@@ -13,6 +13,10 @@ json.isStripeSetup @artist_page.is_stripe_ready
 json.approved @artist_page.approved
 json.hide_members @artist_page.hide_members
 json.supporter_count @artist_page.subscriber_count
+json.promote_facebook_image @artist_page.promote_facebook_image
+json.promote_square_images @artist_page.promote_square_images
+json.promote_story_images @artist_page.promote_story_images
+json.supporter_images @artist_page.supporter_images
 
 json.most_recent_supporter do
   if @artist_page.most_recent_supporter.present?

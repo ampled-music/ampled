@@ -170,6 +170,22 @@ class ArtistPage < ApplicationRecord
     ArtistPageApprovedEmailJob.perform_async(id) unless ENV["REDIS_URL"].nil?
   end
 
+  def promote_facebook_image
+    CloudinaryImageHelper.facebook_share_image(self)
+  end
+
+  def promote_square_images
+    CloudinaryImageHelper.promote_square_images(self)
+  end
+
+  def promote_story_images
+    CloudinaryImageHelper.promote_story_images(self)
+  end
+
+  def supporter_images
+    CloudinaryImageHelper.supporter_images(self)
+  end
+
   private
 
   def find_screenshot_url(video_url)

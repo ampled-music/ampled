@@ -171,19 +171,19 @@ class ArtistPage < ApplicationRecord
   end
 
   def promote_facebook_image
-    CloudinaryImageHelper.facebook_share_image(self)
+    SocialImageService.facebook_share_image(self)
   end
 
   def promote_square_images
-    CloudinaryImageHelper.promote_square_images(self)
+    SocialImageService.promote_square_images(self)
   end
 
   def promote_story_images
-    CloudinaryImageHelper.promote_story_images(self)
+    SocialImageService.promote_story_images(self)
   end
 
   def supporter_images
-    CloudinaryImageHelper.supporter_images(self)
+    SocialImageService.supporter_images(self)
   end
 
   private

@@ -33,48 +33,48 @@ RSpec.describe SocialImageService, type: :service do
   end
 
   describe "promote_square_images" do
-    let(:square1) {
+    let(:square1) do
       {
         url: "http://test.com/square1",
         name: "Test_Grid1.jpg",
         description: "Test Description 1"
       }
-    }
-    let(:square2) {
+    end
+    let(:square2) do
       {
         url: "http://test.com/square2",
         name: "Test_Grid2.jpg",
         description: "Test Description 2"
       }
-    }
-    let(:square3) {
+    end
+    let(:square3) do
       {
         url: "http://test.com/square3",
         name: "Test_Grid3.jpg",
         description: "Test Description 3"
       }
-    }
-    let(:square4) {
+    end
+    let(:square4) do
       {
         url: "http://test.com/square4",
         name: "Test_Grid4.jpg",
         description: "Test Description 4"
       }
-    }
-    let(:square5) {
+    end
+    let(:square5) do
       {
         url: "http://test.com/square5",
         name: "Test_Grid5.jpg",
         description: "Test Description 5"
       }
-    }
-    let(:square6) {
+    end
+    let(:square6) do
       {
         url: "http://test.com/square6",
         name: "Test_Grid6.jpg",
         description: "Test Description 6"
       }
-    }
+    end
 
     before(:each) do
       allow(SocialImages::Images::Square1)
@@ -143,55 +143,55 @@ RSpec.describe SocialImageService, type: :service do
   end
 
   describe "promote_story_images" do
-    let(:story_blank) {
+    let(:story_blank) do
       {
         url: "http://test.com/story-blank",
         name: "Test_StoryBlank.jpg",
         description: "Test Description Blank"
       }
-    }
-    let(:story1) {
+    end
+    let(:story1) do
       {
         url: "http://test.com/story1",
         name: "Test_Story1.jpg",
         description: "Test Description 1"
       }
-    }
-    let(:story2) {
+    end
+    let(:story2) do
       {
         url: "http://test.com/story2",
         name: "Test_Story2.jpg",
         description: "Test Description 2"
       }
-    }
-    let(:story3) {
+    end
+    let(:story3) do
       {
         url: "http://test.com/story3",
         name: "Test_Story3.jpg",
         description: "Test Description 3"
       }
-    }
-    let(:story4) {
+    end
+    let(:story4) do
       {
         url: "http://test.com/story4",
         name: "Test_Story4.jpg",
         description: "Test Description 4"
       }
-    }
-    let(:story5) {
+    end
+    let(:story5) do
       {
         url: "http://test.com/story5",
         name: "Test_Story5.jpg",
         description: "Test Description 5"
       }
-    }
-    let(:story6) {
+    end
+    let(:story6) do
       {
         url: "http://test.com/story6",
         name: "Test_Story6.jpg",
         description: "Test Description 6"
       }
-    }
+    end
 
     before(:each) do
       allow(SocialImages::Images::StoryBlank)
@@ -268,20 +268,20 @@ RSpec.describe SocialImageService, type: :service do
   end
 
   describe "supporter_images" do
-    let(:supporter_square) {
+    let(:supporter_square) do
       {
         url: "http://test.com/supporter-square",
         name: "Test_SupporterSquare.jpg",
         description: "Test Description Square"
       }
-    }
-    let(:supporter_story) {
+    end
+    let(:supporter_story) do
       {
         url: "http://test.com/supporter-story",
         name: "Test_SupporterStory.jpg",
         description: "Test Description Story"
       }
-    }
+    end
 
     before(:each) do
       allow(SocialImages::Images::SupporterSquare)
@@ -315,6 +315,5 @@ RSpec.describe SocialImageService, type: :service do
       expect(result[1])
         .to eq(supporter_story)
     end
-
   end
 end

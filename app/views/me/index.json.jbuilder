@@ -45,6 +45,9 @@ json.subscriptions @subscriptions do |subscription|
   json.last_post_date subscription.artist_page.last_post_date
   json.support_date subscription.created_at
   json.amount subscription.plan.nominal_amount
+  json.promoteSquareImages subscription.artist_page.promote_square_images
+  json.promoteStoryImages subscription.artist_page.promote_story_images
+  json.supporterImages subscription.artist_page.supporter_images
 end
 json.ownedPages @owned_pages do |page|
   json.role page.role
@@ -62,4 +65,7 @@ json.ownedPages @owned_pages do |page|
   json.stripeSignup page.role == "admin" ? page.page.stripe_signup_url : json.null
   json.stripeDashboard page.role == "admin" ? page.page.stripe_dashboard_url : json.null
   json.isStripeSetup page.page.is_stripe_ready
+  json.promoteSquareImages page.page.promote_square_images
+  json.promoteStoryImages page.page.promote_story_images
+  json.supporterImages page.page.supporter_images
 end

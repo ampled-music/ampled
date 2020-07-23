@@ -111,7 +111,9 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
 
     it "creates a local plan with the given nominal amount" do
       post url, params: create_params
-      expect(Plan.first.nominal_amount).to eq create_params[:amount]
+
+      plan = Plan.where(artist_page_id: create_params[:artist_page_id]).take
+      expect(plan.nominal_amount).to eq create_params[:amount]
     end
 
     it "calls email job for user supported artist" do

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Redirect } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -599,7 +598,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     showConfirmRemoveMember: false,
     confirmRemoveMemberIndex: 99,
     showDeleteModal: false,
-    isDeletedPage: false,
+    isSoftDeleted: false,
   };
 
   constructor(props) {
@@ -641,7 +640,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       }
     }
     if (editMode && artist && !prevProps?.artist?.name && artist.name) {
-      // console.log(artist);
       const {
         accent_color,
         name,
@@ -658,6 +656,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         slug,
         owners,
         images,
+        isSoftDeleted,
       } = artist;
       this.setState({
         artistColor: accent_color,
@@ -675,6 +674,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistSlug: slug,
         artistStripe: '',
         hideMembers: hide_members,
+        isSoftDeleted,
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
           role: owner.instrument || '',
@@ -714,6 +714,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         slug,
         owners,
         images,
+        isSoftDeleted,
         hide_members,
       } = artist;
       this.setState({
@@ -739,6 +740,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           isAdmin: owner.role === 'admin',
         })),
         images: images || [],
+        isSoftDeleted,
       });
     } else if (!editMode && userData) {
       // nothing commit
@@ -788,8 +790,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           type: 'success',
         });
 
-        this.setState({ isDeletedPage: true });
-        // window.location.href = '/';
+        this.setState({ isSoftDeleted: true, showDeleteModal: false });
       } else {
         this.props.showToast({
           message: response.data.message,
@@ -1578,8 +1579,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               <h4>Are you sure?</h4>
             </div>
             <p>
-              Deleting your page is permanent, and any content posted will be
-              deleted permanently as well.
+              TODO: Update this with copy about soft deletion. Deleting your
+              page is permanent, and any content posted will be deleted
+              permanently as well.
             </p>
             {this.renderSupporterCount()}
             <div className="delete-post-modal__actions action-buttons">
@@ -1623,9 +1625,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       me: { userData },
     } = this.props;
 
-    if (this.state.isDeletedPage) {
-      return <Redirect to="/" />;
-    } else if (this.state.loading) {
+    if (this.state.loading) {
       return <Loading artistLoading={true} />;
     } else if (userData && !userData.email_confirmed) {
       return (
@@ -1711,7 +1711,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               </div>
             )}
             <div className="row action-buttons">
-              {/* {this.renderDeleteBtn()} */}
+              {this.renderDeleteBtn()}
               <div className={`col-sm-6 center ${saveBtnClasses}`}>
                 <Button onClick={this.onSubmit} className="publish-button">
                   {this.props.editMode ? 'Update your page' : 'Save your page'}

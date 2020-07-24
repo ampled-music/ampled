@@ -13,6 +13,7 @@ json.youtube_handle @artist_page.youtube_handle
 json.external @artist_page.external
 json.images @artist_page.images, partial: "images/image", as: :image
 json.isStripeSetup @artist_page.is_stripe_ready
+json.isSoftDeleted @artist_page.is_soft_deleted
 json.approved @artist_page.approved
 json.hide_members @artist_page.hide_members
 json.supporter_count @artist_page.subscriber_count

@@ -2,8 +2,8 @@ import { apiAxios } from '../setup-axios';
 
 export const deleteArtist = async (artistId) => {
   const response = await apiAxios({
-    method: 'delete',
-    url: `/artist_pages/${artistId}.json?cancel_subscriptions=true`,
+    method: 'put',
+    url: `/artist_pages/soft_destroy/${artistId}`,
   });
 
   return response;

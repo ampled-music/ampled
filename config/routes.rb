@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   resources :subscriptions, only: %i[create destroy]
   resources :artist_pages
 
+  put "artist_pages/soft_destroy/:id", to: "artist_pages#soft_destroy"
+
   resources :posts, only: %i[destroy update index]
 
   resources :artist_pages, only: [] do

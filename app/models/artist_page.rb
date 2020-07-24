@@ -14,6 +14,7 @@
 #  hide_members         :boolean          default(FALSE)
 #  id                   :bigint(8)        not null, primary key
 #  instagram_handle     :string
+#  is_soft_deleted      :boolean          default(FALSE)
 #  location             :string
 #  name                 :string
 #  slug                 :string

@@ -1,5 +1,5 @@
 class ArtistPagesController < ApplicationController
-  before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy]
+  before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy soft_destroy]
   before_action :check_approved, only: :show
   before_action :check_user, only: %i[create update]
   before_action :check_has_image, only: :create
@@ -117,6 +117,20 @@ class ArtistPagesController < ApplicationController
     end
   end
 
+  def soft_destroy
+    unless @role == "admin" || current_user&.admin?
+      return render json: { status: "error", message: "You don't have that permission." }
+    end
+
+    begin
+      @artist_page.update(is_soft_deleted: true)
+      render json: { status: "ok", message: "Your page is scheduled to be deleted in 2 weeks!" }
+    rescue
+      error_msg = "Something went wrong with scheduling your page for deletion. Please try again."
+      render json: { status: "error", message: error_msg }
+    end
+  end
+
   def destroy
     unless @role == "admin" || current_user&.admin?
       return render json: { status: "error", message: "You don't have that permission." }
@@ -125,6 +139,7 @@ class ArtistPagesController < ApplicationController
     # This param will be set when the Delete your page button is click by the Artist admin
     # but not when a site admin is deleting a page. When an Artist admin initiates the deletion,
     # we want to let them do that and first cancel any subscriptions.
+    # TODO: can remove the below now that we soft delete from user initiated action
     cancel_subs = params[:cancel_subscriptions] && params[:cancel_subscriptions] == "true"
     @artist_page.subscriptions.each(&:cancel!) if cancel_subs
 

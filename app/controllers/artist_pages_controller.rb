@@ -1,5 +1,5 @@
 class ArtistPagesController < ApplicationController
-  before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy soft_destroy]
+  before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy soft_destroy restore]
   before_action :check_approved, only: :show
   before_action :check_user, only: %i[create update]
   before_action :check_has_image, only: :create
@@ -114,6 +114,20 @@ class ArtistPagesController < ApplicationController
       render json: { status: "ok", message: "Your page has been updated!" }
     else
       render json: { status: "error", message: "Something went wrong." }
+    end
+  end
+
+  def restore
+    unless @role == "admin" || current_user&.admin?
+      return render json: { status: "error", message: "You don't have that permission." }
+    end
+
+    begin
+      @artist_page.update(is_soft_deleted: false)
+      render json: { status: "ok", message: "Your page is restored and will no longer be deleted." }
+    rescue
+      error_msg = "Something went wrong with restoring your page. Please try again."
+      render json: { status: "error", message: error_msg }
     end
   end
 

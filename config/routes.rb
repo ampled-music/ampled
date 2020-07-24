@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :artist_pages
 
   put "artist_pages/soft_destroy/:id", to: "artist_pages#soft_destroy"
+  put "artist_pages/restore/:id", to: "artist_pages#restore"
 
   resources :posts, only: %i[destroy update index]
 

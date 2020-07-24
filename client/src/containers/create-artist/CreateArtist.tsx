@@ -49,6 +49,7 @@ import { Store } from '../../redux/configure-store';
 
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { deleteArtistAction } from '../../redux/artists/delete';
+import { restoreArtistAction } from '../../redux/artists/restore';
 
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
@@ -64,6 +65,7 @@ interface CreateArtistProps {
   artist?: any;
   showToast: Function;
   deleteArtist: Function;
+  restoreArtist: Function;
 }
 
 interface TabPanelProps {
@@ -800,6 +802,32 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     } else {
       this.props.showToast({
         message: 'There was an error deleting your artist page.',
+        type: 'error',
+      });
+    }
+  };
+
+  restoreArtistPage = async () => {
+    // TODO: change deleteArtist to restoreArtist
+    const response = await this.props.restoreArtist(this.props.artist.id);
+
+    if (response && response.data) {
+      if (response.status === 200 && response.data?.status !== 'error') {
+        this.props.showToast({
+          message: response.data.message,
+          type: 'success',
+        });
+
+        this.setState({ isSoftDeleted: false, showDeleteModal: false });
+      } else {
+        this.props.showToast({
+          message: response.data.message,
+          type: 'error',
+        });
+      }
+    } else {
+      this.props.showToast({
+        message: 'There was an error restoring your artist page.',
         type: 'error',
       });
     }
@@ -1564,6 +1592,65 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     );
   };
 
+  renderDeleteConfirmation = () => {
+    return (
+      <div className="delete-post-modal__container">
+        <img className="tear tear__topper" src={tear} alt="" />
+        <div className="delete-post-modal">
+          <div className="delete-post-modal__title">
+            <h4>Are you sure?</h4>
+          </div>
+          <p>
+            TODO: Update this with copy about soft deletion. Deleting your page
+            is permanent, and any content posted will be deleted permanently as
+            well.
+          </p>
+          {this.renderSupporterCount()}
+          <div className="delete-post-modal__actions action-buttons">
+            <button
+              className="cancel-button"
+              onClick={() => this.setState({ showDeleteModal: false })}
+            >
+              Cancel
+            </button>
+            <button className="delete-button" onClick={this.deleteArtistPage}>
+              Delete Artist Page
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  renderRestoreConfirmation = () => {
+    return (
+      <div className="delete-post-modal__container">
+        <img className="tear tear__topper" src={tear} alt="" />
+        <div className="delete-post-modal">
+          <div className="delete-post-modal__title">
+            <h4>Are you sure?</h4>
+          </div>
+          <p>
+            TODO: Update this with copy about soft deletion. Restoring your page
+            will prevent it from being deleted.
+          </p>
+          {this.renderSupporterCount()}
+          <div className="delete-post-modal__actions action-buttons">
+            <button
+              className="cancel-button"
+              onClick={() => this.setState({ showDeleteModal: false })}
+            >
+              Cancel
+            </button>
+            <button className="delete-button" onClick={this.restoreArtistPage}>
+              Restore Artist Page
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   renderDeleteModal = () => {
     return (
       <Modal
@@ -1572,6 +1659,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           this.setState({ showDeleteModal: !this.state.showDeleteModal })
         }
       >
+<<<<<<< HEAD
         <div className="delete-post-modal__container">
           <img className="tear tear__topper" src={tear} alt="" />
           <div className="delete-post-modal">
@@ -1600,6 +1688,35 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </div>
           </div>
         </div>
+||||||| merged common ancestors
+        <div className="delete-post-modal__container">
+          <img className="tear tear__topper" src={tear} alt="" />
+          <div className="delete-post-modal">
+            <div className="delete-post-modal__title">
+              <h4>Are you sure?</h4>
+            </div>
+            <p>
+              TODO: Update this with copy about soft deletion. Deleting your
+              page is permanent, and any content posted will be deleted
+              permanently as well.
+            </p>
+            {this.renderSupporterCount()}
+            <div className="delete-post-modal__actions action-buttons">
+              <button
+                className="cancel-button"
+                onClick={() => this.setState({ showDeleteModal: false })}
+              >
+                Cancel
+              </button>
+              <button className="delete-button" onClick={this.deleteArtistPage}>
+                Delete Artist Page
+              </button>
+            </div>
+          </div>
+        </div>
+        {this.state.isSoftDeleted
+          ? this.renderRestoreConfirmation()
+          : this.renderDeleteConfirmation()}
       </Modal>
     );
   };
@@ -1608,14 +1725,19 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     if (!this.isShowDeleteBtn()) {
       return;
     }
+
+    const btnLabel = this.state.isSoftDeleted
+      ? 'Restore your page'
+      : 'Delete your page';
+
     return (
       <div className="col-md-6 col-sm-12">
         <Button
           onClick={this.onDeleteBtnClicked}
           className="btn btn-ampled btn-delete"
         >
-          Delete your page
-        </Button>
+          {btnLabel}
+        </button>
       </div>
     );
   }
@@ -1734,6 +1856,7 @@ const mapStateToProps = (state: Store) => {
 const mapDispatchToProps = (dispatch) => ({
   showToast: bindActionCreators(showToastAction, dispatch),
   deleteArtist: bindActionCreators(deleteArtistAction, dispatch),
+  restoreArtist: bindActionCreators(restoreArtistAction, dispatch),
 });
 
 const connectArtist = connect(

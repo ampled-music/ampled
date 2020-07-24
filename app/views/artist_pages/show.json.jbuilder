@@ -17,6 +17,7 @@ json.isSoftDeleted @artist_page.is_soft_deleted
 json.approved @artist_page.approved
 json.hide_members @artist_page.hide_members
 json.supporter_count @artist_page.subscriber_count
+json.permanentlyDeleteAt @artist_page.permanently_delete_at
 json.promote_facebook_image @artist_page.promote_facebook_image
 json.promote_square_images @artist_page.promote_square_images
 json.promote_story_images @artist_page.promote_story_images

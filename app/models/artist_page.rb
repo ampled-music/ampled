@@ -2,6 +2,7 @@
 #
 # Table name: artist_pages
 #
+<<<<<<< HEAD
 #  accent_color         :string
 #  approved             :boolean          default(FALSE)
 #  artist_owner         :boolean          default(FALSE), not null
@@ -28,6 +29,54 @@
 #  video_screenshot_url :string
 #  video_url            :string
 #  youtube_handle       :string
+||||||| merged common ancestors
+#  accent_color         :string
+#  approved             :boolean          default(FALSE)
+#  banner_image_url     :string
+#  bio                  :string
+#  created_at           :datetime         not null
+#  featured             :boolean          default(FALSE)
+#  hide_members         :boolean          default(FALSE)
+#  id                   :bigint(8)        not null, primary key
+#  instagram_handle     :string
+#  is_soft_deleted      :boolean          default(FALSE)
+#  location             :string
+#  name                 :string
+#  slug                 :string
+#  state_token          :string
+#  stripe_access_token  :string
+#  stripe_product_id    :string
+#  stripe_user_id       :string
+#  twitter_handle       :string
+#  updated_at           :datetime         not null
+#  verb_plural          :boolean          default(FALSE)
+#  video_screenshot_url :string
+#  video_url            :string
+=======
+#  accent_color          :string
+#  approved              :boolean          default(FALSE)
+#  banner_image_url      :string
+#  bio                   :string
+#  created_at            :datetime         not null
+#  featured              :boolean          default(FALSE)
+#  hide_members          :boolean          default(FALSE)
+#  id                    :bigint(8)        not null, primary key
+#  instagram_handle      :string
+#  is_soft_deleted       :boolean          default(FALSE)
+#  location              :string
+#  name                  :string
+#  permanently_delete_at :datetime
+#  slug                  :string
+#  state_token           :string
+#  stripe_access_token   :string
+#  stripe_product_id     :string
+#  stripe_user_id        :string
+#  twitter_handle        :string
+#  updated_at            :datetime         not null
+#  verb_plural           :boolean          default(FALSE)
+#  video_screenshot_url  :string
+#  video_url             :string
+>>>>>>> Add permanently deleted at field to artist pages to be able to schedule deletions
 #
 # Indexes
 #

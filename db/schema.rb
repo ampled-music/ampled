@@ -35,11 +35,18 @@ ActiveRecord::Schema.define(version: 2020_11_29_095835) do
     t.boolean "approved", default: false
     t.boolean "featured", default: false
     t.boolean "hide_members", default: false
+<<<<<<< HEAD
     t.string "bandcamp_handle"
     t.string "youtube_handle"
     t.string "external"
     t.string "style_type"
     t.boolean "artist_owner", default: false, null: false
+||||||| merged common ancestors
+    t.boolean "is_soft_deleted", default: false
+=======
+    t.boolean "is_soft_deleted", default: false
+    t.datetime "permanently_delete_at"
+>>>>>>> Add permanently deleted at field to artist pages to be able to schedule deletions
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 
@@ -181,6 +188,7 @@ ActiveRecord::Schema.define(version: 2020_11_29_095835) do
     t.boolean "card_is_valid"
     t.boolean "admin"
     t.string "redirect_uri"
+    t.string "profile_image_url"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true

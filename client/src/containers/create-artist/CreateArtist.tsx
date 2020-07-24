@@ -601,6 +601,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     confirmRemoveMemberIndex: 99,
     showDeleteModal: false,
     isSoftDeleted: false,
+    permanentlyDeletedAt: null,
   };
 
   constructor(props) {
@@ -659,6 +660,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         owners,
         images,
         isSoftDeleted,
+        permanentlyDeletedAt,
       } = artist;
       this.setState({
         artistColor: accent_color,
@@ -677,6 +679,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistStripe: '',
         hideMembers: hide_members,
         isSoftDeleted,
+        permanentlyDeletedAt,
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
           role: owner.instrument || '',
@@ -717,6 +720,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         owners,
         images,
         isSoftDeleted,
+        permanentlyDeletedAt,
         hide_members,
       } = artist;
       this.setState({
@@ -743,6 +747,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         })),
         images: images || [],
         isSoftDeleted,
+        permanentlyDeletedAt,
       });
     } else if (!editMode && userData) {
       // nothing commit
@@ -792,7 +797,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           type: 'success',
         });
 
-        this.setState({ isSoftDeleted: true, showDeleteModal: false });
+        this.setState({
+          isSoftDeleted: true,
+          permanentlyDeletedAt: response.data?.delete_at,
+          showDeleteModal: false,
+        });
       } else {
         this.props.showToast({
           message: response.data.message,
@@ -808,7 +817,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
   };
 
   restoreArtistPage = async () => {
-    // TODO: change deleteArtist to restoreArtist
     const response = await this.props.restoreArtist(this.props.artist.id);
 
     if (response && response.data) {
@@ -818,7 +826,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           type: 'success',
         });
 
-        this.setState({ isSoftDeleted: false, showDeleteModal: false });
+        this.setState({
+          isSoftDeleted: false,
+          permanentlyDeletedAt: null,
+          showDeleteModal: false,
+        });
       } else {
         this.props.showToast({
           message: response.data.message,

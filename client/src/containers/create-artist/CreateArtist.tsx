@@ -601,7 +601,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     confirmRemoveMemberIndex: 99,
     showDeleteModal: false,
     isSoftDeleted: false,
-    permanentlyDeletedAt: null,
+    permanentlyDeleteAt: null,
   };
 
   constructor(props) {
@@ -660,7 +660,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         owners,
         images,
         isSoftDeleted,
-        permanentlyDeletedAt,
+        permanentlyDeleteAt,
       } = artist;
       this.setState({
         artistColor: accent_color,
@@ -679,7 +679,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistStripe: '',
         hideMembers: hide_members,
         isSoftDeleted,
-        permanentlyDeletedAt,
+        permanentlyDeleteAt,
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
           role: owner.instrument || '',
@@ -720,7 +720,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         owners,
         images,
         isSoftDeleted,
-        permanentlyDeletedAt,
+        permanentlyDeleteAt,
         hide_members,
       } = artist;
       this.setState({
@@ -747,7 +747,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         })),
         images: images || [],
         isSoftDeleted,
-        permanentlyDeletedAt,
+        permanentlyDeleteAt,
       });
     } else if (!editMode && userData) {
       // nothing commit
@@ -799,7 +799,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
 
         this.setState({
           isSoftDeleted: true,
-          permanentlyDeletedAt: response.data?.delete_at,
+          permanentlyDeleteAt: response.data?.delete_at,
           showDeleteModal: false,
         });
       } else {
@@ -828,7 +828,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
 
         this.setState({
           isSoftDeleted: false,
-          permanentlyDeletedAt: null,
+          permanentlyDeleteAt: null,
           showDeleteModal: false,
         });
       } else {
@@ -862,6 +862,28 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     } else {
       this.setState({ [name]: value });
     }
+  };
+
+  renderDeletionWarning = () => {
+    const { permanentlyDeleteAt } = this.state;
+
+    if (!permanentlyDeleteAt) {
+      return null;
+    }
+
+    const deletionDate = new Date(permanentlyDeleteAt).toLocaleDateString();
+    const deletionDateText = `This artist page is scheduled for deletion on ${deletionDate}.`;
+    const restorePermissions = this.isShowDeleteBtn()
+      ? 'click Restore Your Page below'
+      : 'an admin user of this page must restore this page.';
+    const restorationText = `To restore the page and cancel permanent deletion of it, ${restorePermissions}.`;
+
+    return (
+      <div className="container artist-deletion-warning">
+        <p>{deletionDateText}</p>
+        <p>{restorationText}</p>
+      </div>
+    );
   };
 
   renderHeader = () => {
@@ -1820,6 +1842,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         <MuiThemeProvider theme={theme}>
           {this.renderHeader()}
           {/* {this.renderNav()} */}
+          {this.renderDeletionWarning()}
           {this.renderAbout()}
           {this.renderInfo()}
           {this.renderImages()}

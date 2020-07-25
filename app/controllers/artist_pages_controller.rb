@@ -125,7 +125,8 @@ class ArtistPagesController < ApplicationController
     begin
       @artist_page.update(is_soft_deleted: false, permanently_delete_at: nil)
       render json: { status: "ok", message: "Your page is restored and will no longer be deleted." }
-    rescue
+    rescue StandardError => e
+      puts "Error with restoring artist page #{@artist_page.id}: #{e}"
       error_msg = "Something went wrong with restoring your page. Please try again."
       render json: { status: "error", message: error_msg }
     end
@@ -139,8 +140,13 @@ class ArtistPagesController < ApplicationController
     begin
       delete_at = DateTime.now + 2.weeks
       @artist_page.update(is_soft_deleted: true, permanently_delete_at: delete_at)
-      render json: { status: "ok", message: "Your page is scheduled to be deleted in 2 weeks!", permanently_delete_at: delete_at }
-    rescue
+      render json: {
+        status: "ok",
+        message: "Your page is scheduled to be deleted in 2 weeks!",
+        permanently_delete_at: delete_at
+      }
+    rescue StandardError => e
+      puts "Error with soft destroying artist page #{@artist_page.id}: #{e}"
       error_msg = "Something went wrong with scheduling your page for deletion. Please try again."
       render json: { status: "error", message: error_msg }
     end

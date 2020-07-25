@@ -259,7 +259,7 @@ RSpec.describe "PUT /artist_page", type: :request do
 end
 
 RSpec.describe "PUT /artist_page/soft_destroy", type: :request do
-  context "when setting an artist page for soft deletion" do
+  context "when setting an artist page for soft deletion with admin user of page" do
     let(:user) { create(:user, confirmed_at: Time.zone.now) }
     let(:artist_page) { create(:artist_page, slug: "test", approved: true, name: "old name") }
     let!(:ownership) { PageOwnership.create(user: user, artist_page: artist_page, role: "admin") }
@@ -282,10 +282,34 @@ RSpec.describe "PUT /artist_page/soft_destroy", type: :request do
       expect(artist_page.permanently_delete_at).not_to be_nil
     end
   end
+
+  context "when setting an artist page for soft deletion with unauthorized user of a page" do
+    let(:user) { create(:user, confirmed_at: Time.zone.now) }
+    let(:artist_page) { create(:artist_page, slug: "test", approved: true, name: "old name") }
+    let!(:ownership) { PageOwnership.create(user: user, artist_page: artist_page, role: "nadmin") }
+    let(:url) { "/artist_pages/soft_destroy/#{artist_page.id}" }
+
+    before(:each) do
+      sign_in user
+    end
+
+    it "returns unauthorized message" do
+      put url
+      expect(JSON.parse(response.body)["message"]).to eq "You don't have that permission."
+    end
+
+    it "does not update soft deletion or set a permanent deletion date" do
+      put url
+      artist_page.reload
+
+      expect(artist_page.is_soft_deleted).to eq(false)
+      expect(artist_page.permanently_delete_at).to be_nil
+    end
+  end
 end
 
 RSpec.describe "PUT /artist_page/restore", type: :request do
-  context "when setting an artist page for restoration" do
+  context "when setting an artist page for restoration with admin user of page " do
     let(:artist_page) do
       create(
         :artist_page, slug: "test", approved: true, name: "old name", is_soft_deleted: true,
@@ -312,6 +336,36 @@ RSpec.describe "PUT /artist_page/restore", type: :request do
 
       expect(artist_page.is_soft_deleted).to eq(false)
       expect(artist_page.permanently_delete_at).to be_nil
+    end
+  end
+
+  context "when setting an artist page for restoration with unauthorized user of artist page" do
+    let(:artist_page) do
+      create(
+        :artist_page, slug: "test", approved: true, name: "old name", is_soft_deleted: true,
+        permanently_delete_at: DateTime.now
+      )
+    end
+
+    let(:url) { "/artist_pages/restore/#{artist_page.id}" }
+    let(:user) { create(:user, confirmed_at: Time.zone.now) }
+    let!(:ownership) { PageOwnership.create(user: user, artist_page: artist_page, role: "nadmin") }
+
+    before(:each) do
+      sign_in user
+    end
+
+    it "returns unauthorized message" do
+      put url
+      expect(JSON.parse(response.body)["message"]).to eq "You don't have that permission."
+    end
+
+    it "does not update soft deletion or nullify permanent deletion date" do
+      put url
+      artist_page.reload
+
+      expect(artist_page.is_soft_deleted).to eq(true)
+      expect(artist_page.permanently_delete_at).to_not be_nil
     end
   end
 end

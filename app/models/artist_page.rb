@@ -170,8 +170,8 @@ class ArtistPage < ApplicationRecord
     ArtistPageApprovedEmailJob.perform_async(id) unless ENV["REDIS_URL"].nil?
   end
 
-  def promote_facebook_image
-    SocialImageService.facebook_share_image(self)
+  def banner_image
+    SocialImageService.banner_image(self)
   end
 
   def promote_square_images

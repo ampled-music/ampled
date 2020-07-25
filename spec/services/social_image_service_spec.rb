@@ -3,32 +3,38 @@ require "rails_helper"
 RSpec.describe SocialImageService, type: :service do
   let(:artist_page) { create(:artist_page, slug: "test") }
 
-  describe "facebook_share_image" do
-    let(:fb_img_uri) { "http://test.com/fb" }
-
-    before(:each) do
-      allow(SocialImages::Images::FacebookImage)
-        .to receive(:build)
-        .and_return(fb_img_uri)
+  describe "banner_image" do
+    let(:banner) do
+      {
+        url: "http://test.com/banner",
+        name: "Test_Banner.jpg",
+        description: "Test Description"
+      }
     end
 
-    it "should call build on FacebookImage with artist page" do
+    before(:each) do
+      allow(SocialImages::Images::Banner)
+        .to receive(:build)
+        .and_return(banner)
+    end
+
+    it "should call build on Banner with artist page" do
       # act
-      SocialImageService.facebook_share_image(artist_page)
+      SocialImageService.banner_image(artist_page)
 
       # assert
-      expect(SocialImages::Images::FacebookImage)
+      expect(SocialImages::Images::Banner)
         .to have_received(:build)
         .with(artist_page)
     end
 
-    it "should return what FacebookImage builds" do
+    it "should return what Banner builds" do
       # act
-      result = SocialImageService.facebook_share_image(artist_page)
+      result = SocialImageService.banner_image(artist_page)
 
       # assert
       expect(result)
-        .to eq(fb_img_uri)
+        .to eq(banner)
     end
   end
 

@@ -9,7 +9,7 @@ class ReactController < ActionController::Base
 
     response_html = render_to_string file: "public/index.html", layout: false
 
-    social_image = SocialImageService.facebook_share_image(artist_page)
+    social_image = SocialImageService.banner_image(artist_page)
 
     # replace title tag and title metas
     response_html.gsub!(/Ampled\s\|\s/, "#{artist_page.name} | Ampled | ")
@@ -22,7 +22,7 @@ class ReactController < ActionController::Base
     \n<meta name=\"og:description\" content=\"#{artist_page.bio}\" />"
     # add image if one exists
     unless social_image.nil?
-      additional_meta += "\n<meta property=\"og:image\" content=\"#{social_image}\" />"
+      additional_meta += "\n<meta property=\"og:image\" content=\"#{social_image.url}\" />"
       additional_meta += "\n<meta property=\"og:image:width\" content=\"1200\" />"
       additional_meta += "\n<meta property=\"og:image:height\" content=\"630\" />"
     end
@@ -42,7 +42,7 @@ class ReactController < ActionController::Base
 
     response_html = render_to_string file: "public/index.html", layout: false
 
-    social_image = SocialImageService.facebook_share_image(artist_page)
+    social_image = SocialImageService.banner_image(artist_page)
 
     # replace title tag and title metas
     response_html.gsub!(/Ampled\s\|\s/, "#{post.title} | #{artist_page.name} | Ampled | ")
@@ -55,7 +55,7 @@ class ReactController < ActionController::Base
     \n<meta name=\"og:description\" content=\"#{artist_page.bio}\" />"
     # add image if one exists
     unless social_image.nil?
-      additional_meta += "\n<meta property=\"og:image\" content=\"#{social_image}\" />"
+      additional_meta += "\n<meta property=\"og:image\" content=\"#{social_image.url}\" />"
       additional_meta += "\n<meta property=\"og:image:width\" content=\"1200\" />"
       additional_meta += "\n<meta property=\"og:image:height\" content=\"630\" />"
     end

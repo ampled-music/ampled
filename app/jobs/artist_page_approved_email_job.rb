@@ -14,6 +14,11 @@ class ArtistPageApprovedEmailJob
   private
 
   def messages
+    social_share_images = []
+    social_share_images << artist.banner_image
+    social_share_images += artist.promote_square_images
+    social_share_images += artist.promote_story_images
+
     users.map do |user|
       {
         from: ENV["POSTMARK_FROM_EMAIL"],
@@ -21,7 +26,8 @@ class ArtistPageApprovedEmailJob
         template_alias: "artist-page-approved",
         template_model: {
           artist_name: artist.name,
-          artist_page_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}"
+          artist_page_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}",
+          social_share_images: social_share_images
         }
       }
     end

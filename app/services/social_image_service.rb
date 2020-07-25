@@ -1,6 +1,6 @@
 class SocialImageService
-  def self.facebook_share_image(artist_page)
-    new(artist_page).facebook_share_image
+  def self.banner_image(artist_page)
+    new(artist_page).banner_image
   end
 
   def self.promote_square_images(artist_page)
@@ -21,8 +21,8 @@ class SocialImageService
     @artist_page = artist_page
   end
 
-  def facebook_share_image
-    SocialImages::Images::FacebookImage.build(artist_page)
+  def banner_image
+    SocialImages::Images::Banner.build(artist_page)
   end
 
   def promote_square_images

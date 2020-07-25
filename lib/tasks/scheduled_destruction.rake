@@ -7,9 +7,9 @@ namespace :scheduled_destruction do
       begin
         ap.subscriptions.each(&:cancel!)
         ap.destroy
-        puts "Destroyed artist page with id: #{ap.id}"
+        Rails.logger.info "Destroyed artist page with id: #{ap.id}"
       rescue StandardError => e
-        puts "Error destroying artist page with id: #{ap.id}"
+        Rails.logger.error "Error destroying artist page with id: #{ap.id}"
       end
     end
   end

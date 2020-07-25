@@ -126,7 +126,7 @@ class ArtistPagesController < ApplicationController
       @artist_page.update(is_soft_deleted: false, permanently_delete_at: nil)
       render json: { status: "ok", message: "Your page is restored and will no longer be deleted." }
     rescue StandardError => e
-      puts "Error with restoring artist page #{@artist_page.id}: #{e}"
+      Rails.logger.error "Error with restoring artist page #{@artist_page.id}: #{e}"
       error_msg = "Something went wrong with restoring your page. Please try again."
       render json: { status: "error", message: error_msg }
     end
@@ -146,7 +146,7 @@ class ArtistPagesController < ApplicationController
         permanently_delete_at: delete_at
       }
     rescue StandardError => e
-      puts "Error with soft destroying artist page #{@artist_page.id}: #{e}"
+      Rails.logger.error "Error with soft destroying artist page #{@artist_page.id}: #{e}"
       error_msg = "Something went wrong with scheduling your page for deletion. Please try again."
       render json: { status: "error", message: error_msg }
     end

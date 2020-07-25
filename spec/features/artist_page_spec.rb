@@ -286,12 +286,13 @@ end
 
 RSpec.describe "PUT /artist_page/restore", type: :request do
   context "when setting an artist page for restoration" do
-    let(:artist_page) {
+    let(:artist_page) do
       create(
         :artist_page, slug: "test", approved: true, name: "old name", is_soft_deleted: true,
         permanently_delete_at: DateTime.now
       )
-    }
+    end
+
     let(:url) { "/artist_pages/restore/#{artist_page.id}" }
     let(:user) { create(:user, confirmed_at: Time.zone.now) }
     let!(:ownership) { PageOwnership.create(user: user, artist_page: artist_page, role: "admin") }

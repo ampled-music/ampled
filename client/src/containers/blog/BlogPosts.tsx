@@ -67,10 +67,10 @@ class BlogPosts extends React.Component<PostsProps, any> {
 
           <img className="tear tear_1" src={tear_1} alt="" />
         </div>
-        <div className="container">
-          <div className="row">
-            {this.state.posts.map((post, index) =>
-              index === 0 ? (
+        <div className="row">
+          {this.state.posts.map(
+            (post, index) =>
+              index === 0 && (
                 <div className="col-12 blog-posts__tease main" key={post.id}>
                   <div
                     className="blog-posts__tease_image"
@@ -78,99 +78,110 @@ class BlogPosts extends React.Component<PostsProps, any> {
                       backgroundImage: `url(${post.featured_image_url})`,
                     }}
                   />
-                  <div className="blog-posts__info">
-                    <Link to={`/blog/${post.slug}`}>
-                      <h2
-                        className="blog-posts__tease_title"
-                        dangerouslySetInnerHTML={{
-                          __html: post.title.rendered,
-                        }}
-                      />
-                    </Link>
-                    <div className="blog-posts__info_border">
-                      {post.acf && post.acf.guest_author ? (
-                        <div className="blog-posts__info_author">
-                          {post.acf.guest_url ? (
-                            <>
-                              by{' '}
-                              <a href={post.acf.guest_url}>
-                                {post.acf.guest_author}
-                              </a>
-                            </>
+                  <div className="container">
+                    <div className="row">
+                      <div className="blog-posts__info">
+                        <Link to={`/blog/${post.slug}`}>
+                          <h2
+                            className="blog-posts__tease_title"
+                            dangerouslySetInnerHTML={{
+                              __html: post.title.rendered,
+                            }}
+                          />
+                        </Link>
+                        <div className="blog-posts__info_border">
+                          {post.acf && post.acf.guest_author ? (
+                            <div className="blog-posts__info_author">
+                              {post.acf.guest_url ? (
+                                <>
+                                  by{' '}
+                                  <a href={post.acf.guest_url}>
+                                    {post.acf.guest_author}
+                                  </a>
+                                </>
+                              ) : (
+                                <>by {post.acf.guest_author}</>
+                              )}
+                            </div>
                           ) : (
-                            <>by {post.acf.guest_author}</>
+                            <div className="blog-posts__info_author">
+                              by {post._embedded.author[0].name}
+                            </div>
                           )}
+                          <div className="blog-posts__info_date">
+                            {Moment(post.date).format('MMMM Do, YYYY')}
+                          </div>
                         </div>
-                      ) : (
-                        <div className="blog-posts__info_author">
-                          by {post._embedded.author[0].name}
-                        </div>
-                      )}
-                      <div className="blog-posts__info_date">
-                        {Moment(post.date).format('MMMM Do, YYYY')}
                       </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="col-md-4 blog-posts__tease" key={post.id}>
-                  <div
-                    className="blog-posts__tease_image"
-                    style={{
-                      backgroundImage: `url(${post.featured_image_url})`,
-                    }}
-                  />
-                  <Link to={`/blog/${post.slug}`}>
-                    <div className="blog-posts__tease_border"></div>
-                  </Link>
-                  {console.log(post)}
-                  <div className="blog-posts__info">
-                    <Link to={`/blog/${post.slug}`}>
-                      <h4
-                        className="blog-posts__tease_title"
-                        dangerouslySetInnerHTML={{
-                          __html: post.title.rendered,
-                        }}
-                      />
-                    </Link>
-                    {post.acf && post.acf.guest_author ? (
-                      <div className="blog-posts__info_author">
-                        {post.acf.guest_url ? (
-                          <>
-                            by{' '}
-                            <a href={post.acf.guest_url}>
-                              {post.acf.guest_author}
-                            </a>
-                          </>
-                        ) : (
-                          <>by {post.acf.guest_author}</>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="blog-posts__info_author">
-                        by {post._embedded.author[0].name}
-                      </div>
-                    )}
-                    <div className="blog-posts__info_date">
-                      {Moment(post.date).format('MMMM Do, YYYY')}
                     </div>
                   </div>
                 </div>
               ),
-            )}
+          )}
+          <div className="container">
+            <div className="row">
+              {this.state.posts.map(
+                (post, index) =>
+                  index > 0 && (
+                    <div className="col-md-4 blog-posts__tease" key={post.id}>
+                      <div
+                        className="blog-posts__tease_image"
+                        style={{
+                          backgroundImage: `url(${post.featured_image_url})`,
+                        }}
+                      />
+                      <Link to={`/blog/${post.slug}`}>
+                        <div className="blog-posts__tease_border"></div>
+                      </Link>
+                      {console.log(post)}
+                      <div className="blog-posts__info">
+                        <Link to={`/blog/${post.slug}`}>
+                          <h4
+                            className="blog-posts__tease_title"
+                            dangerouslySetInnerHTML={{
+                              __html: post.title.rendered,
+                            }}
+                          />
+                        </Link>
+                        {post.acf && post.acf.guest_author ? (
+                          <div className="blog-posts__info_author">
+                            {post.acf.guest_url ? (
+                              <>
+                                by{' '}
+                                <a href={post.acf.guest_url}>
+                                  {post.acf.guest_author}
+                                </a>
+                              </>
+                            ) : (
+                              <>by {post.acf.guest_author}</>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="blog-posts__info_author">
+                            by {post._embedded.author[0].name}
+                          </div>
+                        )}
+                        <div className="blog-posts__info_date">
+                          {Moment(post.date).format('MMMM Do, YYYY')}
+                        </div>
+                      </div>
+                    </div>
+                  ),
+              )}
+            </div>
           </div>
-
-          {this.state.page > 1 && (
-            <button onClick={this.prevPage} className="btn btn-ampled">
-              Prev Page
-            </button>
-          )}
-          {this.state.posts.length === 10 && (
-            <button onClick={this.nextPage} className="btn btn-ampled">
-              Next Page
-            </button>
-          )}
         </div>
+
+        {this.state.page > 1 && (
+          <button onClick={this.prevPage} className="btn btn-ampled">
+            Prev Page
+          </button>
+        )}
+        {this.state.posts.length === 10 && (
+          <button onClick={this.nextPage} className="btn btn-ampled">
+            Next Page
+          </button>
+        )}
       </div>
     );
   }

@@ -6,6 +6,7 @@
   width: 100%;
   max-width: 2000px;
   margin: 50px auto 0;
+  overflow: hidden;
 
   a {
     color: $black;
@@ -18,7 +19,7 @@
   }
 
   &__header {
-    margin-bottom: -115px;
+    margin-bottom: -125px;
     text-align: center;
     font-family: $font-family-sans-serif;
     position: relative;
@@ -40,16 +41,14 @@
       height: 220px;
       width: calc(100% - 30px);
       position: absolute;
-      top: 0px;
+      top: 4px;
+      left: 4px;
     }
     &_image {
       height: 220px;
       width: 100%;
       background-size: cover;
       background-position: center center;
-      position: relative;
-      top: -4px;
-      right: -3px;
     }
     &_title {
       margin-bottom: 0.5rem;
@@ -62,7 +61,11 @@
     &.main {
       .blog-posts__info {
         max-width: 600px;
-        margin-right: 2rem;
+        width: 85%;
+        @include mq($layout-m) {
+          margin-right: 12px;
+          max-width: 600px;
+        }
       }
       .blog-posts__info_author,
       .blog-posts__info_date {
@@ -73,7 +76,9 @@
         margin-right: 1rem;
       }
       .blog-posts__tease_image {
-        height: 500px;
+        height: 50vh;
+        max-width: 1650px;
+        margin: auto;
       }
     }
   }

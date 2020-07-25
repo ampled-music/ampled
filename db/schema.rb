@@ -188,7 +188,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_095835) do
     t.boolean "card_is_valid"
     t.boolean "admin"
     t.string "redirect_uri"
-    t.string "profile_image_url"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true

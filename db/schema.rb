@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_06_001526) do
+ActiveRecord::Schema.define(version: 2020_07_29_174634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 2020_05_06_001526) do
     t.string "public_id"
     t.string "imageable_type"
     t.bigint "imageable_id"
+    t.string "coordinates"
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 
@@ -151,6 +152,7 @@ ActiveRecord::Schema.define(version: 2020_05_06_001526) do
     t.boolean "card_is_valid"
     t.boolean "admin"
     t.string "redirect_uri"
+    t.string "coordinates"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true

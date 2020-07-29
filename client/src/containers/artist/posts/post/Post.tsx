@@ -606,7 +606,7 @@ class PostComponent extends React.Component<any, any> {
                     image={post.authorImage}
                     className="user-image"
                     alt={authorFirstName}
-                    width={120}
+                    width={60}
                   />
                   <span className="post__header_name">{authorFirstName}</span>
                 </div>

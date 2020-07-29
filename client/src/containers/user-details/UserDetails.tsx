@@ -11,7 +11,6 @@ import { bindActionCreators } from 'redux';
 import { Store } from '../../redux/configure-store';
 import { ReactSVG } from 'react-svg';
 import Close from '../../images/icons/Icon_Close-Cancel.svg';
-import { Image, Transformation } from 'cloudinary-react';
 
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
@@ -49,8 +48,7 @@ import { Loading } from '../shared/loading/Loading';
 import { UploadFile } from '../shared/upload/UploadFile';
 import { StripePaymentProvider } from '../artist/support/StripePaymentProvider';
 
-import avatar from '../../images/avatars/Avatar_Blank.svg';
-
+import { UserImage } from './UserImage';
 import { theme } from './theme';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -348,63 +346,34 @@ class UserDetailsComponent extends React.Component<Props, any> {
     );
   };
 
-  renderUserImage = () => {
+  renderAddPhotoButton = () => {
     const { userData } = this.props;
-    let coordinates;
-    if (userData.image?.coordinates) {
-      coordinates = userData.image?.coordinates.split(',');
-    }
-    console.log('image: ', userData.image);
     return (
-      <>
-        {userData.image?.public_id ? (
-          <Image
-            className="user-image"
-            alt="Avatar"
-            publicId={userData.image.public_id}
-          >
-            <Transformation
-              fetchFormat="auto"
-              crop={coordinates ? 'crop' : 'fill'}
-              x={coordinates ? coordinates[0] : ''}
-              y={coordinates ? coordinates[1] : ''}
-              width="300"
-              height="300"
-              responsive_placeholder="blank"
-            />
-          </Image>
-        ) : (
-          <img src={avatar} className="user-image" alt="Your avatar" />
-        )}
-      </>
-    );
-  };
-
-  renderAddPhotoButton = () => (
-    <div className="add-photo-button-container">
-      <UploadFile
-        inputRefId="input-user-photo"
-        uploadFile={this.loadPhotoContent}
-      />
-      <div
-        className="image-button"
-        onClick={() => document.getElementById('input-user-photo').click()}
-      >
-        {this.renderUserImage()}
-      </div>
-      <div className="action-buttons single-button">
-        <Button
-          disabled={this.props.updating}
-          className="link-button"
+      <div className="add-photo-button-container">
+        <UploadFile
+          inputRefId="input-user-photo"
+          uploadFile={this.loadPhotoContent}
+        />
+        <div
+          className="image-button"
           onClick={() => document.getElementById('input-user-photo').click()}
         >
-          {this.state.photoContent || this.props.userData.image
-            ? 'Change photo'
-            : 'Add photo'}
-        </Button>
+          <UserImage image={userData.image} />
+        </div>
+        <div className="action-buttons single-button">
+          <Button
+            disabled={this.props.updating}
+            className="link-button"
+            onClick={() => document.getElementById('input-user-photo').click()}
+          >
+            {this.state.photoContent || this.props.userData.image
+              ? 'Change photo'
+              : 'Add photo'}
+          </Button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   renderPhoto = () => {
     const { photoBody, processingImage } = this.state;
@@ -571,6 +540,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
   };
 
   renderBasicInfo = () => {
+    const { userData } = this.props;
     return (
       <div className="basic-info">
         <div className="row">
@@ -650,7 +620,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     onClick={this.showUserPhotoModal}
                     aria-label="Edit avatar"
                   >
-                    {this.renderUserImage()}
+                    <UserImage image={userData.image} />
                     <span className="tag">
                       <ReactSVG className="icon" src={Edit} />
                     </span>

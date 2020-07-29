@@ -25,8 +25,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import tear from '../../images/backgrounds/background_tear.png';
 import tear_black from '../../images/backgrounds/background_tear_black.png';
 
-import avatar from '../../images/avatars/Avatar_Blank.svg';
-
 import Edit from '../../images/icons/Icon_Edit.svg';
 import Instagram from '../../images/icons/Icon_Instagram.svg';
 import Twitter from '../../images/icons/Icon_Twitter.svg';
@@ -39,6 +37,7 @@ import { routePaths } from '../route-paths';
 import { Modal } from '../shared/modal/Modal';
 import { ResetPassword } from '../connect/ResetPassword';
 import { Loading } from '../shared/loading/Loading';
+import { UserImage } from '../user-details/UserImage';
 
 const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
@@ -674,23 +673,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return (
       <div className="user-image-container">
         <Link to="/user-details">
-          {userData.image?.public_id ? (
-            <Image
-              publicId={userData.image.public_id}
-              alt={userData.name}
-              className="user-image"
-            >
-              <Transformation
-                fetchFormat="auto"
-                crop="fill"
-                width={120}
-                height={120}
-                responsive_placeholder="blank"
-              />
-            </Image>
-          ) : (
-            <img src={avatar} className="user-image" alt="Your avatar" />
-          )}
+          <UserImage image={userData.image} />
         </Link>
       </div>
     );

@@ -13,6 +13,7 @@ import tear from '../../../../images/backgrounds/background_tear.png';
 import Edit from '../../../../images/icons/Icon_Edit.svg';
 import Remove from '../../../../images/icons/Icon_Remove-Delete.svg';
 import Unlock from '../../../../images/icons/Icon_Lock.svg';
+import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
 import { Button, IconButton, CardActions, Collapse } from '@material-ui/core';
 import { Modal } from '../../../shared/modal/Modal';
 import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
@@ -379,7 +380,7 @@ const DeleteModal = ({ onCancel, onConfirm }) => (
       </div>
       <div className="delete-post-modal__actions action-buttons">
         <Button className="cancel-button" onClick={onCancel}>
-          Cancel
+          <ReactSVG className="icon" src={Close} />
         </Button>
         <Button className="publish-button" onClick={onConfirm}>
           Delete Post

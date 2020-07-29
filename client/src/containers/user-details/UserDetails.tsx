@@ -358,7 +358,12 @@ class UserDetailsComponent extends React.Component<Props, any> {
           className="image-button"
           onClick={() => document.getElementById('input-user-photo').click()}
         >
-          <UserImage image={userData.image} />
+          <UserImage
+            image={userData.image}
+            className="user-image"
+            alt={userData.name}
+            width={120}
+          />
         </div>
         <div className="action-buttons single-button">
           <Button
@@ -620,7 +625,12 @@ class UserDetailsComponent extends React.Component<Props, any> {
                     onClick={this.showUserPhotoModal}
                     aria-label="Edit avatar"
                   >
-                    <UserImage image={userData.image} />
+                    <UserImage
+                      image={userData.image}
+                      className="user-image"
+                      alt={userData.name}
+                      width={120}
+                    />
                     <span className="tag">
                       <ReactSVG className="icon" src={Edit} />
                     </span>

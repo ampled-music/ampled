@@ -9,7 +9,6 @@ import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
 import { ReactSVG } from 'react-svg';
 
-import avatar from '../../../../images/avatars/Avatar_Blank.svg';
 import tear from '../../../../images/backgrounds/background_tear.png';
 import Edit from '../../../../images/icons/Icon_Edit.svg';
 import Remove from '../../../../images/icons/Icon_Remove-Delete.svg';
@@ -22,6 +21,7 @@ import VimeoPlayer from 'react-player/lib/players/Vimeo';
 import Linkify from 'react-linkify';
 import parse from 'html-react-parser';
 import DOMPurify from 'dompurify';
+import { UserImage } from '../../../user-details/UserImage';
 
 import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';
@@ -601,15 +601,12 @@ class PostComponent extends React.Component<any, any> {
                 ''
               ) : (
                 <div className="post__header_title">
-                  {post.authorImage ? (
-                    <img
-                      className="user-image"
-                      src={post.authorImage}
-                      alt={`${authorFirstName}'s avatar`}
-                    />
-                  ) : (
-                    <img className="user-image" src={avatar} alt="Avatar" />
-                  )}
+                  <UserImage
+                    image={post.authorImage}
+                    className="user-image"
+                    alt={authorFirstName}
+                    width={120}
+                  />
                   <span className="post__header_name">{authorFirstName}</span>
                 </div>
               )}

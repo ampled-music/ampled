@@ -98,7 +98,12 @@ class NavComponent extends React.Component<Props, any> {
 
     return (
       <Link to="/settings">
-        <UserImage image={userData.image} />
+        <UserImage
+          image={userData.image}
+          className="user-image"
+          alt={userData.name}
+          width={60}
+        />
       </Link>
     );
   };

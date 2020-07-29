@@ -673,7 +673,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return (
       <div className="user-image-container">
         <Link to="/user-details">
-          <UserImage image={userData.image} />
+          <UserImage
+            image={userData.image}
+            className="user-image"
+            alt={userData.name}
+            width={120}
+          />
         </Link>
       </div>
     );

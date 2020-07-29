@@ -6,7 +6,7 @@ import { isMobile } from 'react-device-detect';
 import cx from 'classnames';
 
 import { Image, Transformation } from 'cloudinary-react';
-import avatar from '../../../images/avatars/Avatar_Blank.svg';
+import { UserImage } from '../../user-details/UserImage';
 
 interface Props {
   artist: any;
@@ -124,30 +124,12 @@ export class FeaturedImages extends React.Component<Props, any> {
             >
               <div className="member-image">
                 <RenderOwnerHover owner={owner} />
-                {owner.image?.public_id ? (
-                  <Image
-                    className="artist-header__person_image member"
-                    key={owner.name}
-                    publicId={owner.image.public_id}
-                    alt={owner.name}
-                    style={{ borderColor: artist.accent_color }}
-                  >
-                    <Transformation
-                      fetchFormat="auto"
-                      crop="fill"
-                      width={60}
-                      height={60}
-                      responsive_placeholder="blank"
-                    />
-                  </Image>
-                ) : (
-                  <img
-                    className="artist-header__person_image member"
-                    src={avatar}
-                    alt={owner.name}
-                    style={{ borderColor: artist.accent_color }}
-                  />
-                )}
+                <UserImage
+                  image={owner.image}
+                  className="artist-header__person_image member"
+                  alt={owner.name}
+                  width={60}
+                />
               </div>
             </div>
           ))}

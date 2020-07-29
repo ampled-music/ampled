@@ -388,7 +388,7 @@
     margin-top: -110px;
   }
 
-  .image-preview {
+  .user-image {
     align-self: center;
     height: 120px;
     width: 120px;
@@ -403,6 +403,9 @@
 
   .add-photo-button-container {
     margin-top: 1rem;
+  }
+  .image-button {
+    cursor: pointer;
   }
 
   .photo-actions {

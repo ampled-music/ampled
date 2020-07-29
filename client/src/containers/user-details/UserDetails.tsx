@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import { Store } from '../../redux/configure-store';
 import { ReactSVG } from 'react-svg';
 import Close from '../../images/icons/Icon_Close-Cancel.svg';
+import { Image, Transformation } from 'cloudinary-react';
 
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
@@ -349,23 +350,33 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   renderUserImage = () => {
     const { userData } = this.props;
+    let coordinates;
+    if (userData.image?.coordinates) {
+      coordinates = userData.image?.coordinates.split(',');
+    }
+    console.log('image: ', userData.image);
     return (
-      <div className="user-image-container">
-        <button onClick={this.showUserPhotoModal} aria-label="Edit avatar">
-          {userData.image?.url ? (
-            <img
-              src={userData.image.url}
-              className="user-image"
-              alt="Your avatar"
+      <>
+        {userData.image?.public_id ? (
+          <Image
+            className="user-image"
+            alt="Avatar"
+            publicId={userData.image.public_id}
+          >
+            <Transformation
+              fetchFormat="auto"
+              crop={coordinates ? 'crop' : 'fill'}
+              x={coordinates ? coordinates[0] : ''}
+              y={coordinates ? coordinates[1] : ''}
+              width="300"
+              height="300"
+              responsive_placeholder="blank"
             />
-          ) : (
-            <img src={avatar} className="user-image" alt="Your avatar" />
-          )}
-          <b className="tag">
-            <ReactSVG className="icon" src={Edit} />
-          </b>
-        </button>
-      </div>
+          </Image>
+        ) : (
+          <img src={avatar} className="user-image" alt="Your avatar" />
+        )}
+      </>
     );
   };
 
@@ -375,6 +386,12 @@ class UserDetailsComponent extends React.Component<Props, any> {
         inputRefId="input-user-photo"
         uploadFile={this.loadPhotoContent}
       />
+      <div
+        className="image-button"
+        onClick={() => document.getElementById('input-user-photo').click()}
+      >
+        {this.renderUserImage()}
+      </div>
       <div className="action-buttons single-button">
         <Button
           disabled={this.props.updating}
@@ -407,18 +424,9 @@ class UserDetailsComponent extends React.Component<Props, any> {
       );
     }
 
-    const placeholderImage = (
-      <>
-        <img
-          src={userData.image.url ? userData.image?.url : avatar}
-          className="image-preview"
-          alt="Avatar"
-        />
-        {this.renderAddPhotoButton()}
-      </>
-    );
-
-    return photoBody ? this.renderCropper(photoBody) : placeholderImage;
+    return photoBody
+      ? this.renderCropper(photoBody)
+      : this.renderAddPhotoButton();
   };
 
   renderPhotoSelector = () => {
@@ -637,7 +645,17 @@ class UserDetailsComponent extends React.Component<Props, any> {
             <div className="row no-gutters">
               <div className="col-md-3">
                 <div className="user-details__subtitle">Photo</div>
-                {this.renderUserImage()}
+                <div className="user-image-container">
+                  <button
+                    onClick={this.showUserPhotoModal}
+                    aria-label="Edit avatar"
+                  >
+                    {this.renderUserImage()}
+                    <span className="tag">
+                      <ReactSVG className="icon" src={Edit} />
+                    </span>
+                  </button>
+                </div>
               </div>
               <div className="row col-md-9">
                 <div className="col-2">

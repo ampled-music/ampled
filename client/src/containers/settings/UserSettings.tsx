@@ -17,6 +17,7 @@ import { updateMeAction } from '../../redux/me/update-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
+import { Button } from '@material-ui/core';
 
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { faStripe } from '@fortawesome/free-brands-svg-icons';
@@ -779,16 +780,16 @@ class UserSettingsComponent extends React.Component<Props, any> {
             {this.state.subscription.name}?
           </p>
           <div className="action-buttons">
-            <button className="cancel-button" onClick={this.closeCancelModal}>
+            <Button className="cancel-button" onClick={this.closeCancelModal}>
               Of Course Not!
-            </button>
-            <button
+            </Button>
+            <Button
               className="publish-button"
               onClick={this.cancelSubscription}
               style={{ marginLeft: 0 }}
             >
               Yes
-            </button>
+            </Button>
           </div>
         </div>
       </Modal>

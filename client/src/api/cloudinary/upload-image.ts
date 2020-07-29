@@ -7,10 +7,7 @@ const createSignature = (timestamp) => {
 
   return sha1(hashString);
 };
-export const uploadFileToCloudinary = async (
-  file: any,
-  coordinates?: string, // comma-separated x,y,width,height
-) => {
+export const uploadFileToCloudinary = async (file: any) => {
   const timestamp = Date.now();
   const signature = createSignature(timestamp);
 

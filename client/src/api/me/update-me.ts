@@ -6,6 +6,5 @@ export const updateMe = async (me) => {
     url: '/users.json',
     data: me,
   });
-
   return { image: me.image, data };
 };

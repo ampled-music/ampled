@@ -8,6 +8,7 @@ import { Reducer } from './initial-state';
 export const updateMeAction = createActionThunk(
   actions.updateMe,
   async (updatedMe) => {
+    // console.log(updatedMe.coordinates);
     if (updatedMe.file) {
       const cloudinaryResponse = await uploadFileToCloudinary(updatedMe.file);
 

@@ -19,10 +19,11 @@ class UserImage extends React.Component<Props, any> {
   render() {
     const { image, className, alt, width, style } = this.props;
     let coordinates;
+
     if (image?.coordinates) {
       coordinates = image?.coordinates.split(',');
     }
-    console.log('image: ', image);
+
     return (
       <>
         {image?.public_id ? (
@@ -37,8 +38,8 @@ class UserImage extends React.Component<Props, any> {
               crop={coordinates ? 'crop' : 'fill'}
               x={coordinates ? coordinates[0] : ''}
               y={coordinates ? coordinates[1] : ''}
-              width={width}
-              height={width}
+              width={coordinates ? coordinates[2] : width}
+              height={coordinates ? coordinates[3] : width}
               responsive_placeholder="blank"
             />
           </Image>

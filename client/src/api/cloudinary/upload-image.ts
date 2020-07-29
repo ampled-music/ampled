@@ -19,7 +19,6 @@ export const uploadFileToCloudinary = async (
   formData.append('timestamp', timestamp.toString());
   formData.append('signature', signature);
   formData.append('file', file);
-  formData.append('custom_coordinates', coordinates);
   formData.append('return_delete_token', 'true');
   const reqConfig = {
     headers: { 'X-Requested-With': 'XMLHttpRequest' },

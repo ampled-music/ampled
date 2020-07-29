@@ -9,10 +9,7 @@ export const updateMeAction = createActionThunk(
   actions.updateMe,
   async (updatedMe) => {
     if (updatedMe.file) {
-      const cloudinaryResponse = await uploadFileToCloudinary(
-        updatedMe.file,
-        updatedMe.coordinates,
-      );
+      const cloudinaryResponse = await uploadFileToCloudinary(updatedMe.file);
 
       if (!cloudinaryResponse) {
         // TODO: handle error when cloudinary request errors once we can pass along error messages
@@ -22,6 +19,7 @@ export const updateMeAction = createActionThunk(
         image: {
           url: cloudinaryResponse.secure_url,
           public_id: cloudinaryResponse.public_id,
+          coordinates: updatedMe.coordinates,
         },
       });
     }

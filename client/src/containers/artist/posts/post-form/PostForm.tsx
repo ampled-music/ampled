@@ -407,7 +407,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
   };
 
   processImage = async (e) => {
-    console.log('????', e);
     const imageFile = e.target.files[0];
 
     if (!imageFile) {

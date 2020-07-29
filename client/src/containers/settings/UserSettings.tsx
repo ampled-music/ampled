@@ -783,7 +783,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
               Of Course Not!
             </button>
             <button
-              className="delete-button"
+              className="publish-button"
               onClick={this.cancelSubscription}
               style={{ marginLeft: 0 }}
             >

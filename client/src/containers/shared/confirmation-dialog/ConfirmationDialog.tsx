@@ -7,7 +7,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import * as React from 'react';
 
-import './confirmation-dialog.scss';
 import { theme } from './theme';
 
 interface Props {
@@ -39,13 +38,13 @@ class ResponsiveDialog extends React.Component<Props, any> {
           </DialogContent>
           <DialogActions className="action-buttons">
             <Button
-              className="discard-button"
+              className="cancel-button"
               onClick={this.props.discardChanges}
             >
               Discard changes
             </Button>
             <Button
-              className="continue-button"
+              className="publish-button"
               onClick={this.props.closeConfirmationDialog}
               autoFocus
             >

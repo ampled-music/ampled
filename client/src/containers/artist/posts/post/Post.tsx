@@ -381,7 +381,7 @@ const DeleteModal = ({ onCancel, onConfirm }) => (
         <Button className="cancel-button" onClick={onCancel}>
           Cancel
         </Button>
-        <Button className="delete-button" onClick={onConfirm}>
+        <Button className="publish-button" onClick={onConfirm}>
           Delete Post
         </Button>
       </div>

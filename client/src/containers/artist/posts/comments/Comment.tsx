@@ -49,7 +49,7 @@ const renderDeleteModal = ({ deleteComment, commentId, setShowModal }) => (
           Cancel
         </Button>
         <Button
-          className="delete-button"
+          className="publish-button"
           onClick={() => {
             deleteComment(commentId);
             setShowModal(false);

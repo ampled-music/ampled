@@ -376,6 +376,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    min-height: 190px;
   }
 
   .MuiCircularProgress-root {
@@ -400,7 +402,7 @@
   }
 
   .add-photo-button-container {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
   .photo-actions {
@@ -421,6 +423,5 @@
   .slider {
     padding: 1em;
     width: 100%;
-    height: 100px;
   }
 }

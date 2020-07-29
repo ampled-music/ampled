@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Store } from '../../redux/configure-store';
 import { ReactSVG } from 'react-svg';
+import Close from '../../images/icons/Icon_Close-Cancel.svg';
 
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
@@ -375,15 +376,15 @@ class UserDetailsComponent extends React.Component<Props, any> {
         uploadFile={this.loadPhotoContent}
       />
       <div className="action-buttons single-button">
-        <button
+        <Button
           disabled={this.props.updating}
-          className="add-media"
+          className="link-button"
           onClick={() => document.getElementById('input-user-photo').click()}
         >
           {this.state.photoContent || this.props.userData.image
             ? 'Change photo'
             : 'Add photo'}
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -406,10 +407,15 @@ class UserDetailsComponent extends React.Component<Props, any> {
       );
     }
 
-    const placeholderImage = userData.image?.url ? (
-      <img src={userData.image.url} className="image-preview" alt="Avatar" />
-    ) : (
-      <img src={avatar} className="image-preview" alt="Avatar" />
+    const placeholderImage = (
+      <>
+        <img
+          src={userData.image.url ? userData.image?.url : avatar}
+          className="image-preview"
+          alt="Avatar"
+        />
+        {this.renderAddPhotoButton()}
+      </>
     );
 
     return photoBody ? this.renderCropper(photoBody) : placeholderImage;
@@ -419,22 +425,22 @@ class UserDetailsComponent extends React.Component<Props, any> {
     return (
       <div className="user-photo-selector-modal">
         {this.renderPhoto()}
-        {this.renderAddPhotoButton()}
+
         <div className="action-buttons">
-          <button
+          <Button
             disabled={this.props.updating}
             className="cancel-button"
             onClick={this.closeUserPhotoModal}
           >
-            Cancel
-          </button>
-          <button
+            <ReactSVG className="icon" src={Close} />
+          </Button>
+          <Button
             disabled={!this.state.photoContent || this.props.updating}
-            className="continue-button"
+            className="publish-button"
             onClick={this.saveUserPhoto}
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -900,7 +906,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   renderButtons = () => (
     <DialogActions className="action-buttons">
-      <Button type="submit" className="finished-button">
+      <Button type="submit" className="publish-button">
         Finished
       </Button>
     </DialogActions>

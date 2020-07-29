@@ -108,75 +108,35 @@ h6 {
   }
 
   button {
-    text-transform: capitalize;
-    outline: none;
-    font-size: 15px;
-    cursor: pointer;
-  }
-
-  .cancel-button,
-  .discard-button {
-    color: $brand-primary;
-    text-decoration: underline;
-    letter-spacing: 0.8px;
-    border-width: 0px;
-    width: 50%;
-    background-color: $white;
-
-    &:hover {
-      background-color: transparent;
-      text-decoration: none;
-    }
-
-    .MuiButton-label {
-      text-align: left;
-    }
-  }
-
-  .publish-button,
-  .continue-button,
-  .add-media,
-  .delete-button,
-  .finished-button {
-    color: $black;
-    background-color: $white;
-    border-radius: 0px;
     border: 1px solid $black;
-    padding: 8px 20px;
-    margin-left: 25px;
-    letter-spacing: 0.7px;
-    text-transform: capitalize;
-    transition: all $speed;
-    width: 50%;
-    max-width: 250px;
-
-    &:hover {
+    border-radius: 0px;
+    &.cancel-button {
+      width: auto;
+      margin-right: 1rem;
+    }
+    &.publish-button {
+      max-width: 100%;
       color: $white;
       background-color: $black;
-    }
-
-    &:only-child {
-      width: 100%;
-      margin-left: 0px;
-
-      @include mq(0, $layout-m) {
-        margin: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      text-transform: capitalize;
+      &:disabled {
+        background-color: $white;
+        color: $gray-lighter;
+        border-color: $gray-lighter;
       }
     }
-    &.disabled {
-      border-color: $gray-light;
-      color: $gray;
-      background-color: $white;
+    &.link-button {
+      text-decoration: underline;
+      font-size: 1rem;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
     }
   }
 
-  .add-media {
-    margin: 0;
-    border: 1px solid $black;
-    width: 100%;
-  }
-
-  .disabled {
+  &.disabled {
     border: 1px solid $gray-light;
   }
 }

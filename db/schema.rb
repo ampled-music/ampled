@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_06_001526) do
+ActiveRecord::Schema.define(version: 2020_07_30_172123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,9 @@ ActiveRecord::Schema.define(version: 2020_05_06_001526) do
     t.boolean "approved", default: false
     t.boolean "featured", default: false
     t.boolean "hide_members", default: false
+    t.string "bandcamp_handle"
+    t.string "youtube_handle"
+    t.string "external_handle"
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 

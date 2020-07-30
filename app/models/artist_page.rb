@@ -8,7 +8,7 @@
 #  banner_image_url     :string
 #  bio                  :string
 #  created_at           :datetime         not null
-#  external_handle      :string
+#  external             :string
 #  featured             :boolean          default(FALSE)
 #  hide_members         :boolean          default(FALSE)
 #  id                   :bigint(8)        not null, primary key

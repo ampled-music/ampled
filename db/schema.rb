@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2020_07_30_172123) do
     t.boolean "hide_members", default: false
     t.string "bandcamp_handle"
     t.string "youtube_handle"
-    t.string "external_handle"
+    t.string "external"
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 

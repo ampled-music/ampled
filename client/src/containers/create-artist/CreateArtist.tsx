@@ -1082,7 +1082,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 name="artistYoutube"
                 label="Youtube URL"
                 id="youtube"
-                placeholder="Youtube"
+                placeholder="https://youtube.com/Your-Url"
                 value={this.state.artistYoutube || ''}
                 onChange={this.handleChange}
                 fullWidth
@@ -1416,9 +1416,18 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
+    // Make sure @ symbol isn't apart of Instagram or Twitter
     if (/[@:/]/gi.test(artistTwitter) || /[@:/]/gi.test(artistInstagram)) {
       return this.props.showToast({
         message: 'Please check the format of your social handles.',
+        type: 'error',
+      });
+    }
+
+    // Make sure Youtube has youtube.com in the URL
+    if (!artistYoutube.includes('youtube.com')) {
+      return this.props.showToast({
+        message: 'Please check that your YouTube URL is pointing to youtube',
         type: 'error',
       });
     }

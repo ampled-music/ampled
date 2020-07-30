@@ -30,7 +30,7 @@ export class ArtistInfo extends React.Component<Props, any> {
     const { twitterHandle } = this.props;
     if (twitterHandle) {
       return (
-        <div className="artist-info__social">
+        <div className="artist-info__social_item">
           <a
             href={`https://twitter.com/${twitterHandle}`}
             target="_blank"
@@ -48,7 +48,7 @@ export class ArtistInfo extends React.Component<Props, any> {
     const { instagramHandle } = this.props;
     if (instagramHandle) {
       return (
-        <div className="artist-info__social">
+        <div className="artist-info__social_item">
           <a
             href={`https://instagram.com/${instagramHandle}`}
             target="_blank"
@@ -66,7 +66,7 @@ export class ArtistInfo extends React.Component<Props, any> {
     const { bandcampHandle } = this.props;
     if (bandcampHandle) {
       return (
-        <div className="artist-info__social">
+        <div className="artist-info__social_item">
           <a
             href={`https://${bandcampHandle}.bandcamp.com/`}
             target="_blank"
@@ -84,7 +84,7 @@ export class ArtistInfo extends React.Component<Props, any> {
     const { youtubeHandle } = this.props;
     if (youtubeHandle) {
       return (
-        <div className="artist-info__social">
+        <div className="artist-info__social_item">
           <a
             href={`${youtubeHandle}`}
             target="_blank"
@@ -101,7 +101,7 @@ export class ArtistInfo extends React.Component<Props, any> {
     const { external } = this.props;
     if (external) {
       return (
-        <div className="artist-info__social">
+        <div className="artist-info__social_item">
           <a href={external} target="_blank" rel="noopener noreferrer">
             <ReactSVG className="icon icon_black" src={Link1} />
           </a>

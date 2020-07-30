@@ -129,6 +129,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                   className="artist-header__person_image member"
                   alt={owner.name}
                   width={60}
+                  style={{ borderColor: artist.accent_color }}
                 />
               </div>
             </div>

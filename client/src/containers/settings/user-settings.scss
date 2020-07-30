@@ -406,6 +406,10 @@
   }
   .image-button {
     cursor: pointer;
+    transition: opacity $speed;
+    &:hover {
+      opacity: 0.7;
+    }
   }
 
   .photo-actions {

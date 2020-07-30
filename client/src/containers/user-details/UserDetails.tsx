@@ -522,7 +522,9 @@ class UserDetailsComponent extends React.Component<Props, any> {
     this.setState({
       showUserPhotoModal: false,
       photoBody: undefined,
-      crop: {},
+      crop: { x: 0, y: 0 },
+      croppedAreaPixels: { x: 0, y: 0, height: 0, width: 0 },
+      zoom: 1,
     });
 
   renderEmailAddress = () => {

@@ -1377,8 +1377,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       members,
     } = this.state;
 
-    console.log(this.state);
-
     // validate fields
     if (
       !artistName ||

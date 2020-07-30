@@ -133,7 +133,6 @@ class BlogPosts extends React.Component<PostsProps, any> {
                       <Link to={`/blog/${post.slug}`}>
                         <div className="blog-posts__tease_border"></div>
                       </Link>
-                      {console.log(post)}
                       <div className="blog-posts__info">
                         <Link to={`/blog/${post.slug}`}>
                           <h4

@@ -95,6 +95,7 @@
         border-radius: 0px;
         display: block;
         padding: 10px;
+        overflow: auto;
 
         &:hover {
           border: 1px solid $black;

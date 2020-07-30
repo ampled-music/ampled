@@ -22,7 +22,7 @@ class Image < ApplicationRecord
   # Image params that are allowed by default.
   # For use by imageables that set Images via nested attributes.
   # 'id' and '_destroy' are needed to support deletion via nested attributes.
-  PERMITTED_PARAMS = %i[id url public_id _destroy].freeze
+  PERMITTED_PARAMS = %i[id url public_id coordinates _destroy].freeze
 
   class << self
     # If the given parameters contain an 'images' key, copies the contents to an 'images_attributes'

@@ -43,10 +43,9 @@ RSpec.describe Post, type: :model do
     let(:author) { create(:user) }
     let(:post) { create(:post, user: author) }
 
-    it "returns the author's image url" do
+    it "returns the author's image" do
       allow(author).to receive(:image).and_return(author_image)
-      # expect(author_image).to receive(:url).and_return(:the_image_url)
-      # expect(post.author_image).to eq(:the_image_url)
+      expect(post.author_image).to eq(author_image)
     end
 
     it "returns nil if the author has no image" do

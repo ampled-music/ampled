@@ -35,7 +35,6 @@ export class ArtistInfo extends React.Component<Props, any> {
             href={`https://twitter.com/${twitterHandle}`}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: 'black' }}
             aria-label={`${twitterHandle} on Twitter`}
           >
             <ReactSVG className="icon icon_black" src={Twitter} />
@@ -54,7 +53,6 @@ export class ArtistInfo extends React.Component<Props, any> {
             href={`https://instagram.com/${instagramHandle}`}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: 'black' }}
             aria-label={`${instagramHandle} on Instagram`}
           >
             <ReactSVG className="icon icon_black" src={Instagram} />
@@ -70,10 +68,9 @@ export class ArtistInfo extends React.Component<Props, any> {
       return (
         <div className="artist-info__social">
           <a
-            href={`https://instagram.com/${bandcampHandle}`}
+            href={`https://${bandcampHandle}.bandcamp.com/`}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: 'black' }}
             aria-label={`${bandcampHandle} on Bandcamp`}
           >
             <ReactSVG className="icon icon_black" src={Bandcamp} />
@@ -89,11 +86,9 @@ export class ArtistInfo extends React.Component<Props, any> {
       return (
         <div className="artist-info__social">
           <a
-            href={`https://instagram.com/${youtubeHandle}`}
+            href={`${youtubeHandle}`}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: 'black' }}
-            aria-label={`${youtubeHandle} on Youtube`}
           >
             <ReactSVG className="icon icon_black" src={Youtube} />
           </a>
@@ -107,12 +102,7 @@ export class ArtistInfo extends React.Component<Props, any> {
     if (external) {
       return (
         <div className="artist-info__social">
-          <a
-            href={external}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'black' }}
-          >
+          <a href={external} target="_blank" rel="noopener noreferrer">
             <ReactSVG className="icon icon_black" src={Link1} />
           </a>
         </div>

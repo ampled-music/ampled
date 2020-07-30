@@ -207,7 +207,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     social_error: false,
     showEditForm: false,
     crop: { x: 0, y: 0 },
-    croppedAreaPixels: { x: '', y: '', height: '', width: '' },
+    croppedAreaPixels: { x: 0, y: 0, height: 0, width: 0 },
     zoom: 1,
   };
 
@@ -493,11 +493,18 @@ class UserDetailsComponent extends React.Component<Props, any> {
         message: 'User photo updated!',
         type: 'success',
       });
+      this.setState({
+        crop: { x: 0, y: 0 },
+        croppedAreaPixels: { x: 0, y: 0, height: 0, width: 0 },
+        zoom: 1,
+      });
     } else {
       this.setState({
         photoContent: undefined,
         photoBody: undefined,
-        crop: {},
+        crop: { x: 0, y: 0 },
+        croppedAreaPixels: { x: 0, y: 0, height: 0, width: 0 },
+        zoom: 1,
       });
       this.props.showToast({
         message:

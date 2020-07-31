@@ -36,7 +36,7 @@ class PromoteArtist extends React.Component<any> {
           </a>{' '}
           so we can repost.
         </p>
-        <h2>Supporter</h2>
+        <h2>Supporting</h2>
         <div className="row">
           {supporter_images &&
             supporter_images.map((image, index) => (
@@ -51,20 +51,6 @@ class PromoteArtist extends React.Component<any> {
                 </a>
               </div>
             ))}
-        </div>
-        <h2>Banner</h2>
-        <div className="row">
-          <div className="col-md-8">
-            {promote_facebook_image && (
-              <a
-                download
-                href={promote_facebook_image}
-                rel="noopener noreferrer"
-              >
-                <img src={promote_facebook_image} alt={`${name} Banner`} />
-              </a>
-            )}
-          </div>
         </div>
         <h2>Instragam Post</h2>
         <div className="row">
@@ -103,6 +89,20 @@ class PromoteArtist extends React.Component<any> {
                 </a>
               </div>
             ))}
+        </div>
+        <h2>Banner</h2>
+        <div className="row">
+          <div className="col-md-8">
+            {promote_facebook_image && (
+              <a
+                download
+                href={promote_facebook_image}
+                rel="noopener noreferrer"
+              >
+                <img src={promote_facebook_image} alt={`${name} Banner`} />
+              </a>
+            )}
+          </div>
         </div>
       </div>
     );

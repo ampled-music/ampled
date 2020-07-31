@@ -229,6 +229,10 @@
               font-size: 10px;
               font-family: $font-family-base;
               text-transform: uppercase;
+              color: $white;
+              a {
+                color: $white;
+              }
               &.sm {
                 font-size: 8px;
                 opacity: 0.8;

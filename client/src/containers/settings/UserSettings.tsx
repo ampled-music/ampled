@@ -218,10 +218,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
     if (!artist.image) {
       return;
     }
-    
     return (
       <div>
-        <div className="details__info_title">Promote Your Page</div>
+        <div className="details__info_title">
+          <Link to={`/artist/${artist.artistSlug}/promote`}>
+            Promote Your Page
+          </Link>
+        </div>
         <div className="row no-gutters">
           <div className="col-6">
             <div className="details__info_title sm">Square</div>

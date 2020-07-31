@@ -1325,7 +1325,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                   <Button
                     href="https://stripe.com/about"
                     target="_blank"
-                    className="btn continue-button"
+                    className="publish-button"
                   >
                     Create your account
                   </Button>
@@ -1582,7 +1582,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               >
                 Cancel
               </Button>
-              <Button className="delete-button" onClick={this.deleteArtistPage}>
+              <Button
+                className="publish-button"
+                onClick={this.deleteArtistPage}
+              >
                 Delete Artist Page
               </Button>
             </div>
@@ -1662,7 +1665,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                   Cancel
                 </Button>
                 <Button
-                  className="delete-button"
+                  className="publish-button"
                   onClick={() => {
                     this.removeMember(this.state.confirmRemoveMemberIndex);
                   }}

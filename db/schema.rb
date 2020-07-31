@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 2020_07_30_172123) do
     t.string "public_id"
     t.string "imageable_type"
     t.bigint "imageable_id"
+    t.string "coordinates"
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 
@@ -154,6 +155,7 @@ ActiveRecord::Schema.define(version: 2020_07_30_172123) do
     t.boolean "card_is_valid"
     t.boolean "admin"
     t.string "redirect_uri"
+    t.string "coordinates"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true

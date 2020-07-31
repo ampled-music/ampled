@@ -40,7 +40,7 @@ class Post < ApplicationRecord
   end
 
   def author_image
-    user.image&.url
+    user.image
   end
 
   def has_audio

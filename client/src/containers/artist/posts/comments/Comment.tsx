@@ -3,6 +3,7 @@ import { ReactSVG } from 'react-svg';
 
 import tear from '../../../../images/backgrounds/background_tear.png';
 import Remove from '../../../../images/icons/Icon_Remove-Delete.svg';
+import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
 import { Divider, Button, IconButton } from '@material-ui/core';
 import { Modal } from '../../../shared/modal/Modal';
 import Linkify from 'react-linkify';
@@ -46,10 +47,10 @@ const renderDeleteModal = ({ deleteComment, commentId, setShowModal }) => (
       </div>
       <div className="delete-post-modal__actions action-buttons">
         <Button className="cancel-button" onClick={() => setShowModal(false)}>
-          Cancel
+          <ReactSVG className="icon" src={Close} />
         </Button>
         <Button
-          className="delete-button"
+          className="publish-button"
           onClick={() => {
             deleteComment(commentId);
             setShowModal(false);

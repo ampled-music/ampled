@@ -17,14 +17,13 @@ import { updateMeAction } from '../../redux/me/update-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
+import { Button } from '@material-ui/core';
 
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { faStripe } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import tear from '../../images/backgrounds/background_tear.png';
 import tear_black from '../../images/backgrounds/background_tear_black.png';
-
-import avatar from '../../images/avatars/Avatar_Blank.svg';
 
 import Edit from '../../images/icons/Icon_Edit.svg';
 import Instagram from '../../images/icons/Icon_Instagram.svg';
@@ -38,6 +37,7 @@ import { routePaths } from '../route-paths';
 import { Modal } from '../shared/modal/Modal';
 import { ResetPassword } from '../connect/ResetPassword';
 import { Loading } from '../shared/loading/Loading';
+import { UserImage } from '../user-details/UserImage';
 
 const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
@@ -301,23 +301,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
     return (
       <div className="user-image-container">
         <Link to="/user-details">
-          {userData.image?.public_id ? (
-            <Image
-              publicId={userData.image.public_id}
-              alt={userData.name}
-              className="user-image"
-            >
-              <Transformation
-                fetchFormat="auto"
-                crop="fill"
-                width={120}
-                height={120}
-                responsive_placeholder="blank"
-              />
-            </Image>
-          ) : (
-            <img src={avatar} className="user-image" alt="Your avatar" />
-          )}
+          <UserImage
+            image={userData.image}
+            className="user-image"
+            alt={userData.name}
+            width={120}
+          />
         </Link>
       </div>
     );
@@ -407,16 +396,16 @@ class UserSettingsComponent extends React.Component<Props, any> {
             {this.state.subscription.name}?
           </p>
           <div className="action-buttons">
-            <button className="cancel-button" onClick={this.closeCancelModal}>
+            <Button className="cancel-button" onClick={this.closeCancelModal}>
               Of Course Not!
-            </button>
-            <button
-              className="delete-button"
+            </Button>
+            <Button
+              className="publish-button"
               onClick={this.cancelSubscription}
               style={{ marginLeft: 0 }}
             >
               Yes
-            </button>
+            </Button>
           </div>
         </div>
       </Modal>

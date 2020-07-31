@@ -27,17 +27,41 @@ class PromoteArtist extends React.Component<any> {
         <h1>Promote {name}</h1>
         <p>
           Use these images to promote your page. Remember to tag{' '}
-          <a href="https://www.instagram.com/ampl3d/" target="_blank">
+          <a
+            href="https://www.instagram.com/ampl3d/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             @ampl3d
           </a>{' '}
           so we can repost.
         </p>
+        <h2>Supporter</h2>
+        <div className="row">
+          {supporter_images &&
+            supporter_images.map((image, index) => (
+              <div className="col-md-4">
+                <a
+                  download={image.name}
+                  href={image.url}
+                  title={image.name}
+                  rel="noopener noreferrer"
+                >
+                  <img src={image.url} alt={`${name} Supporter ${index}`} />
+                </a>
+              </div>
+            ))}
+        </div>
         <h2>Banner</h2>
         <div className="row">
           <div className="col-md-8">
             {promote_facebook_image && (
-              <a download href={promote_facebook_image}>
-                <img src={promote_facebook_image} />
+              <a
+                download
+                href={promote_facebook_image}
+                rel="noopener noreferrer"
+              >
+                <img src={promote_facebook_image} alt={`${name} Banner`} />
               </a>
             )}
           </div>
@@ -45,10 +69,18 @@ class PromoteArtist extends React.Component<any> {
         <h2>Instragam Post</h2>
         <div className="row">
           {promote_square_images &&
-            promote_square_images.map((image) => (
+            promote_square_images.map((image, index) => (
               <div className="col-md-4">
-                <a download={image.name} href={image.url} title={image.name}>
-                  <img src={image.url} />
+                <a
+                  download={image.name}
+                  href={image.url}
+                  title={image.name}
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src={image.url}
+                    alt={`${name} Instagram Post ${index}`}
+                  />
                 </a>
               </div>
             ))}
@@ -56,21 +88,18 @@ class PromoteArtist extends React.Component<any> {
         <h2>Instagram Story</h2>
         <div className="row">
           {promote_story_images &&
-            promote_story_images.map((image) => (
+            promote_story_images.map((image, index) => (
               <div className="col-md-4">
-                <a download={image.name} href={image.url} title={image.name}>
-                  <img src={image.url} />
-                </a>
-              </div>
-            ))}
-        </div>
-        <h2>Supporter</h2>
-        <div className="row">
-          {supporter_images &&
-            supporter_images.map((image) => (
-              <div className="col-md-4">
-                <a download={image.name} href={image.url} title={image.name}>
-                  <img src={image.url} />
+                <a
+                  download={image.name}
+                  href={image.url}
+                  title={image.name}
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src={image.url}
+                    alt={`${name} Instagram Story ${index}`}
+                  />
                 </a>
               </div>
             ))}

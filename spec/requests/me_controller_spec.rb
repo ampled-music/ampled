@@ -17,7 +17,8 @@ RSpec.describe MeController, type: :request do
         {
           "id" => image.id,
           "url" => image.url,
-          "public_id" => image.public_id
+          "public_id" => image.public_id,
+          "coordinates" => image.coordinates
         }
       )
     end

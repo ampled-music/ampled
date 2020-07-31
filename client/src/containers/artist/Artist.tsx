@@ -308,8 +308,6 @@ class ArtistComponent extends React.Component<Props, any> {
       }
     }
 
-    // console.log(loggedUserAccess);
-
     if (
       !artists.artist.approved &&
       !loggedUserAccess &&
@@ -396,6 +394,9 @@ class ArtistComponent extends React.Component<Props, any> {
           accentColor={artist.accent_color}
           twitterHandle={artist.twitter_handle}
           instagramHandle={artist.instagram_handle}
+          bandcampHandle={artist.bandcamp_handle}
+          youtubeHandle={artist.youtube_handle}
+          external={artist.external}
         />
         <PostsContainer
           match={this.props.match}

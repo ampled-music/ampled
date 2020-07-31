@@ -25,7 +25,6 @@ class ArtistSearch extends React.Component {
     });
 
     this.setState({ results: data });
-    console.log(data);
   }, 400);
 
   updateSearchQuery = (e) => {

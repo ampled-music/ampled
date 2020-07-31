@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as R from 'ramda';
 import { Image, Transformation } from 'cloudinary-react';
 import { UserRoles } from '../../shared/user-roles';
-import avatar from '../../../images/avatars/Avatar_Blank.svg';
+import { UserImage } from '../../user-details/UserImage';
 
 interface Props {
   artist: any;
@@ -121,30 +121,13 @@ export class Supporters extends React.Component<Props, any> {
               : 'supporter-image artist-header__person'
           }
         >
-          {supporter.image?.public_id ? (
-            <Image
-              publicId={supporter.image.public_id}
-              alt={supporter.name}
-              key={supporter.name}
-              className="artist-header__person_image"
-              style={style}
-            >
-              <Transformation
-                fetchFormat="auto"
-                crop="fill"
-                width={60}
-                height={60}
-                responsive_placeholder="blank"
-              />
-            </Image>
-          ) : (
-            <img
-              className="artist-header__person_svg"
-              src={avatar}
-              alt={supporter.name}
-              style={style}
-            />
-          )}
+          <UserImage
+            image={supporter.image}
+            className="artist-header__person_image"
+            alt={supporter.name}
+            width={60}
+            style={style}
+          />
         </div>
       </div>
     );

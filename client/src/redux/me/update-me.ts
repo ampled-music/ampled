@@ -8,6 +8,7 @@ import { Reducer } from './initial-state';
 export const updateMeAction = createActionThunk(
   actions.updateMe,
   async (updatedMe) => {
+    // console.log(updatedMe.coordinates);
     if (updatedMe.file) {
       const cloudinaryResponse = await uploadFileToCloudinary(updatedMe.file);
 
@@ -15,7 +16,13 @@ export const updateMeAction = createActionThunk(
         // TODO: handle error when cloudinary request errors once we can pass along error messages
         return () => undefined;
       }
-      return updateMe({ image: { url: cloudinaryResponse.secure_url, public_id: cloudinaryResponse.public_id }});
+      return updateMe({
+        image: {
+          url: cloudinaryResponse.secure_url,
+          public_id: cloudinaryResponse.public_id,
+          coordinates: updatedMe.coordinates,
+        },
+      });
     }
 
     return updateMe({

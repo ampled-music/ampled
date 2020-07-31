@@ -11,6 +11,9 @@ export interface ArtistModel {
   bio: string;
   twitter_handle: string;
   instagram_handle: string;
+  bandcamp_handle: string;
+  youtube_handle: string;
+  external: string;
   isStripeSetup: boolean;
   posts: [];
   images: [Image];

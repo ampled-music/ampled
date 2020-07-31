@@ -6,6 +6,7 @@ class ApprovalRequestMailer < PostmarkMailer
       artist_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}",
       artist_twitter: artist_page.twitter_handle.presence,
       artist_instagram: artist_page.instagram_handle.presence,
+      artist_bandcamp: artist_page.bandcamp_handle.presence,
       user_name: requesting_user.name,
       user_email: requesting_user.email
     }

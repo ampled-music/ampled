@@ -49,7 +49,6 @@ class BlogPost extends React.Component<PostProps, any> {
       const content = data[0];
 
       if (content.slug === this.props.match.params.slug) {
-        console.log(content);
         this.setState({
           loading: false,
           title: content.title.rendered,

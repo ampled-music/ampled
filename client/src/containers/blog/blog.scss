@@ -61,16 +61,17 @@
     &.main {
       .blog-posts__info {
         max-width: 600px;
-        width: 85%;
+        width: 100%;
         @include mq($layout-m) {
           margin-right: 12px;
           max-width: 600px;
+          width: 85%;
         }
       }
-      .blog-posts__info_author,
       .blog-posts__info_date {
-        display: inline-block;
-        margin: 1rem 0;
+        @include mq($layout-m) {
+          margin-top: 0;
+        }
       }
       .blog-posts__info_author {
         margin-right: 1rem;
@@ -92,9 +93,18 @@
     position: relative;
     z-index: 10;
     &_border {
-      border: 1px solid $black;
-      padding: 0.5rem;
-      display: inline;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      @include mq($layout-m) {
+        border: 1px solid $black;
+        padding: 0.5rem;
+        flex-direction: row;
+        display: inline-block;
+        div {
+          display: inline;
+        }
+      }
     }
     &_author {
       font-family: $font-family-sans-serif;

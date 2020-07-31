@@ -19,6 +19,11 @@ const LazyEditArtist = React.lazy(() =>
     default: module.Edit,
   })),
 );
+const LazyPromote = React.lazy(() =>
+  import('./artist/PromoteArtist').then((module) => ({
+    default: module.Promote,
+  })),
+);
 const LazyNoArtist = React.lazy(() =>
   import('./shared/no-artist/NoArtist').then((module) => ({
     default: module.NoArtist,
@@ -112,6 +117,7 @@ const Routes = () => {
         path={routePaths.editArtist}
         component={LazyEditArtist}
       />
+      <PublicRoute exact path={routePaths.promote} component={LazyPromote} />
       <PublicRoute exact path={routePaths.support} component={Support} />
       <PublicRoute
         exact

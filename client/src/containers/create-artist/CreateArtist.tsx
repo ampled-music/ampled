@@ -1082,7 +1082,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 name="artistYoutube"
                 label="Youtube URL"
                 id="youtube"
-                placeholder="https://youtube.com/Your-Url"
+                placeholder="https://youtube.com/your-url"
                 value={this.state.artistYoutube || ''}
                 onChange={this.handleChange}
                 fullWidth
@@ -1423,9 +1423,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     }
 
     // Make sure Youtube has youtube.com in the URL
-    if (!artistYoutube.includes('youtube.com')) {
+    if (artistYoutube && !/(youtube.com)/gi.test(artistYoutube)) {
       return this.props.showToast({
-        message: 'Please check that your YouTube URL is pointing to youtube',
+        message:
+          'Please check that your YouTube URL is pointing to youtube.com',
         type: 'error',
       });
     }

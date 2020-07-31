@@ -94,7 +94,7 @@ RSpec.describe ArtistPagesController, type: :request do
 
       body = JSON.parse(response.body)
       expect(body["images"]).to eq([
-        { "id" => image.id, "url" => image.url, "public_id" => image.public_id }
+        { "coordinates" => image.coordinates, "id" => image.id, "url" => image.url, "public_id" => image.public_id }
       ])
     end
 

@@ -36,7 +36,7 @@ class CommentForm extends React.Component<Props, any> {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="action-buttons">
         <InputBase
           type="text"
           name="comment"
@@ -58,9 +58,9 @@ class CommentForm extends React.Component<Props, any> {
                 aria-label="Send comment"
                 title="Send comment"
                 disabled={this.state.comment.length > 0 ? false : true}
-                className="comment-input-button"
+                className="publish-button"
               >
-                Post <ReactSVG className="icon icon_white" src={Arrow} />
+                Post <ReactSVG className="icon" src={Arrow} />
               </Button>
             </InputAdornment>
           }

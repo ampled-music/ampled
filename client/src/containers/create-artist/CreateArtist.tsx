@@ -1414,6 +1414,15 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
+    // Make sure Bandcamp is just the username not the url
+    if (artistBandcamp && !/^[0-9a-z\-]+$/gi.test(artistBandcamp)) {
+      return this.props.showToast({
+        message:
+          'Please check the format of your Bandcamp username. For example, if your url is bandname.bandcamp.com then your username is bandname )',
+        type: 'error',
+      });
+    }
+
     // Make sure @ symbol isn't apart of Instagram or Twitter
     if (/[@:/]/gi.test(artistTwitter) || /[@:/]/gi.test(artistInstagram)) {
       return this.props.showToast({

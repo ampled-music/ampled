@@ -63,7 +63,6 @@ const SinglePostComponent = ({
           method: 'get',
           url: `/slug/${slug}/post/${postId}.json`,
         });
-        console.log(data);
         setPost(data);
         setError(null);
         setLoading(false);

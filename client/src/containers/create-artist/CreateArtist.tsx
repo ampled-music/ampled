@@ -34,6 +34,9 @@ import AddPlus from '../../images/icons/Icon_Add-Plus.svg';
 import Close from '../../images/icons/Icon_Close-Cancel.svg';
 import Instagram from '../../images/icons/Icon_Instagram.svg';
 import Twitter from '../../images/icons/Icon_Twitter.svg';
+import Bandcamp from '../../images/icons/Icon_Bandcamp.svg';
+import Youtube from '../../images/icons/Icon_Youtube.svg';
+import Link1 from '../../images/icons/Icon_Link_1.svg';
 import PhotoIcon from '../../images/icons/Icon_Photo.svg';
 
 import { faStripe } from '@fortawesome/free-brands-svg-icons';
@@ -581,6 +584,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     artistMessage: '',
     artistTwitter: '',
     artistInstagram: '',
+    artistBandcamp: '',
+    artistYoutube: '',
+    artistExternal: '',
     artistVideo: '',
     artistSlug: '',
     artistStripe: '',
@@ -642,6 +648,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         bio,
         twitter_handle,
         instagram_handle,
+        youtube_handle,
+        bandcamp_handle,
+        external,
         video_url,
         hide_members,
         slug,
@@ -657,6 +666,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistMessage: bio,
         artistTwitter: twitter_handle,
         artistInstagram: instagram_handle,
+        artistYoutube: youtube_handle,
+        artistBandcamp: bandcamp_handle,
+        artistExternal: external,
         artistVideo: video_url,
         artistSlug: slug,
         artistStripe: '',
@@ -693,6 +705,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         bio,
         twitter_handle,
         instagram_handle,
+        youtube_handle,
+        bandcamp_handle,
+        external,
         video_url,
         slug,
         owners,
@@ -707,6 +722,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistMessage: bio,
         artistTwitter: twitter_handle,
         artistInstagram: instagram_handle,
+        artistYoutube: youtube_handle,
+        artistBandcamp: bandcamp_handle,
+        artistExternal: external,
         artistVideo: video_url,
         artistSlug: slug,
         artistStripe: '',
@@ -1002,12 +1020,30 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Social</div>
               <h6>
-                Just your username, with no &quot;@&quot;.
+                For Bandcamp, Twitter, and Instagram just enter your username,
+                with no &quot;@&quot;.
                 <br />
-                Not a URL.
+                For Youtube and External URL enter the full URL.
               </h6>
             </div>
             <div className="col-md-8 col-sm-12">
+              <TextField
+                name="artistBandcamp"
+                label="Bandcamp"
+                id="bandcamp"
+                placeholder="Bandcamp"
+                value={this.state.artistBandcamp || ''}
+                onChange={this.handleChange}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <ReactSVG className="icon" src={Bandcamp} />
+                    </InputAdornment>
+                  ),
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
               <TextField
                 name="artistTwitter"
                 label="Twitter"
@@ -1037,6 +1073,40 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                   startAdornment: (
                     <InputAdornment position="start">
                       <ReactSVG className="icon" src={Instagram} />
+                    </InputAdornment>
+                  ),
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
+              <TextField
+                name="artistYoutube"
+                label="Youtube URL"
+                id="youtube"
+                placeholder="https://youtube.com/your-url"
+                value={this.state.artistYoutube || ''}
+                onChange={this.handleChange}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <ReactSVG className="icon" src={Youtube} />
+                    </InputAdornment>
+                  ),
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
+              <TextField
+                name="artistExternal"
+                label="External URL"
+                id="external"
+                placeholder="https://yoursite.com"
+                value={this.state.artistExternal || ''}
+                onChange={this.handleChange}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <ReactSVG className="icon" src={Link1} />
                     </InputAdornment>
                   ),
                 }}
@@ -1294,6 +1364,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       artistColor,
       artistInstagram,
       artistTwitter,
+      artistBandcamp,
+      artistYoutube,
+      artistExternal,
       artistLocation,
       artistMessage,
       artistSlug,
@@ -1341,9 +1414,19 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
+    // Make sure @ symbol isn't apart of Instagram or Twitter
     if (/[@:/]/gi.test(artistTwitter) || /[@:/]/gi.test(artistInstagram)) {
       return this.props.showToast({
         message: 'Please check the format of your social handles.',
+        type: 'error',
+      });
+    }
+
+    // Make sure Youtube has youtube.com in the URL
+    if (artistYoutube && !/(youtube.com)/gi.test(artistYoutube)) {
+      return this.props.showToast({
+        message:
+          'Please check that your YouTube URL is pointing to youtube.com',
         type: 'error',
       });
     }
@@ -1389,6 +1472,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             video_url: artistVideo,
             instagram_handle: artistInstagram,
             twitter_handle: artistTwitter,
+            youtube_handle: artistYoutube,
+            bandcamp_handle: artistBandcamp,
+            external: artistExternal,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
             images: fixImages,
@@ -1425,6 +1511,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             video_url: artistVideo,
             instagram_handle: artistInstagram,
             twitter_handle: artistTwitter,
+            youtube_handle: artistYoutube,
+            bandcamp_handle: artistBandcamp,
+            external: artistExternal,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
             images: fixImages,
@@ -1487,18 +1576,18 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             </p>
             {this.renderSupporterCount()}
             <div className="delete-post-modal__actions action-buttons">
-              <button
+              <Button
                 className="cancel-button"
                 onClick={() => this.setState({ showDeleteModal: false })}
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
                 className="publish-button"
                 onClick={this.deleteArtistPage}
               >
                 Delete Artist Page
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -1512,12 +1601,12 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     }
     return (
       <div className="col-md-6 col-sm-12">
-        <button
+        <Button
           onClick={this.onDeleteBtnClicked}
           className="btn btn-ampled btn-delete"
         >
           Delete your page
-        </button>
+        </Button>
       </div>
     );
   }
@@ -1567,22 +1656,22 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 <h4>Are you sure?</h4>
               </div>
               <div className="delete-post-modal__actions action-buttons">
-                <button
+                <Button
                   className="cancel-button"
                   onClick={() => {
                     this.setState({ showConfirmRemoveMember: false });
                   }}
                 >
                   Cancel
-                </button>
-                <button
+                </Button>
+                <Button
                   className="publish-button"
                   onClick={() => {
                     this.removeMember(this.state.confirmRemoveMemberIndex);
                   }}
                 >
                   Remove Member
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -1607,30 +1696,22 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           {/* {this.renderPayment()} */}
           <div className="container">
             {!this.props.editMode && (
-              <div className="row">
-                <div className="col-md-3 col-sm-1"></div>
+              <div className="row justify-content-center">
                 <div className="col-md-6 col-sm-10 create-artist__bottomcopy">
                   Your page will initially only be visible to you and any other
                   members you&#39;ve added. The Ampled team does a quick spot
                   check of all pages before they become visible to the general
                   public, but this normally doesn&#39;t take us very long.
                 </div>
-                <div className="col-md-3 col-sm-1"></div>
               </div>
             )}
-            <div className="row">
-              <div className="col-md-3 col-sm-1"></div>
-              <div className="col-md-6 col-sm-10">
-                <div className="row">
-                  {/* {this.renderDeleteBtn()} */}
-                  <div className={saveBtnClasses}>
-                    <button onClick={this.onSubmit} className="btn btn-ampled">
-                      {this.props.editMode ? 'Save' : 'Create'} your page
-                    </button>
-                  </div>
-                </div>
+            <div className="row action-buttons">
+              {/* {this.renderDeleteBtn()} */}
+              <div className={`col-sm-6 ${saveBtnClasses}`}>
+                <Button onClick={this.onSubmit} className="publish-button">
+                  {this.props.editMode ? 'Save' : 'Create'} your page
+                </Button>
               </div>
-              <div className="col-md-3 col-sm-1"></div>
             </div>
           </div>
         </MuiThemeProvider>

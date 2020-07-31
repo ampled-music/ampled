@@ -4,9 +4,11 @@
 #
 #  accent_color         :string
 #  approved             :boolean          default(FALSE)
+#  bandcamp_handle      :string
 #  banner_image_url     :string
 #  bio                  :string
 #  created_at           :datetime         not null
+#  external             :string
 #  featured             :boolean          default(FALSE)
 #  hide_members         :boolean          default(FALSE)
 #  id                   :bigint(8)        not null, primary key
@@ -23,6 +25,7 @@
 #  verb_plural          :boolean          default(FALSE)
 #  video_screenshot_url :string
 #  video_url            :string
+#  youtube_handle       :string
 #
 # Indexes
 #

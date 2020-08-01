@@ -24,7 +24,7 @@ class PromoteArtist extends React.Component<any> {
       <div className="artist-promote container">
         <h1>Promote {name}</h1>
         <p>
-          Use these images to promote your page. Remember to tag{' '}
+          Use these images to promote {name}. Remember to tag{' '}
           <a
             href="https://www.instagram.com/ampl3d/"
             target="_blank"

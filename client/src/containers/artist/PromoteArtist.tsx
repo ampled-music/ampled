@@ -20,13 +20,11 @@ class PromoteArtist extends React.Component<any> {
       name,
     } = this.props.artists.artist;
 
-    console.log(this.props.artists.artist);
-
     return (
       <div className="artist-promote container">
         <h1>Promote {name}</h1>
         <p>
-          Use these images to promote your page. Remember to tag{' '}
+          Use these images to promote {name}. Remember to tag{' '}
           <a
             href="https://www.instagram.com/ampl3d/"
             target="_blank"
@@ -40,7 +38,7 @@ class PromoteArtist extends React.Component<any> {
         <div className="row">
           {supporter_images &&
             supporter_images.map((image, index) => (
-              <div className="col-md-4">
+              <div className="col-md-4" key={`promote_supporter_${index}`}>
                 <a
                   download={image.name}
                   href={image.url}
@@ -56,7 +54,7 @@ class PromoteArtist extends React.Component<any> {
         <div className="row">
           {promote_square_images &&
             promote_square_images.map((image, index) => (
-              <div className="col-md-4">
+              <div className="col-md-4" key={`promote_square_${index}`}>
                 <a
                   download={image.name}
                   href={image.url}
@@ -75,7 +73,7 @@ class PromoteArtist extends React.Component<any> {
         <div className="row">
           {promote_story_images &&
             promote_story_images.map((image, index) => (
-              <div className="col-md-4">
+              <div className="col-md-4" key={`promote_story_${index}`}>
                 <a
                   download={image.name}
                   href={image.url}

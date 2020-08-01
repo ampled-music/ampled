@@ -48,7 +48,13 @@ class NavComponent extends React.Component<Props, any> {
   showSupportButton = () => {
     const loggedUserAccess = this.getLoggedUserPageAccess();
     const { isStripeSetup } = this.props.artist;
+
     if (!isStripeSetup) {
+      return false;
+    }
+
+    // disable support button on Promote page
+    if (this.props.match.path.indexOf(routePaths.promote) === 0) {
       return false;
     }
 

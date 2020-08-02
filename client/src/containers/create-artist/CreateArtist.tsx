@@ -18,6 +18,7 @@ import Box from '@material-ui/core/Box';
 import SwipeableViews from 'react-swipeable-views';
 import {
   TextField,
+  Input,
   Radio,
   RadioGroup,
   FormControlLabel,
@@ -1026,92 +1027,78 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 For Youtube and External URL enter the full URL.
               </h6>
             </div>
-            <div className="col-md-8 col-sm-12">
-              <TextField
-                name="artistBandcamp"
-                label="Bandcamp"
-                id="bandcamp"
-                placeholder="Bandcamp"
-                value={this.state.artistBandcamp || ''}
-                onChange={this.handleChange}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <ReactSVG className="icon" src={Bandcamp} />
+            <div className="col-md-5 col-sm-12">
+              <div className="social-input">
+                <ReactSVG className="icon icon_black icon_sm" src={Twitter} />
+                <TextField
+                  name="artistTwitter"
+                  id="twitter"
+                  value={this.state.artistTwitter || ''}
+                  onChange={this.handleChange}
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        twitter.com/
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </div>
+              <div className="social-input">
+                <ReactSVG className="icon icon_black icon_sm" src={Instagram} />
+                <TextField
+                  name="artistInstagram"
+                  id="instagram"
+                  value={this.state.artistInstagram || ''}
+                  onChange={this.handleChange}
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        instagram.com/
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </div>
+              <div className="social-input">
+                <ReactSVG className="icon icon_black icon_sm" src={Bandcamp} />
+                <Input
+                  name="artistBandcamp"
+                  id="bandcamp"
+                  value={this.state.artistBandcamp || ''}
+                  onChange={this.handleChange}
+                  fullWidth
+                  endAdornment={
+                    <InputAdornment position="end">
+                      .bandcamp.com
                     </InputAdornment>
-                  ),
-                }}
-                InputLabelProps={{ shrink: true }}
-              />
-              <TextField
-                name="artistTwitter"
-                label="Twitter"
-                id="twitter"
-                placeholder="Twitter"
-                value={this.state.artistTwitter || ''}
-                onChange={this.handleChange}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <ReactSVG className="icon" src={Twitter} />
-                    </InputAdornment>
-                  ),
-                }}
-                InputLabelProps={{ shrink: true }}
-              />
-              <TextField
-                name="artistInstagram"
-                label="Instagram"
-                id="instagram"
-                placeholder="Instagram"
-                value={this.state.artistInstagram || ''}
-                onChange={this.handleChange}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <ReactSVG className="icon" src={Instagram} />
-                    </InputAdornment>
-                  ),
-                }}
-                InputLabelProps={{ shrink: true }}
-              />
-              <TextField
-                name="artistYoutube"
-                label="Youtube URL"
-                id="youtube"
-                placeholder="https://youtube.com/your-url"
-                value={this.state.artistYoutube || ''}
-                onChange={this.handleChange}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <ReactSVG className="icon" src={Youtube} />
-                    </InputAdornment>
-                  ),
-                }}
-                InputLabelProps={{ shrink: true }}
-              />
-              <TextField
-                name="artistExternal"
-                label="External URL"
-                id="external"
-                placeholder="https://yoursite.com"
-                value={this.state.artistExternal || ''}
-                onChange={this.handleChange}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <ReactSVG className="icon" src={Link1} />
-                    </InputAdornment>
-                  ),
-                }}
-                InputLabelProps={{ shrink: true }}
-              />
+                  }
+                />
+              </div>
+              <div className="url-input">
+                <ReactSVG className="icon icon_black icon_sm" src={Youtube} />
+                <TextField
+                  name="artistYoutube"
+                  id="youtube"
+                  placeholder="https://youtube.com/your-url"
+                  value={this.state.artistYoutube || ''}
+                  onChange={this.handleChange}
+                  fullWidth
+                />
+              </div>
+              <div className="url-input">
+                <ReactSVG className="icon icon_black icon_sm" src={Link1} />
+                <TextField
+                  name="artistExternal"
+                  id="external"
+                  placeholder="https://yoursite.com"
+                  value={this.state.artistExternal || ''}
+                  onChange={this.handleChange}
+                  fullWidth
+                />
+              </div>
             </div>
           </div>
           <div className="row">
@@ -1123,7 +1110,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                 You can add this later.
               </h6>
             </div>
-            <div className="col-md-8 col-sm-12">
+            <div className="col-md-5 col-sm-12">
               <TextField
                 name="artistVideo"
                 label="Video URL (Vimeo or YouTube)"

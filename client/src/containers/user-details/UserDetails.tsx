@@ -4,10 +4,13 @@ import '../settings/user-settings.scss';
 
 import * as loadImage from 'blueimp-load-image';
 import * as React from 'react';
+import Cropper from 'react-easy-crop';
+import { Slider } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Store } from '../../redux/configure-store';
 import { ReactSVG } from 'react-svg';
+import Close from '../../images/icons/Icon_Close-Cancel.svg';
 
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
@@ -45,8 +48,7 @@ import { Loading } from '../shared/loading/Loading';
 import { UploadFile } from '../shared/upload/UploadFile';
 import { StripePaymentProvider } from '../artist/support/StripePaymentProvider';
 
-import avatar from '../../images/avatars/Avatar_Blank.svg';
-
+import { UserImage } from './UserImage';
 import { theme } from './theme';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -204,6 +206,9 @@ class UserDetailsComponent extends React.Component<Props, any> {
     country_error: false,
     social_error: false,
     showEditForm: false,
+    crop: { x: 0, y: 0 },
+    croppedAreaPixels: { x: 0, y: 0, height: 0, width: 0 },
+    zoom: 1,
   };
 
   handleChange = (e) => {
@@ -299,47 +304,81 @@ class UserDetailsComponent extends React.Component<Props, any> {
     }
   }
 
-  renderUserImage = () => {
-    const { userData } = this.props;
+  onCropChange = (crop) => {
+    this.setState({ crop });
+  };
+
+  onCropComplete = (croppedArea, croppedAreaPixels) => {
+    this.setState({ croppedAreaPixels });
+  };
+
+  onZoomChange = (zoom) => {
+    this.setState({ zoom });
+  };
+
+  renderCropper = (photoBody) => {
     return (
-      <div className="user-image-container">
-        <button onClick={this.showUserPhotoModal} aria-label="Edit avatar">
-          {userData.image?.url ? (
-            <img
-              src={userData.image.url}
-              className="user-image"
-              alt="Your avatar"
-            />
-          ) : (
-            <img src={avatar} className="user-image" alt="Your avatar" />
-          )}
-          <b className="tag">
-            <ReactSVG className="icon" src={Edit} />
-          </b>
-        </button>
-      </div>
+      <>
+        <div className="cropper">
+          <Cropper
+            image={photoBody}
+            aspect={1}
+            showGrid={false}
+            crop={this.state.crop}
+            zoom={this.state.zoom}
+            onCropChange={this.onCropChange}
+            onCropComplete={this.onCropComplete}
+            cropShape="round"
+            onZoomChange={this.onZoomChange}
+          />
+        </div>
+        <div className="slider">
+          <Slider
+            value={this.state.zoom}
+            min={1}
+            max={3}
+            step={0.1}
+            aria-labelledby="zoom"
+            onChange={(e, zoom) => this.onZoomChange(zoom)}
+          />
+        </div>
+      </>
     );
   };
 
-  renderAddPhotoButton = () => (
-    <div className="add-photo-button-container">
-      <UploadFile
-        inputRefId="input-user-photo"
-        uploadFile={this.loadPhotoContent}
-      />
-      <div className="action-buttons single-button">
-        <button
-          disabled={this.props.updating}
-          className="add-media"
+  renderAddPhotoButton = () => {
+    const { userData } = this.props;
+    return (
+      <div className="add-photo-button-container">
+        <UploadFile
+          inputRefId="input-user-photo"
+          uploadFile={this.loadPhotoContent}
+        />
+        <div
+          className="image-button"
           onClick={() => document.getElementById('input-user-photo').click()}
         >
-          {this.state.photoContent || this.props.userData.image
-            ? 'Change photo'
-            : 'Add photo'}
-        </button>
+          <UserImage
+            image={userData.image}
+            className="user-image"
+            alt={userData.name}
+            width={120}
+          />
+        </div>
+        <div className="action-buttons single-button">
+          <Button
+            disabled={this.props.updating}
+            className="link-button"
+            onClick={() => document.getElementById('input-user-photo').click()}
+          >
+            {this.state.photoContent || this.props.userData.image
+              ? 'Change photo'
+              : 'Add photo'}
+          </Button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   renderPhoto = () => {
     const { photoBody, processingImage } = this.state;
@@ -349,59 +388,41 @@ class UserDetailsComponent extends React.Component<Props, any> {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
-          <img
-            src={userData.image.url}
-            className="image-preview loading-image"
-            alt="Loading"
-          />
         </div>
       );
     } else if (processingImage) {
       return (
         <div className="processing-image">
           <CircularProgress size={80} />
-          <img
-            src={avatar}
-            className="image-preview loading-image"
-            alt="Loading"
-          />
         </div>
       );
     }
 
-    const placeholderImage = userData.image?.url ? (
-      <img src={userData.image.url} className="image-preview" alt="Avatar" />
-    ) : (
-      <img src={avatar} className="image-preview" alt="Avatar" />
-    );
-
-    return photoBody ? (
-      <img src={photoBody} className="image-preview" alt="Avatar" />
-    ) : (
-      placeholderImage
-    );
+    return photoBody
+      ? this.renderCropper(photoBody)
+      : this.renderAddPhotoButton();
   };
 
   renderPhotoSelector = () => {
     return (
       <div className="user-photo-selector-modal">
         {this.renderPhoto()}
-        {this.renderAddPhotoButton()}
+
         <div className="action-buttons">
-          <button
+          <Button
             disabled={this.props.updating}
             className="cancel-button"
             onClick={this.closeUserPhotoModal}
           >
-            Cancel
-          </button>
-          <button
+            <ReactSVG className="icon" src={Close} />
+          </Button>
+          <Button
             disabled={!this.state.photoContent || this.props.updating}
-            className="continue-button"
+            className="publish-button"
             onClick={this.saveUserPhoto}
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -458,6 +479,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
   saveUserPhoto = () => {
     const me = {
       file: this.state.photoContent.file,
+      coordinates: `${this.state.croppedAreaPixels.x},${this.state.croppedAreaPixels.y},${this.state.croppedAreaPixels.width},${this.state.croppedAreaPixels.height}`,
     };
     this.props.updateMe(me);
   };
@@ -471,10 +493,18 @@ class UserDetailsComponent extends React.Component<Props, any> {
         message: 'User photo updated!',
         type: 'success',
       });
+      this.setState({
+        crop: { x: 0, y: 0 },
+        croppedAreaPixels: { x: 0, y: 0, height: 0, width: 0 },
+        zoom: 1,
+      });
     } else {
       this.setState({
         photoContent: undefined,
         photoBody: undefined,
+        crop: { x: 0, y: 0 },
+        croppedAreaPixels: { x: 0, y: 0, height: 0, width: 0 },
+        zoom: 1,
       });
       this.props.showToast({
         message:
@@ -488,7 +518,14 @@ class UserDetailsComponent extends React.Component<Props, any> {
     e.preventDefault();
     this.setState({ showUserPhotoModal: true });
   };
-  closeUserPhotoModal = () => this.setState({ showUserPhotoModal: false });
+  closeUserPhotoModal = () =>
+    this.setState({
+      showUserPhotoModal: false,
+      photoBody: undefined,
+      crop: { x: 0, y: 0 },
+      croppedAreaPixels: { x: 0, y: 0, height: 0, width: 0 },
+      zoom: 1,
+    });
 
   renderEmailAddress = () => {
     return (
@@ -517,6 +554,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
   };
 
   renderBasicInfo = () => {
+    const { userData } = this.props;
     return (
       <div className="basic-info">
         <div className="row">
@@ -591,7 +629,22 @@ class UserDetailsComponent extends React.Component<Props, any> {
             <div className="row no-gutters">
               <div className="col-md-3">
                 <div className="user-details__subtitle">Photo</div>
-                {this.renderUserImage()}
+                <div className="user-image-container">
+                  <button
+                    onClick={this.showUserPhotoModal}
+                    aria-label="Edit avatar"
+                  >
+                    <UserImage
+                      image={userData.image}
+                      className="user-image"
+                      alt={userData.name}
+                      width={120}
+                    />
+                    <span className="tag">
+                      <ReactSVG className="icon" src={Edit} />
+                    </span>
+                  </button>
+                </div>
               </div>
               <div className="row col-md-9">
                 <div className="col-2">
@@ -860,7 +913,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   renderButtons = () => (
     <DialogActions className="action-buttons">
-      <Button type="submit" className="finished-button">
+      <Button type="submit" className="publish-button">
         Finished
       </Button>
     </DialogActions>

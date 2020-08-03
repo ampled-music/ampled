@@ -8,11 +8,18 @@ json.video_url @artist_page.video_url
 json.video_screenshot_url @artist_page.video_screenshot_url
 json.twitter_handle @artist_page.twitter_handle
 json.instagram_handle @artist_page.instagram_handle
+json.bandcamp_handle @artist_page.bandcamp_handle
+json.youtube_handle @artist_page.youtube_handle
+json.external @artist_page.external
 json.images @artist_page.images, partial: "images/image", as: :image
 json.isStripeSetup @artist_page.is_stripe_ready
 json.approved @artist_page.approved
 json.hide_members @artist_page.hide_members
 json.supporter_count @artist_page.subscriber_count
+json.promote_facebook_image @artist_page.promote_facebook_image
+json.promote_square_images @artist_page.promote_square_images
+json.promote_story_images @artist_page.promote_story_images
+json.supporter_images @artist_page.supporter_images
 
 json.most_recent_supporter do
   if @artist_page.most_recent_supporter.present?

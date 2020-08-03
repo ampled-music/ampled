@@ -1,17 +1,13 @@
 @import '../../theme/vars.scss';
 @import '../../theme/mixins.scss';
-@import '../../theme/global.scss';
 
 .home-section {
   overflow: hidden;
   margin-top: 50px;
 
-  h1 {
-    font-size: 1.8rem;
-
-    @include mq($desktop) {
-      font-size: 2.5rem;
-    }
+  .btn {
+    border-radius: 0;
+    border: 2px solid $black;
   }
   .artistAlertHeader {
     position: relative;
@@ -127,6 +123,10 @@
   .input-group {
     max-width: 350px;
     margin: auto;
+
+    @include mq($desktop) {
+      margin: 0;
+    }
   }
 }
 
@@ -183,6 +183,10 @@
     @include mq($tablet) {
       min-height: 80px;
     }
+  }
+  &__button {
+    display: block;
+    margin: auto;
   }
 }
 
@@ -570,6 +574,7 @@
 .home-garden {
   padding: 1rem 1rem 2rem;
   background-color: $white;
+  border-top: 10px solid $black;
 
   h3 {
     font-family: $font-family-sans-serif;

@@ -6,6 +6,7 @@ import * as store from 'store';
 import { config } from '../config';
 import { routePaths } from './route-paths';
 import { Nav } from './shared/nav/Nav';
+import { Footer } from './shared/footer/Footer';
 
 import { Store } from '../redux/configure-store';
 import { connect } from 'react-redux';
@@ -73,6 +74,7 @@ const ProtectedRoute = ({
                 />
               )}
             </main>
+            <Footer />
           </CloudinaryContext>
         </div>
       </div>

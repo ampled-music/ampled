@@ -19,6 +19,11 @@ const LazyEditArtist = React.lazy(() =>
     default: module.Edit,
   })),
 );
+const LazyPromote = React.lazy(() =>
+  import('./artist/PromoteArtist').then((module) => ({
+    default: module.Promote,
+  })),
+);
 const LazyNoArtist = React.lazy(() =>
   import('./shared/no-artist/NoArtist').then((module) => ({
     default: module.NoArtist,
@@ -72,6 +77,21 @@ const LazySinglePost = React.lazy(() =>
     default: module.SinglePost,
   })),
 );
+const LazyBlog = React.lazy(() =>
+  import('./blog/BlogPosts').then((module) => ({
+    default: module.BlogPosts,
+  })),
+);
+const LazyBlogPost = React.lazy(() =>
+  import('./blog/BlogPost').then((module) => ({
+    default: module.BlogPost,
+  })),
+);
+const LazyPage = React.lazy(() =>
+  import('./pages/Page').then((module) => ({
+    default: module.Page,
+  })),
+);
 
 const Routes = () => {
   return (
@@ -97,6 +117,7 @@ const Routes = () => {
         path={routePaths.editArtist}
         component={LazyEditArtist}
       />
+      <PublicRoute exact path={routePaths.promote} component={LazyPromote} />
       <PublicRoute exact path={routePaths.support} component={Support} />
       <PublicRoute
         exact
@@ -135,6 +156,9 @@ const Routes = () => {
       />
       <PublicRoute exact path={routePaths.metrics} component={LazyMetrics} />
       <ProtectedRoute exact path={routePaths.feed} component={LazyFeed} />
+      <PublicRoute exact path={routePaths.page} component={LazyPage} />
+      <PublicRoute exact path={routePaths.blog} component={LazyBlog} />
+      <PublicRoute exact path={routePaths.blogPost} component={LazyBlogPost} />
       <PublicRoute path={'*'} component={LazyNoArtist} />
     </Switch>
   );

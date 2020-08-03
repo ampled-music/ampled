@@ -5,7 +5,7 @@ RSpec.describe ArtistPagesController, type: :request do
   let(:supporter) { create(:user, confirmed_at: Time.current) }
 
   let(:image) { create(:image) }
-  let(:artist_page) { create(:artist_page, slug: "test", approved: true, images: [image]) }
+  let(:artist_page) { create(:artist_page, slug: "test", approved: true, images: [image], accent_color: "#0f0f0f") }
   let(:artist_page_unapproved) { create(:artist_page, slug: "unapproved", approved: false) }
 
   before(:each) do
@@ -94,7 +94,7 @@ RSpec.describe ArtistPagesController, type: :request do
 
       body = JSON.parse(response.body)
       expect(body["images"]).to eq([
-        { "id" => image.id, "url" => image.url, "public_id" => image.public_id }
+        { "coordinates" => image.coordinates, "id" => image.id, "url" => image.url, "public_id" => image.public_id }
       ])
     end
 

@@ -5,7 +5,6 @@ import cx from 'classnames';
 import * as store from 'store';
 import { ReactSVG } from 'react-svg';
 
-import { Footer } from '../footer/Footer';
 import { HomeArtists } from './HomeArtists';
 import { HomeFor } from './HomeFor';
 import { HomeHeader } from './HomeHeader';
@@ -27,7 +26,7 @@ class Home extends React.Component<any> {
         As a response to COVID-19, artists will receive 100% of support through
         Ampled. We will waive artist membership dues for the rest of 2020.{' '}
         <a
-          href="https://app.ampled.com/zine/ampled-artist-membership-is-now-open-join-today"
+          href="https://ampled.com/blog/ampled-artist-membership-is-now-open-join-today"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -71,7 +70,6 @@ class Home extends React.Component<any> {
         <HomeArtists />
         <HomeGarden />
         {/* <HomeBrowse /> */}
-        <Footer />
       </div>
     );
   }

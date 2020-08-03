@@ -589,25 +589,19 @@
     display: flex;
     justify-content: flex-end;
 
+    &_item {
+      opacity: 1;
+      transition: opacity $speed;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
     span {
       display: none;
 
       @include mq($layout-m) {
         display: inline;
-      }
-    }
-
-    &_twitter,
-    &_instagram {
-      margin: 0 0 0 0.5rem;
-      display: flex;
-
-      a {
-        display: flex;
-      }
-
-      @include mq($layout-m) {
-        margin: 0 1rem;
       }
     }
   }

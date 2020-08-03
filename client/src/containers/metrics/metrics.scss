@@ -1,12 +1,19 @@
 @import '../../theme/vars.scss';
 @import '../../theme/mixins.scss';
-@import '../../theme/global.scss';
 
 .metrics {
   font-family: $font-family-monospace;
   font-size: $font-size-lg;
   text-align: center;
-  padding: 2rem;
+  background-color: $white;
+  min-height: calc(100vh - 280px);
+  padding: 1rem;
+  margin: 50px auto 0;
+  @include mq($layout-m) {
+    padding: 2rem 5rem;
+    border-left: 1px solid $black;
+    border-right: 1px solid $black;
+  }
 
   h1 {
     font-family: $font-family-sans-serif;

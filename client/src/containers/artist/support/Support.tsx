@@ -15,7 +15,7 @@ import { declineStepAction } from '../../../redux/subscriptions/decline-step';
 import { startSubscriptionAction } from '../../../redux/subscriptions/start-subscription';
 import { Helmet } from 'react-helmet';
 
-import avatar from '../../../images/avatars/Avatar_Blank.svg';
+import { UserImage } from '../../user-details/UserImage';
 
 import {
   initialState as artistsInitialState,
@@ -240,19 +240,13 @@ export class SupportComponent extends React.Component<Props, any> {
     <div key="artists" className="support__artists">
       {owners.map((owner, index) => (
         <div key={index} className="support__artist-info">
-          {owner.image?.url ? (
-            <img
-              className="support__artist-info_image"
-              src={owner.image.url}
-              alt={`${this.returnFirstName(owner.name)}'s avatar`}
-            />
-          ) : (
-            <img
-              className="support__artist-info_image"
-              src={avatar}
-              alt="Avatar"
-            />
-          )}
+          <UserImage
+            image={owner.image}
+            className="support__artist-info_image"
+            alt={owner.name}
+            width={60}
+          />
+
           <p>{this.returnFirstName(owner.name)}</p>
         </div>
       ))}
@@ -289,7 +283,7 @@ export class SupportComponent extends React.Component<Props, any> {
               This is due to our payment processor's service fee. More details
               can be found{' '}
               <a
-                href="https://app.ampled.com/payment-processing"
+                href="https://docs.ampled.com/finances/pricing"
                 target="_blank"
                 rel="noopener noreferrer"
               >

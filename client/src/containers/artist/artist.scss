@@ -1,6 +1,5 @@
 @import '../../theme/vars.scss';
 @import '../../theme/mixins.scss';
-@import '../../theme/global.scss';
 
 .artistAlertHeader {
   font-family: $font-family-monospace;
@@ -76,5 +75,13 @@
 
   @include mq($layout-m) {
     top: 95px;
+  }
+}
+
+.artist-promote {
+  padding-top: 2rem;
+  img {
+    width: 100%;
+    margin-bottom: 2rem;
   }
 }

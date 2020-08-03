@@ -8,6 +8,9 @@ json.video_url @artist_page.video_url
 json.video_screenshot_url @artist_page.video_screenshot_url
 json.twitter_handle @artist_page.twitter_handle
 json.instagram_handle @artist_page.instagram_handle
+json.bandcamp_handle @artist_page.bandcamp_handle
+json.youtube_handle @artist_page.youtube_handle
+json.external @artist_page.external
 json.image @artist_page.images.first&.url
 json.isStripeSetup @artist_page.is_stripe_ready
 json.approved @artist_page.approved

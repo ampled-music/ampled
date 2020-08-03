@@ -953,7 +953,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
           <div>Not sure what to post?</div>
           <div>
             <a
-              href="http://app.ampled.com/what-to-post"
+              href="https://docs.ampled.com/artist-handbook/getting-started/posts"
               target="_blank"
               rel="noopener noreferrer"
             >

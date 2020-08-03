@@ -8,13 +8,12 @@ import { openAuthModalAction } from '../../../redux/authentication/authenticatio
 import { Store } from '../../../redux/configure-store';
 
 import logo from '../../../images/ampled_logo_beta.svg';
-import avatar from '../../../images/avatars/Avatar_Blank.svg';
 import { initialState as loginInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import { routePaths } from '../../route-paths';
 import { MenuEx } from '../menu/Menu';
 import { UserRoles } from '../user-roles';
-import { Image, Transformation } from 'cloudinary-react';
+import { UserImage } from '../../user-details/UserImage';
 
 interface NavComponentProps {
   match: {
@@ -49,7 +48,13 @@ class NavComponent extends React.Component<Props, any> {
   showSupportButton = () => {
     const loggedUserAccess = this.getLoggedUserPageAccess();
     const { isStripeSetup } = this.props.artist;
+
     if (!isStripeSetup) {
+      return false;
+    }
+
+    // disable support button on Promote page
+    if (this.props.match.path.indexOf(routePaths.promote) === 0) {
       return false;
     }
 
@@ -97,25 +102,14 @@ class NavComponent extends React.Component<Props, any> {
   renderUserImage = () => {
     const { userData } = this.props;
 
-    return userData.image?.public_id ? (
+    return (
       <Link to="/settings">
-        <Image
-          publicId={userData.image.public_id}
-          alt={userData.name}
+        <UserImage
+          image={userData.image}
           className="user-image"
-        >
-          <Transformation
-            fetchFormat="auto"
-            crop="fill"
-            width={60}
-            height={60}
-            responsive_placeholder="blank"
-          />
-        </Image>
-      </Link>
-    ) : (
-      <Link to="/settings">
-        <img src={avatar} className="user-image" alt="Your avatar" />
+          alt={userData.name}
+          width={60}
+        />
       </Link>
     );
   };

@@ -151,6 +151,8 @@
       button {
         width: 240px;
         text-transform: uppercase;
+        border-radius: 0;
+        font-family: $font-family-monospace;
       }
     }
   }
@@ -258,24 +260,19 @@
       border-radius: 0px;
       margin-top: 10px;
 
-      &-button {
-        text-transform: uppercase;
-        font-family: $font-family-monospace;
-        border-radius: 0px;
-        border: 1px solid $black;
-        background-color: $black;
-        color: $white;
+      .publish-button {
         right: -10px;
-
-        &.Mui-disabled {
-          border: 1px solid $gray-light;
-          background-color: $gray-light;
+        &:disabled {
+          svg path {
+            fill: $gray-lighter;
+          }
         }
-
         .icon {
           width: 20px;
           height: 20px;
           margin-left: 5px;
+          position: relative;
+          top: -1px;
         }
       }
     }

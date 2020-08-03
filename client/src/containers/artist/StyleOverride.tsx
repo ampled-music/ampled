@@ -80,7 +80,7 @@ const StyleOverride = ({
         .private-support__btn > .btn:hover,
         .new-post button:hover,
         .edit-page button:hover {
-          background-color: ${accentColor};
+          background-color: ${accentColor}CC;
         }
         .supporter__hover-card_bands_name a:hover {
           color: ${accentColor};

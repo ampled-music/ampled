@@ -1,6 +1,5 @@
 @import '../../theme/vars.scss';
 @import '../../theme/mixins.scss';
-@import '../../theme/global.scss';
 
 .create-artist {
   margin-top: 50px;
@@ -198,6 +197,12 @@
         width: 200px;
         height: 160px;
       }
+    }
+  }
+  .social-input {
+    max-width: 330px;
+    #bandcamp {
+      text-align: right;
     }
   }
 }

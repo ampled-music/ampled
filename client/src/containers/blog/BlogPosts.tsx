@@ -43,7 +43,7 @@ class BlogPosts extends React.Component<PostsProps, any> {
       this.setState({ loading: true });
       const { data } = await apiAxios({
         method: 'get',
-        url: `http://cms.ampled.com/wp-json/wp/v2/posts?page=${page}&_embed`,
+        url: `https://cms.ampled.com/wp-json/wp/v2/posts?page=${page}&_embed`,
       });
 
       this.setState({

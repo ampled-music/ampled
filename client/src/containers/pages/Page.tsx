@@ -30,7 +30,7 @@ class Page extends React.Component<PageProps, any> {
       this.setState({ loading: true });
       const { data } = await apiAxios({
         method: 'get',
-        url: `http://cms.ampled.com/wp-json/wp/v2/pages?slug=${this.props.match.params.slug}`,
+        url: `https://cms.ampled.com/wp-json/wp/v2/pages?slug=${this.props.match.params.slug}`,
       });
       if (data[0].slug === this.props.match.params.slug) {
         this.setState({

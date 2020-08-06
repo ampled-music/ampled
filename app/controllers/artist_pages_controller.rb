@@ -140,14 +140,6 @@ class ArtistPagesController < ApplicationController
     }
   end
 
-  def destroy
-    unless @role == "admin" || current_user&.admin?
-      return render json: { status: "error", message: "You don't have that permission." }
-    end
-
-    render json: { status: "ok", message: "Your page has been deleted!" } if @artist_page.destroy
-  end
-
   def request_approval
     set_artist_page
 

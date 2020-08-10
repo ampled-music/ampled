@@ -21,6 +21,7 @@ class ArtistPageApprovedEmailJob
         to: user.email,
         template_alias: "wip-artist-page-approved",
         template_model: {
+          app_base_url: ENV["REACT_APP_API_URL"],
           artist_name: artist.name,
           artist_slug: artist.slug,
           social_image_url: social_image[:url]

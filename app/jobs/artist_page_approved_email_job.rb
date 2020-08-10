@@ -15,11 +15,12 @@ class ArtistPageApprovedEmailJob
 
   def messages
     social_image = SocialImages::Images::Square1.build(artist)
+
     users.map do |user|
       {
         from: ENV["POSTMARK_FROM_EMAIL"],
         to: user.email,
-        template_alias: "wip-artist-page-approved",
+        template_alias: "artist-page-approved",
         template_model: {
           app_base_url: ENV["REACT_APP_API_URL"],
           artist_name: artist.name,

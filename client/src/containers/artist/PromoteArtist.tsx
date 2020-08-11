@@ -50,7 +50,7 @@ class PromoteArtist extends React.Component<any> {
               </div>
             ))}
         </div>
-        <h2>Instragam Post</h2>
+        <h2>Instagram Post</h2>
         <div className="row">
           {promote_square_images &&
             promote_square_images.map((image, index) => (

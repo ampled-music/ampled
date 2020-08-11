@@ -26,7 +26,7 @@ class Home extends React.Component<any> {
         As a response to COVID-19, artists will receive 100% of support through
         Ampled. We will waive artist membership dues for the rest of 2020.{' '}
         <a
-          href="https://ampled.com/blog/ampled-artist-membership-is-now-open-join-today"
+          href="https://www.ampled.com/blog/artist-membership-is-open"
           target="_blank"
           rel="noopener noreferrer"
         >

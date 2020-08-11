@@ -26,7 +26,7 @@ export const PublicRoute = ({ component: Component, ...rest }) => {
             <main>
               <Component {...props} />
             </main>
-            <Footer />
+            <Footer match={props.match} />
           </CloudinaryContext>
         </div>
       </div>

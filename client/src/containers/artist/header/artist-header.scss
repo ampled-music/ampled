@@ -278,7 +278,7 @@
   }
 
   &__message-col {
-    margin-top: 1rem;
+    margin-top: 0;
 
     @include mq($layout-m) {
       margin-top: -20px;
@@ -304,10 +304,14 @@
       justify-content: center;
       flex-direction: column;
       width: 90%;
-      margin: 0rem auto 1.5rem;
+      margin: auto;
       border: 2px solid $brand-primary;
       padding: 10px 0px;
       min-height: 140px;
+
+      @include mq($layout-m) {
+        margin: 0rem auto 1.5rem;
+      }
 
       &.paper_md {
         min-height: 210px;
@@ -338,6 +342,10 @@
       font-family: $font-family-monospace;
       padding: 1rem 2rem;
       font-size: 0.8rem;
+      span {
+        word-wrap: anywhere;
+        word-break: break-all;
+      }
     }
 
     &_image {
@@ -360,6 +368,10 @@
 
   &__supporters {
     margin: 3rem 0 1rem;
+
+    &:empty {
+      display: none;
+    }
 
     &_title {
       font-size: 1.2rem;
@@ -594,6 +606,11 @@
       transition: opacity $speed;
       &:hover {
         opacity: 0.7;
+      }
+      &:last-child {
+        .icon {
+          margin-right: 0;
+        }
       }
     }
 

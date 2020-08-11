@@ -8,6 +8,9 @@
 body {
   color: $black;
   margin-top: 50px;
+  @include mq(0, $layout-m) {
+    margin-bottom: 50px;
+  }
 }
 
 a {

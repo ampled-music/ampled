@@ -5,7 +5,7 @@ module SocialImages
         return nil if artist_page.accent_color.nil?
 
         image_url = BASE_UPLOAD_URL
-        image_url += "/b_rgb:#{adjust_background_color(artist_page.accent_color)}/social/Grid/Grid5.png"
+        image_url += "/b_rgb:#{adjust_background_color(artist_page.accent_color)}/social/Grid/Grid5.1.png"
 
         {
           url: image_url,

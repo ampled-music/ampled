@@ -18,8 +18,8 @@ module SocialImages
             bgcolor: "202020"
           }
         )
-        image_url += "/l_text:Arial_60_bold:%20ampled.com%252Fartist%252F#{artist_page.slug}%20,"
-        image_url += "co_rgb:ffffff,b_rgb:202020,g_south_east,y_280,x_100/"
+        image_url += "/l_text:Arial_45_bold:%20ampled.com%252Fartist%252F#{artist_page.slug}%20,"
+        image_url += "co_rgb:ffffff,b_rgb:202020,g_south_east,y_215,x_100/"
         image_url += handle_public_id(artist_image.url)
 
         {

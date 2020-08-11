@@ -9,7 +9,7 @@ class UserSupportedArtistEmailJob
     @artist_page = subscription.artist_page
     @user = subscription.user
 
-    social_image = SocialImages::Images::SupporterSquare.build(artist)
+    social_image = SocialImages::Images::SupporterSquare.build(artist_page)
 
     SendBatchEmail.call(
       [{

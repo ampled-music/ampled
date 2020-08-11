@@ -6,7 +6,7 @@ module SocialImages
         return nil if artist_image.nil?
 
         image_url = BASE_UPLOAD_URL
-        image_url += "/c_fill,h_1500,w_1500/l_social:Supporter:Grid/"
+        image_url += "/c_fill,h_1500,w_1500,g_faces/l_social:Supporter:Grid/"
         image_url += cloudinary_artist_name_string(
           {
             position: "north_west",

@@ -74,7 +74,7 @@ const ProtectedRoute = ({
                 />
               )}
             </main>
-            <Footer />
+            <Footer match={props.match} />
           </CloudinaryContext>
         </div>
       </div>

@@ -11,7 +11,7 @@ module SocialImages
 
         {
           url: image_url,
-          name: "#{clean_artist_name}_Story6.jpg",
+          name: "#{clean_artist_name}_Story6.1.jpg",
           description: ""
         }
       end

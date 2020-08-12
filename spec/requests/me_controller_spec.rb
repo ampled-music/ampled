@@ -18,6 +18,7 @@ RSpec.describe MeController, type: :request do
           "id" => image.id,
           "url" => image.url,
           "public_id" => image.public_id,
+          "delete_token" => image.delete_token,
           "coordinates" => image.coordinates
         }
       )

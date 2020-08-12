@@ -375,9 +375,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
     this.setState({ savingPost: true });
 
     if (deletedImages && deletedImages.length > 0) {
-      console.log('delete from cloudinary');
       for (const deleteImage of deletedImages) {
-        console.log('deleteImage: ', deleteImage);
         await this.removeImageFromBackendAndCloudinary(
           deleteImage.id,
           deleteImage.delete_token,
@@ -434,7 +432,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
     this.removeImage();
 
     const cloudinaryResponse = await uploadFileToCloudinary(imageFile);
-    console.log('cloudinaryResponse: ', cloudinaryResponse);
 
     if (cloudinaryResponse) {
       this.setState((state) => {
@@ -443,7 +440,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
           public_id: cloudinaryResponse.public_id,
           delete_token: cloudinaryResponse.delete_token,
         });
-        console.log('newImageList: ', newImageList);
         return {
           images: newImageList,
           hasUnsavedChanges: true,
@@ -465,16 +461,13 @@ export default class PostFormComponent extends React.Component<Props, any> {
   };
 
   removeImageFromBackendAndCloudinary = async (id, delete_token) => {
-    console.log('id|delete_token: ', id, delete_token);
     if (delete_token) {
       // TODO: Sometimes we want to delete an image but there is no longer a delete token.
       //       Figure this out, perhaps as part of a broader "deleting images" cleanup.
       try {
         await deleteFileFromCloudinary(delete_token);
-        console.log('delete function');
       } catch (e) {
         Sentry.captureException(e);
-        console.log('error', e);
       }
     }
     if (id) {
@@ -499,8 +492,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
         },
       ];
     }
-    console.log('state: ', this.state.images);
-    console.log('deleteArray: ', deletedImages);
 
     this.setState({
       images: [],

@@ -261,7 +261,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
     images: [],
     deletedImages: [],
     publicId: null,
-    deleteToken: undefined,
     hasUnsavedChanges: false,
     loadingImage: false,
     savingPost: false,
@@ -374,9 +373,15 @@ export default class PostFormComponent extends React.Component<Props, any> {
     };
 
     this.setState({ savingPost: true });
+
     if (deletedImages && deletedImages.length > 0) {
+      console.log('delete from cloudinary');
       for (const deleteImage of deletedImages) {
-        await this.removeImageFromBackendAndCloudinary(deleteImage);
+        console.log('deleteImage: ', deleteImage);
+        await this.removeImageFromBackendAndCloudinary(
+          deleteImage.id,
+          deleteImage.delete_token,
+        );
       }
     }
 
@@ -429,16 +434,18 @@ export default class PostFormComponent extends React.Component<Props, any> {
     this.removeImage();
 
     const cloudinaryResponse = await uploadFileToCloudinary(imageFile);
+    console.log('cloudinaryResponse: ', cloudinaryResponse);
 
     if (cloudinaryResponse) {
       this.setState((state) => {
         const newImageList = state.images.concat({
           url: cloudinaryResponse.secure_url,
           public_id: cloudinaryResponse.public_id,
+          delete_token: cloudinaryResponse.delete_token,
         });
+        console.log('newImageList: ', newImageList);
         return {
           images: newImageList,
-          deleteToken: cloudinaryResponse.delete_token,
           hasUnsavedChanges: true,
           loadingImage: false,
           imageName: imageFile.name,
@@ -457,14 +464,17 @@ export default class PostFormComponent extends React.Component<Props, any> {
     }
   };
 
-  removeImageFromBackendAndCloudinary = async ({ id, deleteToken }) => {
-    if (deleteToken) {
+  removeImageFromBackendAndCloudinary = async (id, delete_token) => {
+    console.log('id|delete_token: ', id, delete_token);
+    if (delete_token) {
       // TODO: Sometimes we want to delete an image but there is no longer a delete token.
       //       Figure this out, perhaps as part of a broader "deleting images" cleanup.
       try {
-        await deleteFileFromCloudinary(deleteToken);
+        await deleteFileFromCloudinary(delete_token);
+        console.log('delete function');
       } catch (e) {
         Sentry.captureException(e);
+        console.log('error', e);
       }
     }
     if (id) {
@@ -482,14 +492,19 @@ export default class PostFormComponent extends React.Component<Props, any> {
       this.state.images[0].id
     ) {
       deletedImages = [
-        { id: this.state.images[0].id, deleteToken: this.state.deleteToken },
+        {
+          id: this.state.images[0].id,
+          public_id: this.state.images[0].public_id,
+          delete_token: this.state.images[0].delete_token,
+        },
       ];
     }
+    console.log('state: ', this.state.images);
+    console.log('deleteArray: ', deletedImages);
 
     this.setState({
       images: [],
       deletedImages,
-      deleteToken: undefined,
       hasUnsavedChanges: true,
     });
   };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { config } from '../../config';
 
-export const deleteFileFromCloudinary = async (deleteToken: string) => {
+export const deleteFileFromCloudinary = async (delete_token: string) => {
   try {
     await axios({
       method: 'post',
@@ -10,7 +10,7 @@ export const deleteFileFromCloudinary = async (deleteToken: string) => {
         'Content-Type': 'application/json',
       },
       data: {
-        token: deleteToken,
+        token: delete_token,
       },
     });
   } catch (e) {

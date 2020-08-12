@@ -3,5 +3,6 @@ export interface Image {
   id: number;
   url: string;
   public_id: string;
+  delete_token: string;
   coordinates: string;
 }

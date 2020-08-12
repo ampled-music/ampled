@@ -14,6 +14,7 @@ class ImageDashboard < Administrate::BaseDashboard
     id: Field::Number,
     url: Field::String,
     public_id: Field::String,
+    delete_token: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze

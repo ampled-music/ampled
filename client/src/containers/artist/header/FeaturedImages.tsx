@@ -94,10 +94,10 @@ export class FeaturedImages extends React.Component<Props, any> {
           <div className="supporter__hover-card_bands">
             <div className="supporter__hover-card_bands_section">
               <h6>Also Supports</h6>
-              {owner.supports.map((artist) => (
+              {owner.supports.map((artist, index) => (
                 <div
                   className="supporter__hover-card_bands_name"
-                  key={artist.name}
+                  key={`${artist.name}-${index}`}
                 >
                   <a href={artist.slug}>{artist.name}</a>
                 </div>

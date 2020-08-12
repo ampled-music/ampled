@@ -103,6 +103,7 @@ interface ImageUploaderProps {
   imageObject?: {
     url: string;
     public_id: string;
+    delete_token: string;
   };
   setImage: Function;
   showToast: Function;

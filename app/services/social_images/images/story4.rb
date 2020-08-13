@@ -9,7 +9,7 @@ module SocialImages
 
         {
           url: image_url,
-          name: "#{clean_artist_name}_Story4.jpg",
+          name: "#{clean_artist_name}_Story4.1.jpg",
           description: ""
         }
       end

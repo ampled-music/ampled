@@ -1,6 +1,8 @@
 import { createActionThunk } from 'redux-thunk-actions';
 import { updateMe } from '../../api/me/update-me';
+import * as Sentry from '@sentry/browser';
 
+import { deleteFileFromCloudinary } from '../../api/cloudinary/delete-image';
 import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
 import { actions } from './actions';
 import { Reducer } from './initial-state';
@@ -8,19 +10,24 @@ import { Reducer } from './initial-state';
 export const updateMeAction = createActionThunk(
   actions.updateMe,
   async (updatedMe) => {
-    // console.log(updatedMe.coordinates);
+    console.log(updatedMe);
     if (updatedMe.file) {
       const cloudinaryResponse = await uploadFileToCloudinary(updatedMe.file);
 
-      if (!cloudinaryResponse) {
-        // TODO: handle error when cloudinary request errors once we can pass along error messages
-        return () => undefined;
+      if (cloudinaryResponse && updatedMe.previous_delete_token) {
+        try {
+          await deleteFileFromCloudinary(updatedMe.previous_delete_token);
+        } catch (e) {
+          Sentry.captureException(e);
+        }
       }
+
       return updateMe({
         image: {
           url: cloudinaryResponse.secure_url,
           public_id: cloudinaryResponse.public_id,
           coordinates: updatedMe.coordinates,
+          delete_token: cloudinaryResponse.delete_token,
         },
       });
     }

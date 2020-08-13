@@ -478,6 +478,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   saveUserPhoto = () => {
     const me = {
+      previous_delete_token: this.props.userData.image.delete_token,
       file: this.state.photoContent.file,
       coordinates: `${this.state.croppedAreaPixels.x},${this.state.croppedAreaPixels.y},${this.state.croppedAreaPixels.width},${this.state.croppedAreaPixels.height}`,
     };

@@ -2,12 +2,14 @@ import './post.scss';
 
 import cx from 'classnames';
 import * as React from 'react';
+import * as Sentry from '@sentry/browser';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { routePaths } from '../../../route-paths';
 import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
 import { ReactSVG } from 'react-svg';
+import { deleteFileFromCloudinary } from '../../../../api/cloudinary/delete-image';
 
 import tear from '../../../../images/backgrounds/background_tear.png';
 import Edit from '../../../../images/icons/Icon_Edit.svg';
@@ -509,6 +511,15 @@ class PostComponent extends React.Component<any, any> {
 
   handleDeletePost = async () => {
     await deletePost(this.props.post.id);
+    if (this.props.post.images.length > 0) {
+      this.props.post.images.forEach(async function(image) {
+        try {
+          await deleteFileFromCloudinary(image.delete_token);
+        } catch (e) {
+          Sentry.captureException(e);
+        }
+      });
+    }
     this.closeDeletePostModal();
     this.props.updateArtist();
   };

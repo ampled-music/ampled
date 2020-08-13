@@ -10,14 +10,14 @@ module SocialImages
           {
             position: "center",
             x: 0,
-            y: -180,
-            distance: 100,
-            font_size: 75,
+            y: -200,
+            distance: 70,
+            font_size: 55,
             color: "ffffff",
             bgcolor: "202020"
           }
         )
-        image_url += "social/Grid/Grid2.png"
+        image_url += "social/Grid/Grid2.1.png"
 
         {
           url: image_url,

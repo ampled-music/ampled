@@ -10,14 +10,14 @@ module SocialImages
           {
             position: "center",
             x: 0,
-            y: -400,
-            distance: 120,
-            font_size: 85,
+            y: -250,
+            distance: 50,
+            font_size: 40,
             color: "ffffff",
             bgcolor: "202020"
           }
         )
-        image_url += "social/Story/Story2.png"
+        image_url += "social/Story/Story2.1.png"
 
         {
           url: image_url,

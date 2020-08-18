@@ -33,6 +33,7 @@
   &.minimal {
     border-bottom: 2px solid $brand-primary;
     margin-bottom: 2rem;
+    padding-bottom: 2rem;
     flex-wrap: wrap;
     .artist-header__photo {
       position: absolute;
@@ -74,7 +75,8 @@
       margin: 0 auto 2rem;
       background-color: $white;
       @include mq($desktop) {
-        width: 30%;
+        min-width: 26%;
+        max-width: 70%;
         margin: 0 1rem auto;
       }
     }
@@ -91,8 +93,9 @@
       border-top: 2px solid $brand-primary;
       padding-top: 1rem;
       @include mq($desktop) {
-        width: 245px;
+        min-width: 245px;
         margin: 0 1rem;
+        width: auto;
       }
       &_title {
         margin: 0 0 1rem 0;
@@ -116,6 +119,7 @@
       padding: 0;
       flex-direction: row;
       flex-wrap: wrap;
+      min-width: 200px;
 
       @include mq($desktop) {
         flex-direction: column;
@@ -711,6 +715,7 @@
   &__social {
     display: flex;
     justify-content: flex-end;
+    flex-wrap: wrap;
 
     &_item {
       opacity: 1;

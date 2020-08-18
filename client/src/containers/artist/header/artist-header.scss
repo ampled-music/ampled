@@ -42,20 +42,20 @@
       transform: rotate(0deg);
     }
     .artist-header__banner-icons {
-      bottom: 20px;
+      bottom: 50px;
       right: 30px;
       z-index: 100;
     }
     .artist-header__photo-container {
-      margin-bottom: 3rem;
+      margin-bottom: 1rem;
       max-width: none;
     }
-    .artist-header__photo-container_border,
     .artist-header__photos {
-      height: 220px;
-      @include mq($desktop) {
-        height: 397px;
-      }
+      width: 100%;
+      top: 0px;
+    }
+    .artist-header__photo-container_border {
+      height: calc(100% - 35px);
     }
     .artist-header__message-col {
       width: 100%;
@@ -92,7 +92,7 @@
       padding-top: 1rem;
       @include mq($desktop) {
         width: 245px;
-        padding: 0 1rem;
+        margin: 0 1rem;
       }
       &_title {
         margin: 0 0 1rem 0;
@@ -151,18 +151,16 @@
     &_border {
       z-index: 100;
       width: 100%;
-      height: 339px;
+      height: 100%;
       position: absolute;
       margin: -2px 0;
 
       @include mq($layout-m) {
         border: 2px solid $brand-primary;
-        height: 475px;
         width: calc(100% - 30px);
       }
 
       @include mq($layout-l) {
-        height: 575px;
       }
 
       &_swipe {
@@ -297,40 +295,37 @@
   }
 
   &__photos {
-    height: 335px;
-    width: 100%;
+    height: 100%;
+    width: 92%;
     display: flex;
     justify-content: center;
-
-    @include mq($layout-m) {
-      height: 475px;
-    }
-
-    @include mq($layout-l) {
-      height: 575px;
-    }
+    position: absolute;
+    top: 5%;
   }
 
   &__photo {
     position: absolute;
     display: block;
-    width: 335px;
+    width: 100%;
     background-color: $brand-primary;
     z-index: 1;
-
-    @include mq($layout-m) {
-      width: 450px;
-    }
-
-    @include mq($layout-l) {
-      width: 550px;
-    }
 
     &.active {
       z-index: 10;
 
       img {
         opacity: 1;
+      }
+    }
+    &_spacer {
+      width: 100%;
+      opacity: 0.1;
+      display: block;
+      position: relative;
+      visibility: hidden;
+
+      img {
+        width: 100%;
       }
     }
 

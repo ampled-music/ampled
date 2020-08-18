@@ -142,7 +142,6 @@ export class FeaturedImages extends React.Component<Props, any> {
 
   renderBanners = () => {
     const { artist, imageWidth, imageHeight } = this.props;
-    // console.log(artist);
     return (
       <div className="artist-header__photos">
         {artist.images &&
@@ -195,13 +194,30 @@ export class FeaturedImages extends React.Component<Props, any> {
   };
 
   render() {
-    const { artist } = this.props;
+    const { artist, imageWidth, imageHeight } = this.props;
     return (
       <div
         className="artist-header__photo-container"
         style={{ borderColor: artist.accent_color }}
       >
         {!artist.hide_members && this.renderOwners()}
+        {artist.images && (
+          <div className="artist-header__photo_spacer">
+            <Image
+              publicId={artist.images[0].public_id}
+              key={artist.images[0].public_id}
+            >
+              <Transformation
+                fetchFormat="auto"
+                crop="fill"
+                width={imageWidth}
+                height={imageHeight}
+                responsive_placeholder="blank"
+                gravity="faces:center"
+              />
+            </Image>
+          </div>
+        )}
         {this.renderBanners()}
         {artist.images && (
           <div

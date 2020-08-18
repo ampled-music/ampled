@@ -24,7 +24,7 @@ import { Texture } from '../shared/texture/Texture';
 import StyleOverride from './StyleOverride';
 
 import { ArtistHeader } from './ArtistHeader';
-import { ArtistInfo } from './ArtistInfo';
+import { ArtistHeaderMinimal } from './ArtistHeaderMinimal';
 import { PostForm } from './posts/post-form/PostForm';
 import { ArtistComingSoon } from '../shared/no-artist/ArtistComingSoon';
 import { NoArtist } from '../shared/no-artist/NoArtist';
@@ -79,6 +79,7 @@ class ArtistComponent extends React.Component<Props, any> {
     showConfirmationDialog: false,
     successfulSupport: false,
     requestedApproval: false,
+    artistHeaderType: 'minimal',
   };
   players: Set<any>;
 
@@ -379,25 +380,30 @@ class ArtistComponent extends React.Component<Props, any> {
               .
             </span>,
           )}
-        <ArtistHeader
-          artist={artist}
-          openVideoModal={this.openVideoModal}
-          openMessageModal={this.openMessageModal}
-          openPostModal={this.openPostModal}
-          openWhyModal={this.openWhyModal}
-          loggedUserAccess={loggedUserAccess}
-          isSupporter={isSupporter}
-          handleSupportClick={this.handleSupportClick}
-        />
-        <ArtistInfo
-          location={artist.location}
-          accentColor={artist.accent_color}
-          twitterHandle={artist.twitter_handle}
-          instagramHandle={artist.instagram_handle}
-          bandcampHandle={artist.bandcamp_handle}
-          youtubeHandle={artist.youtube_handle}
-          external={artist.external}
-        />
+        {this.state.artistHeaderType === 'minimal' ? (
+          <ArtistHeaderMinimal
+            artist={artist}
+            openVideoModal={this.openVideoModal}
+            openMessageModal={this.openMessageModal}
+            openPostModal={this.openPostModal}
+            openWhyModal={this.openWhyModal}
+            loggedUserAccess={loggedUserAccess}
+            isSupporter={isSupporter}
+            handleSupportClick={this.handleSupportClick}
+          />
+        ) : (
+          <ArtistHeader
+            artist={artist}
+            openVideoModal={this.openVideoModal}
+            openMessageModal={this.openMessageModal}
+            openPostModal={this.openPostModal}
+            openWhyModal={this.openWhyModal}
+            loggedUserAccess={loggedUserAccess}
+            isSupporter={isSupporter}
+            handleSupportClick={this.handleSupportClick}
+          />
+        )}
+
         <PostsContainer
           match={this.props.match}
           hash={this.props.history.location.hash}

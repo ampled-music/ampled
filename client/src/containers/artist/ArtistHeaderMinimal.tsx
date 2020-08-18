@@ -26,7 +26,7 @@ interface Props {
   handleSupportClick: Function;
 }
 
-export class ArtistHeader extends React.Component<Props, any> {
+export class ArtistHeaderMinimal extends React.Component<Props, any> {
   state = {
     showConfirmationDialog: false,
   };
@@ -108,55 +108,60 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   render() {
     return (
-      <div>
-        <div className="artist-header container">
-          {this.renderArtistName()}
-          <div className="row justify-content-between">
-            <div className="col-md-7">
-              <FeaturedImages
-                artist={this.props.artist}
-                loggedUserAccess={this.props.loggedUserAccess}
-                isSupporter={this.props.isSupporter}
-                handleSupportClick={this.props.handleSupportClick}
-                imageWidth={800}
-                imageHeight={800}
-              />
-            </div>
-            <div className="col-md-4 artist-header__message-col">
-              <FeaturedVideo
-                artist={this.props.artist}
-                openVideoModal={this.props.openVideoModal}
-              />
-              <FeaturedMessage
-                artist={this.props.artist}
-                openMessageModal={this.props.openMessageModal}
-              />
-              <Supporters
-                artist={this.props.artist}
-                openWhyModal={this.props.openWhyModal}
-                loggedUserAccess={this.props.loggedUserAccess}
-                isSupporter={this.props.isSupporter}
-                handleSupportClick={this.props.handleSupportClick}
-              />
-
-              {!this.props.isSupporter &&
-                !this.canLoggedUserPost() &&
-                this.props.artist.isStripeSetup &&
-                this.renderSupportButton()}
-              {this.renderFloatingNewPostButton()}
-              {this.renderFloatingEditButton()}
-            </div>
+      <div className="artist-header minimal container">
+        {this.renderArtistName()}
+        <div className="row justify-content-between">
+          <div className="col-12">
+            <FeaturedImages
+              artist={this.props.artist}
+              loggedUserAccess={this.props.loggedUserAccess}
+              isSupporter={this.props.isSupporter}
+              handleSupportClick={this.props.handleSupportClick}
+              imageWidth={2000}
+              imageHeight={800}
+            />
           </div>
         </div>
-        <ArtistInfo
-          location={this.props.artist.location}
-          accentColor={this.props.artist.accent_color}
-          twitterHandle={this.props.artist.twitter_handle}
-          instagramHandle={this.props.artist.instagram_handle}
-          bandcampHandle={this.props.artist.bandcamp_handle}
-          youtubeHandle={this.props.artist.youtube_handle}
-          external={this.props.artist.external}
-        />
+        <div className="row justify-content-between no-gutters">
+          <div className="col-md-3">
+            <FeaturedMessage
+              artist={this.props.artist}
+              openMessageModal={this.props.openMessageModal}
+            />
+          </div>
+          <div className="col-md-4">
+            <FeaturedVideo
+              artist={this.props.artist}
+              openVideoModal={this.props.openVideoModal}
+            />
+          </div>
+          <div className="col-md-3">
+            <Supporters
+              artist={this.props.artist}
+              openWhyModal={this.props.openWhyModal}
+              loggedUserAccess={this.props.loggedUserAccess}
+              isSupporter={this.props.isSupporter}
+              handleSupportClick={this.props.handleSupportClick}
+            />
+          </div>
+          <div className="col-md-2">
+            {!this.props.isSupporter &&
+              !this.canLoggedUserPost() &&
+              this.props.artist.isStripeSetup &&
+              this.renderSupportButton()}
+            <ArtistInfo
+              location={this.props.artist.location}
+              accentColor={this.props.artist.accent_color}
+              twitterHandle={this.props.artist.twitter_handle}
+              instagramHandle={this.props.artist.instagram_handle}
+              bandcampHandle={this.props.artist.bandcamp_handle}
+              youtubeHandle={this.props.artist.youtube_handle}
+              external={this.props.artist.external}
+            />
+          </div>
+        </div>
+        {this.renderFloatingNewPostButton()}
+        {this.renderFloatingEditButton()}
       </div>
     );
   }

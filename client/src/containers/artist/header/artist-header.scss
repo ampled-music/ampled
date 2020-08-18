@@ -23,6 +23,67 @@
 .artist-header {
   font-family: $font-family-sans-serif;
 
+  &.minimal {
+    border-bottom: 2px solid $brand-primary;
+    margin-bottom: 2rem;
+    .artist-header__photo {
+      position: absolute;
+      display: block;
+      width: 100%;
+      top: -20px;
+      transform: rotate(0deg);
+    }
+    .artist-header__banner-icons {
+      bottom: 20px;
+      right: 30px;
+      z-index: 100;
+    }
+    .artist-header__photo-container {
+      margin-bottom: 3rem;
+    }
+    .artist-header__photo-container_border,
+    .artist-header__photos {
+      height: 397px;
+    }
+    .artist-header__message_container {
+      width: 100%;
+    }
+    .artist-header__message_text {
+      background-color: $white;
+    }
+    .artist-header__message_paper-bg,
+    .artist-header__message_tear {
+      display: none;
+    }
+    .artist-header__message_video {
+      transform: scale(1) rotate(0deg);
+    }
+    .artist-header__supporters {
+      margin: 0;
+      &_title {
+        margin: 0 0 1rem 0;
+      }
+      &_recent {
+        flex-direction: row;
+        justify-content: flex-start;
+        .supporter {
+          margin-right: 1rem;
+        }
+      }
+    }
+    .artist-info {
+      border: 0px;
+      margin: 0;
+      padding: 0;
+      &__location {
+        margin: 0 0 1rem 0;
+      }
+      &__social {
+        justify-content: flex-start;
+      }
+    }
+  }
+
   @include mq($layout-l) {
     padding: 0 15px 0 35px;
   }
@@ -172,7 +233,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 100%;
+      width: auto;
     }
 
     &_name {

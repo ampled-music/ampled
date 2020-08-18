@@ -65,6 +65,9 @@ const StyleOverride = ({
           background-color: ${accentColor};
           color: ${lightOrDark(accentColor)};
         }
+        .artist-header.minimal {
+          border-color: ${accentColor};
+        }
         .new-post button,
         .edit-page button,
         .artist-header__photo {

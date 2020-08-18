@@ -133,29 +133,6 @@ export class Supporters extends React.Component<Props, any> {
     );
   };
 
-  renderSupportButton = () => {
-    const { artist } = this.props;
-    const borderColor = artist.accent_color;
-
-    return (
-      <div
-        className="artist-header__message_container"
-        style={{ border: 'unset', minHeight: 'auto' }}
-      >
-        <button
-          className="btn btn-ampled btn-support"
-          style={{ borderColor, maxWidth: '100%' }}
-          onClick={() => this.props.handleSupportClick()}
-        >
-          Support What You Want
-        </button>
-        <button onClick={this.props.openWhyModal} className="link link__why">
-          Why support?
-        </button>
-      </div>
-    );
-  };
-
   renderSupportersContainer = () => {
     const { artist } = this.props;
     const RenderSupporter = this.renderSupporter;
@@ -170,59 +147,48 @@ export class Supporters extends React.Component<Props, any> {
     return (
       <div className="artist-header__supporters">
         {artist.supporters.length > 0 && (
-          <div>
+          <>
             <div className="artist-header__supporters_title">
               {artist.supporter_count} Supporters
             </div>
-            <div className="row">
-              <div className="artist-header__supporters_recent col-4">
-                <RenderSupporter
-                  supporter={mostRecentSupporter}
-                  borderColor={borderColor}
-                />
-                <div className="artist-header__person_info">
-                  <div className="artist-header__person_name">
-                    {mostRecentSupporter.name}
-                  </div>
-                  <div className="artist-header__person_mr">Most Recent</div>
+            <div className="artist-header__supporters_recent">
+              <RenderSupporter
+                supporter={mostRecentSupporter}
+                borderColor={borderColor}
+              />
+              <div className="artist-header__person_info">
+                <div className="artist-header__person_name">
+                  {mostRecentSupporter.name}
                 </div>
-              </div>
-              <div className="artist-header__supporters_all col-8">
-                {artist.supporters
-                  .filter(
-                    (supporter) =>
-                      !R.equals(
-                        R.path(['most_recent_supporter', 'id'], artist),
-                        +supporter.id,
-                      ),
-                  )
-                  .map((supporter) => (
-                    <div key={`minisupporter-${supporter.id}`}>
-                      <RenderSupporter
-                        supporter={supporter}
-                        borderColor
-                        isSmall
-                      />
-                    </div>
-                  ))}
+                <div className="artist-header__person_mr">Most Recent</div>
               </div>
             </div>
-          </div>
+            <div className="artist-header__supporters_all">
+              {artist.supporters
+                .filter(
+                  (supporter) =>
+                    !R.equals(
+                      R.path(['most_recent_supporter', 'id'], artist),
+                      +supporter.id,
+                    ),
+                )
+                .map((supporter) => (
+                  <div key={`minisupporter-${supporter.id}`}>
+                    <RenderSupporter
+                      supporter={supporter}
+                      borderColor
+                      isSmall
+                    />
+                  </div>
+                ))}
+            </div>
+          </>
         )}
       </div>
     );
   };
 
   render() {
-    const { isStripeSetup } = this.props.artist;
-    return (
-      <div>
-        {this.renderSupportersContainer()}
-        {!this.props.isSupporter &&
-          !this.canLoggedUserPost() &&
-          isStripeSetup &&
-          this.renderSupportButton()}
-      </div>
-    );
+    return <div>{this.renderSupportersContainer()}</div>;
   }
 }

@@ -13,6 +13,8 @@ interface Props {
   loggedUserAccess: { role: string; artistId: number };
   isSupporter: boolean;
   handleSupportClick: Function;
+  imageWidth: number;
+  imageHeight: number;
 }
 
 export class FeaturedImages extends React.Component<Props, any> {
@@ -139,7 +141,7 @@ export class FeaturedImages extends React.Component<Props, any> {
   };
 
   renderBanners = () => {
-    const { artist } = this.props;
+    const { artist, imageWidth, imageHeight } = this.props;
     // console.log(artist);
     return (
       <div className="artist-header__photos">
@@ -154,9 +156,10 @@ export class FeaturedImages extends React.Component<Props, any> {
                   <Transformation
                     fetchFormat="auto"
                     crop="fill"
-                    width={800}
-                    height={800}
+                    width={imageWidth}
+                    height={imageHeight}
                     responsive_placeholder="blank"
+                    gravity="faces"
                   />
                 </Image>
               </div>

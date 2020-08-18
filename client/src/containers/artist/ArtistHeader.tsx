@@ -108,44 +108,40 @@ export class ArtistHeader extends React.Component<Props, any> {
 
   render() {
     return (
-      <div>
+      <>
+        <div className="container">{this.renderArtistName()}</div>
         <div className="artist-header container">
-          {this.renderArtistName()}
-          <div className="row justify-content-between">
-            <div className="col-md-7">
-              <FeaturedImages
-                artist={this.props.artist}
-                loggedUserAccess={this.props.loggedUserAccess}
-                isSupporter={this.props.isSupporter}
-                handleSupportClick={this.props.handleSupportClick}
-                imageWidth={800}
-                imageHeight={800}
-              />
-            </div>
-            <div className="col-md-4 artist-header__message-col">
-              <FeaturedVideo
-                artist={this.props.artist}
-                openVideoModal={this.props.openVideoModal}
-              />
-              <FeaturedMessage
-                artist={this.props.artist}
-                openMessageModal={this.props.openMessageModal}
-              />
-              <Supporters
-                artist={this.props.artist}
-                openWhyModal={this.props.openWhyModal}
-                loggedUserAccess={this.props.loggedUserAccess}
-                isSupporter={this.props.isSupporter}
-                handleSupportClick={this.props.handleSupportClick}
-              />
+          <FeaturedImages
+            artist={this.props.artist}
+            loggedUserAccess={this.props.loggedUserAccess}
+            isSupporter={this.props.isSupporter}
+            handleSupportClick={this.props.handleSupportClick}
+            imageWidth={800}
+            imageHeight={800}
+          />
+          <div className="artist-header__message-col">
+            <FeaturedVideo
+              artist={this.props.artist}
+              openVideoModal={this.props.openVideoModal}
+            />
+            <FeaturedMessage
+              artist={this.props.artist}
+              openMessageModal={this.props.openMessageModal}
+            />
+            <Supporters
+              artist={this.props.artist}
+              openWhyModal={this.props.openWhyModal}
+              loggedUserAccess={this.props.loggedUserAccess}
+              isSupporter={this.props.isSupporter}
+              handleSupportClick={this.props.handleSupportClick}
+            />
 
-              {!this.props.isSupporter &&
-                !this.canLoggedUserPost() &&
-                this.props.artist.isStripeSetup &&
-                this.renderSupportButton()}
-              {this.renderFloatingNewPostButton()}
-              {this.renderFloatingEditButton()}
-            </div>
+            {!this.props.isSupporter &&
+              !this.canLoggedUserPost() &&
+              this.props.artist.isStripeSetup &&
+              this.renderSupportButton()}
+            {this.renderFloatingNewPostButton()}
+            {this.renderFloatingEditButton()}
           </div>
         </div>
         <ArtistInfo
@@ -157,7 +153,7 @@ export class ArtistHeader extends React.Component<Props, any> {
           youtubeHandle={this.props.artist.youtube_handle}
           external={this.props.artist.external}
         />
-      </div>
+      </>
     );
   }
 }

@@ -194,7 +194,7 @@ export class FeaturedImages extends React.Component<Props, any> {
     );
   };
 
-  renderPhotoContainer = () => {
+  render() {
     const { artist } = this.props;
     return (
       <div
@@ -229,9 +229,5 @@ export class FeaturedImages extends React.Component<Props, any> {
         {this.renderBannerIcons()}
       </div>
     );
-  };
-
-  render() {
-    return <div>{this.renderPhotoContainer()}</div>;
   }
 }

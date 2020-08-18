@@ -26,11 +26,6 @@ export class FeaturedMessage extends React.Component<Props, any> {
             style={{ borderColor: artist.accent_color }}
           >
             <div className="artist-header__message_text">
-              <img
-                className="artist-header__message_paper-bg"
-                src={artist.video_url ? paper_sm : paper_md}
-                alt=""
-              />
               <TextTruncate
                 line={artist.video_url ? 5 : 9}
                 element="span"

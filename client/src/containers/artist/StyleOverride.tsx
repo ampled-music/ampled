@@ -75,7 +75,8 @@ const StyleOverride = ({
           color: ${lightOrDark(accentColor)};
         }
         .new-post svg path,
-        .edit-page svg path {
+        .edit-page svg path,
+        .artist-header__play_svg svg path {
           fill: ${lightOrDark(accentColor)};
         }
         .btn.btn-read-more:hover,

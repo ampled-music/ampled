@@ -22,6 +22,13 @@
 
 .artist-header {
   font-family: $font-family-sans-serif;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  @include mq($layout-m) {
+    flex-direction: row;
+  }
 
   &.minimal {
     border-bottom: 2px solid $brand-primary;
@@ -66,15 +73,20 @@
       &_recent {
         flex-direction: row;
         justify-content: flex-start;
+        width: 100%;
         .supporter {
           margin-right: 1rem;
         }
+      }
+      &_all {
+        width: 100%;
       }
     }
     .artist-info {
       border: 0px;
       margin: 0;
       padding: 0;
+      flex-direction: column;
       &__location {
         margin: 0 0 1rem 0;
       }
@@ -92,10 +104,14 @@
     display: flex;
     position: relative;
     justify-content: center;
-    margin: 0 0 2rem 0;
+    margin: 0 auto 2rem;
+    width: 100%;
+    align-self: flex-start;
+    max-width: 500px;
 
     @include mq($desktop) {
       margin: 0 auto 1rem;
+      max-width: 1000px;
     }
 
     &_border {
@@ -339,10 +355,13 @@
   }
 
   &__message-col {
-    margin-top: 0;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
 
     @include mq($layout-m) {
-      margin-top: -20px;
+      width: 50%;
+      margin-left: 2rem;
     }
   }
 
@@ -358,14 +377,13 @@
     }
 
     &_container {
-      max-width: 335px;
       display: flex;
       position: relative;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       width: 90%;
-      margin: auto;
+      margin: 0 auto 2rem;
       border: 2px solid $brand-primary;
       padding: 10px 0px;
       min-height: 140px;

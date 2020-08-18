@@ -110,32 +110,28 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
     return (
       <div className="artist-header minimal container">
         {this.renderArtistName()}
-        <div className="row justify-content-between">
-          <div className="col-12">
-            <FeaturedImages
-              artist={this.props.artist}
-              loggedUserAccess={this.props.loggedUserAccess}
-              isSupporter={this.props.isSupporter}
-              handleSupportClick={this.props.handleSupportClick}
-              imageWidth={2000}
-              imageHeight={800}
-            />
-          </div>
-        </div>
-        <div className="row justify-content-between no-gutters">
-          <div className="col-md-3">
+        <FeaturedImages
+          artist={this.props.artist}
+          loggedUserAccess={this.props.loggedUserAccess}
+          isSupporter={this.props.isSupporter}
+          handleSupportClick={this.props.handleSupportClick}
+          imageWidth={2000}
+          imageHeight={800}
+        />
+        <div>
+          <div>
             <FeaturedMessage
               artist={this.props.artist}
               openMessageModal={this.props.openMessageModal}
             />
           </div>
-          <div className="col-md-4">
+          <div>
             <FeaturedVideo
               artist={this.props.artist}
               openVideoModal={this.props.openVideoModal}
             />
           </div>
-          <div className="col-md-3">
+          <div>
             <Supporters
               artist={this.props.artist}
               openWhyModal={this.props.openWhyModal}

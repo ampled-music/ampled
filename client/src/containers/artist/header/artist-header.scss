@@ -73,12 +73,16 @@
     .artist-header__message_container {
       width: 100%;
       margin: 0 auto 2rem;
-      background-color: $white;
+      padding: 0;
+      // background-color: $white;
       @include mq($desktop) {
         min-width: 26%;
         max-width: 70%;
         margin: 0 1rem auto;
       }
+    }
+    .artist-header__message_image {
+      transform: scale(1);
     }
     .artist-header__message_paper-bg,
     .artist-header__message_tear {
@@ -93,7 +97,7 @@
       border-top: 2px solid $brand-primary;
       padding-top: 1rem;
       @include mq($desktop) {
-        min-width: 245px;
+        min-width: 252px;
         margin: 0 1rem;
         width: auto;
       }
@@ -440,7 +444,7 @@
 
     &_text {
       font-family: $font-family-monospace;
-      padding: 1rem 2rem;
+      padding: 1rem 2rem 2rem;
       font-size: 0.8rem;
       span {
         word-wrap: anywhere;
@@ -452,6 +456,7 @@
       width: 100%;
       font-size: 1.2rem;
       padding-left: 2rem;
+      padding-top: 1rem;
       text-transform: uppercase;
       font-weight: bold;
     }

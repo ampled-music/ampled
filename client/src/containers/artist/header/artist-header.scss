@@ -33,6 +33,7 @@
   &.minimal {
     border-bottom: 2px solid $brand-primary;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
     .artist-header__photo {
       position: absolute;
       display: block;
@@ -47,16 +48,35 @@
     }
     .artist-header__photo-container {
       margin-bottom: 3rem;
+      max-width: none;
     }
     .artist-header__photo-container_border,
     .artist-header__photos {
-      height: 397px;
+      height: 220px;
+      @include mq($desktop) {
+        height: 397px;
+      }
+    }
+    .artist-header__message-col {
+      width: 100%;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      @include mq($desktop) {
+        flex-direction: row;
+        max-width: none;
+      }
     }
     .artist-header__message_container {
       width: 100%;
-    }
-    .artist-header__message_text {
+      margin: 0 auto 2rem;
       background-color: $white;
+      @include mq($desktop) {
+        width: 30%;
+        margin: 0 1rem auto;
+      }
     }
     .artist-header__message_paper-bg,
     .artist-header__message_tear {
@@ -67,6 +87,13 @@
     }
     .artist-header__supporters {
       margin: 0;
+      width: 100%;
+      border-top: 2px solid $brand-primary;
+      padding-top: 1rem;
+      @include mq($desktop) {
+        width: 245px;
+        padding: 0 1rem;
+      }
       &_title {
         margin: 0 0 1rem 0;
       }
@@ -80,13 +107,20 @@
       }
       &_all {
         width: 100%;
+        max-width: 375px;
       }
     }
     .artist-info {
       border: 0px;
-      margin: 0;
+      margin: 0 0 1rem 0;
       padding: 0;
-      flex-direction: column;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      @include mq($desktop) {
+        flex-direction: column;
+      }
+
       &__location {
         margin: 0 0 1rem 0;
       }
@@ -111,7 +145,7 @@
 
     @include mq($desktop) {
       margin: 0 auto 1rem;
-      max-width: 1000px;
+      max-width: none;
     }
 
     &_border {
@@ -392,22 +426,10 @@
         margin: 0rem auto 1.5rem;
       }
 
-      &.paper_md {
-        min-height: 210px;
-      }
-
       .btn-read-more {
         position: absolute;
         bottom: -18px;
       }
-    }
-
-    &_paper-bg {
-      width: 115%;
-      left: -7%;
-      top: 3%;
-      z-index: -1;
-      position: absolute;
     }
 
     &_video {
@@ -425,6 +447,14 @@
         word-wrap: anywhere;
         word-break: break-all;
       }
+    }
+
+    &_title {
+      width: 100%;
+      font-size: 1.2rem;
+      padding-left: 2rem;
+      text-transform: uppercase;
+      font-weight: bold;
     }
 
     &_image {

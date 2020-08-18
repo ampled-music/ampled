@@ -79,7 +79,7 @@ class ArtistComponent extends React.Component<Props, any> {
     showConfirmationDialog: false,
     successfulSupport: false,
     requestedApproval: false,
-    artistHeaderType: '',
+    artistHeaderType: 'minimal',
   };
   players: Set<any>;
 

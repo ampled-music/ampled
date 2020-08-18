@@ -16,7 +16,7 @@ interface Props {
 }
 
 export class FeaturedVideo extends React.Component<Props, any> {
-  renderVideoContainer = () => {
+  render() {
     const { artist } = this.props;
 
     const PlayButton = withStyles({
@@ -59,10 +59,8 @@ export class FeaturedVideo extends React.Component<Props, any> {
           </div>
         </MuiThemeProvider>
       );
+    } else {
+      return null;
     }
-  };
-
-  render() {
-    return <div>{this.renderVideoContainer()}</div>;
   }
 }

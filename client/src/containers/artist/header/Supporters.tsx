@@ -133,7 +133,7 @@ export class Supporters extends React.Component<Props, any> {
     );
   };
 
-  renderSupportersContainer = () => {
+  render() {
     const { artist } = this.props;
     const RenderSupporter = this.renderSupporter;
 
@@ -186,9 +186,5 @@ export class Supporters extends React.Component<Props, any> {
         )}
       </div>
     );
-  };
-
-  render() {
-    return <div>{this.renderSupportersContainer()}</div>;
   }
 }

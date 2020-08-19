@@ -144,7 +144,7 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
               isSupporter={this.props.isSupporter}
               handleSupportClick={this.props.handleSupportClick}
             />
-            <div>
+            <div className="artist-header__info">
               {!this.props.isSupporter &&
                 !this.canLoggedUserPost() &&
                 this.props.artist.isStripeSetup &&

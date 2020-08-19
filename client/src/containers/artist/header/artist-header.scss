@@ -90,15 +90,20 @@
       width: 100%;
       margin: 0 auto 2rem;
       padding: 0;
-      // background-color: $white;
       @include mq($desktop) {
         min-width: 25%;
         max-width: 70%;
         margin: 0 1rem auto;
       }
+      &.video-message {
+        margin-top: 0.5rem;
+      }
+    }
+    .artist-header__message_image_container {
+      overflow: unset;
     }
     .artist-header__message_image {
-      transform: scale(1);
+      transform: scale(1.1);
     }
     .artist-header__message_paper-bg,
     .artist-header__message_tear {

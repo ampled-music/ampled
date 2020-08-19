@@ -17,7 +17,7 @@ export class FeaturedMessage extends React.Component<Props, any> {
     if (artist.bio) {
       return (
         <div
-          className="artist-header__message_container message"
+          className="artist-header__message_container text-message"
           style={{ borderColor: artist.accent_color }}
         >
           <div className="artist-header__message_title">Message</div>

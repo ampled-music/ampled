@@ -33,7 +33,7 @@ export class FeaturedVideo extends React.Component<Props, any> {
       return (
         <MuiThemeProvider theme={theme}>
           <div
-            className="artist-header__message_container"
+            className="artist-header__message_container video"
             style={{ borderColor: artist.accent_color }}
           >
             <PlayButton

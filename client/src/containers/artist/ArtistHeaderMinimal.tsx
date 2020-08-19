@@ -71,10 +71,10 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
           style={{ borderColor, maxWidth: '100%' }}
           onClick={() => this.props.handleSupportClick()}
         >
-          {this.isAmpled ? 'Become a Member' : 'Support What You Want'}
+          {this.isAmpled() ? 'Become a Member' : 'Support What You Want'}
         </button>
 
-        {this.isAmpled ? (
+        {this.isAmpled() ? (
           <button onClick={this.props.openJoinModal} className="link link__why">
             Why join?
           </button>

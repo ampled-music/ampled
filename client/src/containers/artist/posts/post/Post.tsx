@@ -346,8 +346,8 @@ const Lock = ({ isLapsed = false, me, handlePrivatePostClick, isAmpled }) => {
         {isLapsed
           ? 'Support On Hold'
           : isAmpled
-          ? 'Member Only'
-          : 'Supporter Only'}
+          ? 'Members Only'
+          : 'Supporters Only'}
       </div>
       <div className="private-support__btn">
         {isLapsed ? (

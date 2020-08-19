@@ -154,7 +154,7 @@ export class Supporters extends React.Component<Props, any> {
           <>
             <div className="artist-header__supporters_title">
               {artist.supporter_count}{' '}
-              {this.isAmpled ? 'Members' : 'Supporters'}
+              {this.isAmpled() ? 'Members' : 'Supporters'}
             </div>
             <div className="artist-header__supporters_recent">
               <RenderSupporter

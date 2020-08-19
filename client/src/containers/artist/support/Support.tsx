@@ -221,7 +221,7 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   renderSupportHeader = (artistName) =>
-    this.isAmpled ? (
+    this.isAmpled() ? (
       <div className="support__header">
         <h2 className="support__header_artist-name">
           Become a Community Member
@@ -304,7 +304,7 @@ export class SupportComponent extends React.Component<Props, any> {
             </p>
           ) : (
             <p className="support__value-description">
-              {this.isAmpled
+              {this.isAmpled()
                 ? 'Join the co-op as a Community Member to help Ampled stay independent and accountable to members.'
                 : `Support ${artistName} directly for $3 (or more) per month to unlock
               access to all of their posts and get notifications when they post
@@ -318,7 +318,7 @@ export class SupportComponent extends React.Component<Props, any> {
 
   renderStartSubscriptionAction = (artistName) => {
     const buttonLabel = this.props.me.userData
-      ? this.isAmpled
+      ? this.isAmpled()
         ? 'BECOME A MEMBER'
         : `SUPPORT ${artistName.toUpperCase()}`
       : 'SIGNUP OR LOGIN TO SUPPORT';

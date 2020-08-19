@@ -152,12 +152,12 @@ class NavComponent extends React.Component<Props, any> {
             className="btn btn-ampled btn-support btn-support-header"
             onClick={this.handleSupportClick}
           >
-            {this.isAmpled ? 'Become a member' : 'Support this artist'}
+            {this.isAmpled() ? 'Become a member' : 'Support this artist'}
           </button>
         )}
         <div className="menus">
           <div className="supporter-message">
-            {this.isAmpled ? 'You are a member' : 'You are a supporter'}
+            {this.isAmpled() ? 'You are a member' : 'You are a supporter'}
           </div>
           <div className="loginLink">{this.renderNavLink()}</div>
           <MenuEx renderLoginLink={this.renderLoginLink} />

@@ -245,18 +245,59 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(User.find_by(email: "testfriend@ampled.com")).not_to be_nil
     end
 
-    it "deletes all previous images if new ones are provided" do
+    it "destroys all previous images that were requested to be destroyed" do
       expect(artist_page.reload.images.map(&:url)).to match_array(images.map(&:url))
-      put "/artist_pages/#{artist_page.id}", params: update_params
-      expect(artist_page.reload.images.map(&:url)).to match_array("updated-url")
+
+      destroy_image_params = update_params
+      destroy_image_params[:artist_page][:images] = artist_page.images.map do |image|
+        {
+          id: image.id,
+          _destroy: true
+        }
+      end
+
+      put "/artist_pages/#{artist_page.id}", params: destroy_image_params
+
+      expect(artist_page.reload.images).to be_empty
     end
 
-    it "doesn't delete old images if new ones are not provided" do
-      update_params_without_images = update_params.dup
-      update_params_without_images[:artist_page].delete(:images)
-      expect {
-        put "/artist_pages/#{artist_page.id}", params: update_params_without_images
-      }.to_not change(Image, :count)
+    it "destroys only images that were requested to be destroyed" do
+      expect(artist_page.reload.images.map(&:url)).to match_array(images.map(&:url))
+      original_image_count = artist_page.images.length
+      destroyed_id = 0
+      destroy_image_params = update_params
+      destroy_image_params[:artist_page][:images] = artist_page.images.map.with_index do |image, index|
+        destroyed_id = image.id if index == 0
+        {
+          id: image.id,
+          _destroy: index == 0
+        }
+      end
+
+      put "/artist_pages/#{artist_page.id}", params: destroy_image_params
+      expect(artist_page.reload.images.map(&:id)).not_to be_empty
+      expect(artist_page.reload.images.length).to eq(original_image_count - 1)
+      expect(artist_page.reload.images.map(&:id)).not_to include(destroyed_id)
+    end
+
+    it "create images where no id is provided" do
+      expect(artist_page.reload.images.map(&:url)).to match_array(images.map(&:url))
+      original_image_count = artist_page.images.length
+
+      create_image_params = update_params
+      create_image_params[:artist_page][:images] = artist_page.images.map do |image|
+        {
+          id: image.id,
+          public_id: image.public_id,
+          url: image.url
+        }
+      end
+      create_image_params[:artist_page][:images] << { public_id: "new1", url: "new-image1.com" }
+      create_image_params[:artist_page][:images] << { public_id: "new2", url: "new-image2.com" }
+      put "/artist_pages/#{artist_page.id}", params: create_image_params
+
+      expect(artist_page.reload.images).to_not be_empty
+      expect(artist_page.reload.images.length).to eq(original_image_count + 2)
     end
   end
 

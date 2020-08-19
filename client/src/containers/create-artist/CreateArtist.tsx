@@ -70,6 +70,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     hideMembers: false,
     members: [],
     images: [],
+    imageUploads: [],
     loading: true,
     showConfirmRemoveMember: false,
     confirmRemoveMemberIndex: 99,
@@ -376,6 +377,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       artistVideo,
       hideMembers,
       images,
+      imageUploads,
       members,
     } = this.state;
 
@@ -461,9 +463,12 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     }
 
     // hotfix accidental image deletion while we find better solution
-    const fixImages = images
+    const newImages = imageUploads
       .filter((image) => image !== null && typeof image !== 'undefined')
-      .map(({ public_id, url, order }) => ({ public_id, url, order }));
+      .map(({ public_id, url }) => ({ id: null, public_id, url, _destroy: null }));
+
+    const deletedImages = images
+      .filter((image) => image !== null && typeof image !== 'undefined' && image._destroy);
 
     // create page
     this.setState({
@@ -488,7 +493,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             external: artistExternal,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
-            images: fixImages,
+            images: newImages
           },
           members,
         },
@@ -527,7 +532,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             external: artistExternal,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
-            images: fixImages,
+            images: deletedImages.concat(newImages),
           },
           members,
         },

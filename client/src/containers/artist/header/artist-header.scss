@@ -96,14 +96,14 @@
         margin: 0 1rem auto;
       }
       &.video-message {
-        margin-top: 0.5rem;
+        padding: 0.5rem 0;
       }
     }
     .artist-header__message_image_container {
       overflow: unset;
     }
     .artist-header__message_image {
-      transform: scale(1.1);
+      transform: scaleX(1.1);
     }
     .artist-header__message_paper-bg,
     .artist-header__message_tear {

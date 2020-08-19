@@ -331,6 +331,7 @@ class ArtistComponent extends React.Component<Props, any> {
       return <NoArtist />;
     }
 
+    // console.log(artist.style_type);
     return (
       <div className="App">
         <StyleOverride
@@ -390,7 +391,7 @@ class ArtistComponent extends React.Component<Props, any> {
               .
             </span>,
           )}
-        {this.state.artistHeaderType === 'minimal' ? (
+        {artist.style_type === 'minimal' ? (
           <ArtistHeaderMinimal
             artist={artist}
             openVideoModal={this.openVideoModal}

@@ -41,145 +41,6 @@
     margin: auto;
   }
 
-  &.minimal {
-    border-bottom: 2px solid $brand-primary;
-    margin-bottom: 2rem;
-    padding: 0 1rem 1rem;
-    flex-wrap: wrap;
-
-    @include mq($layout-m) {
-      padding: 0 0 2rem 0;
-    }
-    .artist-header__name {
-      justify-content: center;
-    }
-    .artist-header__title {
-      margin: 2rem auto 3rem;
-    }
-    .artist-header__photo {
-      position: absolute;
-      display: block;
-      width: 100%;
-      transform: rotate(0deg);
-      @include mq($layout-m) {
-        top: -20px;
-      }
-    }
-    .artist-header__banner-icons {
-      bottom: 50px;
-      right: 30px;
-      z-index: 100;
-      display: none;
-      @include mq($layout-m) {
-        display: flex;
-      }
-    }
-    .artist-header__photo-container {
-      margin-bottom: 1rem;
-      max-width: none;
-    }
-    .artist-header__photos {
-      width: 100%;
-      top: 0px;
-    }
-    .artist-header__persons {
-      display: none;
-
-      @include mq($layout-m) {
-        display: flex;
-      }
-    }
-    .artist-header__photo-container_border {
-      height: calc(100% - 35px);
-    }
-    .artist-header__message-col {
-      width: 100%;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      flex-direction: column;
-
-      @include mq($desktop) {
-        flex-direction: row;
-        max-width: none;
-      }
-    }
-    .artist-header__message_container {
-      width: 100%;
-      margin: 0 auto 2rem;
-      padding: 0;
-      @include mq($desktop) {
-        min-width: 25%;
-        max-width: 70%;
-        margin: 0 1rem auto;
-      }
-      &.video-message {
-        padding: 0.5rem 0;
-      }
-    }
-    .artist-header__message_image_container {
-      overflow: unset;
-    }
-    .artist-header__message_image {
-      transform: scaleX(1.1);
-    }
-    .artist-header__message_paper-bg,
-    .artist-header__message_tear {
-      display: none;
-    }
-    .artist-header__message_video {
-      transform: scale(1) rotate(0deg);
-    }
-    .artist-header__supporters {
-      margin: 0;
-      width: 100%;
-      border-top: 2px solid $brand-primary;
-      padding-top: 1rem;
-      @include mq($desktop) {
-        min-width: 252px;
-        margin: 0 1rem;
-        width: auto;
-      }
-      &_title {
-        margin: 0 0 1rem 0;
-      }
-      &_recent {
-        flex-direction: row;
-        justify-content: flex-start;
-        width: 100%;
-        .supporter {
-          margin-right: 1rem;
-        }
-      }
-      &_all {
-        width: 100%;
-        max-width: 375px;
-      }
-    }
-    .artist-header__support-buttons {
-      margin-bottom: 1rem;
-    }
-    .artist-info {
-      border: 0px;
-      margin: 0 0 1rem 0;
-      padding: 0;
-      flex-direction: row;
-      flex-wrap: wrap;
-      min-width: 200px;
-
-      @include mq($desktop) {
-        flex-direction: column;
-      }
-
-      &__location {
-        margin: 0 0 1rem 0;
-      }
-      &__social {
-        justify-content: flex-start;
-      }
-    }
-  }
-
   &__photo-container {
     display: flex;
     position: relative;
@@ -431,7 +292,7 @@
   &__message-col {
     width: 100%;
     max-width: 500px;
-    margin: auto;
+    margin: 0 auto;
 
     @include mq($layout-m) {
       width: 50%;
@@ -730,6 +591,146 @@
       left: 2px;
     }
   }
+
+  &.minimal {
+    border-bottom: 2px solid $brand-primary;
+    margin-bottom: 2rem;
+    padding: 0 1rem 1rem;
+    flex-wrap: wrap;
+
+    @include mq($layout-m) {
+      padding: 0 0 2rem 0;
+    }
+    .artist-header__name {
+      justify-content: center;
+    }
+    .artist-header__title {
+      margin: 2rem auto 3rem;
+    }
+    .artist-header__photo {
+      position: absolute;
+      display: block;
+      width: 100%;
+      transform: rotate(0deg);
+      @include mq($layout-m) {
+        top: -20px;
+      }
+    }
+    .artist-header__banner-icons {
+      bottom: 50px;
+      right: 30px;
+      z-index: 100;
+      display: none;
+      @include mq($layout-m) {
+        display: flex;
+      }
+    }
+    .artist-header__photo-container {
+      margin-bottom: 1rem;
+      max-width: none;
+    }
+    .artist-header__photos {
+      width: 100%;
+      top: 0px;
+    }
+    .artist-header__persons {
+      display: none;
+
+      @include mq($layout-m) {
+        display: flex;
+      }
+    }
+    .artist-header__photo-container_border {
+      height: calc(100% - 35px);
+    }
+    .artist-header__message-col {
+      width: 100%;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      @include mq($desktop) {
+        flex-direction: row;
+        max-width: none;
+      }
+    }
+    .artist-header__message_container {
+      width: 100%;
+      margin: 0 auto 2rem;
+      padding: 0;
+      @include mq($desktop) {
+        min-width: 25%;
+        max-width: 70%;
+        margin: 0 1rem auto;
+      }
+      &.video-message {
+        padding: 0.5rem 0;
+      }
+    }
+    .artist-header__message_image_container {
+      overflow: unset;
+    }
+    .artist-header__message_image {
+      transform: scaleX(1.1);
+    }
+    .artist-header__message_paper-bg,
+    .artist-header__message_tear {
+      display: none;
+    }
+    .artist-header__message_video {
+      transform: scale(1) rotate(0deg);
+    }
+    .artist-header__supporters {
+      margin: 0;
+      width: 100%;
+      border-top: 2px solid $brand-primary;
+      padding-top: 1rem;
+      @include mq($desktop) {
+        min-width: 252px;
+        margin: 0 1rem;
+        width: auto;
+      }
+      &_title {
+        margin: 0 0 1rem 0;
+      }
+      &_recent {
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 100%;
+        .supporter {
+          margin-right: 1rem;
+        }
+      }
+      &_all {
+        width: 100%;
+        max-width: 375px;
+      }
+    }
+    .artist-header__support-buttons {
+      margin-bottom: 1rem;
+    }
+    .artist-info {
+      border: 0px;
+      margin: 0 0 1rem 0;
+      padding: 0;
+      flex-direction: row;
+      flex-wrap: wrap;
+      min-width: 200px;
+
+      @include mq($desktop) {
+        flex-direction: column;
+      }
+
+      &__location {
+        margin: 0 0 1rem 0;
+      }
+      &__social {
+        justify-content: flex-start;
+        margin: 0;
+      }
+    }
+  }
 }
 
 .artist-info {
@@ -758,6 +759,7 @@
     display: flex;
     justify-content: flex-end;
     flex-wrap: wrap;
+    margin: 0 1rem;
 
     &_item {
       opacity: 1;

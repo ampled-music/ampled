@@ -247,6 +247,7 @@ const PostMedia = ({
               isLapsed={deny_details_lapsed}
               me={me}
               handlePrivatePostClick={handlePrivatePostClick}
+              isAmpled={artistSlug === 'community'}
             />
           )}
         </div>
@@ -280,6 +281,7 @@ const PostMedia = ({
               isLapsed={deny_details_lapsed}
               me={me}
               handlePrivatePostClick={handlePrivatePostClick}
+              isAmpled={artistSlug === 'community'}
             />
           )}
         </div>
@@ -315,6 +317,7 @@ const PostMedia = ({
                 isLapsed={deny_details_lapsed}
                 me={me}
                 handlePrivatePostClick={handlePrivatePostClick}
+                isAmpled={artistSlug === 'community'}
               />
             }
           </div>
@@ -335,13 +338,16 @@ PostMedia.propTypes = {
   doReflow: PropTypes.func,
 };
 
-const Lock = ({ isLapsed = false, me, handlePrivatePostClick }) => {
+const Lock = ({ isLapsed = false, me, handlePrivatePostClick, isAmpled }) => {
   const authenticated = !!me;
-
   return (
     <div className="private-support">
       <div className="private-support__copy">
-        {isLapsed ? 'Support On Hold' : 'Supporter Only'}
+        {isLapsed
+          ? 'Support On Hold'
+          : isAmpled
+          ? 'Member Only'
+          : 'Supporter Only'}
       </div>
       <div className="private-support__btn">
         {isLapsed ? (
@@ -353,7 +359,7 @@ const Lock = ({ isLapsed = false, me, handlePrivatePostClick }) => {
             className="btn btn-ampled"
             onClick={() => handlePrivatePostClick(authenticated)}
           >
-            Support To Unlock
+            {isAmpled ? 'Become a Member' : 'Support To Unlock'}
           </Button>
         )}
       </div>
@@ -365,6 +371,7 @@ Lock.propTypes = {
   isLapsed: PropTypes.bool,
   handlePrivatePostClick: PropTypes.func,
   me: PropTypes.any,
+  isAmpled: PropTypes.bool,
 };
 
 const DeleteModal = ({ onCancel, onConfirm }) => (
@@ -397,6 +404,10 @@ class PostComponent extends React.Component<any, any> {
     showDeletePostModal: false,
     showEditPostModal: false,
     expanded: false,
+  };
+
+  isAmpled = () => {
+    return this.props.artist.slug === 'community';
   };
 
   handleExpandClick = () => {

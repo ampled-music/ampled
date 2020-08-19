@@ -19,6 +19,7 @@ interface Props {
   openVideoModal: React.MouseEventHandler;
   openPostModal: React.MouseEventHandler;
   openWhyModal: React.MouseEventHandler;
+  openJoinModal: React.MouseEventHandler;
   openMessageModal: React.MouseEventHandler;
   artist: ArtistModel;
   loggedUserAccess: { role: string; artistId: number };

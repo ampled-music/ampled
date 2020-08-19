@@ -291,13 +291,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     );
   };
 
-  handlePromoteImages = (promoteImages) => {
-    // Attempt at a single download button
-    // This requires cross browser to be enabled for cloudinary.com, which it currently is not.
-    // const fileUrls = promoteImages.map((image) => image.url);
-    // multiDownload(fileUrls);
-  };
-
   renderUserImage = () => {
     const { userData } = this.props;
 
@@ -417,7 +410,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   renderOwnedPages = () => (
     <div>
-      {this.renderPagesTitle('MY ARTIST PAGES')}
+      {this.renderPagesTitle('MY PAGES')}
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.ownedPages.map((ownedPage) => (
           <div
@@ -555,7 +548,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   renderSupportedArtists = () => (
     <div>
-      {this.renderPagesTitle('SUPPORTED ARTISTS')}
+      {this.renderPagesTitle('SUPPORTING')}
       <div className="pages row justify-content-center justify-content-md-start">
         {this.props.userData.subscriptions.map((subscription) => (
           <div

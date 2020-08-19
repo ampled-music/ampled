@@ -24,6 +24,10 @@ export class Supporters extends React.Component<Props, any> {
     );
   };
 
+  isAmpled = () => {
+    return this.props.artist.slug === 'community';
+  };
+
   renderSupporterHover = ({ supporter }) => {
     const artist_name = this.props.artist.name;
     return (
@@ -149,7 +153,8 @@ export class Supporters extends React.Component<Props, any> {
         {artist.supporters.length > 0 && (
           <>
             <div className="artist-header__supporters_title">
-              {artist.supporter_count} Supporters
+              {artist.supporter_count}{' '}
+              {this.isAmpled ? 'Members' : 'Supporters'}
             </div>
             <div className="artist-header__supporters_recent">
               <RenderSupporter

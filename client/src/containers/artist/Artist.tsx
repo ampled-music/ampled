@@ -19,6 +19,7 @@ import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
 import { VideoModal } from '../shared/video-modal/VideoModal';
 import { WhyModal } from '../shared/why-modal/WhyModal';
+import { JoinModal } from '../shared/join-modal/JoinModal';
 import { MessageModal } from '../shared/message-modal/MessageModal';
 import { Texture } from '../shared/texture/Texture';
 import StyleOverride from './StyleOverride';
@@ -76,6 +77,7 @@ class ArtistComponent extends React.Component<Props, any> {
     openVideoModal: false,
     openMessageModal: false,
     openWhyModal: false,
+    openJoinModal: false,
     showConfirmationDialog: false,
     successfulSupport: false,
     requestedApproval: false,
@@ -201,6 +203,14 @@ class ArtistComponent extends React.Component<Props, any> {
     this.setState({ openWhyModal: false });
   };
 
+  openJoinModal = () => {
+    this.setState({ openJoinModal: true });
+  };
+
+  closeJoinModal = () => {
+    this.setState({ openJoinModal: false });
+  };
+
   openMessageModal = () => {
     this.setState({ openMessageModal: true });
   };
@@ -252,7 +262,7 @@ class ArtistComponent extends React.Component<Props, any> {
         artistName: this.props.artists.artist.name,
         redirectTo: supportUrl,
       });
-      this.setState({ openWhyModal: false });
+      this.setState({ openWhyModal: false, openJoinModal: false });
     }
   };
 
@@ -387,6 +397,7 @@ class ArtistComponent extends React.Component<Props, any> {
             openMessageModal={this.openMessageModal}
             openPostModal={this.openPostModal}
             openWhyModal={this.openWhyModal}
+            openJoinModal={this.openJoinModal}
             loggedUserAccess={loggedUserAccess}
             isSupporter={isSupporter}
             handleSupportClick={this.handleSupportClick}
@@ -398,6 +409,7 @@ class ArtistComponent extends React.Component<Props, any> {
             openMessageModal={this.openMessageModal}
             openPostModal={this.openPostModal}
             openWhyModal={this.openWhyModal}
+            openJoinModal={this.openJoinModal}
             loggedUserAccess={loggedUserAccess}
             isSupporter={isSupporter}
             handleSupportClick={this.handleSupportClick}
@@ -437,6 +449,11 @@ class ArtistComponent extends React.Component<Props, any> {
         <WhyModal
           open={this.state.openWhyModal}
           onClose={this.closeWhyModal}
+          handleSupportClick={this.handleSupportClick}
+        />
+        <JoinModal
+          open={this.state.openJoinModal}
+          onClose={this.closeJoinModal}
           handleSupportClick={this.handleSupportClick}
         />
         <MessageModal

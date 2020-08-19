@@ -19,6 +19,7 @@ interface Props {
   openVideoModal: React.MouseEventHandler;
   openPostModal: React.MouseEventHandler;
   openWhyModal: React.MouseEventHandler;
+  openJoinModal: React.MouseEventHandler;
   openMessageModal: React.MouseEventHandler;
   artist: ArtistModel;
   loggedUserAccess: { role: string; artistId: number };
@@ -29,6 +30,10 @@ interface Props {
 export class ArtistHeaderMinimal extends React.Component<Props, any> {
   state = {
     showConfirmationDialog: false,
+  };
+
+  isAmpled = () => {
+    return this.props.artist.slug === 'community';
   };
 
   canLoggedUserPost = () => {
@@ -66,11 +71,18 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
           style={{ borderColor, maxWidth: '100%' }}
           onClick={() => this.props.handleSupportClick()}
         >
-          Support What You Want
+          {this.isAmpled ? 'Become a Member' : 'Support What You Want'}
         </button>
-        <button onClick={this.props.openWhyModal} className="link link__why">
-          Why support?
-        </button>
+
+        {this.isAmpled ? (
+          <button onClick={this.props.openJoinModal} className="link link__why">
+            Why join?
+          </button>
+        ) : (
+          <button onClick={this.props.openWhyModal} className="link link__why">
+            Why support?
+          </button>
+        )}
       </div>
     );
   };

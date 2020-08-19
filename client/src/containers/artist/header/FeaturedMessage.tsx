@@ -17,14 +17,10 @@ export class FeaturedMessage extends React.Component<Props, any> {
     if (artist.bio) {
       return (
         <div
-          className={cx('artist-header__message_container', {
-            paper_md: !artist.video_url,
-          })}
+          className="artist-header__message_container message"
           style={{ borderColor: artist.accent_color }}
         >
-          <div className="artist-header__message_title">
-            Message
-          </div>
+          <div className="artist-header__message_title">Message</div>
           <div className="artist-header__message_text">
             <TextTruncate
               line={artist.video_url ? 5 : 9}

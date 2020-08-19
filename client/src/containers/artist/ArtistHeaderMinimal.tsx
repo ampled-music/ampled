@@ -60,10 +60,7 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
     const borderColor = artist.accent_color;
 
     return (
-      <div
-        className="artist-header__message_container"
-        style={{ border: 'unset', minHeight: 'auto' }}
-      >
+      <div className="artist-header__support-buttons">
         <button
           className="btn btn-ampled btn-support"
           style={{ borderColor, maxWidth: '100%' }}

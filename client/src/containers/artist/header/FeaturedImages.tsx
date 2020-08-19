@@ -142,6 +142,11 @@ export class FeaturedImages extends React.Component<Props, any> {
 
   renderBanners = () => {
     const { artist, imageWidth, imageHeight } = this.props;
+    let mobileImageWidth, mobileImageHeight;
+    if (window.screen.width < 768) {
+      mobileImageWidth = 800;
+      mobileImageHeight = 800;
+    }
     return (
       <div className="artist-header__photos">
         {artist.images &&
@@ -155,8 +160,8 @@ export class FeaturedImages extends React.Component<Props, any> {
                   <Transformation
                     fetchFormat="auto"
                     crop="fill"
-                    width={imageWidth}
-                    height={imageHeight}
+                    width={mobileImageWidth ? mobileImageWidth : imageWidth}
+                    height={mobileImageHeight ? mobileImageHeight : imageHeight}
                     responsive_placeholder="blank"
                     gravity="faces"
                   />
@@ -195,6 +200,11 @@ export class FeaturedImages extends React.Component<Props, any> {
 
   render() {
     const { artist, imageWidth, imageHeight } = this.props;
+    let mobileImageWidth, mobileImageHeight;
+    if (window.screen.width < 768) {
+      mobileImageWidth = 800;
+      mobileImageHeight = 800;
+    }
     return (
       <div
         className="artist-header__photo-container"
@@ -210,8 +220,8 @@ export class FeaturedImages extends React.Component<Props, any> {
               <Transformation
                 fetchFormat="auto"
                 crop="fill"
-                width={imageWidth}
-                height={imageHeight}
+                width={mobileImageWidth ? mobileImageWidth : imageWidth}
+                height={mobileImageHeight ? mobileImageHeight : imageHeight}
                 responsive_placeholder="blank"
                 gravity="faces:center"
               />

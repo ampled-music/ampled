@@ -1,7 +1,6 @@
 import './artist-header.scss';
 
 import * as React from 'react';
-import cx from 'classnames';
 import TextTruncate from 'react-text-truncate';
 
 interface Props {

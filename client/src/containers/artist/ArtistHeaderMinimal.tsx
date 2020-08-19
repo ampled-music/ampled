@@ -54,9 +54,11 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
   };
 
   renderArtistName = () => (
-    <div className="artist-header__title">
-      <span className="artist-header__title_flair"></span>
-      {this.props.artist.name}
+    <div className="artist-header__name">
+      <div className="artist-header__title">
+        <span className="artist-header__title_flair"></span>
+        {this.props.artist.name}
+      </div>
     </div>
   );
 
@@ -71,7 +73,7 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
           style={{ borderColor, maxWidth: '100%' }}
           onClick={() => this.props.handleSupportClick()}
         >
-          {this.isAmpled() ? 'Become a Member' : 'Support What You Want'}
+          {this.isAmpled() ? 'Become a Member' : 'Support This Artist'}
         </button>
 
         {this.isAmpled() ? (
@@ -118,8 +120,8 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
   render() {
     return (
       <>
-        <div className="container">{this.renderArtistName()}</div>
         <div className="artist-header minimal container">
+          {this.renderArtistName()}
           <FeaturedImages
             artist={this.props.artist}
             loggedUserAccess={this.props.loggedUserAccess}

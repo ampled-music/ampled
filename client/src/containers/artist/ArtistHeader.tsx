@@ -50,9 +50,11 @@ export class ArtistHeader extends React.Component<Props, any> {
   };
 
   renderArtistName = () => (
-    <div className="artist-header__title">
-      <span className="artist-header__title_flair"></span>
-      {this.props.artist.name}
+    <div className="artist-header__name">
+      <div className="artist-header__title">
+        <span className="artist-header__title_flair"></span>
+        {this.props.artist.name}
+      </div>
     </div>
   );
 
@@ -110,7 +112,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   render() {
     return (
       <>
-        <div className="container">{this.renderArtistName()}</div>
+        {this.renderArtistName()}
         <div className="artist-header container">
           <FeaturedImages
             artist={this.props.artist}

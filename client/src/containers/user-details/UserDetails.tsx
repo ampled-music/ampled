@@ -348,6 +348,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
 
   renderAddPhotoButton = () => {
     const { userData } = this.props;
+    console.log('sup', userData.image);
     return (
       <div className="add-photo-button-container">
         <UploadFile

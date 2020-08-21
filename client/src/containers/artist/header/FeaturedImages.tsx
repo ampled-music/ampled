@@ -140,7 +140,6 @@ export class FeaturedImages extends React.Component<Props, any> {
 
   renderBanners = () => {
     const { artist } = this.props;
-    // console.log(artist);
     return (
       <div className="artist-header__photos">
         {artist.images &&

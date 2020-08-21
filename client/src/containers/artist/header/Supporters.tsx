@@ -197,13 +197,12 @@ export class Supporters extends React.Component<Props, any> {
                       ),
                   )
                   .map((supporter) => (
-                    <div key={`minisupporter-${supporter.id}`}>
-                      <RenderSupporter
-                        supporter={supporter}
-                        borderColor
-                        isSmall
-                      />
-                    </div>
+                    <RenderSupporter
+                      key={`minisupporter-${supporter.id}`}
+                      supporter={supporter}
+                      borderColor
+                      isSmall
+                    />
                   ))}
               </div>
             </div>

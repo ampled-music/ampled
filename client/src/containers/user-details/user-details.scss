@@ -38,6 +38,7 @@
       z-index: 1;
       opacity: 1;
       transition: opacity $speed;
+      background-color: $white;
       &:hover {
         opacity: 0.7;
       }

@@ -127,6 +127,7 @@
       border-width: 2px;
       border-style: solid;
       margin: auto;
+      background-color: $white;
 
       @include mq($layout-m) {
         max-width: 70px;

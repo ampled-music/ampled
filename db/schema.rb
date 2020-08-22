@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_195516) do
+ActiveRecord::Schema.define(version: 2020_08_22_212821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 2020_08_19_195516) do
     t.string "video_screenshot_url"
     t.string "state_token"
     t.string "stripe_user_id"
-    t.string "stripe_access_token"
     t.string "stripe_product_id"
     t.string "slug"
     t.boolean "verb_plural", default: false

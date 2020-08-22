@@ -389,10 +389,12 @@
 
       .artist-header__person {
         margin-top: 0px;
-
         &_mr {
           font-size: 0.7rem;
           font-family: $font-family-monospace;
+        }
+        &_image {
+          background-color: $white !important;
         }
       }
     }
@@ -413,6 +415,27 @@
     @include mq($layout-m) {
       position: relative;
       display: block;
+    }
+
+    &:nth-child(1n) {
+      .artist-header__person_image {
+        background-color: #e9c7c6;
+      }
+    }
+    &:nth-child(2n) {
+      .artist-header__person_image {
+        background-color: #eddfbd;
+      }
+    }
+    &:nth-child(3n) {
+      .artist-header__person_image {
+        background-color: #baddac;
+      }
+    }
+    &:nth-child(4n) {
+      .artist-header__person_image {
+        background-color: #cae4e7;
+      }
     }
 
     &:hover {

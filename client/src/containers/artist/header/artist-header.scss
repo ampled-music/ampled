@@ -323,6 +323,10 @@
       padding: 10px 0px;
       min-height: 140px;
 
+      &.text-message {
+        background-color: $white;
+      }
+
       @include mq($layout-m) {
         margin: 0rem auto 1.5rem;
       }

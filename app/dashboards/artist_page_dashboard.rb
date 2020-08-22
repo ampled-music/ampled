@@ -34,7 +34,9 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     featured: Field::Boolean,
     verb_plural: Field::Boolean,
     hide_members: Field::Boolean,
-    style_type: Field::String
+    style_type: Field::Select.with_options(
+      collection: ['standard', 'minimal']
+    ),
   }.freeze
 
   # COLLECTION_ATTRIBUTES

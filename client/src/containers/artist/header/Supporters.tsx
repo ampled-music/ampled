@@ -167,7 +167,7 @@ export class Supporters extends React.Component<Props, any> {
                 </div>
                 <div className="artist-header__person_mr">Most Recent</div>
               </div>
-              <div className="artist-header__supporters_all col-8">
+              <div className="artist-header__supporters_all">
                 {artist.supporters
                   .filter(
                     (supporter) =>
@@ -185,25 +185,6 @@ export class Supporters extends React.Component<Props, any> {
                     />
                   ))}
               </div>
-            </div>
-            <div className="artist-header__supporters_all">
-              {artist.supporters
-                .filter(
-                  (supporter) =>
-                    !R.equals(
-                      R.path(['most_recent_supporter', 'id'], artist),
-                      +supporter.id,
-                    ),
-                )
-                .map((supporter) => (
-                  <div key={`minisupporter-${supporter.id}`}>
-                    <RenderSupporter
-                      supporter={supporter}
-                      borderColor
-                      isSmall
-                    />
-                  </div>
-                ))}
             </div>
           </>
         )}

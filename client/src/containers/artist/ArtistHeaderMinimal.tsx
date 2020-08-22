@@ -70,7 +70,7 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
       <div className="artist-header__support-buttons">
         <button
           className="btn btn-ampled btn-support"
-          style={{ borderColor, maxWidth: '100%' }}
+          style={{ borderColor }}
           onClick={() => this.props.handleSupportClick()}
         >
           {this.isAmpled() ? 'Become a Member' : 'Support This Artist'}

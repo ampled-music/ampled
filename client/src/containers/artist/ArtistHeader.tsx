@@ -32,6 +32,10 @@ export class ArtistHeader extends React.Component<Props, any> {
     showConfirmationDialog: false,
   };
 
+  isAmpled = () => {
+    return this.props.artist.slug === 'community';
+  };
+
   canLoggedUserPost = () => {
     return (
       this.props.loggedUserAccess &&
@@ -63,20 +67,24 @@ export class ArtistHeader extends React.Component<Props, any> {
     const borderColor = artist.accent_color;
 
     return (
-      <div
-        className="artist-header__message_container"
-        style={{ border: 'unset', minHeight: 'auto' }}
-      >
+      <div className="artist-header__support-buttons">
         <button
           className="btn btn-ampled btn-support"
-          style={{ borderColor, maxWidth: '100%' }}
+          style={{ borderColor }}
           onClick={() => this.props.handleSupportClick()}
         >
-          Support What You Want
+          {this.isAmpled() ? 'Become a Member' : 'Support This Artist'}
         </button>
-        <button onClick={this.props.openWhyModal} className="link link__why">
-          Why support?
-        </button>
+
+        {this.isAmpled() ? (
+          <button onClick={this.props.openJoinModal} className="link link__why">
+            Why join?
+          </button>
+        ) : (
+          <button onClick={this.props.openWhyModal} className="link link__why">
+            Why support?
+          </button>
+        )}
       </div>
     );
   };

@@ -81,7 +81,6 @@ class ArtistComponent extends React.Component<Props, any> {
     showConfirmationDialog: false,
     successfulSupport: false,
     requestedApproval: false,
-    artistHeaderType: 'minimal',
   };
   players: Set<any>;
 
@@ -331,7 +330,6 @@ class ArtistComponent extends React.Component<Props, any> {
       return <NoArtist />;
     }
 
-    // console.log(artist.style_type);
     return (
       <div className="App">
         <StyleOverride

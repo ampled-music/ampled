@@ -98,18 +98,21 @@
     }
   }
 
+  &__copy-container {
+    padding: 1rem;
+  }
+
   &__title {
     font-family: $font-family-sans-serif;
     font-size: 1.2rem;
-    padding: 1rem 1rem 0 1rem;
   }
 
   &__body {
     font-family: $font-family-monospace;
     font-size: 0.8rem;
     line-height: 1.1rem;
-    padding: 1rem;
     white-space: pre-wrap;
+    margin-top: 1rem;
     overflow-wrap: break-word;
 
     p {

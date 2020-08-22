@@ -22,36 +22,52 @@
 
 .artist-header {
   font-family: $font-family-sans-serif;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 
+  @include mq($layout-m) {
+    flex-direction: row;
+  }
   @include mq($layout-l) {
     padding: 0 15px 0 35px;
+  }
+
+  &__name {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 1140px;
+    margin: auto;
   }
 
   &__photo-container {
     display: flex;
     position: relative;
     justify-content: center;
-    margin: 0 0 2rem 0;
+    margin: 0 auto 2rem;
+    width: 100%;
+    align-self: flex-start;
+    max-width: 500px;
 
     @include mq($desktop) {
       margin: 0 auto 1rem;
+      max-width: none;
     }
 
     &_border {
       z-index: 100;
       width: 100%;
-      height: 339px;
+      height: 100%;
       position: absolute;
       margin: -2px 0;
 
       @include mq($layout-m) {
         border: 2px solid $brand-primary;
-        height: 475px;
         width: calc(100% - 30px);
       }
 
       @include mq($layout-l) {
-        height: 575px;
       }
 
       &_swipe {
@@ -63,12 +79,11 @@
 
   &__title {
     font-size: 2rem;
-    margin: 2rem auto 3rem;
+    margin: 2rem 0 3rem;
     font-weight: bolder;
     text-align: center;
     position: relative;
     display: inline-block;
-    max-width: 75%;
 
     &_flair {
       position: absolute;
@@ -172,7 +187,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 100%;
+      width: auto;
     }
 
     &_name {
@@ -186,40 +201,37 @@
   }
 
   &__photos {
-    height: 335px;
-    width: 100%;
+    height: 100%;
+    width: 92%;
     display: flex;
     justify-content: center;
-
-    @include mq($layout-m) {
-      height: 475px;
-    }
-
-    @include mq($layout-l) {
-      height: 575px;
-    }
+    position: absolute;
+    top: 5%;
   }
 
   &__photo {
     position: absolute;
     display: block;
-    width: 335px;
+    width: 100%;
     background-color: $brand-primary;
     z-index: 1;
-
-    @include mq($layout-m) {
-      width: 450px;
-    }
-
-    @include mq($layout-l) {
-      width: 550px;
-    }
 
     &.active {
       z-index: 10;
 
       img {
         opacity: 1;
+      }
+    }
+    &_spacer {
+      width: 100%;
+      opacity: 0.1;
+      display: block;
+      position: relative;
+      visibility: hidden;
+
+      img {
+        width: 100%;
       }
     }
 
@@ -278,10 +290,13 @@
   }
 
   &__message-col {
-    margin-top: 0;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
 
     @include mq($layout-m) {
-      margin-top: -20px;
+      width: 50%;
+      margin-left: 2rem;
     }
   }
 
@@ -297,38 +312,29 @@
     }
 
     &_container {
-      max-width: 335px;
       display: flex;
       position: relative;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       width: 90%;
-      margin: auto;
+      margin: 0 auto 2rem;
       border: 2px solid $brand-primary;
       padding: 10px 0px;
       min-height: 140px;
 
-      @include mq($layout-m) {
-        margin: 0rem auto 1.5rem;
+      &.text-message {
+        background-color: $white;
       }
 
-      &.paper_md {
-        min-height: 210px;
+      @include mq($layout-m) {
+        margin: 0rem auto 1.5rem;
       }
 
       .btn-read-more {
         position: absolute;
         bottom: -18px;
       }
-    }
-
-    &_paper-bg {
-      width: 115%;
-      left: -7%;
-      top: 3%;
-      z-index: -1;
-      position: absolute;
     }
 
     &_video {
@@ -340,12 +346,22 @@
 
     &_text {
       font-family: $font-family-monospace;
-      padding: 1rem 2rem;
+      padding: 1rem 2rem 2rem;
       font-size: 0.8rem;
+      width: 100%;
       span {
         word-wrap: anywhere;
         word-break: break-all;
       }
+    }
+
+    &_title {
+      width: 100%;
+      font-size: 1.2rem;
+      padding-left: 2rem;
+      padding-top: 1rem;
+      text-transform: uppercase;
+      font-weight: bold;
     }
 
     &_image {
@@ -368,12 +384,15 @@
 
   &__supporters {
     margin: 3rem 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
 
     &:empty {
       display: none;
     }
 
     &_title {
+      width: 100%;
       font-size: 1.2rem;
       margin: 1rem 0 0.5rem 0;
       text-transform: uppercase;
@@ -386,6 +405,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      width: 37%;
 
       .artist-header__person {
         margin-top: 0px;
@@ -403,6 +423,7 @@
       display: flex;
       flex-flow: wrap;
       margin-bottom: 1.5rem;
+      width: 63%;
 
       .artist-header__person_image,
       .artist-header__person_svg {
@@ -454,25 +475,13 @@
             position: absolute;
             display: block;
             transform: rotate(45deg);
-            top: -18px;
+            top: -15px;
             left: 27%;
           }
 
           &:before {
             box-shadow: 1px 1px 3px $gray-light;
             z-index: 1;
-          }
-
-          &:after {
-            z-index: 301;
-            transform: rotate(0deg);
-            top: -4px;
-            left: 27%;
-            background-color: transparent;
-            border-top: 11px solid $white;
-            border-right: 11px solid transparent;
-            border-bottom: 11px solid transparent;
-            border-left: 11px solid transparent;
           }
         }
       }
@@ -598,6 +607,146 @@
       left: 2px;
     }
   }
+
+  &.minimal {
+    border-bottom: 2px solid $brand-primary;
+    margin-bottom: 2rem;
+    padding: 0 1rem 1rem;
+    flex-wrap: wrap;
+
+    @include mq($layout-m) {
+      padding: 0 0 2rem 0;
+    }
+    .artist-header__name {
+      justify-content: center;
+    }
+    .artist-header__title {
+      margin: 2rem auto 3rem;
+    }
+    .artist-header__photo {
+      position: absolute;
+      display: block;
+      width: 100%;
+      transform: rotate(0deg);
+      @include mq($layout-m) {
+        top: -20px;
+      }
+    }
+    .artist-header__banner-icons {
+      bottom: 50px;
+      right: 30px;
+      z-index: 100;
+      display: none;
+      @include mq($layout-m) {
+        display: flex;
+      }
+    }
+    .artist-header__photo-container {
+      margin-bottom: 1rem;
+      max-width: none;
+    }
+    .artist-header__photos {
+      width: 100%;
+      top: 0px;
+    }
+    .artist-header__persons {
+      display: none;
+
+      @include mq($layout-m) {
+        display: flex;
+      }
+    }
+    .artist-header__photo-container_border {
+      height: calc(100% - 35px);
+    }
+    .artist-header__message-col {
+      width: 100%;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      @include mq($desktop) {
+        flex-direction: row;
+        max-width: none;
+      }
+    }
+    .artist-header__message_container {
+      width: 100%;
+      margin: 0 auto 2rem;
+      padding: 0;
+      @include mq($desktop) {
+        min-width: 25%;
+        max-width: 70%;
+        margin: 0 1rem auto;
+      }
+      &.video-message {
+        padding: 0.5rem 0;
+      }
+    }
+    .artist-header__message_image_container {
+      overflow: unset;
+    }
+    .artist-header__message_image {
+      transform: scaleX(1.1);
+    }
+    .artist-header__message_paper-bg,
+    .artist-header__message_tear {
+      display: none;
+    }
+    .artist-header__message_video {
+      transform: scale(1) rotate(0deg);
+    }
+    .artist-header__supporters {
+      margin: 0;
+      width: 100%;
+      border-top: 2px solid $brand-primary;
+      padding-top: 1rem;
+      @include mq($desktop) {
+        min-width: 252px;
+        margin: 0 1rem;
+        width: auto;
+      }
+      &_title {
+        margin: 0 0 1rem 0;
+      }
+      &_recent {
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 100%;
+        .supporter {
+          margin-right: 1rem;
+        }
+      }
+      &_all {
+        width: 100%;
+        max-width: 375px;
+      }
+    }
+    .artist-header__support-buttons {
+      margin-bottom: 1rem;
+    }
+    .artist-info {
+      border: 0px;
+      margin: 0 0 1rem 0;
+      padding: 0;
+      flex-direction: row;
+      flex-wrap: wrap;
+      min-width: 200px;
+
+      @include mq($desktop) {
+        flex-direction: column;
+      }
+
+      &__location {
+        margin: 0 0 1rem 0;
+      }
+      &__social {
+        justify-content: flex-start;
+        margin: 0;
+      }
+    }
+  }
 }
 
 .artist-info {
@@ -606,6 +755,8 @@
   border-bottom: 2px solid $black;
   margin: 1rem auto;
   padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
 
   @include mq($layout-m) {
     margin: 1rem auto 2rem;
@@ -623,6 +774,8 @@
   &__social {
     display: flex;
     justify-content: flex-end;
+    flex-wrap: wrap;
+    margin: 0 1rem;
 
     &_item {
       opacity: 1;

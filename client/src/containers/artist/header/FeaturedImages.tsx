@@ -13,6 +13,8 @@ interface Props {
   loggedUserAccess: { role: string; artistId: number };
   isSupporter: boolean;
   handleSupportClick: Function;
+  imageWidth: number;
+  imageHeight: number;
 }
 
 export class FeaturedImages extends React.Component<Props, any> {
@@ -139,7 +141,12 @@ export class FeaturedImages extends React.Component<Props, any> {
   };
 
   renderBanners = () => {
-    const { artist } = this.props;
+    const { artist, imageWidth, imageHeight } = this.props;
+    let mobileImageWidth, mobileImageHeight;
+    if (window.screen.width < 768) {
+      mobileImageWidth = 800;
+      mobileImageHeight = 800;
+    }
     return (
       <div className="artist-header__photos">
         {artist.images &&
@@ -153,9 +160,10 @@ export class FeaturedImages extends React.Component<Props, any> {
                   <Transformation
                     fetchFormat="auto"
                     crop="fill"
-                    width={800}
-                    height={800}
+                    width={mobileImageWidth ? mobileImageWidth : imageWidth}
+                    height={mobileImageHeight ? mobileImageHeight : imageHeight}
                     responsive_placeholder="blank"
+                    gravity="faces"
                   />
                 </Image>
               </div>
@@ -190,14 +198,36 @@ export class FeaturedImages extends React.Component<Props, any> {
     );
   };
 
-  renderPhotoContainer = () => {
-    const { artist } = this.props;
+  render() {
+    const { artist, imageWidth, imageHeight } = this.props;
+    let mobileImageWidth, mobileImageHeight;
+    if (window.screen.width < 768) {
+      mobileImageWidth = 800;
+      mobileImageHeight = 800;
+    }
     return (
       <div
         className="artist-header__photo-container"
         style={{ borderColor: artist.accent_color }}
       >
         {!artist.hide_members && this.renderOwners()}
+        {artist.images && (
+          <div className="artist-header__photo_spacer">
+            <Image
+              publicId={artist.images[0].public_id}
+              key={artist.images[0].public_id}
+            >
+              <Transformation
+                fetchFormat="auto"
+                crop="fill"
+                width={mobileImageWidth ? mobileImageWidth : imageWidth}
+                height={mobileImageHeight ? mobileImageHeight : imageHeight}
+                responsive_placeholder="blank"
+                gravity="faces:center"
+              />
+            </Image>
+          </div>
+        )}
         {this.renderBanners()}
         {artist.images && (
           <div
@@ -225,9 +255,5 @@ export class FeaturedImages extends React.Component<Props, any> {
         {this.renderBannerIcons()}
       </div>
     );
-  };
-
-  render() {
-    return <div>{this.renderPhotoContainer()}</div>;
   }
 }

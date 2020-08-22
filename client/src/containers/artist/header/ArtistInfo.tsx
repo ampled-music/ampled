@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { ReactSVG } from 'react-svg';
 
-import Instagram from '../../images/icons/Icon_Instagram.svg';
-import Twitter from '../../images/icons/Icon_Twitter.svg';
-import Bandcamp from '../../images/icons/Icon_Bandcamp.svg';
-import Youtube from '../../images/icons/Icon_Youtube.svg';
-import Link1 from '../../images/icons/Icon_Link_1.svg';
-import Location from '../../images/icons/Icon_Location.svg';
+import Instagram from '../../../images/icons/Icon_Instagram.svg';
+import Twitter from '../../../images/icons/Icon_Twitter.svg';
+import Bandcamp from '../../../images/icons/Icon_Bandcamp.svg';
+import Youtube from '../../../images/icons/Icon_Youtube.svg';
+import Link1 from '../../../images/icons/Icon_Link_1.svg';
+import Location from '../../../images/icons/Icon_Location.svg';
 
 interface Props {
   location: string;
@@ -125,10 +125,8 @@ export class ArtistInfo extends React.Component<Props, any> {
   render() {
     return (
       <div className="artist-info container">
-        <div className="row justify-content-center justify-content-sm-between">
-          <div className="col-auto">{this.renderArtistLocation()}</div>
-          <div className="col-auto col-md-6">{this.renderSocialInfo()}</div>
-        </div>
+        {this.renderArtistLocation()}
+        {this.renderSocialInfo()}
       </div>
     );
   }

@@ -19,12 +19,13 @@ import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
 import { VideoModal } from '../shared/video-modal/VideoModal';
 import { WhyModal } from '../shared/why-modal/WhyModal';
+import { JoinModal } from '../shared/join-modal/JoinModal';
 import { MessageModal } from '../shared/message-modal/MessageModal';
 import { Texture } from '../shared/texture/Texture';
 import StyleOverride from './StyleOverride';
 
 import { ArtistHeader } from './ArtistHeader';
-import { ArtistInfo } from './ArtistInfo';
+import { ArtistHeaderMinimal } from './ArtistHeaderMinimal';
 import { PostForm } from './posts/post-form/PostForm';
 import { ArtistComingSoon } from '../shared/no-artist/ArtistComingSoon';
 import { NoArtist } from '../shared/no-artist/NoArtist';
@@ -76,6 +77,7 @@ class ArtistComponent extends React.Component<Props, any> {
     openVideoModal: false,
     openMessageModal: false,
     openWhyModal: false,
+    openJoinModal: false,
     showConfirmationDialog: false,
     successfulSupport: false,
     requestedApproval: false,
@@ -200,6 +202,14 @@ class ArtistComponent extends React.Component<Props, any> {
     this.setState({ openWhyModal: false });
   };
 
+  openJoinModal = () => {
+    this.setState({ openJoinModal: true });
+  };
+
+  closeJoinModal = () => {
+    this.setState({ openJoinModal: false });
+  };
+
   openMessageModal = () => {
     this.setState({ openMessageModal: true });
   };
@@ -251,7 +261,7 @@ class ArtistComponent extends React.Component<Props, any> {
         artistName: this.props.artists.artist.name,
         redirectTo: supportUrl,
       });
-      this.setState({ openWhyModal: false });
+      this.setState({ openWhyModal: false, openJoinModal: false });
     }
   };
 
@@ -379,25 +389,32 @@ class ArtistComponent extends React.Component<Props, any> {
               .
             </span>,
           )}
-        <ArtistHeader
-          artist={artist}
-          openVideoModal={this.openVideoModal}
-          openMessageModal={this.openMessageModal}
-          openPostModal={this.openPostModal}
-          openWhyModal={this.openWhyModal}
-          loggedUserAccess={loggedUserAccess}
-          isSupporter={isSupporter}
-          handleSupportClick={this.handleSupportClick}
-        />
-        <ArtistInfo
-          location={artist.location}
-          accentColor={artist.accent_color}
-          twitterHandle={artist.twitter_handle}
-          instagramHandle={artist.instagram_handle}
-          bandcampHandle={artist.bandcamp_handle}
-          youtubeHandle={artist.youtube_handle}
-          external={artist.external}
-        />
+        {artist.style_type === 'minimal' ? (
+          <ArtistHeaderMinimal
+            artist={artist}
+            openVideoModal={this.openVideoModal}
+            openMessageModal={this.openMessageModal}
+            openPostModal={this.openPostModal}
+            openWhyModal={this.openWhyModal}
+            openJoinModal={this.openJoinModal}
+            loggedUserAccess={loggedUserAccess}
+            isSupporter={isSupporter}
+            handleSupportClick={this.handleSupportClick}
+          />
+        ) : (
+          <ArtistHeader
+            artist={artist}
+            openVideoModal={this.openVideoModal}
+            openMessageModal={this.openMessageModal}
+            openPostModal={this.openPostModal}
+            openWhyModal={this.openWhyModal}
+            openJoinModal={this.openJoinModal}
+            loggedUserAccess={loggedUserAccess}
+            isSupporter={isSupporter}
+            handleSupportClick={this.handleSupportClick}
+          />
+        )}
+
         <PostsContainer
           match={this.props.match}
           hash={this.props.history.location.hash}
@@ -431,6 +448,11 @@ class ArtistComponent extends React.Component<Props, any> {
         <WhyModal
           open={this.state.openWhyModal}
           onClose={this.closeWhyModal}
+          handleSupportClick={this.handleSupportClick}
+        />
+        <JoinModal
+          open={this.state.openJoinModal}
+          onClose={this.closeJoinModal}
           handleSupportClick={this.handleSupportClick}
         />
         <MessageModal

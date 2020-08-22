@@ -247,10 +247,10 @@ const PostMedia = ({
               isLapsed={deny_details_lapsed}
               me={me}
               handlePrivatePostClick={handlePrivatePostClick}
+              isAmpled={artistSlug === 'community'}
             />
           )}
         </div>
-        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
       </>
     )}
 
@@ -281,11 +281,10 @@ const PostMedia = ({
               isLapsed={deny_details_lapsed}
               me={me}
               handlePrivatePostClick={handlePrivatePostClick}
+              isAmpled={artistSlug === 'community'}
             />
           )}
         </div>
-
-        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
 
         {allowDetails && (
           <AudioPlayer
@@ -318,11 +317,11 @@ const PostMedia = ({
                 isLapsed={deny_details_lapsed}
                 me={me}
                 handlePrivatePostClick={handlePrivatePostClick}
+                isAmpled={artistSlug === 'community'}
               />
             }
           </div>
         )}
-        <PostTitle artistSlug={artistSlug} postId={id} title={title} />
       </>
     )}
   </>
@@ -339,13 +338,16 @@ PostMedia.propTypes = {
   doReflow: PropTypes.func,
 };
 
-const Lock = ({ isLapsed = false, me, handlePrivatePostClick }) => {
+const Lock = ({ isLapsed = false, me, handlePrivatePostClick, isAmpled }) => {
   const authenticated = !!me;
-
   return (
     <div className="private-support">
       <div className="private-support__copy">
-        {isLapsed ? 'Support On Hold' : 'Supporter Only'}
+        {isLapsed
+          ? 'Support On Hold'
+          : isAmpled
+          ? 'Members Only'
+          : 'Supporters Only'}
       </div>
       <div className="private-support__btn">
         {isLapsed ? (
@@ -357,7 +359,7 @@ const Lock = ({ isLapsed = false, me, handlePrivatePostClick }) => {
             className="btn btn-ampled"
             onClick={() => handlePrivatePostClick(authenticated)}
           >
-            Support To Unlock
+            {isAmpled ? 'Become a Member' : 'Support To Unlock'}
           </Button>
         )}
       </div>
@@ -369,6 +371,7 @@ Lock.propTypes = {
   isLapsed: PropTypes.bool,
   handlePrivatePostClick: PropTypes.func,
   me: PropTypes.any,
+  isAmpled: PropTypes.bool,
 };
 
 const DeleteModal = ({ onCancel, onConfirm }) => (
@@ -401,6 +404,10 @@ class PostComponent extends React.Component<any, any> {
     showDeletePostModal: false,
     showEditPostModal: false,
     expanded: false,
+  };
+
+  isAmpled = () => {
+    return this.props.artist.slug === 'community';
   };
 
   handleExpandClick = () => {
@@ -674,56 +681,65 @@ class PostComponent extends React.Component<any, any> {
               playerCallback={this.props.playerCallback}
               artistSlug={artistSlug}
             />
+            <div className="post__copy-container">
+              {post.title && (
+                <PostTitle
+                  artistSlug={artistSlug}
+                  postId={post.id}
+                  title={post.title}
+                />
+              )}
 
-            {post.body && (
-              <div className="post__body">
-                <Linkify
-                  componentDecorator={(
-                    decoratedHref: string,
-                    decoratedText: string,
-                    key: number,
-                  ) => (
-                    <a
-                      href={decoratedHref}
-                      key={key}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {decoratedText}
-                    </a>
-                  )}
-                >
-                  {// If there are no p or ul tags, this is legacy
-                  // text and should be presented unparsed.
-                  /<p>|<ul>/gi.test(post.body)
-                    ? parse(
-                        DOMPurify.sanitize(post.body, {
-                          ALLOWED_TAGS: [
-                            'p',
-                            'em',
-                            'strong',
-                            'br',
-                            'ul',
-                            'ol',
-                            'li',
-                          ],
-                        }),
-                        {
-                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                          replace: (domNode) => {
-                            // FYI, here we can reshape tags as needed
-                            // for presentation. If we simply return,
-                            // the node is unprocessed; otherwise, return
-                            // a new React element that should take the
-                            // place of the node.
-                            return;
+              {post.body && (
+                <div className="post__body">
+                  <Linkify
+                    componentDecorator={(
+                      decoratedHref: string,
+                      decoratedText: string,
+                      key: number,
+                    ) => (
+                      <a
+                        href={decoratedHref}
+                        key={key}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {decoratedText}
+                      </a>
+                    )}
+                  >
+                    {// If there are no p or ul tags, this is legacy
+                    // text and should be presented unparsed.
+                    /<p>|<ul>/gi.test(post.body)
+                      ? parse(
+                          DOMPurify.sanitize(post.body, {
+                            ALLOWED_TAGS: [
+                              'p',
+                              'em',
+                              'strong',
+                              'br',
+                              'ul',
+                              'ol',
+                              'li',
+                            ],
+                          }),
+                          {
+                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                            replace: (domNode) => {
+                              // FYI, here we can reshape tags as needed
+                              // for presentation. If we simply return,
+                              // the node is unprocessed; otherwise, return
+                              // a new React element that should take the
+                              // place of the node.
+                              return;
+                            },
                           },
-                        },
-                      )
-                    : post.body}
-                </Linkify>
-              </div>
-            )}
+                        )
+                      : post.body}
+                  </Linkify>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <Comments

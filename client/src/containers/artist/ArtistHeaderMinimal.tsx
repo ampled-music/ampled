@@ -27,7 +27,7 @@ interface Props {
   handleSupportClick: Function;
 }
 
-export class ArtistHeader extends React.Component<Props, any> {
+export class ArtistHeaderMinimal extends React.Component<Props, any> {
   state = {
     showConfirmationDialog: false,
   };
@@ -120,24 +120,24 @@ export class ArtistHeader extends React.Component<Props, any> {
   render() {
     return (
       <>
-        {this.renderArtistName()}
-        <div className="artist-header container">
+        <div className="artist-header minimal container">
+          {this.renderArtistName()}
           <FeaturedImages
             artist={this.props.artist}
             loggedUserAccess={this.props.loggedUserAccess}
             isSupporter={this.props.isSupporter}
             handleSupportClick={this.props.handleSupportClick}
-            imageWidth={800}
+            imageWidth={2000}
             imageHeight={800}
           />
           <div className="artist-header__message-col">
-            <FeaturedVideo
-              artist={this.props.artist}
-              openVideoModal={this.props.openVideoModal}
-            />
             <FeaturedMessage
               artist={this.props.artist}
               openMessageModal={this.props.openMessageModal}
+            />
+            <FeaturedVideo
+              artist={this.props.artist}
+              openVideoModal={this.props.openVideoModal}
             />
             <Supporters
               artist={this.props.artist}
@@ -146,24 +146,25 @@ export class ArtistHeader extends React.Component<Props, any> {
               isSupporter={this.props.isSupporter}
               handleSupportClick={this.props.handleSupportClick}
             />
-
-            {!this.props.isSupporter &&
-              !this.canLoggedUserPost() &&
-              this.props.artist.isStripeSetup &&
-              this.renderSupportButton()}
-            {this.renderFloatingNewPostButton()}
-            {this.renderFloatingEditButton()}
+            <div className="artist-header__info">
+              {!this.props.isSupporter &&
+                !this.canLoggedUserPost() &&
+                this.props.artist.isStripeSetup &&
+                this.renderSupportButton()}
+              <ArtistInfo
+                location={this.props.artist.location}
+                accentColor={this.props.artist.accent_color}
+                twitterHandle={this.props.artist.twitter_handle}
+                instagramHandle={this.props.artist.instagram_handle}
+                bandcampHandle={this.props.artist.bandcamp_handle}
+                youtubeHandle={this.props.artist.youtube_handle}
+                external={this.props.artist.external}
+              />
+            </div>
           </div>
+          {this.renderFloatingNewPostButton()}
+          {this.renderFloatingEditButton()}
         </div>
-        <ArtistInfo
-          location={this.props.artist.location}
-          accentColor={this.props.artist.accent_color}
-          twitterHandle={this.props.artist.twitter_handle}
-          instagramHandle={this.props.artist.instagram_handle}
-          bandcampHandle={this.props.artist.bandcamp_handle}
-          youtubeHandle={this.props.artist.youtube_handle}
-          external={this.props.artist.external}
-        />
       </>
     );
   }

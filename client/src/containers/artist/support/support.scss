@@ -162,7 +162,7 @@
       width: 100%;
       background-color: $brand-primary;
       color: $white;
-      height: 45px;
+      min-height: 45px;
       border: 0px;
       transition: all $speed;
     }

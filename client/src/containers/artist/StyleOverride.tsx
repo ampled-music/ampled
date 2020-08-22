@@ -65,6 +65,10 @@ const StyleOverride = ({
           background-color: ${accentColor};
           color: ${lightOrDark(accentColor)};
         }
+        .artist-header.minimal,
+        .artist-header__supporters {
+          border-color: ${accentColor};
+        }
         .new-post button,
         .edit-page button,
         .artist-header__photo {
@@ -72,7 +76,8 @@ const StyleOverride = ({
           color: ${lightOrDark(accentColor)};
         }
         .new-post svg path,
-        .edit-page svg path {
+        .edit-page svg path,
+        .artist-header__play_svg svg path {
           fill: ${lightOrDark(accentColor)};
         }
         .btn.btn-read-more:hover,

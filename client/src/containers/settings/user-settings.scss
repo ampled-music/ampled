@@ -35,8 +35,8 @@
           height: 120px;
           width: 120px;
           border-radius: 50%;
-          object-fit: cover;
           z-index: 1;
+          background-color: $white;
         }
       }
 
@@ -397,7 +397,6 @@
     height: 120px;
     width: 120px;
     border-radius: 50%;
-    object-fit: cover;
     opacity: 1;
 
     &.loading-image {

@@ -167,6 +167,24 @@ export class Supporters extends React.Component<Props, any> {
                 </div>
                 <div className="artist-header__person_mr">Most Recent</div>
               </div>
+              <div className="artist-header__supporters_all col-8">
+                {artist.supporters
+                  .filter(
+                    (supporter) =>
+                      !R.equals(
+                        R.path(['most_recent_supporter', 'id'], artist),
+                        +supporter.id,
+                      ),
+                  )
+                  .map((supporter) => (
+                    <RenderSupporter
+                      key={`minisupporter-${supporter.id}`}
+                      supporter={supporter}
+                      borderColor
+                      isSmall
+                    />
+                  ))}
+              </div>
             </div>
             <div className="artist-header__supporters_all">
               {artist.supporters

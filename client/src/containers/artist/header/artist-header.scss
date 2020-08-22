@@ -475,25 +475,13 @@
             position: absolute;
             display: block;
             transform: rotate(45deg);
-            top: -18px;
+            top: -15px;
             left: 27%;
           }
 
           &:before {
             box-shadow: 1px 1px 3px $gray-light;
             z-index: 1;
-          }
-
-          &:after {
-            z-index: 301;
-            transform: rotate(0deg);
-            top: -4px;
-            left: 27%;
-            background-color: transparent;
-            border-top: 11px solid $white;
-            border-right: 11px solid transparent;
-            border-bottom: 11px solid transparent;
-            border-left: 11px solid transparent;
           }
         }
       }

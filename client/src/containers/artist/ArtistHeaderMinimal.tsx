@@ -146,21 +146,21 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
               isSupporter={this.props.isSupporter}
               handleSupportClick={this.props.handleSupportClick}
             />
-            <div className="artist-header__info">
-              {!this.props.isSupporter &&
-                !this.canLoggedUserPost() &&
-                this.props.artist.isStripeSetup &&
-                this.renderSupportButton()}
-              <ArtistInfo
-                location={this.props.artist.location}
-                accentColor={this.props.artist.accent_color}
-                twitterHandle={this.props.artist.twitter_handle}
-                instagramHandle={this.props.artist.instagram_handle}
-                bandcampHandle={this.props.artist.bandcamp_handle}
-                youtubeHandle={this.props.artist.youtube_handle}
-                external={this.props.artist.external}
-              />
-            </div>
+          </div>
+          <div className="artist-header__info">
+            {!this.props.isSupporter &&
+              !this.canLoggedUserPost() &&
+              this.props.artist.isStripeSetup &&
+              this.renderSupportButton()}
+            <ArtistInfo
+              location={this.props.artist.location}
+              accentColor={this.props.artist.accent_color}
+              twitterHandle={this.props.artist.twitter_handle}
+              instagramHandle={this.props.artist.instagram_handle}
+              bandcampHandle={this.props.artist.bandcamp_handle}
+              youtubeHandle={this.props.artist.youtube_handle}
+              external={this.props.artist.external}
+            />
           </div>
           {this.renderFloatingNewPostButton()}
           {this.renderFloatingEditButton()}

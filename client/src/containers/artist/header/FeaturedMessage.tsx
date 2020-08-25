@@ -26,17 +26,11 @@ export class FeaturedMessage extends React.Component<Props, any> {
               element="span"
               truncateText="&#8230;"
               text={artist.bio}
+              textTruncateChild={
+                <a onClick={this.props.openMessageModal}>&#8230;Read More</a>
+              }
             />
           </div>
-          {artist.bio.length > 130 && (
-            <button
-              className="btn btn-ampled btn-read-more"
-              style={{ borderColor }}
-              onClick={this.props.openMessageModal}
-            >
-              Read More
-            </button>
-          )}
         </div>
       );
     } else {

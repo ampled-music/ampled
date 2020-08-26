@@ -35,15 +35,6 @@ export class FeaturedMessage extends React.Component<Props, any> {
               }
             />
           </div>
-          {artist.bio.length > 130 && (
-            <button
-              className="btn btn-ampled btn-read-more"
-              style={{ borderColor }}
-              onClick={this.props.openMessageModal}
-            >
-              Read More
-            </button>
-          )}
         </div>
       );
     } else {

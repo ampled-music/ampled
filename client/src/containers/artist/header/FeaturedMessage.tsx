@@ -11,7 +11,6 @@ interface Props {
 export class FeaturedMessage extends React.Component<Props, any> {
   render() {
     const { artist } = this.props;
-    const borderColor = artist.accent_color;
 
     if (artist.bio) {
       return (
@@ -27,7 +26,12 @@ export class FeaturedMessage extends React.Component<Props, any> {
               truncateText="&#8230;"
               text={artist.bio}
               textTruncateChild={
-                <a onClick={this.props.openMessageModal}>&#8230;Read More</a>
+                <span
+                  className="read-more"
+                  onClick={this.props.openMessageModal}
+                >
+                  &#8230;Read More
+                </span>
               }
             />
           </div>

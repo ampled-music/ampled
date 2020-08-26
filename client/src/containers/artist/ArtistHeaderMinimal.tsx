@@ -14,6 +14,7 @@ import { FeaturedVideo } from './header/FeaturedVideo';
 import { FeaturedMessage } from './header/FeaturedMessage';
 import { Supporters } from './header/Supporters';
 import { ArtistInfo } from './header/ArtistInfo';
+import { Members } from './header/Members';
 
 interface Props {
   openVideoModal: React.MouseEventHandler;
@@ -118,49 +119,57 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
     );
 
   render() {
+    const {
+      artist,
+      loggedUserAccess,
+      isSupporter,
+      handleSupportClick,
+      openVideoModal,
+      openMessageModal,
+      openWhyModal,
+    } = this.props;
+
     return (
       <>
         <div className="artist-header minimal container">
           {this.renderArtistName()}
           <FeaturedImages
-            artist={this.props.artist}
-            loggedUserAccess={this.props.loggedUserAccess}
-            isSupporter={this.props.isSupporter}
-            handleSupportClick={this.props.handleSupportClick}
+            artist={artist}
+            loggedUserAccess={loggedUserAccess}
+            isSupporter={isSupporter}
+            handleSupportClick={handleSupportClick}
             imageWidth={2000}
             imageHeight={800}
           />
           <div className="artist-header__message-col">
+            {!artist.hide_members && <Members artist={artist} />}
             <FeaturedMessage
-              artist={this.props.artist}
-              openMessageModal={this.props.openMessageModal}
+              artist={artist}
+              openMessageModal={openMessageModal}
             />
-            <FeaturedVideo
-              artist={this.props.artist}
-              openVideoModal={this.props.openVideoModal}
-            />
+            <FeaturedVideo artist={artist} openVideoModal={openVideoModal} />
             <Supporters
-              artist={this.props.artist}
-              openWhyModal={this.props.openWhyModal}
-              loggedUserAccess={this.props.loggedUserAccess}
-              isSupporter={this.props.isSupporter}
-              handleSupportClick={this.props.handleSupportClick}
+              artist={artist}
+              openWhyModal={openWhyModal}
+              loggedUserAccess={loggedUserAccess}
+              isSupporter={isSupporter}
+              handleSupportClick={handleSupportClick}
             />
-            <div className="artist-header__info">
-              {!this.props.isSupporter &&
-                !this.canLoggedUserPost() &&
-                this.props.artist.isStripeSetup &&
-                this.renderSupportButton()}
-              <ArtistInfo
-                location={this.props.artist.location}
-                accentColor={this.props.artist.accent_color}
-                twitterHandle={this.props.artist.twitter_handle}
-                instagramHandle={this.props.artist.instagram_handle}
-                bandcampHandle={this.props.artist.bandcamp_handle}
-                youtubeHandle={this.props.artist.youtube_handle}
-                external={this.props.artist.external}
-              />
-            </div>
+          </div>
+          <div className="artist-header__info">
+            {!isSupporter &&
+              !this.canLoggedUserPost() &&
+              artist.isStripeSetup &&
+              this.renderSupportButton()}
+            <ArtistInfo
+              location={artist.location}
+              accentColor={artist.accent_color}
+              twitterHandle={artist.twitter_handle}
+              instagramHandle={artist.instagram_handle}
+              bandcampHandle={artist.bandcamp_handle}
+              youtubeHandle={artist.youtube_handle}
+              external={artist.external}
+            />
           </div>
           {this.renderFloatingNewPostButton()}
           {this.renderFloatingEditButton()}

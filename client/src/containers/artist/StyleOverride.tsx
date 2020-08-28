@@ -103,7 +103,7 @@ const StyleOverride = ({
           --organic-arrow-thickness: 1px;
           --organic-arrow-border-radius: 0px;
           --organic-arrow-height: 10px;
-          --organic-arrow-color: #cdcdcd;
+          --organic-arrow-color: #ffffff;
           --control-button-width: 5%;
           --control-button-height: 25%;
           --control-button-background: transparent;

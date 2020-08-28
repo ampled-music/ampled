@@ -154,7 +154,9 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
             />
           )}
           <div className="artist-header__message-col">
-            {!artist.hide_members && <Members artist={artist} />}
+            {!artist.hide_members && !this.isAmpled() && (
+              <Members artist={artist} />
+            )}
             <FeaturedMessage
               artist={artist}
               openMessageModal={openMessageModal}

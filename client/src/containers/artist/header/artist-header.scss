@@ -273,6 +273,15 @@
 
   &__contributors {
     width: 100%;
+    order: 2;
+    margin-bottom: 4rem;
+    .awssld__bullets button {
+      height: 10px;
+      width: 10px;
+    }
+    .awssld__timer {
+      height: 0px !important;
+    }
   }
 
   &__banner-icons {

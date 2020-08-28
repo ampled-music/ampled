@@ -276,9 +276,12 @@
   &__contributors {
     width: 100%;
     order: 2;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
     padding: 0 0 2rem 0;
     position: relative;
+    @include mq($layout-m) {
+      margin-bottom: 5rem;
+    }
     &_tear {
       width: 100%;
       transform: rotate(180deg);

@@ -275,7 +275,7 @@
     width: 100%;
     order: 2;
     margin-bottom: 4rem;
-    height: 210px;
+    padding: 0 0 2rem 0;
     position: relative;
     &_tear {
       width: 100%;
@@ -283,14 +283,26 @@
       position: absolute;
     }
     .awssld {
-      --slider-height-percentage: 250px;
+      position: absolute;
+      top: 0px;
+      --slider-height-percentage: 40%;
+      @include mq($layout-m) {
+        --slider-height-percentage: 250px;
+      }
+    }
+    .artist-header__photo_spacer img {
+      width: 33%;
+      @include mq($layout-m) {
+        width: auto;
+      }
     }
     &_image {
       transform: scale(1.1);
       width: 33%;
+      align-self: self-end;
       @include mq($layout-m) {
         width: auto;
-        width: 20%;
+        height: auto;
       }
     }
   }
@@ -323,6 +335,12 @@
     }
     &__timer {
       height: 0px !important;
+    }
+    &__content {
+      flex-wrap: nowrap;
+      div {
+        display: flex;
+      }
     }
   }
 

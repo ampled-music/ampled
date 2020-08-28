@@ -237,7 +237,7 @@
 
     img {
       width: 100%;
-      opacity: 0.5;
+      opacity: 1;
     }
 
     &:nth-child(1n) {
@@ -271,6 +271,42 @@
     }
   }
 
+  &__contributors {
+    width: 100%;
+    order: 2;
+    margin-bottom: 4rem;
+    padding: 0 0 2rem 0;
+    position: relative;
+    &_tear {
+      width: 100%;
+      transform: rotate(180deg);
+      position: absolute;
+    }
+    .awssld {
+      position: absolute;
+      top: 0px;
+      --slider-height-percentage: 40%;
+      @include mq($layout-m) {
+        --slider-height-percentage: 250px;
+      }
+    }
+    .artist-header__photo_spacer img {
+      width: 33%;
+      @include mq($layout-m) {
+        width: auto;
+      }
+    }
+    &_image {
+      transform: scale(1.1);
+      width: 33%;
+      align-self: self-end;
+      @include mq($layout-m) {
+        width: auto;
+        height: auto;
+      }
+    }
+  }
+
   &__banner-icons {
     display: flex;
     bottom: -20px;
@@ -285,6 +321,25 @@
 
       &.active {
         background: $brand-primary;
+      }
+    }
+  }
+
+  .awssld {
+    &__bullets {
+      bottom: -10px;
+      button {
+        height: 10px;
+        width: 10px;
+      }
+    }
+    &__timer {
+      height: 0px !important;
+    }
+    &__content {
+      flex-wrap: nowrap;
+      div {
+        display: flex;
       }
     }
   }
@@ -427,8 +482,12 @@
     &_all {
       display: flex;
       flex-flow: wrap;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       width: 63%;
+
+      @include mq($layout-m) {
+        margin-bottom: 0rem;
+      }
 
       .artist-header__person_image,
       .artist-header__person_svg {

@@ -337,7 +337,6 @@ class ArtistComponent extends React.Component<Props, any> {
           isSupporter={isSupporter}
           bgColor={false}
         />
-
         <Texture
           positionTop25={false}
           positionTop50={false}

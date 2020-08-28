@@ -9,6 +9,7 @@ import { Button } from '@material-ui/core';
 import { ArtistModel } from '../../redux/artists/initial-state';
 import { UserRoles } from '../shared/user-roles';
 
+import { ContributorImages } from './header/ContributorImages';
 import { FeaturedImages } from './header/FeaturedImages';
 import { FeaturedVideo } from './header/FeaturedVideo';
 import { FeaturedMessage } from './header/FeaturedMessage';
@@ -133,14 +134,25 @@ export class ArtistHeaderMinimal extends React.Component<Props, any> {
       <>
         <div className="artist-header minimal container">
           {this.renderArtistName()}
-          <FeaturedImages
-            artist={artist}
-            loggedUserAccess={loggedUserAccess}
-            isSupporter={isSupporter}
-            handleSupportClick={handleSupportClick}
-            imageWidth={2000}
-            imageHeight={800}
-          />
+          {this.isAmpled() ? (
+            <ContributorImages
+              artist={artist}
+              loggedUserAccess={loggedUserAccess}
+              isSupporter={isSupporter}
+              handleSupportClick={handleSupportClick}
+              imageWidth={2000}
+              imageHeight={800}
+            />
+          ) : (
+            <FeaturedImages
+              artist={artist}
+              loggedUserAccess={loggedUserAccess}
+              isSupporter={isSupporter}
+              handleSupportClick={handleSupportClick}
+              imageWidth={2000}
+              imageHeight={800}
+            />
+          )}
           <div className="artist-header__message-col">
             {!artist.hide_members && <Members artist={artist} />}
             <FeaturedMessage

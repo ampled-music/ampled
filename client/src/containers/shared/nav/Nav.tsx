@@ -168,7 +168,7 @@ class NavComponent extends React.Component<Props, any> {
               className="btn btn-ampled btn-support"
               onClick={this.handleSupportClick}
             >
-              Support this artist
+              {this.isAmpled() ? 'Become a member' : 'Support this artist'}
             </button>
           </div>
         )}

@@ -96,6 +96,7 @@ export class ContributorImages extends React.Component<Props, any> {
             <img
               src={chunkContributors[0][0]}
               className="artist-header__contributors_image"
+              alt="spacer"
             />
           </div>
         )}
@@ -109,11 +110,12 @@ export class ContributorImages extends React.Component<Props, any> {
               return (
                 <div>
                   {images &&
-                    images.map((image) => {
+                    images.map((image, index) => {
                       return (
                         <img
                           src={image}
                           className="artist-header__contributors_image"
+                          alt={`contributor-${index}`}
                         />
                       );
                     })}

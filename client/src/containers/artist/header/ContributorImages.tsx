@@ -1,11 +1,12 @@
 import './artist-header.scss';
 
 import * as React from 'react';
-import cx from 'classnames';
 
 import AwesomeSlider from 'react-awesome-slider';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import 'react-awesome-slider/dist/styles.css';
+
+import tear from '../../../images/full_page_tear.png';
 
 import Amanda from '../../../images/contributors/Amanda.png';
 import Ana from '../../../images/contributors/Ana.png';
@@ -40,13 +41,11 @@ export class ContributorImages extends React.Component<Props, any> {
     var currentIndex = array.length,
       temporaryValue,
       randomIndex;
-
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
       // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
-
       // And swap it with the current element.
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
@@ -78,7 +77,7 @@ export class ContributorImages extends React.Component<Props, any> {
       Weston,
     ]);
 
-    var perChunk = 5; // items per chunk
+    var perChunk = window.screen.width < 768 ? 3 : 5; // items per chunk
     var chunkContributors = contributors.reduce((resultArray, item, index) => {
       const chunkIndex = Math.floor(index / perChunk);
       if (!resultArray[chunkIndex]) {
@@ -91,18 +90,24 @@ export class ContributorImages extends React.Component<Props, any> {
     const AutoplaySlider = withAutoplay(AwesomeSlider);
     return (
       <div className="artist-header__contributors">
+        <img className="artist-header__contributors_tear" src={tear} alt="" />
         <AutoplaySlider
           play={true}
           cancelOnInteraction={false} // should stop playing on user interaction
           interval={6000}
         >
           {chunkContributors &&
-            chunkContributors.map((images, index) => {
+            chunkContributors.map((images) => {
               return (
                 <div>
                   {images &&
-                    images.map((image, index) => {
-                      return <img src={image} />;
+                    images.map((image) => {
+                      return (
+                        <img
+                          src={image}
+                          className="artist-header__contributors_image"
+                        />
+                      );
                     })}
                 </div>
               );

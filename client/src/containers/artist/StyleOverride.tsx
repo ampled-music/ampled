@@ -61,7 +61,8 @@ const StyleOverride = ({
           color: ${lightOrDark(accentColor)};
         }
         .artist-header__title_flair,
-        .artist-header__banner-icons_icon.active  {
+        .artist-header__banner-icons_icon.active,
+        .artist-header__contributors  {
           background-color: ${accentColor};
           color: ${lightOrDark(accentColor)};
         }
@@ -90,7 +91,7 @@ const StyleOverride = ({
         .supporter__hover-card_bands_name a:hover {
           color: ${accentColor};
         }
-        .artist-header__message_container button {
+        .artist-header__message_container button, {
           background-color: ${hexToRGB(accentColor, '.5')};
           color: ${lightOrDark(accentColor)};
         }
@@ -98,12 +99,11 @@ const StyleOverride = ({
           background-color: ${hexToRGB(accentColor, '.7')};
         }
         .awssld {
-          --slider-height-percentage: 20%;
           --slider-transition-duration: 700ms;
           --organic-arrow-thickness: 1px;
           --organic-arrow-border-radius: 0px;
           --organic-arrow-height: 10px;
-          --organic-arrow-color: ${accentColor};
+          --organic-arrow-color: #cdcdcd;
           --control-button-width: 5%;
           --control-button-height: 25%;
           --control-button-background: transparent;

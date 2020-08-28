@@ -237,7 +237,7 @@
 
     img {
       width: 100%;
-      opacity: 0.5;
+      opacity: 1;
     }
 
     &:nth-child(1n) {
@@ -275,12 +275,23 @@
     width: 100%;
     order: 2;
     margin-bottom: 4rem;
-    .awssld__bullets button {
-      height: 10px;
-      width: 10px;
+    height: 210px;
+    position: relative;
+    &_tear {
+      width: 100%;
+      transform: rotate(180deg);
+      position: absolute;
     }
-    .awssld__timer {
-      height: 0px !important;
+    .awssld {
+      --slider-height-percentage: 250px;
+    }
+    &_image {
+      transform: scale(1.1);
+      width: 33%;
+      @include mq($layout-m) {
+        width: auto;
+        width: 20%;
+      }
     }
   }
 
@@ -299,6 +310,19 @@
       &.active {
         background: $brand-primary;
       }
+    }
+  }
+
+  .awssld {
+    &__bullets {
+      bottom: -10px;
+      button {
+        height: 10px;
+        width: 10px;
+      }
+    }
+    &__timer {
+      height: 0px !important;
     }
   }
 

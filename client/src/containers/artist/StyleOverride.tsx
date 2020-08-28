@@ -97,6 +97,21 @@ const StyleOverride = ({
         .artist-header__message_container button:hover {
           background-color: ${hexToRGB(accentColor, '.7')};
         }
+        .aws-btn {
+          --slider-height-percentage: 60%;
+          --slider-transition-duration: 700ms;
+          --organic-arrow-thickness: 1px;
+          --organic-arrow-border-radius: 0px;
+          --organic-arrow-height: 10px;
+          --organic-arrow-color: ${accentColor};
+          --control-button-width: 5%;
+          --control-button-height: 25%;
+          --control-button-background: transparent;
+          --control-bullet-color: ${accentColor};
+          --control-bullet-active-color: ${accentColor};
+          --loader-bar-color: ${accentColor}CC;
+          --loader-bar-height: 1px;
+        }
         ${bgColor &&
           `
           body { 

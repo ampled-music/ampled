@@ -691,7 +691,7 @@
   }
 
   &.minimal {
-    padding: 0 1rem 1rem;
+    padding: 0;
     flex-wrap: wrap;
 
     @include mq($layout-m) {
@@ -765,10 +765,12 @@
       justify-content: space-between;
       flex-direction: column;
       align-items: flex-start;
+      padding: 0 1rem;
 
       @include mq($layout-m) {
         flex-direction: row;
         max-width: none;
+        padding: 0;
       }
     }
     .artist-header__message_container {
@@ -833,6 +835,7 @@
   padding: 1rem 0;
   display: flex;
   justify-content: space-between;
+  background-color: $white;
 
   @include mq($layout-m) {
     margin: 1rem auto 2rem;

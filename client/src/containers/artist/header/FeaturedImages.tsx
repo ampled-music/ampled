@@ -73,7 +73,7 @@ export class FeaturedImages extends React.Component<Props, any> {
   renderBanners = () => {
     const { artist, imageWidth, imageHeight } = this.props;
     let mobileImageWidth, mobileImageHeight;
-    if (window.screen.width < 768) {
+    if (window.screen.width <= 768) {
       mobileImageWidth = 800;
       mobileImageHeight = 800;
     }
@@ -131,7 +131,7 @@ export class FeaturedImages extends React.Component<Props, any> {
   render() {
     const { artist, imageWidth, imageHeight } = this.props;
     let mobileImageWidth, mobileImageHeight;
-    if (window.screen.width < 768) {
+    if (window.screen.width <= 768) {
       mobileImageWidth = 800;
       mobileImageHeight = 800;
     }

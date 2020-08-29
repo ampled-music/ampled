@@ -127,6 +127,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       openVideoModal,
       openMessageModal,
       openWhyModal,
+      openJoinModal,
     } = this.props;
 
     return (
@@ -166,13 +167,12 @@ export class ArtistHeader extends React.Component<Props, any> {
         </div>
         <div className="artist-header__info">
           <ArtistInfo
-            location={artist.location}
-            accentColor={artist.accent_color}
-            twitterHandle={artist.twitter_handle}
-            instagramHandle={artist.instagram_handle}
-            bandcampHandle={artist.bandcamp_handle}
-            youtubeHandle={artist.youtube_handle}
-            external={artist.external}
+            artist={artist}
+            openWhyModal={openWhyModal}
+            openJoinModal={openJoinModal}
+            loggedUserAccess={loggedUserAccess}
+            isSupporter={isSupporter}
+            handleSupportClick={handleSupportClick}
           />
         </div>
       </>

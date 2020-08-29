@@ -70,6 +70,9 @@ const StyleOverride = ({
         .artist-header__persons {
           border-color: ${accentColor};
         }
+        .artist-header__supporters {
+          border-top-color: ${accentColor};
+        }
         .new-post button,
         .edit-page button,
         .artist-header__photo {

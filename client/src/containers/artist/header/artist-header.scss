@@ -26,6 +26,7 @@
   justify-content: space-between;
   flex-direction: column;
   position: relative;
+  padding: 0px;
 
   @include mq($layout-m) {
     flex-direction: row;
@@ -36,25 +37,29 @@
 
   &__name {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     width: 100%;
     max-width: 1140px;
     margin: auto;
     order: 1;
+
+    @include mq($layout-m) {
+      justify-content: flex-start;
+    }
   }
 
   &__photo-container {
     display: flex;
     position: relative;
     justify-content: center;
-    margin: 0 auto 1rem;
+    margin: 0 auto 3rem;
     width: 100%;
     align-self: flex-start;
     max-width: 500px;
     order: 2;
 
     @include mq($desktop) {
-      max-width: none;
+      max-width: 60%;
     }
 
     &_border {
@@ -206,11 +211,10 @@
 
   &__photos {
     height: 100%;
-    width: 92%;
+    width: 100%;
     display: flex;
     justify-content: center;
     position: absolute;
-    top: 5%;
   }
 
   &__photo {
@@ -278,11 +282,11 @@
   &__contributors {
     width: 100%;
     order: 2;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     padding: 0 0 2rem 0;
     position: relative;
     @include mq($layout-m) {
-      margin-bottom: 5rem;
+      margin-bottom: 6rem;
     }
     &_tear {
       width: 100%;
@@ -334,7 +338,7 @@
 
   .awssld {
     &__bullets {
-      bottom: -10px;
+      bottom: -1rem;
       button {
         height: 10px;
         width: 10px;
@@ -416,6 +420,7 @@
       .read-more {
         font-weight: bold;
         cursor: pointer;
+        opacity: 1;
         &:hover {
           opacity: 0.7;
         }
@@ -691,7 +696,7 @@
   }
 
   &.minimal {
-    padding: 0 1rem 1rem;
+    padding: 0;
     flex-wrap: wrap;
 
     @include mq($layout-m) {
@@ -765,10 +770,12 @@
       justify-content: space-between;
       flex-direction: column;
       align-items: flex-start;
+      padding: 0 1rem;
 
       @include mq($layout-m) {
         flex-direction: row;
         max-width: none;
+        padding: 0;
       }
     }
     .artist-header__message_container {
@@ -798,10 +805,11 @@
     .artist-header__supporters {
       margin: 0;
       width: 100%;
-      border-top: 2px solid $brand-primary;
-      padding-top: 1rem;
       @include mq($layout-m) {
         margin: 0 1rem;
+        padding-top: 1rem;
+        border-top-width: 2px;
+        border-top-style: solid;
       }
       &_title {
         margin: 0 0 1rem 0;
@@ -832,26 +840,58 @@
   margin: 1rem auto;
   padding: 1rem 0;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $white;
 
   @include mq($layout-m) {
     margin: 1rem auto 2rem;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .icon {
     margin: 0 0.5rem 0 0;
   }
+  .link__why {
+    width: auto;
+    padding: 0;
+    margin: 0;
+    order: 3;
+    @include mq($layout-m) {
+      order: 2;
+    }
+  }
 
   &__location {
-    margin: 0 1rem;
+    margin: 0 1rem 1rem;
     display: flex;
+    order: 1;
+    @include mq($layout-m) {
+      min-width: 200px;
+      margin: 0 1rem;
+    }
   }
 
   &__social {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     flex-wrap: wrap;
-    margin: 0 1rem;
+    margin: 0 1rem 1rem;
+    order: 2;
+    align-items: center;
+
+    &:empty {
+      display: none;
+    }
+
+    @include mq($layout-m) {
+      min-width: 200px;
+      margin: 0 1rem;
+      order: 3;
+      justify-content: flex-end;
+    }
 
     &_item {
       opacity: 1;

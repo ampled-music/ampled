@@ -1,44 +1,67 @@
 @import '../../../theme/vars.scss';
 @import '../../../theme/mixins.scss';
 
-.footer {
+#footer {
   border-top: 10px solid $black;
   padding: 2rem 0;
   background-color: $white;
+  width: 100%;
+  overflow-x: hidden;
 
-  .title {
-    font-family: $font-family-sans-serif;
-    text-transform: uppercase;
-    margin: 1rem 0;
-    font-weight: bold;
-    @include mq($tablet) {
-      margin: 0 0 1rem;
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    &__email {
+      width: 100%;
+      @include mq($layout-m) {
+        width: auto;
+      }
     }
-  }
-  a {
-    display: block;
-    font-family: $font-family-monospace;
-    color: $black;
-    text-decoration: underline;
-    font-size: 0.875rem;
-    margin-bottom: 0.5rem;
-    &:hover {
-      text-decoration: none;
+    &__info,
+    &__logos {
+      width: 50%;
+      margin-bottom: 1rem;
+      @include mq($layout-m) {
+        width: auto;
+      }
     }
-  }
-  .logo {
-    width: 100%;
-    max-width: 150px;
-  }
-  .copyright {
-    display: block;
-    font-family: $font-family-monospace;
-    color: $black;
-  }
-  .own-it {
-    display: block;
-    font-family: $font-family-monospace;
-    color: $black;
-    margin: 0.5rem auto;
+
+    .title {
+      font-family: $font-family-sans-serif;
+      text-transform: uppercase;
+      margin: 1rem 0;
+      font-weight: bold;
+      @include mq($layout-m) {
+        margin: 0 0 1rem;
+      }
+    }
+    a {
+      display: block;
+      font-family: $font-family-monospace;
+      color: $black;
+      text-decoration: underline;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    .logo {
+      width: 100%;
+      max-width: 150px;
+    }
+    .copyright {
+      display: block;
+      font-family: $font-family-monospace;
+      color: $black;
+    }
+    .own-it {
+      display: block;
+      font-family: $font-family-monospace;
+      color: $black;
+      margin: 0.5rem auto;
+    }
   }
 }

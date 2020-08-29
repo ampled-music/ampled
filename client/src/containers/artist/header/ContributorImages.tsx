@@ -77,7 +77,7 @@ export class ContributorImages extends React.Component<Props, any> {
       Weston,
     ]);
 
-    var perChunk = window.screen.width < 768 ? 3 : 5; // items per chunk
+    var perChunk = window.screen.width <= 768 ? 3 : 5; // items per chunk
     var chunkContributors = contributors.reduce((resultArray, item, index) => {
       const chunkIndex = Math.floor(index / perChunk);
       if (!resultArray[chunkIndex]) {

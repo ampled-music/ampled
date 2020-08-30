@@ -282,11 +282,11 @@
   &__contributors {
     width: 100%;
     order: 2;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     padding: 0 0 2rem 0;
     position: relative;
     @include mq($layout-m) {
-      margin-bottom: 6rem;
+      margin-bottom: 4rem;
     }
     &_tear {
       width: 100%;
@@ -351,7 +351,7 @@
     --loader-bar-color: #1e1e1e;
     --loader-bar-height: 1px;
     &__bullets {
-      bottom: -1rem;
+      bottom: 0rem;
       button {
         height: 8px;
         width: 8px;
@@ -723,7 +723,7 @@
       justify-content: center;
     }
     .artist-header__title {
-      margin: 2rem auto 3rem;
+      margin: 1rem auto;
     }
     .artist-header__photo {
       position: absolute;
@@ -791,11 +791,13 @@
       flex-direction: column;
       align-items: flex-start;
       padding: 0 1rem;
+      margin-bottom: 1rem;
 
       @include mq($layout-m) {
         flex-direction: row;
         max-width: none;
         padding: 0;
+        margin-bottom: 0;
       }
     }
     .artist-header__message_container {

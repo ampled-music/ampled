@@ -860,27 +860,27 @@
   margin: 1rem auto;
   padding: 1rem 0;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
   background-color: $white;
 
   @include mq($layout-m) {
     margin: 1rem auto 2rem;
-    flex-direction: row;
-    justify-content: space-between;
   }
 
   .icon {
     margin: 0 0.5rem 0 0;
   }
   .link__why {
-    width: auto;
+    width: 100%;
     padding: 0;
     margin: 0;
     order: 3;
     @include mq($layout-m) {
       order: 2;
+      width: auto;
     }
   }
 

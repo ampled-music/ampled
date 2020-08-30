@@ -410,7 +410,7 @@
       }
 
       @include mq($layout-m) {
-        margin: 0rem auto 1.5rem;
+        margin: 0rem auto 1rem;
       }
 
       .btn-read-more {
@@ -469,7 +469,7 @@
   }
 
   &__supporters {
-    margin: 3rem 0 1rem;
+    margin: 1rem 2rem;
     display: flex;
     flex-wrap: wrap;
 
@@ -859,7 +859,7 @@
   border-top: 2px solid $black;
   border-bottom: 2px solid $black;
   margin: 1rem auto;
-  padding: 1rem 0;
+  padding: 1rem 0 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -877,7 +877,7 @@
   .link__why {
     width: 100%;
     padding: 0;
-    margin: 0;
+    margin: 0 0 1rem;
     order: 3;
     @include mq($layout-m) {
       order: 2;
@@ -891,7 +891,6 @@
     order: 1;
     @include mq($layout-m) {
       min-width: 200px;
-      margin: 0 1rem;
     }
   }
 
@@ -909,7 +908,6 @@
 
     @include mq($layout-m) {
       min-width: 200px;
-      margin: 0 1rem;
       order: 3;
       justify-content: flex-end;
     }

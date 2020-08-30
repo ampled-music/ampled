@@ -759,6 +759,9 @@
         text-align: left;
         line-height: 1.1;
       }
+      &_info {
+        text-align: left;
+      }
     }
     .artist-header__photo-container_border {
       height: calc(100% - 35px);

@@ -6,8 +6,6 @@ import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '../../../images/icons/Icon_Close-Cancel.svg';
 
-import tear from '../../../images/backgrounds/background_tear.png';
-
 import './join-modal.scss';
 
 interface Props {
@@ -25,7 +23,6 @@ class JoinModalComponent extends React.Component<Props, any> {
         className="join"
       >
         <div className="join__container">
-          <img className="tear tear__topper" src={tear} alt="" />
           <div className="join__info">
             <h5 className="join__title">Why Join Ampled?</h5>
             <div className="join__subheader">
@@ -65,9 +62,6 @@ class JoinModalComponent extends React.Component<Props, any> {
               className="close-x"
               aria-label="close"
               color="default"
-              style={{
-                margin: '-10px -10px 0 0',
-              }}
               onClick={(e) => this.props.onClose(e)}
             >
               <ReactSVG className="icon" src={Close} />

@@ -785,19 +785,18 @@
     }
     .artist-header__message-col {
       width: 100%;
-      margin: auto;
+      margin: 1rem auto;
       display: flex;
       justify-content: space-between;
       flex-direction: column;
       align-items: flex-start;
       padding: 0 1rem;
-      margin-bottom: 1rem;
 
       @include mq($layout-m) {
         flex-direction: row;
         max-width: none;
         padding: 0;
-        margin-bottom: 0;
+        margin: auto;
       }
     }
     .artist-header__message_container {

@@ -3,6 +3,7 @@ import './artist.scss';
 import * as React from 'react';
 import { ReactSVG } from 'react-svg';
 
+import { Texture } from '../shared/texture/Texture';
 import Edit from '../../images/icons/Icon_Edit.svg';
 import Plus from '../../images/icons/Icon_Add-Plus.svg';
 import { Button } from '@material-ui/core';
@@ -132,6 +133,11 @@ export class ArtistHeader extends React.Component<Props, any> {
 
     return (
       <>
+        <Texture
+          positionTop25={false}
+          positionTop50={false}
+          positionFlip={false}
+        />
         {this.renderArtistName()}
         <div className="artist-header container">
           {!artist.hide_members && <Members artist={artist} />}

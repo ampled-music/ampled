@@ -21,7 +21,6 @@ import { VideoModal } from '../shared/video-modal/VideoModal';
 import { WhyModal } from '../shared/why-modal/WhyModal';
 import { JoinModal } from '../shared/join-modal/JoinModal';
 import { MessageModal } from '../shared/message-modal/MessageModal';
-import { Texture } from '../shared/texture/Texture';
 import StyleOverride from './StyleOverride';
 
 import { ArtistHeader } from './ArtistHeader';
@@ -336,11 +335,6 @@ class ArtistComponent extends React.Component<Props, any> {
           accentColor={artist.accent_color}
           isSupporter={isSupporter}
           bgColor={false}
-        />
-        <Texture
-          positionTop25={false}
-          positionTop50={false}
-          positionFlip={false}
         />
         {artist && artist.name && (
           <Helmet>

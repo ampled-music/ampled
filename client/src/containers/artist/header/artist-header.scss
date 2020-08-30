@@ -576,13 +576,16 @@
             position: absolute;
             display: block;
             transform: rotate(45deg);
-            top: -15px;
+            top: -18px;
             left: 27%;
           }
 
           &:before {
             box-shadow: 1px 1px 3px $gray-light;
             z-index: 1;
+          }
+          &:after {
+            z-index: 1010;
           }
         }
       }

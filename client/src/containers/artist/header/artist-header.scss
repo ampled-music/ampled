@@ -889,9 +889,13 @@
   }
 
   &__location {
-    margin: 0 1rem 1rem;
+    margin: 0 auto 1rem;
     display: flex;
     order: 1;
+    @include mq($layout-s) {
+      width: auto;
+      margin: 0 1rem 1rem;
+    }
     @include mq($layout-m) {
       min-width: 200px;
     }
@@ -904,9 +908,13 @@
     margin: 0 1rem 1rem;
     order: 2;
     align-items: center;
+    width: 100%;
 
     &:empty {
       display: none;
+    }
+    @include mq($layout-s) {
+      width: auto;
     }
 
     @include mq($layout-m) {

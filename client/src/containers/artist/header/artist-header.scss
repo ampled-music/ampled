@@ -355,6 +355,7 @@
     --loader-bar-height: 1px;
     &__bullets {
       bottom: 0rem;
+      z-index: 100;
       button {
         height: 8px;
         width: 8px;

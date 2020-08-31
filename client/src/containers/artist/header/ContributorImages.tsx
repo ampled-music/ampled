@@ -91,15 +91,6 @@ export class ContributorImages extends React.Component<Props, any> {
     return (
       <div className="artist-header__contributors">
         <img className="artist-header__contributors_tear" src={tear} alt="" />
-        {chunkContributors && (
-          <div className="artist-header__photo_spacer">
-            <img
-              src={chunkContributors[0][0]}
-              className="artist-header__contributors_image"
-              alt="spacer"
-            />
-          </div>
-        )}
         <AutoplaySlider
           play={true}
           cancelOnInteraction={false} // should stop playing on user interaction

@@ -25,6 +25,7 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  flex-wrap: wrap;
   position: relative;
   padding: 0px;
 
@@ -281,12 +282,17 @@
 
   &__contributors {
     width: 100%;
+    height: 150px;
     order: 2;
     margin-bottom: 2rem;
-    padding: 0 0 2rem 0;
+    padding: 0;
     position: relative;
+    @include mq($layout-s) {
+      height: 180px;
+    }
     @include mq($layout-m) {
       margin-bottom: 4rem;
+      height: 220px;
     }
     &_tear {
       width: 100%;
@@ -296,24 +302,26 @@
     .awssld {
       position: absolute;
       top: 0px;
-      --slider-height-percentage: 40%;
-      @include mq($layout-m) {
-        --slider-height-percentage: 250px;
+      --slider-height-percentage: 150px;
+      @include mq($layout-s) {
+        --slider-height-percentage: 180px;
       }
-    }
-    .artist-header__photo_spacer img {
-      width: 33%;
       @include mq($layout-m) {
-        width: auto;
+        --slider-height-percentage: 220px;
       }
     }
     &_image {
       transform: scale(1.1);
       width: 33%;
       align-self: self-end;
+      max-height: 150px;
+      @include mq($layout-s) {
+        max-height: 180px;
+      }
       @include mq($layout-m) {
         width: auto;
         height: auto;
+        max-height: 220px;
       }
     }
   }
@@ -322,16 +330,19 @@
     display: flex;
     bottom: -20px;
     position: absolute;
+    z-index: 100;
 
     &_icon {
-      width: 10px;
-      height: 10px;
+      height: 8px;
+      width: 8px;
+      border: solid 1px $black;
       border-radius: 100%;
-      background-color: $gray-lighter;
+      background-color: transparent;
       margin: 0 4px;
 
       &.active {
         background: $brand-primary;
+        transform: scale(1.5);
       }
     }
   }
@@ -350,8 +361,12 @@
     --content-background-color: transparent;
     --loader-bar-color: #1e1e1e;
     --loader-bar-height: 1px;
+    &__container {
+      padding-bottom: var(--slider-height-percentage) !important;
+    }
     &__bullets {
-      bottom: 0rem;
+      bottom: -2rem;
+      z-index: 100;
       button {
         height: 8px;
         width: 8px;
@@ -735,16 +750,14 @@
       }
     }
     .artist-header__banner-icons {
-      bottom: 50px;
-      right: 30px;
-      z-index: 100;
-      display: none;
       @include mq($layout-m) {
         display: flex;
+        bottom: 50px;
+        right: 30px;
       }
     }
     .artist-header__photo-container {
-      margin-bottom: 1rem;
+      margin: 1rem auto;
       max-width: none;
     }
     .artist-header__photos {
@@ -886,9 +899,13 @@
   }
 
   &__location {
-    margin: 0 1rem 1rem;
+    margin: 0 auto 1rem;
     display: flex;
     order: 1;
+    @include mq($layout-s) {
+      width: auto;
+      margin: 0 1rem 1rem;
+    }
     @include mq($layout-m) {
       min-width: 200px;
     }
@@ -901,9 +918,13 @@
     margin: 0 1rem 1rem;
     order: 2;
     align-items: center;
+    width: 100%;
 
     &:empty {
       display: none;
+    }
+    @include mq($layout-s) {
+      width: auto;
     }
 
     @include mq($layout-m) {

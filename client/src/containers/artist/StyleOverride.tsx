@@ -61,7 +61,6 @@ const StyleOverride = ({
           color: ${lightOrDark(accentColor)};
         }
         .artist-header__title_flair,
-        .artist-header__banner-icons_icon.active,
         .artist-header__contributors  {
           background-color: ${accentColor};
           color: ${lightOrDark(accentColor)};

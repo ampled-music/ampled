@@ -25,6 +25,7 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  flex-wrap: wrap;
   position: relative;
   padding: 0px;
 
@@ -746,7 +747,7 @@
       }
     }
     .artist-header__photo-container {
-      margin-bottom: 1rem;
+      margin: 1rem auto;
       max-width: none;
     }
     .artist-header__photos {

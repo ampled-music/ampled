@@ -15,6 +15,7 @@ export const authModalReducer = {
     customLoginMessage: payload.customLoginMessage,
     onModalCloseAction: payload.onModalCloseAction,
     artistName: payload.artistName,
+    artistSlug: payload.artistSlug,
     redirectTo: payload.redirectTo,
   }),
   [actions.closeAuthModal]: (state) => ({
@@ -24,5 +25,8 @@ export const authModalReducer = {
 } as Reducer;
 
 interface Reducer {
-  [key: string]: (state: typeof initialState, action: any) => typeof initialState;
+  [key: string]: (
+    state: typeof initialState,
+    action: any,
+  ) => typeof initialState;
 }

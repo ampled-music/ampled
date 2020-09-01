@@ -258,6 +258,7 @@ class ArtistComponent extends React.Component<Props, any> {
         modalPage: 'signup',
         showSupportMessage: 'artist',
         artistName: this.props.artists.artist.name,
+        artistSlug: this.props.artists.artist.slug,
         redirectTo: supportUrl,
       });
       this.setState({ openWhyModal: false, openJoinModal: false });

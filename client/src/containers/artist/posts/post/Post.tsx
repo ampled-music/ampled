@@ -463,6 +463,7 @@ class PostComponent extends React.Component<any, any> {
       modalPage: 'signup',
       showSupportMessage: 'post',
       artistName: this.props.artistName,
+      artistSlug: this.props.artistSlug,
       redirectTo: redirectToSupport
         ? routePaths.support.replace(':id', artistId)
         : window.location.pathname,

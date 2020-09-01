@@ -98,6 +98,7 @@ class NavComponent extends React.Component<Props, any> {
         modalPage: 'signup',
         showSupportMessage: 'artist',
         artistName: this.props.artist.name,
+        artistSlug: this.props.artist.slug,
         redirectTo: routePaths.support.replace(':id', artistId),
       });
     }

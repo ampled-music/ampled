@@ -20,7 +20,6 @@ import { initialState as signupInitialState } from '../../redux/signup/initial-s
 import tear from '../../images/backgrounds/background_tear.png';
 
 import { once } from 'ramda';
-import { Supporters } from '../artist/header/Supporters';
 
 const mapStateToProps = (state: Store) => ({
   authentication: state.authentication,
@@ -53,7 +52,6 @@ class SignupComponent extends React.Component<Props, any> {
     name: '',
     last_name: '',
     confirmPassword: '',
-
     matchPasswordsError: false,
     passwordError: null,
     emailError: null,
@@ -186,7 +184,7 @@ class SignupComponent extends React.Component<Props, any> {
 
     const passwordErrorMessage = 'Passwords do not match.';
     const memberSupporter =
-      this.props.authentication.artistName === 'Ampled Community'
+      this.props.authentication.artistSlug === 'community'
         ? 'member'
         : 'supporter';
 

@@ -20,6 +20,7 @@ import { initialState as signupInitialState } from '../../redux/signup/initial-s
 import tear from '../../images/backgrounds/background_tear.png';
 
 import { once } from 'ramda';
+import { Supporters } from '../artist/header/Supporters';
 
 const mapStateToProps = (state: Store) => ({
   authentication: state.authentication,
@@ -184,6 +185,10 @@ class SignupComponent extends React.Component<Props, any> {
     const { authentication } = this.props;
 
     const passwordErrorMessage = 'Passwords do not match.';
+    const memberSupporter =
+      this.props.authentication.artistName === 'Ampled Community'
+        ? 'member'
+        : 'supporter';
 
     return (
       <div className="login__container">
@@ -199,15 +204,16 @@ class SignupComponent extends React.Component<Props, any> {
             authentication.showSupportMessage === 'post' &&
             authentication.artistName && (
               <p>
-                This is a private post. Sign up and become a supporter of{' '}
-                {authentication.artistName} to access it.
+                This is a private post. Sign up and become a {memberSupporter}{' '}
+                of {authentication.artistName} to access it.
               </p>
             )}
           {authentication.showSupportMessage &&
             authentication.showSupportMessage === 'artist' &&
             authentication.artistName && (
               <p>
-                Sign up to become a supporter of {authentication.artistName}.
+                Sign up to become a {memberSupporter} of{' '}
+                {authentication.artistName}.
               </p>
             )}
           <form

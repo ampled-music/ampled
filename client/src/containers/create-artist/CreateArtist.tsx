@@ -886,13 +886,23 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     return (
       <div className="container">
         <div className="artist-about">
-          {!this.props.editMode && (
+          {this.props.editMode ? (
             <div className="create-artist__copy">
-              <b>
-                You can&#39;t change your artist/band name or your custom link
-                later
-              </b>
-              , so make sure they&#39;re right.
+              <p>
+                Click Save Your Page at the bottom of this form to save your
+                work.
+              </p>
+            </div>
+          ) : (
+            <div className="create-artist__copy">
+              <p>
+                <b>Double-check your artist/band name and custom link</b>, as
+                you can&#39;t change them later. (You can edit everything else.)
+              </p>
+              <p>
+                Click Preview Your Page at the bottom of this form to save your
+                work.
+              </p>
             </div>
           )}
         </div>
@@ -1694,18 +1704,17 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             {!this.props.editMode && (
               <div className="row justify-content-center">
                 <div className="col-md-6 col-sm-10 create-artist__bottomcopy">
-                  Your page will initially only be visible to you and any other
-                  members you&#39;ve added. The Ampled team does a quick spot
-                  check of all pages before they become visible to the general
-                  public, but this normally doesn&#39;t take us very long.
+                  The Ampled team does a quick spot check of all pages before
+                  they become visible to the general public, but this normally
+                  doesn&#39;t take us very long.
                 </div>
               </div>
             )}
             <div className="row action-buttons">
               {/* {this.renderDeleteBtn()} */}
-              <div className={`col-sm-6 ${saveBtnClasses}`}>
+              <div className={`col-sm-6 center ${saveBtnClasses}`}>
                 <Button onClick={this.onSubmit} className="publish-button">
-                  {this.props.editMode ? 'Save' : 'Create'} your page
+                  Preview your page
                 </Button>
               </div>
             </div>

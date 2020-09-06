@@ -391,7 +391,7 @@
     order: 4;
 
     @include mq($layout-m) {
-      width: 50%;
+      width: calc(40% - 2rem);
       margin-left: 2rem;
       order: 3;
     }

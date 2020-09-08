@@ -17,7 +17,6 @@
 #  name                 :string
 #  slug                 :string
 #  state_token          :string
-#  stripe_access_token  :string
 #  stripe_product_id    :string
 #  stripe_user_id       :string
 #  style_type           :string

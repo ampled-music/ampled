@@ -32,7 +32,7 @@ class UserImage extends React.Component<Props, any> {
         const plus = acc + n;
         const asArr = plus.toString().split('');
         if (asArr.length === 1) return plus;
-        else return Number(asArr[0]);
+        else return Number(asArr[1]);
       }, 0);
     return num;
   }

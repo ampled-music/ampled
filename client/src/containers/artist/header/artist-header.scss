@@ -291,7 +291,7 @@
       height: 180px;
     }
     @include mq($layout-m) {
-      margin-bottom: 4rem;
+      margin-bottom: 3rem;
       height: 220px;
     }
     &_tear {
@@ -579,29 +579,6 @@
       .member-image {
         display: block;
         position: relative;
-
-        @include mq($layout-m) {
-          &:before,
-          &:after {
-            content: '';
-            width: 20px;
-            height: 20px;
-            background-color: $white;
-            position: absolute;
-            display: block;
-            transform: rotate(45deg);
-            top: -18px;
-            left: 27%;
-          }
-
-          &:before {
-            box-shadow: 1px 1px 3px $gray-light;
-            z-index: 1;
-          }
-          &:after {
-            z-index: 1010;
-          }
-        }
       }
 
       .supporter__hover-card {
@@ -682,6 +659,8 @@
         margin-top: 0.5rem;
         padding-top: 0.5rem;
         border-top: 1px solid $gray;
+        position: relative;
+        z-index: 1020;
 
         &_section {
           margin-bottom: 1rem;
@@ -753,7 +732,7 @@
       }
     }
     .artist-header__photo-container {
-      margin: 1rem auto;
+      margin: 1rem auto 0;
       max-width: none;
     }
     .artist-header__photos {
@@ -784,6 +763,7 @@
         margin-left: 0.5rem;
         text-align: left;
         line-height: 1.1;
+        font-size: 0.9rem;
       }
       &_info {
         text-align: left;
@@ -791,6 +771,10 @@
     }
     .artist-header__photo-container_border {
       height: calc(100% - 35px);
+    }
+    .artist-header__person_image {
+      width: 40px;
+      height: 40px;
     }
     .artist-header__message-col {
       width: 100%;
@@ -841,7 +825,7 @@
         border-top-style: solid;
       }
       &_title {
-        margin: 0 0 1rem 0;
+        margin: 0;
       }
       &_recent {
         flex-direction: row;
@@ -858,6 +842,9 @@
     }
     .artist-header__support-buttons {
       margin-bottom: 1rem;
+    }
+    .artist-header__info {
+      margin-top: 0;
     }
   }
 }

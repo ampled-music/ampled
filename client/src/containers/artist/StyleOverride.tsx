@@ -74,7 +74,8 @@ const StyleOverride = ({
         }
         .new-post button,
         .edit-page button,
-        .artist-header__photo {
+        .artist-header__photo,
+        .artist-header__banner-icons_icon.active {
           background-color: ${accentColor};
           color: ${lightOrDark(accentColor)};
         }

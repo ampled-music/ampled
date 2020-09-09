@@ -31,7 +31,7 @@ namespace :dummy do
     }
 
     users.each do |us|
-      us.image << Image.create(url: image_url.call, public_id: public_id.call)
+      us.image = Image.create(url: image_url.call, public_id: public_id.call)
     end
   end
 

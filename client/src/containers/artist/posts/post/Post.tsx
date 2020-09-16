@@ -36,7 +36,7 @@ const renderCloudinaryPhoto = (image: string) => {
       const img_src = image.replace('upload/', `upload/`);
       return img_src;
     } else {
-      const img_src = `https://res.cloudinary.com/ampled-web/image/fetch/${image}`;
+      const img_src = `https://res.cloudinary.com/${config.cloudinary.cloud_name}/image/fetch/${image}`;
       return img_src;
     }
   }

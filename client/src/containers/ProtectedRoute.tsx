@@ -61,7 +61,7 @@ const ProtectedRoute = ({
     return (
       <div className="public-routes">
         <div>
-          <CloudinaryContext cloudName="ampled-web">
+          <CloudinaryContext cloudName={config.cloudinary.cloud_name}>
             <Nav match={props.match} history={props.history} />
             <main>
               {isLoggedIn ? (

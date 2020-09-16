@@ -1,6 +1,6 @@
 module SocialImages
   class SocialImage
-    BASE_UPLOAD_URL = "https://res.cloudinary.com/ampled-web/image/upload"
+    BASE_UPLOAD_URL = "https://res.cloudinary.com/#{Cloudinary.config.cloud_name}/image/upload"
 
     def self.build(artist_page)
       new(artist_page).build

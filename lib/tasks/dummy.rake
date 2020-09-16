@@ -33,8 +33,6 @@ namespace :dummy do
   end
 
   task users: [:environment] do
-    User.all.map(&:destroy)
-
     (1..10).map do |_|
       first = Faker::Name.first_name
       last = Faker::Name.last_name
@@ -57,8 +55,6 @@ namespace :dummy do
   end
 
   task artist_pages: [:environment] do
-    ArtistPage.all.map(&:destroy)
-
     (1..5).map do |_|
       name = Faker::Music.band
       social = Faker::Twitter.screen_name
@@ -77,7 +73,6 @@ namespace :dummy do
   end
 
   task posts: [:environment] do
-    Post.delete_all
     ArtistPage.all.map do |ap|
       post_count = (0..4).to_a.sample
       (0..post_count).map do |_|

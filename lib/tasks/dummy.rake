@@ -11,16 +11,11 @@ namespace :dummy do
   # at images that are no longer in Cloudinary. An alternative would be to re-upload these images
   # every time, which would create new instances of each image, and guarantee unsurprising behavior.
   def new_testing_image(imageable)
-    # TODO: These images are in the production Cloudinary account. Change this to point to the
-    #       acceptance account, once we have it.
-    image_url = -> {
-      "https://res.cloudinary.com/ampled-web/image/upload/v1586552080/testing/TestingImage_#{rand(1..30)}.jpg"
-    }
-    public_id = -> {
-      "v1586552080/testing/TestingImage_#{rand(1..30)}"
-    }
+    random_image = rand(1..30)
+    image_url = "https://res.cloudinary.com/ampledacceptance/image/upload/v1600287316/testing/TestingImage_#{random_image}.jpg"
+    public_id = "v1600287316/testing/TestingImage_#{random_image}"
 
-    Image.create!(imageable: imageable, url: image_url.call, public_id: public_id.call)
+    Image.create!(imageable: imageable, url: image_url, public_id: public_id)
   end
 
   task admin: [:environment] do

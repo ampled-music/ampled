@@ -580,7 +580,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     artistColor: '',
     artistColorAlpha: '',
     artistName: '',
-    artistVerb: 'are',
+    artistVerb: '',
     artistLocation: '',
     artistMessage: '',
     artistTwitter: '',

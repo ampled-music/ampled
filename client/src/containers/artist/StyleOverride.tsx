@@ -61,7 +61,7 @@ const StyleOverride = ({
           color: ${lightOrDark(accentColor)};
         }
         .artist-header__title_flair,
-        .artist-header__contributors  {
+        .artist-header__contributors,  {
           background-color: ${accentColor};
           color: ${lightOrDark(accentColor)};
         }
@@ -94,7 +94,7 @@ const StyleOverride = ({
         .supporter__hover-card_bands_name a:hover {
           color: ${accentColor};
         }
-        .artist-header__message_container button, {
+        .artist-header__message_container button {
           background-color: ${hexToRGB(accentColor, '.5')};
           color: ${lightOrDark(accentColor)};
         }

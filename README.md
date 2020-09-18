@@ -4,7 +4,8 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
 
 - [Ampled Web](#ampled-web)
   - [Getting Started](#getting-started)
-    - [Requirements](#requirements)
+    - [Access to shared tools](#access-to-shared-tools)
+    - [Development requirements](#development-requirements)
     - [First Time Setup](#first-time-setup)
       - [`bin/setup`](#binsetup)
       - [`.env`](#env)
@@ -34,7 +35,21 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
 
 ## Getting Started
 
-### Requirements
+### Access to shared tools
+
+If you plan to do work in this repo, you probably want to get access to, at least:
+* Ampled's Trello boards.
+  * Used to track our work, and communicate with each other about status and implementation plans.
+  * We like to talk about "card numbers", which don't show up in the Trello interface. You can see these with browser plugins,
+    such as [this one for Chrome](https://chrome.google.com/webstore/detail/trello-card-numbers/kadpkdielickimifpinkknemjdipghaf) or [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/trello-super-powers/).
+* Heroku environments.
+  * We run our servers on Heroku, where we have "production" and "acceptance" environments.
+  * The "acceptance" environment will be helpful for getting credentials for services needed to
+    run a server locally, and to debug things during QA.
+
+Ask other devs in the Slack to get access to these services.
+
+### Development requirements
 
 To run the specs or fire up the server, be sure you have these installed (and running):
 

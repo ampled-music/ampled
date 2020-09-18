@@ -446,6 +446,7 @@
       font-family: $font-family-monospace;
       font-size: 0.8rem;
       width: 100%;
+      white-space: pre-wrap;
       .read-more {
         font-weight: bold;
         cursor: pointer;
@@ -732,8 +733,11 @@
       }
     }
     .artist-header__photo-container {
-      margin: 1rem auto 0;
+      margin: 1rem auto;
       max-width: none;
+      @include mq($layout-m) {
+        margin: 1rem auto 0;
+      }
     }
     .artist-header__photos {
       width: 100%;
@@ -749,6 +753,7 @@
       border-style: solid;
       display: none;
       flex-wrap: nowrap;
+      margin: 0 1rem;
       @include mq($layout-m) {
         display: flex;
       }
@@ -854,7 +859,7 @@
   border-top: 2px solid $black;
   border-bottom: 2px solid $black;
   margin: 1rem auto;
-  padding: 1rem 0 0;
+  padding: 1rem 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -862,31 +867,26 @@
   align-items: center;
   background-color: $white;
 
-  @include mq($layout-m) {
-    margin: 1rem auto 2rem;
-  }
-
   .icon {
     margin: 0 0.5rem 0 0;
   }
   .link__why {
     width: 100%;
     padding: 0;
-    margin: 0 0 1rem;
-    order: 3;
-    @include mq($layout-m) {
-      order: 2;
+    order: 2;
+    margin: 0;
+    @include mq($layout-s) {
       width: auto;
     }
   }
 
   &__location {
-    margin: 0 auto 1rem;
     display: flex;
     order: 1;
+    width: 100%;
+    justify-content: center;
     @include mq($layout-s) {
       width: auto;
-      margin: 0 1rem 1rem;
     }
     @include mq($layout-m) {
       min-width: 200px;
@@ -897,8 +897,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    margin: 0 1rem 1rem;
-    order: 2;
+    order: 3;
     align-items: center;
     width: 100%;
 
@@ -911,8 +910,6 @@
 
     @include mq($layout-m) {
       min-width: 200px;
-      order: 3;
-      justify-content: flex-end;
     }
 
     &_item {

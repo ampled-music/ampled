@@ -749,6 +749,7 @@
       border-style: solid;
       display: none;
       flex-wrap: nowrap;
+      margin: 0 1rem;
       @include mq($layout-m) {
         display: flex;
       }

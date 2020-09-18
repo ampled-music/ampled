@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { CloudinaryContext } from 'cloudinary-react';
 import { Nav } from './shared/nav/Nav';
 import { Footer } from './shared/footer/Footer';
+import { config } from '../config';
 
 export const PublicRoute = ({ component: Component, ...rest }) => {
   const randomColor = () => {
@@ -21,7 +22,7 @@ export const PublicRoute = ({ component: Component, ...rest }) => {
     return (
       <div className="public-routes">
         <div>
-          <CloudinaryContext cloudName="ampled-web">
+          <CloudinaryContext cloudName={config.cloudinary.cloud_name}>
             <Nav match={props.match} history={props.history} />
             <main>
               <Component {...props} />

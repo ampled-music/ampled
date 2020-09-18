@@ -446,6 +446,7 @@
       font-family: $font-family-monospace;
       font-size: 0.8rem;
       width: 100%;
+      white-space: pre-wrap;
       .read-more {
         font-weight: bold;
         cursor: pointer;
@@ -732,8 +733,11 @@
       }
     }
     .artist-header__photo-container {
-      margin: 1rem auto 0;
+      margin: 1rem auto;
       max-width: none;
+      @include mq($layout-m) {
+        margin: 1rem auto 0;
+      }
     }
     .artist-header__photos {
       width: 100%;
@@ -862,10 +866,6 @@
   justify-content: space-between;
   align-items: center;
   background-color: $white;
-
-  @include mq($layout-m) {
-    margin: 1rem auto 2rem;
-  }
 
   .icon {
     margin: 0 0.5rem 0 0;

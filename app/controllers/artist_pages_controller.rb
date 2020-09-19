@@ -74,7 +74,7 @@ class ArtistPagesController < ApplicationController
 
     set_members
 
-    ArtistPageCreateEmailJob.perform_async(@artist_page.id, current_user.id) unless ENV["REDIS_URL"].nil?
+    ArtistPageCreateEmailJob.perform_async(@artist_page.id, current_user.id)
 
     render json: { status: "ok", message: "Your page has been created!" }
   rescue ActiveRecord::RecordNotUnique
@@ -236,9 +236,8 @@ class ArtistPagesController < ApplicationController
                             artist_page_id: @artist_page[:id]).update(instrument: member[:role],
                                                                       role: member[:isAdmin] ? "admin" : "member")
 
-      # Skip emails if we're not in an environment where they work
-      # or if the user was already part of the band.
-      next if ENV["REDIS_URL"].nil? || existing_owners.include?(member_user.id)
+      # Skip emails if the user was already part of the band.
+      next if existing_owners.include?(member_user.id)
 
       send_member_add_email(@artist_page.id, member_user.id, current_user.id, new_member)
     end

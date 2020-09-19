@@ -170,7 +170,7 @@ class ArtistPage < ApplicationRecord
   def check_approved
     return unless approved_changed? && approved
 
-    ArtistPageApprovedEmailJob.perform_async(id) unless ENV["REDIS_URL"].nil?
+    ArtistPageApprovedEmailJob.perform_async(id)
   end
 
   def promote_facebook_image

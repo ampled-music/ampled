@@ -41,7 +41,7 @@ json.owners @artist_page.page_ownerships do |ownership|
 end
 
 json.supporters @artist_page.active_subscribers.includes(%i[image page_ownerships owned_pages])
-  .shuffle.take(16), partial: "users/user", as: :user
+  .shuffle.take(25), partial: "users/user", as: :user
 
 @expand_artist = false
 

@@ -823,12 +823,12 @@
     .artist-header__supporters {
       margin: 0;
       width: 100%;
-      max-width: 350px;
       @include mq($layout-m) {
         margin: 0 1rem;
         padding-top: 1rem;
         border-top-width: 2px;
         border-top-style: solid;
+        max-width: 350px;
       }
       &_title {
         margin: 0;
@@ -843,7 +843,6 @@
       }
       &_all {
         width: 100%;
-        max-width: 375px;
       }
     }
     .artist-header__support-buttons {

@@ -63,6 +63,8 @@ Note: `./bin/rake` runs the springified version of rake (there's a `./bin/rspec`
 `./bin` to your PATH too, then you'll always use the springified bins when they exist. See
 [rails/spring](https://github.com/rails/spring) for additional information.
 
+Note: Sidekiq jobs are [queued in memory](https://github.com/ampled-music/ampled-web/blob/development/spec/spec_helper.rb#L22) in the test environment.
+
 ### Running the Application Locally
 
 First you need to install all npm dependencies in both root as well as client.
@@ -89,6 +91,8 @@ Once your database is set up and filled with data simply run the following comma
     $ npm run start
 
 This will also automatically compile any js or css changes live on the fly.
+
+Note: Sidekiq jobs are [run inline](https://github.com/ampled-music/ampled-web/blob/development/config/environments/development.rb#L88-L90) in the development environment.
 
 ## Conventions
 

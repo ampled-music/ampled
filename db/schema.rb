@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_30_172123) do
+ActiveRecord::Schema.define(version: 2020_08_22_212821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 2020_07_30_172123) do
     t.string "video_screenshot_url"
     t.string "state_token"
     t.string "stripe_user_id"
-    t.string "stripe_access_token"
     t.string "stripe_product_id"
     t.string "slug"
     t.boolean "verb_plural", default: false
@@ -39,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_07_30_172123) do
     t.string "bandcamp_handle"
     t.string "youtube_handle"
     t.string "external"
+    t.string "style_type"
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 2020_07_30_172123) do
     t.string "imageable_type"
     t.bigint "imageable_id"
     t.string "coordinates"
+    t.string "delete_token"
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 
@@ -155,7 +156,6 @@ ActiveRecord::Schema.define(version: 2020_07_30_172123) do
     t.boolean "card_is_valid"
     t.boolean "admin"
     t.string "redirect_uri"
-    t.string "coordinates"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true

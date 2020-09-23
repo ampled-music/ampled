@@ -10,5 +10,6 @@ export const initialState = {
   onModalCloseAction: undefined,
   redirectTo: undefined,
   artistName: undefined,
+  artistSlug: undefined,
   error: undefined,
 };

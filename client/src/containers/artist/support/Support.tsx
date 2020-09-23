@@ -55,6 +55,10 @@ export class SupportComponent extends React.Component<Props, any> {
     this.getArtistInfo();
   }
 
+  isAmpled = () => {
+    return this.props.artists.artist.slug === 'community';
+  };
+
   componentDidUpdate(prevProps) {
     const { me, subscriptions, getMe } = this.props;
 
@@ -216,12 +220,19 @@ export class SupportComponent extends React.Component<Props, any> {
     });
   };
 
-  renderSupportHeader = (artistName) => (
-    <div className="support__header">
-      <div className="support__header_support">Support</div>
-      <h2 className="support__header_artist-name">{artistName}</h2>
-    </div>
-  );
+  renderSupportHeader = (artistName) =>
+    this.isAmpled() ? (
+      <div className="support__header">
+        <h2 className="support__header_artist-name">
+          Become a Community Member
+        </h2>
+      </div>
+    ) : (
+      <div className="support__header">
+        <div className="support__header_support">Support</div>
+        <h2 className="support__header_artist-name">{artistName}</h2>
+      </div>
+    );
 
   renderArtistImage = (images) => {
     const placeholderImage =
@@ -293,9 +304,11 @@ export class SupportComponent extends React.Component<Props, any> {
             </p>
           ) : (
             <p className="support__value-description">
-              Support {artistName} directly for $3 (or more) per month to unlock
+              {this.isAmpled()
+                ? 'Join the co-op as a Community Member to help Ampled stay independent and accountable to members.'
+                : `Support ${artistName} directly for $3 (or more) per month to unlock
               access to all of their posts and get notifications when they post
-              anything new.
+              anything new.`}
             </p>
           )}
         </div>
@@ -305,7 +318,9 @@ export class SupportComponent extends React.Component<Props, any> {
 
   renderStartSubscriptionAction = (artistName) => {
     const buttonLabel = this.props.me.userData
-      ? `SUPPORT ${artistName.toUpperCase()}`
+      ? this.isAmpled()
+        ? 'BECOME A MEMBER'
+        : `SUPPORT ${artistName.toUpperCase()}`
       : 'SIGNUP OR LOGIN TO SUPPORT';
 
     return (

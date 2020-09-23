@@ -1,2 +1,6 @@
 codecov:
   token: 9e841483-f7df-49c3-ae56-83ff79946ca0
+ignore:
+  - "lib/tasks/**"
+  - "config/**"
+  - "spec/**""

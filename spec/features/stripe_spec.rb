@@ -48,13 +48,7 @@ RSpec.describe StripeController, type: :request do
       it "should call CardChargedEmailJob" do
         allow(CardChargedEmailJob).to receive(:perform_async)
 
-        prev_redis_url = ENV["REDIS_URL"]
-        begin
-          ENV["REDIS_URL"] = "temp"
-          post webhook_url, params: webhook_params
-        ensure
-          ENV["REDIS_URL"] = prev_redis_url
-        end
+        post webhook_url, params: webhook_params
 
         expect(CardChargedEmailJob).to have_received(:perform_async).with(subscription.id, total.to_s, currency)
       end
@@ -64,13 +58,7 @@ RSpec.describe StripeController, type: :request do
         allow(CardChargedEmailJob).to receive(:perform_async).and_raise(error)
         allow(Raven).to receive(:extra_context)
 
-        prev_redis_url = ENV["REDIS_URL"]
-        begin
-          ENV["REDIS_URL"] = "temp"
-          post webhook_url, params: webhook_params
-        ensure
-          ENV["REDIS_URL"] = prev_redis_url
-        end
+        post webhook_url, params: webhook_params
 
         json = JSON.parse(response.body)
         expect(json["message"]).to eq(error.message)
@@ -113,13 +101,7 @@ RSpec.describe StripeController, type: :request do
       it "should call CardDeclinedEmailJob" do
         allow(CardDeclineEmailJob).to receive(:perform_async)
 
-        prev_redis_url = ENV["REDIS_URL"]
-        begin
-          ENV["REDIS_URL"] = "temp"
-          post webhook_url, params: webhook_params
-        ensure
-          ENV["REDIS_URL"] = prev_redis_url
-        end
+        post webhook_url, params: webhook_params
 
         subscription = user.subscriptions.first
         expect(CardDeclineEmailJob).to have_received(:perform_async).with(subscription.id)
@@ -145,13 +127,7 @@ RSpec.describe StripeController, type: :request do
         webhook_params.delete(:account)
         allow(ArtistPaidEmailJob).to receive(:perform_async)
 
-        prev_redis_url = ENV["REDIS_URL"]
-        begin
-          ENV["REDIS_URL"] = "temp"
-          post webhook_url, params: webhook_params
-        ensure
-          ENV["REDIS_URL"] = prev_redis_url
-        end
+        post webhook_url, params: webhook_params
 
         expect(ArtistPaidEmailJob).to_not have_received(:perform_async)
       end
@@ -159,13 +135,7 @@ RSpec.describe StripeController, type: :request do
       it "should have called ArtistPaidEmailJob" do
         allow(ArtistPaidEmailJob).to receive(:perform_async)
 
-        prev_redis_url = ENV["REDIS_URL"]
-        begin
-          ENV["REDIS_URL"] = "temp"
-          post webhook_url, params: webhook_params
-        ensure
-          ENV["REDIS_URL"] = prev_redis_url
-        end
+        post webhook_url, params: webhook_params
 
         expect(ArtistPaidEmailJob).to have_received(:perform_async)
           .with(account, amount, currency, arrival_epoch_time.to_s)
@@ -176,13 +146,7 @@ RSpec.describe StripeController, type: :request do
         allow(ArtistPaidEmailJob).to receive(:perform_async).and_raise(error)
         allow(Raven).to receive(:capture_exception)
 
-        prev_redis_url = ENV["REDIS_URL"]
-        begin
-          ENV["REDIS_URL"] = "temp"
-          post webhook_url, params: webhook_params
-        ensure
-          ENV["REDIS_URL"] = prev_redis_url
-        end
+        post webhook_url, params: webhook_params
 
         json = JSON.parse(response.body)
         expect(json["message"]).to eq(error.message)
@@ -194,13 +158,7 @@ RSpec.describe StripeController, type: :request do
         allow(ArtistPaidEmailJob).to receive(:perform_async).and_raise(error)
         allow(Raven).to receive(:capture_exception)
 
-        prev_redis_url = ENV["REDIS_URL"]
-        begin
-          ENV["REDIS_URL"] = "temp"
-          post webhook_url, params: webhook_params
-        ensure
-          ENV["REDIS_URL"] = prev_redis_url
-        end
+        post webhook_url, params: webhook_params
 
         json = JSON.parse(response.body)
         expect(json["message"]).to eq(error.message)

@@ -52,7 +52,6 @@ class SignupComponent extends React.Component<Props, any> {
     name: '',
     last_name: '',
     confirmPassword: '',
-
     matchPasswordsError: false,
     passwordError: null,
     emailError: null,
@@ -184,6 +183,10 @@ class SignupComponent extends React.Component<Props, any> {
     const { authentication } = this.props;
 
     const passwordErrorMessage = 'Passwords do not match.';
+    const memberSupporter =
+      this.props.authentication.artistSlug === 'community'
+        ? 'member'
+        : 'supporter';
 
     return (
       <div className="login__container">
@@ -199,15 +202,16 @@ class SignupComponent extends React.Component<Props, any> {
             authentication.showSupportMessage === 'post' &&
             authentication.artistName && (
               <p>
-                This is a private post. Sign up and become a supporter of{' '}
-                {authentication.artistName} to access it.
+                This is a private post. Sign up and become a {memberSupporter}{' '}
+                of {authentication.artistName} to access it.
               </p>
             )}
           {authentication.showSupportMessage &&
             authentication.showSupportMessage === 'artist' &&
             authentication.artistName && (
               <p>
-                Sign up to become a supporter of {authentication.artistName}.
+                Sign up to become a {memberSupporter} of{' '}
+                {authentication.artistName}.
               </p>
             )}
           <form

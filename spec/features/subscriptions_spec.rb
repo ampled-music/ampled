@@ -119,13 +119,7 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
     it "calls email job for user supported artist" do
       allow(UserSupportedArtistEmailJob).to receive(:perform_async)
 
-      prev_redis_url = ENV["REDIS_URL"]
-      begin
-        ENV["REDIS_URL"] = "temp"
-        post url, params: create_params
-      ensure
-        ENV["REDIS_URL"] = prev_redis_url
-      end
+      post url, params: create_params
 
       subscription = user.subscriptions.active.first
       expect(UserSupportedArtistEmailJob).to have_received(:perform_async).with(subscription.id)
@@ -135,13 +129,7 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
       allow(UserSupportedArtistEmailJob).to receive(:perform_async)
       allow(NewSupporterEmailJob).to receive(:perform_async)
 
-      prev_redis_url = ENV["REDIS_URL"]
-      begin
-        ENV["REDIS_URL"] = "temp"
-        post url, params: create_params
-      ensure
-        ENV["REDIS_URL"] = prev_redis_url
-      end
+      post url, params: create_params
 
       subscription = user.subscriptions.active.first
       expect(NewSupporterEmailJob).to have_received(:perform_async).with(subscription.id)

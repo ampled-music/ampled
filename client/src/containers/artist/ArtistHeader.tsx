@@ -3,6 +3,7 @@ import './artist.scss';
 import * as React from 'react';
 import { ReactSVG } from 'react-svg';
 
+import { Texture } from '../shared/texture/Texture';
 import Edit from '../../images/icons/Icon_Edit.svg';
 import Plus from '../../images/icons/Icon_Add-Plus.svg';
 import { Button } from '@material-ui/core';
@@ -13,11 +14,14 @@ import { FeaturedImages } from './header/FeaturedImages';
 import { FeaturedVideo } from './header/FeaturedVideo';
 import { FeaturedMessage } from './header/FeaturedMessage';
 import { Supporters } from './header/Supporters';
+import { ArtistInfo } from './header/ArtistInfo';
+import { Members } from './header/Members';
 
 interface Props {
   openVideoModal: React.MouseEventHandler;
   openPostModal: React.MouseEventHandler;
   openWhyModal: React.MouseEventHandler;
+  openJoinModal: React.MouseEventHandler;
   openMessageModal: React.MouseEventHandler;
   artist: ArtistModel;
   loggedUserAccess: { role: string; artistId: number };
@@ -28,6 +32,10 @@ interface Props {
 export class ArtistHeader extends React.Component<Props, any> {
   state = {
     showConfirmationDialog: false,
+  };
+
+  isAmpled = () => {
+    return this.props.artist.slug === 'community';
   };
 
   canLoggedUserPost = () => {
@@ -48,11 +56,40 @@ export class ArtistHeader extends React.Component<Props, any> {
   };
 
   renderArtistName = () => (
-    <div className="artist-header__title">
-      <span className="artist-header__title_flair"></span>
-      {this.props.artist.name}
+    <div className="artist-header__name">
+      <div className="artist-header__title">
+        <span className="artist-header__title_flair"></span>
+        {this.props.artist.name}
+      </div>
     </div>
   );
+
+  renderSupportButton = () => {
+    const { artist } = this.props;
+    const borderColor = artist.accent_color;
+
+    return (
+      <div className="artist-header__support-buttons">
+        <button
+          className="btn btn-ampled btn-support"
+          style={{ borderColor }}
+          onClick={() => this.props.handleSupportClick()}
+        >
+          {this.isAmpled() ? 'Become a Member' : 'Support This Artist'}
+        </button>
+
+        {this.isAmpled() ? (
+          <button onClick={this.props.openJoinModal} className="link link__why">
+            Why join?
+          </button>
+        ) : (
+          <button onClick={this.props.openWhyModal} className="link link__why">
+            Why support?
+          </button>
+        )}
+      </div>
+    );
+  };
 
   renderFloatingNewPostButton = () =>
     this.canLoggedUserPost() && (
@@ -83,39 +120,68 @@ export class ArtistHeader extends React.Component<Props, any> {
     );
 
   render() {
+    const {
+      artist,
+      loggedUserAccess,
+      isSupporter,
+      handleSupportClick,
+      openVideoModal,
+      openMessageModal,
+      openWhyModal,
+      openJoinModal,
+    } = this.props;
+
     return (
-      <div className="artist-header container">
+      <>
+        <Texture
+          positionTop25={false}
+          positionTop50={false}
+          positionFlip={false}
+        />
         {this.renderArtistName()}
-        <div className="row justify-content-between">
-          <div className="col-md-7">
-            <FeaturedImages
-              artist={this.props.artist}
-              loggedUserAccess={this.props.loggedUserAccess}
-              isSupporter={this.props.isSupporter}
-              handleSupportClick={this.props.handleSupportClick}
-            />
-          </div>
-          <div className="col-md-4 artist-header__message-col">
-            <FeaturedVideo
-              artist={this.props.artist}
-              openVideoModal={this.props.openVideoModal}
-            />
+        <div className="artist-header container">
+          {!artist.hide_members && <Members artist={artist} />}
+          <FeaturedImages
+            artist={artist}
+            loggedUserAccess={loggedUserAccess}
+            isSupporter={isSupporter}
+            handleSupportClick={handleSupportClick}
+            imageWidth={800}
+            imageHeight={800}
+          />
+          <div className="artist-header__message-col">
+            <FeaturedVideo artist={artist} openVideoModal={openVideoModal} />
             <FeaturedMessage
-              artist={this.props.artist}
-              openMessageModal={this.props.openMessageModal}
+              artist={artist}
+              openMessageModal={openMessageModal}
             />
             <Supporters
-              artist={this.props.artist}
-              openWhyModal={this.props.openWhyModal}
-              loggedUserAccess={this.props.loggedUserAccess}
-              isSupporter={this.props.isSupporter}
-              handleSupportClick={this.props.handleSupportClick}
+              artist={artist}
+              openWhyModal={openWhyModal}
+              loggedUserAccess={loggedUserAccess}
+              isSupporter={isSupporter}
+              handleSupportClick={handleSupportClick}
             />
+
+            {!isSupporter &&
+              !this.canLoggedUserPost() &&
+              artist.isStripeSetup &&
+              this.renderSupportButton()}
             {this.renderFloatingNewPostButton()}
             {this.renderFloatingEditButton()}
           </div>
         </div>
-      </div>
+        <div className="artist-header__info">
+          <ArtistInfo
+            artist={artist}
+            openWhyModal={openWhyModal}
+            openJoinModal={openJoinModal}
+            loggedUserAccess={loggedUserAccess}
+            isSupporter={isSupporter}
+            handleSupportClick={handleSupportClick}
+          />
+        </div>
+      </>
     );
   }
 }

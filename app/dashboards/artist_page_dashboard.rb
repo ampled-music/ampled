@@ -33,7 +33,10 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     approved: Field::Boolean,
     featured: Field::Boolean,
     verb_plural: Field::Boolean,
-    hide_members: Field::Boolean
+    hide_members: Field::Boolean,
+    style_type: Field::Select.with_options(
+      collection: ['standard', 'minimal']
+    ),
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -72,7 +75,8 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :approved,
     :featured,
     :verb_plural,
-    :hide_members
+    :hide_members,
+    :style_type
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -94,7 +98,8 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :approved,
     :featured,
     :verb_plural,
-    :hide_members
+    :hide_members,
+    :style_type
   ].freeze
 
   # Overwrite this method to customize how artist pages are displayed

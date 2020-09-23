@@ -17,9 +17,9 @@
 #  name                 :string
 #  slug                 :string
 #  state_token          :string
-#  stripe_access_token  :string
 #  stripe_product_id    :string
 #  stripe_user_id       :string
+#  style_type           :string
 #  twitter_handle       :string
 #  updated_at           :datetime         not null
 #  verb_plural          :boolean          default(FALSE)
@@ -170,7 +170,7 @@ class ArtistPage < ApplicationRecord
   def check_approved
     return unless approved_changed? && approved
 
-    ArtistPageApprovedEmailJob.perform_async(id) unless ENV["REDIS_URL"].nil?
+    ArtistPageApprovedEmailJob.perform_async(id)
   end
 
   def promote_facebook_image

@@ -61,18 +61,27 @@ const StyleOverride = ({
           color: ${lightOrDark(accentColor)};
         }
         .artist-header__title_flair,
-        .artist-header__banner-icons_icon.active  {
+        .artist-header__contributors  {
           background-color: ${accentColor};
           color: ${lightOrDark(accentColor)};
         }
+        .artist-header.minimal,
+        .artist-header__persons {
+          border-color: ${accentColor};
+        }
+        .artist-header__supporters {
+          border-top-color: ${accentColor};
+        }
         .new-post button,
         .edit-page button,
-        .artist-header__photo {
+        .artist-header__photo,
+        .artist-header__banner-icons_icon.active {
           background-color: ${accentColor};
           color: ${lightOrDark(accentColor)};
         }
         .new-post svg path,
-        .edit-page svg path {
+        .edit-page svg path,
+        .artist-header__play_svg svg path {
           fill: ${lightOrDark(accentColor)};
         }
         .btn.btn-read-more:hover,

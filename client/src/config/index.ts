@@ -12,9 +12,7 @@ export const config = {
     about: process.env.REACT_APP_URL_ABOUT || '/page/about-us',
   },
   cloudinary: {
-    uploadImageUrl: 'https://api.cloudinary.com/v1_1/ampled-web/upload',
-    deleteImageUrl:
-      'https://api.cloudinary.com/v1_1/ampled-web/delete_by_token',
+    cloud_name: process.env.REACT_APP_CLOUDINARY_CLOUD_NAME || 'ampled-web',
     apiKey: process.env.REACT_APP_CLOUDINARY_API_KEY,
     apiSecret: process.env.REACT_APP_CLOUDINARY_API_SECRET,
   },

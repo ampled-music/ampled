@@ -6,8 +6,6 @@ import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '../../../images/icons/Icon_Close-Cancel.svg';
 
-import tear from '../../../images/backgrounds/background_tear.png';
-
 import './why-modal.scss';
 
 interface Props {
@@ -25,7 +23,6 @@ class WhyModalComponent extends React.Component<Props, any> {
         className="why-support"
       >
         <div className="why-support__container">
-          <img className="tear tear__topper" src={tear} alt="" />
           <div className="why-support__info">
             <h5 className="why-support__title">Why Support Through Ampled?</h5>
             <div className="why-support__subheader">
@@ -65,9 +62,6 @@ class WhyModalComponent extends React.Component<Props, any> {
               className="close-x"
               aria-label="close"
               color="default"
-              style={{
-                margin: '-10px -10px 0 0',
-              }}
               onClick={(e) => this.props.onClose(e)}
             >
               <ReactSVG className="icon" src={Close} />

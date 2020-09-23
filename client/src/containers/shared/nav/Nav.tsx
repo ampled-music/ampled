@@ -45,6 +45,10 @@ class NavComponent extends React.Component<Props, any> {
     );
   };
 
+  isAmpled = () => {
+    return this.props.artist.slug === 'community';
+  };
+
   showSupportButton = () => {
     const loggedUserAccess = this.getLoggedUserPageAccess();
     const { isStripeSetup } = this.props.artist;
@@ -94,6 +98,7 @@ class NavComponent extends React.Component<Props, any> {
         modalPage: 'signup',
         showSupportMessage: 'artist',
         artistName: this.props.artist.name,
+        artistSlug: this.props.artist.slug,
         redirectTo: routePaths.support.replace(':id', artistId),
       });
     }
@@ -148,11 +153,13 @@ class NavComponent extends React.Component<Props, any> {
             className="btn btn-ampled btn-support btn-support-header"
             onClick={this.handleSupportClick}
           >
-            Support this artist
+            {this.isAmpled() ? 'Become a member' : 'Support this artist'}
           </button>
         )}
         <div className="menus">
-          <div className="supporter-message">You are a supporter</div>
+          <div className="supporter-message">
+            {this.isAmpled() ? 'You are a member' : 'You are a supporter'}
+          </div>
           <div className="loginLink">{this.renderNavLink()}</div>
           <MenuEx renderLoginLink={this.renderLoginLink} />
         </div>
@@ -162,7 +169,7 @@ class NavComponent extends React.Component<Props, any> {
               className="btn btn-ampled btn-support"
               onClick={this.handleSupportClick}
             >
-              Support this artist
+              {this.isAmpled() ? 'Become a member' : 'Support this artist'}
             </button>
           </div>
         )}

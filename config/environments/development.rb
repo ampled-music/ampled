@@ -84,4 +84,8 @@ Rails.application.configure do
     Bullet.rails_logger = true
     Bullet.bullet_logger = true
   end
+
+  # Run Sidekiq jobs inline
+  require "sidekiq/testing"
+  Sidekiq::Testing.inline!
 end

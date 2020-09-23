@@ -22,36 +22,61 @@
 
 .artist-header {
   font-family: $font-family-sans-serif;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  flex-wrap: wrap;
+  position: relative;
+  padding: 0px;
 
+  @include mq($layout-m) {
+    flex-direction: row;
+  }
   @include mq($layout-l) {
-    padding: 0 15px 0 35px;
+    padding: 0 1rem 0 2rem;
+  }
+
+  &__name {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1140px;
+    margin: auto;
+    order: 1;
+
+    @include mq($layout-m) {
+      justify-content: flex-start;
+    }
   }
 
   &__photo-container {
     display: flex;
     position: relative;
     justify-content: center;
-    margin: 0 0 2rem 0;
+    margin: 0 auto 3rem;
+    width: 100%;
+    align-self: flex-start;
+    max-width: 500px;
+    order: 2;
 
-    @include mq($desktop) {
-      margin: 0 auto 1rem;
+    @include mq($layout-m) {
+      max-width: 55%;
+      margin-right: 5%;
     }
 
     &_border {
       z-index: 100;
       width: 100%;
-      height: 339px;
+      height: 100%;
       position: absolute;
       margin: -2px 0;
 
       @include mq($layout-m) {
         border: 2px solid $brand-primary;
-        height: 475px;
         width: calc(100% - 30px);
       }
 
       @include mq($layout-l) {
-        height: 575px;
       }
 
       &_swipe {
@@ -62,52 +87,58 @@
   }
 
   &__title {
-    font-size: 2rem;
-    margin: 2rem auto 3rem;
+    font-size: 1.5rem;
+    margin: 1rem 0;
     font-weight: bolder;
     text-align: center;
     position: relative;
     display: inline-block;
-    max-width: 75%;
 
     &_flair {
       position: absolute;
       display: block;
-      height: 1rem;
+      height: 0.8rem;
       width: 5rem;
       z-index: -1;
       background-color: $brand-primary;
-      margin-top: 30px;
+      margin-top: 22px;
       margin-left: -25px;
+      @include mq($layout-m) {
+        margin-top: 30px;
+        height: 1rem;
+      }
     }
 
     @include mq($layout-m) {
       text-align: left;
+      margin: 2rem 0 3rem 2rem;
+      font-size: 2rem;
     }
   }
 
   &__persons {
     z-index: 200;
-    display: flex;
+    display: none;
     align-items: flex-start;
     align-content: flex-start;
     flex-wrap: wrap;
     flex-direction: column;
     position: absolute;
-    left: -5px;
+    left: 5px;
+    max-width: 50px;
+    text-align: center;
 
     @include mq($layout-m) {
       padding-top: 20px;
-      left: -12px;
+      left: 20px;
+      display: flex;
     }
   }
 
   &__person {
     width: auto;
-    max-width: 50px;
-    max-height: 50px;
     position: relative;
-    margin: 10px auto;
+    margin: 0.5rem auto;
 
     &:hover {
       .supporter__hover-card {
@@ -115,30 +146,18 @@
       }
     }
 
-    @include mq($layout-m) {
-      max-width: 70px;
-      max-height: 70px;
-    }
-
     &_image {
       width: 50px;
       height: 50px;
-      object-fit: cover;
       border-radius: 50%;
       border-width: 2px;
       border-style: solid;
       margin: auto;
+      background-color: $white;
 
       @include mq($layout-m) {
         max-width: 70px;
         max-height: 70px;
-      }
-
-      &.member {
-        @include mq($layout-m) {
-          width: 56px !important;
-          height: 56px !important;
-        }
       }
     }
 
@@ -172,7 +191,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 100%;
+      width: auto;
     }
 
     &_name {
@@ -181,39 +200,30 @@
     }
 
     &_small {
-      margin: 0 6px 6px 0;
+    }
+    .member-name {
+      text-align: center;
+      display: none;
+    }
+    .member-gradient {
+      display: none;
     }
   }
 
   &__photos {
-    height: 335px;
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
-
-    @include mq($layout-m) {
-      height: 475px;
-    }
-
-    @include mq($layout-l) {
-      height: 575px;
-    }
+    position: absolute;
   }
 
   &__photo {
     position: absolute;
     display: block;
-    width: 335px;
+    width: 100%;
     background-color: $brand-primary;
     z-index: 1;
-
-    @include mq($layout-m) {
-      width: 450px;
-    }
-
-    @include mq($layout-l) {
-      width: 550px;
-    }
 
     &.active {
       z-index: 10;
@@ -222,10 +232,21 @@
         opacity: 1;
       }
     }
+    &_spacer {
+      width: 100%;
+      opacity: 0.1;
+      display: block;
+      position: relative;
+      visibility: hidden;
+
+      img {
+        width: 100%;
+      }
+    }
 
     img {
       width: 100%;
-      opacity: 0.5;
+      opacity: 1;
     }
 
     &:nth-child(1n) {
@@ -259,29 +280,120 @@
     }
   }
 
+  &__contributors {
+    width: 100%;
+    height: 150px;
+    order: 2;
+    margin-bottom: 2rem;
+    padding: 0;
+    position: relative;
+    @include mq($layout-s) {
+      height: 180px;
+    }
+    @include mq($layout-m) {
+      margin-bottom: 3rem;
+      height: 220px;
+    }
+    &_tear {
+      width: 100%;
+      transform: rotate(180deg);
+      position: absolute;
+    }
+    .awssld {
+      position: absolute;
+      top: 0px;
+      --slider-height-percentage: 150px;
+      @include mq($layout-s) {
+        --slider-height-percentage: 180px;
+      }
+      @include mq($layout-m) {
+        --slider-height-percentage: 220px;
+      }
+    }
+    &_image {
+      transform: scale(1.1);
+      width: 33%;
+      align-self: self-end;
+      max-height: 150px;
+      @include mq($layout-s) {
+        max-height: 180px;
+      }
+      @include mq($layout-m) {
+        width: auto;
+        height: auto;
+        max-height: 220px;
+      }
+    }
+  }
+
   &__banner-icons {
     display: flex;
     bottom: -20px;
     position: absolute;
+    z-index: 100;
 
     &_icon {
-      width: 10px;
-      height: 10px;
+      height: 8px;
+      width: 8px;
+      border: solid 1px $black;
       border-radius: 100%;
-      background-color: $gray-lighter;
+      background-color: transparent;
       margin: 0 4px;
 
       &.active {
         background: $brand-primary;
+        transform: scale(1.5);
+      }
+    }
+  }
+
+  .awssld {
+    --slider-transition-duration: 500ms;
+    --organic-arrow-thickness: 1px;
+    --organic-arrow-border-radius: 0px;
+    --organic-arrow-height: 1rem;
+    --organic-arrow-color: #ffffff;
+    --control-button-width: 5%;
+    --control-button-height: 25%;
+    --control-button-background: transparent;
+    --control-bullet-color: #ffffff;
+    --control-bullet-active-color: #1e1e1e;
+    --content-background-color: transparent;
+    --loader-bar-color: #1e1e1e;
+    --loader-bar-height: 1px;
+    &__container {
+      padding-bottom: var(--slider-height-percentage) !important;
+    }
+    &__bullets {
+      bottom: -2rem;
+      z-index: 100;
+      button {
+        height: 8px;
+        width: 8px;
+        border: solid 1px $black;
+      }
+    }
+    &__timer {
+      height: 0px !important;
+    }
+    &__content {
+      flex-wrap: nowrap;
+      div {
+        display: flex;
       }
     }
   }
 
   &__message-col {
-    margin-top: 0;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    order: 4;
 
     @include mq($layout-m) {
-      margin-top: -20px;
+      width: calc(40% - 2rem);
+      margin-left: 2rem;
+      order: 3;
     }
   }
 
@@ -297,38 +409,30 @@
     }
 
     &_container {
-      max-width: 335px;
       display: flex;
       position: relative;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       width: 90%;
-      margin: auto;
+      margin: 0 auto 2rem;
       border: 2px solid $brand-primary;
       padding: 10px 0px;
       min-height: 140px;
 
-      @include mq($layout-m) {
-        margin: 0rem auto 1.5rem;
+      &.text-message {
+        background-color: $white;
+        padding: 1rem;
       }
 
-      &.paper_md {
-        min-height: 210px;
+      @include mq($layout-m) {
+        margin: 0rem auto 1rem;
       }
 
       .btn-read-more {
         position: absolute;
         bottom: -18px;
       }
-    }
-
-    &_paper-bg {
-      width: 115%;
-      left: -7%;
-      top: 3%;
-      z-index: -1;
-      position: absolute;
     }
 
     &_video {
@@ -340,12 +444,25 @@
 
     &_text {
       font-family: $font-family-monospace;
-      padding: 1rem 2rem;
       font-size: 0.8rem;
-      span {
-        word-wrap: anywhere;
-        word-break: break-all;
+      width: 100%;
+      white-space: pre-wrap;
+      .read-more {
+        font-weight: bold;
+        cursor: pointer;
+        opacity: 1;
+        &:hover {
+          opacity: 0.7;
+        }
       }
+    }
+
+    &_title {
+      width: 100%;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      font-weight: bold;
     }
 
     &_image {
@@ -367,13 +484,16 @@
   }
 
   &__supporters {
-    margin: 3rem 0 1rem;
+    margin: 1rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
 
     &:empty {
       display: none;
     }
 
     &_title {
+      width: 100%;
       font-size: 1.2rem;
       margin: 1rem 0 0.5rem 0;
       text-transform: uppercase;
@@ -386,26 +506,48 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      width: 37%;
 
       .artist-header__person {
         margin-top: 0px;
-
         &_mr {
           font-size: 0.7rem;
           font-family: $font-family-monospace;
+        }
+        &_image {
+          background-color: $white !important;
         }
       }
     }
 
     &_all {
-      display: flex;
+      width: 63%;
+      display: grid;
       flex-flow: wrap;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
+      grid-template-columns: repeat(auto-fill, 36px);
+      gap: 0.5rem;
+      justify-content: space-between;
+
+      @include mq($layout-m) {
+        margin-bottom: 0rem;
+      }
 
       .artist-header__person_image,
       .artist-header__person_svg {
         border-width: 0;
       }
+    }
+  }
+
+  &__info {
+    margin-top: 1rem;
+    width: 100%;
+    order: 3;
+
+    @include mq($layout-m) {
+      order: 4;
+      margin-top: 2rem;
     }
   }
 
@@ -415,43 +557,32 @@
       display: block;
     }
 
+    &:nth-child(1n) {
+      .artist-header__person_image {
+        background-color: #e9c7c6;
+      }
+    }
+    &:nth-child(2n) {
+      .artist-header__person_image {
+        background-color: #eddfbd;
+      }
+    }
+    &:nth-child(3n) {
+      .artist-header__person_image {
+        background-color: #baddac;
+      }
+    }
+    &:nth-child(4n) {
+      .artist-header__person_image {
+        background-color: #cae4e7;
+      }
+    }
+
     &:hover {
       .supporter-image,
       .member-image {
         display: block;
         position: relative;
-
-        @include mq($layout-m) {
-          &:before,
-          &:after {
-            content: '';
-            width: 20px;
-            height: 20px;
-            background-color: $white;
-            position: absolute;
-            display: block;
-            transform: rotate(45deg);
-            top: -18px;
-            left: 27%;
-          }
-
-          &:before {
-            box-shadow: 1px 1px 3px $gray-light;
-            z-index: 1;
-          }
-
-          &:after {
-            z-index: 301;
-            transform: rotate(0deg);
-            top: -4px;
-            left: 27%;
-            background-color: transparent;
-            border-top: 11px solid $white;
-            border-right: 11px solid transparent;
-            border-bottom: 11px solid transparent;
-            border-left: 11px solid transparent;
-          }
-        }
       }
 
       .supporter__hover-card {
@@ -532,6 +663,8 @@
         margin-top: 0.5rem;
         padding-top: 0.5rem;
         border-top: 1px solid $gray;
+        position: relative;
+        z-index: 1020;
 
         &_section {
           margin-bottom: 1rem;
@@ -575,6 +708,153 @@
       left: 2px;
     }
   }
+
+  &.minimal {
+    padding: 0;
+    flex-wrap: wrap;
+
+    .artist-header__name {
+      justify-content: center;
+    }
+    .artist-header__title {
+      margin: 1rem auto;
+    }
+    .artist-header__photo {
+      position: absolute;
+      display: block;
+      width: 100%;
+      transform: rotate(0deg);
+      @include mq($layout-m) {
+        top: -20px;
+      }
+    }
+    .artist-header__banner-icons {
+      @include mq($layout-m) {
+        display: flex;
+        bottom: 50px;
+        right: 30px;
+      }
+    }
+    .artist-header__photo-container {
+      margin: 1rem auto;
+      max-width: none;
+      @include mq($layout-m) {
+        margin: 1rem auto 0;
+      }
+    }
+    .artist-header__photos {
+      width: 100%;
+      top: 0px;
+    }
+    .artist-header__persons {
+      position: relative;
+      padding: 1rem;
+      left: 0;
+      max-width: none;
+      max-width: 450px;
+      border-width: 2px;
+      border-style: solid;
+      display: none;
+      flex-wrap: nowrap;
+      margin: 0 1rem;
+      @include mq($layout-m) {
+        display: flex;
+      }
+    }
+
+    .artist-header__person {
+      display: flex;
+      align-items: center;
+      margin: 0.5rem 0;
+      .member-name {
+        display: block;
+        margin-left: 0.5rem;
+        text-align: left;
+        line-height: 1.1;
+        font-size: 0.9rem;
+      }
+      &_info {
+        text-align: left;
+      }
+    }
+    .artist-header__photo-container_border {
+      height: calc(100% - 35px);
+    }
+    .artist-header__person_image {
+      width: 40px;
+      height: 40px;
+    }
+    .artist-header__message-col {
+      width: 100%;
+      margin: 1rem auto;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0 1rem;
+
+      @include mq($layout-m) {
+        flex-direction: row;
+        max-width: none;
+        padding: 0;
+        margin: auto;
+      }
+    }
+    .artist-header__message_container {
+      width: 100%;
+      margin: 0 auto 1rem;
+      @include mq($layout-m) {
+        margin: 0 1rem;
+      }
+      &.video-message {
+        padding: 0.5rem 0;
+      }
+    }
+    .artist-header__message_image_container {
+      overflow: unset;
+    }
+    .artist-header__message_image {
+      transform: scaleX(1.1);
+    }
+    .artist-header__message_paper-bg,
+    .artist-header__message_tear {
+      display: none;
+    }
+    .artist-header__message_video {
+      transform: scale(1) rotate(0deg);
+    }
+    .artist-header__supporters {
+      margin: 0;
+      width: 100%;
+      @include mq($layout-m) {
+        margin: 0 1rem;
+        padding-top: 1rem;
+        border-top-width: 2px;
+        border-top-style: solid;
+        max-width: 350px;
+      }
+      &_title {
+        margin: 0;
+      }
+      &_recent {
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 100%;
+        .supporter {
+          margin-right: 1rem;
+        }
+      }
+      &_all {
+        width: 100%;
+      }
+    }
+    .artist-header__support-buttons {
+      margin-bottom: 1rem;
+    }
+    .artist-header__info {
+      margin-top: 0;
+    }
+  }
 }
 
 .artist-info {
@@ -582,24 +862,66 @@
   border-top: 2px solid $black;
   border-bottom: 2px solid $black;
   margin: 1rem auto;
-  padding: 1rem 0;
+  padding: 1rem 1rem 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $white;
 
   @include mq($layout-m) {
-    margin: 1rem auto 2rem;
+    padding: 1rem 0 0;
+  }
+
+  & > * {
+    margin-bottom: 1rem;
   }
 
   .icon {
     margin: 0 0.5rem 0 0;
   }
+  .link__why {
+    width: 100%;
+    padding: 0;
+    order: 2;
+    @include mq($layout-s) {
+      width: auto;
+    }
+  }
 
   &__location {
-    margin: 0 1rem;
     display: flex;
+    order: 1;
+    width: 100%;
+    justify-content: center;
+    @include mq($layout-s) {
+      width: auto;
+    }
+    @include mq($layout-m) {
+      min-width: 200px;
+    }
   }
 
   &__social {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    flex-wrap: wrap;
+    order: 3;
+    align-items: center;
+    width: 100%;
+
+    &:empty {
+      display: none;
+    }
+    @include mq($layout-s) {
+      width: auto;
+    }
+
+    @include mq($layout-m) {
+      min-width: 200px;
+      justify-content: flex-end;
+    }
 
     &_item {
       opacity: 1;

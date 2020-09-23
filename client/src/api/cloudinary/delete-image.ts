@@ -5,7 +5,7 @@ export const deleteFileFromCloudinary = async (deleteToken: string) => {
   try {
     await axios({
       method: 'post',
-      url: config.cloudinary.deleteImageUrl,
+      url: `https://api.cloudinary.com/v1_1/${config.cloudinary.cloud_name}/delete_by_token`,
       headers: {
         'Content-Type': 'application/json',
       },

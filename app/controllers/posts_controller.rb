@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     if PostPolicy.new(current_user, @post).create? && @post.save
-      PostNotificationEmailJob.perform_async(@post.id) unless ENV["REDIS_URL"].nil?
+      PostNotificationEmailJob.perform_async(@post.id)
       render json: :ok
     else
       render json: { errors: @post.errors }, status: :bad_request

@@ -59,8 +59,9 @@
     max-width: 500px;
     order: 2;
 
-    @include mq($desktop) {
-      max-width: 60%;
+    @include mq($layout-m) {
+      max-width: 55%;
+      margin-right: 5%;
     }
 
     &_border {
@@ -110,7 +111,7 @@
 
     @include mq($layout-m) {
       text-align: left;
-      margin: 2rem 0 3rem;
+      margin: 2rem 0 3rem 2rem;
       font-size: 2rem;
     }
   }
@@ -199,7 +200,6 @@
     }
 
     &_small {
-      margin: 0 6px 6px 0;
     }
     .member-name {
       text-align: center;
@@ -521,10 +521,13 @@
     }
 
     &_all {
-      display: flex;
+      width: 63%;
+      display: grid;
       flex-flow: wrap;
       margin-bottom: 1rem;
-      width: 63%;
+      grid-template-columns: repeat(auto-fill, 36px);
+      gap: 0.5rem;
+      justify-content: space-between;
 
       @include mq($layout-m) {
         margin-bottom: 0rem;
@@ -828,6 +831,7 @@
         padding-top: 1rem;
         border-top-width: 2px;
         border-top-style: solid;
+        max-width: 350px;
       }
       &_title {
         margin: 0;
@@ -842,7 +846,6 @@
       }
       &_all {
         width: 100%;
-        max-width: 375px;
       }
     }
     .artist-header__support-buttons {
@@ -859,13 +862,21 @@
   border-top: 2px solid $black;
   border-bottom: 2px solid $black;
   margin: 1rem auto;
-  padding: 1rem 0;
+  padding: 1rem 1rem 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   background-color: $white;
+
+  @include mq($layout-m) {
+    padding: 1rem 0 0;
+  }
+
+  & > * {
+    margin-bottom: 1rem;
+  }
 
   .icon {
     margin: 0 0.5rem 0 0;
@@ -874,7 +885,6 @@
     width: 100%;
     padding: 0;
     order: 2;
-    margin: 0;
     @include mq($layout-s) {
       width: auto;
     }
@@ -910,6 +920,7 @@
 
     @include mq($layout-m) {
       min-width: 200px;
+      justify-content: flex-end;
     }
 
     &_item {

@@ -72,7 +72,7 @@ class StripeController < ApplicationController
     invoice_currency = object[:currency]
 
     logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"
-    CardChargedEmailJob.perform_async(usersub.id, invoice_total, invoice_currency) unless ENV["REDIS_URL"].nil?
+    CardChargedEmailJob.perform_async(usersub.id, invoice_total, invoice_currency)
     render json: {}
   rescue StandardError => e
     Raven.extra_context(usersub: usersub) do
@@ -90,7 +90,7 @@ class StripeController < ApplicationController
 
     # send notification to user.email that their payment failed
     logger.info "Stripe: sending CardDeclineEmail to #{user.email}"
-    CardDeclineEmailJob.perform_async(usersub.id) unless ENV["REDIS_URL"].nil?
+    CardDeclineEmailJob.perform_async(usersub.id)
     # TODO: update subscription to mark as failed?
     render json: {}
   end
@@ -110,9 +110,7 @@ class StripeController < ApplicationController
 
     # notify the stripe account / artist
     logger.info "Stripe: sending artist-paid email to connect account email."
-    if ENV["REDIS_URL"].present?
-      ArtistPaidEmailJob.perform_async(connect_account_id, amount_in_cents, currency, arrival_epoch_time)
-    end
+    ArtistPaidEmailJob.perform_async(connect_account_id, amount_in_cents, currency, arrival_epoch_time)
 
     render json: {}
   rescue StandardError => e

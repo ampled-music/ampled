@@ -1,10 +1,4 @@
 namespace :db do
-  desc "Load a small, representative set of data so that the application can start in an use state (for development)."
-  task sample_data: :environment do
-    sample_data = Rails.root.join("db", "sample_data.rb")
-    load(sample_data) if sample_data
-  end
-
   desc "Dumps the database to backups with specified backup name"
   task :dump, [:name] => [:environment] do |task,args|
       cmd = nil
@@ -27,8 +21,8 @@ namespace :db do
               createCmd = "createdb #{db}"
           end
           cmd = "#{dropCmd} && #{createCmd} && #{restoreCmd}"
-          puts cmd 
-          exec cmd 
+          puts cmd
+          exec cmd
       else
           puts 'Please provide backup name to restore.'
       end

@@ -49,9 +49,6 @@ To run the specs or fire up the server, be sure you have these installed (and ru
 
 After cloning, run [./bin/setup](bin/setup) to install missing gems and prepare the database.
 
-Note, `rake db:sample_data` (run as part of setup) loads a small set of data for development. Check out
-[db/sample_data.rb](db/sample_data.rb) for details.
-
 #### `.env`
 
 The `bin/setup` script will create `.env` and `client/.env` files that define settings for your local environment. Do not check this into source control. Refer to the [environment variables](#environment-variables) section below for what can be specified in `.env`.
@@ -65,6 +62,8 @@ To run all Ruby and Javascript specs.
 Note: `./bin/rake` runs the springified version of rake (there's a `./bin/rspec` and `./bin/rails` too). You can add
 `./bin` to your PATH too, then you'll always use the springified bins when they exist. See
 [rails/spring](https://github.com/rails/spring) for additional information.
+
+Note: Sidekiq jobs are [queued in memory](https://github.com/ampled-music/ampled-web/blob/development/spec/spec_helper.rb#L22) in the test environment.
 
 ### Running the Application Locally
 
@@ -80,15 +79,20 @@ Back in the root directory migrate the database
 
 Then populate database with faker data.
 
+    $ bundle exec rake dummy:admin
     $ bundle exec rake dummy:users
     $ bundle exec rake dummy:artist_pages
     $ bundle exec rake dummy:posts
+
+The `dummy:admin` task will create an admin account with a well-known username and password, which can be used to give admin owers to other testing accounts via the admin dashboard. See the contents of [dummy.rake](lib/tasks/dummy.rake) for the username and password of this account.
 
 Once your database is set up and filled with data simply run the following command and give it a moment to spin up a local test environment.
 
     $ npm run start
 
-This will also automatically compile and js or css changes live on the fly.
+This will also automatically compile any js or css changes live on the fly.
+
+Note: Sidekiq jobs are [run inline](https://github.com/ampled-music/ampled-web/blob/development/config/environments/development.rb#L88-L90) in the development environment.
 
 ## Conventions
 

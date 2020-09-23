@@ -21,7 +21,7 @@ export class FeaturedMessage extends React.Component<Props, any> {
           <div className="artist-header__message_title">Message</div>
           <div className="artist-header__message_text">
             <TextTruncate
-              line={artist.video_url ? 5 : 9}
+              line={5}
               element="span"
               truncateText="&#8230;"
               text={artist.bio}

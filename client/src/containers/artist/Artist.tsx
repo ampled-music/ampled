@@ -418,6 +418,7 @@ class ArtistComponent extends React.Component<Props, any> {
           loading={artists.loading || loadingMe}
           loggedUserAccess={loggedUserAccess}
           playerCallback={this.playerCallback}
+          openPostModal={this.openPostModal}
         />
         <Modal
           open={this.state.openPostModal}

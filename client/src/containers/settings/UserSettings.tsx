@@ -683,8 +683,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderSetUpBanner = () => {
     const { ownedPages } = this.props.userData;
     const noStripe = ownedPages.filter((ownedPage) => !ownedPage.isStripeSetup);
-    const notApproved = ownedPages.filter((ownedPage) => !ownedPage.approved);
-    console.log(notApproved);
+    const notApproved = ownedPages.filter(
+      (ownedPage) => !ownedPage.approved && ownedPage.isStripeSetup,
+    );
 
     return (
       <>
@@ -694,14 +695,24 @@ class UserSettingsComponent extends React.Component<Props, any> {
               The Ampled team does a quick spot check of all pages before they
               become visible to the general public. Set up payout for{' '}
               {noStripe.map((page, index) => {
-                if (noStripe.length === index + 1) {
-                  return <a href={page.stripeSignup}>{page.name}</a>;
-                } else {
+                if (noStripe.length > 0 && noStripe.length === index + 1) {
+                  return (
+                    <>
+                      {' '}
+                      and <a href={page.stripeSignup}>{page.name}</a>
+                    </>
+                  );
+                } else if (
+                  noStripe.length > 2 &&
+                  noStripe.length !== index + 1
+                ) {
                   return (
                     <>
                       <a href={page.stripeSignup}>{page.name}</a>,{' '}
                     </>
                   );
+                } else {
+                  return <a href={page.stripeSignup}>{page.name}</a>;
                 }
               })}{' '}
               to help us approve your page faster.
@@ -712,17 +723,24 @@ class UserSettingsComponent extends React.Component<Props, any> {
             <span>
               Your page is pending a quick approval. When you&apos;re ready to
               go, request approval for{' '}
-              {notApproved.map((page, index) => {
-                if (notApproved.length === index + 1) {
+              {noStripe.map((page, index) => {
+                if (noStripe.length > 0 && noStripe.length === index + 1) {
                   return (
-                    <button
-                      className="link link__banner"
-                      onClick={() => this.requestApproval(page.artistSlug)}
-                    >
-                      {page.name}
-                    </button>
+                    <>
+                      {' '}
+                      and{' '}
+                      <button
+                        className="link link__banner"
+                        onClick={() => this.requestApproval(page.artistSlug)}
+                      >
+                        {page.name}
+                      </button>
+                    </>
                   );
-                } else {
+                } else if (
+                  noStripe.length > 2 &&
+                  noStripe.length !== index + 1
+                ) {
                   return (
                     <>
                       <button
@@ -733,6 +751,15 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       </button>
                       ,{' '}
                     </>
+                  );
+                } else {
+                  return (
+                    <button
+                      className="link link__banner"
+                      onClick={() => this.requestApproval(page.artistSlug)}
+                    >
+                      {page.name}
+                    </button>
                   );
                 }
               })}{' '}

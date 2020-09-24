@@ -18,6 +18,7 @@ import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
 import { Button } from '@material-ui/core';
+import { apiAxios } from '../../api/setup-axios';
 
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { faStripe } from '@fortawesome/free-brands-svg-icons';
@@ -204,6 +205,32 @@ class UserSettingsComponent extends React.Component<Props, any> {
     }
   };
 
+  requestApproval = async (artistSlug) => {
+    try {
+      const { data } = await apiAxios({
+        method: 'post',
+        url: `/artist/${artistSlug}/request_approval.json`,
+        data: {},
+      });
+      if (data.status === 'ok') {
+        this.props.showToast({
+          message: data.message,
+          type: 'success',
+        });
+      } else {
+        this.props.showToast({
+          message: data.message,
+          type: 'error',
+        });
+      }
+    } catch {
+      this.props.showToast({
+        message: 'Sorry, something went wrong.',
+        type: 'error',
+      });
+    }
+  };
+
   handlePublicID = (image: string) => {
     if (!image) {
       return '';
@@ -213,6 +240,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
     const part_2 = url[url.length - 1];
     return part_1 + '/' + part_2;
   };
+
+  renderSticky = (message: any) => (
+    <div className="artistAlertHeader active">{message}</div>
+  );
 
   renderSocialImages = (artist) => {
     if (!artist.image) {
@@ -649,6 +680,69 @@ class UserSettingsComponent extends React.Component<Props, any> {
     </div>
   );
 
+  renderSetUpBanner = () => {
+    const { ownedPages } = this.props.userData;
+    const noStripe = ownedPages.filter((ownedPage) => !ownedPage.isStripeSetup);
+    const notApproved = ownedPages.filter((ownedPage) => !ownedPage.approved);
+    console.log(notApproved);
+
+    return (
+      <>
+        {noStripe &&
+          this.renderSticky(
+            <span>
+              The Ampled team does a quick spot check of all pages before they
+              become visible to the general public. Set up payout for{' '}
+              {noStripe.map((page, index) => {
+                if (noStripe.length === index + 1) {
+                  return <a href={page.stripeSignup}>{page.name}</a>;
+                } else {
+                  return (
+                    <>
+                      <a href={page.stripeSignup}>{page.name}</a>,{' '}
+                    </>
+                  );
+                }
+              })}{' '}
+              to help us approve your page faster.
+            </span>,
+          )}
+        {notApproved &&
+          this.renderSticky(
+            <span>
+              Your page is pending a quick approval. When you&apos;re ready to
+              go, request approval for{' '}
+              {notApproved.map((page, index) => {
+                if (notApproved.length === index + 1) {
+                  return (
+                    <button
+                      className="link link__banner"
+                      onClick={() => this.requestApproval(page.artistSlug)}
+                    >
+                      {page.name}
+                    </button>
+                  );
+                } else {
+                  return (
+                    <>
+                      <button
+                        className="link link__banner"
+                        onClick={() => this.requestApproval(page.artistSlug)}
+                      >
+                        {page.name}
+                      </button>
+                      ,{' '}
+                    </>
+                  );
+                }
+              })}{' '}
+              to let us know.
+            </span>,
+          )}
+      </>
+    );
+  };
+
   renderContent = () => (
     <div className="row content">
       {this.renderUserInfo()}
@@ -665,19 +759,24 @@ class UserSettingsComponent extends React.Component<Props, any> {
     const { userData } = this.props;
 
     return (
-      <div className="container user-settings-container">
-        <Loading artistLoading={this.props.loadingMe && !this.props.userData} />
-        {userData && this.renderContent()}
-        {this.renderCancelSubscriptionModal()}
-        {this.state.showPasswordModal && (
-          <Modal
-            open={this.state.showPasswordModal}
-            onClose={() => this.setState({ showPasswordModal: false })}
-          >
-            <ResetPassword type="change" />
-          </Modal>
-        )}
-      </div>
+      <>
+        {userData && this.renderSetUpBanner()}
+        <div className="container user-settings-container">
+          <Loading
+            artistLoading={this.props.loadingMe && !this.props.userData}
+          />
+          {userData && this.renderContent()}
+          {this.renderCancelSubscriptionModal()}
+          {this.state.showPasswordModal && (
+            <Modal
+              open={this.state.showPasswordModal}
+              onClose={() => this.setState({ showPasswordModal: false })}
+            >
+              <ResetPassword type="change" />
+            </Modal>
+          )}
+        </div>
+      </>
     );
   }
 }

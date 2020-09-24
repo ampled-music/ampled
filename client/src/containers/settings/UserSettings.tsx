@@ -683,13 +683,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
   renderSetUpBanner = () => {
     const { ownedPages } = this.props.userData;
     const noStripe = ownedPages.filter((ownedPage) => !ownedPage.isStripeSetup);
-    const notApproved = ownedPages.filter(
-      (ownedPage) => !ownedPage.approved && ownedPage.isStripeSetup,
-    );
+    const notApproved = ownedPages
+      .filter((ownedPage) => ownedPage.isStripeSetup)
+      .filter((ownedPage) => !ownedPage.approved);
 
     return (
       <>
-        {noStripe &&
+        {noStripe.length > 0 &&
           this.renderSticky(
             <span>
               The Ampled team does a quick spot check of all pages before they
@@ -718,13 +718,16 @@ class UserSettingsComponent extends React.Component<Props, any> {
               to help us approve your page faster.
             </span>,
           )}
-        {notApproved &&
+        {notApproved.length > 0 &&
           this.renderSticky(
             <span>
               Your page is pending a quick approval. When you&apos;re ready to
               go, request approval for{' '}
-              {noStripe.map((page, index) => {
-                if (noStripe.length > 0 && noStripe.length === index + 1) {
+              {notApproved.map((page, index) => {
+                if (
+                  notApproved.length > 0 &&
+                  notApproved.length === index + 1
+                ) {
                   return (
                     <>
                       {' '}
@@ -738,8 +741,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     </>
                   );
                 } else if (
-                  noStripe.length > 2 &&
-                  noStripe.length !== index + 1
+                  notApproved.length > 2 &&
+                  notApproved.length !== index + 1
                 ) {
                   return (
                     <>

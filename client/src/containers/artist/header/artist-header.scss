@@ -900,6 +900,7 @@
     }
     @include mq($layout-m) {
       min-width: 200px;
+      justify-content: flex-start;
     }
   }
 

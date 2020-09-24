@@ -354,14 +354,15 @@ class ArtistComponent extends React.Component<Props, any> {
               Your page is pending a quick approval.
               {!this.state.requestedApproval && (
                 <span>
-                  When you&apos;re ready to go,{' '}
+                  Congrats! Your page is now eligible for approval. When you’re
+                  ready for us to take a look,{' '}
                   <button
                     className="link link__banner"
                     onClick={this.requestApproval}
                   >
-                    click here
+                    click here to submit your page
                   </button>{' '}
-                  to let us know.
+                  .
                 </span>
               )}
             </span>,

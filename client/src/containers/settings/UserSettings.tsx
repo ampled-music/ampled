@@ -721,8 +721,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
         {notApproved.length > 0 &&
           this.renderSticky(
             <span>
-              Your page is pending a quick approval. When you&apos;re ready to
-              go, request approval for{' '}
+              Congrats! Your page is now eligible for approval. When you’re
+              ready for us to take a look, request approval for{' '}
               {notApproved.map((page, index) => {
                 if (
                   notApproved.length > 0 &&
@@ -766,7 +766,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                   );
                 }
               })}{' '}
-              to let us know.
+              to submit your page.
             </span>,
           )}
       </>

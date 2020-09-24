@@ -40,6 +40,7 @@ class UserImage extends React.Component<Props, any> {
   render() {
     const { image, className, alt, width, style } = this.props;
     let coordinates;
+    let selectedAvatar;
 
     const avatars = [
       avatar1,
@@ -52,9 +53,9 @@ class UserImage extends React.Component<Props, any> {
       avatar8,
       avatar9,
     ];
-    let selectedAvatar;
     const rando = this.imageSelector(alt);
-    if (rando >= 1 && rando <= 9) {
+
+    if (rando >= 1 && rando <= 8) {
       selectedAvatar = avatars[rando];
     } else {
       selectedAvatar = avatar5;

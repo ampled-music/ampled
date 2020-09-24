@@ -40,7 +40,7 @@ class Home extends React.Component<any> {
         onClick={this.closeBanner}
         style={{ width: '30px', height: '30px' }}
       >
-        <ReactSVG className="icon" src={Close} />
+        <ReactSVG className="icon icon_white" src={Close} />
       </IconButton>
     </div>
   );

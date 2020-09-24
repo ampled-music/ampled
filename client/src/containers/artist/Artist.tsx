@@ -266,7 +266,7 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   renderSticky = (message: any) => (
-    <div className="artistAlertHeader">{message}</div>
+    <div className="artistAlertHeader active">{message}</div>
   );
 
   requestApproval = async () => {
@@ -347,40 +347,35 @@ class ArtistComponent extends React.Component<Props, any> {
         )}
         {artist &&
           !artist.approved &&
+          artist.isStripeSetup &&
           loggedUserAccess &&
           this.renderSticky(
             <span>
               Your page is pending a quick approval.
-              <br />
               {!this.state.requestedApproval && (
                 <span>
                   When you&apos;re ready to go,{' '}
-                  <a
-                    role="button"
+                  <button
+                    className="link link__banner"
                     onClick={this.requestApproval}
-                    style={{ textDecoration: 'underline', cursor: 'pointer' }}
-                    // Hack to circumvent jsx-a11y lint rule. Ideally this entire <a> should
-                    // be replaced with a <button>. See:
-                    // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md
-                    href="#/"
                   >
                     click here
-                  </a>{' '}
+                  </button>{' '}
                   to let us know.
                 </span>
               )}
             </span>,
           )}
         {artist &&
+          !artist.approved &&
           !artist.isStripeSetup &&
           loggedUserAccess &&
           this.renderSticky(
             <span>
-              Right now you can&#39;t be supported until you{' '}
-              <a href={loggedUserAccess.stripeSignup}>
-                set up your Stripe Account
-              </a>
-              .
+              The Ampled team does a quick spot check of all pages before they
+              become visible to the general public.{' '}
+              <a href={loggedUserAccess.stripeSignup}>Set up payouts</a> to help
+              us approve your page faster.
             </span>,
           )}
         {artist.style_type === 'minimal' ? (

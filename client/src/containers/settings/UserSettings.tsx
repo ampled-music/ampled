@@ -695,7 +695,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
               The Ampled team does a quick spot check of all pages before they
               become visible to the general public. Set up payout for{' '}
               {noStripe.map((page, index) => {
-                if (noStripe.length > 0 && noStripe.length === index + 1) {
+                if (noStripe.length > 1 && noStripe.length === index + 1) {
                   return (
                     <>
                       {' '}
@@ -724,8 +724,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
               Congrats! Your page is now eligible for approval. When you’re
               ready for us to take a look, request approval for{' '}
               {notApproved.map((page, index) => {
+                console.log(notApproved.length);
+                console.log(index);
                 if (
-                  notApproved.length > 0 &&
+                  notApproved.length > 1 &&
                   notApproved.length === index + 1
                 ) {
                   return (

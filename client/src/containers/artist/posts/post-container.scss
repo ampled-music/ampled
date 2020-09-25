@@ -11,12 +11,15 @@
     margin: 2rem auto;
     text-align: center;
     font-family: $font-family-monospace;
-    min-height: 250px;
+    min-height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
     button {
       color: $black;
+    }
+    @include mq($layout-m) {
+      min-height: 250px;
     }
   }
 }

@@ -351,7 +351,6 @@ class ArtistComponent extends React.Component<Props, any> {
           loggedUserAccess &&
           this.renderSticky(
             <span>
-              Your page is pending a quick approval.
               {!this.state.requestedApproval && (
                 <span>
                   Congrats! Your page is now eligible for approval. When you’re
@@ -361,7 +360,7 @@ class ArtistComponent extends React.Component<Props, any> {
                     onClick={this.requestApproval}
                   >
                     click here to submit your page
-                  </button>{' '}
+                  </button>
                   .
                 </span>
               )}

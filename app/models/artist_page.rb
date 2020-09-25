@@ -108,8 +108,8 @@ class ArtistPage < ApplicationRecord
     plan
   end
 
-  def cover_url
-    images&.first&.url
+  def cover_public_id
+    images&.first&.public_id
   end
 
   def plan_for_nominal_amount(nominal_amount)

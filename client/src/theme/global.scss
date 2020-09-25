@@ -8,9 +8,6 @@
 body {
   color: $black;
   margin-top: 50px;
-  @include mq(0, $layout-m) {
-    margin-bottom: 50px;
-  }
 }
 
 a {
@@ -409,10 +406,13 @@ h6 {
       color: $white;
     }
   }
-  span {
+  &__container {
     display: block;
-    padding: 5px 15px;
+    padding: 5px 35px;
     margin: auto;
     max-width: 800px;
+    @include mq($tablet) {
+      padding: 5px 15px;
+    }
   }
 }

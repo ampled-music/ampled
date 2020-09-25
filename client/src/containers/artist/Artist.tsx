@@ -350,7 +350,7 @@ class ArtistComponent extends React.Component<Props, any> {
           artist.isStripeSetup &&
           loggedUserAccess &&
           this.renderSticky(
-            <span>
+            <div className="artistAlertHeader__container">
               {!this.state.requestedApproval && (
                 <span>
                   Congrats! Your page is now eligible for approval. When you’re
@@ -364,19 +364,19 @@ class ArtistComponent extends React.Component<Props, any> {
                   .
                 </span>
               )}
-            </span>,
+            </div>,
           )}
         {artist &&
           !artist.approved &&
           !artist.isStripeSetup &&
           loggedUserAccess &&
           this.renderSticky(
-            <span>
+            <div className="artistAlertHeader__container">
               The Ampled team does a quick spot check of all pages before they
               become visible to the general public.{' '}
               <a href={loggedUserAccess.stripeSignup}>Set up payouts</a> to help
               us approve your page faster.
-            </span>,
+            </div>,
           )}
         {artist.style_type === 'minimal' ? (
           <ArtistHeaderMinimal

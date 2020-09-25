@@ -691,7 +691,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <>
         {noStripe.length > 0 &&
           this.renderSticky(
-            <span>
+            <div className="artistAlertHeader__container">
               The Ampled team does a quick spot check of all pages before they
               become visible to the general public. Set up payout for{' '}
               {noStripe.map((page, index) => {
@@ -720,11 +720,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
                 }
               })}{' '}
               to help us approve your page faster.
-            </span>,
+            </div>,
           )}
         {notApproved.length > 0 &&
           this.renderSticky(
-            <span>
+            <div className="artistAlertHeader__container">
               Congrats! Your page is now eligible for approval. When you’re
               ready for us to take a look, request approval for{' '}
               {notApproved.map((page, index) => {
@@ -774,7 +774,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                 }
               })}{' '}
               to submit your page.
-            </span>,
+            </div>,
           )}
       </>
     );

@@ -697,22 +697,26 @@ class UserSettingsComponent extends React.Component<Props, any> {
               {noStripe.map((page, index) => {
                 if (noStripe.length > 1 && noStripe.length === index + 1) {
                   return (
-                    <>
+                    <span key={`stripe-${index}`}>
                       {' '}
                       and <a href={page.stripeSignup}>{page.name}</a>
-                    </>
+                    </span>
                   );
                 } else if (
                   noStripe.length > 2 &&
                   noStripe.length !== index + 1
                 ) {
                   return (
-                    <>
+                    <span key={`stripe-${index}`}>
                       <a href={page.stripeSignup}>{page.name}</a>,{' '}
-                    </>
+                    </span>
                   );
                 } else {
-                  return <a href={page.stripeSignup}>{page.name}</a>;
+                  return (
+                    <a key={`stripe-${index}`} href={page.stripeSignup}>
+                      {page.name}
+                    </a>
+                  );
                 }
               })}{' '}
               to help us approve your page faster.
@@ -731,7 +735,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
                   notApproved.length === index + 1
                 ) {
                   return (
-                    <>
+                    <span key={`request-${index}`}>
                       {' '}
                       and{' '}
                       <button
@@ -740,14 +744,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
                       >
                         {page.name}
                       </button>
-                    </>
+                    </span>
                   );
                 } else if (
                   notApproved.length > 2 &&
                   notApproved.length !== index + 1
                 ) {
                   return (
-                    <>
+                    <span key={`request-${index}`}>
                       <button
                         className="link link__banner"
                         onClick={() => this.requestApproval(page.artistSlug)}
@@ -755,11 +759,12 @@ class UserSettingsComponent extends React.Component<Props, any> {
                         {page.name}
                       </button>
                       ,{' '}
-                    </>
+                    </span>
                   );
                 } else {
                   return (
                     <button
+                      key={`request-${index}`}
                       className="link link__banner"
                       onClick={() => this.requestApproval(page.artistSlug)}
                     >

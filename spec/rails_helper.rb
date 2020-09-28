@@ -23,6 +23,11 @@ Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+# Load Rake tasks once, so that they are available in specs. If you call
+# load_tasks again, they will be re-added to the task list, and when you invoke
+# a task once it will get run twice (or as many times as it has been "loaded").
+Rails.application.load_tasks
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"

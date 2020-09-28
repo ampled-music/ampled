@@ -45,11 +45,7 @@ class StripeController < ApplicationController
   private
 
   def process_webhook(event_type, object, connect_account_id)
-    # artist_page = ArtistPage.find_by(stripe_user_id: _connect_account)
-
-    # for 'charge.failed' only
-    # puts object[:customer]
-    # puts object[:source][:last4]
+    StripeReconciliation::ReconcileStripeObjectJob.perform_async(object)
     case event_type
     when "invoice.payment_failed"
       return invoice_payment_failed(object)

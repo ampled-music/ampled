@@ -133,6 +133,10 @@
         padding: 1rem;
         display: flex;
         flex-wrap: wrap;
+        min-height: 100px;
+        @include mq($layout-m) {
+          min-height: 250px;
+        }
       }
     }
 

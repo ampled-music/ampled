@@ -22,7 +22,7 @@ class Home extends React.Component<any> {
 
   renderSticky = () => (
     <div className={cx('artistAlertHeader', { active: this.state.showBanner })}>
-      <span>
+      <div className="artistAlertHeader__container">
         As a response to COVID-19, artists will receive 100% of support through
         Ampled. We will waive artist membership dues for the rest of 2020.{' '}
         <a
@@ -33,14 +33,14 @@ class Home extends React.Component<any> {
           Learn more
         </a>
         .
-      </span>
+      </div>
       <IconButton
         className="artistAlertHeader__close-button"
         aria-label="close"
         onClick={this.closeBanner}
         style={{ width: '30px', height: '30px' }}
       >
-        <ReactSVG className="icon" src={Close} />
+        <ReactSVG className="icon icon_white" src={Close} />
       </IconButton>
     </div>
   );

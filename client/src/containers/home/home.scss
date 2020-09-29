@@ -9,31 +9,6 @@
     border-radius: 0;
     border: 2px solid $black;
   }
-  .artistAlertHeader {
-    position: relative;
-    padding-right: 50px;
-    display: none;
-    &.active {
-      display: block;
-    }
-    span {
-      display: block;
-      padding: 5px 15px;
-    }
-    &__close-button {
-      position: absolute;
-      top: 7px;
-      right: 15px;
-      padding: 0px;
-      .MuiIconButton-label {
-        padding: 0px !important;
-      }
-      svg {
-        fill: $white;
-        color: $white;
-      }
-    }
-  }
 }
 
 .home-header {

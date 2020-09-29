@@ -266,7 +266,7 @@ class ArtistComponent extends React.Component<Props, any> {
   };
 
   renderSticky = (message: any) => (
-    <div className="artistAlertHeader">{message}</div>
+    <div className="artistAlertHeader active">{message}</div>
   );
 
   requestApproval = async () => {
@@ -347,41 +347,36 @@ class ArtistComponent extends React.Component<Props, any> {
         )}
         {artist &&
           !artist.approved &&
+          artist.isStripeSetup &&
           loggedUserAccess &&
           this.renderSticky(
-            <span>
-              Your page is pending a quick approval.
-              <br />
+            <div className="artistAlertHeader__container">
               {!this.state.requestedApproval && (
                 <span>
-                  When you&apos;re ready to go,{' '}
-                  <a
-                    role="button"
+                  Congrats! Your page is now eligible for approval. When you’re
+                  ready for us to take a look,{' '}
+                  <button
+                    className="link link__banner"
                     onClick={this.requestApproval}
-                    style={{ textDecoration: 'underline', cursor: 'pointer' }}
-                    // Hack to circumvent jsx-a11y lint rule. Ideally this entire <a> should
-                    // be replaced with a <button>. See:
-                    // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md
-                    href="#/"
                   >
-                    click here
-                  </a>{' '}
-                  to let us know.
+                    click here to submit your page
+                  </button>
+                  .
                 </span>
               )}
-            </span>,
+            </div>,
           )}
         {artist &&
+          !artist.approved &&
           !artist.isStripeSetup &&
           loggedUserAccess &&
           this.renderSticky(
-            <span>
-              Right now you can&#39;t be supported until you{' '}
-              <a href={loggedUserAccess.stripeSignup}>
-                set up your Stripe Account
-              </a>
-              .
-            </span>,
+            <div className="artistAlertHeader__container">
+              The Ampled team does a quick spot check of all pages before they
+              become visible to the general public.{' '}
+              <a href={loggedUserAccess.stripeSignup}>Set up payouts</a> to help
+              us approve your page faster.
+            </div>,
           )}
         {artist.style_type === 'minimal' ? (
           <ArtistHeaderMinimal
@@ -422,6 +417,7 @@ class ArtistComponent extends React.Component<Props, any> {
           loading={artists.loading || loadingMe}
           loggedUserAccess={loggedUserAccess}
           playerCallback={this.playerCallback}
+          openPostModal={this.openPostModal}
         />
         <Modal
           open={this.state.openPostModal}

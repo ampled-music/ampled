@@ -2,7 +2,6 @@ import './artist-header.scss';
 
 import * as React from 'react';
 import * as R from 'ramda';
-import { Image, Transformation } from 'cloudinary-react';
 import { UserRoles } from '../../shared/user-roles';
 import { UserImage } from '../../user-details/UserImage';
 
@@ -35,20 +34,13 @@ export class Supporters extends React.Component<Props, any> {
         <div className="supporter__hover-card_header">
           {supporter.image?.public_id && (
             <div className="supporter__hover-card_header_photo">
-              <Image
-                publicId={supporter.image.public_id}
-                alt={supporter.name}
-                key={`hover-${supporter.name}`}
+              <UserImage
+                image={supporter.image}
                 className="supporter__hover-card_header_photo_image"
-              >
-                <Transformation
-                  fetchFormat="auto"
-                  crop="fill"
-                  width={100}
-                  height={100}
-                  responsive_placeholder="blank"
-                />
-              </Image>
+                alt={supporter.name}
+                width={60}
+                key={`hover-${supporter.name}`}
+              />
             </div>
           )}
           <div className="supporter__hover-card_header_info">

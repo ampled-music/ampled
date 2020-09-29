@@ -640,7 +640,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       }
     }
     if (editMode && artist && !prevProps?.artist?.name && artist.name) {
-      // console.log(artist);
+      console.log(artist);
       const {
         accent_color,
         name,
@@ -1714,7 +1714,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               {/* {this.renderDeleteBtn()} */}
               <div className={`col-sm-6 center ${saveBtnClasses}`}>
                 <Button onClick={this.onSubmit} className="publish-button">
-                  Preview your page
+                  {this.props.editMode
+                    ? 'Update your page'
+                    : 'Preview your page'}
                 </Button>
               </div>
             </div>

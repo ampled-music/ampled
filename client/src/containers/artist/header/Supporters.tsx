@@ -38,7 +38,7 @@ export class Supporters extends React.Component<Props, any> {
                 image={supporter.image}
                 className="supporter__hover-card_header_photo_image"
                 alt={supporter.name}
-                width={60}
+                width={100}
                 key={`hover-${supporter.name}`}
               />
             </div>

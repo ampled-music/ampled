@@ -105,6 +105,7 @@ const Routes = () => {
           return <Redirect to={`${props.location.pathname.toLowerCase()}`} />;
         }}
       />
+      <Redirect from={routePaths.community} to="/artist/community" />
       <PublicRoute
         exact
         path={routePaths.viewPost}

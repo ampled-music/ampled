@@ -9,8 +9,8 @@ module StripeReconciliation
       # TODO: Implement a more effective way to notify developers of an anomaly
 
       log_fields = {
-        stripe_object_type: @stripe_object["object"],
-        stripe_object_id: @stripe_object["id"],
+        stripe_object_type: @stripe_object.object,
+        stripe_object_id: @stripe_object.id,
         anomaly: @anomaly
       }
 

@@ -3,7 +3,8 @@ module StripeReconciliation
     include Sidekiq::Worker
 
     def perform(stripe_object)
-      reconciler_class = case stripe_object["object"]
+      stripe_object = OpenStruct.new(stripe_object)
+      reconciler_class = case stripe_object.object
                          when "invoice"
                            InvoiceReconciler
                          end

@@ -4,9 +4,7 @@ module StripeReconciliation
   describe ReconcileStripeObjectJob, type: :job do
     describe "#perform" do
       let!(:stripe_object) do
-        {
-          "object" => "invoice"
-        }
+        OpenStruct.new(object: "invoice")
       end
 
       it "reconciles an invoice with InvoiceReconciler" do
@@ -20,7 +18,7 @@ module StripeReconciliation
       end
 
       it "is silent when reconciling a Stripe object with an unknown type" do
-        stripe_object["object"] = "account"
+        stripe_object.object = "account"
 
         described_class.new.perform(stripe_object)
       end

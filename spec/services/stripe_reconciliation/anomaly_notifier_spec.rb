@@ -5,10 +5,10 @@ module StripeReconciliation
     describe "#notify" do
       let(:anomaly) { :unexpected_currency }
       let(:stripe_object) do
-        {
-          "object" => "invoice",
-          "id" => "in_1036Vr2eZvKYlo2CfjuUHA94"
-        }
+        OpenStruct.new(
+          object: "invoice",
+          id: "in_1036Vr2eZvKYlo2CfjuUHA94"
+        )
       end
 
       it "logs anomaly and Stripe details" do

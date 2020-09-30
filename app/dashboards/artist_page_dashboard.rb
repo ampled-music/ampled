@@ -50,7 +50,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :id,
     :owners,
     :approved,
-    :subscriber_count
+    :subscriber_count,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES

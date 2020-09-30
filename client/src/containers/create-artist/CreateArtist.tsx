@@ -1704,9 +1704,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             {!this.props.editMode && (
               <div className="row justify-content-center">
                 <div className="col-md-6 col-sm-10 create-artist__bottomcopy">
-                  The Ampled team does a quick spot check of all pages before
-                  they become visible to the general public, but this normally
-                  doesn&#39;t take us very long.
+                  Your page should initially only be visible to you and any
+                  other members you may add.
                 </div>
               </div>
             )}
@@ -1714,9 +1713,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               {/* {this.renderDeleteBtn()} */}
               <div className={`col-sm-6 center ${saveBtnClasses}`}>
                 <Button onClick={this.onSubmit} className="publish-button">
-                  {this.props.editMode
-                    ? 'Update your page'
-                    : 'Preview your page'}
+                  {this.props.editMode ? 'Update your page' : 'Save your page'}
                 </Button>
               </div>
             </div>

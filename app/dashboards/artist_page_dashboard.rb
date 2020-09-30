@@ -37,6 +37,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     style_type: Field::Select.with_options(
       collection: ['standard', 'minimal']
     ),
+    subscriber_count: Field::Number,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -49,7 +50,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :id,
     :owners,
     :approved,
-    :featured
+    :subscriber_count
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -58,6 +59,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :name,
     :id,
     :slug,
+    :subscriber_count,
     :owners,
     :location,
     :bio,

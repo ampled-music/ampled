@@ -3,7 +3,6 @@
 
 .page {
   background-color: $white;
-  min-height: calc(100vh - 280px);
   padding: 1rem;
   margin: 50px auto 0;
   @include mq($layout-m) {

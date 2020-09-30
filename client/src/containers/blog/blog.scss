@@ -2,7 +2,6 @@
 @import '../../theme/mixins.scss';
 
 .blog-posts {
-  min-height: calc(100vh - 280px);
   width: 100%;
   max-width: 2000px;
   margin: 50px auto 0;
@@ -118,7 +117,6 @@
 }
 
 .blog-post {
-  min-height: calc(100vh - 280px);
   margin: 0 auto;
   position: relative;
   margin-bottom: 2rem;

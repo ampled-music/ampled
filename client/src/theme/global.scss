@@ -10,6 +10,13 @@ body {
   margin-top: 50px;
 }
 
+main {
+  min-height: calc(100vh - 100px);
+  @include mq($layout-m) {
+    min-height: calc(100vh - 300px);
+  }
+}
+
 a {
   color: $black;
   text-decoration: underline;
@@ -26,7 +33,7 @@ h1 {
   letter-spacing: 2px;
   font-size: 1.8rem;
 
-  @include mq($desktop) {
+  @include mq($layout-m) {
     font-size: 2.5rem;
   }
 }

@@ -9,11 +9,22 @@ module StripeReconciliation
                            InvoiceReconciler
                          end
 
-      return unless reconciler_class
+      if reconciler_class.nil?
+        log_info("not reconciling Stipe object type #{stripe_object.object}")
 
+        return
+      end
+
+      log_info("reconciling Stripe object type #{stripe_object.object} with #{reconciler_class.name}")
       reconciler = reconciler_class.new(stripe_object)
 
       AnomalyNotifier.new(anomaly: reconciler.anomaly, stripe_object: stripe_object).notify unless reconciler.reconcile
+    end
+
+    private
+
+    def log_info(message)
+      Rails.logger.info("[#{self.class.name}] #{message}")
     end
   end
 end

@@ -457,6 +457,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
               >
                 <Transformation
                   fetchFormat="auto"
+                  quality="auto"
                   crop="fill"
                   width={250}
                   height={250}
@@ -594,6 +595,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
             >
               <Transformation
                 fetchFormat="auto"
+                quality="auto"
                 crop="fill"
                 width={250}
                 height={250}

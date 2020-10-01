@@ -45,7 +45,11 @@ class StripeController < ApplicationController
   private
 
   def process_webhook(event_type, object, connect_account_id)
-    StripeReconciliation::ReconcileStripeObjectJob.perform_async(object)
+    # Sidekiq writes ActionController::Params as a JSON string when queueing a job.
+    # That String is not transformed into a Hash when the job runs.
+    # Therefore, we need to convert the Stripe object into a Hash before queueing the job.
+    # It is safe to do this because we have verfied the webhook.
+    StripeReconciliation::ReconcileStripeObjectJob.perform_async(object.to_unsafe_h)
     case event_type
     when "invoice.payment_failed"
       return invoice_payment_failed(object)

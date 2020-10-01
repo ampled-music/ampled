@@ -21,6 +21,7 @@ json.promote_square_images @artist_page.promote_square_images
 json.promote_story_images @artist_page.promote_story_images
 json.supporter_images @artist_page.supporter_images
 json.style_type @artist_page.style_type
+json.verb_plural @artist_page.verb_plural
 
 json.most_recent_supporter do
   if @artist_page.most_recent_supporter.present?

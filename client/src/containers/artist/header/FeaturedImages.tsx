@@ -89,6 +89,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                 <Image publicId={image.public_id} key={image.public_id}>
                   <Transformation
                     fetchFormat="auto"
+                    quality="auto"
                     crop="fill"
                     width={mobileImageWidth ? mobileImageWidth : imageWidth}
                     height={mobileImageHeight ? mobileImageHeight : imageHeight}
@@ -148,6 +149,7 @@ export class FeaturedImages extends React.Component<Props, any> {
             >
               <Transformation
                 fetchFormat="auto"
+                quality="auto"
                 crop="fill"
                 width={mobileImageWidth ? mobileImageWidth : imageWidth}
                 height={mobileImageHeight ? mobileImageHeight : imageHeight}

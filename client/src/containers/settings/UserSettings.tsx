@@ -450,7 +450,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           >
             {ownedPage.image && (
               <Image
-                publicId={this.handlePublicID(ownedPage.image)}
+                publicId={ownedPage.image}
                 alt={ownedPage.name}
                 key={ownedPage.name}
                 className="artist__image"
@@ -587,7 +587,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
             className="artist col-sm-6 col-md-4"
           >
             <Image
-              publicId={this.handlePublicID(subscription.image)}
+              publicId={subscription.image}
               alt={subscription.name}
               key={subscription.name}
               className="artist__image"

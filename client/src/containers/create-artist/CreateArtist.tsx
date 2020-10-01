@@ -189,6 +189,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
             >
               <Transformation
                 fetchFormat="auto"
+                quality="auto"
                 crop="fill"
                 width={130}
                 height={130}

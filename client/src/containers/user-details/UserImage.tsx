@@ -76,6 +76,7 @@ class UserImage extends React.Component<Props, any> {
           >
             <Transformation
               fetchFormat="auto"
+              quality="auto"
               crop={coordinates ? 'crop' : 'fill'}
               x={coordinates ? coordinates[0] : ''}
               y={coordinates ? coordinates[1] : ''}

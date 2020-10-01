@@ -68,6 +68,7 @@ class ArtistSearch extends React.Component {
                 >
                   <Transformation
                     fetchFormat="auto"
+                    quality="auto"
                     crop="fill"
                     width={30}
                     height={30}

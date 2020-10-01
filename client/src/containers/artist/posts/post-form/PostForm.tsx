@@ -635,6 +635,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
         >
           <Transformation
             fetchFormat="auto"
+            quality="auto"
             crop="fill"
             width={500}
             height={150}

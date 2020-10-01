@@ -49,6 +49,7 @@ interface PostsProps {
   artistSlug: string;
   hideMembers: boolean;
   playerCallback?(action: string, instance: any): void;
+  openPostModal: React.MouseEventHandler;
 }
 
 const { scaleDown } = transitions;
@@ -120,7 +121,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
     } = this.props;
 
     if (!posts) {
-      return null;
+      return;
     }
 
     const loggedUserAccess = (me?.artistPages || []).filter(
@@ -180,7 +181,32 @@ class PostsContainerComponent extends React.Component<Props, any> {
   render() {
     return (
       <div className="post-container">
-        <div className="container">{this.renderStackedPosts()}</div>
+        <div className="container">
+          {this.props.posts?.length > 0 ? (
+            this.renderStackedPosts()
+          ) : (
+            <div className="post-container__no-posts">
+              <div>
+                Create your{' '}
+                <button
+                  className="link link__banner"
+                  onClick={this.props.openPostModal}
+                >
+                  first post
+                </button>
+                ! If you need help, our{' '}
+                <a
+                  href="https://docs.ampled.com/artist-handbook/getting-started/posts"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Artist Handbook
+                </a>{' '}
+                can show you the way.
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     );
   }

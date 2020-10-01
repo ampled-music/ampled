@@ -4,13 +4,11 @@ module StripeReconciliation
   describe ReconcileStripeObjectJob, type: :job do
     describe "#perform" do
       let!(:stripe_object) do
-        {
-          "object" => "invoice"
-        }
+        { "object" => "invoice" }
       end
 
       it "reconciles an invoice with InvoiceReconciler" do
-        expect(InvoiceReconciler).to receive(:new).with(stripe_object).and_return(
+        expect(InvoiceReconciler).to receive(:new).with(OpenStruct.new(stripe_object)).and_return(
           instance_double("InvoiceReconciler", reconcile: true)
         )
 
@@ -26,12 +24,12 @@ module StripeReconciliation
       end
 
       it "uses AnomalyNotifier when reconiliation fails" do
-        expect(InvoiceReconciler).to receive(:new).with(stripe_object).and_return(
+        expect(InvoiceReconciler).to receive(:new).with(OpenStruct.new(stripe_object)).and_return(
           instance_double("InvoiceReconciler", reconcile: false, anomaly: :unexpected_currency)
         )
 
         expect(AnomalyNotifier).to receive(:new)
-          .with(anomaly: :unexpected_currency, stripe_object: stripe_object).and_return(
+          .with(anomaly: :unexpected_currency, stripe_object: OpenStruct.new(stripe_object)).and_return(
             instance_double("AnomalyNotifier", notify: nil)
           )
 

@@ -31,7 +31,7 @@ RSpec.describe StripeController, type: :request do
       expect(StripeReconciliation::ReconcileStripeObjectJob.jobs.last["args"]).to match_array([
         {
           "id" => "abc"
-        }.to_s
+        }
       ])
     end
 

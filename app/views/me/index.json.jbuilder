@@ -41,7 +41,7 @@ json.subscriptions @subscriptions do |subscription|
   json.artistSlug subscription.artist_page.slug
   json.artistColor subscription.artist_page.accent_color
   json.name subscription.artist_page.name
-  json.image subscription.artist_page.cover_url
+  json.image subscription.artist_page.cover_public_id
   json.last_post_date subscription.artist_page.last_post_date
   json.support_date subscription.created_at
   json.amount subscription.plan.nominal_amount
@@ -57,7 +57,7 @@ json.ownedPages @owned_pages do |page|
   json.artistSlug page.page.slug
   json.artistColor page.page.accent_color
   json.name page.page.name
-  json.image page.page.cover_url
+  json.image page.page.cover_public_id
   json.supportersCount page.page.subscriber_count
   json.monthlyTotal page.page.monthly_total
   json.lastPost page.page.last_post_date

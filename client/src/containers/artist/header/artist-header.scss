@@ -1,25 +1,6 @@
 @import '../../../theme/vars.scss';
 @import '../../../theme/mixins.scss';
 
-.artistAlertHeader {
-  font-family: $font-family-monospace;
-  font-size: $font-size-md;
-  text-align: center;
-  padding: 5px 10px;
-  margin: 0;
-  background-color: $black;
-  color: $white;
-  span {
-    display: list-item;
-  }
-  a {
-    color: $white;
-    &:hover {
-      color: $white;
-    }
-  }
-}
-
 .artist-header {
   font-family: $font-family-sans-serif;
   display: flex;
@@ -246,7 +227,7 @@
 
     img {
       width: 100%;
-      opacity: 1;
+      opacity: 0.3;
     }
 
     &:nth-child(1n) {
@@ -900,6 +881,7 @@
     }
     @include mq($layout-m) {
       min-width: 200px;
+      justify-content: flex-start;
     }
   }
 

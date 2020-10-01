@@ -8,8 +8,12 @@
 body {
   color: $black;
   margin-top: 50px;
-  @include mq(0, $layout-m) {
-    margin-bottom: 50px;
+}
+
+main {
+  min-height: calc(100vh - 100px);
+  @include mq($layout-m) {
+    min-height: calc(100vh - 300px);
   }
 }
 
@@ -29,7 +33,7 @@ h1 {
   letter-spacing: 2px;
   font-size: 1.8rem;
 
-  @include mq($desktop) {
+  @include mq($layout-m) {
     font-size: 2.5rem;
   }
 }
@@ -228,6 +232,10 @@ h6 {
       background: transparent !important;
     }
   }
+  &__banner {
+    color: $white;
+    text-decoration: underline;
+  }
 }
 
 .bg-texture {
@@ -373,5 +381,45 @@ h6 {
   .MuiPaper-root {
     background: transparent;
     align-self: self-start;
+  }
+}
+
+.artistAlertHeader {
+  font-family: $font-family-monospace;
+  font-size: $font-size-md;
+  text-align: center;
+  padding: 5px 10px;
+  margin: 0;
+  background-color: $black;
+  color: $white;
+  display: none;
+  position: relative;
+  &.active {
+    display: block;
+  }
+  &__close-button,
+  .artistAlertHeader__close-button {
+    position: absolute;
+    top: 7px;
+    right: 15px;
+    padding: 0px;
+    .MuiIconButton-label {
+      padding: 0px !important;
+    }
+  }
+  a {
+    color: $white;
+    &:hover {
+      color: $white;
+    }
+  }
+  &__container {
+    display: block;
+    padding: 5px 35px;
+    margin: auto;
+    max-width: 800px;
+    @include mq($tablet) {
+      padding: 5px 15px;
+    }
   }
 }

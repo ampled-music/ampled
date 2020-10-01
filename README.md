@@ -11,6 +11,7 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
       - [`.env`](#env)
     - [Running the Specs](#running-the-specs)
     - [Running the Application Locally](#running-the-application-locally)
+    - [Running Sidekiq](#running-sidekiq)
   - [Conventions](#conventions)
     - [Git](#git)
     - [Code Style](#code-style)
@@ -107,7 +108,20 @@ Once your database is set up and filled with data simply run the following comma
 
 This will also automatically compile any js or css changes live on the fly.
 
-Note: Sidekiq jobs are [run inline](https://github.com/ampled-music/ampled-web/blob/development/config/environments/development.rb#L88-L90) in the development environment.
+### Running Sidekiq
+
+By default Sidekiq jobs are [run inline](https://github.com/ampled-music/ampled-web/blob/development/config/environments/development.rb#L88-L90) in the development environment.
+
+If you want to simulate the production environment by running jobs in the background, you need to run Redis and Sidekiq.
+
+    $ brew services start redis
+    $ bundle exec sidekiq
+
+Then when starting your application server or console set the rails env to production.
+
+    $ RAILS_ENV=production bundle exec rails console
+    $ RAILS_ENV=production npm run start
+
 
 ## Conventions
 

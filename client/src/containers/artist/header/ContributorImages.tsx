@@ -97,14 +97,15 @@ export class ContributorImages extends React.Component<Props, any> {
           interval={6000}
         >
           {chunkContributors &&
-            chunkContributors.map((images) => {
+            chunkContributors.map((images, index) => {
               return (
-                <div>
+                <div key={`contributor_slide-${index}`}>
                   {images &&
                     images.map((image, index) => {
                       return (
                         <img
                           src={image}
+                          key={`contributor-${index}`}
                           className="artist-header__contributors_image"
                           alt={`contributor-${index}`}
                         />

@@ -5,11 +5,11 @@ module StripeReconciliation
     describe "#reconcile" do
       let(:subscription) { create(:subscription) }
       let!(:stripe_invoice) do
-        {
+        OpenStruct.new(
           currency: "usd",
           total: subscription.plan.nominal_amount,
           subscription: subscription.stripe_id
-        }
+        )
       end
       let!(:reconciler) { described_class.new(stripe_invoice) }
 
@@ -21,7 +21,7 @@ module StripeReconciliation
       end
 
       it "returns false and records an anomaly if an invoice has an unexpected currency" do
-        stripe_invoice[:currency] = "cad"
+        stripe_invoice.currency = "cad"
 
         result = reconciler.reconcile
 
@@ -30,7 +30,7 @@ module StripeReconciliation
       end
 
       it "returns false and records an anomaly if an invoice doesn't have a matching local subscription" do
-        stripe_invoice[:subscription] = "some_id"
+        stripe_invoice.subscription = "some_id"
 
         result = reconciler.reconcile
 
@@ -39,7 +39,7 @@ module StripeReconciliation
       end
 
       it "returns false and records an anomaly if an invoice doesn't have the expected total amount" do
-        stripe_invoice[:total] = stripe_invoice[:total] - 1
+        stripe_invoice.total = stripe_invoice.total - 1
 
         result = reconciler.reconcile
 

@@ -284,13 +284,13 @@ class SignupComponent extends React.Component<Props, any> {
                 required
                 aria-label="Accept terms of use"
               />
-              You agree to our{' '}
+              You agree to our Terms of Use, which you can read{' '}
               <a
                 href="https://docs.ampled.com/policy/terms-of-use"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <u>Terms of Service</u>
+                here
               </a>
               .
             </label>

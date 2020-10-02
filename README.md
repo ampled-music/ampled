@@ -17,7 +17,7 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
     - [Code Style](#code-style)
   - [Additional/Optional Development Details](#additionaloptional-development-details)
     - [Backup/Restore Database](#backuprestore-database)
-    - [Code Coverage (local)](#code-coverage-local)
+    - [Code Coverage](#code-coverage)
     - [Using Guard](#using-guard)
     - [Using Mailcatcher](#using-mailcatcher)
     - [Using ChromeDriver](#using-chromedriver)
@@ -158,13 +158,14 @@ The backup files are stored in `/db/backups/` directory. If you use zsh, your ra
 
 IMPORTANT: These commands will connect to whatever DB your rails environment is configured with.
 
-### Code Coverage (local)
+### Code Coverage
 
-Coverage for the ruby specs:
+To compute code coverage for the Ruby specs, set the `COVERAGE` env variable:
 
     $ COVERAGE=true rspec
 
-Code coverage is reported to Code Climate on every CI build so there's a record of trending.
+SimpleCov will output the coverage information into the `coverage/` directory. Open `coverage/index.html` to browse the
+coverage results.
 
 ### Using Guard
 

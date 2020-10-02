@@ -776,9 +776,6 @@ GEM
     cloudinary (1.9.1)
       aws_cf_signer
       rest-client
-    codecov (0.2.11)
-      json
-      simplecov
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -1126,7 +1123,6 @@ DEPENDENCIES
   capybara
   chromedriver-helper
   cloudinary
-  codecov
   coffee-rails
   devise
   devise-jwt

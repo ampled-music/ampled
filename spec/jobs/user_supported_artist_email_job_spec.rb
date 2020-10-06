@@ -33,6 +33,18 @@ describe UserSupportedArtistEmailJob, type: :job do
             social_image_url: social_image[:url],
             support_amount: format("%.2f", subscription.plan.nominal_amount / 100.0)
           }
+        },
+        {
+          from: ENV["POSTMARK_FROM_EMAIL"],
+          to: user.email,
+          template_alias: "new-community-member",
+          template_model: {
+            artist_name: artist_page.name,
+            artist_page_link: "#{ENV["REACT_APP_API_URL"]}/artist/community",
+            promote_artist_page_link: "#{ENV["REACT_APP_API_URL"]}/artist/community/promote",
+            social_image_url: social_image[:url],
+            support_amount: format("%.2f", subscription.plan.nominal_amount / 100.0)
+          }
         }
       ]
     )

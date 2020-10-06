@@ -111,6 +111,7 @@ const Routes = () => {
         }}
       />
       <Redirect from={routePaths.community} to="/artist/community" />
+      <Redirect from="/artist/community/promote" to="/artist/community/share" />
       <PublicRoute
         exact
         path={routePaths.communityShare}

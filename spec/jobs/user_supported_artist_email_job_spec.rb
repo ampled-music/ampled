@@ -14,7 +14,7 @@ describe UserSupportedArtistEmailJob, type: :job do
     allow(SocialImages::Images::SupporterSquare).to receive(:build) { social_image }
 
     user = create(:user)
-    artist_page = create(:artist_page)
+    artist_page = create(:artist_page, slug: "slug")
     plan = create(:plan, artist_page: artist_page, nominal_amount: 500)
     subscription = create(:subscription, user: user, artist_page: artist_page, plan: plan)
 

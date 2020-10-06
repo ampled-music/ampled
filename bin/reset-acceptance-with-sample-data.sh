@@ -2,7 +2,7 @@
 cwd=`dirname "$0"`
 source "$cwd/reset-config.cfg"
 
-echo "Loading sample_data on acceptance (destructive)..."
+echo "Loading sample data on acceptance (destructive)..."
 sleep 3
 
 set -x

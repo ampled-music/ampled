@@ -163,7 +163,7 @@ class NavComponent extends React.Component<Props, any> {
           <div className="loginLink">{this.renderNavLink()}</div>
           <MenuEx renderLoginLink={this.renderLoginLink} />
         </div>
-        {this.showSupportButton() && (
+        {this.showSupportButton() && this.props.artist.approved && (
           <div className="stickySupport">
             <button
               className="btn btn-ampled btn-support"

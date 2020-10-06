@@ -352,7 +352,9 @@ export class SupportComponent extends React.Component<Props, any> {
     switch (subscriptions.status) {
       case SubscriptionStep.SupportLevel:
         return [
-          !artist.hide_members && this.renderArtists(artist.owners),
+          !artist.hide_members &&
+            !this.isAmpled() &&
+            this.renderArtists(artist.owners),
           this.renderSupportLevelForm(artist.name),
         ];
       case SubscriptionStep.PaymentDetails:

@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   post "artist/:slug/request_approval", to: "artist_pages#request_approval"
   get "artist/:slug/post/:postid/download", to: "posts#download_post"
   get "slug/:slug/post/:id", to: "posts#show"
-  get "artists/browse", to: "artist_pages#browse"
+  get "artists/browse", to: "artist_pages#browse_artist_owners"
   get "artists/typeahead", to: "artist_pages#typeahead"
   get "stats/summary", to: "stats#summary"
 

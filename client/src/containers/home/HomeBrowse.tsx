@@ -1,8 +1,10 @@
 import './home.scss';
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 import { Link } from 'react-router-dom';
 import { apiAxios } from '../../api/setup-axios';
 import { Image, Transformation } from 'cloudinary-react';
+import Location from '../../images/icons/Icon_Location.svg';
 
 class HomeBrowse extends React.Component {
   state = {
@@ -63,7 +65,7 @@ class HomeBrowse extends React.Component {
     return (
       <div>
         <div className="home-artists">
-          <h1 className="home-artists__title">All Artists</h1>
+          <h1 className="home-artists__title">Artists-Owners</h1>
           <div className="container">
             <div className="row justify-content-center">
               {this.getArtistsList(artists)}
@@ -81,6 +83,7 @@ class HomeBrowse extends React.Component {
   private getArtistsList(artistsPages: any) {
     return artistsPages && artistsPages.length
       ? artistsPages.map((page) => {
+          console.log(page);
           return (
             <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
               <Link to={`/artist/${page.slug}`}>
@@ -105,6 +108,15 @@ class HomeBrowse extends React.Component {
                   </Image>
                 </div>
                 <div className="home-artists__item_border"></div>
+                {page.location && (
+                  <div className="home-artists__item_location">
+                    <ReactSVG
+                      className="icon icon_black icon_sm"
+                      src={Location}
+                    />
+                    {page.location}
+                  </div>
+                )}
               </Link>
             </div>
           );

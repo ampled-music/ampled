@@ -17,7 +17,7 @@ class UserSupportedArtistEmailJob
       [{
         from: ENV["POSTMARK_FROM_EMAIL"],
         to: user.email,
-        template_alias: is_community ? "user-supported-artist" : "new-community-member",
+        template_alias: is_community ? "new-community-member" : "user-supported-artist",
         template_model: {
           artist_name: artist_page.name,
           artist_page_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}",

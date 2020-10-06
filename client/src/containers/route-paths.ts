@@ -24,4 +24,5 @@ export const routePaths = {
   blog: '/blog',
   blogPost: '/blog/:slug',
   community: '/community',
+  communityShare: '/artist/community/share',
 };

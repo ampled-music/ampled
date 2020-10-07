@@ -147,7 +147,11 @@ const usageGuide = [
   },
   {
     header: '  Refund processed application (platform) fees',
-    content: ['TKTK'],
+    content: [
+      'Refund all processed platform fees for August 2020:',
+      '{bold yarn start --refundProcessedFees --starting 08/01/2020 --ending 08/31/2020}',
+      '',
+    ],
   },
 ];
 

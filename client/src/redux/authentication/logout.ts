@@ -6,6 +6,7 @@ import { actions } from './actions';
 export const logoutAction = createActionThunk(actions.logout, () => {
   logout();
   Sentry.configureScope((scope) => scope.setUser(null));
+  document.cookie = '_ampled_web_session=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 });
 
 export const logoutReducer = {

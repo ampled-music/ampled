@@ -29,6 +29,11 @@ const LazyNoArtist = React.lazy(() =>
     default: module.NoArtist,
   })),
 );
+const LazyCommunityShare = React.lazy(() =>
+  import('./community/CommunityShare').then((module) => ({
+    default: module.CommunityShare,
+  })),
+);
 const LazyHome = React.lazy(() =>
   import('./home/Home').then((module) => ({ default: module.Home })),
 );
@@ -106,6 +111,17 @@ const Routes = () => {
         }}
       />
       <Redirect from={routePaths.community} to="/artist/community" />
+      <Redirect from="/artist/community/promote" to="/artist/community/share" />
+      <PublicRoute
+        exact
+        path={routePaths.communityShare}
+        component={LazyCommunityShare}
+      />
+      <PublicRoute
+        exact
+        path={routePaths.communityShare}
+        component={LazyCommunityShare}
+      />
       <PublicRoute
         exact
         path={routePaths.viewPost}

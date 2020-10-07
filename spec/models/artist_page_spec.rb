@@ -102,4 +102,57 @@ RSpec.describe ArtistPage, type: :model do
       end
     end
   end
+
+  describe "#stripe_product" do
+    let(:artist_page) { build(:artist_page, name: name, stripe_product_id: nil) }
+
+    # Examples that test the transformation of an artist's name into a statement descriptor
+    [
+      {
+        description: "strips disallowed statement descriptor characters",
+        name: "*(ryan\'s) ironic \"band\"*",
+        expected_statement_descriptor: "ryans ironic band"
+      },
+      {
+        description: "pads a statement descriptor that is too short",
+        name: "ê",
+        expected_statement_descriptor: "ê    "
+      },
+      {
+        description: "shortens a statement_descriptor this is too long",
+        name: "abcdefghijkmnopqrstuvwxyz",
+        expected_statement_descriptor: "abcdefghijkmnopqrstuvw"
+      }
+    ].each do |example_case|
+      let(:name) { example_case[:name] }
+      let(:expected_statement_descriptor) { example_case[:expected_statement_descriptor] }
+
+      it "#{example_case[:description]} when creating a product" do
+        product_double = double("Stripe Product",
+                                id: "some not nil id", statement_descriptor: expected_statement_descriptor)
+
+        allow(Stripe::Product).to receive(:retrieve).and_return(product_double)
+        expect(Stripe::Product).to receive(:create).with(
+          hash_including(statement_descriptor: expected_statement_descriptor),
+          stripe_account: artist_page.stripe_user_id
+        ).and_return(product_double)
+
+        artist_page.stripe_product
+      end
+
+      it "#{example_case[:description]} when updating a product" do
+        product_double = double("Stripe Product", statement_descriptor: nil)
+        artist_page.stripe_product_id = "some not nil id"
+
+        allow(Stripe::Product).to receive(:retrieve).and_return(product_double)
+        expect(Stripe::Product).to receive(:update).with(
+          artist_page.stripe_product_id,
+          hash_including(statement_descriptor: expected_statement_descriptor),
+          stripe_account: artist_page.stripe_user_id
+        )
+
+        artist_page.stripe_product
+      end
+    end
+  end
 end

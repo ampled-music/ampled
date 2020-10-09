@@ -55,6 +55,8 @@ class ArtistPage < ApplicationRecord
 
   scope :approved, -> { where(approved: true) }
 
+  STRIPE_STATEMENT_DESCRIPTOR_DISALLOWED_CHARACTERS = "()\\\'\"*".freeze
+
   def sluggy_slug
     return unless slug
 
@@ -132,7 +134,11 @@ class ArtistPage < ApplicationRecord
     @stripe_product ||= Stripe::Product.retrieve(stripe_product_id, stripe_account: stripe_user_id)
     return @stripe_product unless @stripe_product.statement_descriptor.nil?
 
-    Stripe::Product.update(stripe_product_id, { statement_descriptor: name[0..21] }, stripe_account: stripe_user_id)
+    Stripe::Product.update(
+      stripe_product_id,
+      { statement_descriptor: stripe_statement_descriptor },
+      stripe_account: stripe_user_id
+    )
   end
 
   def subscriber_count
@@ -207,9 +213,20 @@ class ArtistPage < ApplicationRecord
       {
         name: "Ampled Support",
         type: "service",
-        statement_descriptor: name[0..21]
+        statement_descriptor: stripe_statement_descriptor
       }, stripe_account: stripe_user_id
     )
     update(stripe_product_id: product.id)
+  end
+
+  def stripe_statement_descriptor
+    # Stripe has specific rules about what can go into a statement descriptor, read more in their documentation:
+    # https://stripe.com/docs/statement-descriptors
+
+    stripped_descriptor = name.tr(STRIPE_STATEMENT_DESCRIPTOR_DISALLOWED_CHARACTERS, "")
+
+    stripped_descriptor += " " * (5 - stripped_descriptor.length) if stripped_descriptor.length < 5
+
+    stripped_descriptor[0..21]
   end
 end

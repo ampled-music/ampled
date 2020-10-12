@@ -3,24 +3,137 @@
 
 #footer {
   border-top: 10px solid $black;
-  padding: 2rem 0;
   background-color: $white;
   width: 100%;
   overflow-x: hidden;
 
-  .footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  a {
+    display: block;
+    font-family: $font-family-monospace;
+    font-size: 0.875rem;
+  }
 
-    &__email {
-      width: 100%;
+  .footer {
+    &__top {
+      background-color: $white;
+      color: $black;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      @include mq(0, $layout-m) {
+        padding: 0;
+      }
       @include mq($layout-m) {
-        width: auto;
+        flex-direction: row;
+      }
+      a {
+        text-decoration: none;
+        margin-bottom: 0.5rem;
+        &:hover {
+          text-decoration: underline;
+          color: $black;
+        }
+      }
+      &_left {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 2rem;
+        flex-wrap: wrap;
+        @include mq($layout-m) {
+          padding: 2rem 5rem 2rem 0;
+        }
+      }
+      &_right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-top: 10px solid $black;
+        width: 100%;
+        padding: 2rem;
+        @include mq($layout-m) {
+          width: auto;
+          border-top: 0;
+          border-left: 10px solid $black;
+          padding: 2rem 0 2rem 5rem;
+        }
+        &_logo-btn {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          .coop-logo {
+            margin-bottom: 1rem;
+          }
+        }
       }
     }
-    &__info,
-    &__logos {
+    &__bottom {
+      background-color: $black;
+      color: $white;
+      padding: 1rem 0;
+      @include mq($layout-m) {
+        padding: 3rem 0;
+      }
+      a {
+        text-decoration: underline;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+      &_flex {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        @include mq($layout-m) {
+          flex-direction: row;
+          align-items: center;
+        }
+      }
+      &_left {
+        font-family: $font-family-monospace;
+        .btn {
+          background-color: $white;
+          color: $black;
+          text-transform: uppercase;
+          &:hover {
+            background-color: $black;
+            color: $white;
+            border: 2px solid $white;
+          }
+        }
+      }
+      &_right {
+        @include mq(0, $layout-m) {
+          margin-top: 2rem;
+        }
+        &_links {
+          display: flex;
+          flex-direction: column;
+          @include mq($layout-m) {
+            flex-direction: row;
+          }
+          * {
+            @include mq(0, $layout-m) {
+              margin-bottom: 0.5rem;
+            }
+            margin-right: 2rem;
+            &:last-child {
+              margin-right: 0;
+              margin-bottom: 0rem;
+            }
+          }
+        }
+      }
+      a {
+        color: $white;
+      }
+    }
+
+    &__info {
       width: 50%;
       margin-bottom: 1rem;
       @include mq($layout-m) {
@@ -37,31 +150,16 @@
         margin: 0 0 1rem;
       }
     }
-    a {
-      display: block;
-      font-family: $font-family-monospace;
-      color: $black;
-      text-decoration: underline;
-      font-size: 0.875rem;
-      margin-bottom: 0.5rem;
-      &:hover {
-        text-decoration: none;
-      }
-    }
-    .logo {
-      width: 100%;
-      max-width: 150px;
-    }
     .copyright {
       display: block;
       font-family: $font-family-monospace;
-      color: $black;
+      font-size: 0.875rem;
     }
     .own-it {
       display: block;
       font-family: $font-family-monospace;
-      color: $black;
       margin: 0.5rem auto;
+      text-align: right;
     }
   }
 }

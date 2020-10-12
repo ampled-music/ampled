@@ -18,8 +18,14 @@
       background-color: $white;
       color: $black;
       display: flex;
-      // flex-wrap: wrap;
       justify-content: space-between;
+      flex-direction: column;
+      @include mq(0, $layout-m) {
+        padding: 0;
+      }
+      @include mq($layout-m) {
+        flex-direction: row;
+      }
       a {
         text-decoration: none;
         margin-bottom: 0.5rem;
@@ -32,17 +38,27 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 70%;
-        padding: 2rem 5rem 2rem 0;
+        width: 100%;
+        padding: 2rem;
+        flex-wrap: wrap;
+        @include mq($layout-m) {
+          padding: 2rem 5rem 2rem 0;
+        }
       }
       &_right {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-end;
-        border-left: 10px solid $black;
-        width: 30%;
-        padding: 2rem 0;
+        justify-content: center;
+        align-items: center;
+        border-top: 10px solid $black;
+        width: 100%;
+        padding: 2rem;
+        @include mq($layout-m) {
+          width: auto;
+          border-top: 0;
+          border-left: 10px solid $black;
+          padding: 2rem 0 2rem 5rem;
+        }
         &_logo-btn {
           display: flex;
           flex-direction: column;
@@ -57,7 +73,10 @@
     &__bottom {
       background-color: $black;
       color: $white;
-      padding: 3rem 0;
+      padding: 1rem 0;
+      @include mq($layout-m) {
+        padding: 3rem 0;
+      }
       a {
         text-decoration: underline;
         &:hover {
@@ -66,9 +85,13 @@
       }
       &_flex {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
+        @include mq($layout-m) {
+          flex-direction: row;
+          align-items: center;
+        }
       }
       &_left {
         font-family: $font-family-monospace;
@@ -84,12 +107,23 @@
         }
       }
       &_right {
+        @include mq(0, $layout-m) {
+          margin-top: 2rem;
+        }
         &_links {
           display: flex;
+          flex-direction: column;
+          @include mq($layout-m) {
+            flex-direction: row;
+          }
           * {
+            @include mq(0, $layout-m) {
+              margin-bottom: 0.5rem;
+            }
             margin-right: 2rem;
             &:last-child {
               margin-right: 0;
+              margin-bottom: 0rem;
             }
           }
         }

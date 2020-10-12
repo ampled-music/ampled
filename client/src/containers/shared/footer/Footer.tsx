@@ -18,6 +18,7 @@ interface Props {
 }
 
 class Footer extends React.Component<Props, any> {
+  // const bodyBg = document.body.style.backgroundColor;
   render() {
     if (
       this.props.match.path.indexOf('/create-artist') === 0 ||
@@ -70,7 +71,12 @@ class Footer extends React.Component<Props, any> {
               <div className="footer__top_right">
                 <div className="footer__top_right_logo-btn">
                   <img src={logo} className="coop-logo" alt="Ampled Co-Op" />
-                  <button className="btn btn-join-ampled">
+                  <button
+                    className="btn btn-join-ampled"
+                    style={{
+                      backgroundColor: document.body.style.backgroundColor,
+                    }}
+                  >
                     Join the Ampled community!
                   </button>
                 </div>

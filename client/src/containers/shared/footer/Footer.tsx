@@ -34,8 +34,8 @@ class Footer extends React.Component<Props, any> {
                 <div className="footer__info">
                   <div className="title">The Co-Op</div>
                   <a href="/page/about-us">About us</a>
-                  <a href="/page/about-us">Who are we</a>
-                  <a href="/page/about-us">How it works</a>
+                  <a href="/page/who-we-are">Who are we</a>
+                  <a href="https://docs.ampled.com/coop/">How it works</a>
                   <a href="/page/open-dashboard">Transparency</a>
                   <a href="/page/faq">FAQs</a>
                 </div>
@@ -44,13 +44,13 @@ class Footer extends React.Component<Props, any> {
                   <a href={config.menuUrls.createArtist}>Create Artist Page</a>
                   <a href="/page/join-the-co-op">Ways to join</a>
                   <a href="/page/become-a-contributor">Become a worker</a>
-                  <a href="/page/become-a-contributor">How to help</a>
+                  <a href="/page/how-to-help">How to help</a>
                   <a href="/page/press">Press</a>
                 </div>
                 <div className="footer__info">
                   <div className="title">Get Connected</div>
                   <a href="/page/contact">Contact us</a>
-                  <a href="/blog/">Events</a>
+                  <a href="/page/events">Events</a>
                   <a href="/blog/">Blog</a>
                   <a
                     href="https://www.instagram.com/ampl3d"

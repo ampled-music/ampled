@@ -1,7 +1,6 @@
 import './footer.scss';
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { config } from '../../../config';
 
 import logo from '../../../images/ampled_coop_logo.svg';

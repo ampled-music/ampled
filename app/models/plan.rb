@@ -16,7 +16,8 @@
 # Foreign Keys
 #
 #  fk_rails_...  (artist_page_id => artist_pages.id)
-#
+
+# Read more about Stripe currency support: https://stripe.com/docs/currencies
 
 class Plan < ApplicationRecord
   belongs_to :artist_page

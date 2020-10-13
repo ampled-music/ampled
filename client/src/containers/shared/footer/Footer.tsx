@@ -125,7 +125,9 @@ class Footer extends React.Component<Props, any> {
                     <a href="https://docs.ampled.com/policy/terms-of-use">
                       Terms of Use
                     </a>
-                    <a href="https://docs.ampled.com/policy/">Privacy Policy</a>
+                    <a href="https://docs.ampled.com/policy/privacy-policy">
+                      Privacy Policy
+                    </a>
                   </div>
                 </div>
               </div>

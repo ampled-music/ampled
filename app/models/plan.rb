@@ -3,6 +3,8 @@
 # Table name: plans
 #
 #  artist_page_id :bigint(8)        not null
+#  charge_amount  :integer
+#  currency       :string           default("usd"), not null
 #  id             :bigint(8)        not null, primary key
 #  nominal_amount :integer          not null
 #  stripe_id      :string           not null

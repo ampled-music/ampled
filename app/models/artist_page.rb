@@ -95,21 +95,6 @@ class ArtistPage < ApplicationRecord
     false
   end
 
-  def create_plan(nominal_amount)
-    stripe_plan = Stripe::Plan.create(
-      {
-        product: stripe_product.id,
-        nickname: "Ampled Support", # should this be based on the amount?
-        interval: "month",
-        currency: "usd",
-        amount: ((nominal_amount + 30) / 0.971).round
-      }, stripe_account: stripe_user_id
-    )
-    plan = Plan.new(stripe_id: stripe_plan.id, nominal_amount: nominal_amount)
-    plans << plan
-    plan
-  end
-
   def cover_public_id
     images&.first&.public_id
   end
@@ -206,6 +191,28 @@ class ArtistPage < ApplicationRecord
       youtube_id = video_url.match(%r{(youtube\.com/watch\?v=|youtu.be/)(.+)}i)[2]
       "https://img.youtube.com/vi/" + youtube_id + "/0.jpg"
     end
+  end
+
+  def create_plan(nominal_amount)
+    # The charge amount is the amount that subscribers will be charged (i.e. including Stripe fees)
+    charge_amount = ((nominal_amount + 30) / 0.971).round
+    stripe_plan = Stripe::Plan.create(
+      {
+        product: stripe_product.id,
+        nickname: "Ampled Support", # should this be based on the amount?
+        interval: "month",
+        currency: "usd",
+        amount: charge_amount
+      }, stripe_account: stripe_user_id
+    )
+    plan = Plan.new(
+      stripe_id: stripe_plan.id,
+      nominal_amount: nominal_amount,
+      charge_amount: charge_amount,
+      currency: "usd"
+    )
+    plans << plan
+    plan
   end
 
   def create_product

@@ -155,4 +155,58 @@ RSpec.describe ArtistPage, type: :model do
       end
     end
   end
+
+  describe "#plan_for_nominal_amount" do
+    context "when a product exists but no plan exists" do
+      let(:artist_page) { create(:artist_page, stripe_product_id: "prod_qdffzsd7843") }
+      let(:product_double) do
+        double(
+          "Stripe Product",
+          id: "prod_qdffzsd7843",
+          statement_descriptor: "Some Band"
+        )
+      end
+
+      before do
+        allow(Stripe::Product).to receive(:retrieve).and_return(product_double)
+      end
+
+      it "creates a Stripe plan" do
+        expect(Stripe::Plan).to receive(:create).with(
+          {
+            product: "prod_qdffzsd7843",
+            nickname: "Ampled Support",
+            interval: "month",
+            currency: "usd",
+            amount: 649
+          }, stripe_account: artist_page.stripe_user_id
+        ).and_return(double("Stripe Plan", id: "plan_afdsa453"))
+
+        artist_page.plan_for_nominal_amount(600)
+      end
+
+      it "creates a local plan" do
+        allow(Stripe::Plan).to receive(:create).and_return(double("Stripe Plan", id: "plan_hkjdfg8991"))
+
+        expect { artist_page.plan_for_nominal_amount(600) }.to change {
+          Plan.where(
+            stripe_id: "plan_hkjdfg8991",
+            nominal_amount: 600,
+            charge_amount: 649,
+            currency: "usd"
+          ).count
+        }.by(1)
+      end
+    end
+
+    context "when a plan exists" do
+      let(:expected_plan) { create(:plan) }
+      let(:artist_page) { expected_plan.artist_page }
+
+      it "returns the plan" do
+        plan = artist_page.plan_for_nominal_amount(expected_plan.nominal_amount)
+        expect(plan).to eq(expected_plan)
+      end
+    end
+  end
 end

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     resources :comments
     resources :plans
     resources :page_ownerships
+    resources :contributors
+    resources :contributor_time
 
     root to: "users#index"
   end

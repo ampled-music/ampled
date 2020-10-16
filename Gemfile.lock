@@ -883,6 +883,8 @@ GEM
     minitest (5.14.0)
     momentjs-rails (2.20.1)
       railties (>= 3.1)
+    money (6.13.8)
+      i18n (>= 0.6.4, <= 2)
     msgpack (1.2.4)
     multi_json (1.13.1)
     multipart-post (2.0.0)
@@ -1137,6 +1139,7 @@ DEPENDENCIES
   kaminari
   launchy
   listen
+  money
   paperclip (~> 6.0.0)
   pg
   postmark-rails (>= 0.19.0)

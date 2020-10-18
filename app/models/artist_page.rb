@@ -100,7 +100,11 @@ class ArtistPage < ApplicationRecord
   end
 
   def plan_for_nominal_amount(nominal_amount)
-    plans.find_by(nominal_amount: nominal_amount) || create_plan(nominal_amount)
+    existing_plan = plans.find_by(
+      nominal_amount: nominal_amount.fractional,
+      currency: StripeUtil.stripe_currency(nominal_amount)
+    )
+    existing_plan || create_plan(nominal_amount)
   end
 
   def stripe_dashboard_url
@@ -195,21 +199,21 @@ class ArtistPage < ApplicationRecord
 
   def create_plan(nominal_amount)
     # The charge amount is the amount that subscribers will be charged (i.e. including Stripe fees)
-    charge_amount = ((nominal_amount + 30) / 0.971).round
+    charge_amount = (nominal_amount + Money.new(30, "USD")) / 0.971
     stripe_plan = Stripe::Plan.create(
       {
         product: stripe_product.id,
         nickname: "Ampled Support", # should this be based on the amount?
         interval: "month",
-        currency: "usd",
-        amount: charge_amount
+        currency: StripeUtil.stripe_currency(charge_amount),
+        amount: charge_amount.fractional
       }, stripe_account: stripe_user_id
     )
     plan = Plan.new(
       stripe_id: stripe_plan.id,
-      nominal_amount: nominal_amount,
-      charge_amount: charge_amount,
-      currency: "usd"
+      nominal_amount: nominal_amount.fractional,
+      charge_amount: charge_amount.fractional,
+      currency: StripeUtil.stripe_currency(charge_amount)
     )
     plans << plan
     plan

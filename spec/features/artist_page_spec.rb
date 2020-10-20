@@ -65,6 +65,12 @@ RSpec.describe ArtistPagesController, type: :request do
       get url_page_two
       expect(JSON.parse(response.body)).to_not eq response_one
     end
+
+    it "handles gracefully artist pages with no images" do
+      approved_page_one.images.destroy_all
+      get url
+      expect(response.status).to eq 200
+    end
   end
 
   context "when loading approved artist_page data" do

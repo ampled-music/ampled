@@ -112,7 +112,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def stripe_plan
-    current_artist_page.plan_for_nominal_amount(subscription_params[:amount].to_i)
+    current_artist_page.plan_for_nominal_amount(Money.new(subscription_params[:amount].to_i, "usd"))
   end
 
   def check_customer

@@ -113,7 +113,7 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
       post url, params: create_params
 
       plan = Plan.where(artist_page_id: create_params[:artist_page_id]).take
-      expect(plan.nominal_amount).to eq create_params[:amount]
+      expect(plan.nominal_amount).to eq Money.new(create_params[:amount], "usd")
     end
 
     it "calls email job for user supported artist" do

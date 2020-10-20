@@ -20,5 +20,9 @@
 # Read more about Stripe currency support: https://stripe.com/docs/currencies
 
 class Plan < ApplicationRecord
+  include MoneyColumn
+
   belongs_to :artist_page
+
+  money_column :nominal_amount, :charge_amount, currency_column: :currency
 end

@@ -182,13 +182,13 @@ RSpec.describe ArtistPage, type: :model do
           }, stripe_account: artist_page.stripe_user_id
         ).and_return(double("Stripe Plan", id: "plan_afdsa453"))
 
-        artist_page.plan_for_nominal_amount(600)
+        artist_page.plan_for_nominal_amount(Money.new(600, "usd"))
       end
 
       it "creates a local plan" do
         allow(Stripe::Plan).to receive(:create).and_return(double("Stripe Plan", id: "plan_hkjdfg8991"))
 
-        expect { artist_page.plan_for_nominal_amount(600) }.to change {
+        expect { artist_page.plan_for_nominal_amount(Money.new(600, "usd")) }.to change {
           Plan.where(
             stripe_id: "plan_hkjdfg8991",
             nominal_amount: 600,

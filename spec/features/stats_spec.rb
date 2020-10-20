@@ -2,10 +2,6 @@ require "rails_helper"
 require "bullet"
 
 RSpec.describe "GET /stats/summary.json", type: :request do
-  let!(:subscriptions) { create_list(:subscription, 2) }
-  let(:artist_page) { create(:artist_page, slug: "test", approved: true) }
-  let(:artist_page_unapproved) { create(:artist_page, slug: "unapproved", approved: false) }
-
   let(:url) { "/stats/summary.json" }
 
   describe "is publicly accessible" do
@@ -32,8 +28,6 @@ RSpec.describe "GET /stats/summary.json", type: :request do
 
     context "with zero active subscriptions" do
       before(:each) do
-        allow(Subscription).to receive_message_chain(:includes, :active).and_return([])
-        allow(Subscription).to receive_message_chain(:active, :count).and_return(0)
         get url
       end
 
@@ -45,6 +39,32 @@ RSpec.describe "GET /stats/summary.json", type: :request do
       it "returns zero for total revenue" do
         counts = JSON.parse(response.body)["counts"]
         expect(counts["active_subscription_revenue"]).to eq("$0.00")
+      end
+    end
+
+    context "with active subscriptions" do
+      before do
+        three_usd_plan = create(:plan, nominal_amount: 300, currency: "USD")
+        five_usd_plan = create(:plan, nominal_amount: 500, currency: "USD")
+
+        create(:subscription, plan: three_usd_plan, artist_page: three_usd_plan.artist_page, status: :pending_active)
+        create(:subscription, plan: five_usd_plan, artist_page: five_usd_plan.artist_page, status: :active)
+        create(:subscription, plan: three_usd_plan, artist_page: three_usd_plan.artist_page, status: :cancelled)
+        create(:subscription, plan: three_usd_plan, artist_page: three_usd_plan.artist_page, status: :pending_cancelled)
+      end
+
+      before(:each) do
+        get url
+      end
+
+      it "calculates and formats average subscription amount properly" do
+        counts = JSON.parse(response.body)["counts"]
+        expect(counts["avg_subscription_amount"]).to eq("$4.00")
+      end
+
+      it "calculates and formats average subscription amount properly" do
+        counts = JSON.parse(response.body)["counts"]
+        expect(counts["active_subscription_revenue"]).to eq("$8.00")
       end
     end
   end

@@ -1533,6 +1533,28 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         loading: false,
       });
 
+      // Send to Hubspot
+      const { hubspot } = await apiAxios({
+        method: 'post',
+        url: 'https://hooks.zapier.com/hooks/catch/6761071/oiiuzd2',
+        data: {
+          artist: {
+            name: artistName,
+            email: this.props.me?.userData.email,
+            location: artistLocation,
+            website: artistExternal,
+            video_url: artistVideo,
+            instagram_handle: artistInstagram,
+            twitter_handle: artistTwitter,
+            youtube_handle: artistYoutube,
+            bandcamp_handle: artistBandcamp,
+          },
+          pageStatus: 'unapproved',
+          stripeConfigured: false,
+        },
+      });
+      console.log(hubspot);
+
       if (data.status && data.status === 'error') {
         this.props.showToast({
           message: data.message,

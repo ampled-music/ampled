@@ -18,9 +18,10 @@ describe PostNotificationEmailJob, type: :job do
           template_alias: "post-notification",
           template_model: {
             artist_name: artist.name,
+            artist_image: images.first&.url,
             post_title: post.title,
             post_id: post.id,
-            post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}#post-#{post.id}"
+            post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
           }
         },
          {
@@ -29,9 +30,10 @@ describe PostNotificationEmailJob, type: :job do
            template_alias: "post-notification",
            template_model: {
              artist_name: artist.name,
+             artist_image: images.first&.url,
              post_title: post.title,
              post_id: post.id,
-             post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}#post-#{post.id}"
+             post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
            }
          }]
       )

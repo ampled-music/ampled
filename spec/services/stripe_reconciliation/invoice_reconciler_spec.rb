@@ -7,7 +7,7 @@ module StripeReconciliation
       let!(:stripe_invoice) do
         OpenStruct.new(
           currency: subscription.plan.currency,
-          total: subscription.plan.nominal_amount.fractional,
+          total: subscription.plan.charge_amount.fractional,
           subscription: subscription.stripe_id
         )
       end

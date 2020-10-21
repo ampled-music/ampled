@@ -199,7 +199,7 @@ class ArtistPage < ApplicationRecord
 
   def create_plan(nominal_amount)
     # The charge amount is the amount that subscribers will be charged (i.e. including Stripe fees)
-    charge_amount = (nominal_amount + Money.new(30, "USD")) / 0.971
+    charge_amount = StripeUtil.charge_amount_for_nominal_amount(nominal_amount)
     stripe_plan = Stripe::Plan.create(
       {
         product: stripe_product.id,

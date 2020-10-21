@@ -18,7 +18,7 @@ module StripeReconciliation
         return false
       end
 
-      if subscription.plan.nominal_amount != Money.new(@stripe_invoice.total, @stripe_invoice.currency)
+      if subscription.plan.charge_amount != Money.new(@stripe_invoice.total, @stripe_invoice.currency)
         @anomaly = :unexpected_total
         return false
       end

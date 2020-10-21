@@ -3,7 +3,7 @@
 # Table name: plans
 #
 #  artist_page_id :bigint(8)        not null
-#  charge_amount  :integer
+#  charge_amount  :integer          not null
 #  currency       :string           default("usd"), not null
 #  id             :bigint(8)        not null, primary key
 #  nominal_amount :integer          not null
@@ -16,6 +16,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (artist_page_id => artist_pages.id)
+#
 
 # Read more about Stripe currency support: https://stripe.com/docs/currencies
 

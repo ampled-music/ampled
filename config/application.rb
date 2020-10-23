@@ -44,12 +44,6 @@ module AmpledWeb
 
     config.action_mailer.postmark_settings = { api_token: ENV["POSTMARK_API_KEY"] }
 
-    # Rails will use eager_load_paths in production and staging, but not in development and test.
-    # It is important to add code paths to be loaded to both autoload and eager_load paths for things
-    # to work both in production and development.
-    config.autoload_paths += %W[#{config.root}/lib]
-    config.eager_load_paths += %W[#{config.root}/lib]
-
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

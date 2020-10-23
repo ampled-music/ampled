@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_20_004110) do
+ActiveRecord::Schema.define(version: 2020_10_22_235521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_004110) do
     t.string "youtube_handle"
     t.string "external"
     t.string "style_type"
+    t.boolean "artist_owner", default: false, null: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 

@@ -4,6 +4,7 @@
 #
 #  accent_color         :string
 #  approved             :boolean          default(FALSE)
+#  artist_owner         :boolean          default(FALSE), not null
 #  bandcamp_handle      :string
 #  banner_image_url     :string
 #  bio                  :string

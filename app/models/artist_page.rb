@@ -34,6 +34,8 @@
 #
 
 class ArtistPage < ApplicationRecord
+  ARTIST_OWNER_THRESHOLD = 10
+
   has_many :page_ownerships, dependent: :destroy
   has_many :owners, through: :page_ownerships, source: :user
 

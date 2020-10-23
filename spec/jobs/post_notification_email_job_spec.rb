@@ -7,6 +7,7 @@ describe PostNotificationEmailJob, type: :job do
     artist = create(:artist_page)
     post = create(:post, artist_page: artist)
     users.each { |u| create(:subscription, user: u, artist_page: artist) }
+    image = create(:image, imageable: artist)
 
     described_class.new.perform(post.id)
 
@@ -18,7 +19,7 @@ describe PostNotificationEmailJob, type: :job do
           template_alias: "post-notification",
           template_model: {
             artist_name: artist.name,
-            artist_image: artist.images.first&.url,
+            artist_image: image.url,
             post_title: post.title,
             post_id: post.id,
             post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
@@ -30,7 +31,7 @@ describe PostNotificationEmailJob, type: :job do
            template_alias: "post-notification",
            template_model: {
              artist_name: artist.name,
-             artist_image: artist.images.first&.url,
+             artist_image: image.url,
              post_title: post.title,
              post_id: post.id,
              post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"

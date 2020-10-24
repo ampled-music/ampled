@@ -134,6 +134,18 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
       subscription = user.subscriptions.active.first
       expect(NewSupporterEmailJob).to have_received(:perform_async).with(subscription.id)
     end
+
+    it "does not update the ArtistPage's artist_owner field when the page has fewer than 10 subscribers" do
+      expect { post url, params: create_params }
+        .to_not change { artist_page.reload.artist_owner? }.from(false)
+    end
+
+    it "updates the ArtistPage's artist_owner field when the page has more than 10 subscribers" do
+      10.times { create(:subscription, artist_page: artist_page) }
+
+      expect { post url, params: create_params }
+        .to change { artist_page.reload.artist_owner? }.from(false).to(true)
+    end
   end
 
   context "when creating multiple subscriptions" do

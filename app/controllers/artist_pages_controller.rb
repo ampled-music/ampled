@@ -26,12 +26,17 @@ class ArtistPagesController < ApplicationController
     # Sorting the entire table in memory like this is NOT IDEAL and should be
     # reevaluated as we scale.
     #
-    # We then paginate into groups of 6 using Kaminari.
+    # We then paginate into groups of 8 using Kaminari.
 
     if params.has_key?(:seed)
       seed = params[:seed].to_f
       ArtistPage.connection.execute ArtistPage.sanitize_sql_like("SELECT setseed(#{seed})")
-      @artist_pages = ArtistPage.approved.order(Arel.sql("random()")).page(params[:page]).per(8)
+      base_query = ArtistPage.approved.order(Arel.sql("random()"))
+      @artist_pages = if params.has_key?(:artist_owners)
+                        base_query.artist_owner.exclude_community_page
+                      else
+                        base_query
+                      end.page(params[:page]).per(8)
     end
 
     render template: "artist_pages/index"

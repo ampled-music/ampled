@@ -20,7 +20,9 @@ describe PostNotificationEmailJob, type: :job do
           template_model: {
             artist_name: artist.name,
             artist_image: image.url,
+            artist_color: artist.accent_color,
             post_title: post.title,
+            post_body: post.body,
             post_id: post.id,
             post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
           }
@@ -32,7 +34,9 @@ describe PostNotificationEmailJob, type: :job do
            template_model: {
              artist_name: artist.name,
              artist_image: image.url,
+             artist_color: artist.accent_color,
              post_title: post.title,
+             post_body: post.body,
              post_id: post.id,
              post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
            }

@@ -9,6 +9,7 @@
 #  id              :bigint(8)        not null, primary key
 #  is_private      :boolean          default(FALSE)
 #  title           :string
+#  type            :string
 #  updated_at      :datetime         not null
 #  user_id         :bigint(8)
 #  video_embed_url :string

@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2020_10_24_173629) do
     t.string "youtube_handle"
     t.string "external"
     t.string "style_type"
+    t.boolean "artist_owner", default: false, null: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 

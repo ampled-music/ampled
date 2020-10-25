@@ -4,6 +4,7 @@
 #
 #  accent_color         :string
 #  approved             :boolean          default(FALSE)
+#  artist_owner         :boolean          default(FALSE), not null
 #  bandcamp_handle      :string
 #  banner_image_url     :string
 #  bio                  :string
@@ -33,6 +34,9 @@
 #
 
 class ArtistPage < ApplicationRecord
+  ARTIST_OWNER_THRESHOLD = 10
+  COMMUNITY_PAGE_ID = 354
+
   has_many :page_ownerships, dependent: :destroy
   has_many :owners, through: :page_ownerships, source: :user
 
@@ -54,6 +58,8 @@ class ArtistPage < ApplicationRecord
   before_save :check_approved
 
   scope :approved, -> { where(approved: true) }
+  scope :artist_owner, -> { where(artist_owner: true) }
+  scope :exclude_community_page, -> { where.not(id: Rails.env.production? ? COMMUNITY_PAGE_ID : []) }
 
   STRIPE_STATEMENT_DESCRIPTOR_DISALLOWED_CHARACTERS = "()\\\'\"*".freeze
 

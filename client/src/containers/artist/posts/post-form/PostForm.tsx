@@ -363,8 +363,8 @@ export default class PostFormComponent extends React.Component<Props, any> {
     const post = {
       title,
       body,
-      type: activePostType,
       link,
+      post_type: activePostType,
       audio_uploads: audioUploads,
       images: ['Audio', 'Photo'].includes(activePostType) ? images : [],
       video_embed_url: activePostType === 'Video' ? videoEmbedUrl : null,

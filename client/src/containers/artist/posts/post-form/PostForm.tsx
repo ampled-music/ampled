@@ -350,7 +350,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
       activePostType,
       title,
       body,
-      type,
       link,
       audioUploads,
       images,
@@ -361,7 +360,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
       deletedImages,
     } = this.state;
     const { isEdit } = this.props;
-    console.log(activePostType);
     const post = {
       title,
       body,

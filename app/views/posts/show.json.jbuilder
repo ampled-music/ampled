@@ -9,6 +9,7 @@ json.comments @post.comments.includes([:user]), partial: "comments/comment", as:
 json.is_private @post.is_private
 json.allow_download @post.allow_download
 json.video_embed_url @post.video_embed_url
+json.post_type post.post_type
 json.has_audio @post.has_audio
 json.has_video_embed @post.has_video_embed
 json.images @post.images, partial: "images/image", as: :image

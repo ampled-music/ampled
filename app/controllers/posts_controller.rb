@@ -64,6 +64,7 @@ class PostsController < ApplicationController
     params.require(:post).permit(
       :title,
       :body,
+      :post_type,
       :artist_page_id,
       :image_url,
       :audio_file,
@@ -85,6 +86,7 @@ class PostsController < ApplicationController
     params.require(:post).permit(
       :title,
       :body,
+      :post_type,
       :image_url,
       :audio_file,
       :is_private,

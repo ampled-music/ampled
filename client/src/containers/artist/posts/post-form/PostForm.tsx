@@ -251,7 +251,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
   initialState = {
     title: '',
     body: '',
-    type: '',
     link: null,
     audioUploads: [],
     imageName: '',
@@ -304,7 +303,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
         videoEmbedUrl: props.post.video_embed_url,
         isPublic: !props.post.is_private,
         allowDownload: props.post.allow_download,
-        type: activePostType,
         activePostType,
         showText,
         showAudio,
@@ -549,7 +547,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
           onClick={() =>
             this.setState({
               activePostType: 'Audio',
-              type: 'Audio',
               showAudio: true,
               showVideo: false,
               showImage: true,
@@ -567,7 +564,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
           onClick={() =>
             this.setState({
               activePostType: 'Video',
-              type: 'Video',
               showAudio: false,
               showVideo: true,
               showImage: false,
@@ -585,7 +581,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
           onClick={() =>
             this.setState({
               activePostType: 'Photo',
-              type: 'Photo',
               showAudio: false,
               showVideo: false,
               showImage: true,
@@ -603,7 +598,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
           onClick={() =>
             this.setState({
               activePostType: 'Link',
-              type: 'Link',
               showAudio: false,
               showVideo: false,
               showImage: false,

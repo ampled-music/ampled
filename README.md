@@ -15,6 +15,7 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
   - [Conventions](#conventions)
     - [Git](#git)
     - [Code Style](#code-style)
+    - [Handling Money](#handling-money)
   - [Additional/Optional Development Details](#additionaloptional-development-details)
     - [Backup/Restore Database](#backuprestore-database)
     - [Code Coverage](#code-coverage)
@@ -141,6 +142,10 @@ Then when starting your application server or console set the rails env to produ
 Rubocop is configured to enforce the style guide for this project.
 
 On the client-side, the default `react-scripts` eslint configuration is ran during the build process. There is also an additional custom `.eslintrc.js` configuration in `client/`, but this is not enforced (as of May 2020). You can run the custom lint configuration with `yarn lint` (add `--fix` to the command, if you want to auto-fix errors).
+
+### Handling Money
+
+When storing a money value in the database, an integer represents the number of subunits (eg. USD cents or GBP pence) and a string is used to store lowercased ISO 4217 currency code (which matches Stripe's formatting). In memory, money values are represented using the [Money gem](https://github.com/RubyMoney/money).
 
 ## Additional/Optional Development Details
 

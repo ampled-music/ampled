@@ -34,6 +34,7 @@ RSpec.describe ArtistPagesController, type: :request do
 
     let(:url) { "/artists/browse.json?seed=0.237894" }
     let(:url_page_two) { "/artists/browse.json?seed=0.237894&page=2" }
+    let(:url_artist_owners) { "/artists/browse.json?seed=0.237894&artist_owners=true" }
 
     let(:image) { "https://res.cloudinary.com/ampled-web/image/upload/b_rgb:ddbdac33/social/Story/Story5.png" }
 
@@ -63,6 +64,22 @@ RSpec.describe ArtistPagesController, type: :request do
     it "distinguishes pages correctly" do
       response_one = JSON.parse(response.body)
       get url_page_two
+      expect(JSON.parse(response.body)).to_not eq response_one
+    end
+
+    it "handles gracefully artist pages with no images" do
+      approved_page_one.images.destroy_all
+      get url
+      expect(response.status).to eq 200
+    end
+
+    it "excludes non artist owners when artist_owners param is passed" do
+      response_one = JSON.parse(response.body)
+
+      approved_page_one.update(artist_owner: true)
+
+      get url_artist_owners
+
       expect(JSON.parse(response.body)).to_not eq response_one
     end
   end

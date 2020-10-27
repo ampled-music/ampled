@@ -31,7 +31,7 @@ describe UserSupportedArtistEmailJob, type: :job do
             artist_page_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}",
             promote_artist_page_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}/promote",
             social_image_url: social_image[:url],
-            support_amount: format("%.2f", subscription.plan.nominal_amount / 100.0)
+            support_amount: "5.00"
           }
         }
       ]
@@ -60,7 +60,7 @@ describe UserSupportedArtistEmailJob, type: :job do
             artist_page_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}",
             promote_artist_page_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}/promote",
             social_image_url: social_image[:url],
-            support_amount: format("%.2f", subscription.plan.nominal_amount / 100.0)
+            support_amount: "5.00"
           }
         }
       ]

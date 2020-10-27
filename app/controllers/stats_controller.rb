@@ -10,7 +10,7 @@ class StatsController < ApplicationController
   private
 
   def format_value(value)
-    format("$%.2f", value / 100.0)
+    format("$%.2f", value)
   end
 
   def active_subscription_count
@@ -25,7 +25,7 @@ class StatsController < ApplicationController
 
   def total_revenue_value
     @total_revenue_value ||= begin
-      Subscription.includes(:plan).active.reduce(0) do |sum, subscription|
+      Subscription.includes(:plan).active.reduce(Money.zero("usd")) do |sum, subscription|
         sum + subscription.plan.nominal_amount
       end
     end

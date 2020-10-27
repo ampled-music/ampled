@@ -4,6 +4,7 @@
 #
 #  accent_color         :string
 #  approved             :boolean          default(FALSE)
+#  artist_owner         :boolean          default(FALSE), not null
 #  bandcamp_handle      :string
 #  banner_image_url     :string
 #  bio                  :string
@@ -33,6 +34,9 @@
 #
 
 class ArtistPage < ApplicationRecord
+  ARTIST_OWNER_THRESHOLD = 10
+  COMMUNITY_PAGE_ID = 354
+
   has_many :page_ownerships, dependent: :destroy
   has_many :owners, through: :page_ownerships, source: :user
 
@@ -54,6 +58,10 @@ class ArtistPage < ApplicationRecord
   before_save :check_approved
 
   scope :approved, -> { where(approved: true) }
+  scope :artist_owner, -> { where(artist_owner: true) }
+  scope :exclude_community_page, -> { where.not(id: Rails.env.production? ? COMMUNITY_PAGE_ID : []) }
+
+  STRIPE_STATEMENT_DESCRIPTOR_DISALLOWED_CHARACTERS = "()\\\'\"*".freeze
 
   def sluggy_slug
     return unless slug
@@ -93,27 +101,16 @@ class ArtistPage < ApplicationRecord
     false
   end
 
-  def create_plan(nominal_amount)
-    stripe_plan = Stripe::Plan.create(
-      {
-        product: stripe_product.id,
-        nickname: "Ampled Support", # should this be based on the amount?
-        interval: "month",
-        currency: "usd",
-        amount: ((nominal_amount + 30) / 0.971).round
-      }, stripe_account: stripe_user_id
-    )
-    plan = Plan.new(stripe_id: stripe_plan.id, nominal_amount: nominal_amount)
-    plans << plan
-    plan
-  end
-
   def cover_public_id
     images&.first&.public_id
   end
 
   def plan_for_nominal_amount(nominal_amount)
-    plans.find_by(nominal_amount: nominal_amount) || create_plan(nominal_amount)
+    existing_plan = plans.find_by(
+      nominal_amount: nominal_amount.fractional,
+      currency: StripeUtil.stripe_currency(nominal_amount)
+    )
+    existing_plan || create_plan(nominal_amount)
   end
 
   def stripe_dashboard_url
@@ -132,7 +129,11 @@ class ArtistPage < ApplicationRecord
     @stripe_product ||= Stripe::Product.retrieve(stripe_product_id, stripe_account: stripe_user_id)
     return @stripe_product unless @stripe_product.statement_descriptor.nil?
 
-    Stripe::Product.update(stripe_product_id, { statement_descriptor: name[0..21] }, stripe_account: stripe_user_id)
+    Stripe::Product.update(
+      stripe_product_id,
+      { statement_descriptor: stripe_statement_descriptor },
+      stripe_account: stripe_user_id
+    )
   end
 
   def subscriber_count
@@ -202,14 +203,47 @@ class ArtistPage < ApplicationRecord
     end
   end
 
+  def create_plan(nominal_amount)
+    # The charge amount is the amount that subscribers will be charged (i.e. including Stripe fees)
+    charge_amount = StripeUtil.charge_amount_for_nominal_amount(nominal_amount)
+    stripe_plan = Stripe::Plan.create(
+      {
+        product: stripe_product.id,
+        nickname: "Ampled Support", # should this be based on the amount?
+        interval: "month",
+        currency: StripeUtil.stripe_currency(charge_amount),
+        amount: charge_amount.fractional
+      }, stripe_account: stripe_user_id
+    )
+    plan = Plan.new(
+      stripe_id: stripe_plan.id,
+      nominal_amount: nominal_amount.fractional,
+      charge_amount: charge_amount.fractional,
+      currency: StripeUtil.stripe_currency(charge_amount)
+    )
+    plans << plan
+    plan
+  end
+
   def create_product
     product = Stripe::Product.create(
       {
         name: "Ampled Support",
         type: "service",
-        statement_descriptor: name[0..21]
+        statement_descriptor: stripe_statement_descriptor
       }, stripe_account: stripe_user_id
     )
     update(stripe_product_id: product.id)
+  end
+
+  def stripe_statement_descriptor
+    # Stripe has specific rules about what can go into a statement descriptor, read more in their documentation:
+    # https://stripe.com/docs/statement-descriptors
+
+    stripped_descriptor = name.tr(STRIPE_STATEMENT_DESCRIPTOR_DISALLOWED_CHARACTERS, "")
+
+    stripped_descriptor += " " * (5 - stripped_descriptor.length) if stripped_descriptor.length < 5
+
+    stripped_descriptor[0..21]
   end
 end

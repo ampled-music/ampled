@@ -26,8 +26,7 @@ export const HomeFor = () => (
           />
           <h3 className="home-for__sub-title">Artist Owned Co-op</h3>
           <p className="home-for__copy">
-            100% owned by artists, workers, and community - not vulture
-            capitalists.
+            100% owned by artists and workers - not vulture capitalists.
           </p>
           <a href="https://docs.ampled.com/coop/">
             <button className="home-for__button btn btn-ampled">

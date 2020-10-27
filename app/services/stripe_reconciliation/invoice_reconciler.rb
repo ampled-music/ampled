@@ -11,12 +11,6 @@ module StripeReconciliation
     end
 
     def reconcile
-      # TODO: Record currency on the Plan and use that to verify
-      unless EXPECTED_CURRENCIES.include?(@stripe_invoice.currency)
-        @anomaly = :unexpected_currency
-        return false
-      end
-
       subscription = Subscription.find_by(stripe_id: @stripe_invoice.subscription)
 
       if subscription.nil?
@@ -24,8 +18,8 @@ module StripeReconciliation
         return false
       end
 
-      if subscription.plan.nominal_amount != @stripe_invoice.total
-        @anomaly = :unexpected_amount
+      if subscription.plan.charge_amount != Money.new(@stripe_invoice.total, @stripe_invoice.currency)
+        @anomaly = :unexpected_total
         return false
       end
 

@@ -12,7 +12,7 @@ class PostNotificationEmailJob
     SendBatchEmail.call(messages)
   end
 
-  case post_type
+  case post.post_type
     when "Audio"
       "Listen on Ampled"
     when "Video"
@@ -35,7 +35,7 @@ class PostNotificationEmailJob
           artist_color: artist.accent_color,
           post_title: post.title,
           post_body: post.body,
-          post_type: post_type,
+          post_type: post.post_type,
           post_id: post.id,
           post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
         }

@@ -379,7 +379,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
         await this.removeImageFromBackendAndCloudinary(deleteImage);
       }
     }
-    console.log(post);
     if (isEdit) {
       const currentPublicIds = post.audio_uploads.map((au) => au.public_id);
       const removedUploads = this.props.post.audio_uploads.filter(

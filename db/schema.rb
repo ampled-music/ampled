@@ -107,7 +107,6 @@ ActiveRecord::Schema.define(version: 2020_10_26_212908) do
     t.boolean "is_private", default: false
     t.boolean "allow_download", default: false
     t.string "video_embed_url"
-    t.string "type"
     t.string "post_type"
     t.index ["artist_page_id"], name: "index_posts_on_artist_page_id"
     t.index ["user_id"], name: "index_posts_on_user_id"

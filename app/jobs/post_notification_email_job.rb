@@ -13,7 +13,7 @@ class PostNotificationEmailJob
   end
 
   def btn_copy
-    case post.post_type
+    case @post.post_type
       when "Audio"
         "Listen on Ampled"
       when "Video"

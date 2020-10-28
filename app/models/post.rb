@@ -8,6 +8,7 @@
 #  created_at      :datetime         not null
 #  id              :bigint(8)        not null, primary key
 #  is_private      :boolean          default(FALSE)
+#  post_type       :string
 #  title           :string
 #  updated_at      :datetime         not null
 #  user_id         :bigint(8)

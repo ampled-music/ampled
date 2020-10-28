@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_22_235521) do
+ActiveRecord::Schema.define(version: 2020_10_26_212908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 2020_10_22_235521) do
     t.boolean "is_private", default: false
     t.boolean "allow_download", default: false
     t.string "video_embed_url"
+    t.string "post_type"
     t.index ["artist_page_id"], name: "index_posts_on_artist_page_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end

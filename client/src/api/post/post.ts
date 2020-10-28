@@ -24,4 +24,5 @@ export interface Post {
   artist_page_id: string;
   is_private: boolean;
   allow_download: boolean;
+  post_type: string;
 }

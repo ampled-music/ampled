@@ -37,7 +37,7 @@ class PostNotificationEmailJob
           artist_color: artist.accent_color,
           post_title: post.title,
           post_body: post.body,
-          post_type: btn_copy,
+          post_btn_copy: btn_copy,
           post_id: post.id,
           post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
         }

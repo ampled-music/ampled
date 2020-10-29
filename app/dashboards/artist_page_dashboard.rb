@@ -38,6 +38,7 @@ class ArtistPageDashboard < Administrate::BaseDashboard
       collection: ['standard', 'minimal']
     ),
     subscriber_count: Field::Number,
+    subscribers: Field::HasMany.with_options(class_name: "User")
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -78,7 +79,8 @@ class ArtistPageDashboard < Administrate::BaseDashboard
     :featured,
     :verb_plural,
     :hide_members,
-    :style_type
+    :style_type,
+    :subscribers
   ].freeze
 
   # FORM_ATTRIBUTES

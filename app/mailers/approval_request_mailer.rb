@@ -13,4 +13,13 @@ class ApprovalRequestMailer < PostmarkMailer
 
     mail to: "hello@ampled.com,austin@ampled.com"
   end
+
+  def artist_page_approval_requested_for_artists(artist_page, requesting_user)
+    self.template_model = {
+      artist_name: artist_page.name,
+      artist_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}",
+    }
+
+    mail to: requesting_user.email
+  end
 end

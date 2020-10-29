@@ -28,7 +28,8 @@ namespace :dummy do
       email: FAKE_ADMIN_EMAIL,
       password: FAKE_ADMIN_PASSWORD,
       password_confirmation:  FAKE_ADMIN_PASSWORD,
-      admin: true
+      admin: true,
+      confirmed_at: Time.now
     )
   end
 
@@ -48,7 +49,8 @@ namespace :dummy do
         instagram: social,
         email: Faker::Internet.email,
         password: password,
-        password_confirmation: password
+        password_confirmation: password,
+        confirmed_at: Time.now
       )
       new_testing_image(user)
     end
@@ -88,8 +90,9 @@ namespace :dummy do
   end
 
   task destroy: [:environment] do
-    User.delete_all
-    ArtistPage.delete_all
+    # Delete things in this order, to avoid foreign key violations.
     Post.delete_all
+    ArtistPage.delete_all
+    User.delete_all
   end
 end

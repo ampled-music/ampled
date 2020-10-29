@@ -127,6 +127,18 @@ class ArtistPagesController < ApplicationController
     render json: { status: "ok", message: "We've let the team know you're ready!" }
   end
 
+  def subscribers_csv
+    unless current_user&.admin?
+      # Only let admins access this feature, for now.
+      return render json: { status: 403, error: "Forbidden to non-admins." }, status: :forbidden
+    end
+
+    set_artist_page
+    response.headers["Content-Type"] = "text/csv"
+    response.headers["Content-Disposition"] = "attachment; filename=#{@artist_page.slug}-subscribers.csv"
+    render :subscribers_csv
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

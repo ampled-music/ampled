@@ -123,6 +123,7 @@ class ArtistPagesController < ApplicationController
     end
 
     ApprovalRequestMailer.approval_requested(@artist_page, current_user).deliver_later
+    ApprovalRequestMailer.artist_page_approval_requested_for_artists(@artist_page, current_user).deliver_later
     render json: { status: "ok", message: "We've let the team know you're ready!" }
   end
 

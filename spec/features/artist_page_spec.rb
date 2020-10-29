@@ -146,6 +146,42 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(JSON.parse(response.body)["owners"]).to be_nil
     end
   end
+
+  describe "#subscribers_csv" do
+    let(:admin) { create(:user, admin: true) }
+    let(:url) { "/artist/#{artist_page.slug}/subscribers_csv" }
+    let!(:subscription) { create(:subscription, user: supporter, artist_page: artist_page) }
+
+    context "when current user is not an admin" do
+      it "returns a 403 forbidden error" do
+        get url
+        expect(response.status).to eq(403)
+      end
+
+      it "returns no subscriber data" do
+        get url
+        expect(response.body).to_not include(supporter.email)
+      end
+    end
+
+    context "when current user is admin" do
+      before do
+        sign_in admin
+      end
+
+      it "returns 200" do
+        get url
+        expect(response.status).to eq(200)
+      end
+
+      it "returns csv with subscriber list" do
+        get url
+        actual_csv = CSV.parse(response.body)
+        expect(actual_csv).to include(["Name", "Last Name", "Email"])
+        expect(actual_csv).to include([supporter.name, supporter.last_name, supporter.email])
+      end
+    end
+  end
 end
 
 RSpec.describe "PUT /artist_page", type: :request do

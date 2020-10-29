@@ -44,7 +44,7 @@ json.subscriptions @subscriptions do |subscription|
   json.image subscription.artist_page.cover_public_id
   json.last_post_date subscription.artist_page.last_post_date
   json.support_date subscription.created_at
-  json.amount subscription.plan.nominal_amount
+  json.amount subscription.plan.nominal_amount.fractional
   json.promoteSquareImages subscription.artist_page.promote_square_images
   json.promoteStoryImages subscription.artist_page.promote_story_images
   json.supporterImages subscription.artist_page.supporter_images

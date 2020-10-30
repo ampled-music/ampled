@@ -24,23 +24,13 @@ import parse from 'html-react-parser';
 import DOMPurify from 'dompurify';
 import { UserImage } from '../../../user-details/UserImage';
 
+import { Image, Transformation } from 'cloudinary-react';
+
 import { Comment } from '../comments/Comment';
 import { CommentForm } from '../comments/CommentForm';
 import { PostForm } from '../post-form/PostForm';
 
 import { deletePost } from '../../../../api/post/delete-post';
-
-const renderCloudinaryPhoto = (image: string) => {
-  if (image) {
-    if (image.includes('https://res.cloudinary')) {
-      const img_src = image.replace('upload/', `upload/`);
-      return img_src;
-    } else {
-      const img_src = `https://res.cloudinary.com/${config.cloudinary.cloud_name}/image/fetch/${image}`;
-      return img_src;
-    }
-  }
-};
 
 const sortItemsByCreationDate = (items) =>
   items.sort((a, b) => b.created_at - a.created_at);
@@ -232,40 +222,56 @@ const PostMedia = ({
       </div>
     )}
     {images?.length > 0 && !has_audio && (
-      <>
-        <div className="post__image-container">
-          <img
-            className={cx({
-              post__image: true,
-              'blur-image': !allowDetails,
-            })}
-            src={renderCloudinaryPhoto(images[0].url)}
-            alt=""
+      <div className="post__image-container">
+        <Image
+          publicId={images[0].public_id}
+          key={images[0].public_id}
+          className={cx({
+            post__image: true,
+            'blur-image': !allowDetails,
+          })}
+        >
+          <Transformation
+            crop="scale"
+            fetchFormat="auto"
+            quality="auto"
+            width="700"
+            responsive_placeholder="blank"
           />
-          {!allowDetails && (
-            <Lock
-              isLapsed={deny_details_lapsed}
-              me={me}
-              handlePrivatePostClick={handlePrivatePostClick}
-              isAmpled={artistSlug === 'community'}
-            />
-          )}
-        </div>
-      </>
+        </Image>
+        {!allowDetails && (
+          <Lock
+            isLapsed={deny_details_lapsed}
+            me={me}
+            handlePrivatePostClick={handlePrivatePostClick}
+            isAmpled={artistSlug === 'community'}
+          />
+        )}
+      </div>
     )}
 
     {has_audio && (
       <div className="post__audio-container">
         <div className="post__image-container">
           {images?.length > 0 && (
-            <img
+            <Image
+              publicId={images.public_id}
+              key={images.public_id}
               className={cx({
                 post__image: true,
                 'blur-image': !allowDetails,
               })}
-              src={renderCloudinaryPhoto(images[0].url)}
-              alt=""
-            />
+            >
+              <Transformation
+                fetchFormat="auto"
+                quality="auto"
+                crop="fill"
+                width={600}
+                height={600}
+                responsive_placeholder="blank"
+                gravity="faces"
+              />
+            </Image>
           )}
           {!images.length && !allowDetails && (
             <div
@@ -301,28 +307,24 @@ const PostMedia = ({
       </div>
     )}
 
-    {!has_audio && !images.length && (
-      <>
-        {!allowDetails && (
-          <div className="post__image-container">
-            <div
-              style={{
-                height: '340px',
-                background:
-                  'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
-              }}
-            />
-            {
-              <Lock
-                isLapsed={deny_details_lapsed}
-                me={me}
-                handlePrivatePostClick={handlePrivatePostClick}
-                isAmpled={artistSlug === 'community'}
-              />
-            }
-          </div>
-        )}
-      </>
+    {!has_audio && !images.length && !allowDetails && (
+      <div className="post__image-container">
+        <div
+          style={{
+            height: '340px',
+            background:
+              'radial-gradient(circle, rgba(79,79,83,1) 0%, rgba(126,126,126,1) 35%, rgba(219,233,236,1) 100%)',
+          }}
+        />
+        {
+          <Lock
+            isLapsed={deny_details_lapsed}
+            me={me}
+            handlePrivatePostClick={handlePrivatePostClick}
+            isAmpled={artistSlug === 'community'}
+          />
+        }
+      </div>
     )}
   </>
 );

@@ -4,6 +4,7 @@
 #
 #  accent_color         :string
 #  approved             :boolean          default(FALSE)
+#  artist_owner         :boolean          default(FALSE), not null
 #  bandcamp_handle      :string
 #  banner_image_url     :string
 #  bio                  :string
@@ -33,6 +34,9 @@
 #
 
 class ArtistPage < ApplicationRecord
+  ARTIST_OWNER_THRESHOLD = 10
+  COMMUNITY_PAGE_ID = 354
+
   has_many :page_ownerships, dependent: :destroy
   has_many :owners, through: :page_ownerships, source: :user
 
@@ -54,6 +58,8 @@ class ArtistPage < ApplicationRecord
   before_save :check_approved
 
   scope :approved, -> { where(approved: true) }
+  scope :artist_owner, -> { where(artist_owner: true) }
+  scope :exclude_community_page, -> { where.not(id: Rails.env.production? ? COMMUNITY_PAGE_ID : []) }
 
   STRIPE_STATEMENT_DESCRIPTOR_DISALLOWED_CHARACTERS = "()\\\'\"*".freeze
 
@@ -95,27 +101,16 @@ class ArtistPage < ApplicationRecord
     false
   end
 
-  def create_plan(nominal_amount)
-    stripe_plan = Stripe::Plan.create(
-      {
-        product: stripe_product.id,
-        nickname: "Ampled Support", # should this be based on the amount?
-        interval: "month",
-        currency: "usd",
-        amount: ((nominal_amount + 30) / 0.971).round
-      }, stripe_account: stripe_user_id
-    )
-    plan = Plan.new(stripe_id: stripe_plan.id, nominal_amount: nominal_amount)
-    plans << plan
-    plan
-  end
-
   def cover_public_id
     images&.first&.public_id
   end
 
   def plan_for_nominal_amount(nominal_amount)
-    plans.find_by(nominal_amount: nominal_amount) || create_plan(nominal_amount)
+    existing_plan = plans.find_by(
+      nominal_amount: nominal_amount.fractional,
+      currency: StripeUtil.stripe_currency(nominal_amount)
+    )
+    existing_plan || create_plan(nominal_amount)
   end
 
   def stripe_dashboard_url
@@ -206,6 +201,28 @@ class ArtistPage < ApplicationRecord
       youtube_id = video_url.match(%r{(youtube\.com/watch\?v=|youtu.be/)(.+)}i)[2]
       "https://img.youtube.com/vi/" + youtube_id + "/0.jpg"
     end
+  end
+
+  def create_plan(nominal_amount)
+    # The charge amount is the amount that subscribers will be charged (i.e. including Stripe fees)
+    charge_amount = StripeUtil.charge_amount_for_nominal_amount(nominal_amount)
+    stripe_plan = Stripe::Plan.create(
+      {
+        product: stripe_product.id,
+        nickname: "Ampled Support", # should this be based on the amount?
+        interval: "month",
+        currency: StripeUtil.stripe_currency(charge_amount),
+        amount: charge_amount.fractional
+      }, stripe_account: stripe_user_id
+    )
+    plan = Plan.new(
+      stripe_id: stripe_plan.id,
+      nominal_amount: nominal_amount.fractional,
+      charge_amount: charge_amount.fractional,
+      currency: StripeUtil.stripe_currency(charge_amount)
+    )
+    plans << plan
+    plan
   end
 
   def create_product

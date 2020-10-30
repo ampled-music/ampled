@@ -358,11 +358,11 @@ export default class PostFormComponent extends React.Component<Props, any> {
       deletedImages,
     } = this.state;
     const { isEdit } = this.props;
-
     const post = {
       title,
       body,
       link,
+      post_type: activePostType,
       audio_uploads: audioUploads,
       images: ['Audio', 'Photo'].includes(activePostType) ? images : [],
       video_embed_url: activePostType === 'Video' ? videoEmbedUrl : null,
@@ -379,7 +379,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
         await this.removeImageFromBackendAndCloudinary(deleteImage);
       }
     }
-
     if (isEdit) {
       const currentPublicIds = post.audio_uploads.map((au) => au.public_id);
       const removedUploads = this.props.post.audio_uploads.filter(

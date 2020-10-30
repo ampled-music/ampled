@@ -12,6 +12,17 @@ class PostNotificationEmailJob
     SendBatchEmail.call(messages)
   end
 
+  def btn_copy
+    case @post.post_type
+      when "Audio"
+        "Listen on Ampled"
+      when "Video"
+        "Watch on Ampled"
+      else
+        "Check it out"
+    end
+  end
+
   private
 
   def messages
@@ -22,9 +33,13 @@ class PostNotificationEmailJob
         template_alias: "post-notification",
         template_model: {
           artist_name: artist.name,
+          artist_image: artist.images.first&.url,
+          artist_color: artist.accent_color,
           post_title: post.title,
+          post_body: post.body,
+          post_btn_copy: btn_copy,
           post_id: post.id,
-          post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}#post-#{post.id}"
+          post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
         }
       }
     end

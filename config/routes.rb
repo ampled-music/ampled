@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get "slug/:slug", to: "artist_pages#show"
   post "artist/:slug/request_approval", to: "artist_pages#request_approval"
   get "artist/:slug/post/:postid/download", to: "posts#download_post"
+  get "artist/:slug/subscribers_csv", to: "artist_pages#subscribers_csv"
   get "slug/:slug/post/:id", to: "posts#show"
   get "artists/browse", to: "artist_pages#browse"
   get "artists/typeahead", to: "artist_pages#typeahead"

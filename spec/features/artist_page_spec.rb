@@ -34,6 +34,7 @@ RSpec.describe ArtistPagesController, type: :request do
 
     let(:url) { "/artists/browse.json?seed=0.237894" }
     let(:url_page_two) { "/artists/browse.json?seed=0.237894&page=2" }
+    let(:url_artist_owners) { "/artists/browse.json?seed=0.237894&artist_owners=true" }
 
     let(:image) { "https://res.cloudinary.com/ampled-web/image/upload/b_rgb:ddbdac33/social/Story/Story5.png" }
 
@@ -63,6 +64,22 @@ RSpec.describe ArtistPagesController, type: :request do
     it "distinguishes pages correctly" do
       response_one = JSON.parse(response.body)
       get url_page_two
+      expect(JSON.parse(response.body)).to_not eq response_one
+    end
+
+    it "handles gracefully artist pages with no images" do
+      approved_page_one.images.destroy_all
+      get url
+      expect(response.status).to eq 200
+    end
+
+    it "excludes non artist owners when artist_owners param is passed" do
+      response_one = JSON.parse(response.body)
+
+      approved_page_one.update(artist_owner: true)
+
+      get url_artist_owners
+
       expect(JSON.parse(response.body)).to_not eq response_one
     end
   end
@@ -127,6 +144,42 @@ RSpec.describe ArtistPagesController, type: :request do
       get url
 
       expect(JSON.parse(response.body)["owners"]).to be_nil
+    end
+  end
+
+  describe "#subscribers_csv" do
+    let(:admin) { create(:user, admin: true) }
+    let(:url) { "/artist/#{artist_page.slug}/subscribers_csv" }
+    let!(:subscription) { create(:subscription, user: supporter, artist_page: artist_page) }
+
+    context "when current user is not an admin" do
+      it "returns a 403 forbidden error" do
+        get url
+        expect(response.status).to eq(403)
+      end
+
+      it "returns no subscriber data" do
+        get url
+        expect(response.body).to_not include(supporter.email)
+      end
+    end
+
+    context "when current user is admin" do
+      before do
+        sign_in admin
+      end
+
+      it "returns 200" do
+        get url
+        expect(response.status).to eq(200)
+      end
+
+      it "returns csv with subscriber list" do
+        get url
+        actual_csv = CSV.parse(response.body)
+        expect(actual_csv).to include(["Name", "Last Name", "Email"])
+        expect(actual_csv).to include([supporter.name, supporter.last_name, supporter.email])
+      end
     end
   end
 end

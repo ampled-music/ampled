@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_22_212821) do
+ActiveRecord::Schema.define(version: 2020_10_26_212908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2020_08_22_212821) do
     t.string "youtube_handle"
     t.string "external"
     t.string "style_type"
+    t.boolean "artist_owner", default: false, null: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 
@@ -91,6 +92,8 @@ ActiveRecord::Schema.define(version: 2020_08_22_212821) do
     t.integer "nominal_amount", null: false
     t.string "stripe_id", null: false
     t.bigint "artist_page_id", null: false
+    t.string "currency", default: "usd", null: false
+    t.integer "charge_amount", null: false
     t.index ["artist_page_id"], name: "index_plans_on_artist_page_id"
   end
 
@@ -104,6 +107,7 @@ ActiveRecord::Schema.define(version: 2020_08_22_212821) do
     t.boolean "is_private", default: false
     t.boolean "allow_download", default: false
     t.string "video_embed_url"
+    t.string "post_type"
     t.index ["artist_page_id"], name: "index_posts_on_artist_page_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end

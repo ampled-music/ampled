@@ -1,5 +1,4 @@
 inherit_from:
-  - .rubocop_todo.yml
   - https://raw.githubusercontent.com/carbonfive/c5-conventions/master/rubocop/rubocop.yml
 
 inherit_mode:

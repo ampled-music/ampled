@@ -190,6 +190,10 @@ class ArtistPage < ApplicationRecord
     SocialImageService.supporter_images(self)
   end
 
+  def url
+    "#{ENV["REACT_APP_API_URL"]}/artist/#{slug}"
+  end
+
   private
 
   def find_screenshot_url(video_url)

@@ -209,4 +209,11 @@ RSpec.describe ArtistPage, type: :model do
       end
     end
   end
+
+  describe "#url" do
+    let(:artist_page) { create(:artist_page, slug: "kittehrock") }
+    it "returns the page's url" do
+      expect(artist_page.url).to eq("http://localhost:3000/artist/kittehrock")
+    end
+  end
 end

@@ -59,7 +59,7 @@ json.ownedPages @owned_pages do |page|
   json.name page.page.name
   json.image page.page.cover_public_id
   json.supportersCount page.page.subscriber_count
-  json.monthlyTotal page.page.monthly_total
+  json.monthlyTotal page.page.monthly_total.fractional
   json.lastPost page.page.last_post_date
   json.lastPayout page.page.last_payout
   json.stripeSignup page.role == "admin" ? page.page.stripe_signup_url : json.null

@@ -213,7 +213,10 @@ RSpec.describe ArtistPage, type: :model do
   describe "#url" do
     let(:artist_page) { create(:artist_page, slug: "kittehrock") }
     it "returns the page's url" do
-      expect(artist_page.url).to eq("http://localhost:3000/artist/kittehrock")
+      old_env_variable = ENV["REACT_APP_API_URL"]
+      ENV["REACT_APP_API_URL"] = "http://www.ampled.com"
+      expect(artist_page.url).to eq("http://www.ampled.com/artist/kittehrock")
+      ENV["REACT_APP_API_URL"] = old_env_variable
     end
   end
 end

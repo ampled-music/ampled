@@ -8,14 +8,19 @@ RSpec.describe ArtistOwnerStatusMailer, type: :mailer do
     ]
   end
   let(:artist_page) { create(:artist_page, name: "Kitteh' Rock", slug: "kittehrock", owners: owners) }
+  let(:artist_page_url) { "http://www.ampled.com/artist/kittehrock" }
+
+  before(:each) do
+    allow(artist_page).to receive(:url) { artist_page_url }
+  end
 
   describe "#internal_artist_eligible_for_ownership" do
     let(:mail) { ArtistOwnerStatusMailer.internal_artist_eligible_for_ownership(artist_page) }
 
     it "sets template correctly" do
-      expect(mail.message.template_model).to eq({
-                                                  artist_name: "Kitteh' Rock",
-        artist_page_url: "http://localhost:3000/artist/kittehrock",
+      expect(mail.message.template_model).to eq(
+        artist_name: "Kitteh' Rock",
+        artist_page_url: artist_page_url,
         page_owners: [
           {
             email: "garfield@cbs.com",
@@ -26,12 +31,12 @@ RSpec.describe ArtistOwnerStatusMailer, type: :mailer do
             name: "Mr. Bigglesworth"
           }
         ]
-                                                })
+      )
     end
 
     it "sets addresses correctly" do
       expect(mail.message.to).to eq(["hello@ampled.com", "austin@ampled.com"])
-      expect(mail.message.from).to eq(["dev@ampled.com"])
+      expect(mail.message.from).to eq([ENV["POSTMARK_FROM_EMAIL"]].compact)
     end
   end
 
@@ -40,7 +45,7 @@ RSpec.describe ArtistOwnerStatusMailer, type: :mailer do
 
     it "sets addresses correctly" do
       expect(mail.message.to).to eq(["garfield@cbs.com", "bigglesworth@evil.co"])
-      expect(mail.message.from).to eq(["dev@ampled.com"])
+      expect(mail.message.from).to eq([ENV["POSTMARK_FROM_EMAIL"]].compact)
     end
   end
 end

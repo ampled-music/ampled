@@ -9,4 +9,8 @@ class ArtistOwnerStatusMailer < PostmarkMailer
 
     mail to: ["hello@ampled.com", "austin@ampled.com"]
   end
+
+  def artist_eligible_for_ownership(artist_page)
+    mail to: artist_page.owners.pluck(:email)
+  end
 end

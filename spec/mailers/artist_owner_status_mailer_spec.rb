@@ -14,7 +14,7 @@ RSpec.describe ArtistOwnerStatusMailer, type: :mailer do
 
     it "sets template correctly" do
       expect(mail.message.template_model).to eq({
-        artist_name: "Kitteh' Rock",
+                                                  artist_name: "Kitteh' Rock",
         artist_page_url: "http://localhost:3000/artist/kittehrock",
         page_owners: [
           {
@@ -26,7 +26,7 @@ RSpec.describe ArtistOwnerStatusMailer, type: :mailer do
             name: "Mr. Bigglesworth"
           }
         ]
-      })
+                                                })
     end
 
     it "sets addresses correctly" do

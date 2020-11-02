@@ -26,10 +26,13 @@ class StripeController < ApplicationController
 
     logger.info "Stripe: Webhook event verified."
 
-    object = params[:data][:object]
-    connect_account_id = params[:account]
-    event_type = params[:type]
-    event_id = params[:id]
+    # It is safe to use `to_unsafe_h` because by now we have verfied the webhook.
+    stripe_event = Stripe::Event.construct_from(params.to_unsafe_h)
+
+    object = stripe_event[:data][:object]
+    connect_account_id = stripe_event[:account]
+    event_type = stripe_event[:type]
+    event_id = stripe_event[:id]
     logger.info "STRIPE EVENT: #{event_type} #{event_id} for #{connect_account_id} (live mode: #{params[:livemode]})"
 
     # Webhooks for Connect may send test data to live endpoints, so we need
@@ -44,12 +47,11 @@ class StripeController < ApplicationController
 
   private
 
+  # @param event_type [String] Type of the Stripe Event
+  # @param object [Stripe::StripeObject] Stripe object contained in the Stripe Event
+  # @param connect_account_id [String, nil] The Stripe Connect Account ID associated with the Stripe Event, if any
   def process_webhook(event_type, object, connect_account_id)
-    # Sidekiq writes ActionController::Params as a JSON string when queueing a job.
-    # That String is not transformed into a Hash when the job runs.
-    # Therefore, we need to convert the Stripe object into a Hash before queueing the job.
-    # It is safe to do this because we have verfied the webhook.
-    StripeReconciliation::ReconcileStripeObjectJob.perform_async(object.to_unsafe_h)
+    StripeReconciliation::ReconcileStripeObjectJob.perform_async(object.to_h)
     case event_type
     when "invoice.payment_failed"
       return invoice_payment_failed(object)
@@ -63,6 +65,7 @@ class StripeController < ApplicationController
     render json: {}
   end
 
+  # @param object [Stripe::Invoice]
   def invoice_payment_succeeded(object)
     usersub = Subscription.find_by(stripe_id: object[:subscription])
     logger.info "Stripe: usersub.id: #{usersub.id}"
@@ -81,6 +84,7 @@ class StripeController < ApplicationController
     render json: { status: "error", message: e.message }, status: :bad_request
   end
 
+  # @param object [Stripe::Invoice]
   def invoice_payment_failed(object)
     usersub = Subscription.find_by(stripe_id: object[:subscription])
     user = User.find(usersub.user_id)
@@ -95,6 +99,8 @@ class StripeController < ApplicationController
     render json: {}
   end
 
+  # @param object [Stripe::Payout]
+  # @param connect_account_id [String, nil] The Stripe Connect Account ID associated with the Stripe Event, if any
   def payout_paid(object, connect_account_id)
     # ignore non-connect events
     render json: {} && return if connect_account_id.blank?

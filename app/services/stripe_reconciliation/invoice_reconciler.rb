@@ -4,12 +4,12 @@ module StripeReconciliation
 
     EXPECTED_CURRENCIES = ["usd"].freeze
 
-    # @param stripe_invoice [OpenStruct] A JSON Stripe invoice, as an OpenStruct
-    #
+    # @param stripe_invoice [Stripe::Invoice]
     def initialize(stripe_invoice)
       @stripe_invoice = stripe_invoice
     end
 
+    # @return [Boolean] Returns `false` if an anomaly is detected, `true` otherwise.
     def reconcile
       subscription = Subscription.find_by(stripe_id: @stripe_invoice.subscription)
 

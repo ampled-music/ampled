@@ -3,7 +3,7 @@ class ApprovalRequestMailer < PostmarkMailer
   def approval_requested(artist_page, requesting_user)
     self.template_model = {
       artist_name: artist_page.name,
-      artist_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}",
+      artist_link: artist_page.url,
       artist_twitter: artist_page.twitter_handle.presence,
       artist_instagram: artist_page.instagram_handle.presence,
       artist_bandcamp: artist_page.bandcamp_handle.presence,
@@ -17,7 +17,7 @@ class ApprovalRequestMailer < PostmarkMailer
   def artist_page_approval_requested_for_artists(artist_page, requesting_user)
     self.template_model = {
       artist_name: artist_page.name,
-      artist_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}"
+      artist_link: artist_page.url
     }
 
     mail to: requesting_user.email

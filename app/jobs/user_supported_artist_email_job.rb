@@ -20,8 +20,8 @@ class UserSupportedArtistEmailJob
         template_alias: is_community ? "new-community-member" : "user-supported-artist",
         template_model: {
           artist_name: artist_page.name,
-          artist_page_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}",
-          promote_artist_page_link: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist_page.slug}/promote",
+          artist_page_link: artist_page.url,
+          promote_artist_page_link: "#{artist_page.url}/promote",
           social_image_url: social_image[:url],
           support_amount: format("%.2f", subscription.plan.nominal_amount)
         }

@@ -76,5 +76,45 @@ RSpec.describe MeController, type: :request do
         }
       ])
     end
+
+    it "returns ownedPages" do
+      artist_page = create(:artist_page)
+      artist_page.owners << user
+
+      plan = create(:plan, artist_page: artist_page, nominal_amount: 1758, currency: "usd")
+      create(
+        :subscription,
+        artist_page: artist_page,
+        plan: plan,
+        created_at: Time.new(2020, 10, 29, 14, 30, 23, "+00:00")
+      )
+
+      get url
+
+      expect(JSON.parse(response.body)["ownedPages"]).to eq(
+        [
+          {
+            "approved" => false,
+            "artistColor" => nil,
+            "artistId" => artist_page.id,
+            "artistSlug" => nil,
+            "image" => nil,
+            "instrument" => nil,
+            "isStripeSetup" => false,
+            "lastPayout" => nil,
+            "lastPost" => nil,
+            "monthlyTotal" => 1758,
+            "name" => artist_page.name,
+            "promoteSquareImages" => [nil, nil, nil, nil, nil, nil],
+            "promoteStoryImages" => [nil, nil, nil, nil, nil, nil, nil],
+            "role" => "member",
+            "stripeDashboard" => nil,
+            "stripeSignup" => nil,
+            "supporterImages" => [nil, nil],
+            "supportersCount" => 1
+          }
+        ]
+      )
+    end
   end
 end

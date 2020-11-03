@@ -141,7 +141,7 @@ class ArtistPage < ApplicationRecord
   end
 
   def monthly_total
-    subscriptions.active.includes(:plan).reduce(0) do |sum, subscription|
+    subscriptions.active.includes(:plan).reduce(Money.zero("usd")) do |sum, subscription|
       sum + subscription.plan.nominal_amount
     end
   end
@@ -188,6 +188,10 @@ class ArtistPage < ApplicationRecord
 
   def supporter_images
     SocialImageService.supporter_images(self)
+  end
+
+  def url
+    "#{ENV["REACT_APP_API_URL"]}/artist/#{slug}"
   end
 
   private

@@ -124,7 +124,7 @@ RSpec.describe StripeController, type: :request do
       let(:amount) { 2402 }
       let(:currency) { "usd" }
       let(:arrival_epoch_time) { 1_586_136_170 }
-      let(:account) { "acc_12345" }
+      let(:account) { "acct_12345" }
 
       before(:each) do
         webhook_params[:type] = event_type

@@ -11,6 +11,7 @@ class ArtistOwnerStatusMailer < PostmarkMailer
   end
 
   def artist_eligible_for_ownership(artist_page)
+    self.template_model = {}
     mail to: artist_page.owners.pluck(:email)
   end
 end

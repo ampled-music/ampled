@@ -43,6 +43,10 @@ RSpec.describe ArtistOwnerStatusMailer, type: :mailer do
   describe "#artist_eligible_for_ownership" do
     let(:mail) { ArtistOwnerStatusMailer.artist_eligible_for_ownership(artist_page) }
 
+    it "sets template correctly" do
+      expect(mail.message.template_model).to eq({})
+    end
+
     it "sets addresses correctly" do
       expect(mail.message.to).to eq(["garfield@cbs.com", "bigglesworth@evil.co"])
       expect(mail.message.from).to eq([ENV["POSTMARK_FROM_EMAIL"]].compact)

@@ -8,8 +8,8 @@ default: &default
   pool: <%= ENV["DB_POOL"].presence || ENV["RAILS_MAX_THREADS"].presence || 5 %>
   timeout: 5000
   host: localhost
-  # user: user
-  # password: password
+  user: <%= ENV["DATABASE_USER"].presence %>
+  password: <%= ENV["DATABASE_PASSWORD"].presence %>
 
 development:
   <<: *default

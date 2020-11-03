@@ -249,14 +249,13 @@ const PostMedia = ({
         )}
       </div>
     )}
-
     {has_audio && (
       <div className="post__audio-container">
         <div className="post__image-container">
           {images?.length > 0 && (
             <Image
-              publicId={images.public_id}
-              key={images.public_id}
+              publicId={images[0].public_id}
+              key={images[0].public_id}
               className={cx({
                 post__image: true,
                 'blur-image': !allowDetails,

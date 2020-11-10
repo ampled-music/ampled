@@ -1,4 +1,6 @@
 module StripeReconciliation
+  class AnomalyDetectedException < StandardError; end
+
   class AnomalyNotifier
     def initialize(anomaly:, stripe_object:)
       @anomaly = anomaly
@@ -15,6 +17,7 @@ module StripeReconciliation
       }
 
       Rails.logger.info("[#{self.class.name}] Anomaly detected #{log_fields}")
+      Raven.capture_exception(AnomalyDetectedException.new, extra: log_fields)
     end
   end
 end

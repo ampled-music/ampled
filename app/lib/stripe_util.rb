@@ -15,6 +15,13 @@ module StripeUtil
   # to be the after-fee amount (not including Ampled's platform fee).
   # We are charged 2.9% + 30 cents for USD transacitions
   #
+  # Example:
+  #   Nominal amount: $5.00
+  #   Fees: $1.18
+  #     Stripe fee: $0.46 (2.9% + $0.30)
+  #     Ampled fee: $0.72 (13.24%)
+  #   Charge amount: $5.46
+  #
   # @param nominal_amount [Money] Nominal amount
   # @return [Money] Calculated charge amount
   # @raise [StandardError] Raised if the `nominal_amount` currency is not USD

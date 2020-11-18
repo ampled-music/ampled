@@ -55,6 +55,7 @@ group :production, :acceptance do
 end
 
 group :development, :test do
+  gem "dotenv-rails", require: "dotenv/rails-now"
   gem "factory_bot_rails"
   gem "rspec-rails"
   gem "rspec_junit_formatter"
@@ -68,7 +69,6 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem "bullet"
-  gem "dotenv-rails", require: "dotenv/rails-now"
   gem "launchy"
   gem "listen"
   gem "spring"

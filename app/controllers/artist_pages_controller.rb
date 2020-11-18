@@ -110,7 +110,8 @@ class ArtistPagesController < ApplicationController
     render json: { status: "error", message: e.message }
   end
 
-  # If the update includes new sets of images, we will delete all the old images after the update is successful.
+  # If the update includes new images, we will insert new image records
+  # Existing images get updated, and removed images get deleted.
   def update
     if @artist_page.update(artist_page_params)
       if artist_page_params[:application_fee_percent].present?

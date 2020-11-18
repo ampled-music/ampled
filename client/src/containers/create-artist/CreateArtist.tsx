@@ -462,7 +462,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
-    // hotfix accidental image deletion while we find better solution
+    // prepare artist images
     const newImages = imageUploads
       .filter((image) => image !== null && typeof image !== 'undefined')
       .map(({ public_id, url }) => ({ id: null, public_id, url, _destroy: null }));

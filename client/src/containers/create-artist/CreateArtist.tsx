@@ -465,7 +465,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     // prepare artist images
     const newImages = imageUploads
       .filter((image) => image !== null && typeof image !== 'undefined')
-      .map(({ public_id, url }) => ({ id: null, public_id, url, _destroy: null }));
+      .map(({ public_id, url }) => ({ public_id, url }));
 
     const deletedImages = images
       .filter((image) => image !== null && typeof image !== 'undefined' && image._destroy);

@@ -8,7 +8,7 @@ class AudioProcessingService
     @raw_file_path = Rails.root.join("tmp/raw_#{@process_id}")
 
     @s3 = Aws::S3::Resource.new
-    object = @s3.bucket(ENV["S3_BUCKET"]).object(public_id)
+    object = @s3.bucket(Rails.application.config.s3_bucket).object(public_id)
     raise S3ObjectNotFound unless object.exists?
 
     # save audio to disk

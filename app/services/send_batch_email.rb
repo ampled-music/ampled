@@ -14,6 +14,6 @@ class SendBatchEmail
   end
 
   def client
-    Postmark::ApiClient.new(ENV["POSTMARK_API_KEY"])
+    Postmark::ApiClient.new(Rails.application.config.postmark_api_key)
   end
 end

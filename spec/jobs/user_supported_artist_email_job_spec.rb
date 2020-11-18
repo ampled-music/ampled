@@ -23,7 +23,7 @@ describe UserSupportedArtistEmailJob, type: :job do
     expect(SendBatchEmail).to have_received(:call).with(
       [
         {
-          from: ENV["POSTMARK_FROM_EMAIL"],
+          from: Rails.application.config.postmark_from_email,
           to: user.email,
           template_alias: "user-supported-artist",
           template_model: {
@@ -52,7 +52,7 @@ describe UserSupportedArtistEmailJob, type: :job do
     expect(SendBatchEmail).to have_received(:call).with(
       [
         {
-          from: ENV["POSTMARK_FROM_EMAIL"],
+          from: Rails.application.config.postmark_from_email,
           to: user.email,
           template_alias: "new-community-member",
           template_model: {

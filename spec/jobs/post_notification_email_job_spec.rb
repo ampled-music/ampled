@@ -14,7 +14,7 @@ describe PostNotificationEmailJob, type: :job do
     expect(SendBatchEmail).to have_received(:call).with(
       array_including(
         [{
-          from: ENV["POSTMARK_FROM_EMAIL"],
+          from: Rails.application.config.postmark_from_email,
           to: users.first.email,
           template_alias: "post-notification",
           template_model: {
@@ -25,11 +25,11 @@ describe PostNotificationEmailJob, type: :job do
             post_body: post.body,
             post_btn_copy: "Check it out",
             post_id: post.id,
-            post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
+            post_url: "#{Rails.application.config.react_app_api_url}/artist/#{artist.slug}/post/#{post.id}"
           }
         },
          {
-           from: ENV["POSTMARK_FROM_EMAIL"],
+           from: Rails.application.config.postmark_from_email,
            to: users.last.email,
            template_alias: "post-notification",
            template_model: {
@@ -40,7 +40,7 @@ describe PostNotificationEmailJob, type: :job do
              post_body: post.body,
              post_btn_copy: "Check it out",
              post_id: post.id,
-             post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
+             post_url: "#{Rails.application.config.react_app_api_url}/artist/#{artist.slug}/post/#{post.id}"
            }
          }]
       )

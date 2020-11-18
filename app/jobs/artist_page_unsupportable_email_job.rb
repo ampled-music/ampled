@@ -18,7 +18,7 @@ class ArtistPageUnsupportableEmailJob
   def messages
     users.map do |user|
       {
-        from: ENV["POSTMARK_FROM_EMAIL"],
+        from: Rails.application.config.postmark_from_email,
         to: user.email,
         template_alias: "artist-page-unsupportable",
         template_model: {

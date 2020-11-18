@@ -40,7 +40,7 @@ describe ArtistPaidEmailJob, type: :job do
     expect(SendBatchEmail).to have_received(:call).with(
       [
         {
-          from: ENV["POSTMARK_FROM_EMAIL"],
+          from: Rails.application.config.postmark_from_email,
           to: connect_account.email,
           template_alias: "artist-paid",
           template_model: {

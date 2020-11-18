@@ -36,7 +36,7 @@ RSpec.describe ArtistOwnerStatusMailer, type: :mailer do
 
     it "sets addresses correctly" do
       expect(mail.message.to).to eq(["hello@ampled.com", "austin@ampled.com"])
-      expect(mail.message.from).to eq([ENV["POSTMARK_FROM_EMAIL"]].compact)
+      expect(mail.message.from).to eq([Rails.application.config.postmark_from_email].compact)
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe ArtistOwnerStatusMailer, type: :mailer do
 
     it "sets addresses correctly" do
       expect(mail.message.to).to eq(["garfield@cbs.com", "bigglesworth@evil.co"])
-      expect(mail.message.from).to eq([ENV["POSTMARK_FROM_EMAIL"]].compact)
+      expect(mail.message.from).to eq([Rails.application.config.postmark_from_email].compact)
     end
   end
 end

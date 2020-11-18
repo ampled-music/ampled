@@ -14,13 +14,13 @@ class ArtistPageMemberAddedJob
 
     SendBatchEmail.call(
       [{
-        from: ENV["POSTMARK_FROM_EMAIL"],
+        from: Rails.application.config.postmark_from_email,
         to: user.email,
         template_alias: "member-added-to-artist-page",
         template_model: {
           artist_name: artist.name,
           artist_admin_first_name: admin.name,
-          destination_link: "#{ENV["REACT_APP_API_URL"]}/settings"
+          destination_link: "#{Rails.application.config.react_app_api_url}/settings"
         }
       }]
     )

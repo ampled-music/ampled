@@ -3,13 +3,13 @@ class FanWelcomeMailer < PostmarkMailer
   def fan_welcome(user)
     token = user.confirmation_token
     self.template_model = {
-      homepage_url: ENV["REACT_APP_API_URL"],
-      login_url: ENV["REACT_APP_API_URL"],
+      homepage_url: Rails.application.config.react_app_api_url,
+      login_url: Rails.application.config.react_app_api_url,
       fan_email_address: user.email,
-      support_email: ENV["POSTMARK_FROM_EMAIL"],
-      ampled_membership_url: ENV["REACT_APP_API_URL"],
+      support_email: Rails.application.config.postmark_from_email,
+      ampled_membership_url: Rails.application.config.react_app_api_url,
       first_name: user.name,
-      confirm_link: "#{ENV["REACT_APP_API_URL"]}/users/confirmation?confirmation_token=#{token}"
+      confirm_link: "#{Rails.application.config.react_app_api_url}/users/confirmation?confirmation_token=#{token}"
     }
 
     mail to: user.email

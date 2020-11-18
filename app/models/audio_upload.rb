@@ -34,7 +34,7 @@ class AudioUpload < ApplicationRecord
 
   def delete_audio
     s3 = Aws::S3::Resource.new
-    bucket = s3.bucket(ENV["S3_BUCKET"])
+    bucket = s3.bucket(Rails.application.config.s3_bucket)
     bucket.object(public_id).delete
   end
 

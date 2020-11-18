@@ -7,7 +7,7 @@ class CardChargedEmailJob
 
     SendBatchEmail.call(
       [{
-        from: ENV["POSTMARK_FROM_EMAIL"],
+        from: Rails.application.config.postmark_from_email,
         to: subscription.user.email,
         template_alias: "card_charged",
         template_model: {

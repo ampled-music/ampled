@@ -45,6 +45,18 @@ module AmpledWeb
 
     config.action_mailer.postmark_settings = { api_token: ENV["POSTMARK_API_KEY"] }
 
+    config.s3_bucket = ENV["S3_BUCKET"]
+
+    config.postmark_api_key = ENV["POSTMARK_API_KEY"]
+    config.postmark_from_email = ENV["POSTMARK_FROM_EMAIL"]
+
+    config.stripe_webhook_secret = ENV["STRIPE_WEBHOOK_SECRET"]
+    config.stripe_connect_webhook_secret = ENV["STRIPE_CONNECT_WEBHOOK_SECRET"]
+    config.stripe_secret_key = ENV["STRIPE_SECRET_KEY"]
+    config.stripe_client_id = ENV["STRIPE_CLIENT_ID"]
+
+    config.react_app_api_url = ENV["REACT_APP_API_URL"]
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

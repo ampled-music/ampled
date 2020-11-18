@@ -126,11 +126,11 @@ class StripeController < ApplicationController
   end
 
   def is_account_hook
-    verify_webhook(ENV["STRIPE_WEBHOOK_SECRET"])
+    verify_webhook(Rails.application.config.stripe_webhook_secret)
   end
 
   def is_connect_hook
-    verify_webhook(ENV["STRIPE_CONNECT_WEBHOOK_SECRET"])
+    verify_webhook(Rails.application.config.stripe_connect_webhook_secret)
   end
 
   def verify_webhook(secret)
@@ -157,7 +157,7 @@ class StripeController < ApplicationController
 
   def authorize_stripe_account
     connection.post("https://connect.stripe.com/oauth/token",
-                    client_secret: ENV["STRIPE_SECRET_KEY"],
+                    client_secret: Rails.application.config.stripe_secret_key,
                     code: params[:code],
                     grant_type: "authorization_code").body
   end

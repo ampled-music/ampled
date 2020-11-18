@@ -18,11 +18,11 @@ class ArtistPageApprovedEmailJob
 
     users.map do |user|
       {
-        from: ENV["POSTMARK_FROM_EMAIL"],
+        from: Rails.application.config.postmark_from_email,
         to: user.email,
         template_alias: "artist-page-approved",
         template_model: {
-          app_base_url: ENV["REACT_APP_API_URL"],
+          app_base_url: Rails.application.config.react_app_api_url,
           artist_name: artist.name,
           artist_slug: artist.slug,
           social_image_url: social_image[:url]

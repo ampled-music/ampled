@@ -16,7 +16,7 @@ class NewSupporterEmailJob
   def messages
     artist.owners.map do |owner|
       {
-        from: ENV["POSTMARK_FROM_EMAIL"],
+        from: Rails.application.config.postmark_from_email,
         to: owner.email,
         template_alias: "new-supporter",
         template_model: {

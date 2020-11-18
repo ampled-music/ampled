@@ -15,7 +15,7 @@ class UserSupportedArtistEmailJob
 
     SendBatchEmail.call(
       [{
-        from: ENV["POSTMARK_FROM_EMAIL"],
+        from: Rails.application.config.postmark_from_email,
         to: user.email,
         template_alias: is_community ? "new-community-member" : "user-supported-artist",
         template_model: {

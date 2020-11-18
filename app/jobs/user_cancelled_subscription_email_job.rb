@@ -12,13 +12,13 @@ class UserCancelledSubscriptionEmailJob
 
     SendBatchEmail.call(
       [{
-        from: ENV["POSTMARK_FROM_EMAIL"],
+        from: Rails.application.config.postmark_from_email,
         to: user.email,
         template_alias: "user-cancelled-subscription",
         template_model: {
           artist_name: artist_page.name,
           user_name: user.name,
-          artist_support_link: "#{ENV["REACT_APP_API_URL"]}/support/#{artist_page.slug}"
+          artist_support_link: "#{Rails.application.config.react_app_api_url}/support/#{artist_page.slug}"
         }
       }]
     )

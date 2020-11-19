@@ -429,10 +429,11 @@
       z-index: 5;
     }
 
-    &_title {
+    &_title,
+    &_location {
       font-family: $font-family-sans-serif;
       font-size: 12px;
-      color: white;
+      color: $white;
       background-color: $black;
       display: inline;
       padding: 5px 10px;
@@ -440,6 +441,20 @@
       left: 1.5rem;
       top: 0.5rem;
       z-index: 10;
+    }
+
+    &_location {
+      font-family: $font-family-monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $black;
+      background-color: $white;
+      border: 1px solid $black;
+      bottom: 0.5rem;
+      top: initial;
+      max-width: 75%;
+      text-transform: capitalize;
     }
 
     &_image {

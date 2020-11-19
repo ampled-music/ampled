@@ -1,8 +1,10 @@
 import './home.scss';
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 import { Link } from 'react-router-dom';
 import { apiAxios } from '../../api/setup-axios';
 import { Image, Transformation } from 'cloudinary-react';
+import Location from '../../images/icons/Icon_Location.svg';
 
 class HomeBrowse extends React.Component {
   state = {
@@ -24,7 +26,7 @@ class HomeBrowse extends React.Component {
       data: { pages: data },
     } = await apiAxios({
       method: 'get',
-      url: `/artists/browse.json?page=${page}&seed=${this.state.seed}`,
+      url: `/artists/browse.json?page=${page}&seed=${this.state.seed}&artist_owners`,
     });
     if (data.length < 8) {
       canLoadMore = false;
@@ -103,6 +105,13 @@ class HomeBrowse extends React.Component {
                       responsive_placeholder="blank"
                     />
                   </Image>
+                </div>
+                <div className="home-artists__item_location">
+                  <ReactSVG
+                    className="icon icon_black icon_sm"
+                    src={Location}
+                  />
+                  {page.location}
                 </div>
                 <div className="home-artists__item_border"></div>
               </Link>

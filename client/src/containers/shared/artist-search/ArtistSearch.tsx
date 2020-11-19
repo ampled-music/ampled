@@ -9,7 +9,11 @@ import debounce from 'lodash.debounce';
 import { ReactSVG } from 'react-svg';
 import Search from '../../../images/icons/Icon_Search.svg';
 
-class ArtistSearch extends React.Component {
+interface Props {
+  imageSize: number;
+}
+
+class ArtistSearch extends React.Component<Props, any> {
   state = {
     query: '',
     results: [],
@@ -58,28 +62,30 @@ class ArtistSearch extends React.Component {
           }}
         />
         <div className="results">
-          {this.state.results.map((page) => (
-            <div key={page.id} className="result">
-              <a href={`/artist/${page.slug}`}>
-                <Image
-                  publicId={page.cloudinaryImage.public_id}
-                  alt={page.name}
-                  className="artist-image"
-                >
-                  <Transformation
-                    fetchFormat="auto"
-                    quality="auto"
-                    crop="fill"
-                    width={30}
-                    height={30}
-                    responsive_placeholder="blank"
-                  />
-                </Image>
+          {this.state.results &&
+            this.state.results &&
+            this.state.results.map((page) => (
+              <div key={page.id} className="result">
+                <a href={`/artist/${page.slug}`}>
+                  <Image
+                    publicId={page.cloudinaryImage.public_id}
+                    alt={page.name}
+                    className="artist-image"
+                  >
+                    <Transformation
+                      fetchFormat="auto"
+                      quality="auto"
+                      crop="fill"
+                      width={this.props.imageSize}
+                      height={this.props.imageSize}
+                      responsive_placeholder="blank"
+                    />
+                  </Image>
 
-                <span className="name">{page.name}</span>
-              </a>
-            </div>
-          ))}
+                  <span className="name">{page.name}</span>
+                </a>
+              </div>
+            ))}
           {this.emptySearch() && (
             <div className="result-empty">No Artists Found</div>
           )}

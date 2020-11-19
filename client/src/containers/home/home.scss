@@ -578,6 +578,14 @@
         .result {
           border: none;
           width: 25%;
+          .artist-image {
+            width: 100%;
+            height: inherit;
+            border-radius: 0;
+            border-width: 0;
+            margin-right: 0;
+            display: block;
+          }
         }
       }
     }

@@ -77,7 +77,7 @@ class HomeBrowse extends React.Component {
         onClick={this.loadMoreArtistOwners}
         className="home-artists__button btn btn-ampled center"
       >
-        Load More
+        View More
       </button>
     );
 
@@ -98,7 +98,7 @@ class HomeBrowse extends React.Component {
         <div className="home-artists__artists">
           <h1 className="home-artists__title">All Artists</h1>
           <div className="container">
-            <ArtistSearch />
+            <ArtistSearch imageSize={800} />
             <div className="row justify-content-center">
               {artists &&
                 artists.length > 0 &&
@@ -118,40 +118,37 @@ class HomeBrowse extends React.Component {
     return (
       artistsPages &&
       artistsPages.length &&
-      artistsPages.map((page) => {
-        console.log(page);
-        return (
-          <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
-            <Link to={`/artist/${page.slug}`}>
-              <div className="home-artists__item_title">{page.name}</div>
-              <div
-                className="home-artists__item_image_hover"
-                style={{ backgroundColor: page.accent_color }}
+      artistsPages.map((page) => (
+        <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
+          <Link to={`/artist/${page.slug}`}>
+            <div className="home-artists__item_title">{page.name}</div>
+            <div
+              className="home-artists__item_image_hover"
+              style={{ backgroundColor: page.accent_color }}
+            >
+              <Image
+                className="home-artists__item_image"
+                publicId={page.cloudinaryImage.public_id}
+                key={page.cloudinaryImage.id}
               >
-                <Image
-                  className="home-artists__item_image"
-                  publicId={page.cloudinaryImage.public_id}
-                  key={page.cloudinaryImage.id}
-                >
-                  <Transformation
-                    fetchFormat="auto"
-                    quality="auto"
-                    crop="fill"
-                    width={800}
-                    height={800}
-                    responsive_placeholder="blank"
-                  />
-                </Image>
-              </div>
-              <div className="home-artists__item_location">
-                <ReactSVG className="icon icon_black icon_sm" src={Location} />
-                {page.location}
-              </div>
-              <div className="home-artists__item_border"></div>
-            </Link>
-          </div>
-        );
-      })
+                <Transformation
+                  fetchFormat="auto"
+                  quality="auto"
+                  crop="fill"
+                  width={800}
+                  height={800}
+                  responsive_placeholder="blank"
+                />
+              </Image>
+            </div>
+            <div className="home-artists__item_location">
+              <ReactSVG className="icon icon_black icon_sm" src={Location} />
+              {page.location}
+            </div>
+            <div className="home-artists__item_border"></div>
+          </Link>
+        </div>
+      ))
     );
   }
 }

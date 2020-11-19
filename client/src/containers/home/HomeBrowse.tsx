@@ -99,6 +99,7 @@ class HomeBrowse extends React.Component {
           <h1 className="home-artists__title">All Artists</h1>
           <div className="container">
             <ArtistSearch imageSize={800} />
+
             <div className="row justify-content-center">
               {artists &&
                 artists.length > 0 &&
@@ -117,7 +118,7 @@ class HomeBrowse extends React.Component {
   private getArtistList(artistsPages: any) {
     return (
       artistsPages &&
-      artistsPages.length &&
+      artistsPages.length > 0 &&
       artistsPages.map((page) => (
         <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
           <Link to={`/artist/${page.slug}`}>

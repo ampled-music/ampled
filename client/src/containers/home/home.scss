@@ -587,6 +587,16 @@
             display: block;
           }
         }
+        .result-empty {
+          width: 25%;
+          margin: auto;
+          border: none;
+          font-size: 1rem;
+          text-align: center;
+          padding: 0.5rem;
+          font-style: italic;
+          color: $brand-danger;
+        }
       }
     }
   }

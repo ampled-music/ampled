@@ -63,25 +63,26 @@ class ArtistSearch extends React.Component<Props, any> {
         />
         <div className="results">
           {this.state.results &&
-            this.state.results &&
+            this.state.results.length > 0 &&
             this.state.results.map((page) => (
               <div key={page.id} className="result">
                 <a href={`/artist/${page.slug}`}>
-                  <Image
-                    publicId={page.cloudinaryImage.public_id}
-                    alt={page.name}
-                    className="artist-image"
-                  >
-                    <Transformation
-                      fetchFormat="auto"
-                      quality="auto"
-                      crop="fill"
-                      width={this.props.imageSize}
-                      height={this.props.imageSize}
-                      responsive_placeholder="blank"
-                    />
-                  </Image>
-
+                  {page.cloudinaryImage && (
+                    <Image
+                      publicId={page.cloudinaryImage.public_id}
+                      alt={page.name}
+                      className="artist-image"
+                    >
+                      <Transformation
+                        fetchFormat="auto"
+                        quality="auto"
+                        crop="fill"
+                        width={this.props.imageSize}
+                        height={this.props.imageSize}
+                        responsive_placeholder="blank"
+                      />
+                    </Image>
+                  )}
                   <span className="name">{page.name}</span>
                 </a>
               </div>

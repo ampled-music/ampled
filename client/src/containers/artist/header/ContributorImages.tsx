@@ -13,6 +13,7 @@ import Ana from '../../../images/contributors/Ana.png';
 import Ari from '../../../images/contributors/Ari.png';
 import Austin from '../../../images/contributors/Austin.png';
 import Blair from '../../../images/contributors/Blair.png';
+import Brad from '../../../images/contributors/Brad.png';
 import Collin from '../../../images/contributors/Collin.png';
 import Dash from '../../../images/contributors/Dash.png';
 import Derek from '../../../images/contributors/Derek.png';
@@ -62,6 +63,7 @@ export class ContributorImages extends React.Component<Props, any> {
       Ari,
       Austin,
       Blair,
+      Brad,
       Collin,
       Dash,
       Derek,

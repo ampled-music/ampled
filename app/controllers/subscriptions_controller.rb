@@ -8,7 +8,7 @@ class SubscriptionsController < ApplicationController
 
   def create
     subscription = subscribe_stripe
-    update_artist_owner_status
+    UpdateArtistOwnerStatusJob.perform_async(@current_artist_page.id)
     UserSupportedArtistEmailJob.perform_async(subscription.id)
     NewSupporterEmailJob.perform_async(subscription.id)
     render json: subscription
@@ -173,12 +173,5 @@ class SubscriptionsController < ApplicationController
 
   def current_subscription
     Subscription.find(params.require(:id))
-  end
-
-  def update_artist_owner_status
-    if !@current_artist_page.artist_owner? &&
-       @current_artist_page.subscriptions.active.count >= ArtistPage::ARTIST_OWNER_THRESHOLD
-      @current_artist_page.update!(artist_owner: true)
-    end
   end
 end

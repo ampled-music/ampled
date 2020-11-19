@@ -12,12 +12,14 @@ class HomeBrowse extends React.Component {
     artists: [],
     loading: true,
     canLoadMore: true,
-    page: 1,
+    artistOwnersPage: 1,
+    artistsPage: 1,
     seed: Math.random(),
   };
 
   componentDidMount() {
-    this.loadArtistOwners(this.state.page);
+    this.loadArtistOwners(this.state.artistOwnersPage);
+    this.loadArtists(this.state.artistsPage);
   }
 
   loadArtistOwners = async (page) => {
@@ -40,12 +42,32 @@ class HomeBrowse extends React.Component {
     });
   };
 
+  loadArtists = async (page) => {
+    let { canLoadMore } = this.state;
+    this.setState({ loading: true });
+    const {
+      data: { pages: data },
+    } = await apiAxios({
+      method: 'get',
+      url: `/artists/browse.json?page=${page}&seed=${this.state.seed}`,
+    });
+    if (data.length < 8) {
+      canLoadMore = false;
+    }
+    this.setState({
+      loading: false,
+      canLoadMore,
+      artists: [...this.state.artists, ...data],
+      page,
+    });
+  };
+
   loadMoreArtistOwners = () => {
-    this.loadArtistOwners(+this.state.page + 1);
+    this.loadArtistOwners(+this.state.artistOwnersPage + 1);
   };
 
   render() {
-    const { artistOwners, loading, canLoadMore } = this.state;
+    const { artists, artistOwners, loading, canLoadMore } = this.state;
 
     const loadMore = (
       <button
@@ -68,6 +90,18 @@ class HomeBrowse extends React.Component {
               {canLoadMore && !loading ? loadMore : ''}
               {loading ? <div className="loading">Loading...</div> : ''}
             </div>
+          </div>
+        </div>
+        <div className="home-artists__artists">
+          <h1 className="home-artists__title">All Artists</h1>
+          <div className="container">
+            <div className="row justify-content-center">
+              {this.getArtistList(artists)}
+            </div>
+            {/* <div className="row justify-content-center">
+              {canLoadMore && !loading ? loadMore : ''}
+              {loading ? <div className="loading">Loading...</div> : ''}
+            </div> */}
           </div>
         </div>
       </div>

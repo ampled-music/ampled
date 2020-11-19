@@ -33,6 +33,17 @@ module StripeReconciliation
         )
         notifier.notify
       end
+
+      context "in acceptance" do
+        before(:each) do
+          allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("acceptance"))
+        end
+
+        it "does not call Raven.capture_exception" do
+          expect(Raven).not_to receive(:capture_exception)
+          notifier.notify
+        end
+      end
     end
   end
 end

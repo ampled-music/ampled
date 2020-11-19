@@ -8,6 +8,7 @@ import Location from '../../images/icons/Icon_Location.svg';
 
 class HomeBrowse extends React.Component {
   state = {
+    artistOwners: [],
     artists: [],
     loading: true,
     canLoadMore: true,
@@ -16,10 +17,10 @@ class HomeBrowse extends React.Component {
   };
 
   componentDidMount() {
-    this.loadData(this.state.page);
+    this.loadArtistOwners(this.state.page);
   }
 
-  loadData = async (page) => {
+  loadArtistOwners = async (page) => {
     let { canLoadMore } = this.state;
     this.setState({ loading: true });
     const {
@@ -34,28 +35,21 @@ class HomeBrowse extends React.Component {
     this.setState({
       loading: false,
       canLoadMore,
-      artists: [...this.state.artists, ...data],
+      artistOwners: [...this.state.artistOwners, ...data],
       page,
     });
   };
 
-  loadMore = () => {
-    this.loadData(+this.state.page + 1);
-  };
-
-  handlePublicID = (image: string) => {
-    const url = image.split('/');
-    const part_1 = url[url.length - 2];
-    const part_2 = url[url.length - 1];
-    return part_1 + '/' + part_2;
+  loadMoreArtistOwners = () => {
+    this.loadArtistOwners(+this.state.page + 1);
   };
 
   render() {
-    const { artists, loading, canLoadMore } = this.state;
+    const { artistOwners, loading, canLoadMore } = this.state;
 
     const loadMore = (
       <button
-        onClick={this.loadMore}
+        onClick={this.loadMoreArtistOwners}
         className="home-artists__button btn btn-ampled center"
       >
         Load More
@@ -63,12 +57,12 @@ class HomeBrowse extends React.Component {
     );
 
     return (
-      <div>
-        <div className="home-artists">
-          <h1 className="home-artists__title">All Artists</h1>
+      <div className="home-artists">
+        <div className="home-artists__owners">
+          <h1 className="home-artists__title">Artists Owners</h1>
           <div className="container">
             <div className="row justify-content-center">
-              {this.getArtistsList(artists)}
+              {this.getArtistList(artistOwners)}
             </div>
             <div className="row justify-content-center">
               {canLoadMore && !loading ? loadMore : ''}
@@ -80,9 +74,10 @@ class HomeBrowse extends React.Component {
     );
   }
 
-  private getArtistsList(artistsPages: any) {
+  private getArtistList(artistsPages: any) {
     return artistsPages && artistsPages.length
       ? artistsPages.map((page) => {
+          console.log(page);
           return (
             <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
               <Link to={`/artist/${page.slug}`}>
@@ -93,8 +88,8 @@ class HomeBrowse extends React.Component {
                 >
                   <Image
                     className="home-artists__item_image"
-                    publicId={this.handlePublicID(page.image)}
-                    key={page.image}
+                    publicId={page.cloudinaryImage.public_id}
+                    key={page.cloudinaryImage.id}
                   >
                     <Transformation
                       fetchFormat="auto"

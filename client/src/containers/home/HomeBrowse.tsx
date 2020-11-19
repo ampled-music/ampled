@@ -3,7 +3,10 @@ import * as React from 'react';
 import { ReactSVG } from 'react-svg';
 import { Link } from 'react-router-dom';
 import { apiAxios } from '../../api/setup-axios';
+
 import { Image, Transformation } from 'cloudinary-react';
+import { ArtistSearch } from '../shared/artist-search/ArtistSearch';
+
 import Location from '../../images/icons/Icon_Location.svg';
 
 class HomeBrowse extends React.Component {
@@ -95,13 +98,16 @@ class HomeBrowse extends React.Component {
         <div className="home-artists__artists">
           <h1 className="home-artists__title">All Artists</h1>
           <div className="container">
+            <ArtistSearch />
             <div className="row justify-content-center">
-              {this.getArtistList(artists)}
+              {artists &&
+                artists.length > 0 &&
+                artists.map((page) => (
+                  <div className="home-artists__artists_artist col-3">
+                    <Link to={`/artist/${page.slug}`}>{page.name}</Link>
+                  </div>
+                ))}
             </div>
-            {/* <div className="row justify-content-center">
-              {canLoadMore && !loading ? loadMore : ''}
-              {loading ? <div className="loading">Loading...</div> : ''}
-            </div> */}
           </div>
         </div>
       </div>
@@ -109,45 +115,44 @@ class HomeBrowse extends React.Component {
   }
 
   private getArtistList(artistsPages: any) {
-    return artistsPages && artistsPages.length
-      ? artistsPages.map((page) => {
-          console.log(page);
-          return (
-            <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
-              <Link to={`/artist/${page.slug}`}>
-                <div className="home-artists__item_title">{page.name}</div>
-                <div
-                  className="home-artists__item_image_hover"
-                  style={{ backgroundColor: page.accent_color }}
+    return (
+      artistsPages &&
+      artistsPages.length &&
+      artistsPages.map((page) => {
+        console.log(page);
+        return (
+          <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
+            <Link to={`/artist/${page.slug}`}>
+              <div className="home-artists__item_title">{page.name}</div>
+              <div
+                className="home-artists__item_image_hover"
+                style={{ backgroundColor: page.accent_color }}
+              >
+                <Image
+                  className="home-artists__item_image"
+                  publicId={page.cloudinaryImage.public_id}
+                  key={page.cloudinaryImage.id}
                 >
-                  <Image
-                    className="home-artists__item_image"
-                    publicId={page.cloudinaryImage.public_id}
-                    key={page.cloudinaryImage.id}
-                  >
-                    <Transformation
-                      fetchFormat="auto"
-                      quality="auto"
-                      crop="fill"
-                      width={800}
-                      height={800}
-                      responsive_placeholder="blank"
-                    />
-                  </Image>
-                </div>
-                <div className="home-artists__item_location">
-                  <ReactSVG
-                    className="icon icon_black icon_sm"
-                    src={Location}
+                  <Transformation
+                    fetchFormat="auto"
+                    quality="auto"
+                    crop="fill"
+                    width={800}
+                    height={800}
+                    responsive_placeholder="blank"
                   />
-                  {page.location}
-                </div>
-                <div className="home-artists__item_border"></div>
-              </Link>
-            </div>
-          );
-        })
-      : '';
+                </Image>
+              </div>
+              <div className="home-artists__item_location">
+                <ReactSVG className="icon icon_black icon_sm" src={Location} />
+                {page.location}
+              </div>
+              <div className="home-artists__item_border"></div>
+            </Link>
+          </div>
+        );
+      })
+    );
   }
 }
 

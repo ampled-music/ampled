@@ -386,7 +386,7 @@
 }
 
 .home-artists {
-  padding: 0 0 2rem;
+  padding: 0;
 
   h1 {
     font-family: $font-family-sans-serif;
@@ -556,6 +556,29 @@
       &:hover {
         color: $white;
         text-decoration: underline;
+      }
+    }
+  }
+
+  &__artists {
+    background-color: $white;
+    padding: 2rem 0;
+    margin: 2rem auto 0;
+    .artist-search {
+      .MuiFormControl-root {
+        max-width: 530px;
+        margin: auto;
+        display: block;
+      }
+      .results {
+        margin-top: 2rem;
+        background-color: transparent;
+        display: flex;
+        flex-wrap: wrap;
+        .result {
+          border: none;
+          width: 25%;
+        }
       }
     }
   }

@@ -1,6 +1,9 @@
 require "rails_helper"
+require "shared_context/cloudinary_stub"
 
 RSpec.describe ArtistPage, type: :model do
+  include_context "cloudinary_stub"
+
   describe ".approved scope" do
     let!(:approved_page) { create(:artist_page, approved: true) }
     let!(:unapproved_page) { create(:artist_page, approved: false) }

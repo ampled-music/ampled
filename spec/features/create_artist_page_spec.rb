@@ -11,6 +11,12 @@ RSpec.describe ArtistPagesController, type: :request do
     ]
   end
 
+  before(:each) do
+    allow(Cloudinary::Uploader)
+      .to receive(:destroy)
+      .and_return({})
+  end
+
   let(:create_params) do
     {
       artist_page: {
@@ -245,25 +251,8 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(User.find_by(email: "testfriend@ampled.com")).not_to be_nil
     end
 
-    it "destroys all previous images that were requested to be destroyed" do
-      expect(artist_page.reload.images.map(&:url)).to match_array(images.map(&:url))
-
-      destroy_image_params = update_params
-      destroy_image_params[:artist_page][:images] = artist_page.images.map do |image|
-        {
-          id: image.id,
-          _destroy: true
-        }
-      end
-
-      put "/artist_pages/#{artist_page.id}", params: destroy_image_params
-
-      expect(artist_page.reload.images).to be_empty
-    end
-
     it "destroys only images that were requested to be destroyed" do
-      expect(artist_page.reload.images.map(&:url)).to match_array(images.map(&:url))
-      original_image_count = artist_page.images.length
+      expect(artist_page.images.map(&:url)).to match_array(images.map(&:url))
       destroyed_id = 0
       destroy_image_params = update_params
       destroy_image_params[:artist_page][:images] = artist_page.images.map.with_index do |image, index|
@@ -274,22 +263,42 @@ RSpec.describe ArtistPagesController, type: :request do
         }
       end
 
-      put "/artist_pages/#{artist_page.id}", params: destroy_image_params
-      expect(artist_page.reload.images.map(&:id)).not_to be_empty
-      expect(artist_page.reload.images.length).to eq(original_image_count - 1)
-      expect(artist_page.reload.images.map(&:id)).not_to include(destroyed_id)
+      expect {
+        put "/artist_pages/#{artist_page.id}", params: destroy_image_params
+        artist_page.reload
+      }.to change { artist_page.images.length }.by(-1)
+
+      expect(artist_page.images).not_to be_empty
+      expect(artist_page.images.map(&:id)).not_to include(destroyed_id)
     end
 
     it "create images where no id is provided" do
-      expect(artist_page.reload.images.map(&:url)).to match_array(images.map(&:url))
+      expect(artist_page.images.map(&:url)).to match_array(images.map(&:url))
       original_image_count = artist_page.images.length
+
+      create_image_params = update_params
+      create_image_params[:artist_page][:images] = []
+      create_image_params[:artist_page][:images] << { public_id: "new1", url: "new-image1.com" }
+      create_image_params[:artist_page][:images] << { public_id: "new2", url: "new-image2.com" }
+
+      expect {
+        put "/artist_pages/#{artist_page.id}", params: create_image_params
+        artist_page.reload
+      }.to change { artist_page.images.length }.by(2)
+
+      expect(artist_page.reload.images).to_not be_empty
+    end
+
+    it "create images where no id is provided and deletes images marked to be destroyed" do
+      expect(artist_page.images.map(&:url)).to match_array(images.map(&:url))
 
       create_image_params = update_params
       create_image_params[:artist_page][:images] = artist_page.images.map do |image|
         {
           id: image.id,
           public_id: image.public_id,
-          url: image.url
+          url: image.url,
+          _destroy: true
         }
       end
       create_image_params[:artist_page][:images] << { public_id: "new1", url: "new-image1.com" }
@@ -297,7 +306,7 @@ RSpec.describe ArtistPagesController, type: :request do
       put "/artist_pages/#{artist_page.id}", params: create_image_params
 
       expect(artist_page.reload.images).to_not be_empty
-      expect(artist_page.reload.images.length).to eq(original_image_count + 2)
+      expect(artist_page.images.length).to eq(2)
     end
   end
 

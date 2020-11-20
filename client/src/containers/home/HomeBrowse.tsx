@@ -53,7 +53,7 @@ class HomeBrowse extends React.Component {
       data: { pages: data },
     } = await apiAxios({
       method: 'get',
-      url: `/artists/browse.json?page=${page}&seed=${this.state.seed}`,
+      url: `/artists/all_artists.json?`,
     });
     if (data.length < 8) {
       canLoadMore = false;

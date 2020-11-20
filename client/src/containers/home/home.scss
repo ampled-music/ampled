@@ -386,7 +386,14 @@
 }
 
 .home-artists {
-  padding: 0;
+  padding: 0 0 2rem;
+  display: flex;
+  flex-direction: column;
+
+  &__tear {
+    width: 100%;
+    align-self: flex-end;
+  }
 
   h1 {
     font-family: $font-family-sans-serif;
@@ -450,7 +457,7 @@
       align-items: center;
       color: $black;
       background-color: $white;
-      border: 1px solid $black;
+      border: 2px solid $black;
       bottom: 0.5rem;
       top: initial;
       max-width: 75%;
@@ -560,10 +567,16 @@
     }
   }
 
+  &__owners {
+    padding: 2rem 0;
+  }
+
   &__artists {
     background-color: $white;
     padding: 2rem 0;
-    margin: 2rem auto 0;
+    margin: 0rem auto -2rem;
+    width: 100%;
+    align-self: flex-end;
     .artist-search {
       .MuiFormControl-root {
         max-width: 530px;

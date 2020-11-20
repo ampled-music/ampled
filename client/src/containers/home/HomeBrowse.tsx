@@ -7,6 +7,7 @@ import { apiAxios } from '../../api/setup-axios';
 import { Image, Transformation } from 'cloudinary-react';
 import { ArtistSearch } from '../shared/artist-search/ArtistSearch';
 
+import tear from '../../images/full_page_tear.png';
 import Location from '../../images/icons/Icon_Location.svg';
 
 class HomeBrowse extends React.Component {
@@ -95,6 +96,7 @@ class HomeBrowse extends React.Component {
             </div>
           </div>
         </div>
+        <img className="home-artists__tear" src={tear} alt="" />
         <div className="home-artists__artists">
           <h1 className="home-artists__title">All Artists</h1>
           <div className="container">

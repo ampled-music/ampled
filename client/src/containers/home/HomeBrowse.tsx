@@ -70,6 +70,30 @@ class HomeBrowse extends React.Component {
     this.loadArtistOwners(+this.state.artistOwnersPage + 1);
   };
 
+  getArtistSections = (artists) => {
+    if (artists.length === 0) {
+      return [];
+    }
+    return Object.values(
+      artists.reduce((acc, artist) => {
+        let firstLetter = artist.name.charAt(0).toLocaleUpperCase();
+        let isLetter = /[a-zA-Z]/.test(firstLetter);
+        if (!isLetter) {
+          if (!acc['Misc']) {
+            acc['Misc'] = { title: 'Misc', artists: [artist] };
+          } else {
+            acc['Misc'].artists.push(artist);
+          }
+        } else if (!acc[firstLetter]) {
+          acc[firstLetter] = { title: firstLetter, artists: [artist] };
+        } else {
+          acc[firstLetter].artists.push(artist);
+        }
+        return acc;
+      }, {}),
+    );
+  };
+
   render() {
     const { artists, artistOwners, loading, canLoadMore } = this.state;
 
@@ -81,6 +105,8 @@ class HomeBrowse extends React.Component {
         View More
       </button>
     );
+
+    const cleanArtists = this.getArtistSections(artists);
 
     return (
       <div className="home-artists">
@@ -101,15 +127,17 @@ class HomeBrowse extends React.Component {
           <h1 className="home-artists__title">All Artists</h1>
           <div className="container">
             <ArtistSearch imageSize={800} />
-
-            <div className="row justify-content-center">
-              {artists &&
-                artists.length > 0 &&
-                artists.map((page) => (
-                  <div className="home-artists__artists_artist col-3">
-                    <Link to={`/artist/${page.slug}`}>{page.name}</Link>
-                  </div>
-                ))}
+            <div className="home-artists__artists_all">
+              {cleanArtists.map((group: any) => (
+                <div className="home-artists__artists_all_group">
+                  <h4>{group.title}</h4>
+                  {group.artists.map((artist) => (
+                    <Link to={`/artist/${artist.slug}`} className="name">
+                      {artist.name}
+                    </Link>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
         </div>

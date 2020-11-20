@@ -274,7 +274,6 @@ RSpec.describe ArtistPagesController, type: :request do
 
     it "create images where no id is provided" do
       expect(artist_page.images.map(&:url)).to match_array(images.map(&:url))
-      original_image_count = artist_page.images.length
 
       create_image_params = update_params
       create_image_params[:artist_page][:images] = []

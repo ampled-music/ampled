@@ -7,7 +7,8 @@ class ArtistPagesController < ApplicationController
   before_action :check_update_okay, only: :update
 
   def index
-    @artist_pages = ArtistPage.includes(:images).approved.artist_owner.exclude_community_page.where.not(images: nil).shuffle.take(8)
+    @artist_pages = ArtistPage.includes(:images).approved.artist_owner
+      .exclude_community_page.where.not(images: nil).shuffle.take(8)
     @artist_page_count = ArtistPage.count
 
     respond_to do |format|
@@ -55,7 +56,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def all_artists
-    @artist_pages = ArtistPage.includes(:images).where.not(images: nil).sort_by { |hash| -hash['name'].downcase }
+    @artist_pages = ArtistPage.includes(:images).where.not(images: nil).sort_by { |hash| -hash["name"].downcase }
     @artist_page_count = ArtistPage.count
 
     render template: "artist_pages/index"

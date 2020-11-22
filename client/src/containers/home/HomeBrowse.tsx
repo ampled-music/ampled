@@ -6,6 +6,7 @@ import { apiAxios } from '../../api/setup-axios';
 
 import { Image, Transformation } from 'cloudinary-react';
 import { ArtistSearch } from '../shared/artist-search/ArtistSearch';
+import StackGrid from 'react-stack-grid';
 
 import tear from '../../images/full_page_tear.png';
 import Location from '../../images/icons/Icon_Location.svg';
@@ -14,6 +15,8 @@ class HomeBrowse extends React.Component {
   state = {
     artistOwners: [],
     artists: [],
+    height: window.innerHeight,
+    width: window.innerWidth,
     loading: true,
     canLoadMore: true,
     artistOwnersPage: 1,
@@ -21,9 +24,26 @@ class HomeBrowse extends React.Component {
     seed: Math.random(),
   };
 
+  constructor(props) {
+    super(props);
+    this.updateDimensions = this.updateDimensions.bind(this);
+  }
+
   componentDidMount() {
     this.loadArtistOwners(this.state.artistOwnersPage);
     this.loadArtists(this.state.artistsPage);
+    window.addEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions() {
+    this.setState({
+      height: window.innerHeight,
+      width: window.innerWidth,
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
   }
 
   loadArtistOwners = async (page) => {
@@ -94,8 +114,45 @@ class HomeBrowse extends React.Component {
     );
   };
 
+  renderAllArtists = () => {
+    const cleanArtists = this.getArtistSections(this.state.artists);
+    return cleanArtists.map((group: any) => (
+      <div className="home-artists__artists_all_group">
+        <h4>{group.title}</h4>
+        {group.artists.map((artist) => (
+          <Link to={`/artist/${artist.slug}`} className="name">
+            {artist.name}
+          </Link>
+        ))}
+      </div>
+    ));
+  };
+
+  renderStackedArtists = () => {
+    let columnWidth;
+
+    if (this.state.width <= 768) {
+      columnWidth = '50%';
+    } else if (this.state.width <= 1024) {
+      columnWidth = '33.33%';
+    } else {
+      columnWidth = '20%';
+    }
+
+    return (
+      <StackGrid
+        columnWidth={columnWidth}
+        gutterWidth={15}
+        gutterHeight={15}
+        monitorImagesLoaded={true}
+      >
+        {this.renderAllArtists()}
+      </StackGrid>
+    );
+  };
+
   render() {
-    const { artists, artistOwners, loading, canLoadMore } = this.state;
+    const { artistOwners, loading, canLoadMore } = this.state;
 
     const loadMore = (
       <button
@@ -105,8 +162,6 @@ class HomeBrowse extends React.Component {
         View More
       </button>
     );
-
-    const cleanArtists = this.getArtistSections(artists);
 
     return (
       <div className="home-artists">
@@ -128,16 +183,7 @@ class HomeBrowse extends React.Component {
           <div className="container">
             <ArtistSearch imageSize={800} />
             <div className="home-artists__artists_all">
-              {cleanArtists.map((group: any) => (
-                <div className="home-artists__artists_all_group">
-                  <h4>{group.title}</h4>
-                  {group.artists.map((artist) => (
-                    <Link to={`/artist/${artist.slug}`} className="name">
-                      {artist.name}
-                    </Link>
-                  ))}
-                </div>
-              ))}
+              {this.renderStackedArtists()}
             </div>
           </div>
         </div>

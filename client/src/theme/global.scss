@@ -121,7 +121,7 @@ h6 {
     left: 0;
     text-align: center;
     box-shadow: 3px 3px 0px #151719;
-    transition: all 0.25s ease-in-out;
+    transition: all $speed;
     &:hover {
       box-shadow: 0px 0px 0px #151719;
       top: 3px;

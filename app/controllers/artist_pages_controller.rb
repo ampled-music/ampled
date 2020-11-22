@@ -58,7 +58,7 @@ class ArtistPagesController < ApplicationController
   def all_artists
     base_query = ArtistPage.includes(:images).approved.exclude_community_page.where.not(images: nil)
     @artist_pages = base_query.sort_by { |hash| -hash["name"].downcase }
-    @artist_page_count = ArtistPage.count
+    @artist_page_count = ArtistPage.count - base_query.count
 
     render template: "artist_pages/index"
   end

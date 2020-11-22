@@ -15,7 +15,7 @@ class HomeBrowse extends React.Component {
   state = {
     artistOwners: [],
     artists: [],
-    totalArtists: null,
+    artistsUnderConstruction: null,
     height: window.innerHeight,
     width: window.innerWidth,
     loading: true,
@@ -74,16 +74,12 @@ class HomeBrowse extends React.Component {
     });
     this.setState({
       artists: [...this.state.artists, ...data.pages],
-      totalArtists: data.count,
+      artistsUnderConstruction: data.count,
     });
   };
 
   loadMoreArtistOwners = () => {
     this.loadArtistOwners(+this.state.artistOwnersPage + 1);
-  };
-
-  getArtistDifference = () => {
-    return this.state.totalArtists - this.state.artists.length;
   };
 
   getArtistSections = (artists) => {
@@ -177,7 +173,7 @@ class HomeBrowse extends React.Component {
         <div className="home-artists__artists">
           <div className="home-artists__artists_title">
             <h1>All Artists</h1>
-            <h5>{this.getArtistDifference()} Under Construction</h5>
+            <h5>{this.state.artistsUnderConstruction} Under Construction</h5>
           </div>
           <div className="container">
             <ArtistSearch imageSize={800} />

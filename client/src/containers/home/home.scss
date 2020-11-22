@@ -591,11 +591,17 @@
         flex-wrap: wrap;
         .result {
           border: none;
-          width: 25%;
+          width: 100%;
           position: relative;
           opacity: 1;
           transition: opacity $speed;
           padding: 0.5rem;
+          @include mq($phablet) {
+            width: 50%;
+          }
+          @include mq($tablet) {
+            width: 25%;
+          }
           &:hover {
             opacity: 0.75;
           }

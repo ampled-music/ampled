@@ -48,7 +48,7 @@ class ArtistPagesController < ApplicationController
       @artist_pages = []
     else
       query = ArtistPage.sanitize_sql_like(params[:query])
-      @artist_pages = ArtistPage.approved.where("lower(name) LIKE ?", "%#{query}%")
+      @artist_pages = ArtistPage.approved.where("lower(name) LIKE ?", "%#{query}%").take(8)
     end
     @artist_page_count = @artist_pages.count
 
@@ -56,8 +56,8 @@ class ArtistPagesController < ApplicationController
   end
 
   def all_artists
-    @artist_pages = ArtistPage.includes(:images).approved.where.not(images: nil)
-    .sort_by { |hash| -hash["name"].downcase }
+    base_query = ArtistPage.includes(:images).approved.where.not(images: nil)
+    @artist_pages = base_query.sort_by { |hash| -hash["name"].downcase }
     @artist_page_count = ArtistPage.count
 
     render template: "artist_pages/index"

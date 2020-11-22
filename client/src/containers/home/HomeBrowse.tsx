@@ -169,19 +169,25 @@ class HomeBrowse extends React.Component {
             </div>
           </div>
         </div>
-        <img className="home-artists__tear" src={tear} alt="" />
-        <div className="home-artists__artists">
-          <div className="home-artists__artists_title">
-            <h1>All Artists</h1>
-            <h5>{this.state.artistsUnderConstruction} Under Construction</h5>
-          </div>
-          <div className="container">
-            <ArtistSearch imageSize={800} />
-            <div className="home-artists__artists_all">
-              {this.renderStackedArtists()}
+        {this.state.artists.length > 0 && (
+          <div>
+            <img className="home-artists__tear" src={tear} alt="" />
+            <div className="home-artists__artists">
+              <div className="home-artists__artists_title">
+                <h1>All Artists</h1>
+                <h5>
+                  {this.state.artistsUnderConstruction} Under Construction
+                </h5>
+              </div>
+              <div className="container">
+                <ArtistSearch imageSize={800} />
+                <div className="home-artists__artists_all">
+                  {this.renderStackedArtists()}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }

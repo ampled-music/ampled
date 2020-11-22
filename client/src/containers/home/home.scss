@@ -577,6 +577,19 @@
     margin: 0rem auto -2rem;
     width: 100%;
     align-self: flex-end;
+    &_title {
+      margin: 2rem;
+      h1,
+      h5 {
+        margin: 0;
+        text-align: center;
+      }
+      h5 {
+        color: $gray-light;
+        font-style: italic;
+        font-family: $font-family-monospace;
+      }
+    }
     .artist-search {
       margin: 1rem 0;
       .MuiFormControl-root {

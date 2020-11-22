@@ -15,6 +15,7 @@ class HomeBrowse extends React.Component {
   state = {
     artistOwners: [],
     artists: [],
+    totalArtists: null,
     height: window.innerHeight,
     width: window.innerWidth,
     loading: true,
@@ -31,7 +32,7 @@ class HomeBrowse extends React.Component {
 
   componentDidMount() {
     this.loadArtistOwners(this.state.artistOwnersPage);
-    this.loadArtists(this.state.artistsPage);
+    this.loadArtists();
     window.addEventListener('resize', this.updateDimensions);
   }
 
@@ -66,28 +67,23 @@ class HomeBrowse extends React.Component {
     });
   };
 
-  loadArtists = async (page) => {
-    let { canLoadMore } = this.state;
-    this.setState({ loading: true });
-    const {
-      data: { pages: data },
-    } = await apiAxios({
+  loadArtists = async () => {
+    const { data } = await apiAxios({
       method: 'get',
-      url: `/artists/all_artists.json?`,
+      url: `/artists/all_artists.json`,
     });
-    if (data.length < 8) {
-      canLoadMore = false;
-    }
     this.setState({
-      loading: false,
-      canLoadMore,
-      artists: [...this.state.artists, ...data],
-      page,
+      artists: [...this.state.artists, ...data.pages],
+      totalArtists: data.count,
     });
   };
 
   loadMoreArtistOwners = () => {
     this.loadArtistOwners(+this.state.artistOwnersPage + 1);
+  };
+
+  getArtistDifference = () => {
+    return this.state.totalArtists - this.state.artists.length;
   };
 
   getArtistSections = (artists) => {
@@ -179,7 +175,10 @@ class HomeBrowse extends React.Component {
         </div>
         <img className="home-artists__tear" src={tear} alt="" />
         <div className="home-artists__artists">
-          <h1 className="home-artists__title">All Artists</h1>
+          <div className="home-artists__artists_title">
+            <h1>All Artists</h1>
+            <h5>{this.getArtistDifference()} Under Construction</h5>
+          </div>
           <div className="container">
             <ArtistSearch imageSize={800} />
             <div className="home-artists__artists_all">

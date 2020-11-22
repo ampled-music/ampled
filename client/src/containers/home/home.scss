@@ -597,7 +597,7 @@
           transition: opacity $speed;
           padding: 0.5rem;
           &:hover {
-            opacity: 0.7;
+            opacity: 0.75;
           }
           a {
             width: 100%;
@@ -615,7 +615,7 @@
           }
           .name {
             font-family: $font-family-sans-serif;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: $white;
             background-color: $black;
             display: inline;

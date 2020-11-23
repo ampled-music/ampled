@@ -17,7 +17,7 @@ module StripeReconciliation
       }
 
       Rails.logger.info("[#{self.class.name}] Anomaly detected #{log_fields}")
-      Raven.capture_exception(AnomalyDetectedException.new, extra: log_fields)
+      Raven.capture_exception(AnomalyDetectedException.new, extra: log_fields) unless Rails.env.acceptance?
     end
   end
 end

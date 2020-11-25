@@ -74,7 +74,7 @@ class HomeBrowse extends React.Component {
     });
     this.setState({
       artists: [...this.state.artists, ...data.pages],
-      artistsUnderConstruction: data.count,
+      artistsUnderConstruction: data.under_construction_count,
     });
   };
 

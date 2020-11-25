@@ -109,10 +109,17 @@ class HomeBrowse extends React.Component {
   renderAllArtists = () => {
     const cleanArtists = this.getArtistSections(this.state.artists);
     return cleanArtists.map((group: any) => (
-      <div className="home-artists__artists_all_group">
+      <div
+        className="home-artists__artists_all_group"
+        key={`key-${group.title}`}
+      >
         <h4>{group.title}</h4>
         {group.artists.map((artist) => (
-          <Link to={`/artist/${artist.slug}`} className="name">
+          <Link
+            to={`/artist/${artist.slug}`}
+            className="name"
+            key={`key-${artist.slug}`}
+          >
             {artist.name}
           </Link>
         ))}

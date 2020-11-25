@@ -51,7 +51,7 @@ class ArtistSearch extends React.Component<Props, any> {
           fullWidth
           value={this.state.query}
           onChange={this.updateSearchQuery}
-          className={this.emptySearch() && 'empty'}
+          className={this.emptySearch() ? 'empty' : ''}
           placeholder="Search for an artist"
           InputProps={{
             endAdornment: (

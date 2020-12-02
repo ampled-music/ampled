@@ -25,13 +25,6 @@ class HomeArtistsComponent extends React.Component<Props> {
     this.props.getArtistsPages();
   }
 
-  handlePublicID = (image: string) => {
-    const url = image.split('/');
-    const part_1 = url[url.length - 2];
-    const part_2 = url[url.length - 1];
-    return part_1 + '/' + part_2;
-  };
-
   render() {
     const loading = this.props.artistsPages.loading;
     const artistsPages = this.props.artistsPages.pages.pages;
@@ -49,7 +42,7 @@ class HomeArtistsComponent extends React.Component<Props> {
             Join {artistCount} artists on Ampled
           </h1>
           <hr className="hr__thick" />
-          <h3 className="home-artists__sub-title">Featured artists</h3>
+          <h3 className="home-artists__sub-title">Artist Owners</h3>
           <div className="container">
             <div className="row justify-content-center">
               {this.getArtistsList(artistsPages)}
@@ -83,8 +76,8 @@ class HomeArtistsComponent extends React.Component<Props> {
               >
                 <Image
                   className="home-artists__item_image"
-                  publicId={this.handlePublicID(page.image)}
-                  key={page.image}
+                  publicId={page.cloudinaryImage.public_id}
+                  key={page.cloudinaryImage.id}
                 >
                   <Transformation
                     fetchFormat="auto"

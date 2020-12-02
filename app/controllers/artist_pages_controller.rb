@@ -7,7 +7,8 @@ class ArtistPagesController < ApplicationController
   before_action :check_update_okay, only: :update
 
   def index
-    @artist_pages = ArtistPage.includes(:images).approved.where(featured: true).where.not(images: nil).uniq.take(8)
+    @artist_pages = ArtistPage.includes(:images).approved.artist_owner
+      .exclude_community_page.where.not(images: nil).order("RANDOM()").take(8)
     @artist_page_count = ArtistPage.count
 
     respond_to do |format|
@@ -47,9 +48,24 @@ class ArtistPagesController < ApplicationController
       @artist_pages = []
     else
       query = ArtistPage.sanitize_sql_like(params[:query])
-      @artist_pages = ArtistPage.approved.where("lower(name) LIKE ?", "%#{query}%")
+      @artist_pages = ArtistPage.approved.where("lower(name) LIKE ?", "%#{query}%").take(8)
     end
     @artist_page_count = @artist_pages.count
+
+    render template: "artist_pages/index"
+  end
+
+  def all_artists
+    base_query = ArtistPage
+      .includes(:images)
+      .approved
+      .exclude_community_page
+      .where.not(images: nil)
+      .order(Arel.sql("LOWER(name)"))
+    @artist_pages = base_query
+    @artist_pages_under_construction_count = ArtistPage.exclude_community_page.count -
+                                             ArtistPage.approved.exclude_community_page.count
+
     render template: "artist_pages/index"
   end
 

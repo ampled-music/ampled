@@ -69,7 +69,6 @@ class Home extends React.Component<any> {
         />
         <HomeArtists />
         <HomeGarden />
-        {/* <HomeBrowse /> */}
       </div>
     );
   }

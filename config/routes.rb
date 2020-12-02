@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   get "slug/:slug/post/:id", to: "posts#show"
   get "artists/browse", to: "artist_pages#browse"
   get "artists/typeahead", to: "artist_pages#typeahead"
+  get "artists/all_artists", to: "artist_pages#all_artists"
   get "stats/summary", to: "stats#summary"
 
   get "uploads/sign", to: "uploads#sign_file"

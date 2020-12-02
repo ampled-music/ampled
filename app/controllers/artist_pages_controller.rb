@@ -63,7 +63,8 @@ class ArtistPagesController < ApplicationController
       .where.not(images: nil)
       .order(Arel.sql("LOWER(name)"))
     @artist_pages = base_query
-    @artist_pages_under_construction_count = ArtistPage.exclude_community_page.count - ArtistPage.approved.exclude_community_page.count
+    @artist_pages_under_construction_count = ArtistPage.exclude_community_page.count -
+                                             ArtistPage.approved.exclude_community_page.count
 
     render template: "artist_pages/index"
   end

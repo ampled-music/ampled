@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_26_212908) do
+ActiveRecord::Schema.define(version: 2020_11_29_095835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,27 @@ ActiveRecord::Schema.define(version: 2020_10_26_212908) do
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "contributor_time", force: :cascade do |t|
+    t.bigint "contributor_id"
+    t.date "started_on"
+    t.date "ended_on"
+    t.float "hours"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contributor_id"], name: "index_contributor_time_on_contributor_id"
+  end
+
+  create_table "contributors", force: :cascade do |t|
+    t.bigint "user_id"
+    t.date "joined_on"
+    t.date "worker_owner_on"
+    t.date "inactive_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_contributors_on_user_id"
   end
 
   create_table "images", force: :cascade do |t|
@@ -169,6 +190,8 @@ ActiveRecord::Schema.define(version: 2020_10_26_212908) do
   add_foreign_key "audio_uploads", "posts"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "contributor_time", "contributors"
+  add_foreign_key "contributors", "users"
   add_foreign_key "plans", "artist_pages"
   add_foreign_key "posts", "artist_pages"
   add_foreign_key "posts", "users"

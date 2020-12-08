@@ -1,7 +1,6 @@
 import './footer.scss';
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { config } from '../../../config';
 
 import logo from '../../../images/ampled_coop_logo.svg';
@@ -71,7 +70,7 @@ class Footer extends React.Component<Props, any> {
               <div className="footer__top_right">
                 <div className="footer__top_right_logo-btn">
                   <img src={logo} className="coop-logo" alt="Ampled Co-Op" />
-                  <Link to="/artist/community">
+                  <a href="/artist/community">
                     <button
                       className="btn btn-join-ampled"
                       style={{
@@ -80,7 +79,7 @@ class Footer extends React.Component<Props, any> {
                     >
                       Join the Ampled community!
                     </button>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

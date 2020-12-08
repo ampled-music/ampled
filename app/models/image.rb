@@ -20,7 +20,7 @@
 class Image < ApplicationRecord
   belongs_to :imageable, polymorphic: true
 
-  before_destroy :delete_image_from_cloudinary
+  after_destroy :delete_image_from_cloudinary
 
   # Image params that are allowed by default.
   # For use by imageables that set Images via nested attributes.
@@ -28,12 +28,12 @@ class Image < ApplicationRecord
   PERMITTED_PARAMS = %i[id url public_id coordinates _destroy].freeze
 
   #
-  # Prior to deleting record from DB, remove object from Cloudinary
+  # After deleting record from DB, remove object from Cloudinary
   #
   # @return [Boolean] Whether clean-up was successful or not.
   #
   def delete_image_from_cloudinary
-    Cloudinary::Uploader.destroy(public_id)
+    Cloudinary::Uploader.destroy(public_id, :invalidate => true)
   end
 
   class << self

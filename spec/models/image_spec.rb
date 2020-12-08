@@ -38,10 +38,6 @@ RSpec.describe Image, type: :model do
 
   describe "before_destroy" do
     it "should call Cloudinary destroy" do
-      allow(Cloudinary::Uploader)
-        .to receive(:destroy)
-        .and_return({})
-
       subject.destroy!
 
       expect(Cloudinary::Uploader)

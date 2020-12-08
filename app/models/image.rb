@@ -33,7 +33,7 @@ class Image < ApplicationRecord
   # @return [Boolean] Whether clean-up was successful or not.
   #
   def delete_image_from_cloudinary
-    Cloudinary::Uploader.destroy(public_id, :invalidate => true)
+    Cloudinary::Uploader.destroy(public_id)
   end
 
   class << self

@@ -1693,7 +1693,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           this.setState({ showDeleteModal: !this.state.showDeleteModal })
         }
       >
-<<<<<<< HEAD
         <div className="delete-post-modal__container">
           <img className="tear tear__topper" src={tear} alt="" />
           <div className="delete-post-modal">
@@ -1719,32 +1718,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
               >
                 Delete Artist Page
               </Button>
-            </div>
-          </div>
-        </div>
-||||||| merged common ancestors
-        <div className="delete-post-modal__container">
-          <img className="tear tear__topper" src={tear} alt="" />
-          <div className="delete-post-modal">
-            <div className="delete-post-modal__title">
-              <h4>Are you sure?</h4>
-            </div>
-            <p>
-              TODO: Update this with copy about soft deletion. Deleting your
-              page is permanent, and any content posted will be deleted
-              permanently as well.
-            </p>
-            {this.renderSupporterCount()}
-            <div className="delete-post-modal__actions action-buttons">
-              <button
-                className="cancel-button"
-                onClick={() => this.setState({ showDeleteModal: false })}
-              >
-                Cancel
-              </button>
-              <button className="delete-button" onClick={this.deleteArtistPage}>
-                Delete Artist Page
-              </button>
             </div>
           </div>
         </div>

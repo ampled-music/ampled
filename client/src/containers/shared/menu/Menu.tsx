@@ -84,7 +84,8 @@ class MenuListComposition extends React.Component<Props, State> {
         <div className="divider" />
         <a href={config.menuUrls.blog}>Blog</a>
         <a href={config.menuUrls.about}>About us</a>
-        <ArtistSearch />
+        <a href={config.menuUrls.browse}>Browse artists</a>
+        <ArtistSearch imageSize={30} />
       </div>
     );
   };
@@ -98,7 +99,8 @@ class MenuListComposition extends React.Component<Props, State> {
         <button className="link" onClick={this.logout}>
           Logout
         </button>
-        <ArtistSearch />
+        <a href={config.menuUrls.browse}>Browse artists</a>
+        <ArtistSearch imageSize={30} />
       </div>
     );
   };

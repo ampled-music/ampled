@@ -9,3 +9,4 @@ json.pages @artist_pages do |artist_page|
   json.cloudinaryImage artist_page.images[0]
 end
 json.count @artist_page_count
+json.under_construction_count if @artist_pages_under_construction_count

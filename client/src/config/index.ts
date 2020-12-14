@@ -10,6 +10,7 @@ export const config = {
     createArtist: process.env.REACT_APP_URL_CREATE_ARTIST || '/create-artist',
     blog: process.env.REACT_APP_URL_BLOG || '/blog',
     about: process.env.REACT_APP_URL_ABOUT || '/page/about-us',
+    browse: process.env.REACT_APP_URL_BROWSE || '/browse',
   },
   cloudinary: {
     cloud_name: process.env.REACT_APP_CLOUDINARY_CLOUD_NAME || 'ampled-web',

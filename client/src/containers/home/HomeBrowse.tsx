@@ -1,30 +1,60 @@
 import './home.scss';
 import * as React from 'react';
+import { ReactSVG } from 'react-svg';
 import { Link } from 'react-router-dom';
 import { apiAxios } from '../../api/setup-axios';
+
 import { Image, Transformation } from 'cloudinary-react';
+import { ArtistSearch } from '../shared/artist-search/ArtistSearch';
+import StackGrid from 'react-stack-grid';
+
+import tear from '../../images/full_page_tear.png';
+import Location from '../../images/icons/Icon_Location.svg';
 
 class HomeBrowse extends React.Component {
   state = {
+    artistOwners: [],
     artists: [],
+    artistsUnderConstruction: null,
+    height: window.innerHeight,
+    width: window.innerWidth,
     loading: true,
     canLoadMore: true,
-    page: 1,
+    artistOwnersPage: 1,
+    artistsPage: 1,
     seed: Math.random(),
   };
 
-  componentDidMount() {
-    this.loadData(this.state.page);
+  constructor(props) {
+    super(props);
+    this.updateDimensions = this.updateDimensions.bind(this);
   }
 
-  loadData = async (page) => {
+  componentDidMount() {
+    this.loadArtistOwners(this.state.artistOwnersPage);
+    this.loadArtists();
+    window.addEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions() {
+    this.setState({
+      height: window.innerHeight,
+      width: window.innerWidth,
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  loadArtistOwners = async (page) => {
     let { canLoadMore } = this.state;
     this.setState({ loading: true });
     const {
       data: { pages: data },
     } = await apiAxios({
       method: 'get',
-      url: `/artists/browse.json?page=${page}&seed=${this.state.seed}`,
+      url: `/artists/browse.json?page=${page}&seed=${this.state.seed}&artist_owners`,
     });
     if (data.length < 8) {
       canLoadMore = false;
@@ -32,41 +62,113 @@ class HomeBrowse extends React.Component {
     this.setState({
       loading: false,
       canLoadMore,
-      artists: [...this.state.artists, ...data],
+      artistOwners: [...this.state.artistOwners, ...data],
       page,
     });
   };
 
-  loadMore = () => {
-    this.loadData(+this.state.page + 1);
+  loadArtists = async () => {
+    const { data } = await apiAxios({
+      method: 'get',
+      url: `/artists/all_artists.json`,
+    });
+    this.setState({
+      artists: [...this.state.artists, ...data.pages],
+      artistsUnderConstruction: data.under_construction_count,
+    });
   };
 
-  handlePublicID = (image: string) => {
-    const url = image.split('/');
-    const part_1 = url[url.length - 2];
-    const part_2 = url[url.length - 1];
-    return part_1 + '/' + part_2;
+  loadMoreArtistOwners = () => {
+    this.loadArtistOwners(+this.state.artistOwnersPage + 1);
+  };
+
+  getArtistSections = (artists) => {
+    if (artists.length === 0) {
+      return [];
+    }
+    return Object.values(
+      artists.reduce((acc, artist) => {
+        let firstLetter = artist.name.charAt(0).toLocaleUpperCase();
+        let isLetter = /[a-zA-Z]/.test(firstLetter);
+        if (!isLetter) {
+          if (!acc['Misc']) {
+            acc['Misc'] = { title: 'Misc', artists: [artist] };
+          } else {
+            acc['Misc'].artists.push(artist);
+          }
+        } else if (!acc[firstLetter]) {
+          acc[firstLetter] = { title: firstLetter, artists: [artist] };
+        } else {
+          acc[firstLetter].artists.push(artist);
+        }
+        return acc;
+      }, {}),
+    );
+  };
+
+  renderAllArtists = () => {
+    const cleanArtists = this.getArtistSections(this.state.artists);
+    return cleanArtists.map((group: any) => (
+      <div
+        className="home-artists__artists_all_group"
+        key={`key-${group.title}`}
+      >
+        <h4>{group.title}</h4>
+        {group.artists.map((artist) => (
+          <Link
+            to={`/artist/${artist.slug}`}
+            className="name"
+            key={`key-${artist.slug}`}
+          >
+            {artist.name}
+          </Link>
+        ))}
+      </div>
+    ));
+  };
+
+  renderStackedArtists = () => {
+    let columnWidth;
+
+    if (this.state.width <= 768) {
+      columnWidth = '50%';
+    } else if (this.state.width <= 1024) {
+      columnWidth = '33.33%';
+    } else {
+      columnWidth = '20%';
+    }
+
+    return (
+      <StackGrid
+        columnWidth={columnWidth}
+        gutterWidth={15}
+        gutterHeight={15}
+        monitorImagesLoaded={true}
+      >
+        {this.renderAllArtists()}
+      </StackGrid>
+    );
   };
 
   render() {
-    const { artists, loading, canLoadMore } = this.state;
+    const { artistOwners, loading, canLoadMore } = this.state;
 
     const loadMore = (
       <button
-        onClick={this.loadMore}
+        onClick={this.loadMoreArtistOwners}
         className="home-artists__button btn btn-ampled center"
       >
-        Load More
+        View More
       </button>
     );
 
     return (
-      <div>
-        <div className="home-artists">
-          <h1 className="home-artists__title">All Artists</h1>
+      <div className="home-artists">
+        <div className="home-artists__owners">
+          <h1 className="home-artists__title">Artists Owners</h1>
           <div className="container">
             <div className="row justify-content-center">
-              {this.getArtistsList(artists)}
+              {this.getArtistList(artistOwners)}
             </div>
             <div className="row justify-content-center">
               {canLoadMore && !loading ? loadMore : ''}
@@ -74,42 +176,65 @@ class HomeBrowse extends React.Component {
             </div>
           </div>
         </div>
+        {this.state.artists.length > 0 && (
+          <div>
+            <img className="home-artists__tear" src={tear} alt="" />
+            <div className="home-artists__artists">
+              <div className="home-artists__artists_title">
+                <h1>All Artists</h1>
+                <h5>
+                  {this.state.artistsUnderConstruction} Under Construction
+                </h5>
+              </div>
+              <div className="container">
+                <ArtistSearch imageSize={800} />
+                <div className="home-artists__artists_all">
+                  {this.renderStackedArtists()}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
 
-  private getArtistsList(artistsPages: any) {
-    return artistsPages && artistsPages.length
-      ? artistsPages.map((page) => {
-          return (
-            <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
-              <Link to={`/artist/${page.slug}`}>
-                <div className="home-artists__item_title">{page.name}</div>
-                <div
-                  className="home-artists__item_image_hover"
-                  style={{ backgroundColor: page.accent_color }}
-                >
-                  <Image
-                    className="home-artists__item_image"
-                    publicId={this.handlePublicID(page.image)}
-                    key={page.image}
-                  >
-                    <Transformation
-                      fetchFormat="auto"
-                      quality="auto"
-                      crop="fill"
-                      width={800}
-                      height={800}
-                      responsive_placeholder="blank"
-                    />
-                  </Image>
-                </div>
-                <div className="home-artists__item_border"></div>
-              </Link>
+  private getArtistList(artistsPages: any) {
+    return (
+      artistsPages &&
+      artistsPages.length > 0 &&
+      artistsPages.map((page) => (
+        <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
+          <Link to={`/artist/${page.slug}`}>
+            <div className="home-artists__item_title">{page.name}</div>
+            <div
+              className="home-artists__item_image_hover"
+              style={{ backgroundColor: page.accent_color }}
+            >
+              <Image
+                className="home-artists__item_image"
+                publicId={page.cloudinaryImage.public_id}
+                key={page.cloudinaryImage.id}
+              >
+                <Transformation
+                  fetchFormat="auto"
+                  quality="auto"
+                  crop="fill"
+                  width={800}
+                  height={800}
+                  responsive_placeholder="blank"
+                />
+              </Image>
             </div>
-          );
-        })
-      : '';
+            <div className="home-artists__item_location">
+              <ReactSVG className="icon icon_black icon_sm" src={Location} />
+              {page.location}
+            </div>
+            <div className="home-artists__item_border"></div>
+          </Link>
+        </div>
+      ))
+    );
   }
 }
 

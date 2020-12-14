@@ -35,18 +35,13 @@ ActiveRecord::Schema.define(version: 2020_11_29_095835) do
     t.boolean "approved", default: false
     t.boolean "featured", default: false
     t.boolean "hide_members", default: false
-<<<<<<< HEAD
     t.string "bandcamp_handle"
     t.string "youtube_handle"
     t.string "external"
     t.string "style_type"
     t.boolean "artist_owner", default: false, null: false
-||||||| merged common ancestors
-    t.boolean "is_soft_deleted", default: false
-=======
     t.boolean "is_soft_deleted", default: false
     t.datetime "permanently_delete_at"
->>>>>>> Add permanently deleted at field to artist pages to be able to schedule deletions
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 

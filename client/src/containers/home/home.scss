@@ -400,6 +400,10 @@
     text-align: center;
     text-transform: uppercase;
     margin: 1rem auto 2rem;
+    a {
+      text-decoration: none;
+      border-bottom: 3px solid $black;
+    }
   }
 
   &__sub-title {

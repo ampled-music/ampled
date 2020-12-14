@@ -39,7 +39,8 @@ class HomeArtistsComponent extends React.Component<Props> {
         <img className="tear tear_2" src={tear_2} alt="" />
         <div className="home-artists">
           <h1 className="home-artists__title">
-            Join {artistCount} artists on Ampled
+            Join <a href={config.menuUrls.browse}>{artistCount} artists</a> on
+            Ampled
           </h1>
           <hr className="hr__thick" />
           <h3 className="home-artists__sub-title">Artist Owners</h3>

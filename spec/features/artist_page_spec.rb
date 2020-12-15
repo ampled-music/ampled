@@ -152,6 +152,11 @@ RSpec.describe ArtistPagesController, type: :request do
     let(:url) { "/artist/#{artist_page.slug}/subscribers_csv" }
     let!(:subscription) { create(:subscription, user: supporter, artist_page: artist_page) }
 
+    let(:ex_supporter) { create(:user, confirmed_at: Time.current) }
+    let!(:cancelled_subscription) do
+      create(:subscription, user: ex_supporter, artist_page: artist_page, status: :cancelled)
+    end
+
     context "when current user is not an admin" do
       it "returns a 403 forbidden error" do
         get url
@@ -179,6 +184,13 @@ RSpec.describe ArtistPagesController, type: :request do
         actual_csv = CSV.parse(response.body)
         expect(actual_csv).to include(["Name", "Last Name", "Email"])
         expect(actual_csv).to include([supporter.name, supporter.last_name, supporter.email])
+      end
+
+      it "returns csv without cancelled subscribers" do
+        get url
+        actual_csv = CSV.parse(response.body)
+        expect(actual_csv).to include(["Name", "Last Name", "Email"])
+        expect(actual_csv).to_not include([ex_supporter.name, ex_supporter.last_name, ex_supporter.email])
       end
     end
   end

@@ -56,11 +56,10 @@ class ArtistPage < ApplicationRecord
 
   validate :sluggy_slug
 
-
   # application_fee_percent represents the Stripe application fee for all of an
   # ArtistPage's subscriptions. It represents the percentage as a percentage
   # not a fraction (i.e. 20% instead of 0.2) to match Stripe's formating.
-  # The default value is 13.24%, Ampled's starndard application fee.
+  # The default value is 13.24%, Ampled's standard application fee.
 
   validates :application_fee_percent, presence: true, numericality: {
     greater_than_or_equal_to: 0,

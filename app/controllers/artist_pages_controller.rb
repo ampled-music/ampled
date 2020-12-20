@@ -97,6 +97,9 @@ class ArtistPagesController < ApplicationController
 
     ArtistPageCreateEmailJob.perform_async(@artist_page.id, current_user.id)
 
+    # Subscribe to Mailchimp
+    ::Mailchimp::MailchimpSubscriber.perform_async(current_user.id)
+
     render json: { status: "ok", message: "Your page has been created!" }
   rescue ActiveRecord::RecordNotUnique
     render json: { status: "error", message: "Someone's already using that custom link." }

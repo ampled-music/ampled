@@ -67,7 +67,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
   render() {
     // const { userData } = this.props;
 
-    return <></>;
+    return <>dashboard</>;
   }
 }
 

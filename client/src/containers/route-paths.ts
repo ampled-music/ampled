@@ -1,6 +1,6 @@
 export const routePaths = {
   artists: '/artists/:id',
-  artistDashboard: '/dashboard/:slug',
+  artistDashboard: '/artist/:slug/dashboard',
   blog: '/blog',
   blogPost: '/blog/:slug',
   browse: '/browse',

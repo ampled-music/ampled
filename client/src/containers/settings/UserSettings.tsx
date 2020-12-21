@@ -567,6 +567,18 @@ class UserSettingsComponent extends React.Component<Props, any> {
                           Edit Artist Details
                         </a>
                       </div>
+                      <div className="col-12">
+                        <a
+                          href={routePaths.artistDashboard.replace(
+                            ':slug',
+                            ownedPage.artistSlug,
+                          )}
+                          className="details__edit_link"
+                          rel="noopener noreferrer"
+                        >
+                          Artist Dashboard
+                        </a>
+                      </div>
                     </div>
                   </div>
                 )}

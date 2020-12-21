@@ -14,6 +14,40 @@ RSpec.describe ArtistPage, type: :model do
     end
   end
 
+  describe "#valid?" do
+    context "with application_fee_percent less than 0" do
+      it "is false" do
+        artist_page = build(:artist_page, application_fee_percent: -0.01)
+
+        expect(artist_page.valid?).to be false
+      end
+    end
+
+    context "with application_fee_percent less than 0" do
+      it "is true" do
+        artist_page = build(:artist_page, application_fee_percent: 0)
+
+        expect(artist_page.valid?).to be true
+      end
+    end
+
+    context "with application_fee_percent over 100" do
+      it "is false" do
+        artist_page = build(:artist_page, application_fee_percent: 100.01)
+
+        expect(artist_page.valid?).to be false
+      end
+    end
+
+    context "with application_fee_percent of 100" do
+      it "is true" do
+        artist_page = build(:artist_page, application_fee_percent: 100)
+
+        expect(artist_page.valid?).to be true
+      end
+    end
+  end
+
   describe "#monthly_total" do
     context "with active subscriptions" do
       it "returns the montly total" do

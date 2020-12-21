@@ -61,7 +61,7 @@ class ArtistPage < ApplicationRecord
 
   validates :application_fee_percent, presence: true, numericality: {
     greater_than_or_equal_to: 0,
-    less_than_or_or_equal_to: 100
+    less_than_or_equal_to: 100
   }
 
   before_save :set_screenshot

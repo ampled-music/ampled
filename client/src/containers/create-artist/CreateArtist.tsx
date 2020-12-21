@@ -563,7 +563,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     confirmRemoveMemberIndex: 99,
     showDeleteModal: false,
     isDeletedPage: false,
-    subscribeToNewsletter: false,
+    subscribeToNewsletter: true,
   };
 
   constructor(props) {
@@ -681,7 +681,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         owners,
         images,
         hide_members,
-        subscribe_to_newsletter,
       } = artist;
       this.setState({
         artistColor: accent_color,
@@ -698,7 +697,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistSlug: slug,
         artistStripe: '',
         hideMembers: hide_members,
-        subscribeToNewsletter: subscribe_to_newsletter,
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
           role: owner.instrument || '',
@@ -789,6 +787,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     } else {
       this.setState({ [name]: value });
     }
+  };
+
+  handleCheckBoxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ [event.target.name]: event.target.checked });
   };
 
   renderHeader = () => {
@@ -1635,11 +1637,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
                     control={
                       <Checkbox
                         checked={this.state.subscribeToNewsletter}
-                        onChange={this.handleChange}
+                        onChange={this.handleCheckBoxChange}
                         name="subscribeToNewsletter"
                       />
                     }
-                    label="Sign Up for Ampled newsletter to stay updated on the latest."
+                    label="Receive email updates from Ampled."
                   />
                 </div>
               </div>

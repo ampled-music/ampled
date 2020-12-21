@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2020_12_21_161806) do
     t.boolean "subscribe_to_newsletter"
     t.boolean "is_soft_deleted", default: false
     t.datetime "permanently_delete_at"
-    t.decimal "application_fee_percent", precision: 2, default: "13", null: false
+    t.decimal "application_fee_percent", precision: 5, scale: 2, default: "13.24", null: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 

@@ -231,16 +231,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     }
   };
 
-  handlePublicID = (image: string) => {
-    if (!image) {
-      return '';
-    }
-    const url = image.split('/');
-    const part_1 = url[url.length - 2];
-    const part_2 = url[url.length - 1];
-    return part_1 + '/' + part_2;
-  };
-
   renderSticky = (message: any) => (
     <div className="artistAlertHeader active">{message}</div>
   );

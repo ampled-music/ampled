@@ -13,7 +13,7 @@ import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
-// import { Image, Transformation } from 'cloudinary-react';
+import { Image, Transformation } from 'cloudinary-react';
 // import { Button } from '@material-ui/core';
 // import { apiAxios } from '../../api/setup-axios';
 
@@ -64,10 +64,38 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
   componentDidUpdate(prevProps) {}
 
-  render() {
-    // const { userData } = this.props;
+  renderArtistPanel() {
+    const { userData } = this.props;
+    console.log(userData);
 
-    return <>dashboard</>;
+    return (
+      <>
+        <Image
+          publicId={userData.image.public_id}
+          alt={userData.name}
+          key={userData.name}
+          className="artist__image"
+        >
+          <Transformation
+            fetchFormat="auto"
+            quality="auto"
+            crop="fill"
+            width={250}
+            height={250}
+            responsive_placeholder="blank"
+          />
+        </Image>
+        <h2>
+          {userData.name} {userData.last_name}
+        </h2>
+      </>
+    );
+  }
+
+  render() {
+    const { userData } = this.props;
+
+    return <>{userData && this.renderArtistPanel()}</>;
   }
 }
 

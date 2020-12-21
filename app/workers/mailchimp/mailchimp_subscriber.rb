@@ -2,9 +2,10 @@ module Mailchimp
   class MailchimpSubscriber
     include Sidekiq::Worker
 
-    def perform(user_id, subscribe = true)
+    def perform(artist_id, user_id, subscribe = true)
+      @artist = ArtistPage.find(artist_id)
       @user = User.find(user_id)
-      mailchimp.call(@user, subscribe)
+      mailchimp.call(@artist, @user, subscribe)
     rescue StandardError => e
       raise e
     end

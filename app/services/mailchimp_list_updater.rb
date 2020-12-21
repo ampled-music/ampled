@@ -10,7 +10,7 @@ module Services
       @mailchimp.open_timeout = 30
     end
 
-    def call(user, subscribe = true)
+    def call(artist, user, subscribe = true)
       raise MailchimpFailed.new unless @mailchimp
 
       status = (subscribe ? "subscribed" : "unsubscribed")
@@ -19,9 +19,9 @@ module Services
           email_address: user.email,
           status: status,
           merge_fields: {
-            FNAME: user.first_name.to_s,
+            FNAME: user.name.to_s,
             LNAME: user.last_name.to_s,
-            ARTISTNAME: user.artist_name.to_s
+            ARTISTNAME: artist.name.to_s
           }
         }
       )

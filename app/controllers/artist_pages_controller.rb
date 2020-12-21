@@ -98,7 +98,9 @@ class ArtistPagesController < ApplicationController
     ArtistPageCreateEmailJob.perform_async(@artist_page.id, current_user.id)
 
     # Subscribe to Mailchimp
-    ::Mailchimp::MailchimpSubscriber.perform_async(current_user.id)
+    if @artist_page.subscribe_to_newsletter
+      ::Mailchimp::MailchimpSubscriber.perform_async(@artist_page.id, current_user.id)
+    end
 
     render json: { status: "ok", message: "Your page has been created!" }
   rescue ActiveRecord::RecordNotUnique

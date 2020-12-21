@@ -563,6 +563,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     confirmRemoveMemberIndex: 99,
     showDeleteModal: false,
     isDeletedPage: false,
+    subscribeToNewsletter: false,
   };
 
   constructor(props) {
@@ -618,6 +619,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         external,
         video_url,
         hide_members,
+        subscribe_to_newsletter,
         slug,
         owners,
         images,
@@ -638,6 +640,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistSlug: slug,
         artistStripe: '',
         hideMembers: hide_members,
+        subscribeToNewsletter: subscribe_to_newsletter,
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
           role: owner.instrument || '',
@@ -678,6 +681,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         owners,
         images,
         hide_members,
+        subscribe_to_newsletter,
       } = artist;
       this.setState({
         artistColor: accent_color,
@@ -694,6 +698,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         artistSlug: slug,
         artistStripe: '',
         hideMembers: hide_members,
+        subscribeToNewsletter: subscribe_to_newsletter,
         members: (owners || []).map((owner) => ({
           firstName: owner.name || '',
           role: owner.instrument || '',
@@ -1622,8 +1627,20 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             {!this.props.editMode && (
               <div className="row justify-content-center">
                 <div className="col-md-6 col-sm-10 create-artist__bottomcopy">
-                  Your page should initially only be visible to you and any
-                  other members you may add.
+                  <p>
+                    Your page should initially only be visible to you and any
+                    other members you may add.
+                  </p>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={this.state.subscribeToNewsletter}
+                        onChange={this.handleChange}
+                        name="subscribeToNewsletter"
+                      />
+                    }
+                    label="Sign Up for Ampled newsletter to stay updated on the latest."
+                  />
                 </div>
               </div>
             )}

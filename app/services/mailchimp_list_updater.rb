@@ -11,7 +11,7 @@ module Services
     end
 
     def call(artist, user, subscribe = true)
-      raise MailchimpFailed.new unless @mailchimp
+      raise MailchimpFailed, "Couldn't initialize Mailchimp" unless @mailchimp
 
       status = (subscribe ? "subscribed" : "unsubscribed")
       list(user).upsert(

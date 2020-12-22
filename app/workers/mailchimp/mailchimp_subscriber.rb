@@ -5,9 +5,7 @@ module Mailchimp
     def perform(artist_id, user_id, subscribe = true)
       @artist = ArtistPage.find(artist_id)
       @user = User.find(user_id)
-      mailchimp.call(@artist, @user, subscribe)
-    rescue StandardError => e
-      raise e
+      mailchimp.update_subscription(@artist, @user, subscribe)
     end
 
     private

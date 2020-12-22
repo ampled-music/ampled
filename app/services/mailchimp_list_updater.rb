@@ -1,6 +1,6 @@
 module Services
   class MailchimpListUpdater
-    MailchimpFailed = Class.new(ServiceActionError)
+    MailchimpFailed = Class.new(StandardError)
 
     def initialize
       return unless ENV["MAILCHIMP_API_KEY"]
@@ -10,7 +10,7 @@ module Services
       @mailchimp.open_timeout = 30
     end
 
-    def call(artist, user, subscribe = true)
+    def update_subscription(artist, user, subscribe = true)
       raise MailchimpFailed, "Couldn't initialize Mailchimp" unless @mailchimp
 
       status = (subscribe ? "subscribed" : "unsubscribed")

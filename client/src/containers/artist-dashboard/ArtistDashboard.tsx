@@ -20,7 +20,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, IconButton } from '@material-ui/core';
 // import { apiAxios } from '../../api/setup-axios';
 
-import { DataGrid, RowsProp, ColDef } from '@material-ui/data-grid';
+import {
+  DataGrid,
+  RowsProp,
+  ColDef,
+  ValueFormatterParams,
+} from '@material-ui/data-grid';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
 import Settings from '../../images/icons/Icon_Settings.svg';
@@ -43,12 +48,6 @@ import { initialState as subscriptionsInitialState } from '../../redux/subscript
 // import { ResetPassword } from '../connect/ResetPassword';
 // import { Loading } from '../shared/loading/Loading';
 // import { UserImage } from '../user-details/UserImage';
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
 
 const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
@@ -75,7 +74,7 @@ const rows: RowsProp = [
     monthly: 0,
     all_time: 0,
     location: 'Location',
-    supporting_since: '2020-10-29 19:51:43.717274',
+    supporting_since: new Date('2020-10-29 19:51:43.717274'),
   },
   {
     id: 2,
@@ -83,7 +82,7 @@ const rows: RowsProp = [
     monthly: 0,
     all_time: 0,
     location: 'Location',
-    supporting_since: '2020-10-29 19:51:43.717274',
+    supporting_since: new Date('2020-10-29 19:51:43.717274'),
   },
   {
     id: 3,
@@ -91,7 +90,7 @@ const rows: RowsProp = [
     monthly: 0,
     all_time: 0,
     location: 'Location',
-    supporting_since: '2020-10-29 19:51:43.717274',
+    supporting_since: new Date('2020-10-29 19:51:43.717274'),
   },
   {
     id: 4,
@@ -99,7 +98,7 @@ const rows: RowsProp = [
     monthly: 0,
     all_time: 0,
     location: 'Location',
-    supporting_since: '2020-10-29 19:51:43.717274',
+    supporting_since: new Date('2020-10-29 19:51:43.717274'),
   },
   {
     id: 5,
@@ -107,7 +106,7 @@ const rows: RowsProp = [
     monthly: 0,
     all_time: 0,
     location: 'Location',
-    supporting_since: '2020-10-29 19:51:43.717274',
+    supporting_since: new Date('2020-10-29 19:51:43.717274'),
   },
   {
     id: 6,
@@ -115,7 +114,7 @@ const rows: RowsProp = [
     monthly: 0,
     all_time: 0,
     location: 'Location',
-    supporting_since: '2020-10-29 19:51:43.717274',
+    supporting_since: new Date('2020-10-29 19:51:43.717274'),
   },
   {
     id: 7,
@@ -123,7 +122,7 @@ const rows: RowsProp = [
     monthly: 0,
     all_time: 0,
     location: 'Location',
-    supporting_since: '2020-10-29 19:51:43.717274',
+    supporting_since: new Date('2020-10-29 19:51:43.717274'),
   },
   {
     id: 8,
@@ -131,7 +130,7 @@ const rows: RowsProp = [
     monthly: 0,
     all_time: 0,
     location: 'Location',
-    supporting_since: '2020-10-29 19:51:43.717274',
+    supporting_since: new Date('2020-10-29 19:51:43.717274'),
   },
   {
     id: 9,
@@ -139,7 +138,7 @@ const rows: RowsProp = [
     monthly: 0,
     all_time: 0,
     location: 'Location',
-    supporting_since: '2020-10-29 19:51:43.717274',
+    supporting_since: new Date('2020-10-29 19:51:43.717274'),
   },
   {
     id: 10,
@@ -147,7 +146,7 @@ const rows: RowsProp = [
     monthly: 0,
     all_time: 0,
     location: 'Location',
-    supporting_since: '2020-10-29 19:51:43.717274',
+    supporting_since: new Date('2020-10-29 19:51:43.717274'),
   },
 ];
 
@@ -156,8 +155,20 @@ const columns: ColDef[] = [
   { field: 'monthly', headerName: 'Monthly Support', width: 150 },
   { field: 'all_time', headerName: 'All Time Support', width: 150 },
   { field: 'location', headerName: 'Location', width: 400 },
-  { field: 'supporting_since', headerName: 'Supporting Since', width: 200 },
+  {
+    field: 'supporting_since',
+    headerName: 'Supporting Since',
+    width: 200,
+    valueFormatter: (params: ValueFormatterParams) =>
+      (params.value as Date).toDateString(),
+  },
 ];
+
+const useStyles = makeStyles({
+  root: {
+    minWidth: 650,
+  },
+});
 
 class ArtistDashboardComponent extends React.Component<Props, any> {
   state = {};
@@ -211,6 +222,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
   renderSupportersPanel() {
     // const classes = useStyles();
+
     return (
       <div className="artist-dashboard__data">
         <DataGrid rows={rows} columns={columns} />

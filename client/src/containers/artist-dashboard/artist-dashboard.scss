@@ -10,7 +10,7 @@
     align-items: center;
     width: 300px;
     border-bottom: 1px solid $black;
-    padding: 2rem 1rem;
+    padding: 2rem 0rem;
     box-shadow: 3px 0 5px -3px $black;
     &_image {
       border: 1px solid $black;
@@ -18,11 +18,36 @@
       margin-bottom: 1rem;
     }
     &_buttons {
+      margin-top: 2rem;
       button {
         background-color: $black;
         margin: 0 0.5rem;
         &:hover {
           background-color: $gray;
+        }
+      }
+    }
+    &_links {
+      width: 100%;
+      margin: 2rem auto;
+      border-top: 1px solid $black;
+      padding-top: 2rem;
+      text-align: center;
+      a {
+        font-family: $font-family-sans-serif;
+        font-size: $font-size-h4;
+        text-decoration: none;
+        &.active {
+          .flair {
+            display: block;
+            position: relative;
+            width: 100px;
+            background-color: $gray-light;
+            height: 1rem;
+            left: calc(50% - 50px);
+            top: -0.75rem;
+            z-index: -1;
+          }
         }
       }
     }

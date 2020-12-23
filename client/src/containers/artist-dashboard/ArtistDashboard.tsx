@@ -1,7 +1,7 @@
 import './artist-dashboard.scss';
 
 import * as React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -252,6 +252,13 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
           <IconButton className="artist-dashboard__panel_buttons_settings">
             <ReactSVG className="icon icon_white" src={Settings} />
           </IconButton>
+        </div>
+
+        <div className="artist-dashboard__panel_links">
+          <Link className="active" to={``}>
+            Supporters
+            <span className="flair"></span>
+          </Link>
         </div>
       </div>
     );

@@ -2,7 +2,7 @@ import './artist-dashboard.scss';
 
 import * as React from 'react';
 // import { Link } from 'react-router-dom';
-// import { ReactSVG } from 'react-svg';
+import { ReactSVG } from 'react-svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -16,6 +16,7 @@ import { showToastAction } from '../../redux/toast/toast-modal';
 import { Image, Transformation } from 'cloudinary-react';
 import {
   Button,
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -27,6 +28,8 @@ import {
 } from '@material-ui/core';
 // import { apiAxios } from '../../api/setup-axios';
 
+import Plus from '../../images/icons/Icon_Add-New.svg';
+import Settings from '../../images/icons/Icon_Settings.svg';
 // import { faImage } from '@fortawesome/free-solid-svg-icons';
 // import { faStripe } from '@fortawesome/free-brands-svg-icons';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -230,20 +233,26 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
           publicId={userData.image.public_id}
           alt={userData.name}
           key={userData.name}
-          className="artist__image"
+          className="artist-dashboard__panel_image"
         >
           <Transformation
             fetchFormat="auto"
             quality="auto"
             crop="fill"
-            width={250}
-            height={250}
+            width={80}
+            height={80}
             responsive_placeholder="blank"
           />
         </Image>
-        <h2>
-          {userData.name} {userData.last_name}
-        </h2>
+        <h2>{userData.name}</h2>
+        <div className="artist-dashboard__panel_buttons">
+          <IconButton className="artist-dashboard__panel_buttons_plus">
+            <ReactSVG className="icon icon_white" src={Plus} />
+          </IconButton>
+          <IconButton className="artist-dashboard__panel_buttons_settings">
+            <ReactSVG className="icon icon_white" src={Settings} />
+          </IconButton>
+        </div>
       </div>
     );
   }

@@ -3,7 +3,6 @@
 # Table name: artist_pages
 #
 #  accent_color            :string
-#  application_fee_percent :decimal(2, )     default(13), not null
 #  approved                :boolean          default(FALSE)
 #  artist_owner            :boolean          default(FALSE), not null
 #  bandcamp_handle         :string
@@ -15,15 +14,14 @@
 #  hide_members            :boolean          default(FALSE)
 #  id                      :bigint(8)        not null, primary key
 #  instagram_handle        :string
-#  is_soft_deleted         :boolean          default(FALSE)
 #  location                :string
 #  name                    :string
-#  permanently_delete_at   :datetime
 #  slug                    :string
 #  state_token             :string
 #  stripe_product_id       :string
 #  stripe_user_id          :string
 #  style_type              :string
+#  subscribe_to_newsletter :boolean
 #  twitter_handle          :string
 #  updated_at              :datetime         not null
 #  verb_plural             :boolean          default(FALSE)

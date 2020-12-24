@@ -57,18 +57,9 @@ const mapDispatchToProps = (dispatch) => ({
   showToast: bindActionCreators(showToastAction, dispatch),
 });
 
-const styles = () =>
-  createStyles({
-    root: {
-      backgroundColor: 'red',
-    },
-  });
-
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
-type DataGridStyle = WithStyles<typeof styles>;
 
-type Props = DataGridStyle &
-  typeof loginInitialState &
+type Props = typeof loginInitialState &
   typeof meInitialState &
   Dispatchers & {
     history: any;
@@ -402,15 +393,14 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
   }
 
   render() {
-    const { userData, classes } = this.props;
-    console.log(this.props);
+    const { userData } = this.props;
 
     return (
       <div className="artist-dashboard">
         {userData && this.renderArtistPanel()}
 
         <div className="artist-dashboard__data">
-          <DataGrid className={classes.root} rows={rows} columns={columns} />
+          <DataGrid rows={rows} columns={columns} />
         </div>
       </div>
     );
@@ -422,11 +412,9 @@ const mapStateToProps = (state: Store) => ({
   ...state.me,
 });
 
-const ArtistDashboardStyle = withStyles(styles)(ArtistDashboardComponent);
-
 const ArtistDashboard = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ArtistDashboardStyle);
+)(ArtistDashboardComponent);
 
 export { ArtistDashboard };

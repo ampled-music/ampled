@@ -16,7 +16,7 @@ import { showToastAction } from '../../redux/toast/toast-modal';
 
 import { Image, Transformation } from 'cloudinary-react';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
 // import { apiAxios } from '../../api/setup-axios';
 
@@ -57,9 +57,18 @@ const mapDispatchToProps = (dispatch) => ({
   showToast: bindActionCreators(showToastAction, dispatch),
 });
 
-type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+const styles = () =>
+  createStyles({
+    root: {
+      backgroundColor: 'red',
+    },
+  });
 
-type Props = typeof loginInitialState &
+type Dispatchers = ReturnType<typeof mapDispatchToProps>;
+type DataGridStyle = WithStyles<typeof styles>;
+
+type Props = DataGridStyle &
+  typeof loginInitialState &
   typeof meInitialState &
   Dispatchers & {
     history: any;
@@ -342,12 +351,6 @@ const columns: ColDef[] = [
   },
 ];
 
-const useStyles = makeStyles({
-  root: {
-    minWidth: 650,
-  },
-});
-
 class ArtistDashboardComponent extends React.Component<Props, any> {
   state = {};
 
@@ -398,23 +401,17 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
     );
   }
 
-  renderSupportersPanel() {
-    // const classes = useStyles();
-
-    return (
-      <div className="artist-dashboard__data">
-        <DataGrid rows={rows} columns={columns} />
-      </div>
-    );
-  }
-
   render() {
-    const { userData } = this.props;
+    const { userData, classes } = this.props;
+    console.log(this.props);
 
     return (
       <div className="artist-dashboard">
         {userData && this.renderArtistPanel()}
-        {this.renderSupportersPanel()}
+
+        <div className="artist-dashboard__data">
+          <DataGrid className={classes.root} rows={rows} columns={columns} />
+        </div>
       </div>
     );
   }
@@ -425,9 +422,11 @@ const mapStateToProps = (state: Store) => ({
   ...state.me,
 });
 
+const ArtistDashboardStyle = withStyles(styles)(ArtistDashboardComponent);
+
 const ArtistDashboard = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ArtistDashboardComponent);
+)(ArtistDashboardStyle);
 
 export { ArtistDashboard };

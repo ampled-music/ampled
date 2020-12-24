@@ -16,7 +16,6 @@ import { showToastAction } from '../../redux/toast/toast-modal';
 
 import { Image, Transformation } from 'cloudinary-react';
 
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
 // import { apiAxios } from '../../api/setup-axios';
 

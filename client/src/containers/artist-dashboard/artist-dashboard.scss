@@ -13,6 +13,8 @@
     width: 300px;
     padding: 2rem 0rem;
     box-shadow: 3px 0 5px -3px $black;
+    position: relative;
+    z-index: 1;
     &_image {
       border: 1px solid $black;
       border-radius: 100%;

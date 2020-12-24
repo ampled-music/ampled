@@ -377,9 +377,11 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
           <IconButton className="artist-dashboard__panel_buttons_plus">
             <ReactSVG className="icon icon_white" src={Plus} />
           </IconButton>
-          <IconButton className="artist-dashboard__panel_buttons_settings">
-            <ReactSVG className="icon icon_white" src={Settings} />
-          </IconButton>
+          <Link to="/user-details">
+            <IconButton className="artist-dashboard__panel_buttons_settings">
+              <ReactSVG className="icon icon_white" src={Settings} />
+            </IconButton>
+          </Link>
         </div>
 
         <div className="artist-dashboard__panel_links">

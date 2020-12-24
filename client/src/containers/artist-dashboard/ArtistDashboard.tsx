@@ -66,281 +66,6 @@ type Props = typeof loginInitialState &
     subscriptions: typeof subscriptionsInitialState;
   };
 
-const rows: RowsProp = [
-  {
-    id: 1,
-    name: 'Test Name 1',
-    monthly: 24,
-    all_time: 556,
-    location: 'Location',
-    supporting_since: new Date('2020-11-29 19:51:43.717274'),
-  },
-  {
-    id: 2,
-    name: 'Test Name 2',
-    monthly: 2,
-    all_time: 6,
-    location: 'Location',
-    supporting_since: new Date('2020-06-22 19:51:43.717274'),
-  },
-  {
-    id: 3,
-    name: 'Test Name 3',
-    monthly: 6,
-    all_time: 12,
-    location: 'Location',
-    supporting_since: new Date('2020-03-12 19:51:43.717274'),
-  },
-  {
-    id: 4,
-    name: 'Test Name 4',
-    monthly: 4.3,
-    all_time: 43.3,
-    location: 'Location',
-    supporting_since: new Date('2020-01-22 19:51:43.717274'),
-  },
-  {
-    id: 5,
-    name: 'Test Name 5',
-    monthly: 6.66,
-    all_time: 99.99,
-    location: 'Location',
-    supporting_since: new Date('2020-02-01 19:51:43.717274'),
-  },
-  {
-    id: 6,
-    name: 'Test Name 6',
-    monthly: 10,
-    all_time: 200,
-    location: 'Location',
-    supporting_since: new Date('2020-07-03 19:51:43.717274'),
-  },
-  {
-    id: 7,
-    name: 'Test Name 7',
-    monthly: 3.23,
-    all_time: 8.77,
-    location: 'Location',
-    supporting_since: new Date('2020-02-06 19:51:43.717274'),
-  },
-  {
-    id: 8,
-    name: 'Test Name 8',
-    monthly: 99.2,
-    all_time: 34.3,
-    location: 'Location',
-    supporting_since: new Date('2020-04-17 19:51:43.717274'),
-  },
-  {
-    id: 9,
-    name: 'Test Name 9',
-    monthly: 3.2,
-    all_time: 99.3,
-    location: 'Location',
-    supporting_since: new Date('2020-02-04 19:51:43.717274'),
-  },
-  {
-    id: 10,
-    name: 'Test Name 10',
-    monthly: 3,
-    all_time: 3,
-    location: 'Location',
-    supporting_since: new Date('2020-02-29 19:51:43.717274'),
-  },
-  {
-    id: 11,
-    name: 'Test Name 11',
-    monthly: 24,
-    all_time: 556,
-    location: 'Location',
-    supporting_since: new Date('2020-11-29 19:51:43.717274'),
-  },
-  {
-    id: 12,
-    name: 'Test Name 12',
-    monthly: 2,
-    all_time: 6,
-    location: 'Location',
-    supporting_since: new Date('2020-06-22 19:51:43.717274'),
-  },
-  {
-    id: 13,
-    name: 'Test Name 13',
-    monthly: 6,
-    all_time: 12,
-    location: 'Location',
-    supporting_since: new Date('2020-03-12 19:51:43.717274'),
-  },
-  {
-    id: 14,
-    name: 'Test Name 14',
-    monthly: 4.3,
-    all_time: 43.3,
-    location: 'Location',
-    supporting_since: new Date('2020-01-22 19:51:43.717274'),
-  },
-  {
-    id: 15,
-    name: 'Test Name 15',
-    monthly: 6.66,
-    all_time: 99.99,
-    location: 'Location',
-    supporting_since: new Date('2020-02-01 19:51:43.717274'),
-  },
-  {
-    id: 16,
-    name: 'Test Name 16',
-    monthly: 10,
-    all_time: 200,
-    location: 'Location',
-    supporting_since: new Date('2020-07-03 19:51:43.717274'),
-  },
-  {
-    id: 17,
-    name: 'Test Name 17',
-    monthly: 3.23,
-    all_time: 8.77,
-    location: 'Location',
-    supporting_since: new Date('2020-02-06 19:51:43.717274'),
-  },
-  {
-    id: 18,
-    name: 'Test Name 18',
-    monthly: 99.2,
-    all_time: 34.3,
-    location: 'Location',
-    supporting_since: new Date('2020-04-17 19:51:43.717274'),
-  },
-  {
-    id: 19,
-    name: 'Test Name 19',
-    monthly: 3.2,
-    all_time: 99.3,
-    location: 'Location',
-    supporting_since: new Date('2020-02-04 19:51:43.717274'),
-  },
-  {
-    id: 20,
-    name: 'Test Name 20',
-    monthly: 3,
-    all_time: 3,
-    location: 'Location',
-    supporting_since: new Date('2020-02-29 19:51:43.717274'),
-  },
-  {
-    id: 21,
-    name: 'Test Name 21',
-    monthly: 24,
-    all_time: 556,
-    location: 'Location',
-    supporting_since: new Date('2020-11-29 19:51:43.717274'),
-  },
-  {
-    id: 22,
-    name: 'Test Name 22',
-    monthly: 2,
-    all_time: 6,
-    location: 'Location',
-    supporting_since: new Date('2020-06-22 19:51:43.717274'),
-  },
-  {
-    id: 23,
-    name: 'Test Name 23',
-    monthly: 6,
-    all_time: 12,
-    location: 'Location',
-    supporting_since: new Date('2020-03-12 19:51:43.717274'),
-  },
-  {
-    id: 24,
-    name: 'Test Name 24',
-    monthly: 4.3,
-    all_time: 43.3,
-    location: 'Location',
-    supporting_since: new Date('2020-01-22 19:51:43.717274'),
-  },
-  {
-    id: 25,
-    name: 'Test Name 25',
-    monthly: 6.66,
-    all_time: 99.99,
-    location: 'Location',
-    supporting_since: new Date('2020-02-01 19:51:43.717274'),
-  },
-  {
-    id: 26,
-    name: 'Test Name 26',
-    monthly: 10,
-    all_time: 200,
-    location: 'Location',
-    supporting_since: new Date('2020-07-03 19:51:43.717274'),
-  },
-  {
-    id: 27,
-    name: 'Test Name 27',
-    monthly: 3.23,
-    all_time: 8.77,
-    location: 'Location',
-    supporting_since: new Date('2020-02-06 19:51:43.717274'),
-  },
-  {
-    id: 28,
-    name: 'Test Name 28',
-    monthly: 99.2,
-    all_time: 34.3,
-    location: 'Location',
-    supporting_since: new Date('2020-04-17 19:51:43.717274'),
-  },
-  {
-    id: 29,
-    name: 'Test Name 29',
-    monthly: 3.2,
-    all_time: 99.3,
-    location: 'Location',
-    supporting_since: new Date('2020-02-04 19:51:43.717274'),
-  },
-  {
-    id: 30,
-    name: 'Test Name 30',
-    monthly: 3,
-    all_time: 3,
-    location: 'Location',
-    supporting_since: new Date('2020-02-29 19:51:43.717274'),
-  },
-];
-
-const columns: ColDef[] = [
-  { field: 'name', headerName: 'Name', width: 400 },
-  {
-    field: 'monthly',
-    headerName: 'Monthly',
-    width: 150,
-    valueFormatter: (params: ValueFormatterParams) =>
-      params.value.toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      }),
-  },
-  {
-    field: 'all_time',
-    headerName: 'All Time',
-    width: 150,
-    valueFormatter: (params: ValueFormatterParams) =>
-      params.value.toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      }),
-  },
-  { field: 'location', headerName: 'Location', width: 400 },
-  {
-    field: 'supporting_since',
-    headerName: 'Supporting Since',
-    width: 200,
-    valueFormatter: (params: ValueFormatterParams) =>
-      (params.value as Date).toDateString(),
-  },
-];
-
 class ArtistDashboardComponent extends React.Component<Props, any> {
   state = {};
 
@@ -395,6 +120,52 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
   render() {
     const { userData } = this.props;
+    const supporters = userData?.ownedPages[0].supporters;
+    console.log(supporters);
+
+    const columns: ColDef[] = [
+      { field: 'first_name', headerName: 'Name', width: 400 },
+      {
+        field: 'monthly',
+        headerName: 'Monthly',
+        width: 150,
+        valueFormatter: (params: ValueFormatterParams) =>
+          params.value.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+          }),
+      },
+      {
+        field: 'all_time',
+        headerName: 'All Time',
+        width: 150,
+        valueFormatter: (params: ValueFormatterParams) =>
+          params.value.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+          }),
+      },
+      { field: 'location', headerName: 'Location', width: 400 },
+      {
+        field: 'supporting_since',
+        headerName: 'Supporting Since',
+        width: 200,
+        valueFormatter: (params: ValueFormatterParams) =>
+          (params.value as Date).toDateString(),
+      },
+    ];
+
+    let supporterRow = supporters?.map((supporter) => ({
+      id: supporter.id,
+      first_name: supporter.name,
+      monthly: 11,
+      all_time: 556,
+      location: supporter.location,
+      supporting_since: supporter.supporter_since,
+    }));
+    const rows: RowsProp = [];
+
+    console.log(supporterRow);
 
     return (
       <div className="artist-dashboard">

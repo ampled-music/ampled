@@ -68,4 +68,5 @@ json.ownedPages @owned_pages do |page|
   json.promoteSquareImages page.page.promote_square_images
   json.promoteStoryImages page.page.promote_story_images
   json.supporterImages page.page.supporter_images
+  json.supporters page.page.active_subscribers.includes(%i[image page_ownerships owned_pages]), partial: "supporters/supporter", as: :user
 end

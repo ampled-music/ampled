@@ -314,7 +314,7 @@ const columns: ColDef[] = [
   { field: 'name', headerName: 'Name', width: 400 },
   {
     field: 'monthly',
-    headerName: 'Monthly Support',
+    headerName: 'Monthly',
     width: 150,
     valueFormatter: (params: ValueFormatterParams) =>
       params.value.toLocaleString('en-US', {
@@ -324,7 +324,7 @@ const columns: ColDef[] = [
   },
   {
     field: 'all_time',
-    headerName: 'All Time Support',
+    headerName: 'All Time',
     width: 150,
     valueFormatter: (params: ValueFormatterParams) =>
       params.value.toLocaleString('en-US', {

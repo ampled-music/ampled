@@ -51,6 +51,7 @@ json.subscriptions @subscriptions do |subscription|
 end
 json.ownedPages @owned_pages do |page|
   json.role page.role
+  json.subscriptions page.subscriptions
   json.instrument page.instrument
   json.approved page.page.approved
   json.artistId page.page.id

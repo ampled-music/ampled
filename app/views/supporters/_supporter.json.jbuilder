@@ -1,10 +1,8 @@
 json.id user.id
 json.name user.name
-json.last_initial user.last_name.first unless user.last_name.nil?
+json.last_name user.last_name unless user.last_name.nil?
 json.image user.image, partial: "images/image", as: :image
 json.location user.city
-
-json.user user
 
 json.supports(user&.subscriptions) do |subscription|
   json.subscription subscription

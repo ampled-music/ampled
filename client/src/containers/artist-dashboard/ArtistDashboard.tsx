@@ -124,7 +124,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
     const rows: RowsProp = supporters?.map((supporter) => ({
       id: supporter.id,
-      name: supporter.name + ' ' + supporter.last_initial + '.',
+      name: supporter.name + ' ' + supporter.last_name,
       monthly: 11,
       all_time: 556,
       location: supporter.location,

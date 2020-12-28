@@ -121,10 +121,18 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
   render() {
     const { userData } = this.props;
     const supporters = userData?.ownedPages[0].supporters;
-    console.log(supporters);
+
+    const rows: RowsProp = supporters?.map((supporter) => ({
+      id: supporter.id,
+      name: supporter.name + ' ' + supporter.last_initial + '.',
+      monthly: 11,
+      all_time: 556,
+      location: supporter.location,
+      supporting_since: supporter.supporter_since,
+    }));
 
     const columns: ColDef[] = [
-      { field: 'first_name', headerName: 'Name', width: 400 },
+      { field: 'name', headerName: 'Name', width: 400 },
       {
         field: 'monthly',
         headerName: 'Monthly',
@@ -150,29 +158,19 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
         field: 'supporting_since',
         headerName: 'Supporting Since',
         width: 200,
-        valueFormatter: (params: ValueFormatterParams) =>
-          (params.value as Date).toDateString(),
+        // valueFormatter: (params: ValueFormatterParams) =>
+        //   (params.value as Date).toDateString(),
       },
     ];
 
-    let supporterRow = supporters?.map((supporter) => ({
-      id: supporter.id,
-      first_name: supporter.name,
-      monthly: 11,
-      all_time: 556,
-      location: supporter.location,
-      supporting_since: supporter.supporter_since,
-    }));
-    const rows: RowsProp = [];
-
-    console.log(supporterRow);
+    console.log('supporters:', supporters);
 
     return (
       <div className="artist-dashboard">
         {userData && this.renderArtistPanel()}
 
         <div className="artist-dashboard__data">
-          <DataGrid rows={rows} columns={columns} />
+          {userData && <DataGrid rows={rows} columns={columns} />}
         </div>
       </div>
     );

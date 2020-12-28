@@ -22,4 +22,7 @@ export const config = {
       process.env.REACT_APP_AWS_BASE_URL ||
       'https://ampled-test.s3.amazonaws.com/',
   },
+  materialUi: {
+    key: process.env.REACT_APP_MATERIAL_UI_KEY,
+  },
 };

@@ -93,9 +93,7 @@
         border-radius: 2px;
         background-color: $white;
         width: 100%;
-        margin-bottom: 0.3rem;
-        max-height: calc(50px - 0.3rem) !important;
-        min-height: calc(50px - 0.3rem) !important;
+        margin-bottom: 0.5rem;
         &.Mui-selected,
         &.Mui-selected:hover {
           background-color: $gray-lighter;
@@ -104,7 +102,6 @@
       &-cell {
         border: 0;
         font-family: $font-family-monospace;
-        line-height: calc(50px - 0.3rem) !important;
         &[data-field='name'] {
           font-family: $font-family-sans-serif;
         }

@@ -13,18 +13,15 @@ import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
 import { setUserDataAction } from '../../redux/me/set-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
+import { config } from '../../config';
 
 import { Image, Transformation } from 'cloudinary-react';
 
 import { IconButton } from '@material-ui/core';
 // import { apiAxios } from '../../api/setup-axios';
 
-import {
-  DataGrid,
-  RowsProp,
-  ColDef,
-  ValueFormatterParams,
-} from '@material-ui/data-grid';
+import { RowsProp, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
+import { XGrid, LicenseInfo } from '@material-ui/x-grid';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
 import Settings from '../../images/icons/Icon_Settings.svg';
@@ -47,6 +44,8 @@ import { initialState as subscriptionsInitialState } from '../../redux/subscript
 // import { ResetPassword } from '../connect/ResetPassword';
 // import { Loading } from '../shared/loading/Loading';
 // import { UserImage } from '../user-details/UserImage';
+
+LicenseInfo.setLicenseKey(config.materialUi.key);
 
 const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
@@ -158,6 +157,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
         field: 'supporting_since',
         headerName: 'Supporting Since',
         width: 200,
+        type: 'date',
         // valueFormatter: (params: ValueFormatterParams) =>
         //   (params.value as Date).toDateString(),
       },
@@ -170,7 +170,16 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
         {userData && this.renderArtistPanel()}
 
         <div className="artist-dashboard__data">
-          {userData && <DataGrid rows={rows} columns={columns} />}
+          {/* <DataGrid  /> */}
+          {userData && (
+            <XGrid
+              rows={rows}
+              columns={columns}
+              // loading={rows.length === 0}
+              rowHeight={40}
+              checkboxSelection
+            />
+          )}
         </div>
       </div>
     );

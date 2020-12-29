@@ -71,6 +71,16 @@ RSpec.describe MeController, type: :request do
           "promoteSquareImages" => [nil, nil, nil, nil, nil, nil],
           "promoteStoryImages" => [nil, nil, nil, nil, nil, nil, nil],
           "subscriptionId" => second_subscription.id,
+          "subscriptions"=>
+       +   [{"artist_page_id"=>34,
+       +     "created_at"=>"2020-10-29T14:30:23.000Z",
+       +     "id"=>3,
+       +     "plan_id"=>5,
+       +     "status"=>"pending_active",
+       +     "stripe_customer_id"=>nil,
+       +     "stripe_id"=>nil,
+       +     "updated_at"=>"2020-12-28T21:01:35.935Z",
+       +     "user_id"=>43}],
           "support_date" => "2020-10-29T14:34:21.000Z",
           "supporterImages" => [nil, nil]
         }

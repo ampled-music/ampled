@@ -23,11 +23,16 @@ import { IconButton } from '@material-ui/core';
 import { RowsProp, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
 
+import {
+  InputLabel,
+  MenuItem,
+  FormHelperText,
+  FormControl,
+  Select,
+} from '@material-ui/core';
+
 import Plus from '../../images/icons/Icon_Add-New.svg';
 import Settings from '../../images/icons/Icon_Settings.svg';
-// import { faImage } from '@fortawesome/free-solid-svg-icons';
-// import { faStripe } from '@fortawesome/free-brands-svg-icons';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import tear from '../../images/backgrounds/background_tear.png';
 // import tear_black from '../../images/backgrounds/background_tear_black.png';
 
@@ -66,17 +71,38 @@ type Props = typeof loginInitialState &
   };
 
 class ArtistDashboardComponent extends React.Component<Props, any> {
-  state = {};
+  state = {
+    selectedArtist: '',
+  };
 
   componentDidMount() {
-    this.props.getMe();
+    this.setInitArtist();
   }
 
-  componentDidUpdate(prevProps) {}
+  componentDidUpdate(prevProps) {
+    if (!prevProps.userData && this.props.userData) {
+      this.setInitArtist();
+    }
+  }
+
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  setInitArtist = () => {
+    if (this.props.userData?.ownedPages) {
+      this.setState({
+        selectedArtist: this.props.userData.ownedPages[0].artistSlug,
+      });
+    }
+  };
 
   renderArtistPanel() {
     const { userData } = this.props;
-    console.log(userData);
+    console.log('subscriptions: ', userData.ownedPages[0].subscriptions);
+    console.log('userData: ', userData);
+    const ownedPages = userData?.ownedPages;
 
     return (
       <div className="artist-dashboard__panel">
@@ -96,6 +122,20 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
           />
         </Image>
         <h2>{userData.name}</h2>
+
+        <FormControl>
+          <Select
+            id="artist-page-select"
+            name="selectedArtist"
+            value={this.state.selectedArtist}
+            onChange={this.handleChange}
+          >
+            {ownedPages.map((page) => (
+              <MenuItem value={page.artistSlug}>{page.name}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         <div className="artist-dashboard__panel_buttons">
           <IconButton className="artist-dashboard__panel_buttons_plus">
             <ReactSVG className="icon icon_white" src={Plus} />
@@ -119,11 +159,11 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
   render() {
     const { userData } = this.props;
-    const supporters = userData?.ownedPages[0].supporters;
+    const supporters = userData?.ownedPages[0].subscriptions;
 
     const rows: RowsProp = supporters?.map((supporter) => ({
       id: supporter.id,
-      name: supporter.name + ' ' + supporter.last_name,
+      name: supporter.name,
       monthly: 11,
       all_time: 556,
       location: supporter.location,
@@ -162,8 +202,6 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
         //   (params.value as Date).toDateString(),
       },
     ];
-
-    console.log('supporters:', supporters);
 
     return (
       <div className="artist-dashboard">

@@ -22,13 +22,15 @@ import { IconButton } from '@material-ui/core';
 
 import { RowsProp, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
-
+import { Check, Block } from '@material-ui/icons';
 import {
   InputLabel,
   MenuItem,
   FormHelperText,
   FormControl,
   Select,
+  Chip,
+  Icon,
 } from '@material-ui/core';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
@@ -165,6 +167,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
       id: supporter.id,
       name: supporter.name,
       monthly: supporter.amount / 100,
+      status: supporter.status,
       // all_time: 556,
       location: supporter.location,
       supporting_since: supporter.supporter_since,
@@ -181,6 +184,19 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
             style: 'currency',
             currency: 'USD',
           }),
+      },
+      {
+        field: 'status',
+        headerName: 'Status',
+        width: 150,
+        renderCell: (params: ValueFormatterParams) => (
+          <Chip
+            size="small"
+            icon={params.value === 'active' ? <Check /> : <Block />}
+            color={params.value === 'active' ? 'primary' : 'default'}
+            label={params.value}
+          />
+        ),
       },
       // {
       //   field: 'all_time',

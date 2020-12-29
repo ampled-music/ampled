@@ -164,8 +164,8 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
     const rows: RowsProp = supporters?.map((supporter) => ({
       id: supporter.id,
       name: supporter.name,
-      monthly: 11,
-      all_time: 556,
+      monthly: supporter.amount / 100,
+      // all_time: 556,
       location: supporter.location,
       supporting_since: supporter.supporter_since,
     }));
@@ -182,24 +182,22 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
             currency: 'USD',
           }),
       },
-      {
-        field: 'all_time',
-        headerName: 'All Time',
-        width: 150,
-        valueFormatter: (params: ValueFormatterParams) =>
-          params.value.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          }),
-      },
+      // {
+      //   field: 'all_time',
+      //   headerName: 'All Time',
+      //   width: 150,
+      //   valueFormatter: (params: ValueFormatterParams) =>
+      //     params.value.toLocaleString('en-US', {
+      //       style: 'currency',
+      //       currency: 'USD',
+      //     }),
+      // },
       { field: 'location', headerName: 'Location', width: 400 },
       {
         field: 'supporting_since',
         headerName: 'Supporting Since',
         width: 200,
         type: 'date',
-        // valueFormatter: (params: ValueFormatterParams) =>
-        //   (params.value as Date).toDateString(),
       },
     ];
 

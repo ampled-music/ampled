@@ -213,6 +213,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
               columns={columns}
               // loading={rows.length === 0}
               rowHeight={40}
+              rowsPerPageOptions={[25, 50, 100, 500, 1000]}
               checkboxSelection
             />
           )}

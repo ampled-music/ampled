@@ -180,7 +180,8 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
       monthly: supporter.amount / 100,
       status: supporter.status,
       // all_time: 556,
-      location: supporter.location,
+      city: supporter.city,
+      country: supporter.country,
       supporting_since: supporter.supporter_since,
     }));
 
@@ -219,7 +220,8 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
       //       currency: 'USD',
       //     }),
       // },
-      { field: 'location', headerName: 'Location', width: 400 },
+      { field: 'city', headerName: 'City', width: 200 },
+      { field: 'country', headerName: 'Country', width: 200 },
       {
         field: 'supporting_since',
         headerName: 'Supporting Since',

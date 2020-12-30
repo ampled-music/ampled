@@ -117,7 +117,8 @@ RSpec.describe MeController, type: :request do
                 "id" => subscription.id,
                 "status" => "pending_active",
                 "name" => "#{subscription.user.name} #{subscription.user.last_name}",
-                "location" => nil,
+                "city" => nil,
+                "country" => nil,
                 "supporter_since" => "October 2020",
                 "amount" => 1758
               }

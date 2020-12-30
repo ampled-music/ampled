@@ -28,8 +28,6 @@ import {
   Select,
   Tabs,
   Tab,
-  Typography,
-  Box,
 } from '@material-ui/core';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
@@ -59,43 +57,10 @@ type Props = typeof loginInitialState &
     subscriptions: typeof subscriptionsInitialState;
   };
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: any) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
-
 class ArtistDashboardComponent extends React.Component<Props, any> {
   state = {
     selectedArtist: '',
-    selectedTab: 0,
+    tabValue: 0,
   };
 
   componentDidMount() {
@@ -110,7 +75,29 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
   handleChange = (e) => {
     const { name, value } = e.target;
+    console.log('change', name, value);
     this.setState({ [name]: value });
+  };
+
+  handleChangeTab = (obj, value) => {
+    console.log('changeTab', value);
+    this.setState({
+      tabValue: value,
+    });
+  };
+
+  renderTabPanel = ({ tabValue, index, children }) => {
+    console.log(tabValue, index);
+    return (
+      <div
+        role="tabpanel"
+        hidden={tabValue !== index}
+        id={`vertical-tabpanel-${index}`}
+        aria-labelledby={`vertical-tab-${index}`}
+      >
+        {tabValue === index && children}
+      </div>
+    );
   };
 
   setInitArtist = () => {
@@ -123,12 +110,12 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
   renderArtistPanel() {
     const { userData } = this.props;
+    const ownedPages = userData?.ownedPages;
     console.log('subscriptions: ', userData.ownedPages[0].subscriptions);
     console.log('userData: ', userData);
-    const ownedPages = userData?.ownedPages;
 
     return (
-      <div className="artist-dashboard__panel">
+      <>
         <Image
           publicId={userData.image.public_id}
           alt={userData.name}
@@ -146,18 +133,24 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
         </Image>
         <h2>{userData.name}</h2>
 
-        <FormControl>
-          <Select
-            id="artist-page-select"
-            name="selectedArtist"
-            value={this.state.selectedArtist}
-            onChange={this.handleChange}
-          >
-            {ownedPages.map((page) => (
-              <MenuItem value={page.artistSlug}>{page.name}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        {ownedPages.length > 1 ? (
+          <FormControl>
+            <Select
+              id="artist-page-select"
+              name="selectedArtist"
+              value={this.state.selectedArtist}
+              onChange={this.handleChange}
+            >
+              {ownedPages.map((page, index) => (
+                <MenuItem value={page.artistSlug} key={`menu-key${index}`}>
+                  {page.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ) : (
+          <div id="artist-page-select">{ownedPages[0].name}</div>
+        )}
 
         <div className="artist-dashboard__panel_buttons">
           <IconButton className="artist-dashboard__panel_buttons_plus">
@@ -169,20 +162,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
             </IconButton>
           </Link>
         </div>
-
-        <div className="artist-dashboard__panel_links">
-          <Tabs
-            orientation="vertical"
-            variant="scrollable"
-            name="selectedTab"
-            value={this.state.selectedTab}
-            onChange={this.handleChange}
-          >
-            <Tab label="Supporters" {...a11yProps(0)} />
-            <Tab label="Item Two" {...a11yProps(1)} />
-          </Tabs>
-        </div>
-      </div>
+      </>
     );
   }
   renderArtistSupporters() {
@@ -262,21 +242,58 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
       )
     );
   }
+  renderArtistPost() {
+    const { userData } = this.props;
+    const { selectedArtist } = this.state;
+    const returnArtist = userData?.ownedPages.filter(function(page) {
+      return page.artistSlug === selectedArtist;
+    });
+    const artist = returnArtist?.shift();
+
+    return userData && <div>poop</div>;
+  }
 
   render() {
     const { userData } = this.props;
-    const { selectedTab } = this.state;
+    const { tabValue } = this.state;
+    const TabPanel = this.renderTabPanel;
+
+    console.log('tabValue', tabValue);
 
     return (
       <div className="artist-dashboard">
-        {userData && this.renderArtistPanel()}
+        {userData && (
+          <div className="artist-dashboard__panel">
+            {this.renderArtistPanel()}
+            <div className="artist-dashboard__panel_links">
+              <Tabs
+                orientation="vertical"
+                variant="scrollable"
+                name="tabValue"
+                value={tabValue}
+                onChange={this.handleChangeTab}
+              >
+                <Tab
+                  label="Supporters"
+                  id="vertical-tab-0"
+                  aria-controls="vertical-tabpanel-0"
+                />
+                <Tab
+                  label="Post"
+                  id="vertical-tab-1"
+                  aria-controls="vertical-tabpanel-1"
+                />
+              </Tabs>
+            </div>
+          </div>
+        )}
 
         <div className="artist-dashboard__data">
-          <TabPanel value={selectedTab} index={0}>
+          <TabPanel tabValue={tabValue} index={0}>
             {this.renderArtistSupporters()}
           </TabPanel>
-          <TabPanel value={selectedTab} index={1}>
-            poop
+          <TabPanel tabValue={tabValue} index={1}>
+            {this.renderArtistPost()}
           </TabPanel>
         </div>
       </div>

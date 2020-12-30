@@ -120,5 +120,15 @@
       text-transform: uppercase;
       color: $gray-light;
     }
+    .MuiBox-root {
+      height: 100%;
+      padding: 0;
+      display: block;
+    }
+
+    div[role='tabpanel'],
+    p.MuiTypography-root {
+      height: 100%;
+    }
   }
 }

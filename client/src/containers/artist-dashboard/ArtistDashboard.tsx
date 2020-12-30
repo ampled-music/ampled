@@ -26,6 +26,10 @@ import {
   IconButton,
   MenuItem,
   Select,
+  Tabs,
+  Tab,
+  Typography,
+  Box,
 } from '@material-ui/core';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
@@ -55,9 +59,43 @@ type Props = typeof loginInitialState &
     subscriptions: typeof subscriptionsInitialState;
   };
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: any) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
+
 class ArtistDashboardComponent extends React.Component<Props, any> {
   state = {
     selectedArtist: '',
+    selectedTab: 0,
   };
 
   componentDidMount() {
@@ -133,16 +171,21 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
         </div>
 
         <div className="artist-dashboard__panel_links">
-          <Link className="active" to={``}>
-            Supporters
-            <span className="flair"></span>
-          </Link>
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            name="selectedTab"
+            value={this.state.selectedTab}
+            onChange={this.handleChange}
+          >
+            <Tab label="Supporters" {...a11yProps(0)} />
+            <Tab label="Item Two" {...a11yProps(1)} />
+          </Tabs>
         </div>
       </div>
     );
   }
-
-  render() {
+  renderArtistSupporters() {
     const { userData } = this.props;
     const { selectedArtist } = this.state;
     const returnArtist = userData?.ownedPages.filter(function(page) {
@@ -206,20 +249,35 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
     ];
 
     return (
+      userData &&
+      rows && (
+        <XGrid
+          rows={rows}
+          columns={columns}
+          // loading={rows.length === 0}
+          rowHeight={40}
+          rowsPerPageOptions={[25, 50, 100, 500, 1000]}
+          checkboxSelection
+        />
+      )
+    );
+  }
+
+  render() {
+    const { userData } = this.props;
+    const { selectedTab } = this.state;
+
+    return (
       <div className="artist-dashboard">
         {userData && this.renderArtistPanel()}
 
         <div className="artist-dashboard__data">
-          {userData && rows && (
-            <XGrid
-              rows={rows}
-              columns={columns}
-              // loading={rows.length === 0}
-              rowHeight={40}
-              rowsPerPageOptions={[25, 50, 100, 500, 1000]}
-              checkboxSelection
-            />
-          )}
+          <TabPanel value={selectedTab} index={0}>
+            {this.renderArtistSupporters()}
+          </TabPanel>
+          <TabPanel value={selectedTab} index={1}>
+            poop
+          </TabPanel>
         </div>
       </div>
     );

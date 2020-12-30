@@ -161,7 +161,12 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
   render() {
     const { userData } = this.props;
-    const supporters = userData?.ownedPages[0].subscriptions;
+    const { selectedArtist } = this.state;
+    const returnArtist = userData?.ownedPages.filter(function(page) {
+      return page.artistSlug === selectedArtist;
+    });
+    const artist = returnArtist?.shift();
+    const supporters = artist?.subscriptions;
 
     const rows: RowsProp = supporters?.map((supporter) => ({
       id: supporter.id,
@@ -223,7 +228,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
         <div className="artist-dashboard__data">
           {/* <DataGrid  /> */}
-          {userData && (
+          {userData && rows && (
             <XGrid
               rows={rows}
               columns={columns}

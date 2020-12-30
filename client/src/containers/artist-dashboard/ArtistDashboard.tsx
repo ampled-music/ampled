@@ -17,40 +17,23 @@ import { config } from '../../config';
 
 import { Image, Transformation } from 'cloudinary-react';
 
-import { IconButton } from '@material-ui/core';
-// import { apiAxios } from '../../api/setup-axios';
-
 import { RowsProp, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
 import { Check, Block } from '@material-ui/icons';
 import {
-  InputLabel,
-  MenuItem,
-  FormHelperText,
-  FormControl,
-  Select,
   Chip,
-  Icon,
+  FormControl,
+  IconButton,
+  MenuItem,
+  Select,
 } from '@material-ui/core';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
 import Settings from '../../images/icons/Icon_Settings.svg';
-// import tear from '../../images/backgrounds/background_tear.png';
-// import tear_black from '../../images/backgrounds/background_tear_black.png';
-
-// import Edit from '../../images/icons/Icon_Edit.svg';
-// import Instagram from '../../images/icons/Icon_Instagram.svg';
-// import Twitter from '../../images/icons/Icon_Twitter.svg';
-// import Location from '../../images/icons/Icon_Location.svg';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
-// import { routePaths } from '../route-paths';
-// import { Modal } from '../shared/modal/Modal';
-// import { ResetPassword } from '../connect/ResetPassword';
-// import { Loading } from '../shared/loading/Loading';
-// import { UserImage } from '../user-details/UserImage';
 
 LicenseInfo.setLicenseKey(config.materialUi.key);
 
@@ -227,7 +210,6 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
         {userData && this.renderArtistPanel()}
 
         <div className="artist-dashboard__data">
-          {/* <DataGrid  /> */}
           {userData && rows && (
             <XGrid
               rows={rows}

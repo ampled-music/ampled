@@ -14,6 +14,14 @@ RSpec.describe ArtistPage, type: :model do
     end
   end
 
+  describe "#application_fee_percent" do
+    let(:artist_page) { create(:artist_page) }
+
+    it "defaults to 13.24" do
+      expect(artist_page.application_fee_percent).to eq 13.24
+    end
+  end
+
   describe "#valid?" do
     context "with application_fee_percent less than 0" do
       it "is false" do

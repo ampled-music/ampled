@@ -3,6 +3,7 @@
 # Table name: artist_pages
 #
 #  accent_color            :string
+#  application_fee_percent :decimal(5, 2)    default(13.24), not null
 #  approved                :boolean          default(FALSE)
 #  artist_owner            :boolean          default(FALSE), not null
 #  bandcamp_handle         :string
@@ -61,7 +62,7 @@ class ArtistPage < ApplicationRecord
 
   validates :application_fee_percent, presence: true, numericality: {
     greater_than_or_equal_to: 0,
-    less_than_or_or_equal_to: 100
+    less_than_or_equal_to: 100
   }
 
   before_save :set_screenshot

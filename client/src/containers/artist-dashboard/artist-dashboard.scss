@@ -54,6 +54,16 @@
         }
       }
     }
+    .MuiFormControl-root {
+      width: 100%;
+      text-align: center;
+      .MuiSelect-select {
+        padding-left: 24px;
+      }
+      .MuiInput-underline::before {
+        border-bottom: 0;
+      }
+    }
   }
   &__data {
     width: 100%;

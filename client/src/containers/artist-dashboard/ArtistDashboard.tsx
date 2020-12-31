@@ -202,7 +202,11 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
           <Chip
             size="small"
             icon={params.value === 'active' ? <Check /> : <Block />}
-            color={params.value === 'active' ? 'primary' : 'default'}
+            style={
+              params.value === 'active'
+                ? { backgroundColor: '#baddac' }
+                : { backgroundColor: 'inherent' }
+            }
             label={params.value}
           />
         ),
@@ -264,8 +268,17 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
     const theme = createMuiTheme({
       palette: {
-        primary: {
-          main: color || '#000',
+        primary: { main: '#1E1E1E' },
+        secondary: { main: color || '#1E1E1E' },
+      },
+      overrides: {
+        MuiInputBase: {
+          root: {
+            marginBottom: '1rem',
+          },
+          input: {
+            fontFamily: 'Courier, Courier New, monospace',
+          },
         },
       },
     });

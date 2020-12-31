@@ -37,6 +37,7 @@ import Settings from '../../images/icons/Icon_Settings.svg';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
+import { any } from 'ramda';
 
 LicenseInfo.setLicenseKey(config.materialUi.key);
 
@@ -60,8 +61,7 @@ type Props = typeof loginInitialState &
 
 class ArtistDashboardComponent extends React.Component<Props, any> {
   state = {
-    selectedArtist: '',
-    selectedArtistColor: '',
+    selectedArtist: [],
     tabValue: 0,
   };
 
@@ -102,8 +102,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
   setInitArtist = () => {
     if (this.props.userData?.ownedPages) {
       this.setState({
-        selectedArtist: this.props.userData.ownedPages[0].artistSlug,
-        selectedArtistColor: this.props.userData.ownedPages[0].artistColor,
+        selectedArtist: this.props.userData.ownedPages[0],
       });
     }
   };
@@ -141,7 +140,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
               onChange={this.handleChange}
             >
               {ownedPages.map((page, index) => (
-                <MenuItem value={page.artistSlug} key={`menu-key${index}`}>
+                <MenuItem value={page} key={`menu-key${index}`}>
                   {page.name}
                 </MenuItem>
               ))}
@@ -167,11 +166,10 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
   renderArtistSupporters() {
     const { userData } = this.props;
     const { selectedArtist } = this.state;
-    const returnArtist = userData?.ownedPages.filter(function(page) {
-      return page.artistSlug === selectedArtist;
-    });
-    const artist = returnArtist?.shift();
-    const supporters = artist?.subscriptions;
+    let artist;
+    artist = selectedArtist;
+    let supporters;
+    supporters = artist.subscriptions;
 
     const rows: RowsProp = supporters?.map((supporter) => ({
       id: supporter.id,
@@ -246,24 +244,28 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
   renderArtistPost() {
     const { userData } = this.props;
     const { selectedArtist } = this.state;
-    const returnArtist = userData?.ownedPages.filter(function(page) {
-      return page.artistSlug === selectedArtist;
-    });
-    const artist = returnArtist?.shift();
+    // const returnArtist = userData?.ownedPages.filter(function(page) {
+    //   return page.artistSlug === selectedArtist;
+    // });
+    // const artist = returnArtist?.shift();
 
     return userData && <div>poop</div>;
   }
 
   render() {
     const { userData } = this.props;
-    const { tabValue, selectedArtistColor } = this.state;
+    const { tabValue, selectedArtist } = this.state;
     const TabPanel = this.renderTabPanel;
-    console.log(selectedArtistColor);
+
+    let artist;
+    artist = selectedArtist;
+    let color;
+    color = artist.artistColor;
 
     const theme = createMuiTheme({
       palette: {
         primary: {
-          main: selectedArtistColor ? selectedArtistColor : '#000',
+          main: color || '#000',
         },
       },
     });

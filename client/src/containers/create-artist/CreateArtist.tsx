@@ -1144,6 +1144,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         images[index] = {
           url: cloudinary.url,
           public_id: cloudinary.public_id,
+          order: index,
         };
       } else {
         images[index] = null;
@@ -1459,13 +1460,13 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     // hotfix accidental image deletion while we find better solution
     const fixImages = images
       .filter((image) => image !== null && typeof image !== 'undefined')
-      .map(({ public_id, url }) => ({ public_id, url }));
+      .map(({ public_id, url, order }) => ({ public_id, url, order }));
 
     // create page
     this.setState({
       loading: true,
     });
-    if (!this.props.editMode) {
+    if (!this.props.editMode) { 
       const { data } = await apiAxios({
         method: 'post',
         url: '/artist_pages.json',

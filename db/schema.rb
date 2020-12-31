@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_29_095835) do
+ActiveRecord::Schema.define(version: 2020_12_17_001256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2020_11_29_095835) do
     t.bigint "imageable_id"
     t.string "coordinates"
     t.string "delete_token"
+    t.integer "order"
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 

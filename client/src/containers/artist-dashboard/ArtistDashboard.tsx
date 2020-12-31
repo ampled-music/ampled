@@ -20,6 +20,7 @@ import { Image, Transformation } from 'cloudinary-react';
 import { RowsProp, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
 import { Check, Block } from '@material-ui/icons';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
   Chip,
   FormControl,
@@ -60,6 +61,7 @@ type Props = typeof loginInitialState &
 class ArtistDashboardComponent extends React.Component<Props, any> {
   state = {
     selectedArtist: '',
+    selectedArtistColor: '',
     tabValue: 0,
   };
 
@@ -75,19 +77,16 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
   handleChange = (e) => {
     const { name, value } = e.target;
-    console.log('change', name, value);
     this.setState({ [name]: value });
   };
 
   handleChangeTab = (obj, value) => {
-    console.log('changeTab', value);
     this.setState({
       tabValue: value,
     });
   };
 
   renderTabPanel = ({ tabValue, index, children }) => {
-    console.log(tabValue, index);
     return (
       <div
         role="tabpanel"
@@ -104,6 +103,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
     if (this.props.userData?.ownedPages) {
       this.setState({
         selectedArtist: this.props.userData.ownedPages[0].artistSlug,
+        selectedArtistColor: this.props.userData.ownedPages[0].artistColor,
       });
     }
   };
@@ -111,7 +111,6 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
   renderArtistPanel() {
     const { userData } = this.props;
     const ownedPages = userData?.ownedPages;
-    console.log('subscriptions: ', userData.ownedPages[0].subscriptions);
     console.log('userData: ', userData);
 
     return (
@@ -257,48 +256,57 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
   render() {
     const { userData } = this.props;
-    const { tabValue } = this.state;
+    const { tabValue, selectedArtistColor } = this.state;
     const TabPanel = this.renderTabPanel;
+    console.log(selectedArtistColor);
 
-    console.log('tabValue', tabValue);
+    const theme = createMuiTheme({
+      palette: {
+        primary: {
+          main: selectedArtistColor ? selectedArtistColor : '#000',
+        },
+      },
+    });
 
     return (
-      <div className="artist-dashboard">
-        {userData && (
-          <div className="artist-dashboard__panel">
-            {this.renderArtistPanel()}
-            <div className="artist-dashboard__panel_links">
-              <Tabs
-                orientation="vertical"
-                variant="scrollable"
-                name="tabValue"
-                value={tabValue}
-                onChange={this.handleChangeTab}
-              >
-                <Tab
-                  label="Supporters"
-                  id="vertical-tab-0"
-                  aria-controls="vertical-tabpanel-0"
-                />
-                <Tab
-                  label="Post"
-                  id="vertical-tab-1"
-                  aria-controls="vertical-tabpanel-1"
-                />
-              </Tabs>
+      <ThemeProvider theme={theme}>
+        <div className="artist-dashboard">
+          {userData && (
+            <div className="artist-dashboard__panel">
+              {this.renderArtistPanel()}
+              <div className="artist-dashboard__panel_links">
+                <Tabs
+                  orientation="vertical"
+                  variant="scrollable"
+                  name="tabValue"
+                  value={tabValue}
+                  onChange={this.handleChangeTab}
+                >
+                  <Tab
+                    label="Supporters"
+                    id="vertical-tab-0"
+                    aria-controls="vertical-tabpanel-0"
+                  />
+                  <Tab
+                    label="Post"
+                    id="vertical-tab-1"
+                    aria-controls="vertical-tabpanel-1"
+                  />
+                </Tabs>
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        <div className="artist-dashboard__data">
-          <TabPanel tabValue={tabValue} index={0}>
-            {this.renderArtistSupporters()}
-          </TabPanel>
-          <TabPanel tabValue={tabValue} index={1}>
-            {this.renderArtistPost()}
-          </TabPanel>
+          <div className="artist-dashboard__data">
+            <TabPanel tabValue={tabValue} index={0}>
+              {this.renderArtistSupporters()}
+            </TabPanel>
+            <TabPanel tabValue={tabValue} index={1}>
+              {this.renderArtistPost()}
+            </TabPanel>
+          </div>
         </div>
-      </div>
+      </ThemeProvider>
     );
   }
 }

@@ -1,4 +1,4 @@
-import './artist-dashboard.scss';
+import './dashboard.scss';
 
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -59,7 +59,7 @@ type Props = typeof loginInitialState &
     subscriptions: typeof subscriptionsInitialState;
   };
 
-class ArtistDashboardComponent extends React.Component<Props, any> {
+class DashboardComponent extends React.Component<Props, any> {
   state = {
     selectedArtist: [],
     tabValue: 0,
@@ -118,7 +118,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
           publicId={userData.image.public_id}
           alt={userData.name}
           key={userData.name}
-          className="artist-dashboard__panel_image"
+          className="dashboard__panel_image"
         >
           <Transformation
             fetchFormat="auto"
@@ -150,12 +150,12 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
           <div id="artist-page-select">{ownedPages[0].name}</div>
         )}
 
-        <div className="artist-dashboard__panel_buttons">
-          <IconButton className="artist-dashboard__panel_buttons_plus">
+        <div className="dashboard__panel_buttons">
+          <IconButton className="dashboard__panel_buttons_plus">
             <ReactSVG className="icon icon_white" src={Plus} />
           </IconButton>
           <Link to="/user-details">
-            <IconButton className="artist-dashboard__panel_buttons_settings">
+            <IconButton className="dashboard__panel_buttons_settings">
               <ReactSVG className="icon icon_white" src={Settings} />
             </IconButton>
           </Link>
@@ -299,11 +299,11 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
 
     return (
       <ThemeProvider theme={theme}>
-        <div className="artist-dashboard">
+        <div className="dashboard">
           {userData && (
-            <div className="artist-dashboard__panel">
+            <div className="dashboard__panel">
               {this.renderArtistPanel()}
-              <div className="artist-dashboard__panel_links">
+              <div className="dashboard__panel_links">
                 <Tabs
                   orientation="vertical"
                   variant="scrollable"
@@ -326,7 +326,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
             </div>
           )}
 
-          <div className="artist-dashboard__data">
+          <div className="dashboard__data">
             <TabPanel tabValue={tabValue} index={0}>
               {this.renderArtistSupporters()}
             </TabPanel>
@@ -345,9 +345,9 @@ const mapStateToProps = (state: Store) => ({
   ...state.me,
 });
 
-const ArtistDashboard = connect(
+const Dashboard = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ArtistDashboardComponent);
+)(DashboardComponent);
 
-export { ArtistDashboard };
+export { Dashboard };

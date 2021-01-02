@@ -272,14 +272,28 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
         secondary: { main: color || '#1E1E1E' },
       },
       overrides: {
-        MuiInputBase: {
-          root: {
-            marginBottom: '1rem',
-          },
-          input: {
-            fontFamily: 'Courier, Courier New, monospace',
+        MuiTabs: {
+          root: {},
+          indicator: {
+            width: '5px',
           },
         },
+        MuiTab: {
+          root: {
+            textTransform: 'capitalize',
+            fontSize: '1rem',
+          },
+        },
+        MuiInput: {
+          underline: {
+            '&:after': {
+              borderBottom: `2px solid ${color}`,
+            },
+          },
+        },
+      },
+      typography: {
+        fontFamily: "'LL Replica Bold Web', sans-serif",
       },
     });
 
@@ -303,7 +317,7 @@ class ArtistDashboardComponent extends React.Component<Props, any> {
                     aria-controls="vertical-tabpanel-0"
                   />
                   <Tab
-                    label="Post"
+                    label="Posts"
                     id="vertical-tab-1"
                     aria-controls="vertical-tabpanel-1"
                   />

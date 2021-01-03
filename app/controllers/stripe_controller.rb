@@ -74,6 +74,10 @@ class StripeController < ApplicationController
     # lowercase currency e.g. usd
     invoice_currency = object[:currency]
 
+    # Add the nominal amount to the total contribution
+    new_total = usersub.plan.total_contributions + usersub.plan.nominal_amount
+    usersub.plan.update(:total_contributions, new_total)
+
     logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"
     CardChargedEmailJob.perform_async(usersub.id, invoice_total, invoice_currency)
     render json: {}

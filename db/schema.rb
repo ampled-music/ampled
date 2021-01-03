@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_17_030418) do
+ActiveRecord::Schema.define(version: 2020_12_30_034323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 2020_12_17_030418) do
     t.bigint "artist_page_id", null: false
     t.string "currency", default: "usd", null: false
     t.integer "charge_amount", null: false
+    t.integer "total_contributions", default: 0
     t.index ["artist_page_id"], name: "index_plans_on_artist_page_id"
   end
 

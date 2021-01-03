@@ -1,6 +1,5 @@
 export const routePaths = {
   artists: '/artists/:id',
-  artistDashboard: '/artist/:slug/dashboard',
   blog: '/blog',
   blogPost: '/blog/:slug',
   browse: '/browse',
@@ -10,6 +9,7 @@ export const routePaths = {
   connect: '/connect',
   createArtist: '/create-artist',
   createPost: '/create_post/:id',
+  dashboard: '/dashboard',
   editArtist: '/artist/:slug/edit',
   feed: '/feed',
   forgotPassword: '/reset-password',

@@ -96,6 +96,9 @@ class MenuListComposition extends React.Component<Props, State> {
         <Link to={routePaths.settings}>
           <b>My Profile</b>
         </Link>
+        <Link to={routePaths.dashboard}>
+          <b>My Dashboard</b>
+        </Link>
         <button className="link" onClick={this.logout}>
           Logout
         </button>

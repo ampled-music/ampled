@@ -1,7 +1,7 @@
 @import '../../theme/vars.scss';
 @import '../../theme/mixins.scss';
 
-.artist-dashboard {
+.dashboard {
   display: flex;
   min-height: 95vh;
   flex-grow: 1;
@@ -16,7 +16,7 @@
     position: relative;
     z-index: 1;
     &_image {
-      border: 1px solid $black;
+      border: 3px solid $black;
       border-radius: 100%;
       margin-bottom: 1rem;
     }
@@ -52,6 +52,19 @@
             z-index: -1;
           }
         }
+      }
+    }
+    #artist-page-select {
+      font-family: $font-family-sans-serif;
+    }
+    .MuiFormControl-root {
+      width: 100%;
+      text-align: center;
+      .MuiSelect-select {
+        padding-left: 24px;
+      }
+      .MuiInput-underline::before {
+        border-bottom: 0;
       }
     }
   }
@@ -119,6 +132,10 @@
       font-size: 0.8rem;
       text-transform: uppercase;
       color: $gray-light;
+    }
+
+    div[role='tabpanel'] {
+      height: 100%;
     }
   }
 }

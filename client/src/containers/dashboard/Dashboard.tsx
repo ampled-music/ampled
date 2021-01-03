@@ -37,7 +37,6 @@ import Settings from '../../images/icons/Icon_Settings.svg';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
-import { any } from 'ramda';
 
 LicenseInfo.setLicenseKey(config.materialUi.key);
 
@@ -107,7 +106,7 @@ class DashboardComponent extends React.Component<Props, any> {
     }
   };
 
-  renderArtistPanel() {
+  renderArtistPanel(color) {
     const { userData } = this.props;
     const ownedPages = userData?.ownedPages;
     console.log('userData: ', userData);
@@ -119,6 +118,7 @@ class DashboardComponent extends React.Component<Props, any> {
           alt={userData.name}
           key={userData.name}
           className="dashboard__panel_image"
+          style={{ borderColor: color }}
         >
           <Transformation
             fetchFormat="auto"
@@ -247,7 +247,7 @@ class DashboardComponent extends React.Component<Props, any> {
   }
   renderArtistPost() {
     const { userData } = this.props;
-    const { selectedArtist } = this.state;
+    // const { selectedArtist } = this.state;
     // const returnArtist = userData?.ownedPages.filter(function(page) {
     //   return page.artistSlug === selectedArtist;
     // });
@@ -302,7 +302,7 @@ class DashboardComponent extends React.Component<Props, any> {
         <div className="dashboard">
           {userData && (
             <div className="dashboard__panel">
-              {this.renderArtistPanel()}
+              {this.renderArtistPanel(color)}
               <div className="dashboard__panel_links">
                 <Tabs
                   orientation="vertical"

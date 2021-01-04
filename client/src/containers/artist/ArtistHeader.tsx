@@ -2,6 +2,7 @@ import './artist.scss';
 
 import * as React from 'react';
 import { ReactSVG } from 'react-svg';
+import { Link } from 'react-router-dom';
 
 import { Texture } from '../shared/texture/Texture';
 import Edit from '../../images/icons/Icon_Edit.svg';
@@ -107,15 +108,14 @@ export class ArtistHeader extends React.Component<Props, any> {
   renderFloatingEditButton = () =>
     this.canLoggedUserAdmin() && (
       <div className="edit-page">
-        <Button
-          onClick={() => {
-            window.location.href = `${window.location.pathname}/edit`;
-          }}
-          endIcon={<ReactSVG className="icon icon_white" src={Edit} />}
-          size="small"
-        >
-          Edit Page
-        </Button>
+        <Link to="/edit">
+          <Button
+            endIcon={<ReactSVG className="icon icon_white" src={Edit} />}
+            size="small"
+          >
+            Edit Page
+          </Button>
+        </Link>
       </div>
     );
 

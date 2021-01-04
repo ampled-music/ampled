@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_17_001256) do
+ActiveRecord::Schema.define(version: 2020_12_21_161806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,10 @@ ActiveRecord::Schema.define(version: 2020_12_17_001256) do
     t.string "external"
     t.string "style_type"
     t.boolean "artist_owner", default: false, null: false
+    t.boolean "is_soft_deleted", default: false
+    t.datetime "permanently_delete_at"
+    t.decimal "application_fee_percent", precision: 5, scale: 2, default: "13.24", null: false
+    t.boolean "subscribe_to_newsletter", default: false, null: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 

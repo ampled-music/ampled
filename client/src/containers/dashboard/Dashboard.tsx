@@ -32,11 +32,12 @@ import {
 } from '@material-ui/core';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
-import Settings from '../../images/icons/Icon_Settings.svg';
+import Edit from '../../images/icons/Icon_Edit.svg';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
+import { initialState as artistInitialState } from '../../redux/artists/initial-state';
 
 LicenseInfo.setLicenseKey(config.materialUi.key);
 
@@ -53,9 +54,11 @@ type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 type Props = typeof loginInitialState &
   typeof meInitialState &
   Dispatchers & {
+    openPostModal: React.MouseEventHandler;
     history: any;
     location: any;
     subscriptions: typeof subscriptionsInitialState;
+    artist: typeof artistInitialState;
   };
 
 class DashboardComponent extends React.Component<Props, any> {
@@ -108,8 +111,11 @@ class DashboardComponent extends React.Component<Props, any> {
 
   renderArtistPanel(color) {
     const { userData } = this.props;
+    const { selectedArtist } = this.state;
     const ownedPages = userData?.ownedPages;
     console.log('userData: ', userData);
+    let artist;
+    artist = selectedArtist;
 
     return (
       <>
@@ -136,7 +142,7 @@ class DashboardComponent extends React.Component<Props, any> {
             <Select
               id="artist-page-select"
               name="selectedArtist"
-              value={this.state.selectedArtist}
+              value={selectedArtist}
               onChange={this.handleChange}
             >
               {ownedPages.map((page, index) => (
@@ -150,16 +156,18 @@ class DashboardComponent extends React.Component<Props, any> {
           <div id="artist-page-select">{ownedPages[0].name}</div>
         )}
 
-        <div className="dashboard__panel_buttons">
-          <IconButton className="dashboard__panel_buttons_plus">
-            <ReactSVG className="icon icon_white" src={Plus} />
-          </IconButton>
-          <Link to="/user-details">
-            <IconButton className="dashboard__panel_buttons_settings">
-              <ReactSVG className="icon icon_white" src={Settings} />
+        {artist && (
+          <div className="dashboard__panel_buttons">
+            <IconButton className="dashboard__panel_buttons_plus">
+              <ReactSVG className="icon icon_white" src={Plus} />
             </IconButton>
-          </Link>
-        </div>
+            <Link to={`/artist/${artist.artistSlug}/edit`}>
+              <IconButton className="dashboard__panel_buttons_settings">
+                <ReactSVG className="icon icon_white" src={Edit} />
+              </IconButton>
+            </Link>
+          </div>
+        )}
       </>
     );
   }
@@ -246,14 +254,12 @@ class DashboardComponent extends React.Component<Props, any> {
     );
   }
   renderArtistPost() {
-    const { userData } = this.props;
-    // const { selectedArtist } = this.state;
-    // const returnArtist = userData?.ownedPages.filter(function(page) {
-    //   return page.artistSlug === selectedArtist;
-    // });
-    // const artist = returnArtist?.shift();
+    // const { userData } = this.props;
+    const { selectedArtist } = this.state;
+    let artist;
+    artist = selectedArtist;
 
-    return userData && <div>poop</div>;
+    return <pre>poop</pre>;
   }
 
   render() {

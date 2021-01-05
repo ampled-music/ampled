@@ -19,7 +19,7 @@ import { Image, Transformation } from 'cloudinary-react';
 
 import { RowsProp, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
-import { Check, Block } from '@material-ui/icons';
+import { Check, Block, GetApp } from '@material-ui/icons';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
   Chip,
@@ -27,8 +27,9 @@ import {
   IconButton,
   MenuItem,
   Select,
-  Tabs,
   Tab,
+  Tabs,
+  Tooltip,
 } from '@material-ui/core';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
@@ -158,14 +159,28 @@ class DashboardComponent extends React.Component<Props, any> {
 
         {artist && (
           <div className="dashboard__panel_buttons">
-            <IconButton className="dashboard__panel_buttons_plus">
-              <ReactSVG className="icon icon_white" src={Plus} />
-            </IconButton>
-            <Link to={`/artist/${artist.artistSlug}/edit`}>
-              <IconButton className="dashboard__panel_buttons_settings">
-                <ReactSVG className="icon icon_white" src={Edit} />
+            <Tooltip title="Add New Post">
+              <IconButton className="dashboard__panel_buttons_plus">
+                <ReactSVG className="icon icon_white" src={Plus} />
               </IconButton>
-            </Link>
+            </Tooltip>
+            <Tooltip title={`Edit ${artist.name}`}>
+              <Link to={`/artist/${artist.artistSlug}/edit`}>
+                <IconButton className="dashboard__panel_buttons_settings">
+                  <ReactSVG className="icon icon_white" src={Edit} />
+                </IconButton>
+              </Link>
+            </Tooltip>
+            <Tooltip title={`Download ${artist.name} Supporters`}>
+              <a
+                href={`/artist/${artist.artistSlug}/subscribers_csv`}
+                download={`${artist.name} Supporters`}
+              >
+                <IconButton className="dashboard__panel_buttons_export">
+                  <GetApp className="icon icon_white" />
+                </IconButton>
+              </a>
+            </Tooltip>
           </div>
         )}
       </>

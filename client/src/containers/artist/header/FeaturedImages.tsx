@@ -4,7 +4,6 @@ import * as React from 'react';
 import Swipe from 'react-easy-swipe';
 import { isMobile } from 'react-device-detect';
 import cx from 'classnames';
-
 import { Image, Transformation } from 'cloudinary-react';
 
 interface Props {
@@ -97,7 +96,7 @@ export class FeaturedImages extends React.Component<Props, any> {
                     gravity="faces"
                   />
                 </Image>
-              </div>
+              </div>  
             );
           })}
       </div>
@@ -106,11 +105,12 @@ export class FeaturedImages extends React.Component<Props, any> {
 
   renderBannerIcons = () => {
     const { artist } = this.props;
+    const orderedImages = artist.images ? artist.images.sort((a, b) => a.order < b.order) : null;
 
     return (
       <div className="artist-header__banner-icons">
-        {artist.images &&
-          artist.images.map((_image, index) => {
+        {orderedImages &&
+          orderedImages.map((_image, index) => {
             if (artist.images.length > 1) {
               return (
                 <span

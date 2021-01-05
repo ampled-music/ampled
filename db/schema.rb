@@ -42,7 +42,8 @@ ActiveRecord::Schema.define(version: 2020_12_30_034323) do
     t.boolean "artist_owner", default: false, null: false
     t.boolean "is_soft_deleted", default: false
     t.datetime "permanently_delete_at"
-    t.decimal "application_fee_percent", precision: 2, default: "13", null: false
+    t.decimal "application_fee_percent", precision: 5, scale: 2, default: "13.24", null: false
+    t.boolean "subscribe_to_newsletter", default: false, null: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
   end
 
@@ -98,6 +99,7 @@ ActiveRecord::Schema.define(version: 2020_12_30_034323) do
     t.bigint "imageable_id"
     t.string "coordinates"
     t.string "delete_token"
+    t.integer "order"
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 

@@ -25,6 +25,7 @@ import Maura from '../../../images/contributors/Maura.png';
 import Molly from '../../../images/contributors/Molly.png';
 import Rene from '../../../images/contributors/Rene.png';
 import Ryan from '../../../images/contributors/Ryan.png';
+import RyanQ from '../../../images/contributors/RyanQ.png';
 import Sean from '../../../images/contributors/Sean.png';
 import Weston from '../../../images/contributors/Weston.png';
 
@@ -75,6 +76,7 @@ export class ContributorImages extends React.Component<Props, any> {
       Molly,
       Rene,
       Ryan,
+      RyanQ,
       Sean,
       Weston,
     ]);

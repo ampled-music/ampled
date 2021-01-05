@@ -119,6 +119,7 @@ RSpec.describe MeController, type: :request do
                 "name" => "#{subscription.user.name} #{subscription.user.last_name}",
                 "city" => nil,
                 "country" => nil,
+                "email" => subscription.user.email,
                 "supporter_since" => "October 2020",
                 "amount" => 1758
               }

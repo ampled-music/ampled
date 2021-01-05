@@ -1,6 +1,7 @@
 json.id subscriber.id
 json.status subscriber.status
 json.name "#{subscriber.user.name} #{subscriber.user.last_name}"
+json.email subscriber.user.email
 json.city subscriber.user.city
 json.country subscriber.user.country
 json.supporter_since subscriber.created_at.strftime("%B %Y")

@@ -118,6 +118,9 @@
         &[data-field='name'] {
           font-family: $font-family-sans-serif;
         }
+        &[data-field='email'] {
+          font-size: 0.8rem;
+        }
 
         &[data-field='monthly'],
         &[data-field='all_time'] {

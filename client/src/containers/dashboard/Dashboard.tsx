@@ -182,6 +182,7 @@ class DashboardComponent extends React.Component<Props, any> {
     const rows: RowsProp = supporters?.map((supporter) => ({
       id: supporter.id,
       name: supporter.name,
+      email: supporter.email,
       monthly: supporter.amount / 100,
       status: supporter.status,
       // all_time: 556,
@@ -191,11 +192,19 @@ class DashboardComponent extends React.Component<Props, any> {
     }));
 
     const columns: ColDef[] = [
-      { field: 'name', headerName: 'Name', width: 400 },
+      { field: 'name', headerName: 'Name', width: 150 },
+      {
+        field: 'email',
+        headerName: 'Email',
+        width: 200,
+        renderCell: (params: ValueFormatterParams) => (
+          <a href={`mailto:${params.value}`}>{params.value}</a>
+        ),
+      },
       {
         field: 'monthly',
         headerName: 'Monthly',
-        width: 150,
+        width: 100,
         valueFormatter: (params: ValueFormatterParams) =>
           params.value.toLocaleString('en-US', {
             style: 'currency',
@@ -205,7 +214,7 @@ class DashboardComponent extends React.Component<Props, any> {
       {
         field: 'status',
         headerName: 'Status',
-        width: 150,
+        width: 110,
         renderCell: (params: ValueFormatterParams) => (
           <Chip
             size="small"
@@ -230,7 +239,7 @@ class DashboardComponent extends React.Component<Props, any> {
       //     }),
       // },
       { field: 'city', headerName: 'City', width: 200 },
-      { field: 'country', headerName: 'Country', width: 200 },
+      { field: 'country', headerName: 'Country', width: 100 },
       {
         field: 'supporting_since',
         headerName: 'Supporting Since',
@@ -245,19 +254,17 @@ class DashboardComponent extends React.Component<Props, any> {
         <XGrid
           rows={rows}
           columns={columns}
-          // loading={rows.length === 0}
           rowHeight={40}
           rowsPerPageOptions={[25, 50, 100, 500, 1000]}
-          checkboxSelection
         />
       )
     );
   }
   renderArtistPost() {
     // const { userData } = this.props;
-    const { selectedArtist } = this.state;
-    let artist;
-    artist = selectedArtist;
+    // const { selectedArtist } = this.state;
+    // let artist;
+    // artist = selectedArtist;
 
     return <pre>poop</pre>;
   }

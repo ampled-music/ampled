@@ -34,6 +34,7 @@ import {
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
 import Edit from '../../images/icons/Icon_Edit.svg';
+import { PostForm } from '../artist/posts/post-form/PostForm';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -87,6 +88,20 @@ class DashboardComponent extends React.Component<Props, any> {
     this.setState({
       tabValue: value,
     });
+  };
+
+  getUserConfirmation = (hasUnsavedChanges) => {
+    if (hasUnsavedChanges) {
+      this.setState({ showConfirmationDialog: true });
+    } else {
+      this.discardChanges();
+    }
+  };
+  closeConfirmationDialog = () => {
+    this.setState({ showConfirmationDialog: false });
+  };
+  discardChanges = () => {
+    this.closeConfirmationDialog();
   };
 
   renderTabPanel = ({ tabValue, index, children }) => {
@@ -281,7 +296,12 @@ class DashboardComponent extends React.Component<Props, any> {
     // let artist;
     // artist = selectedArtist;
 
-    return <pre>poop</pre>;
+    return (
+      <PostForm
+        close={this.getUserConfirmation}
+        discardChanges={this.discardChanges}
+      />
+    );
   }
 
   render() {

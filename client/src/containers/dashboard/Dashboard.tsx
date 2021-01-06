@@ -31,6 +31,7 @@ import {
   Tabs,
   Tooltip,
 } from '@material-ui/core';
+import Moment from 'react-moment';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
 import Edit from '../../images/icons/Icon_Edit.svg';
@@ -274,7 +275,9 @@ class DashboardComponent extends React.Component<Props, any> {
         field: 'supporting_since',
         headerName: 'Supporting Since',
         width: 200,
-        type: 'date',
+        renderCell: (params: ValueFormatterParams) => (
+          <Moment format="YYYY/MM/DD">{params.value}</Moment>
+        ),
       },
     ];
 

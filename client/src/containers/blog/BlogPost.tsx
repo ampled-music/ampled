@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
-import Moment from 'moment';
+import Moment from 'react-moment';
 import { ReactSVG } from 'react-svg';
 import PhotoIcon from '../../images/icons/Icon_Photo.svg';
 
@@ -124,7 +124,7 @@ class BlogPost extends React.Component<PostProps, any> {
               )}
 
               <div className="blog-post__info_date">
-                {Moment(this.state.date).format('MMMM Do, YYYY')}
+                <Moment format="MMMM Do, YYYY">{this.state.date}</Moment>
               </div>
             </div>
 

@@ -8,7 +8,6 @@
 #  id                  :bigint(8)        not null, primary key
 #  nominal_amount      :integer          not null
 #  stripe_id           :string           not null
-#  total_contributions :integer          default(0)
 #
 # Indexes
 #

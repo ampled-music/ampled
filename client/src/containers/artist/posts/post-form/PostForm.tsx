@@ -67,6 +67,7 @@ interface PostFormProps {
   discardChanges: () => void;
   isEdit?: boolean;
   post?: Post;
+  artistId?: number;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -369,7 +370,9 @@ export default class PostFormComponent extends React.Component<Props, any> {
       is_private: !isPublic,
       is_pinned: isPinned,
       allow_download: activePostType === 'Audio' ? allowDownload : null,
-      artist_page_id: this.props.artist.id,
+      artist_page_id: this.props.artistId
+        ? this.props.artistId
+        : this.props.artist.id,
       id: this.state.id,
     };
 

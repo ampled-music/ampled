@@ -15,6 +15,8 @@ import { setUserDataAction } from '../../redux/me/set-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { config } from '../../config';
 
+import Moment from 'react-moment';
+
 import { Image, Transformation } from 'cloudinary-react';
 
 import { RowsProp, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
@@ -31,11 +33,13 @@ import {
   Tabs,
   Tooltip,
 } from '@material-ui/core';
-import Moment from 'react-moment';
+
+import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
+import { Modal } from '../shared/modal/Modal';
+import { PostForm } from '../artist/posts/post-form/PostForm';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
 import Edit from '../../images/icons/Icon_Edit.svg';
-import { PostForm } from '../artist/posts/post-form/PostForm';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -68,6 +72,8 @@ class DashboardComponent extends React.Component<Props, any> {
   state = {
     selectedArtist: [],
     tabValue: 0,
+    openPostModal: false,
+    showConfirmationDialog: false,
   };
 
   componentDidMount() {
@@ -84,11 +90,17 @@ class DashboardComponent extends React.Component<Props, any> {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
-
   handleChangeTab = (obj, value) => {
     this.setState({
       tabValue: value,
     });
+  };
+
+  openPostModal = () => {
+    this.setState({ openPostModal: true });
+  };
+  closePostModal = () => {
+    this.setState({ openPostModal: false });
   };
 
   getUserConfirmation = (hasUnsavedChanges) => {
@@ -176,7 +188,10 @@ class DashboardComponent extends React.Component<Props, any> {
         {artist && (
           <div className="dashboard__panel_buttons">
             <Tooltip title="Add New Post">
-              <IconButton className="dashboard__panel_buttons_plus">
+              <IconButton
+                onClick={this.openPostModal}
+                className="dashboard__panel_buttons_plus"
+              >
                 <ReactSVG className="icon icon_white" src={Plus} />
               </IconButton>
             </Tooltip>
@@ -317,6 +332,10 @@ class DashboardComponent extends React.Component<Props, any> {
     artist = selectedArtist;
     let color;
     color = artist.artistColor;
+    let artistId;
+    artistId = artist.artistId;
+
+    console.log(artist);
 
     const theme = createMuiTheme({
       palette: {
@@ -387,6 +406,24 @@ class DashboardComponent extends React.Component<Props, any> {
             </TabPanel>
           </div>
         </div>
+
+        <ConfirmationDialog
+          open={this.state.showConfirmationDialog}
+          closeConfirmationDialog={this.closeConfirmationDialog}
+          discardChanges={this.discardChanges}
+        />
+        <Modal
+          open={this.state.openPostModal}
+          onClose={this.closePostModal}
+          className="post-modal"
+          disableBackdropClick={true}
+        >
+          <PostForm
+            close={this.getUserConfirmation}
+            discardChanges={this.discardChanges}
+            artistId={artistId}
+          />
+        </Modal>
       </ThemeProvider>
     );
   }

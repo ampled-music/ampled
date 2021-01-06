@@ -275,8 +275,9 @@ class DashboardComponent extends React.Component<Props, any> {
         field: 'supporting_since',
         headerName: 'Supporting Since',
         width: 200,
-        renderCell: (params: ValueFormatterParams) => (
-          <Moment format="YYYY/MM/DD">{params.value}</Moment>
+        type: 'date',
+        renderCell: (params: any) => (
+          <Moment format="MMM Do, YYYY">{params.value}</Moment>
         ),
       },
     ];

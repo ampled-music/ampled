@@ -120,7 +120,7 @@ RSpec.describe MeController, type: :request do
                 "city" => nil,
                 "country" => nil,
                 "email" => subscription.user.email,
-                "supporter_since" => "October 2020",
+                "supporter_since" => "2020-10-29T14:30:23.000Z",
                 "amount" => 1758
               }
             ]

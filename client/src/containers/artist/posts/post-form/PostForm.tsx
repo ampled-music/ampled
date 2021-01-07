@@ -68,6 +68,7 @@ interface PostFormProps {
   isEdit?: boolean;
   post?: Post;
   artistId?: number;
+  isStripeSetup?: boolean;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -977,11 +978,11 @@ export default class PostFormComponent extends React.Component<Props, any> {
 
   render() {
     const { hasUnsavedChanges, savingPost } = this.state;
-    const {
-      isEdit,
-      artist: { isStripeSetup },
-    } = this.props;
+    const { isEdit } = this.props;
 
+    const isStripeSetup = this.props.isStripeSetup
+      ? this.props.isStripeSetup
+      : this.props.artist.isStripeSetup;
     const isSaveEnabled = this.isSaveEnabled();
 
     if (savingPost) return <Loading artistLoading={true} />;

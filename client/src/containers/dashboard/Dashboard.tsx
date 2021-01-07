@@ -11,7 +11,6 @@ import {
 } from '../../redux/authentication/authentication-modal';
 import { Store } from '../../redux/configure-store';
 import { getMeAction } from '../../redux/me/get-me';
-import { setUserDataAction } from '../../redux/me/set-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { config } from '../../config';
 
@@ -44,13 +43,11 @@ import Edit from '../../images/icons/Icon_Edit.svg';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
-import { initialState as artistInitialState } from '../../redux/artists/initial-state';
 
 LicenseInfo.setLicenseKey(config.materialUi.key);
 
 const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
-  setMe: bindActionCreators(setUserDataAction, dispatch),
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
   showToast: bindActionCreators(showToastAction, dispatch),
@@ -65,7 +62,6 @@ type Props = typeof loginInitialState &
     history: any;
     location: any;
     subscriptions: typeof subscriptionsInitialState;
-    artist: typeof artistInitialState;
   };
 
 class DashboardComponent extends React.Component<Props, any> {
@@ -325,10 +321,9 @@ class DashboardComponent extends React.Component<Props, any> {
 
     let artist;
     artist = selectedArtist;
-    let color;
-    color = artist.artistColor;
-    let artistId;
-    artistId = artist.artistId;
+    let color = artist.artistColor;
+    let artistId = artist.artistId;
+    let isStripeSetup = artist.isStripeSetup;
 
     const theme = createMuiTheme({
       palette: {
@@ -415,6 +410,7 @@ class DashboardComponent extends React.Component<Props, any> {
             close={this.getUserConfirmation}
             discardChanges={this.discardChanges}
             artistId={artistId}
+            isStripeSetup={isStripeSetup}
           />
         </Modal>
       </ThemeProvider>

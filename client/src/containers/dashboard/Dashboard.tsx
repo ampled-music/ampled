@@ -112,6 +112,7 @@ class DashboardComponent extends React.Component<Props, any> {
   };
   closeConfirmationDialog = () => {
     this.setState({ showConfirmationDialog: false });
+    this.closePostModal();
   };
   discardChanges = () => {
     this.closeConfirmationDialog();
@@ -142,7 +143,6 @@ class DashboardComponent extends React.Component<Props, any> {
     const { userData } = this.props;
     const { selectedArtist } = this.state;
     const ownedPages = userData?.ownedPages;
-    console.log('userData: ', userData);
     let artist;
     artist = selectedArtist;
 
@@ -195,23 +195,23 @@ class DashboardComponent extends React.Component<Props, any> {
                 <ReactSVG className="icon icon_white" src={Plus} />
               </IconButton>
             </Tooltip>
-            <Tooltip title={`Edit ${artist.name}`}>
-              <Link to={`/artist/${artist.artistSlug}/edit`}>
+            <Link to={`/artist/${artist.artistSlug}/edit`}>
+              <Tooltip title={`Edit ${artist.name}`}>
                 <IconButton className="dashboard__panel_buttons_settings">
                   <ReactSVG className="icon icon_white" src={Edit} />
                 </IconButton>
-              </Link>
-            </Tooltip>
-            <Tooltip title={`Download ${artist.name} Supporters`}>
-              <a
-                href={`/artist/${artist.artistSlug}/subscribers_csv`}
-                download={`${artist.name} Supporters`}
-              >
+              </Tooltip>
+            </Link>
+            <a
+              href={`/artist/${artist.artistSlug}/subscribers_csv`}
+              download={`${artist.name} Supporters`}
+            >
+              <Tooltip title={`Download ${artist.name} Supporters`}>
                 <IconButton className="dashboard__panel_buttons_export">
                   <GetApp className="icon icon_white" />
                 </IconButton>
-              </a>
-            </Tooltip>
+              </Tooltip>
+            </a>
           </div>
         )}
       </>
@@ -309,18 +309,13 @@ class DashboardComponent extends React.Component<Props, any> {
       )
     );
   }
-  renderArtistPost() {
+  renderArtistIncome() {
     // const { userData } = this.props;
     // const { selectedArtist } = this.state;
     // let artist;
     // artist = selectedArtist;
 
-    return (
-      <PostForm
-        close={this.getUserConfirmation}
-        discardChanges={this.discardChanges}
-      />
-    );
+    return 'income';
   }
 
   render() {
@@ -334,8 +329,6 @@ class DashboardComponent extends React.Component<Props, any> {
     color = artist.artistColor;
     let artistId;
     artistId = artist.artistId;
-
-    console.log(artist);
 
     const theme = createMuiTheme({
       palette: {
@@ -388,7 +381,7 @@ class DashboardComponent extends React.Component<Props, any> {
                     aria-controls="vertical-tabpanel-0"
                   />
                   <Tab
-                    label="Posts"
+                    label="Income"
                     id="vertical-tab-1"
                     aria-controls="vertical-tabpanel-1"
                   />
@@ -402,7 +395,7 @@ class DashboardComponent extends React.Component<Props, any> {
               {this.renderArtistSupporters()}
             </TabPanel>
             <TabPanel tabValue={tabValue} index={1}>
-              {this.renderArtistPost()}
+              {this.renderArtistIncome()}
             </TabPanel>
           </div>
         </div>

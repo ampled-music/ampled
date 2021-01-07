@@ -72,12 +72,17 @@
     .MuiDataGrid {
       &-columnsContainer {
         background-color: $white;
+        border-top: 1px solid $black;
         border-bottom: 1px solid $black;
         font-family: $font-family-sans-serif;
         font-size: 0.8rem;
         text-transform: uppercase;
         color: $gray-light;
         padding-left: 2rem;
+      }
+      &-toolbar {
+        padding: 0.5rem 2rem;
+        display: flex;
       }
       &-footer {
         background-color: $white;

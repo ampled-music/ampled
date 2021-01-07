@@ -20,9 +20,10 @@ import { Image, Transformation } from 'cloudinary-react';
 
 import { RowsProp, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
-import { Check, Block, GetApp } from '@material-ui/icons';
+import { Check, Block } from '@material-ui/icons';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
+  Button,
   Chip,
   FormControl,
   IconButton,
@@ -31,6 +32,7 @@ import {
   Tab,
   Tabs,
   Tooltip,
+  Toolbar,
 } from '@material-ui/core';
 
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
@@ -188,27 +190,21 @@ class DashboardComponent extends React.Component<Props, any> {
               <IconButton
                 onClick={this.openPostModal}
                 className="dashboard__panel_buttons_plus"
+                style={{ backgroundColor: artist.artistColor }}
               >
                 <ReactSVG className="icon icon_white" src={Plus} />
               </IconButton>
             </Tooltip>
             <Link to={`/artist/${artist.artistSlug}/edit`}>
               <Tooltip title={`Edit ${artist.name}`}>
-                <IconButton className="dashboard__panel_buttons_settings">
+                <IconButton
+                  className="dashboard__panel_buttons_settings"
+                  style={{ backgroundColor: artist.artistColor }}
+                >
                   <ReactSVG className="icon icon_white" src={Edit} />
                 </IconButton>
               </Tooltip>
             </Link>
-            <a
-              href={`/artist/${artist.artistSlug}/subscribers_csv`}
-              download={`${artist.name} Supporters`}
-            >
-              <Tooltip title={`Download ${artist.name} Supporters`}>
-                <IconButton className="dashboard__panel_buttons_export">
-                  <GetApp className="icon icon_white" />
-                </IconButton>
-              </Tooltip>
-            </a>
           </div>
         )}
       </>
@@ -297,12 +293,27 @@ class DashboardComponent extends React.Component<Props, any> {
     return (
       userData &&
       rows && (
-        <XGrid
-          rows={rows}
-          columns={columns}
-          rowHeight={40}
-          rowsPerPageOptions={[25, 50, 100, 500, 1000]}
-        />
+        <>
+          <Toolbar>
+            <Button
+              size="small"
+              onClick={() =>
+                window.open(
+                  `/artist/${artist.artistSlug}/subscribers_csv`,
+                  '_blank',
+                )
+              }
+            >
+              Download CSV
+            </Button>
+          </Toolbar>
+          <XGrid
+            rows={rows}
+            columns={columns}
+            rowHeight={40}
+            rowsPerPageOptions={[25, 50, 100, 500, 1000]}
+          />
+        </>
       )
     );
   }
@@ -356,15 +367,6 @@ class DashboardComponent extends React.Component<Props, any> {
           underline: {
             '&:after': {
               borderBottom: `2px solid ${artistColor}`,
-            },
-          },
-        },
-        MuiIconButton: {
-          root: {
-            color: 'inherit',
-            backgroundColor: artistColor,
-            '&:hover': {
-              backgroundColor: `${artistColor}D9`,
             },
           },
         },

@@ -142,13 +142,14 @@ class DashboardComponent extends React.Component<Props, any> {
     const ownedPages = userData?.ownedPages;
     let artist;
     artist = selectedArtist;
+    console.log(artist);
 
     return (
       <>
         <Image
-          publicId={userData.image.public_id}
-          alt={userData.name}
-          key={userData.name}
+          publicId={artist.image}
+          alt={artist.name}
+          key={artist.name}
           className="dashboard__panel_image"
           style={{ borderColor: color }}
         >
@@ -161,7 +162,6 @@ class DashboardComponent extends React.Component<Props, any> {
             responsive_placeholder="blank"
           />
         </Image>
-        <h2>{userData.name}</h2>
 
         {ownedPages.length > 1 ? (
           <FormControl>

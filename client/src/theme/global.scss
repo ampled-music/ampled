@@ -205,7 +205,6 @@ h6 {
   }
 
   &_white {
-    fill: $white !important;
     svg {
       fill: $white;
       path {
@@ -214,7 +213,6 @@ h6 {
     }
   }
   &_black {
-    fill: $black !important;
     svg {
       fill: $black;
       path {

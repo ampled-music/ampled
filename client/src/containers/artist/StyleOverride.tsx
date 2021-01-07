@@ -3,8 +3,8 @@ import { hexToRGB } from '../../styles/utils';
 
 type StyleOverrideProps = {
   accentColor: string;
-  isSupporter: boolean;
-  bgColor: boolean;
+  isSupporter?: boolean;
+  bgColor?: boolean;
 };
 
 const lightOrDark = (color) => {
@@ -100,6 +100,10 @@ const StyleOverride = ({
         }
         .artist-header__message_container button:hover {
           background-color: ${hexToRGB(accentColor, '.7')};
+        }
+        .dashboard__panel_buttons .icon svg,
+        .dashboard__panel_buttons .icon svg path {
+          fill: ${lightOrDark(accentColor)};
         }
         ${bgColor &&
           `

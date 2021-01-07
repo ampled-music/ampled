@@ -36,6 +36,7 @@ import {
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { Modal } from '../shared/modal/Modal';
 import { PostForm } from '../artist/posts/post-form/PostForm';
+import StyleOverride from '../artist/StyleOverride';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
 import Edit from '../../images/icons/Icon_Edit.svg';
@@ -43,6 +44,7 @@ import Edit from '../../images/icons/Icon_Edit.svg';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
+import { inherits } from 'util';
 
 LicenseInfo.setLicenseKey(config.materialUi.key);
 
@@ -313,6 +315,14 @@ class DashboardComponent extends React.Component<Props, any> {
 
     return 'income';
   }
+  renderArtistHome() {
+    // const { userData } = this.props;
+    // const { selectedArtist } = this.state;
+    // let artist;
+    // artist = selectedArtist;
+
+    return 'Home';
+  }
 
   render() {
     const { userData } = this.props;
@@ -321,14 +331,14 @@ class DashboardComponent extends React.Component<Props, any> {
 
     let artist;
     artist = selectedArtist;
-    let color = artist.artistColor;
+    let artistColor = artist.artistColor;
     let artistId = artist.artistId;
     let isStripeSetup = artist.isStripeSetup;
 
     const theme = createMuiTheme({
       palette: {
         primary: { main: '#1E1E1E' },
-        secondary: { main: color || '#1E1E1E' },
+        secondary: { main: artistColor || '#1E1E1E' },
       },
       overrides: {
         MuiTabs: {
@@ -346,7 +356,16 @@ class DashboardComponent extends React.Component<Props, any> {
         MuiInput: {
           underline: {
             '&:after': {
-              borderBottom: `2px solid ${color}`,
+              borderBottom: `2px solid ${artistColor}`,
+            },
+          },
+        },
+        MuiIconButton: {
+          root: {
+            color: 'inherit',
+            backgroundColor: artistColor,
+            '&:hover': {
+              backgroundColor: `${artistColor}D9`,
             },
           },
         },
@@ -358,10 +377,11 @@ class DashboardComponent extends React.Component<Props, any> {
 
     return (
       <ThemeProvider theme={theme}>
+        <StyleOverride accentColor={artistColor} />
         <div className="dashboard">
           {userData && (
             <div className="dashboard__panel">
-              {this.renderArtistPanel(color)}
+              {this.renderArtistPanel(artistColor)}
               <div className="dashboard__panel_links">
                 <Tabs
                   orientation="vertical"
@@ -371,14 +391,19 @@ class DashboardComponent extends React.Component<Props, any> {
                   onChange={this.handleChangeTab}
                 >
                   <Tab
-                    label="Supporters"
+                    label="Home"
                     id="vertical-tab-0"
                     aria-controls="vertical-tabpanel-0"
                   />
                   <Tab
-                    label="Income"
+                    label="Supporters"
                     id="vertical-tab-1"
                     aria-controls="vertical-tabpanel-1"
+                  />
+                  <Tab
+                    label="Income"
+                    id="vertical-tab-2"
+                    aria-controls="vertical-tabpanel-2"
                   />
                 </Tabs>
               </div>
@@ -387,9 +412,12 @@ class DashboardComponent extends React.Component<Props, any> {
 
           <div className="dashboard__data">
             <TabPanel tabValue={tabValue} index={0}>
-              {this.renderArtistSupporters()}
+              {this.renderArtistHome()}
             </TabPanel>
             <TabPanel tabValue={tabValue} index={1}>
+              {this.renderArtistSupporters()}
+            </TabPanel>
+            <TabPanel tabValue={tabValue} index={2}>
               {this.renderArtistIncome()}
             </TabPanel>
           </div>

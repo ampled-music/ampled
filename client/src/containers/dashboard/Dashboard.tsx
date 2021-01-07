@@ -44,7 +44,6 @@ import Edit from '../../images/icons/Icon_Edit.svg';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
-import { inherits } from 'util';
 
 LicenseInfo.setLicenseKey(config.materialUi.key);
 

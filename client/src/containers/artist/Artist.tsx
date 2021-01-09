@@ -343,6 +343,9 @@ class ArtistComponent extends React.Component<Props, any> {
               {artist.name} | Ampled | Direct Community Support For Music
               Artists
             </title>
+            {!artist.approved && (
+              <meta name="robots" content="noindex, nofollow" />
+            )}
           </Helmet>
         )}
         {artist &&

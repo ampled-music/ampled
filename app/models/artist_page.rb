@@ -2,31 +2,33 @@
 #
 # Table name: artist_pages
 #
-#  accent_color         :string
-#  approved             :boolean          default(FALSE)
-#  artist_owner         :boolean          default(FALSE), not null
-#  bandcamp_handle      :string
-#  banner_image_url     :string
-#  bio                  :string
-#  created_at           :datetime         not null
-#  external             :string
-#  featured             :boolean          default(FALSE)
-#  hide_members         :boolean          default(FALSE)
-#  id                   :bigint(8)        not null, primary key
-#  instagram_handle     :string
-#  location             :string
-#  name                 :string
-#  slug                 :string
-#  state_token          :string
-#  stripe_product_id    :string
-#  stripe_user_id       :string
-#  style_type           :string
-#  twitter_handle       :string
-#  updated_at           :datetime         not null
-#  verb_plural          :boolean          default(FALSE)
-#  video_screenshot_url :string
-#  video_url            :string
-#  youtube_handle       :string
+#  accent_color            :string
+#  application_fee_percent :decimal(5, 2)    default(13.24), not null
+#  approved                :boolean          default(FALSE)
+#  artist_owner            :boolean          default(FALSE), not null
+#  bandcamp_handle         :string
+#  banner_image_url        :string
+#  bio                     :string
+#  created_at              :datetime         not null
+#  external                :string
+#  featured                :boolean          default(FALSE)
+#  hide_members            :boolean          default(FALSE)
+#  id                      :bigint(8)        not null, primary key
+#  instagram_handle        :string
+#  location                :string
+#  name                    :string
+#  slug                    :string
+#  state_token             :string
+#  stripe_product_id       :string
+#  stripe_user_id          :string
+#  style_type              :string
+#  subscribe_to_newsletter :boolean
+#  twitter_handle          :string
+#  updated_at              :datetime         not null
+#  verb_plural             :boolean          default(FALSE)
+#  video_screenshot_url    :string
+#  video_url               :string
+#  youtube_handle          :string
 #
 # Indexes
 #
@@ -52,6 +54,16 @@ class ArtistPage < ApplicationRecord
   accepts_nested_attributes_for :images
 
   validate :sluggy_slug
+
+  # application_fee_percent represents the Stripe application fee for all of an
+  # ArtistPage's subscriptions. It represents the percentage as a percentage
+  # not a fraction (i.e. 20% instead of 0.2) to match Stripe's formating.
+  # The default value is 13.24%, Ampled's standard application fee.
+
+  validates :application_fee_percent, presence: true, numericality: {
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 100
+  }
 
   before_save :set_screenshot
 

@@ -8,6 +8,7 @@
 #  id             :bigint(8)        not null, primary key
 #  imageable_id   :bigint(8)
 #  imageable_type :string
+#  order          :integer
 #  public_id      :string
 #  updated_at     :datetime         not null
 #  url            :string

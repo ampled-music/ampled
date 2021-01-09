@@ -42,6 +42,7 @@ import StyleOverride from '../artist/StyleOverride';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
 import Edit from '../../images/icons/Icon_Edit.svg';
+import Download from '../../images/icons/Icon_Download.svg';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -297,11 +298,15 @@ class DashboardComponent extends React.Component<Props, any> {
           <Toolbar>
             <Button
               size="small"
+              variant="outlined"
               onClick={() =>
                 window.open(
                   `/artist/${artist.artistSlug}/subscribers_csv`,
                   '_blank',
                 )
+              }
+              startIcon={
+                <ReactSVG className="icon icon_black" src={Download} />
               }
             >
               Download CSV

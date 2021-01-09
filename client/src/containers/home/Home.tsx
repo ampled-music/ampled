@@ -22,18 +22,7 @@ class Home extends React.Component<any> {
 
   renderSticky = () => (
     <div className={cx('artistAlertHeader', { active: this.state.showBanner })}>
-      <div className="artistAlertHeader__container">
-        As a response to COVID-19, artists will receive 100% of support through
-        Ampled. We will waive artist membership dues for the rest of 2020.{' '}
-        <a
-          href="https://www.ampled.com/blog/artist-membership-is-open"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn more
-        </a>
-        .
-      </div>
+      <div className="artistAlertHeader__container"></div>
       <IconButton
         className="artistAlertHeader__close-button"
         aria-label="close"
@@ -53,7 +42,7 @@ class Home extends React.Component<any> {
   render() {
     return (
       <div className="home-section">
-        {this.renderSticky()}
+        {/* {this.renderSticky()} */}
         <HomeHeader />
         <Texture
           positionTop25={false}

@@ -68,6 +68,17 @@ type Props = typeof loginInitialState &
     subscriptions: typeof subscriptionsInitialState;
   };
 
+const TabPanel = ({ tabValue, index, children }) => (
+  <div
+    role="tabpanel"
+    hidden={tabValue !== index}
+    id={`vertical-tabpanel-${index}`}
+    aria-labelledby={`vertical-tab-${index}`}
+  >
+    {tabValue === index && children}
+  </div>
+);
+
 class DashboardComponent extends React.Component<Props, any> {
   state = {
     selectedArtist: [],
@@ -116,19 +127,6 @@ class DashboardComponent extends React.Component<Props, any> {
   };
   discardChanges = () => {
     this.closeConfirmationDialog();
-  };
-
-  renderTabPanel = ({ tabValue, index, children }) => {
-    return (
-      <div
-        role="tabpanel"
-        hidden={tabValue !== index}
-        id={`vertical-tabpanel-${index}`}
-        aria-labelledby={`vertical-tab-${index}`}
-      >
-        {tabValue === index && children}
-      </div>
-    );
   };
 
   setInitArtist = () => {
@@ -342,7 +340,6 @@ class DashboardComponent extends React.Component<Props, any> {
   render() {
     const { userData } = this.props;
     const { tabValue, selectedArtist } = this.state;
-    const TabPanel = this.renderTabPanel;
 
     let artist;
     artist = selectedArtist;

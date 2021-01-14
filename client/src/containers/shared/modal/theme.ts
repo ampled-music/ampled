@@ -6,9 +6,6 @@ export const theme = createMuiTheme({
   },
   overrides: {
     MuiPaper: {
-      root: {
-        backgroundColor: 'transparent',
-      },
       elevation24: {
         boxShadow: 'none',
       },
@@ -41,7 +38,7 @@ export const theme = createMuiTheme({
     },
     MuiInputBase: {
       input: {
-        fontFamily: 'LL Replica Light Web, sans-serif'
+        fontFamily: 'LL Replica Light Web, sans-serif',
       },
     },
     MuiButton: {

@@ -17,7 +17,17 @@ import { updateMeAction } from '../../redux/me/update-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
-import { Button } from '@material-ui/core';
+
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardActions,
+  IconButton,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import { apiAxios } from '../../api/setup-axios';
 
 import { faImage } from '@fortawesome/free-solid-svg-icons';
@@ -27,6 +37,7 @@ import tear from '../../images/backgrounds/background_tear.png';
 import tear_black from '../../images/backgrounds/background_tear_black.png';
 
 import Edit from '../../images/icons/Icon_Edit.svg';
+import Close from '../../images/icons/Icon_Close-Cancel.svg';
 import Instagram from '../../images/icons/Icon_Instagram.svg';
 import Twitter from '../../images/icons/Icon_Twitter.svg';
 import Location from '../../images/icons/Icon_Location.svg';
@@ -46,6 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
   cancelSubscription: bindActionCreators(cancelSubscriptionAction, dispatch),
+  // editSubscription: bindActionCreators(editSubscriptionAction, dispatch),
   updateMe: bindActionCreators(updateMeAction, dispatch),
   showToast: bindActionCreators(showToastAction, dispatch),
 });
@@ -63,6 +75,7 @@ type Props = typeof loginInitialState &
 class UserSettingsComponent extends React.Component<Props, any> {
   state = {
     showCancelModal: false,
+    showChangeModal: false,
     showPasswordModal: false,
     subscription: undefined,
   };
@@ -158,7 +171,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   openCancelModal = (event, subscription) => {
     event.preventDefault();
-
     this.setState({ showCancelModal: true, subscription });
   };
 
@@ -173,6 +185,24 @@ class UserSettingsComponent extends React.Component<Props, any> {
       artistName: this.state.subscription.name,
     });
     this.closeCancelModal();
+  };
+
+  openChangeModal = (event, subscription) => {
+    event.preventDefault();
+    console.log(subscription);
+    this.setState({ showChangeModal: true, subscription });
+  };
+  closeChangeModal = () =>
+    this.setState({ showChangeModal: false, subscription: undefined });
+
+  changeSubscription = () => {
+    this.props.cancelSubscription({
+      subscriptionId: this.state.subscription.subscriptionId,
+      artistPageId: this.state.subscription.artistPageId,
+      artistSlug: this.state.subscription.artistSlug,
+      artistName: this.state.subscription.name,
+    });
+    this.closeChangeModal();
   };
 
   formatMoney = (value) => {
@@ -341,13 +371,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   renderUserInfo = () => {
     const { userData } = this.props;
-    // const { subscriptions } = userData;
-    // let monthlyTotal = 0;
-    // if (subscriptions && subscriptions.length) {
-    //   for (const sub of subscriptions) {
-    //     monthlyTotal += this.calculateSupportTotalNumber(sub.amount / 100);
-    //   }
-    // }
+
     return (
       <div className="user-info-container col-md-3">
         <img className="tear__topper" src={tear} alt="" />
@@ -435,6 +459,47 @@ class UserSettingsComponent extends React.Component<Props, any> {
             </Button>
           </div>
         </div>
+      </Modal>
+    );
+  };
+
+  renderChangeSubscriptionModal = () => {
+    if (!this.state.subscription) {
+      return null;
+    }
+
+    return (
+      <Modal open={this.state.showChangeModal} onClose={this.closeChangeModal}>
+        <Card>
+          <CardContent>
+            <p>
+              Would you like to change your support amount for{' '}
+              {this.state.subscription.name}?
+            </p>
+            <TextField
+              placeholder={this.state.subscription.amount}
+              // value={this.state.subscription.amount}
+            />
+
+            <CardActions>
+              <Button
+                aria-label="Cancel Change Subscription"
+                className="cancel-button"
+                onClick={this.closeChangeModal}
+                size="small"
+              >
+                <ReactSVG className="icon" src={Close} />
+              </Button>
+              <Button
+                className="publish-button"
+                onClick={this.cancelSubscription}
+                style={{ marginLeft: 0 }}
+              >
+                Change support for {this.state.subscription.name}
+              </Button>
+            </CardActions>
+          </CardContent>
+        </Card>
       </Modal>
     );
   };
@@ -630,6 +695,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     </div>
                     <div className="col-4">
                       <button
+                        className="link details__info_value details__info_value_change"
+                        onClick={(event) =>
+                          this.openChangeModal(event, subscription)
+                        }
+                      >
+                        Change Amount
+                      </button>
+                      <button
                         className="link details__info_value details__info_value_cancel"
                         onClick={(event) =>
                           this.openCancelModal(event, subscription)
@@ -796,9 +869,49 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   render() {
     const { userData } = this.props;
+    const theme = createMuiTheme({
+      palette: {
+        primary: { main: '#000' },
+      },
+      overrides: {
+        MuiButton: {
+          root: {
+            fontSize: '1rem',
+          },
+        },
+        MuiInput: {
+          root: {
+            borderRadius: '0',
+            margin: '1rem auto',
+            outline: 'none',
+            width: '100%',
+          },
+          input: {
+            textAlign: 'center',
+            width: '100%',
+          },
+        },
+        MuiPaper: {
+          root: {
+            backgroundColor: '#fff',
+          },
+        },
+        MuiCard: {
+          root: {},
+        },
+        MuiTypography: {
+          root: {
+            textAlign: 'center',
+          },
+        },
+      },
+      typography: {
+        fontFamily: "'Courier', Courier, monospace",
+      },
+    });
 
     return (
-      <>
+      <ThemeProvider theme={theme}>
         {userData && this.renderSetUpBanner()}
         <div className="container user-settings-container">
           <Loading
@@ -806,6 +919,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           />
           {userData && this.renderContent()}
           {this.renderCancelSubscriptionModal()}
+          {this.renderChangeSubscriptionModal()}
           {this.state.showPasswordModal && (
             <Modal
               open={this.state.showPasswordModal}
@@ -815,7 +929,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
             </Modal>
           )}
         </div>
-      </>
+      </ThemeProvider>
     );
   }
 }

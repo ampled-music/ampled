@@ -257,15 +257,24 @@
                 font-size: 11px;
               }
 
-              &_cancel {
+              &_cancel,
+              &_change {
                 cursor: pointer;
                 color: $gray-light;
                 transition: color $speed;
                 text-decoration: underline;
+                text-align: left;
 
                 &:hover {
                   text-decoration: none;
                   color: $brand-danger;
+                }
+              }
+
+              &_change {
+                color: $white;
+                &:hover {
+                  color: $brand-success;
                 }
               }
             }

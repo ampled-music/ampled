@@ -15,7 +15,18 @@ import { declineStepAction } from '../../../redux/subscriptions/decline-step';
 import { startSubscriptionAction } from '../../../redux/subscriptions/start-subscription';
 import { Helmet } from 'react-helmet';
 
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import {
+  Avatar,
+  Button,
+  Card,
+  CardContent,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import { UserImage } from '../../user-details/UserImage';
+
+import { lightOrDark } from '../../../styles/utils';
 
 import {
   initialState as artistsInitialState,
@@ -106,27 +117,6 @@ export class SupportComponent extends React.Component<Props, any> {
       });
     }
   }
-
-  ColorLuminance = (hex, lum) => {
-    // validate hex string
-    hex = String(hex).replace(/[^0-9a-f]/gi, '');
-    if (hex.length < 6) {
-      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-    }
-    lum = lum || 0;
-
-    // convert to decimal and change luminosity
-    let rgb = '#',
-      c,
-      i;
-    for (i = 0; i < 3; i++) {
-      c = parseInt(hex.substr(i * 2, 2), 16);
-      c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
-      rgb += ('00' + c).substr(c.length);
-    }
-
-    return rgb;
-  };
 
   returnFirstName = (name) => {
     const spacePosition = name.indexOf(' ');
@@ -234,30 +224,13 @@ export class SupportComponent extends React.Component<Props, any> {
       </div>
     );
 
-  renderArtistImage = (images) => {
-    const placeholderImage =
-      'https://images.pexels.com/photos/1749822/pexels-photo-1749822.jpeg?cs=srgb&dl=backlit-band-concert-1749822.jpg';
-
-    return (
-      <img
-        className="support__artist-image"
-        src={images.length ? images[0] : placeholderImage}
-        alt="Artist"
-      />
-    );
-  };
-
   renderArtists = (owners) => (
     <div key="artists" className="support__artists">
       {owners.map((owner, index) => (
         <div key={index} className="support__artist-info">
-          <UserImage
-            image={owner.image}
-            className="support__artist-info_image"
-            alt={owner.name}
-            width={60}
-          />
-
+          <Avatar>
+            <UserImage image={owner.image} alt={owner.name} width={80} />
+          </Avatar>
           <p>{this.returnFirstName(owner.name)}</p>
         </div>
       ))}
@@ -270,10 +243,12 @@ export class SupportComponent extends React.Component<Props, any> {
   renderSupportLevelForm = (artistName) => (
     <div className="row justify-content-center" key={artistName}>
       <div className="col-md-5">
-        <div key="support__level-form" className="support__level-form">
-          <h3>Support What You Want</h3>
-          <div className="support__value-field">
-            <input
+        <Card>
+          <CardContent>
+            <Typography variant="h5" component="h5">
+              Support What You Want
+            </Typography>
+            <TextField
               aria-label="Support level"
               type="number"
               name="supportLevelValue"
@@ -281,37 +256,38 @@ export class SupportComponent extends React.Component<Props, any> {
               value={this.state.supportLevelValue || ''}
               placeholder="3 min"
             />
-          </div>
-          {this.state.supportLevelValue && this.state.supportLevelValue >= 3 ? (
-            <p className="support__value-description">
-              Your total charge will be{' '}
-              <strong>
-                ${this.calculateSupportTotal(this.state.supportLevelValue)}
-              </strong>
-              .
-              <br />
-              <br />
-              This is due to our payment processor's service fee. More details
-              can be found{' '}
-              <a
-                href="https://docs.ampled.com/finances/pricing"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                here
-              </a>
-              .
-            </p>
-          ) : (
-            <p className="support__value-description">
-              {this.isAmpled()
-                ? 'Join the co-op as a Community Member to help Ampled stay independent and accountable to members.'
-                : `Support ${artistName} directly for $3 (or more) per month to unlock
-              access to all of their posts and get notifications when they post
-              anything new.`}
-            </p>
-          )}
-        </div>
+            {this.state.supportLevelValue &&
+            this.state.supportLevelValue >= 3 ? (
+              <Typography component="p" className="support__value-description">
+                Your total charge will be{' '}
+                <strong>
+                  ${this.calculateSupportTotal(this.state.supportLevelValue)}
+                </strong>
+                .
+                <br />
+                <br />
+                This is due to our payment processor's service fee. More details
+                can be found{' '}
+                <a
+                  href="https://docs.ampled.com/finances/pricing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  here
+                </a>
+                .
+              </Typography>
+            ) : (
+              <Typography component="p" className="support__value-description">
+                {this.isAmpled()
+                  ? 'Join the co-op as a Community Member to help Ampled stay independent and accountable to members.'
+                  : `Support ${artistName} directly for $3 (or more) per month to unlock
+                access to all of their posts and get notifications when they post
+                anything new.`}
+              </Typography>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
@@ -319,21 +295,23 @@ export class SupportComponent extends React.Component<Props, any> {
   renderStartSubscriptionAction = (artistName) => {
     const buttonLabel = this.props.me.userData
       ? this.isAmpled()
-        ? 'BECOME A MEMBER'
-        : `SUPPORT ${artistName.toUpperCase()}`
-      : 'SIGNUP OR LOGIN TO SUPPORT';
+        ? 'Become a member'
+        : `Support ${artistName}`
+      : 'Signup or login to support';
 
     return (
       <div className="row justify-content-center">
         <div className="col-md-5">
-          <div className="support__action">
-            <button
-              disabled={!this.state.supportLevelValue}
-              onClick={this.handleSupportClick}
-            >
-              {buttonLabel}
-            </button>
-          </div>
+          <Button
+            disabled={
+              !this.state.supportLevelValue || this.state.supportLevelValue < 3
+            }
+            onClick={this.handleSupportClick}
+            variant="contained"
+            color="primary"
+          >
+            {buttonLabel}
+          </Button>
         </div>
       </div>
     );
@@ -383,55 +361,127 @@ export class SupportComponent extends React.Component<Props, any> {
       return null;
     }
 
-    const artistName = artist.name;
+    const theme = createMuiTheme({
+      palette: {
+        primary: { main: artist.accent_color },
+      },
+      overrides: {
+        MuiButton: {
+          root: {
+            borderRadius: '0',
+            width: '100%',
+            marginTop: '2rem',
+            minHeight: '45px',
+            color: lightOrDark(artist.accent_color),
+            fontSize: '1rem',
+          },
+        },
+        MuiInput: {
+          root: {
+            fontSize: '3rem',
+            borderRadius: '0',
+            margin: '1rem auto',
+            outline: 'none',
+            width: '100%',
+          },
+          input: {
+            textAlign: 'center',
+          },
+        },
+        MuiFormControl: {
+          root: {
+            '&:before': {
+              content: '"$"',
+              position: 'absolute',
+              left: '10%',
+              marginBottom: '2rem',
+              fontSize: '1.5rem',
+            },
+            '&:after': {
+              content: '"/Month"',
+              position: 'absolute',
+              right: '20px',
+              bottom: '20px',
+              fontSize: '.9rem',
+            },
+          },
+        },
+        MuiCard: {
+          root: {
+            borderRadius: '0',
+            borderTop: `5px solid ${artist.accent_color}`,
+            boxShadow:
+              '0 20px 20px 0 rgba(10,31,68,.1),0 0 1px 0 rgba(10,31,68,.08)',
+          },
+        },
+        MuiTypography: {
+          root: {
+            textAlign: 'center',
+          },
+          h5: {
+            fontFamily: "'LL Replica Bold Web', sans-serif",
+            marginBottom: '1.5rem',
+            textTransform: 'uppercase',
+          },
+        },
+        MuiAvatar: {
+          root: {
+            width: '80px',
+            height: '80px',
+            backgroundColor: '#fff',
+            border: `2px solid ${artist.accent_color}`,
+          },
+          colorDefault: {
+            backgroundColor: '#fff',
+          },
+        },
+      },
+      typography: {
+        fontFamily: "'Courier', Courier, monospace",
+      },
+    });
 
     return (
-      <div className="container support__container">
-        {artist && artist.name && (
-          <Helmet>
-            <title>
-              Support {artist.name} on Ampled | Direct Community Support For
-              Music Artists
-            </title>
-          </Helmet>
-        )}
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-          body {
-            background-color: ${artist.accent_color}20 !important;
-          }
-          .support__action button {
-            background-color: ${artist.accent_color};
-            color: white;
-          }
-          .support__action button:hover {
-            background-color: ${this.ColorLuminance(artist.accent_color, -0.2)};
-          }
-          .support__level-form,
-          .support__artist-info_image {
-            border-color: ${artist.accent_color};
-          }`,
-          }}
-        />
-        <div className="row no-gutters justify-content-center">
-          <div className="col-md-8">{this.renderSupportHeader(artistName)}</div>
-        </div>
-        <div className="row no-gutters justify-content-center">
-          <div className="col-md-8">
-            <div className="stripe" />
-          </div>
-        </div>
-        <div className="row no-gutters justify-content-center">
-          <div className="col-md-12">
-            <div className="support__content">
-              {this.renderPaymentStep(artist)}
+      <ThemeProvider theme={theme}>
+        <div className="container support__container">
+          {artist && artist.name && (
+            <Helmet>
+              <title>
+                Support {artist.name} on Ampled | Direct Community Support For
+                Music Artists
+              </title>
+            </Helmet>
+          )}
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
+            body {
+              background-color: ${artist.accent_color}20 !important;
+            }
+            `,
+            }}
+          />
+          <div className="row no-gutters justify-content-center">
+            <div className="col-md-8">
+              {this.renderSupportHeader(artist.name)}
             </div>
           </div>
+          <div className="row no-gutters justify-content-center">
+            <div className="col-md-8">
+              <div className="stripe" />
+            </div>
+          </div>
+          <div className="row no-gutters justify-content-center">
+            <div className="col-md-12">
+              <div className="support__content">
+                {this.renderPaymentStep(artist)}
+              </div>
+            </div>
+          </div>
+          {subscriptions.status === SubscriptionStep.SupportLevel &&
+            this.renderStartSubscriptionAction(artist.name)}
         </div>
-        {subscriptions.status === SubscriptionStep.SupportLevel &&
-          this.renderStartSubscriptionAction(artistName)}
-      </div>
+      </ThemeProvider>
     );
   }
 }

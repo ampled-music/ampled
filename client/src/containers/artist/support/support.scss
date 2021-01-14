@@ -40,14 +40,6 @@
     }
   }
 
-  &__artist-image {
-    width: 280px;
-    height: 280px;
-    margin-right: 2.5rem;
-    object-fit: cover;
-    transform: rotate(-3deg);
-  }
-
   &__artists {
     display: flex;
     flex-wrap: wrap;
@@ -70,34 +62,8 @@
       }
     }
 
-    &_image {
-      height: 60px;
-      width: 60px;
-      border-radius: 50%;
-      border: 2px solid $brand-primary;
-      margin-bottom: 0.5rem;
-
-      @include mq($tablet) {
-        height: 80px;
-        width: 80px;
-      }
-    }
-  }
-
-  &__level-form {
-    width: 100%;
-    padding: 1rem;
-    border-top: 5px solid $brand-primary;
-    background-color: $white;
-    text-align: center;
-    box-shadow: 0 20px 20px 0 rgba(10, 31, 68, 0.1),
-      0 0 1px 0 rgba(10, 31, 68, 0.08);
-
-    h3 {
-      text-transform: uppercase;
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-      font-family: $font-family-sans-serif;
+    img {
+      width: 100%;
     }
   }
 
@@ -105,79 +71,5 @@
     margin-top: 1.5rem;
     font-size: 0.9rem;
     color: $black;
-  }
-
-  &__value-field {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-
-    &:before {
-      content: '$';
-      position: absolute;
-      left: 20%;
-      margin-bottom: 30px;
-      font-size: 1.5rem;
-    }
-    &:after {
-      content: '/Month';
-      position: absolute;
-      right: 30px;
-      font-size: 0.9rem;
-    }
-
-    p {
-      margin: 0 0.5rem;
-    }
-
-    input[type='number'] {
-      text-align: center;
-      background-color: $white;
-      font-size: 3rem;
-      border: none;
-      border-bottom: 1px solid $gray-light;
-      border-radius: 0;
-      margin-top: 15px;
-      outline: none;
-      width: 100%;
-
-      &::placeholder {
-        color: $gray-light;
-        opacity: 0.6;
-      }
-    }
-
-    input[type='number']::-webkit-outer-spin-button,
-    input[type='number']::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  }
-
-  &__action {
-    margin-top: 2rem;
-
-    button {
-      cursor: pointer;
-      width: 100%;
-      background-color: $brand-primary;
-      color: $white;
-      min-height: 45px;
-      border: 0px;
-      transition: all $speed;
-    }
-
-    button:hover {
-      background-color: lighten($brand-primary, 20%);
-    }
-
-    button:disabled {
-      background-color: $gray-light;
-      opacity: 0.6;
-      cursor: not-allowed;
-      &:hover {
-        background-color: $gray-light;
-      }
-    }
   }
 }

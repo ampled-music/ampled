@@ -41,7 +41,6 @@ class Page extends React.Component<PageProps, any> {
         });
       }
     } catch (e) {
-      console.log(e);
       this.setState({ loading: false });
     }
   };

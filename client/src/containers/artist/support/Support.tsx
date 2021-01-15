@@ -172,7 +172,6 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   handleSupportChange = (event) => {
-    console.log(event);
     const { value } = event.target;
     this.setState({ supportLevelValue: Number(value) });
   };
@@ -255,8 +254,6 @@ export class SupportComponent extends React.Component<Props, any> {
     } = this.props;
 
     const { artistPageId, subscriptionLevelValue } = subscriptions;
-    console.log('subscriptions', subscriptions);
-    console.log(this.props.artists.artist);
 
     switch (subscriptions.status) {
       case SubscriptionStep.SupportLevel:

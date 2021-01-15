@@ -51,7 +51,6 @@ class BlogPosts extends React.Component<PostsProps, any> {
         posts: data,
       });
     } catch (e) {
-      console.log(e);
       this.setState({ loading: false });
     }
   };

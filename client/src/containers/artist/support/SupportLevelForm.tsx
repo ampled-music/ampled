@@ -23,7 +23,6 @@ export class SupportLevelForm extends React.Component<Props, any> {
     (Math.round((supportLevel * 100 + 30) / 0.971) / 100).toFixed(2);
 
   render() {
-    console.log('props', this.props);
     return (
       <>
         <div className="row justify-content-center" key={this.props.artistName}>

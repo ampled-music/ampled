@@ -68,7 +68,6 @@ class BlogPost extends React.Component<PostProps, any> {
         });
       }
     } catch (e) {
-      console.log(e);
       this.setState({ loading: false });
     }
   };

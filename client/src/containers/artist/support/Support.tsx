@@ -36,6 +36,7 @@ import {
 import { StripePaymentProvider } from './StripePaymentProvider';
 import { SupportLevelForm } from './SupportLevelForm';
 import { artists } from '../../../redux/artists';
+import { chain } from 'ramda';
 // import { StripePaymentProvider } from './StripePaymentProvider';
 
 interface ArtistProps {
@@ -70,6 +71,10 @@ export class SupportComponent extends React.Component<Props, any> {
 
     if (!prevProps.me.userData && me.userData) {
       this.getArtistInfo();
+      if (this.props.artists.artist.slug) {
+        const getIsAmpled = isAmpled(this.props.artists.artist.slug);
+        this.setState({ isAmpled: getIsAmpled });
+      }
     }
 
     if (subscriptions.status === SubscriptionStep.Finished) {
@@ -95,7 +100,6 @@ export class SupportComponent extends React.Component<Props, any> {
       me.userData.subscriptions &&
       me.userData.subscriptions.find(
         (sub) => sub.artistSlug === this.props.match.params.id,
-        (sub) => this.setState({ isAmpled: isAmpled(sub.artistSlug) }),
       )
     ) {
       this.redirectToArtistsPage();
@@ -171,7 +175,9 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   handleChange = (event) => {
+    console.log(event);
     const { value } = event.target;
+    console.log(value);
     this.setState({ supportLevelValue: Number(value) });
   };
 
@@ -252,8 +258,9 @@ export class SupportComponent extends React.Component<Props, any> {
       me: { userData },
     } = this.props;
 
-    const { artistPageId, subscriptionLevelValue, artistName } = subscriptions;
-    console.log(subscriptions);
+    const { artistPageId, subscriptionLevelValue } = subscriptions;
+    console.log('subscriptions', subscriptions);
+    console.log(this.props.artists.artist);
 
     switch (subscriptions.status) {
       case SubscriptionStep.SupportLevel:
@@ -264,8 +271,7 @@ export class SupportComponent extends React.Component<Props, any> {
           <SupportLevelForm
             subscriptionLevelValue={subscriptionLevelValue}
             supportClick={this.handleSupportClick}
-            handleValueChange={this.handleChange}
-            artistName={artistName}
+            artistName={this.props.artists.artist.name}
             isAmpled={this.state.isAmpled}
           />,
         ];

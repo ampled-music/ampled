@@ -16,26 +16,30 @@ interface Props {
   subscriptionLevelValue: any;
   isAmpled?: boolean;
   supportClick: Function;
-  handleValueChange: Function;
 }
 
 export class SupportLevelForm extends React.Component<Props, any> {
+  state = {
+    supportLevelValue: null,
+  };
+
   constructor(props: Readonly<Props>) {
     super(props);
-    this.state = { supportLevelValue: null };
   }
-
-  componentDidMount() {}
 
   handleChange = (event) => {
     const { value } = event.target;
+    console.log(value);
     this.setState({ supportLevelValue: Number(value) });
   };
+
+  componentDidMount() {}
 
   calculateSupportTotal = (supportLevel) =>
     (Math.round((supportLevel * 100 + 30) / 0.971) / 100).toFixed(2);
 
   render() {
+    console.log('props', this.props);
     return (
       <>
         <div className="row justify-content-center" key={this.props.artistName}>
@@ -48,8 +52,7 @@ export class SupportLevelForm extends React.Component<Props, any> {
                 <TextField
                   aria-label="Support level"
                   type="number"
-                  name="subscriptionLevelValue"
-                  onChange={() => this.props.handleValueChange}
+                  onChange={this.handleChange}
                   value={this.state.supportLevelValue || ''}
                   placeholder="3 min"
                 />

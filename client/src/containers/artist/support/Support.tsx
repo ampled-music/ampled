@@ -35,9 +35,6 @@ import {
 
 import { StripePaymentProvider } from './StripePaymentProvider';
 import { SupportLevelForm } from './SupportLevelForm';
-import { artists } from '../../../redux/artists';
-import { chain } from 'ramda';
-// import { StripePaymentProvider } from './StripePaymentProvider';
 
 interface ArtistProps {
   match: {
@@ -174,10 +171,9 @@ export class SupportComponent extends React.Component<Props, any> {
     }
   };
 
-  handleChange = (event) => {
+  handleSupportChange = (event) => {
     console.log(event);
     const { value } = event.target;
-    console.log(value);
     this.setState({ supportLevelValue: Number(value) });
   };
 
@@ -269,8 +265,9 @@ export class SupportComponent extends React.Component<Props, any> {
             !this.state.isAmpled &&
             this.renderArtists(artist.owners),
           <SupportLevelForm
-            subscriptionLevelValue={subscriptionLevelValue}
+            supportLevelValue={this.state.supportLevelValue}
             supportClick={this.handleSupportClick}
+            supportChange={this.handleSupportChange}
             artistName={this.props.artists.artist.name}
             isAmpled={this.state.isAmpled}
           />,
@@ -293,8 +290,7 @@ export class SupportComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { artists, subscriptions } = this.props;
-
+    const { artists } = this.props;
     const artist = artists.artist;
 
     if (!Object.keys(artist).length) {

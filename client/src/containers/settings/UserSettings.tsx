@@ -24,9 +24,7 @@ import {
   Card,
   CardContent,
   CardActions,
-  IconButton,
   TextField,
-  Typography,
 } from '@material-ui/core';
 import { apiAxios } from '../../api/setup-axios';
 

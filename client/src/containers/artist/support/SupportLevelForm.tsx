@@ -3,7 +3,6 @@ import './stripe-payment-provider.scss';
 import * as React from 'react';
 
 import {
-  Avatar,
   Button,
   Card,
   CardContent,
@@ -13,28 +12,13 @@ import {
 
 interface Props {
   artistName: string;
-  subscriptionLevelValue: any;
+  supportLevelValue: any;
   isAmpled?: boolean;
   supportClick: Function;
+  supportChange: (e: any) => void;
 }
 
 export class SupportLevelForm extends React.Component<Props, any> {
-  state = {
-    supportLevelValue: null,
-  };
-
-  constructor(props: Readonly<Props>) {
-    super(props);
-  }
-
-  handleChange = (event) => {
-    const { value } = event.target;
-    console.log(value);
-    this.setState({ supportLevelValue: Number(value) });
-  };
-
-  componentDidMount() {}
-
   calculateSupportTotal = (supportLevel) =>
     (Math.round((supportLevel * 100 + 30) / 0.971) / 100).toFixed(2);
 
@@ -52,12 +36,12 @@ export class SupportLevelForm extends React.Component<Props, any> {
                 <TextField
                   aria-label="Support level"
                   type="number"
-                  onChange={this.handleChange}
-                  value={this.state.supportLevelValue || ''}
+                  onChange={this.props.supportChange}
+                  value={this.props.supportLevelValue || ''}
                   placeholder="3 min"
                 />
-                {this.state.supportLevelValue &&
-                this.state.supportLevelValue >= 3 ? (
+                {this.props.supportLevelValue &&
+                this.props.supportLevelValue >= 3 ? (
                   <Typography
                     component="p"
                     className="support__value-description"
@@ -65,7 +49,7 @@ export class SupportLevelForm extends React.Component<Props, any> {
                     Your total charge will be{' '}
                     <strong>
                       $
-                      {this.calculateSupportTotal(this.state.supportLevelValue)}
+                      {this.calculateSupportTotal(this.props.supportLevelValue)}
                     </strong>
                     .
                     <br />
@@ -101,8 +85,8 @@ export class SupportLevelForm extends React.Component<Props, any> {
           <div className="col-md-5">
             <Button
               disabled={
-                !this.state.supportLevelValue ||
-                this.state.supportLevelValue < 3
+                !this.props.supportLevelValue ||
+                this.props.supportLevelValue < 3
               }
               onClick={() => this.props.supportClick()}
               variant="contained"

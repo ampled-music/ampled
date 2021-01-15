@@ -14,16 +14,10 @@ import { createSubscriptionAction } from '../../../redux/subscriptions/create';
 import { declineStepAction } from '../../../redux/subscriptions/decline-step';
 import { startSubscriptionAction } from '../../../redux/subscriptions/start-subscription';
 import { Helmet } from 'react-helmet';
+import { isAmpled } from '../../shared/utils';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import {
-  Avatar,
-  Button,
-  Card,
-  CardContent,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
 import { UserImage } from '../../user-details/UserImage';
 
 import { lightOrDark } from '../../../styles/utils';
@@ -38,7 +32,11 @@ import {
   initialState as subscriptionsInitialState,
   SubscriptionStep,
 } from '../../../redux/subscriptions/initial-state';
+
 import { StripePaymentProvider } from './StripePaymentProvider';
+import { SupportLevelForm } from './SupportLevelForm';
+import { artists } from '../../../redux/artists';
+// import { StripePaymentProvider } from './StripePaymentProvider';
 
 interface ArtistProps {
   match: {
@@ -59,16 +57,13 @@ type Props = Dispatchers & ArtistProps;
 export class SupportComponent extends React.Component<Props, any> {
   state = {
     supportLevelValue: null,
+    isAmpled: null,
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
     this.getArtistInfo();
   }
-
-  isAmpled = () => {
-    return this.props.artists.artist.slug === 'community';
-  };
 
   componentDidUpdate(prevProps) {
     const { me, subscriptions, getMe } = this.props;
@@ -100,6 +95,7 @@ export class SupportComponent extends React.Component<Props, any> {
       me.userData.subscriptions &&
       me.userData.subscriptions.find(
         (sub) => sub.artistSlug === this.props.match.params.id,
+        (sub) => this.setState({ isAmpled: isAmpled(sub.artistSlug) }),
       )
     ) {
       this.redirectToArtistsPage();
@@ -210,20 +206,6 @@ export class SupportComponent extends React.Component<Props, any> {
     });
   };
 
-  renderSupportHeader = (artistName) =>
-    this.isAmpled() ? (
-      <div className="support__header">
-        <h2 className="support__header_artist-name">
-          Become a Community Member
-        </h2>
-      </div>
-    ) : (
-      <div className="support__header">
-        <div className="support__header_support">Support</div>
-        <h2 className="support__header_artist-name">{artistName}</h2>
-      </div>
-    );
-
   renderArtists = (owners) => (
     <div key="artists" className="support__artists">
       {owners.map((owner, index) => (
@@ -237,64 +219,9 @@ export class SupportComponent extends React.Component<Props, any> {
     </div>
   );
 
-  calculateSupportTotal = (supportLevel) =>
-    (Math.round((supportLevel * 100 + 30) / 0.971) / 100).toFixed(2);
-
-  renderSupportLevelForm = (artistName) => (
-    <div className="row justify-content-center" key={artistName}>
-      <div className="col-md-5">
-        <Card>
-          <CardContent>
-            <Typography variant="h5" component="h5">
-              Support What You Want
-            </Typography>
-            <TextField
-              aria-label="Support level"
-              type="number"
-              name="supportLevelValue"
-              onChange={this.handleChange}
-              value={this.state.supportLevelValue || ''}
-              placeholder="3 min"
-            />
-            {this.state.supportLevelValue &&
-            this.state.supportLevelValue >= 3 ? (
-              <Typography component="p" className="support__value-description">
-                Your total charge will be{' '}
-                <strong>
-                  ${this.calculateSupportTotal(this.state.supportLevelValue)}
-                </strong>
-                .
-                <br />
-                <br />
-                This is due to our payment processor's service fee. More details
-                can be found{' '}
-                <a
-                  href="https://docs.ampled.com/finances/pricing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  here
-                </a>
-                .
-              </Typography>
-            ) : (
-              <Typography component="p" className="support__value-description">
-                {this.isAmpled()
-                  ? 'Join the co-op as a Community Member to help Ampled stay independent and accountable to members.'
-                  : `Support ${artistName} directly for $3 (or more) per month to unlock
-                access to all of their posts and get notifications when they post
-                anything new.`}
-              </Typography>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  );
-
   renderStartSubscriptionAction = (artistName) => {
     const buttonLabel = this.props.me.userData
-      ? this.isAmpled()
+      ? this.state.isAmpled
         ? 'Become a member'
         : `Support ${artistName}`
       : 'Signup or login to support';
@@ -325,15 +252,22 @@ export class SupportComponent extends React.Component<Props, any> {
       me: { userData },
     } = this.props;
 
-    const { artistPageId, subscriptionLevelValue } = subscriptions;
+    const { artistPageId, subscriptionLevelValue, artistName } = subscriptions;
+    console.log(subscriptions);
 
     switch (subscriptions.status) {
       case SubscriptionStep.SupportLevel:
         return [
           !artist.hide_members &&
-            !this.isAmpled() &&
+            !this.state.isAmpled &&
             this.renderArtists(artist.owners),
-          this.renderSupportLevelForm(artist.name),
+          <SupportLevelForm
+            subscriptionLevelValue={subscriptionLevelValue}
+            supportClick={this.handleSupportClick}
+            handleValueChange={this.handleChange}
+            artistName={artistName}
+            isAmpled={this.state.isAmpled}
+          />,
         ];
       case SubscriptionStep.PaymentDetails:
         return (
@@ -463,7 +397,18 @@ export class SupportComponent extends React.Component<Props, any> {
           />
           <div className="row no-gutters justify-content-center">
             <div className="col-md-8">
-              {this.renderSupportHeader(artist.name)}
+              {this.state.isAmpled ? (
+                <div className="support__header">
+                  <h2 className="support__header_artist-name">
+                    Become a Community Member
+                  </h2>
+                </div>
+              ) : (
+                <div className="support__header">
+                  <div className="support__header_support">Support</div>
+                  <h2 className="support__header_artist-name">{artist.name}</h2>
+                </div>
+              )}
             </div>
           </div>
           <div className="row no-gutters justify-content-center">
@@ -478,8 +423,6 @@ export class SupportComponent extends React.Component<Props, any> {
               </div>
             </div>
           </div>
-          {subscriptions.status === SubscriptionStep.SupportLevel &&
-            this.renderStartSubscriptionAction(artist.name)}
         </div>
       </ThemeProvider>
     );

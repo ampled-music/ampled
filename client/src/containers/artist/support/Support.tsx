@@ -33,8 +33,7 @@ import {
   SubscriptionStep,
 } from '../../../redux/subscriptions/initial-state';
 
-import { StripePaymentProvider } from './StripePaymentProvider';
-import { SupportLevelForm } from './SupportLevelForm';
+import { PaymentStep } from './PaymentStep';
 
 interface ArtistProps {
   match: {
@@ -115,15 +114,6 @@ export class SupportComponent extends React.Component<Props, any> {
     }
   }
 
-  returnFirstName = (name) => {
-    const spacePosition = name.indexOf(' ');
-    if (spacePosition === -1) {
-      return name;
-    } else {
-      return name.substr(0, spacePosition);
-    }
-  };
-
   redirectToArtistsPage = () => {
     const {
       match,
@@ -171,123 +161,8 @@ export class SupportComponent extends React.Component<Props, any> {
     }
   };
 
-  handleSupportChange = (event) => {
-    const { value } = event.target;
-    this.setState({ supportLevelValue: Number(value) });
-  };
-
-  handleSupportClick = () => {
-    if (this.state.supportLevelValue < 3) {
-      this.props.showToast({
-        message:
-          'Sorry, but you need to insert a value equal or bigger than $3.00.',
-        type: 'error',
-      });
-
-      return;
-    }
-
-    if (!this.props.me.userData) {
-      this.props.openAuthModal({ modalPage: 'signup' });
-    } else {
-      this.startSubscription();
-    }
-  };
-
-  startSubscription = () => {
-    const {
-      match: { params },
-      artists: { artist },
-    } = this.props;
-    const artistPageId = artist && artist.id ? artist.id : params.id;
-    this.props.startSubscription({
-      artistPageId,
-      subscriptionLevelValue: this.state.supportLevelValue * 100,
-      supportLevelValue: this.state.supportLevelValue * 100,
-    });
-  };
-
-  renderArtists = (owners) => (
-    <div key="artists" className="support__artists">
-      {owners.map((owner, index) => (
-        <div key={index} className="support__artist-info">
-          <Avatar>
-            <UserImage image={owner.image} alt={owner.name} width={80} />
-          </Avatar>
-          <p>{this.returnFirstName(owner.name)}</p>
-        </div>
-      ))}
-    </div>
-  );
-
-  renderStartSubscriptionAction = (artistName) => {
-    const buttonLabel = this.props.me.userData
-      ? this.state.isAmpled
-        ? 'Become a member'
-        : `Support ${artistName}`
-      : 'Signup or login to support';
-
-    return (
-      <div className="row justify-content-center">
-        <div className="col-md-5">
-          <Button
-            disabled={
-              !this.state.supportLevelValue || this.state.supportLevelValue < 3
-            }
-            onClick={this.handleSupportClick}
-            variant="contained"
-            color="primary"
-          >
-            {buttonLabel}
-          </Button>
-        </div>
-      </div>
-    );
-  };
-
-  renderPaymentStep = (artist: ArtistModel) => {
-    const {
-      subscriptions,
-      createSubscription,
-      declineStep,
-      me: { userData },
-    } = this.props;
-
-    const { artistPageId, subscriptionLevelValue } = subscriptions;
-
-    switch (subscriptions.status) {
-      case SubscriptionStep.SupportLevel:
-        return [
-          !artist.hide_members &&
-            !this.state.isAmpled &&
-            this.renderArtists(artist.owners),
-          <SupportLevelForm
-            supportLevelValue={this.state.supportLevelValue}
-            supportClick={this.handleSupportClick}
-            supportChange={this.handleSupportChange}
-            artistName={this.props.artists.artist.name}
-            isAmpled={this.state.isAmpled}
-          />,
-        ];
-      case SubscriptionStep.PaymentDetails:
-        return (
-          <StripePaymentProvider
-            artistPageId={artistPageId}
-            subscriptionLevelValue={subscriptionLevelValue}
-            createSubscription={createSubscription}
-            declineStep={declineStep}
-            formType="checkout"
-            userData={userData}
-            showToast={this.props.showToast}
-          />
-        );
-      default:
-        break;
-    }
-  };
-
   render() {
-    const { artists } = this.props;
+    const { artists, subscriptions } = this.props;
     const artist = artists.artist;
 
     if (!Object.keys(artist).length) {
@@ -418,7 +293,11 @@ export class SupportComponent extends React.Component<Props, any> {
           <div className="row no-gutters justify-content-center">
             <div className="col-md-12">
               <div className="support__content">
-                {this.renderPaymentStep(artist)}
+                <PaymentStep
+                  artist={artist}
+                  subscriptions={subscriptions}
+                  userData={this.props.me.userData}
+                />
               </div>
             </div>
           </div>
@@ -442,9 +321,6 @@ const mapDispatchToProps = (dispatch) => {
     getArtist: bindActionCreators(getArtistAction, dispatch),
     getMe: bindActionCreators(getMeAction, dispatch),
     openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
-    startSubscription: bindActionCreators(startSubscriptionAction, dispatch),
-    createSubscription: bindActionCreators(createSubscriptionAction, dispatch),
-    declineStep: bindActionCreators(declineStepAction, dispatch),
     showToast: bindActionCreators(showToastAction, dispatch),
   };
 };

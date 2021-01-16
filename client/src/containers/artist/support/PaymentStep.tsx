@@ -20,9 +20,9 @@ import { StripePaymentProvider } from './StripePaymentProvider';
 import { SupportLevelForm } from './SupportLevelForm';
 
 interface PaymentProps {
-  artist: ArtistModel;
+  artist?: ArtistModel;
   subscriptions?: typeof subscriptionsInitialState;
-  userData: any;
+  userData?: any;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
@@ -59,7 +59,6 @@ export class PaymentStepComponent extends React.Component<Props, any> {
           'Sorry, but you need to insert a value equal or bigger than $3.00.',
         type: 'error',
       });
-
       return;
     }
 
@@ -73,7 +72,6 @@ export class PaymentStepComponent extends React.Component<Props, any> {
   startSubscription = () => {
     const { artist } = this.props;
     const artistPageId = artist.id;
-
     this.props.startSubscription({
       artistPageId,
       subscriptionLevelValue: this.state.supportLevelValue * 100,
@@ -114,13 +112,11 @@ export class PaymentStepComponent extends React.Component<Props, any> {
       declineStep,
       userData,
     } = this.props;
-    console.log('subscriptions', subscriptions);
 
     const { artistPageId, subscriptionLevelValue } = subscriptions;
 
     switch (subscriptions.status) {
       case SubscriptionStep.SupportLevel:
-        console.log('SupportLevel render');
         return [
           !artist.hide_members && !this.state.isAmpled && (
             <ArtistsHeader owners={artist.owners} />
@@ -146,7 +142,7 @@ export class PaymentStepComponent extends React.Component<Props, any> {
           />
         );
       default:
-        break;
+        return null;
     }
   }
 }

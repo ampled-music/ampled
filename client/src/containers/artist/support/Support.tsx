@@ -66,7 +66,6 @@ export class SupportComponent extends React.Component<Props, any> {
     }
 
     if (subscriptions.status === SubscriptionStep.Finished) {
-      // getMe();
       this.redirectToArtistsPage();
     }
 

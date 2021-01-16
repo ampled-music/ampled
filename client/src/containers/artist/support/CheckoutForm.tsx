@@ -9,6 +9,7 @@ import {
 } from 'react-stripe-elements';
 import { Link } from 'react-router-dom';
 import { SingleCardDisplay } from '../../user-details/UserDetails';
+import { Button } from '@material-ui/core';
 
 interface Props {
   artistPageId: number;
@@ -185,22 +186,24 @@ class CheckoutFormComponent extends React.Component<Props, any> {
                       )}
                     </h2>
                   </div>
-                  <div className="actions">
-                    <button
+                  <div className="action-buttons">
+                    <Button
                       disabled={this.state.disableActions}
-                      className="btn btn-secondary"
+                      className="cancel-button"
                       type="button"
+                      style={{ width: '50%' }}
                       onClick={this.props.declineStep}
                     >
                       Change amount
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       disabled={this.state.disableActions}
-                      className="btn btn-primary"
+                      className="publish-button"
                       type="submit"
+                      style={{ width: '50%' }}
                     >
                       Support
-                    </button>
+                    </Button>
                   </div>
                 </>
               )}

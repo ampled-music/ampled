@@ -28,6 +28,19 @@ interface PaymentProps {
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 type Props = Dispatchers & PaymentProps;
 
+const ArtistsHeader = ({ owners }) => (
+  <div key="artists" className="support__artists">
+    {owners.map((owner, index) => (
+      <div key={index} className="support__artist-info">
+        <Avatar>
+          <UserImage image={owner.image} alt={owner.name} width={80} />
+        </Avatar>
+        <p>{owner.name}</p>
+      </div>
+    ))}
+  </div>
+);
+
 export class PaymentStepComponent extends React.Component<Props, any> {
   state = {
     supportLevelValue: null,
@@ -93,19 +106,6 @@ export class PaymentStepComponent extends React.Component<Props, any> {
     );
   };
 
-  renderArtists = (owners) => (
-    <div key="artists" className="support__artists">
-      {owners.map((owner, index) => (
-        <div key={index} className="support__artist-info">
-          <Avatar>
-            <UserImage image={owner.image} alt={owner.name} width={80} />
-          </Avatar>
-          <p>{owner.name}</p>
-        </div>
-      ))}
-    </div>
-  );
-
   render() {
     const {
       artist,
@@ -120,10 +120,11 @@ export class PaymentStepComponent extends React.Component<Props, any> {
 
     switch (subscriptions.status) {
       case SubscriptionStep.SupportLevel:
+        console.log('SupportLevel render');
         return [
-          !artist.hide_members &&
-            !this.state.isAmpled &&
-            this.renderArtists(artist.owners),
+          !artist.hide_members && !this.state.isAmpled && (
+            <ArtistsHeader owners={artist.owners} />
+          ),
           <SupportLevelForm
             supportLevelValue={this.state.supportLevelValue}
             supportClick={this.handleSupportClick}

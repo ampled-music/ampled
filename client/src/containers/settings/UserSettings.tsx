@@ -19,13 +19,7 @@ import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 import { Image, Transformation } from 'cloudinary-react';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardActions,
-  TextField,
-} from '@material-ui/core';
+import { Button, Card, CardContent, CardActions } from '@material-ui/core';
 import { apiAxios } from '../../api/setup-axios';
 
 import { faImage } from '@fortawesome/free-solid-svg-icons';
@@ -48,6 +42,7 @@ import { Modal } from '../shared/modal/Modal';
 import { ResetPassword } from '../connect/ResetPassword';
 import { Loading } from '../shared/loading/Loading';
 import { UserImage } from '../user-details/UserImage';
+import { SupportLevelForm } from '../artist/support/SupportLevelForm';
 
 const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
@@ -474,10 +469,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
               Would you like to change your support amount for{' '}
               {this.state.subscription.name}?
             </p>
-            <TextField
-              placeholder={this.state.subscription.amount}
-              // value={this.state.subscription.amount}
-            />
+
+            {/* <SupportLevelForm
+              supportLevelValue={this.state.supportLevelValue}
+              supportClick={this.handleSupportClick}
+              supportChange={this.handleSupportChange}
+              artistName={this.props.artists.artist.name}
+              isAmpled={this.state.isAmpled}
+            /> */}
 
             <CardActions>
               <Button
@@ -912,9 +911,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <ThemeProvider theme={theme}>
         {userData && this.renderSetUpBanner()}
         <div className="container user-settings-container">
-          <Loading
-            artistLoading={this.props.loadingMe && !this.props.userData}
-          />
+          <Loading isLoading={this.props.loadingMe && !this.props.userData} />
           {userData && this.renderContent()}
           {this.renderCancelSubscriptionModal()}
           {this.renderChangeSubscriptionModal()}

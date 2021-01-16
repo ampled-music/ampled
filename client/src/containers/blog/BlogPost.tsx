@@ -74,7 +74,7 @@ class BlogPost extends React.Component<PostProps, any> {
 
   render() {
     if (this.state.loading) {
-      return <Loading artistLoading={true} />;
+      return <Loading isLoading={true} />;
     }
     return (
       <div>

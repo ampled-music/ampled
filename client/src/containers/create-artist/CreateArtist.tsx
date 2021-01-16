@@ -1390,7 +1390,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     this.setState({
       loading: true,
     });
-    if (!this.props.editMode) { 
+    if (!this.props.editMode) {
       const { data } = await apiAxios({
         method: 'post',
         url: '/artist_pages.json',
@@ -1551,7 +1551,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     if (this.state.isDeletedPage) {
       return <Redirect to="/" />;
     } else if (this.state.loading) {
-      return <Loading artistLoading={true} />;
+      return <Loading isLoading={true} />;
     } else if (userData && !userData.email_confirmed) {
       return (
         <div

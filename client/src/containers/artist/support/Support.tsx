@@ -12,6 +12,7 @@ import { getMeAction } from '../../../redux/me/get-me';
 import { showToastAction } from '../../../redux/toast/toast-modal';
 import { Helmet } from 'react-helmet';
 import { isAmpled } from '../../shared/utils';
+import { Loading } from '../../shared/loading/Loading';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -293,6 +294,7 @@ export class SupportComponent extends React.Component<Props, any> {
             </div>
           </div>
         </div>
+        <Loading isLoading={this.props.subscriptions.processing} />
       </ThemeProvider>
     );
   }

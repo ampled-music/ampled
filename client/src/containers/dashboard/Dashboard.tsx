@@ -14,17 +14,11 @@ import { getMeAction } from '../../redux/me/get-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { config } from '../../config';
 
-import Moment from 'react-moment';
-
 import { Image, Transformation } from 'cloudinary-react';
 
-import { RowsProp, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
-import { XGrid, LicenseInfo } from '@material-ui/x-grid';
-import { Check, Block } from '@material-ui/icons';
+import { LicenseInfo } from '@material-ui/x-grid';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
-  Button,
-  Chip,
   FormControl,
   IconButton,
   MenuItem,
@@ -32,7 +26,6 @@ import {
   Tab,
   Tabs,
   Tooltip,
-  Toolbar,
 } from '@material-ui/core';
 
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
@@ -42,11 +35,12 @@ import StyleOverride from '../artist/StyleOverride';
 
 import Plus from '../../images/icons/Icon_Add-New.svg';
 import Edit from '../../images/icons/Icon_Edit.svg';
-import Download from '../../images/icons/Icon_Download.svg';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
+
+import ArtistSupporters from './ArtistSupporters';
 
 LicenseInfo.setLicenseKey(config.materialUi.key);
 
@@ -67,6 +61,17 @@ type Props = typeof loginInitialState &
     location: any;
     subscriptions: typeof subscriptionsInitialState;
   };
+
+const TabPanel = ({ tabValue, index, children }) => (
+  <div
+    role="tabpanel"
+    hidden={tabValue !== index}
+    id={`vertical-tabpanel-${index}`}
+    aria-labelledby={`vertical-tab-${index}`}
+  >
+    {tabValue === index && children}
+  </div>
+);
 
 class DashboardComponent extends React.Component<Props, any> {
   state = {
@@ -116,19 +121,6 @@ class DashboardComponent extends React.Component<Props, any> {
   };
   discardChanges = () => {
     this.closeConfirmationDialog();
-  };
-
-  renderTabPanel = ({ tabValue, index, children }) => {
-    return (
-      <div
-        role="tabpanel"
-        hidden={tabValue !== index}
-        id={`vertical-tabpanel-${index}`}
-        aria-labelledby={`vertical-tab-${index}`}
-      >
-        {tabValue === index && children}
-      </div>
-    );
   };
 
   setInitArtist = () => {
@@ -211,117 +203,7 @@ class DashboardComponent extends React.Component<Props, any> {
       </>
     );
   }
-  renderArtistSupporters() {
-    const { userData } = this.props;
-    const { selectedArtist } = this.state;
-    let artist;
-    artist = selectedArtist;
-    let supporters;
-    supporters = artist.subscriptions;
 
-    const rows: RowsProp = supporters?.map((supporter) => ({
-      id: supporter.id,
-      name: supporter.name,
-      email: supporter.email,
-      monthly: supporter.amount / 100,
-      status: supporter.status,
-      // all_time: 556,
-      city: supporter.city,
-      country: supporter.country,
-      supporting_since: supporter.supporter_since,
-    }));
-
-    const columns: ColDef[] = [
-      { field: 'name', headerName: 'Name', width: 150 },
-      {
-        field: 'email',
-        headerName: 'Email',
-        width: 200,
-        renderCell: (params: ValueFormatterParams) => (
-          <a href={`mailto:${params.value}`}>{params.value}</a>
-        ),
-      },
-      {
-        field: 'monthly',
-        headerName: 'Monthly',
-        width: 100,
-        valueFormatter: (params: ValueFormatterParams) =>
-          params.value.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          }),
-      },
-      {
-        field: 'status',
-        headerName: 'Status',
-        width: 110,
-        renderCell: (params: ValueFormatterParams) => (
-          <Chip
-            size="small"
-            icon={params.value === 'active' ? <Check /> : <Block />}
-            style={
-              params.value === 'active'
-                ? { backgroundColor: '#baddac' }
-                : { backgroundColor: 'inherent' }
-            }
-            label={params.value}
-          />
-        ),
-      },
-      // {
-      //   field: 'all_time',
-      //   headerName: 'All Time',
-      //   width: 150,
-      //   valueFormatter: (params: ValueFormatterParams) =>
-      //     params.value.toLocaleString('en-US', {
-      //       style: 'currency',
-      //       currency: 'USD',
-      //     }),
-      // },
-      { field: 'city', headerName: 'City', width: 200 },
-      { field: 'country', headerName: 'Country', width: 100 },
-      {
-        field: 'supporting_since',
-        headerName: 'Supporting Since',
-        width: 200,
-        type: 'date',
-        renderCell: (params: any) => (
-          <Moment format="MMM Do, YYYY">{params.value}</Moment>
-        ),
-      },
-    ];
-
-    return (
-      userData &&
-      rows && (
-        <>
-          <Toolbar>
-            <Button
-              size="small"
-              variant="outlined"
-              onClick={() =>
-                window.open(
-                  `/artist/${artist.artistSlug}/subscribers_csv`,
-                  '_blank',
-                )
-              }
-              startIcon={
-                <ReactSVG className="icon icon_black" src={Download} />
-              }
-            >
-              Download CSV
-            </Button>
-          </Toolbar>
-          <XGrid
-            rows={rows}
-            columns={columns}
-            rowHeight={40}
-            rowsPerPageOptions={[25, 50, 100, 500, 1000]}
-          />
-        </>
-      )
-    );
-  }
   renderArtistIncome() {
     // const { userData } = this.props;
     // const { selectedArtist } = this.state;
@@ -342,7 +224,6 @@ class DashboardComponent extends React.Component<Props, any> {
   render() {
     const { userData } = this.props;
     const { tabValue, selectedArtist } = this.state;
-    const TabPanel = this.renderTabPanel;
 
     let artist;
     artist = selectedArtist;
@@ -421,7 +302,7 @@ class DashboardComponent extends React.Component<Props, any> {
               {this.renderArtistHome()}
             </TabPanel>
             <TabPanel tabValue={tabValue} index={1}>
-              {this.renderArtistSupporters()}
+              <ArtistSupporters userData={userData} selectedArtist={selectedArtist} />
             </TabPanel>
             <TabPanel tabValue={tabValue} index={2}>
               {this.renderArtistIncome()}

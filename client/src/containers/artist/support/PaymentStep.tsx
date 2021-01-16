@@ -1,18 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { routePaths } from '../../route-paths';
-import { getArtistAction } from '../../../redux/artists/get-details';
 import { openAuthModalAction } from '../../../redux/authentication/authentication-modal';
 import { Store } from '../../../redux/configure-store';
-import { getMeAction } from '../../../redux/me/get-me';
 import { showToastAction } from '../../../redux/toast/toast-modal';
 import { createSubscriptionAction } from '../../../redux/subscriptions/create';
 import { declineStepAction } from '../../../redux/subscriptions/decline-step';
 import { startSubscriptionAction } from '../../../redux/subscriptions/start-subscription';
 import { ArtistModel } from '../../../redux/artists/initial-state';
-import { initialState as authenticateInitialState } from '../../../redux/authentication/initial-state';
-import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import {
   initialState as subscriptionsInitialState,
   SubscriptionStep,
@@ -26,7 +21,7 @@ import { SupportLevelForm } from './SupportLevelForm';
 
 interface PaymentProps {
   artist: ArtistModel;
-  subscriptions?: any;
+  subscriptions?: typeof subscriptionsInitialState;
   userData: any;
 }
 

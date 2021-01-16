@@ -10,22 +10,14 @@ import { openAuthModalAction } from '../../../redux/authentication/authenticatio
 import { Store } from '../../../redux/configure-store';
 import { getMeAction } from '../../../redux/me/get-me';
 import { showToastAction } from '../../../redux/toast/toast-modal';
-import { createSubscriptionAction } from '../../../redux/subscriptions/create';
-import { declineStepAction } from '../../../redux/subscriptions/decline-step';
-import { startSubscriptionAction } from '../../../redux/subscriptions/start-subscription';
 import { Helmet } from 'react-helmet';
 import { isAmpled } from '../../shared/utils';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Avatar, Button } from '@material-ui/core';
-import { UserImage } from '../../user-details/UserImage';
 
 import { lightOrDark } from '../../../styles/utils';
 
-import {
-  initialState as artistsInitialState,
-  ArtistModel,
-} from '../../../redux/artists/initial-state';
+import { initialState as artistsInitialState } from '../../../redux/artists/initial-state';
 import { initialState as authenticateInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import {

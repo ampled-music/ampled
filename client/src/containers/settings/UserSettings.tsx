@@ -42,7 +42,7 @@ import { Modal } from '../shared/modal/Modal';
 import { ResetPassword } from '../connect/ResetPassword';
 import { Loading } from '../shared/loading/Loading';
 import { UserImage } from '../user-details/UserImage';
-import { SupportLevelForm } from '../artist/support/SupportLevelForm';
+import { PaymentStep } from '../artist/support/PaymentStep';
 
 const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
@@ -440,13 +440,17 @@ class UserSettingsComponent extends React.Component<Props, any> {
             {this.state.subscription.name}?
           </p>
           <div className="action-buttons">
-            <Button className="cancel-button" onClick={this.closeCancelModal}>
+            <Button
+              className="cancel-button"
+              onClick={this.closeCancelModal}
+              style={{ width: '50%' }}
+            >
               Of Course Not!
             </Button>
             <Button
               className="publish-button"
               onClick={this.cancelSubscription}
-              style={{ marginLeft: 0 }}
+              style={{ width: '50%' }}
             >
               Yes
             </Button>
@@ -460,7 +464,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
     if (!this.state.subscription) {
       return null;
     }
-
+    console.log('state', this.state);
+    console.log('props', this.props);
     return (
       <Modal open={this.state.showChangeModal} onClose={this.closeChangeModal}>
         <Card>
@@ -470,15 +475,13 @@ class UserSettingsComponent extends React.Component<Props, any> {
               {this.state.subscription.name}?
             </p>
 
-            {/* <SupportLevelForm
-              supportLevelValue={this.state.supportLevelValue}
-              supportClick={this.handleSupportClick}
-              supportChange={this.handleSupportChange}
-              artistName={this.props.artists.artist.name}
-              isAmpled={this.state.isAmpled}
-            /> */}
+            <PaymentStep
+              // artist={artist}
+              subscriptions={this.state.subscription}
+              userData={this.props.userData}
+            />
 
-            <CardActions>
+            <CardActions className="action-buttons">
               <Button
                 aria-label="Cancel Change Subscription"
                 className="cancel-button"

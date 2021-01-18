@@ -474,31 +474,29 @@ class UserSettingsComponent extends React.Component<Props, any> {
               Would you like to change your support amount for{' '}
               {this.state.subscription.name}?
             </p>
-
             <PaymentStep
-              // artist={artist}
-              subscriptions={this.state.subscription}
+              artistName={this.state.subscription.name}
+              subscriptions={this.state.subscription} // @todo: status and some other subscription info is not coming in.
               userData={this.props.userData}
             />
-
-            <CardActions className="action-buttons">
-              <Button
-                aria-label="Cancel Change Subscription"
-                className="cancel-button"
-                onClick={this.closeChangeModal}
-                size="small"
-              >
-                <ReactSVG className="icon" src={Close} />
-              </Button>
-              <Button
-                className="publish-button"
-                onClick={this.cancelSubscription}
-                style={{ marginLeft: 0 }}
-              >
-                Change support for {this.state.subscription.name}
-              </Button>
-            </CardActions>
           </CardContent>
+          <CardActions className="action-buttons">
+            <Button
+              aria-label="Cancel Change Subscription"
+              className="cancel-button"
+              onClick={this.closeChangeModal}
+              size="small"
+            >
+              <ReactSVG className="icon" src={Close} />
+            </Button>
+            <Button
+              className="publish-button"
+              onClick={this.cancelSubscription}
+              style={{ marginLeft: 0 }}
+            >
+              Change support for {this.state.subscription.name}
+            </Button>
+          </CardActions>
         </Card>
       </Modal>
     );

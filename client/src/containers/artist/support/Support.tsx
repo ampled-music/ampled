@@ -286,7 +286,7 @@ export class SupportComponent extends React.Component<Props, any> {
             <div className="col-md-12">
               <div className="support__content">
                 <PaymentStep
-                  artist={artist}
+                  artistName={artist.name}
                   subscriptions={subscriptions}
                   userData={this.props.me.userData}
                 />

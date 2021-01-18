@@ -41,6 +41,7 @@ import { routePaths } from '../route-paths';
 import { Modal } from '../shared/modal/Modal';
 import { ResetPassword } from '../connect/ResetPassword';
 import { Loading } from '../shared/loading/Loading';
+import { Sticky } from '../shared/sticky/Sticky';
 import { UserImage } from '../user-details/UserImage';
 import { PaymentStep } from '../artist/support/PaymentStep';
 
@@ -162,13 +163,14 @@ class UserSettingsComponent extends React.Component<Props, any> {
     });
   };
 
-  openCancelModal = (event, subscription) => {
+  openModal = (event, subscription?) => {
     event.preventDefault();
-    this.setState({ showCancelModal: true, subscription });
+    const { name } = event.target;
+    this.setState({ [`show${name}Modal`]: true, subscription });
   };
-
-  closeCancelModal = () =>
-    this.setState({ showCancelModal: false, subscription: undefined });
+  closeModal = (name) => {
+    this.setState({ [`show${name}Modal`]: false, subscription: undefined });
+  };
 
   cancelSubscription = () => {
     this.props.cancelSubscription({
@@ -177,16 +179,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
       artistSlug: this.state.subscription.artistSlug,
       artistName: this.state.subscription.name,
     });
-    this.closeCancelModal();
+    this.closeModal('Cancel');
   };
-
-  openChangeModal = (event, subscription) => {
-    event.preventDefault();
-    console.log(subscription);
-    this.setState({ showChangeModal: true, subscription });
-  };
-  closeChangeModal = () =>
-    this.setState({ showChangeModal: false, subscription: undefined });
 
   changeSubscription = () => {
     this.props.cancelSubscription({
@@ -195,7 +189,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
       artistSlug: this.state.subscription.artistSlug,
       artistName: this.state.subscription.name,
     });
-    this.closeChangeModal();
+    this.closeModal('Change');
   };
 
   formatMoney = (value) => {
@@ -253,20 +247,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
       });
     }
   };
-
-  handlePublicID = (image: string) => {
-    if (!image) {
-      return '';
-    }
-    const url = image.split('/');
-    const part_1 = url[url.length - 2];
-    const part_2 = url[url.length - 1];
-    return part_1 + '/' + part_2;
-  };
-
-  renderSticky = (message: any) => (
-    <div className="artistAlertHeader active">{message}</div>
-  );
 
   renderSocialImages = (artist) => {
     if (!artist.image) {
@@ -345,23 +325,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     );
   };
 
-  renderUserImage = () => {
-    const { userData } = this.props;
-
-    return (
-      <div className="user-image-container">
-        <Link to="/user-details">
-          <UserImage
-            image={userData.image}
-            className="user-image"
-            alt={userData.name}
-            width={120}
-          />
-        </Link>
-      </div>
-    );
-  };
-
   renderUserInfo = () => {
     const { userData } = this.props;
 
@@ -369,7 +332,16 @@ class UserSettingsComponent extends React.Component<Props, any> {
       <div className="user-info-container col-md-3">
         <img className="tear__topper" src={tear} alt="" />
         <div className="user-content">
-          {this.renderUserImage()}
+          <div className="user-image-container">
+            <Link to="/user-details">
+              <UserImage
+                image={userData.image}
+                className="user-image"
+                alt={userData.name}
+                width={120}
+              />
+            </Link>
+          </div>
           <div className="user-content__name">{userData.name}</div>
           <div className="user-content__joined-at">
             Joined {this.getFormattedDate(userData.created_at)}
@@ -433,7 +405,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
     }
 
     return (
-      <Modal open={this.state.showCancelModal} onClose={this.closeCancelModal}>
+      <Modal
+        open={this.state.showCancelModal}
+        onClose={() => this.closeModal('Cancel')}
+      >
         <div className="user-settings-cancel-modal">
           <p>
             Are you sure you want to stop supporting{' '}
@@ -442,7 +417,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <div className="action-buttons">
             <Button
               className="cancel-button"
-              onClick={this.closeCancelModal}
+              onClick={() => this.closeModal('Cancel')}
               style={{ width: '50%' }}
             >
               Of Course Not!
@@ -467,7 +442,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
     console.log('state', this.state);
     console.log('props', this.props);
     return (
-      <Modal open={this.state.showChangeModal} onClose={this.closeChangeModal}>
+      <Modal
+        open={this.state.showChangeModal}
+        onClose={() => this.closeModal('Change')}
+      >
         <Card>
           <CardContent>
             <p>
@@ -484,7 +462,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
             <Button
               aria-label="Cancel Change Subscription"
               className="cancel-button"
-              onClick={this.closeChangeModal}
+              onClick={() => this.closeModal('Change')}
               size="small"
             >
               <ReactSVG className="icon" src={Close} />
@@ -694,17 +672,15 @@ class UserSettingsComponent extends React.Component<Props, any> {
                     <div className="col-4">
                       <button
                         className="link details__info_value details__info_value_change"
-                        onClick={(event) =>
-                          this.openChangeModal(event, subscription)
-                        }
+                        name="Change"
+                        onClick={(event) => this.openModal(event, subscription)}
                       >
                         Change Amount
                       </button>
                       <button
                         className="link details__info_value details__info_value_cancel"
-                        onClick={(event) =>
-                          this.openCancelModal(event, subscription)
-                        }
+                        name="Cancel"
+                        onClick={(event) => this.openModal(event, subscription)}
                       >
                         Cancel
                       </button>
@@ -762,8 +738,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <>
-        {noStripe.length > 0 &&
-          this.renderSticky(
+        {noStripe.length > 0 && (
+          <Sticky>
             <div className="artistAlertHeader__container">
               The Ampled team does a quick spot check of all pages before they
               become visible to the general public. Set up payout for{' '}
@@ -793,10 +769,11 @@ class UserSettingsComponent extends React.Component<Props, any> {
                 }
               })}{' '}
               to help us approve your page faster.
-            </div>,
-          )}
-        {notApproved.length > 0 &&
-          this.renderSticky(
+            </div>
+          </Sticky>
+        )}
+        {notApproved.length > 0 && (
+          <Sticky>
             <div className="artistAlertHeader__container">
               Congrats! Your page is now eligible for approval. When you’re
               ready for us to take a look, request approval for{' '}
@@ -847,8 +824,9 @@ class UserSettingsComponent extends React.Component<Props, any> {
                 }
               })}{' '}
               to submit your page.
-            </div>,
-          )}
+            </div>
+          </Sticky>
+        )}
       </>
     );
   };
@@ -914,8 +892,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
         <div className="container user-settings-container">
           <Loading isLoading={this.props.loadingMe && !this.props.userData} />
           {userData && this.renderContent()}
-          {this.renderCancelSubscriptionModal()}
-          {this.renderChangeSubscriptionModal()}
           {this.state.showPasswordModal && (
             <Modal
               open={this.state.showPasswordModal}
@@ -924,6 +900,20 @@ class UserSettingsComponent extends React.Component<Props, any> {
               <ResetPassword type="change" />
             </Modal>
           )}
+          <Modal
+            open={this.state.showCancelModal}
+            onClose={() => this.closeModal('Cancel')}
+          >
+            Cancel
+            {/* <CancelSubscription subscription={this.state.subscription} /> */}
+          </Modal>
+          <Modal
+            open={this.state.showChangeModal}
+            onClose={() => this.closeModal('Change')}
+          >
+            Change
+            {/* <ChangeSubscription subscription={this.state.subscription} /> */}
+          </Modal>
         </div>
       </ThemeProvider>
     );

@@ -28,6 +28,7 @@ import { ArtistHeaderMinimal } from './ArtistHeaderMinimal';
 import { PostForm } from './posts/post-form/PostForm';
 import { ArtistComingSoon } from '../shared/no-artist/ArtistComingSoon';
 import { NoArtist } from '../shared/no-artist/NoArtist';
+import { Sticky } from '../shared/sticky/Sticky';
 import { routePaths } from '../route-paths';
 
 import { isAmpled } from '../shared/utils';
@@ -270,10 +271,6 @@ class ArtistComponent extends React.Component<Props, any> {
     }
   };
 
-  renderSticky = (message: any) => (
-    <div className="artistAlertHeader active">{message}</div>
-  );
-
   requestApproval = async () => {
     try {
       const { data } = await apiAxios({
@@ -356,35 +353,39 @@ class ArtistComponent extends React.Component<Props, any> {
         {artist &&
           !artist.approved &&
           artist.isStripeSetup &&
-          loggedUserAccess &&
-          this.renderSticky(
-            <div className="artistAlertHeader__container">
-              {!this.state.requestedApproval && (
-                <span>
-                  Congrats! Your page is now eligible for approval. When you’re
-                  ready for us to take a look,{' '}
-                  <button
-                    className="link link__banner"
-                    onClick={this.requestApproval}
-                  >
-                    click here to submit your page
-                  </button>
-                  .
-                </span>
-              )}
-            </div>,
+          loggedUserAccess && (
+            <Sticky>
+              <div className="artistAlertHeader__container">
+                {!this.state.requestedApproval && (
+                  <span>
+                    Congrats! Your page is now eligible for approval. When
+                    you’re ready for us to take a look,{' '}
+                    <button
+                      className="link link__banner"
+                      onClick={this.requestApproval}
+                    >
+                      click here to submit your page
+                    </button>
+                    .
+                  </span>
+                )}
+              </div>
+              ,
+            </Sticky>
           )}
         {artist &&
           !artist.approved &&
           !artist.isStripeSetup &&
-          loggedUserAccess &&
-          this.renderSticky(
-            <div className="artistAlertHeader__container">
-              The Ampled team does a quick spot check of all pages before they
-              become visible to the general public.{' '}
-              <a href={loggedUserAccess.stripeSignup}>Set up payouts</a> to help
-              us approve your page faster.
-            </div>,
+          loggedUserAccess && (
+            <Sticky>
+              <div className="artistAlertHeader__container">
+                The Ampled team does a quick spot check of all pages before they
+                become visible to the general public.{' '}
+                <a href={loggedUserAccess.stripeSignup}>Set up payouts</a> to
+                help us approve your page faster.
+              </div>
+              ,
+            </Sticky>
           )}
         {artist.style_type === 'minimal' ? (
           <ArtistHeaderMinimal

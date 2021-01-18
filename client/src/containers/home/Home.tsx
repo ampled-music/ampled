@@ -12,37 +12,14 @@ import { HomeHow } from './HomeHow';
 import { HomeGarden } from './HomeGarden';
 import { Texture } from '../shared/texture/Texture';
 
-import { IconButton } from '@material-ui/core';
-import Close from '../../images/icons/Icon_Close-Cancel.svg';
-
 class Home extends React.Component<any> {
   state = {
     showBanner: store.get('close-banner') ? false : true,
   };
 
-  renderSticky = () => (
-    <div className={cx('artistAlertHeader', { active: this.state.showBanner })}>
-      <div className="artistAlertHeader__container"></div>
-      <IconButton
-        className="artistAlertHeader__close-button"
-        aria-label="close"
-        onClick={this.closeBanner}
-        style={{ width: '30px', height: '30px' }}
-      >
-        <ReactSVG className="icon icon_white" src={Close} />
-      </IconButton>
-    </div>
-  );
-
-  closeBanner = () => {
-    store.set('close-banner', true);
-    this.setState({ showBanner: false });
-  };
-
   render() {
     return (
       <div className="home-section">
-        {/* {this.renderSticky()} */}
         <HomeHeader />
         <Texture
           positionTop25={false}

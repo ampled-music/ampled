@@ -8,7 +8,7 @@ class ArtistPagesController < ApplicationController
 
   def index
     @artist_pages = ArtistPage.includes(:images).approved.artist_owner
-      .exclude_community_page.where.not(images: nil).order("RANDOM()").take(8)
+      .exclude_community_page.where.not(images: nil).order(Arel.sql("RANDOM()")).take(8)
     @artist_page_count = ArtistPage.count
 
     respond_to do |format|

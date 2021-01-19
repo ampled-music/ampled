@@ -15,15 +15,10 @@ import { setUserDataAction } from '../../redux/me/set-me';
 import { updateMeAction } from '../../redux/me/update-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
-import { Image, Transformation } from 'cloudinary-react';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Button, Card, CardContent, CardActions } from '@material-ui/core';
 import { apiAxios } from '../../api/setup-axios';
-
-import { faImage } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import tear_black from '../../images/backgrounds/background_tear_black.png';
 
 import Close from '../../images/icons/Icon_Close-Cancel.svg';
 

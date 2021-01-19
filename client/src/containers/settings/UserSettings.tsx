@@ -25,14 +25,9 @@ import { apiAxios } from '../../api/setup-axios';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { faStripe } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import tear from '../../images/backgrounds/background_tear.png';
 import tear_black from '../../images/backgrounds/background_tear_black.png';
 
-import Edit from '../../images/icons/Icon_Edit.svg';
 import Close from '../../images/icons/Icon_Close-Cancel.svg';
-import Instagram from '../../images/icons/Icon_Instagram.svg';
-import Twitter from '../../images/icons/Icon_Twitter.svg';
-import Location from '../../images/icons/Icon_Location.svg';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -42,8 +37,9 @@ import { Modal } from '../shared/modal/Modal';
 import { ResetPassword } from '../connect/ResetPassword';
 import { Loading } from '../shared/loading/Loading';
 import { Sticky } from '../shared/sticky/Sticky';
-import { UserImage } from '../user-details/UserImage';
 import { PaymentStep } from '../artist/support/PaymentStep';
+
+import { UserInfo } from './UserInfo';
 
 const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
@@ -148,18 +144,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
         </>
       ),
       type: 'success',
-    });
-  };
-
-  getFormattedDate = (date: string) => {
-    if (!date) {
-      return '-';
-    }
-
-    return new Date(date).toLocaleString('en-us', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
     });
   };
 
@@ -320,78 +304,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
               ))}
             </div>
           </div>
-        </div>
-      </div>
-    );
-  };
-
-  renderUserInfo = () => {
-    const { userData } = this.props;
-
-    return (
-      <div className="user-info-container col-md-3">
-        <img className="tear__topper" src={tear} alt="" />
-        <div className="user-content">
-          <div className="user-image-container">
-            <Link to="/user-details">
-              <UserImage
-                image={userData.image}
-                className="user-image"
-                alt={userData.name}
-                width={120}
-              />
-            </Link>
-          </div>
-          <div className="user-content__name">{userData.name}</div>
-          <div className="user-content__joined-at">
-            Joined {this.getFormattedDate(userData.created_at)}
-          </div>
-          {userData.city && (
-            <div className="user-content__city">
-              <ReactSVG className="icon icon_sm" src={Location} />
-              {userData.city}
-            </div>
-          )}
-          {userData.bio && (
-            <div>
-              <div className="user-content__hr"></div>
-              <div className="user-content__bio">{userData.bio}</div>
-              <div className="user-content__hr"></div>
-            </div>
-          )}
-          {userData.twitter && (
-            <div className="user-content__social">
-              <ReactSVG className="icon icon_sm" src={Twitter} />
-              {userData.twitter}
-            </div>
-          )}
-          {userData.instagram && (
-            <div className="user-content__social">
-              <ReactSVG className="icon icon_sm" src={Instagram} />
-              {userData.instagram}
-            </div>
-          )}
-          {/*
-            monthlyTotal > 0 ?
-              (<p className="user-name">${monthlyTotal.toFixed(2)}/Month</p>) :
-              ''
-          */}
-
-          <Link to="/user-details" className="user-content__edit-profile">
-            <ReactSVG className="icon icon_sm" src={Edit} />
-            Edit Profile
-          </Link>
-          <button
-            onClick={() => this.setState({ showPasswordModal: true })}
-            className="user-content__change-password"
-          >
-            Change Password
-          </button>
-          {userData.admin && (
-            <div>
-              <strong>Ampled Admin</strong>
-            </div>
-          )}
         </div>
       </div>
     );
@@ -833,7 +745,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   renderContent = () => (
     <div className="row content">
-      {this.renderUserInfo()}
+      <UserInfo userData={this.props.userData} />
       <div className="pages-container col-md-9">
         {this.props.userData.ownedPages.length > 0 && this.renderOwnedPages()}
         {this.props.userData.subscriptions.length > 0

@@ -2,7 +2,6 @@ import './../artist/artist.scss';
 import './user-settings.scss';
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -23,7 +22,6 @@ import { Button, Card, CardContent, CardActions } from '@material-ui/core';
 import { apiAxios } from '../../api/setup-axios';
 
 import { faImage } from '@fortawesome/free-solid-svg-icons';
-import { faStripe } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import tear_black from '../../images/backgrounds/background_tear_black.png';
 
@@ -40,6 +38,8 @@ import { Sticky } from '../shared/sticky/Sticky';
 import { PaymentStep } from '../artist/support/PaymentStep';
 
 import { UserInfo } from './UserInfo';
+import { OwnedPages } from './OwnedPages';
+import { SupportedPages } from './SupportedPages';
 
 const mapDispatchToProps = (dispatch) => ({
   getMe: bindActionCreators(getMeAction, dispatch),
@@ -189,22 +189,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
   calculateSupportTotalNumber = (supportLevel) =>
     Math.round((supportLevel * 100 + 30) / 0.971) / 100;
-
-  redirectToArtistPage = (artist) => {
-    if (artist.artistSlug && artist.artistSlug.length > 0) {
-      this.props.history.push(
-        routePaths.slugs.replace(':slug', artist.artistSlug),
-      );
-    } else if (artist.artistId) {
-      this.props.history.push(
-        routePaths.artists.replace(':id', artist.artistId),
-      );
-    } else if (artist.artistPageId) {
-      this.props.history.push(
-        routePaths.artists.replace(':id', artist.artistPageId),
-      );
-    }
-  };
+  s;
 
   requestApproval = async (artistSlug) => {
     try {
@@ -232,57 +217,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     }
   };
 
-  renderSocialImages = (artist) => {
-    if (!artist.image) {
-      return;
-    }
-    return (
-      <div>
-        <div className="details__info_title">
-          <Link to={`/artist/${artist.artistSlug}/promote`}>
-            Promote Your Page
-          </Link>
-        </div>
-        <div className="row no-gutters">
-          <div className="col-6">
-            <div className="details__info_title sm">Square</div>
-            <div className="details__promote_container">
-              {artist.promoteSquareImages.map((promoImage) => (
-                <a
-                  key={promoImage.name}
-                  className="details__promote_link"
-                  href={promoImage.url}
-                  download={promoImage.name}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FontAwesomeIcon icon={faImage} title={promoImage.name} />
-                </a>
-              ))}
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="details__info_title sm">Stories</div>
-            <div className="details__promote_container">
-              {artist.promoteStoryImages.map((promoImage) => (
-                <a
-                  key={promoImage.name}
-                  className="details__promote_link"
-                  href={promoImage.url}
-                  download={promoImage.name}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FontAwesomeIcon icon={faImage} title={promoImage.name} />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   renderSupporterShareImages = (artist) => {
     return (
       <div>
@@ -308,8 +242,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
       </div>
     );
   };
-
-  renderPagesTitle = (title: string) => <h1>{title}</h1>;
 
   renderCancelSubscriptionModal = () => {
     if (!this.state.subscription) {
@@ -392,255 +324,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     );
   };
 
-  renderOwnedPages = () => (
-    <div>
-      {this.renderPagesTitle('MY PAGES')}
-      <div className="pages row justify-content-center justify-content-md-start">
-        {this.props.userData.ownedPages.map((ownedPage) => (
-          <div
-            key={`artist-${ownedPage.artistId}`}
-            className="artist col-sm-6 col-md-4"
-          >
-            {ownedPage.image && (
-              <Image
-                publicId={ownedPage.image}
-                alt={ownedPage.name}
-                key={ownedPage.name}
-                className="artist__image"
-              >
-                <Transformation
-                  fetchFormat="auto"
-                  quality="auto"
-                  crop="fill"
-                  width={250}
-                  height={250}
-                  responsive_placeholder="blank"
-                />
-              </Image>
-            )}
-            <div
-              className="artist__image-border"
-              onClick={() => this.redirectToArtistPage(ownedPage)}
-            ></div>
-            <img className="tear__topper" src={tear_black} alt="" />
-            <div className="artist__info">
-              <p className="artist__info_role">
-                {ownedPage.role
-                  ? ownedPage.role.charAt(0).toUpperCase() +
-                    ownedPage.role.slice(1) +
-                    ' of'
-                  : ''}
-              </p>
-              <p
-                className="artist__info_name"
-                onClick={() => this.redirectToArtistPage(ownedPage)}
-              >
-                {ownedPage.name}
-              </p>
-              <div className="details">
-                <div className="details__info">
-                  <div className="row no-gutters">
-                    <div className="col-6">
-                      <div className="details__info_title">Supporters</div>
-                      <div className="details__info_value">
-                        {ownedPage.supportersCount || 0}
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="details__info_title">Monthly Total</div>
-                      <div className="details__info_value">
-                        $ {this.formatMoney(ownedPage.monthlyTotal / 100)}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row no-gutters">
-                    <div className="col-6">
-                      <div className="details__info_title">Last Post</div>
-                      <div className="details__info_value">
-                        {this.getFormattedDate(ownedPage.lastPost)}
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="details__info_title">Last Payout</div>
-                      <div className="details__info_value">
-                        {this.getFormattedDate(ownedPage.lastPayout)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {ownedPage.approved && (
-                  <div className="details__promote">
-                    <div className="row no-gutters">
-                      <div className="col-12">
-                        {this.renderSocialImages(ownedPage)}
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {ownedPage.role === 'admin' && (
-                  <div className="details__stripe">
-                    <div className="row no-gutters align-items-center">
-                      <div className="col-4">
-                        <FontAwesomeIcon
-                          className="icon details__stripe_icon"
-                          icon={faStripe}
-                        />
-                      </div>
-                      <div className="col-8">
-                        {ownedPage.isStripeSetup ? (
-                          <a
-                            href={ownedPage.stripeDashboard}
-                            className="details__stripe_link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Edit Payout Details
-                          </a>
-                        ) : (
-                          <a
-                            href={ownedPage.stripeSignup}
-                            className="details__stripe_link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#d9534f' }}
-                          >
-                            Set Up Payouts
-                          </a>
-                        )}
-                      </div>
-                      <div className="col-12">
-                        <a
-                          href={routePaths.editArtist.replace(
-                            ':slug',
-                            ownedPage.artistSlug,
-                          )}
-                          className="details__edit_link"
-                          rel="noopener noreferrer"
-                        >
-                          Edit Artist Details
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
-  renderSupportedArtists = () => (
-    <div>
-      {this.renderPagesTitle('SUPPORTING')}
-      <div className="pages row justify-content-center justify-content-md-start">
-        {this.props.userData.subscriptions.map((subscription) => (
-          <div
-            key={`artist-${subscription.artistPageId}`}
-            className="artist col-sm-6 col-md-4"
-          >
-            <Image
-              publicId={subscription.image}
-              alt={subscription.name}
-              key={subscription.name}
-              className="artist__image"
-            >
-              <Transformation
-                fetchFormat="auto"
-                quality="auto"
-                crop="fill"
-                width={250}
-                height={250}
-                responsive_placeholder="blank"
-              />
-            </Image>
-
-            <div
-              className="artist__image-border"
-              onClick={() => this.redirectToArtistPage(subscription)}
-            ></div>
-            <img className="tear__topper" src={tear_black} alt="" />
-            <div className="artist__info">
-              <p
-                className="artist__info_name"
-                onClick={() => this.redirectToArtistPage(subscription)}
-              >
-                {subscription.name}
-              </p>
-              <div className="details">
-                <div className="details__info">
-                  <div className="row no-gutters">
-                    <div className="col-8">
-                      <div className="details__info_title">Supporting At</div>
-                      <div className="details__info_value details__info_value_large">
-                        ${subscription.amount / 100}/Month
-                      </div>
-                      <div className="details__info_value details__info_value_small">
-                        ${this.calculateSupportTotal(subscription.amount / 100)}{' '}
-                        incl. fees
-                      </div>
-                    </div>
-                    <div className="col-4">
-                      <button
-                        className="link details__info_value details__info_value_change"
-                        name="Change"
-                        onClick={(event) => this.openModal(event, subscription)}
-                      >
-                        Change Amount
-                      </button>
-                      <button
-                        className="link details__info_value details__info_value_cancel"
-                        name="Cancel"
-                        onClick={(event) => this.openModal(event, subscription)}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                  <div className="row no-gutters">
-                    <div className="col-6">
-                      <div className="details__info_title">Support Date</div>
-                      <div className="details__info_value">
-                        {this.getFormattedDate(subscription.support_date)}
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="details__info_title">Last Post</div>
-                      <div className="details__info_value">
-                        {this.getFormattedDate(subscription.last_post_date)}
-                      </div>
-                    </div>
-                  </div>
-                  {subscription.artistApproved && (
-                    <div className="details__promote">
-                      <div className="row no-gutters">
-                        <div className="col-12">
-                          {this.renderSupporterShareImages(subscription)}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
-  renderEmptyArtists = () => (
-    <div>
-      {this.renderPagesTitle('SUPPORTED ARTISTS')}
-      <div className="pages row justify-content-center justify-content-md-start">
-        <div className="center col-md-8">
-          You currently don&apos;t support any artists.
-        </div>
-      </div>
-    </div>
-  );
-
   renderSetUpBanner = () => {
     const { ownedPages } = this.props.userData;
     const noStripe = ownedPages.filter((ownedPage) => !ownedPage.isStripeSetup);
@@ -690,8 +373,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
               Congrats! Your page is now eligible for approval. When you’re
               ready for us to take a look, request approval for{' '}
               {notApproved.map((page, index) => {
-                console.log(notApproved.length);
-                console.log(index);
                 if (
                   notApproved.length > 1 &&
                   notApproved.length === index + 1
@@ -747,10 +428,21 @@ class UserSettingsComponent extends React.Component<Props, any> {
     <div className="row content">
       <UserInfo userData={this.props.userData} />
       <div className="pages-container col-md-9">
-        {this.props.userData.ownedPages.length > 0 && this.renderOwnedPages()}
-        {this.props.userData.subscriptions.length > 0
-          ? this.renderSupportedArtists()
-          : this.renderEmptyArtists()}
+        {this.props.userData.ownedPages.length > 0 && (
+          <OwnedPages ownedPages={this.props.userData.ownedPages} />
+        )}
+        {this.props.userData.subscriptions.length > 0 ? (
+          <SupportedPages supportedPages={this.props.userData.subscriptions} />
+        ) : (
+          <div>
+            <h1>Supported Artists</h1>
+            <div className="pages row justify-content-center justify-content-md-start">
+              <div className="center col-md-8">
+                You currently don&apos;t support any artists.
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

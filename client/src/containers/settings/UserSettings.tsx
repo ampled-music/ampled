@@ -176,21 +176,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     this.closeModal('Change');
   };
 
-  formatMoney = (value) => {
-    if (isNaN(value)) {
-      return 0;
-    }
-
-    return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-  };
-
-  calculateSupportTotal = (supportLevel) =>
-    this.calculateSupportTotalNumber(supportLevel).toFixed(2);
-
-  calculateSupportTotalNumber = (supportLevel) =>
-    Math.round((supportLevel * 100 + 30) / 0.971) / 100;
-  s;
-
   requestApproval = async (artistSlug) => {
     try {
       const { data } = await apiAxios({
@@ -215,32 +200,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
         type: 'error',
       });
     }
-  };
-
-  renderSupporterShareImages = (artist) => {
-    return (
-      <div>
-        <div className="details__info_title">Promote This Page</div>
-        <div className="row">
-          <div className="col-12">
-            <div className="details__promote_container">
-              {artist.supporterImages.map((promoImage) => (
-                <a
-                  key={promoImage.name}
-                  className="details__promote_link"
-                  href={promoImage.url}
-                  download={promoImage.name}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FontAwesomeIcon icon={faImage} title={promoImage.name} />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
   };
 
   renderCancelSubscriptionModal = () => {

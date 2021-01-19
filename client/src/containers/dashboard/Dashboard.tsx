@@ -1,8 +1,6 @@
 import './dashboard.scss';
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import { ReactSVG } from 'react-svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -14,33 +12,21 @@ import { getMeAction } from '../../redux/me/get-me';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { config } from '../../config';
 
-import { Image, Transformation } from 'cloudinary-react';
-
 import { LicenseInfo } from '@material-ui/x-grid';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import {
-  FormControl,
-  IconButton,
-  MenuItem,
-  Select,
-  Tab,
-  Tabs,
-  Tooltip,
-} from '@material-ui/core';
+import { Tab, Tabs } from '@material-ui/core';
 
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { Modal } from '../shared/modal/Modal';
 import { PostForm } from '../artist/posts/post-form/PostForm';
 import StyleOverride from '../artist/StyleOverride';
 
-import Plus from '../../images/icons/Icon_Add-New.svg';
-import Edit from '../../images/icons/Icon_Edit.svg';
-
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
 import { initialState as subscriptionsInitialState } from '../../redux/subscriptions/initial-state';
 
 import ArtistSupporters from './ArtistSupporters';
+import ArtistPanel from './ArtistPanel';
 
 LicenseInfo.setLicenseKey(config.materialUi.key);
 
@@ -131,79 +117,6 @@ class DashboardComponent extends React.Component<Props, any> {
     }
   };
 
-  renderArtistPanel(color) {
-    const { userData } = this.props;
-    const { selectedArtist } = this.state;
-    const ownedPages = userData?.ownedPages;
-    let artist;
-    artist = selectedArtist;
-    console.log(artist);
-
-    return (
-      <>
-        <Image
-          publicId={artist.image}
-          alt={artist.name}
-          key={artist.name}
-          className="dashboard__panel_image"
-          style={{ borderColor: color }}
-        >
-          <Transformation
-            fetchFormat="auto"
-            quality="auto"
-            crop="fill"
-            width={80}
-            height={80}
-            responsive_placeholder="blank"
-          />
-        </Image>
-
-        {ownedPages.length > 1 ? (
-          <FormControl>
-            <Select
-              id="artist-page-select"
-              name="selectedArtist"
-              value={selectedArtist}
-              onChange={this.handleChange}
-            >
-              {ownedPages.map((page, index) => (
-                <MenuItem value={page} key={`menu-key${index}`}>
-                  {page.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        ) : (
-          <div id="artist-page-select">{ownedPages[0].name}</div>
-        )}
-
-        {artist && (
-          <div className="dashboard__panel_buttons">
-            <Tooltip title="Add New Post">
-              <IconButton
-                onClick={this.openPostModal}
-                className="dashboard__panel_buttons_plus"
-                style={{ backgroundColor: artist.artistColor }}
-              >
-                <ReactSVG className="icon icon_white" src={Plus} />
-              </IconButton>
-            </Tooltip>
-            <Link to={`/artist/${artist.artistSlug}/edit`}>
-              <Tooltip title={`Edit ${artist.name}`}>
-                <IconButton
-                  className="dashboard__panel_buttons_settings"
-                  style={{ backgroundColor: artist.artistColor }}
-                >
-                  <ReactSVG className="icon icon_white" src={Edit} />
-                </IconButton>
-              </Tooltip>
-            </Link>
-          </div>
-        )}
-      </>
-    );
-  }
-
   renderArtistIncome() {
     // const { userData } = this.props;
     // const { selectedArtist } = this.state;
@@ -224,6 +137,10 @@ class DashboardComponent extends React.Component<Props, any> {
   render() {
     const { userData } = this.props;
     const { tabValue, selectedArtist } = this.state;
+
+    // const { artistColor, artistId, isStripeSetup } = selectedArtist;
+
+    console.log('selectedArtist', selectedArtist);
 
     let artist;
     artist = selectedArtist;
@@ -264,11 +181,14 @@ class DashboardComponent extends React.Component<Props, any> {
 
     return (
       <ThemeProvider theme={theme}>
-        <StyleOverride accentColor={artistColor} />
+        {/* <StyleOverride accentColor={artistColor} /> */}
         <div className="dashboard">
           {userData && (
             <div className="dashboard__panel">
-              {this.renderArtistPanel(artistColor)}
+              <ArtistPanel
+                ownedPages={userData?.ownedPages}
+                selectedArtist={selectedArtist}
+              />
               <div className="dashboard__panel_links">
                 <Tabs
                   orientation="vertical"
@@ -299,13 +219,22 @@ class DashboardComponent extends React.Component<Props, any> {
 
           <div className="dashboard__data">
             <TabPanel tabValue={tabValue} index={0}>
-              {this.renderArtistHome()}
+              {/* <ArtistHome
+                userData={userData}
+                selectedArtist={selectedArtist}
+              /> */}
             </TabPanel>
             <TabPanel tabValue={tabValue} index={1}>
-              <ArtistSupporters userData={userData} selectedArtist={selectedArtist} />
+              <ArtistSupporters
+                userData={userData}
+                selectedArtist={selectedArtist}
+              />
             </TabPanel>
             <TabPanel tabValue={tabValue} index={2}>
-              {this.renderArtistIncome()}
+              {/* <ArtistIncome
+                userData={userData}
+                selectedArtist={selectedArtist}
+              /> */}
             </TabPanel>
           </div>
         </div>

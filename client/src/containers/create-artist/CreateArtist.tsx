@@ -4,7 +4,6 @@ import './../artist/posts/post/post.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Redirect } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
@@ -18,27 +17,24 @@ import {
   FormControlLabel,
   InputAdornment,
   Button,
+  Checkbox,
   Card,
   CardContent,
-  CircularProgress,
-  Checkbox,
-  IconButton,
+  CardActions,
 } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AddPlus from '../../images/icons/Icon_Add-Plus.svg';
-import Close from '../../images/icons/Icon_Close-Cancel.svg';
 import Instagram from '../../images/icons/Icon_Instagram.svg';
 import Twitter from '../../images/icons/Icon_Twitter.svg';
 import Bandcamp from '../../images/icons/Icon_Bandcamp.svg';
 import Youtube from '../../images/icons/Icon_Youtube.svg';
 import Link1 from '../../images/icons/Icon_Link_1.svg';
-import PhotoIcon from '../../images/icons/Icon_Photo.svg';
 
 import { faStripe } from '@fortawesome/free-brands-svg-icons';
 import ChromePicker from 'react-color/lib/Chrome';
 
 import { theme } from './theme';
 import tear from '../../images/full_page_tear.png';
+import Close from '../../images/icons/Icon_Close-Cancel.svg';
 
 import { Store } from '../../redux/configure-store';
 
@@ -47,11 +43,11 @@ import { deleteArtistAction } from '../../redux/artists/delete';
 
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
+import { UploadImage } from '../shared/upload/UploadImage';
 
-import { deleteFileFromCloudinary } from '../../api/cloudinary/delete-image';
-import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
-import { Image, Transformation } from 'cloudinary-react';
 import { Modal } from '../shared/modal/Modal';
+
+import { Members } from './Members';
 
 interface CreateArtistProps {
   me: any;
@@ -60,478 +56,6 @@ interface CreateArtistProps {
   showToast: Function;
   deleteArtist: Function;
 }
-
-interface ImageUploaderProps {
-  altText: string;
-  imageObject?: {
-    url: string;
-    public_id: string;
-  };
-  setImage: Function;
-  showToast: Function;
-}
-
-class ImageUploader extends React.Component<ImageUploaderProps> {
-  state = {
-    loadingImage: false,
-    deleteToken: undefined,
-    publicId: null,
-  };
-
-  processImage = async (e) => {
-    const imageFile = e.target.files[0];
-
-    if (!imageFile) {
-      return;
-    }
-
-    if (
-      ['image/gif', 'image/jpeg', 'image/png'].indexOf(imageFile.type) === -1
-    ) {
-      this.props.showToast({
-        message: 'Please select an image file.',
-        type: 'error',
-      });
-
-      return;
-    }
-
-    this.setState({ loadingImage: true });
-
-    if (this.state.deleteToken) {
-      this.removeImage();
-    }
-
-    const cloudinaryResponse = await uploadFileToCloudinary(imageFile);
-
-    if (cloudinaryResponse) {
-      this.setState({
-        deleteToken: cloudinaryResponse.delete_token,
-        loadingImage: false,
-        publicId: cloudinaryResponse.public_id,
-      });
-      this.props.setImage({
-        url: cloudinaryResponse.secure_url,
-        public_id: cloudinaryResponse.public_id,
-      });
-    } else {
-      this.setState({
-        loadingImage: false,
-      });
-
-      this.props.showToast({
-        message:
-          'Something went wrong with your image upload. Please try again.',
-        type: 'error',
-      });
-    }
-  };
-
-  removeImage = async () => {
-    deleteFileFromCloudinary(this.state.deleteToken);
-    this.setState({
-      imageObject: null,
-      deleteToken: undefined,
-      publicId: null,
-    });
-    this.props.setImage(null);
-  };
-
-  render() {
-    const { altText, imageObject } = this.props;
-    const { loadingImage } = this.state;
-    let body: {};
-    if (imageObject) {
-      body = (
-        <>
-          <div className="image-upload__image_container">
-            <Image
-              className="image-upload__image_image"
-              publicId={imageObject.public_id}
-              alt={altText}
-            >
-              <Transformation
-                fetchFormat="auto"
-                quality="auto"
-                crop="fill"
-                width={130}
-                height={130}
-                responsive_placeholder="blank"
-              />
-            </Image>
-          </div>
-          {/* <span className="preview__name">{altText}</span> */}
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <label>
-              <Button
-                className="btn btn-upload"
-                variant="outlined"
-                component="span"
-                onClick={this.removeImage}
-              >
-                Remove
-              </Button>
-            </label>
-            <label htmlFor={`image-file-${altText}`}>
-              <Button
-                className="btn btn-upload"
-                variant="outlined"
-                component="span"
-              >
-                Replace
-              </Button>
-            </label>
-          </div>
-        </>
-      );
-    } else if (loadingImage) {
-      body = <CircularProgress className="loading-circle" />;
-    } else {
-      body = (
-        <>
-          <div className="image-upload__image_container">
-            <ReactSVG className="icon icon_black icon_100" src={PhotoIcon} />
-          </div>
-          <label
-            htmlFor={`image-file-${altText}`}
-            style={{ display: 'flex', justifyContent: 'center' }}
-          >
-            <Button
-              className="btn btn-ampled"
-              variant="outlined"
-              component="span"
-            >
-              Upload {altText}
-            </Button>
-          </label>
-        </>
-      );
-    }
-
-    return (
-      <div
-        className={`image-upload__image ${
-          altText === 'Primary' ? 'primary' : 'secondary'
-        }`}
-      >
-        <input
-          style={{ display: 'none' }}
-          id={`image-file-${altText}`}
-          type="file"
-          aria-label="Image file"
-          accept="image/*"
-          onChange={this.processImage}
-        />
-        {body}
-      </div>
-    );
-  }
-}
-
-const Members = ({
-  bandName,
-  members,
-  addMember,
-  removeMember,
-  handleChange,
-  userData,
-  hideMembers,
-  setHideMembers,
-}) => {
-  return (
-    <div className="container">
-      <div className="artist-members">
-        <div className="row">
-          <div className="col-md-6">
-            <div className="create-artist__title">Add Members</div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
-            <div className="create-artist__copy">
-              Who else is a member of{' '}
-              {bandName && bandName.length ? bandName : 'your band'}? Add them
-              here. Admins have the ability to add / remove members and access /
-              edit payout info. After you finish filling out this form, we’ll
-              send them an email invite to join the page.
-              {/* This step is optional, but we encourage you to list the members of
-              your project or band to further connect with your audience and
-              give them insight into your own interests. The order in which they
-              will appear can be altered below. */}
-            </div>
-          </div>
-          {/* <div className="col-md-6">
-            <div className="create-artist__copy">
-              All members marked as admins will be notified of payouts, changes,
-              and updates, unless specified otherwise.
-            </div>
-          </div> */}
-        </div>
-
-        <div className="row">
-          {members.map((v, i) => (
-            <Member
-              key={i}
-              handleChange={handleChange}
-              removeMember={removeMember}
-              index={i}
-              userData={userData}
-              {...v}
-            />
-          ))}
-          <div className="col-md-6 col-sm-12" style={{ marginBottom: '8px' }}>
-            <Card className="artist-members__card">
-              <CardContent>
-                <div className="artist-members__card_add" onClick={addMember}>
-                  <ReactSVG className="icon icon_black icon_lg" src={AddPlus} />
-                  <span>Add a Member</span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12 col-sm-12">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="hideMembers"
-                  checked={hideMembers}
-                  onChange={(e) => {
-                    setHideMembers(e.target.checked);
-                  }}
-                />
-              }
-              label="Hide member avatars &amp; names on page &amp; posts"
-            />
-            <br />
-            <span
-              className="create-artist__copy"
-              style={{ fontSize: '0.8rem' }}
-            >
-              Your name and avatar will still appear when posting or replying to
-              comments.
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-Members.propTypes = {
-  bandName: PropTypes.string,
-  members: PropTypes.array,
-  addMember: PropTypes.func,
-  removeMember: PropTypes.func,
-  handleChange: PropTypes.func,
-  userData: PropTypes.object,
-  hideMembers: PropTypes.bool,
-  setHideMembers: PropTypes.func,
-};
-
-const Member = ({
-  isAdmin,
-  firstName,
-  lastName,
-  role,
-  email,
-  // instagram,
-  // twitter,
-  // photo,
-  index,
-  handleChange,
-  removeMember,
-  userData,
-}) => {
-  const isMe = email === userData.email;
-  return (
-    <div className="col-md-6 col-sm-12" style={{ marginBottom: '8px' }}>
-      <Card className="artist-members__card">
-        <CardContent className="container">
-          <div
-            style={{
-              position: 'absolute',
-              right: '16px',
-              top: '0px',
-              cursor: 'pointer',
-            }}
-          >
-            {!isMe && (
-              <IconButton
-                aria-label="close"
-                color="primary"
-                onClick={() => removeMember(index)}
-              >
-                <ReactSVG className="icon" src={Close} />
-              </IconButton>
-            )}
-          </div>
-          <div className="row">
-            <div className="col-md-7 col-sm-12">
-              <div className="create-artist__title">
-                {isMe ? 'You' : 'Member'}
-              </div>
-            </div>
-            <div className="col-md-4 col-sm-12">
-              <div className="artist-members__card_admin">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="isAdmin"
-                      checked={isAdmin}
-                      disabled={isMe}
-                      onChange={(e) => handleChange(e, index)}
-                    />
-                  }
-                  label="Make Admin"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-3 col-sm-12">
-              <div className="create-artist__subtitle">Name</div>
-              <h6>Required</h6>
-            </div>
-            <div className="col-md-9 col-sm-12">
-              <TextField
-                name="firstName"
-                label="First Name"
-                id="first-name"
-                value={firstName || ''}
-                onChange={(e) => handleChange(e, index)}
-                fullWidth
-                disabled={isMe}
-                required
-              />
-              <TextField
-                name="lastName"
-                label="Last Name"
-                id="last-name"
-                value={lastName || ''}
-                onChange={(e) => handleChange(e, index)}
-                disabled={isMe}
-                fullWidth
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-3 col-sm-12">
-              <div className="create-artist__subtitle">Email</div>
-              <h6>Required</h6>
-            </div>
-            <div className="col-md-9 col-sm-12">
-              <TextField
-                name="email"
-                placeholder="Email"
-                id="email"
-                value={email || ''}
-                onChange={(e) => handleChange(e, index)}
-                inputProps={{ maxLength: 50 }}
-                disabled={isMe}
-                // helperText={`${role.length - 50} characters left`}
-                fullWidth
-                required
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-3 col-sm-12">
-              <div className="create-artist__subtitle">Role</div>
-            </div>
-            <div className="col-md-9 col-sm-12">
-              <TextField
-                name="role"
-                placeholder={'e.g. "singer", "drums"'}
-                id="role"
-                value={role || ''}
-                onChange={(e) => handleChange(e, index)}
-                inputProps={{ maxLength: 50 }}
-                // disabled={isMe}
-                // helperText={`${role.length - 50} characters left`}
-                fullWidth
-              />
-            </div>
-          </div>
-          {/* <div className="row">
-            <div className="col-3">
-              <div className="create-artist__subtitle">Photo</div>
-            </div>
-            <div className="col-9"></div>
-          </div> */}
-          {/* <div className="row">
-            <div className="col-3">
-              <div className="create-artist__subtitle">Social</div>
-            </div>
-            <div className="col-9">
-              <TextField
-                name="twitter"
-                id="twitter"
-                placeholder="Twitter"
-                value={twitter || ''}
-                onChange={handleChange}
-                fullWidth
-                disabled={isMe}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <ReactSVG className="icon" src={Twitter} />
-                    </InputAdornment>
-                  ),
-                }}
-                InputLabelProps={{ shrink: true }}
-              />
-              <TextField
-                name="instagram"
-                id="instagram"
-                placeholder="Instagram"
-                value={instagram || ''}
-                onChange={handleChange}
-                fullWidth
-                disabled={isMe}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <ReactSVG className="icon" src={Instagram} />
-                    </InputAdornment>
-                  ),
-                }}
-                InputLabelProps={{ shrink: true }}
-              />
-            </div>
-          </div> */}
-          <div className="row">
-            <div className="col-12 create-artist__copy">
-              <h6>
-                {isMe ? 'You' : 'Members'} can edit {isMe ? 'your ' : 'their '}
-                name, photo, social handles, etc. in {isMe ? 'your ' : 'their '}
-                <a href="/user-details" target="_blank">
-                  user details
-                </a>
-                {isMe ? '' : ' after they register'}.
-              </h6>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-};
-
-Member.propTypes = {
-  isAdmin: PropTypes.bool,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
-  role: PropTypes.string,
-  email: PropTypes.string,
-  index: PropTypes.number,
-  handleChange: PropTypes.func,
-  removeMember: PropTypes.func,
-  userData: PropTypes.shape({
-    email: PropTypes.string,
-  }),
-};
 
 class CreateArtist extends React.Component<CreateArtistProps, any> {
   randomColor = () => {
@@ -1100,7 +624,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           <div className="row">
             {imageTypes.map((type, index) => (
               <div className="col-md-4 col-sm-12" key={index}>
-                <ImageUploader
+                <UploadImage
                   altText={type}
                   setImage={imageSetter(index)}
                   imageObject={images[index]}
@@ -1390,7 +914,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     this.setState({
       loading: true,
     });
-    if (!this.props.editMode) { 
+    if (!this.props.editMode) {
       const { data } = await apiAxios({
         method: 'post',
         url: '/artist_pages.json',
@@ -1581,32 +1105,29 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             this.setState({ showConfirmRemoveMember: false });
           }}
         >
-          <div className="delete-post-modal__container">
-            <img className="tear tear__topper" src={tear} alt="" />
-            <div className="delete-post-modal">
-              <div className="delete-post-modal__title">
-                <h4>Are you sure?</h4>
-              </div>
-              <div className="delete-post-modal__actions action-buttons">
-                <Button
-                  className="cancel-button"
-                  onClick={() => {
-                    this.setState({ showConfirmRemoveMember: false });
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  className="publish-button"
-                  onClick={() => {
-                    this.removeMember(this.state.confirmRemoveMemberIndex);
-                  }}
-                >
-                  Remove Member
-                </Button>
-              </div>
-            </div>
-          </div>
+          <Card className="artist-members__card">
+            <CardContent>
+              <h4>Are you sure?</h4>
+            </CardContent>
+            <CardActions className="action-buttons">
+              <Button
+                className="cancel-button"
+                onClick={() => {
+                  this.setState({ showConfirmRemoveMember: false });
+                }}
+              >
+                <ReactSVG className="icon" src={Close} />
+              </Button>
+              <Button
+                className="publish-button"
+                onClick={() => {
+                  this.removeMember(this.state.confirmRemoveMemberIndex);
+                }}
+              >
+                Remove Member
+              </Button>
+            </CardActions>
+          </Card>
         </Modal>
         <MuiThemeProvider theme={theme}>
           {this.renderHeader()}

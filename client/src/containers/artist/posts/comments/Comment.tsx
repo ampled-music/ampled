@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ReactSVG } from 'react-svg';
 
-import tear from '../../../../images/backgrounds/background_tear.png';
 import Remove from '../../../../images/icons/Icon_Remove-Delete.svg';
 import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
 import { Divider, Button, IconButton } from '@material-ui/core';
@@ -40,7 +39,6 @@ const renderBody = (text: string) => (
 
 const renderDeleteModal = ({ deleteComment, commentId, setShowModal }) => (
   <div className="delete-post-modal__container">
-    <img className="tear tear__topper" src={tear} alt="" />
     <div className="delete-post-modal">
       <div className="delete-post-modal__title">
         <h4>Are you sure?</h4>

@@ -144,11 +144,7 @@ export class UploadImage extends React.Component<UploadImageProps> {
             htmlFor={`image-file-${altText}`}
             style={{ display: 'flex', justifyContent: 'center' }}
           >
-            <Button
-              className="btn btn-ampled"
-              variant="outlined"
-              component="span"
-            >
+            <Button variant="outlined" component="span">
               Upload {altText}
             </Button>
           </label>

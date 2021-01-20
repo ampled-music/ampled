@@ -10,27 +10,13 @@ import { ReactSVG } from 'react-svg';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import {
-  TextField,
-  Input,
-  Radio,
-  RadioGroup,
   FormControlLabel,
-  InputAdornment,
   Button,
   Checkbox,
   Card,
   CardContent,
   CardActions,
 } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Instagram from '../../images/icons/Icon_Instagram.svg';
-import Twitter from '../../images/icons/Icon_Twitter.svg';
-import Bandcamp from '../../images/icons/Icon_Bandcamp.svg';
-import Youtube from '../../images/icons/Icon_Youtube.svg';
-import Link1 from '../../images/icons/Icon_Link_1.svg';
-
-import { faStripe } from '@fortawesome/free-brands-svg-icons';
-import ChromePicker from 'react-color/lib/Chrome';
 
 import { theme } from './theme';
 import tear from '../../images/full_page_tear.png';
@@ -43,11 +29,13 @@ import { deleteArtistAction } from '../../redux/artists/delete';
 
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
-import { UploadImage } from '../shared/upload/UploadImage';
 
 import { Modal } from '../shared/modal/Modal';
 
 import { Members } from './Members';
+import { Info } from './Info';
+import { Images } from './Images';
+import { Color } from './Color';
 
 interface CreateArtistProps {
   me: any;
@@ -317,382 +305,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     this.setState({ [event.target.name]: event.target.checked });
   };
 
-  renderHeader = () => {
-    return (
-      <div
-        className="create-artist__header"
-        style={{ backgroundColor: this.state.randomColor }}
-      >
-        <div className="container">
-          <h2>{this.props.editMode ? 'Edit' : 'Create'} Your Artist Page</h2>
-        </div>
-        <img className="create-artist__header_tear" src={tear} alt="" />
-      </div>
-    );
-  };
-
-  renderAbout = () => {
-    return (
-      <div className="container">
-        <div className="artist-about">
-          {this.props.editMode ? (
-            <div className="create-artist__copy">
-              <p>
-                Click Save Your Page at the bottom of this form to save your
-                work.
-              </p>
-            </div>
-          ) : (
-            <div className="create-artist__copy">
-              <p>
-                <b>Double-check your artist/band name and custom link</b>, as
-                you can&#39;t change them later. (You can edit everything else.)
-              </p>
-              <p>
-                Click Preview Your Page at the bottom of this form to save your
-                work.
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  renderInfo = () => {
-    const { artistName } = this.state;
-    const displayName = artistName || 'Band';
-    return (
-      <div className="container">
-        <div className="artist-custom">
-          <div className="row">
-            <div className="col-md-4 col-sm-12">
-              <div className="create-artist__subtitle">Artist or Band Name</div>
-              <h6>Required</h6>
-            </div>
-            <div className="col-md-8 col-sm-12">
-              <TextField
-                name="artistName"
-                placeholder="Name"
-                id="name"
-                value={this.state.artistName || ''}
-                onChange={this.handleChange}
-                fullWidth
-                disabled={!!this.props.editMode}
-                required
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4 col-sm-12">
-              <div className="create-artist__subtitle">Your Custom Link</div>
-              <h6>Required</h6>
-              <h6>Letters and dashes only.</h6>
-            </div>
-            <div className="col-md-8 col-sm-12">
-              <TextField
-                name="artistSlug"
-                id="artistSlug"
-                value={this.state.artistSlug || ''}
-                onChange={this.handleChange}
-                fullWidth
-                required
-                disabled={!!this.props.editMode}
-                InputProps={{
-                  autoComplete: 'off',
-                  inputProps: { autoCapitalize: 'off', autoCorrect: 'off' },
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      ampled.com/artist/
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4 col-sm-12">
-              <div className="create-artist__subtitle">
-                What Sounds More Accurate?
-              </div>
-              <h6>Required</h6>
-            </div>
-            <div className="col-md-8 col-sm-12">
-              <RadioGroup
-                aria-label="artistVerb"
-                name="artistVerb"
-                value={this.state.artistVerb || ''}
-                onChange={this.handleChange}
-              >
-                <FormControlLabel
-                  value="are"
-                  control={<Radio />}
-                  label={`${displayName} are recording a new record.`}
-                />
-                <FormControlLabel
-                  value="is"
-                  control={<Radio />}
-                  label={`${displayName} is recording a new record.`}
-                />
-              </RadioGroup>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4 col-sm-12">
-              <div className="create-artist__subtitle">Location</div>
-            </div>
-            <div className="col-md-8 col-sm-12">
-              <TextField
-                name="artistLocation"
-                placeholder="Location"
-                id="location"
-                value={this.state.artistLocation || ''}
-                onChange={this.handleChange}
-                fullWidth
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4 col-sm-12">
-              <div className="create-artist__subtitle">Written Message</div>
-              <h6>Required</h6>
-              <h6>
-                This message is featured on your artist page.
-                <br />
-                You can edit this later.
-              </h6>
-            </div>
-            <div className="col-md-8 col-sm-12">
-              <TextField
-                name="artistMessage"
-                label="Who are you? Why should people support you?"
-                id="message"
-                value={this.state.artistMessage || ''}
-                onChange={this.handleChange}
-                multiline
-                rows="5"
-                fullWidth
-                variant="outlined"
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4 col-sm-12">
-              <div className="create-artist__subtitle">Social</div>
-              <h6>
-                For Bandcamp, Twitter, and Instagram just enter your username,
-                with no &quot;@&quot;.
-                <br />
-                For Youtube and External URL enter the full URL.
-              </h6>
-            </div>
-            <div className="col-md-5 col-sm-12">
-              <div className="social-input">
-                <ReactSVG className="icon icon_black icon_sm" src={Twitter} />
-                <TextField
-                  name="artistTwitter"
-                  id="twitter"
-                  value={this.state.artistTwitter || ''}
-                  onChange={this.handleChange}
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        twitter.com/
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </div>
-              <div className="social-input">
-                <ReactSVG className="icon icon_black icon_sm" src={Instagram} />
-                <TextField
-                  name="artistInstagram"
-                  id="instagram"
-                  value={this.state.artistInstagram || ''}
-                  onChange={this.handleChange}
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        instagram.com/
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </div>
-              <div className="social-input">
-                <ReactSVG className="icon icon_black icon_sm" src={Bandcamp} />
-                <Input
-                  name="artistBandcamp"
-                  id="bandcamp"
-                  value={this.state.artistBandcamp || ''}
-                  onChange={this.handleChange}
-                  fullWidth
-                  endAdornment={
-                    <InputAdornment position="end">
-                      .bandcamp.com
-                    </InputAdornment>
-                  }
-                />
-              </div>
-              <div className="url-input">
-                <ReactSVG className="icon icon_black icon_sm" src={Youtube} />
-                <TextField
-                  name="artistYoutube"
-                  id="youtube"
-                  placeholder="https://youtube.com/your-url"
-                  value={this.state.artistYoutube || ''}
-                  onChange={this.handleChange}
-                  fullWidth
-                />
-              </div>
-              <div className="url-input">
-                <ReactSVG className="icon icon_black icon_sm" src={Link1} />
-                <TextField
-                  name="artistExternal"
-                  id="external"
-                  placeholder="https://yoursite.com"
-                  value={this.state.artistExternal || ''}
-                  onChange={this.handleChange}
-                  fullWidth
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4 col-sm-12">
-              <div className="create-artist__subtitle">Video Message</div>
-              <h6>
-                This video is featured on your artist page.
-                <br />
-                You can add this later.
-              </h6>
-            </div>
-            <div className="col-md-5 col-sm-12">
-              <TextField
-                name="artistVideo"
-                label="Video URL (Vimeo or YouTube)"
-                id="video-message"
-                value={this.state.artistVideo || ''}
-                onChange={this.handleChange}
-                fullWidth
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  renderImages = () => {
-    const { images } = this.state;
-    const imageSetter = (index) => (cloudinary) => {
-      if (cloudinary) {
-        images[index] = {
-          url: cloudinary.url,
-          public_id: cloudinary.public_id,
-          order: index,
-        };
-      } else {
-        images[index] = null;
-      }
-      this.setState({ images });
-    };
-
-    const imageTypes = ['Primary', 'Photo #2', 'Photo #3'];
-
-    return (
-      <div className="container">
-        <div className="image-upload">
-          <div className="row">
-            <div className="col-md-6 col-sm-12">
-              <div className="create-artist__subtitle">Featured Images</div>
-              <h6>
-                Minimum resolution: 700 X 700
-                <br />
-                Maximum size: 5mb
-              </h6>
-              {/* <div className="create-artist__copy">
-                You can have several photos for your profile, but there can be
-                only one profile photo, which will be used to identify you to
-                your supporters in certain scenarios. Select your primary photo
-                and then up to two secondary photos for your profile.
-              </div> */}
-            </div>
-          </div>
-          <div className="row">
-            {imageTypes.map((type, index) => (
-              <div className="col-md-4 col-sm-12" key={index}>
-                <UploadImage
-                  altText={type}
-                  setImage={imageSetter(index)}
-                  imageObject={images[index]}
-                  showToast={this.props.showToast}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  renderColor = () => {
-    return (
-      <div className="artist-color">
-        <div
-          className="primary-color"
-          style={{ backgroundColor: this.state.artistColor }}
-        >
-          <div className="container">
-            <div className="row justify-content-between">
-              <div className="col-md-6 col-sm-12">
-                <div className="artist-color__info">
-                  <div className="create-artist__subtitle">Accent Color</div>
-                  <div className="create-artist__copy">
-                    <p>
-                      Select a color for your artist page. This color will be
-                      used as accents on both your page and around the site.
-                    </p>
-                    <p>
-                      The lighter version (20% opacity) of the color is how it
-                      will appear in certain rare instances.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4 col-sm-12">
-                <div className="artist-color__picker">
-                  <ChromePicker
-                    color={
-                      this.state.artistColor
-                        ? this.state.artistColor
-                        : this.state.randomColor
-                    }
-                    onChangeComplete={this.handleColorChange}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="secondary-color"
-          style={{ backgroundColor: this.state.artistColorAlpha }}
-        >
-          <div className="container">
-            <div className="row">
-              <div className="col-12">
-                <div className="artist-color__opacity">20% Opacity</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   addMember = () => {
     this.setState({
       members: [
@@ -726,63 +338,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       ],
       showConfirmRemoveMember: false,
     });
-  };
-
-  renderPayment = () => {
-    return (
-      <div className="container">
-        <div className="artist-payment">
-          <div className="row justify-content-between">
-            <div className="col-6">
-              <div className="create-artist__title">Payments</div>
-              <div className="create-artist__copy">
-                All of Ampled payments are handled through Stripe. Create an
-                account and agree to our terms of use to get started.
-              </div>
-            </div>
-            <div className="col-3">
-              <div className="center">
-                <FontAwesomeIcon
-                  className="artist-payment__stripe_icon"
-                  icon={faStripe}
-                />
-                <a
-                  href="https://stripe.com/about"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn link"
-                >
-                  Learn more about Stripe
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="row justify-content-between">
-            <div className="col-6">
-              <FormControlLabel
-                control={
-                  <Checkbox name="StripeTerms" onChange={this.handleChange} />
-                }
-                label="I agree to the Terms of Use."
-              />
-            </div>
-            <div className="col-3">
-              <div className="center">
-                <div className="action-buttons">
-                  <Button
-                    href="https://stripe.com/about"
-                    target="_blank"
-                    className="publish-button"
-                  >
-                    Create your account
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
   };
 
   updateMemberDetails = (e, index) => {
@@ -1130,12 +685,51 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           </Card>
         </Modal>
         <MuiThemeProvider theme={theme}>
-          {this.renderHeader()}
-          {/* {this.renderNav()} */}
-          {this.renderAbout()}
-          {this.renderInfo()}
-          {this.renderImages()}
-          {this.renderColor()}
+          <div
+            className="create-artist__header"
+            style={{ backgroundColor: this.state.randomColor }}
+          >
+            <div className="container">
+              <h2>
+                {this.props.editMode ? 'Edit' : 'Create'} Your Artist Page
+              </h2>
+            </div>
+            <img className="create-artist__header_tear" src={tear} alt="" />
+          </div>
+          <div className="container">
+            <div className="artist-about">
+              {this.props.editMode ? (
+                <div className="create-artist__copy">
+                  <p>
+                    Click Save Your Page at the bottom of this form to save your
+                    work.
+                  </p>
+                </div>
+              ) : (
+                <div className="create-artist__copy">
+                  <p>
+                    <b>Double-check your artist/band name and custom link</b>,
+                    as you can&#39;t change them later. (You can edit everything
+                    else.)
+                  </p>
+                  <p>
+                    Click Preview Your Page at the bottom of this form to save
+                    your work.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+          <Info
+            state={this.state}
+            handleChange={this.handleChange}
+            editMode={this.props.editMode}
+          />
+          <Images images={this.state.images} showToast={this.props.showToast} />
+          <Color
+            state={this.state}
+            handleColorChange={this.handleColorChange}
+          />
           <Members
             bandName={this.state.artistName}
             members={this.state.members}

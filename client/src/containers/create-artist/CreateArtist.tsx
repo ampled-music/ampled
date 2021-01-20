@@ -740,7 +740,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             hideMembers={this.state.hideMembers}
             setHideMembers={(val) => this.setState({ hideMembers: val })}
           />
-          {/* {this.renderPayment()} */}
           <div className="container">
             {!this.props.editMode && (
               <div className="row justify-content-center">

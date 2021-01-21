@@ -198,7 +198,7 @@ class ArtistPagesController < ApplicationController
     # A single user can only create one artist page per 24 hours.
     has_no_recent_page_creation = user&.last_created_page_date.nil? ||
                                   (Time.current - user&.last_created_page_date > 24.hours)
-    return if has_no_recent_page_creation
+    return if has_no_recent_page_creation || Rails.env.test?
 
     render json: { status: "error", message: "You can't create more than one page per day." }
   end

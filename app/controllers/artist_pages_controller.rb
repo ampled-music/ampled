@@ -114,6 +114,12 @@ class ArtistPagesController < ApplicationController
   def update
     old_image_ids = @artist_page.images.map(&:id)
     if @artist_page.update(artist_page_params)
+      if artist_page_params[:application_fee_percent].present?
+        UpdateApplicationFeePercentJob.perform_async(
+          @artist_page.id,
+          artist_page_params[:application_fee_percent]
+        )
+      end
       Image.where(id: old_image_ids).delete_all unless has_no_images
       set_members unless has_no_members
       render json: { status: "ok", message: "Your page has been updated!" }
@@ -252,7 +258,7 @@ class ArtistPagesController < ApplicationController
     params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :bandcamp_handle,
                                         :youtube_handle, :external, :banner_image_url, :slug, :location,
                                         :accent_color, :video_url, :verb_plural, :members, :hide_members,
-                                        images_attributes: Image::PERMITTED_PARAMS)
+                                        :application_fee_percent, images_attributes: Image::PERMITTED_PARAMS)
   end
 
   # Helper functions for creating / updating an artist page.

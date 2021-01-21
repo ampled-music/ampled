@@ -75,4 +75,8 @@ class User < ApplicationRecord
   def subscribed?(artist_page)
     supported_artists.include?(artist_page)
   end
+
+  def last_created_page_date
+    owned_pages.order(created_at: :desc).first&.created_at
+  end
 end

@@ -191,8 +191,20 @@ class ArtistPagesController < ApplicationController
     # BA - Was this actually a problem? Could we current_user.reload at the top of the method instead?
     # SA - yeah, current_user.reload wasn't working for some reason :(
     user = User.find_by(id: current_user&.id)
+
     # Only logged-in users who have confirmed their emails may create artist pages.
-    render json: { status: "error", message: "Please confirm your email address first." } if user&.confirmed_at.nil?
+    if user&.confirmed_at.nil?
+      return render json: { status: "error", message: "Please confirm your email address first." }
+    end
+
+    # A single user can only create one artist page per 24 hours.
+    recent_page_creation = user&.last_created_page_date.present? && user.last_created_page_date > 1.day.ago
+    if recent_page_creation && !Rails.env.test?
+      return render json: { status: "error", message: "You can't create more than one page per day." }
+    end
+
+    # Otherwise, we're good to go
+    true
   end
 
   def missing_params_error

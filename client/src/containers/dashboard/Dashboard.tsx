@@ -165,7 +165,7 @@ class DashboardComponent extends React.Component<Props, any> {
 
     return (
       <ThemeProvider theme={theme}>
-        {/* <StyleOverride accentColor={artistColor} /> */}
+        <StyleOverride accentColor={artistColor} />
         <div className="dashboard">
           {userData && (
             <div className="dashboard__panel">

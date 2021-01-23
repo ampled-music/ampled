@@ -38,7 +38,7 @@ export const CardOverview = ({ selectedArtist }: CardOverviewProps) => {
         </div>
       </CardContent>
       <CardActions>
-        <a className="dashboard__home_link">View More Income Metrics</a>
+        {/* <a className="dashboard__home_link">View More Income Metrics</a> */}
       </CardActions>
     </Card>
   );

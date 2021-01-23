@@ -3,20 +3,24 @@ import * as React from 'react';
 import ChromePicker from 'react-color/lib/Chrome';
 
 interface ColorProps {
-  state: any;
+  randomColor: string;
+  artistColor: string;
+  artistColorAlpha: string;
   handleColorChange: Function;
 }
 
 export class Color extends React.Component<ColorProps> {
   render() {
-    const { state } = this.props;
+    const {
+      randomColor,
+      artistColor,
+      artistColorAlpha,
+      handleColorChange,
+    } = this.props;
 
     return (
       <div className="artist-color">
-        <div
-          className="primary-color"
-          style={{ backgroundColor: state.artistColor }}
-        >
+        <div className="primary-color" style={{ backgroundColor: artistColor }}>
           <div className="container">
             <div className="row justify-content-between">
               <div className="col-md-6 col-sm-12">
@@ -37,10 +41,8 @@ export class Color extends React.Component<ColorProps> {
               <div className="col-md-4 col-sm-12">
                 <div className="artist-color__picker">
                   <ChromePicker
-                    color={
-                      state.artistColor ? state.artistColor : state.randomColor
-                    }
-                    onChangeComplete={this.props.handleColorChange}
+                    color={artistColor ? artistColor : randomColor}
+                    onChangeComplete={handleColorChange}
                   />
                 </div>
               </div>
@@ -49,7 +51,7 @@ export class Color extends React.Component<ColorProps> {
         </div>
         <div
           className="secondary-color"
-          style={{ backgroundColor: state.artistColorAlpha }}
+          style={{ backgroundColor: artistColorAlpha }}
         >
           <div className="container">
             <div className="row">

@@ -727,7 +727,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           />
           <Images images={this.state.images} showToast={this.props.showToast} />
           <Color
-            state={this.state}
+            randomColor={this.state.randomColor}
+            artistColor={this.state.artistColor}
+            artistColorAlpha={this.state.artistColorAlpha}
             handleColorChange={this.handleColorChange}
           />
           <Members

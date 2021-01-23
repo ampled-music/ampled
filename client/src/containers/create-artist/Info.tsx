@@ -23,7 +23,7 @@ interface InfoProps {
 
 export class Info extends React.Component<InfoProps> {
   render() {
-    const { state, editMode } = this.props;
+    const { state, editMode, handleChange } = this.props;
     const displayName = state.artistName || 'Band';
     return (
       <div className="container">
@@ -39,7 +39,7 @@ export class Info extends React.Component<InfoProps> {
                 placeholder="Name"
                 id="name"
                 value={state.artistName || ''}
-                onChange={() => this.props.handleChange}
+                onChange={(e) => handleChange(e)}
                 fullWidth
                 disabled={!!editMode}
                 required
@@ -57,7 +57,7 @@ export class Info extends React.Component<InfoProps> {
                 name="artistSlug"
                 id="artistSlug"
                 value={state.artistSlug || ''}
-                onChange={() => this.props.handleChange}
+                onChange={(e) => handleChange(e)}
                 fullWidth
                 required
                 disabled={!!this.props.editMode}
@@ -85,7 +85,7 @@ export class Info extends React.Component<InfoProps> {
                 aria-label="artistVerb"
                 name="artistVerb"
                 value={state.artistVerb || ''}
-                onChange={() => this.props.handleChange}
+                onChange={(e) => handleChange(e)}
               >
                 <FormControlLabel
                   value="are"
@@ -110,7 +110,7 @@ export class Info extends React.Component<InfoProps> {
                 placeholder="Location"
                 id="location"
                 value={state.artistLocation || ''}
-                onChange={() => this.props.handleChange}
+                onChange={(e) => handleChange(e)}
                 fullWidth
               />
             </div>
@@ -131,7 +131,7 @@ export class Info extends React.Component<InfoProps> {
                 label="Who are you? Why should people support you?"
                 id="message"
                 value={state.artistMessage || ''}
-                onChange={() => this.props.handleChange}
+                onChange={(e) => handleChange(e)}
                 multiline
                 rows="5"
                 fullWidth
@@ -156,7 +156,7 @@ export class Info extends React.Component<InfoProps> {
                   name="artistTwitter"
                   id="twitter"
                   value={state.artistTwitter || ''}
-                  onChange={() => this.props.handleChange}
+                  onChange={(e) => handleChange(e)}
                   fullWidth
                   InputProps={{
                     startAdornment: (
@@ -173,7 +173,7 @@ export class Info extends React.Component<InfoProps> {
                   name="artistInstagram"
                   id="instagram"
                   value={state.artistInstagram || ''}
-                  onChange={() => this.props.handleChange}
+                  onChange={(e) => handleChange(e)}
                   fullWidth
                   InputProps={{
                     startAdornment: (
@@ -190,7 +190,7 @@ export class Info extends React.Component<InfoProps> {
                   name="artistBandcamp"
                   id="bandcamp"
                   value={state.artistBandcamp || ''}
-                  onChange={() => this.props.handleChange}
+                  onChange={(e) => handleChange(e)}
                   fullWidth
                   endAdornment={
                     <InputAdornment position="end">
@@ -206,7 +206,7 @@ export class Info extends React.Component<InfoProps> {
                   id="youtube"
                   placeholder="https://youtube.com/your-url"
                   value={state.artistYoutube || ''}
-                  onChange={() => this.props.handleChange}
+                  onChange={(e) => handleChange(e)}
                   fullWidth
                 />
               </div>
@@ -217,7 +217,7 @@ export class Info extends React.Component<InfoProps> {
                   id="external"
                   placeholder="https://yoursite.com"
                   value={state.artistExternal || ''}
-                  onChange={() => this.props.handleChange}
+                  onChange={(e) => handleChange(e)}
                   fullWidth
                 />
               </div>
@@ -238,7 +238,7 @@ export class Info extends React.Component<InfoProps> {
                 label="Video URL (Vimeo or YouTube)"
                 id="video-message"
                 value={state.artistVideo || ''}
-                onChange={() => this.props.handleChange}
+                onChange={(e) => handleChange(e)}
                 fullWidth
               />
             </div>

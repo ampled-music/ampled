@@ -27,6 +27,7 @@ import { initialState as subscriptionsInitialState } from '../../redux/subscript
 
 import ArtistSupporters from './ArtistSupporters';
 import ArtistPanel from './ArtistPanel';
+import ArtistHome from './ArtistHome';
 
 LicenseInfo.setLicenseKey(config.materialUi.key);
 
@@ -117,23 +118,6 @@ class DashboardComponent extends React.Component<Props, any> {
     }
   };
 
-  renderArtistIncome() {
-    // const { userData } = this.props;
-    // const { selectedArtist } = this.state;
-    // let artist;
-    // artist = selectedArtist;
-
-    return 'income';
-  }
-  renderArtistHome() {
-    // const { userData } = this.props;
-    // const { selectedArtist } = this.state;
-    // let artist;
-    // artist = selectedArtist;
-
-    return 'Home';
-  }
-
   render() {
     const { userData } = this.props;
     const { tabValue, selectedArtist } = this.state;
@@ -219,10 +203,7 @@ class DashboardComponent extends React.Component<Props, any> {
 
           <div className="dashboard__data">
             <TabPanel tabValue={tabValue} index={0}>
-              {/* <ArtistHome
-                userData={userData}
-                selectedArtist={selectedArtist}
-              /> */}
+              <ArtistHome userData={userData} selectedArtist={selectedArtist} />
             </TabPanel>
             <TabPanel tabValue={tabValue} index={1}>
               <ArtistSupporters
@@ -232,9 +213,9 @@ class DashboardComponent extends React.Component<Props, any> {
             </TabPanel>
             <TabPanel tabValue={tabValue} index={2}>
               {/* <ArtistIncome
-                userData={userData}
-                selectedArtist={selectedArtist}
-              /> */}
+              userData={userData}
+              selectedArtist={selectedArtist}
+            /> */}
             </TabPanel>
           </div>
         </div>

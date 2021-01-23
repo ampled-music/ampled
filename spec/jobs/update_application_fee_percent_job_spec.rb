@@ -34,6 +34,15 @@ describe UpdateApplicationFeePercentJob, type: :job do
       described_class.new.perform(artist_page.id, application_fee_percent)
     end
 
+    it "does not call Stripe for cancelled subscriptions" do
+      create(:subscription, artist_page: artist_page, status: :cancelled)
+      create(:subscription, artist_page: artist_page, status: :pending_cancelled)
+
+      expect(Stripe::Subscription).not_to receive(:update)
+
+      described_class.new.perform(artist_page.id, application_fee_percent)
+    end
+
     context "when updating a remote subscription raises a Stripe::StripeError" do
       it "continues updating other subscriptions" do
         subscriptions = [
@@ -55,7 +64,7 @@ describe UpdateApplicationFeePercentJob, type: :job do
           receive(:capture_exception).with(error)
         )
         expect_any_instance_of(ArtistPage).to(
-          receive(:subscriptions).and_return(subscriptions)
+          receive(:subscriptions).and_return(double(active: subscriptions))
         )
 
         described_class.new.perform(artist_page.id, application_fee_percent)

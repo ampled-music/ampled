@@ -8,7 +8,7 @@ class ArtistPagesController < ApplicationController
 
   def index
     @artist_pages = ArtistPage.includes(:images).approved.artist_owner
-      .exclude_community_page.where.not(images: nil).order("RANDOM()").take(8)
+      .exclude_community_page.where.not(images: nil).order(Arel.sql("RANDOM()")).take(8)
     @artist_page_count = ArtistPage.count
 
     respond_to do |format|
@@ -114,6 +114,12 @@ class ArtistPagesController < ApplicationController
   def update
     old_image_ids = @artist_page.images.map(&:id)
     if @artist_page.update(artist_page_params)
+      if artist_page_params[:application_fee_percent].present?
+        UpdateApplicationFeePercentJob.perform_async(
+          @artist_page.id,
+          artist_page_params[:application_fee_percent]
+        )
+      end
       Image.where(id: old_image_ids).delete_all unless has_no_images
       set_members unless has_no_members
       render json: { status: "ok", message: "Your page has been updated!" }
@@ -184,8 +190,20 @@ class ArtistPagesController < ApplicationController
     # BA - Was this actually a problem? Could we current_user.reload at the top of the method instead?
     # SA - yeah, current_user.reload wasn't working for some reason :(
     user = User.find_by(id: current_user&.id)
+
     # Only logged-in users who have confirmed their emails may create artist pages.
-    render json: { status: "error", message: "Please confirm your email address first." } if user&.confirmed_at.nil?
+    if user&.confirmed_at.nil?
+      return render json: { status: "error", message: "Please confirm your email address first." }
+    end
+
+    # A single user can only create one artist page per 24 hours.
+    recent_page_creation = user&.last_created_page_date.present? && user.last_created_page_date > 1.day.ago
+    if recent_page_creation && !Rails.env.test?
+      return render json: { status: "error", message: "You can't create more than one page per day." }
+    end
+
+    # Otherwise, we're good to go
+    true
   end
 
   def missing_params_error
@@ -251,7 +269,7 @@ class ArtistPagesController < ApplicationController
     params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :bandcamp_handle,
                                         :youtube_handle, :external, :banner_image_url, :slug, :location,
                                         :accent_color, :video_url, :verb_plural, :members, :hide_members,
-                                        images_attributes: Image::PERMITTED_PARAMS)
+                                        :application_fee_percent, images_attributes: Image::PERMITTED_PARAMS)
   end
 
   # Helper functions for creating / updating an artist page.

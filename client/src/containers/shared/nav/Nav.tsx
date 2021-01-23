@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { openAuthModalAction } from '../../../redux/authentication/authentication-modal';
 import { Store } from '../../../redux/configure-store';
 
-import logo from '../../../images/ampled_logo_beta.svg';
+import logo from '../../../images/ampled_logo.svg';
 import { initialState as loginInitialState } from '../../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../../redux/me/initial-state';
 import { routePaths } from '../../route-paths';

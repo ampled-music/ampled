@@ -206,6 +206,56 @@ RSpec.describe "PUT /artist_page", type: :request do
     end
   end
 
+  context "when updating application_fee_percent" do
+    let(:artist_page) { create(:artist_page, application_fee_percent: 5.21) }
+    let(:user) { create(:user, confirmed_at: Time.zone.now) }
+    let!(:ownership) { PageOwnership.create(user: user, artist_page: artist_page, role: "admin") }
+
+    before do
+      sign_in user
+    end
+
+    it "queues the UpdateApplicationFeePercentJob with the correct parameters" do
+      expect {
+        put(
+          "/artist_pages/#{artist_page.id}.json",
+          params: {
+            artist_page: {
+              application_fee_percent: 34.21
+            }
+          }
+        )
+      }.to change { UpdateApplicationFeePercentJob.jobs.count }.by(1)
+
+      expect(UpdateApplicationFeePercentJob.jobs.last["args"]).to match_array(
+        [artist_page.id, "34.21"]
+      )
+    end
+  end
+
+  context "when not updating application_fee_percent" do
+    let(:artist_page) { create(:artist_page) }
+    let(:user) { create(:user, confirmed_at: Time.zone.now) }
+    let!(:ownership) { PageOwnership.create(user: user, artist_page: artist_page, role: "admin") }
+
+    before do
+      sign_in user
+    end
+
+    it "does not queue the UpdateApplicationFeePercentJob" do
+      expect {
+        put(
+          "/artist_pages/#{artist_page.id}.json",
+          params: {
+            artist_page: {
+              name: "Kitteh' Rock: The Sequel"
+            }
+          }
+        )
+      }.to change { UpdateApplicationFeePercentJob.jobs.count }.by(0)
+    end
+  end
+
   context "when a user is unconfirmed" do
     let(:artist_page) { create(:artist_page, slug: "test", approved: true, name: "old name") }
     let(:user) { create(:user, confirmed_at: nil) }

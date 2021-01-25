@@ -17,6 +17,8 @@ class SubscriptionsController < ApplicationController
 
     Raven.capture_exception(e)
     render json: { status: "error", message: e.message }
+  rescue Stripe::CardError => e
+    render json: { status: "error", message: e.message }
   rescue StandardError => e
     Raven.capture_exception(e)
     render json: { status: "error", message: e.message }
@@ -50,7 +52,6 @@ class SubscriptionsController < ApplicationController
     begin
       customer = update_single_customer
     rescue Stripe::CardError => e
-      Raven.capture_exception(e)
       return render json: { status: "error", message: e.message }, status: :bad_request
     end
     card = customer.sources.data[0]

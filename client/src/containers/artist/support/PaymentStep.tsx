@@ -36,7 +36,6 @@ export class PaymentStepComponent extends React.Component<Props, any> {
     const { value } = event.target;
     this.setState({ supportLevelValue: Number(value) });
   };
-
   handleSupportClick = () => {
     if (this.state.supportLevelValue < 3) {
       this.props.showToast({
@@ -100,6 +99,7 @@ export class PaymentStepComponent extends React.Component<Props, any> {
 
     const { artistPageId, subscriptionLevelValue } = subscriptions;
 
+    console.log('this.props:', this.props);
     console.log('subscriptions:', subscriptions);
 
     switch (subscriptions.status) {

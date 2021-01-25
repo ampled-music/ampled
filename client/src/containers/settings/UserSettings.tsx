@@ -2,7 +2,6 @@ import './../artist/artist.scss';
 import './user-settings.scss';
 
 import * as React from 'react';
-import { ReactSVG } from 'react-svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -17,10 +16,8 @@ import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Button, Card, CardContent, CardActions } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { apiAxios } from '../../api/setup-axios';
-
-import Close from '../../images/icons/Icon_Close-Cancel.svg';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
@@ -30,22 +27,12 @@ import { Modal } from '../shared/modal/Modal';
 import { ResetPassword } from '../connect/ResetPassword';
 import { Loading } from '../shared/loading/Loading';
 import { Sticky } from '../shared/sticky/Sticky';
-import { PaymentStep } from '../artist/support/PaymentStep';
 
 import { UserInfo } from './UserInfo';
 import { OwnedPages } from './OwnedPages';
 import { SupportedPages } from './SupportedPages';
-
-const mapDispatchToProps = (dispatch) => ({
-  getMe: bindActionCreators(getMeAction, dispatch),
-  setMe: bindActionCreators(setUserDataAction, dispatch),
-  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
-  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
-  cancelSubscription: bindActionCreators(cancelSubscriptionAction, dispatch),
-  // editSubscription: bindActionCreators(editSubscriptionAction, dispatch),
-  updateMe: bindActionCreators(updateMeAction, dispatch),
-  showToast: bindActionCreators(showToastAction, dispatch),
-});
+import { ChangeSubscription } from './ChangeSubscription';
+import { CancelSubscription } from './CancelSubscription';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
@@ -196,85 +183,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
         type: 'error',
       });
     }
-  };
-
-  renderCancelSubscriptionModal = () => {
-    if (!this.state.subscription) {
-      return null;
-    }
-
-    return (
-      <Modal
-        open={this.state.showCancelModal}
-        onClose={() => this.closeModal('Cancel')}
-      >
-        <div className="user-settings-cancel-modal">
-          <p>
-            Are you sure you want to stop supporting{' '}
-            {this.state.subscription.name}?
-          </p>
-          <div className="action-buttons">
-            <Button
-              className="cancel-button"
-              onClick={() => this.closeModal('Cancel')}
-              style={{ width: '50%' }}
-            >
-              Of Course Not!
-            </Button>
-            <Button
-              className="publish-button"
-              onClick={this.cancelSubscription}
-              style={{ width: '50%' }}
-            >
-              Yes
-            </Button>
-          </div>
-        </div>
-      </Modal>
-    );
-  };
-
-  renderChangeSubscriptionModal = () => {
-    if (!this.state.subscription) {
-      return null;
-    }
-    return (
-      <Modal
-        open={this.state.showChangeModal}
-        onClose={() => this.closeModal('Change')}
-      >
-        <Card>
-          <CardContent>
-            <p>
-              Would you like to change your support amount for{' '}
-              {this.state.subscription.name}?
-            </p>
-            <PaymentStep
-              artistName={this.state.subscription.name}
-              subscriptions={this.state.subscription} // @todo: status and some other subscription info is not coming in.
-              userData={this.props.userData}
-            />
-          </CardContent>
-          <CardActions className="action-buttons">
-            <Button
-              aria-label="Cancel Change Subscription"
-              className="cancel-button"
-              onClick={() => this.closeModal('Change')}
-              size="small"
-            >
-              <ReactSVG className="icon" src={Close} />
-            </Button>
-            <Button
-              className="publish-button"
-              onClick={this.cancelSubscription}
-              style={{ marginLeft: 0 }}
-            >
-              Change support for {this.state.subscription.name}
-            </Button>
-          </CardActions>
-        </Card>
-      </Modal>
-    );
   };
 
   renderSetUpBanner = () => {
@@ -446,6 +354,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
       },
     });
 
+    console.log('this.props:', this.props);
+
     return (
       <ThemeProvider theme={theme}>
         {userData && this.renderSetUpBanner()}
@@ -464,15 +374,20 @@ class UserSettingsComponent extends React.Component<Props, any> {
             open={this.state.showCancelModal}
             onClose={() => this.closeModal('Cancel')}
           >
-            Cancel
-            {/* <CancelSubscription subscription={this.state.subscription} /> */}
+            <CancelSubscription
+              name={this.state.subscription?.name}
+              closeModal={this.closeModal}
+              cancelSubscription={this.cancelSubscription}
+            />
           </Modal>
           <Modal
             open={this.state.showChangeModal}
             onClose={() => this.closeModal('Change')}
           >
-            Change
-            {/* <ChangeSubscription subscription={this.state.subscription} /> */}
+            <ChangeSubscription
+              subscription={this.state.subscription}
+              userData={userData}
+            />
           </Modal>
         </div>
       </ThemeProvider>
@@ -481,9 +396,21 @@ class UserSettingsComponent extends React.Component<Props, any> {
 }
 
 const mapStateToProps = (state: Store) => ({
-  ...state.authentication,
+  ...state.artists,
   ...state.me,
+  authentication: state.authentication,
   subscriptions: state.subscriptions,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getMe: bindActionCreators(getMeAction, dispatch),
+  setMe: bindActionCreators(setUserDataAction, dispatch),
+  openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
+  closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
+  cancelSubscription: bindActionCreators(cancelSubscriptionAction, dispatch),
+  // editSubscription: bindActionCreators(editSubscriptionAction, dispatch),
+  updateMe: bindActionCreators(updateMeAction, dispatch),
+  showToast: bindActionCreators(showToastAction, dispatch),
 });
 
 const UserSettings = connect(

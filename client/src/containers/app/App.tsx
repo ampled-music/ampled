@@ -121,7 +121,7 @@ class AppComponent extends React.Component<Props, any> {
             <meta name="robots" content="noindex, nofollow" />
           )}
         </Helmet>
-        <React.Suspense fallback={<Loading artistLoading={true} />}>
+        <React.Suspense fallback={<Loading isLoading={true} />}>
           <Routes />
           <Modal
             open={this.props.authModalOpen}

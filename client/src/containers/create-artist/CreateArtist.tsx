@@ -630,7 +630,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     if (this.state.isDeletedPage) {
       return <Redirect to="/" />;
     } else if (this.state.loading) {
-      return <Loading artistLoading={true} />;
+      return <Loading isLoading={true} />;
     } else if (userData && !userData.email_confirmed) {
       return (
         <div

@@ -471,7 +471,7 @@ class ArtistComponent extends React.Component<Props, any> {
         <div className="confetti-overlay">
           <Confetti active={showConfetti} config={this.getConfettiConfig()} />
         </div>
-        <Loading artistLoading={artists.loading || loadingMe} />
+        <Loading isLoading={artists.loading || loadingMe} />
       </div>
     );
   }

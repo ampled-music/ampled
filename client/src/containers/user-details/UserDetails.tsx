@@ -940,7 +940,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
     const { userData } = this.props;
     return (
       <div className="container user-details">
-        <Loading artistLoading={this.props.loadingMe} />
+        <Loading isLoading={this.props.loadingMe} />
         {userData && this.renderContent()}
       </div>
     );

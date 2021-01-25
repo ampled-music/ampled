@@ -7,7 +7,7 @@ import tear_black from '../../images/backgrounds/background_tear_black.png';
 
 interface Props {
   supportedPages: any;
-  openModal?: any;
+  openModal?: Function;
 }
 
 export class SupportedPages extends React.Component<Props, any> {

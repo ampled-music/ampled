@@ -15,7 +15,6 @@ interface Props {
 export class SocialImages extends React.Component<Props, any> {
   render() {
     const { images } = this.props;
-    console.log('images', images);
     return (
       <div className="details__promote_container">
         {images.map((promoImage) => (

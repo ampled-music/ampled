@@ -145,6 +145,7 @@ class UserSettingsComponent extends React.Component<Props, any> {
   openModal = (event, subscription?) => {
     event.preventDefault();
     const { name } = event.target;
+    console.log(name);
     this.setState({ [`show${name}Modal`]: true, subscription });
   };
   closeModal = (name) => {
@@ -237,8 +238,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     if (!this.state.subscription) {
       return null;
     }
-    console.log('state', this.state);
-    console.log('props', this.props);
     return (
       <Modal
         open={this.state.showChangeModal}
@@ -386,7 +385,10 @@ class UserSettingsComponent extends React.Component<Props, any> {
           <OwnedPages ownedPages={this.props.userData.ownedPages} />
         )}
         {this.props.userData.subscriptions.length > 0 ? (
-          <SupportedPages supportedPages={this.props.userData.subscriptions} />
+          <SupportedPages
+            supportedPages={this.props.userData.subscriptions}
+            openModal={this.openModal}
+          />
         ) : (
           <div>
             <h1>Supported Artists</h1>

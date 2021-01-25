@@ -16,7 +16,6 @@ import { showToastAction } from '../../redux/toast/toast-modal';
 import { cancelSubscriptionAction } from '../../redux/subscriptions/cancel';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
 import { apiAxios } from '../../api/setup-axios';
 
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
@@ -26,13 +25,13 @@ import { routePaths } from '../route-paths';
 import { Modal } from '../shared/modal/Modal';
 import { ResetPassword } from '../connect/ResetPassword';
 import { Loading } from '../shared/loading/Loading';
-import { Sticky } from '../shared/sticky/Sticky';
 
 import { UserInfo } from './UserInfo';
 import { OwnedPages } from './OwnedPages';
 import { SupportedPages } from './SupportedPages';
 import { ChangeSubscription } from './ChangeSubscription';
 import { CancelSubscription } from './CancelSubscription';
+import { SetUpBanner } from './SetUpBanner';
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
 
@@ -185,132 +184,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
     }
   };
 
-  renderSetUpBanner = () => {
-    const { ownedPages } = this.props.userData;
-    const noStripe = ownedPages.filter((ownedPage) => !ownedPage.isStripeSetup);
-    const notApproved = ownedPages
-      .filter((ownedPage) => ownedPage.isStripeSetup)
-      .filter((ownedPage) => !ownedPage.approved);
-
-    return (
-      <>
-        {noStripe.length > 0 && (
-          <Sticky>
-            <div className="artistAlertHeader__container">
-              The Ampled team does a quick spot check of all pages before they
-              become visible to the general public. Set up payout for{' '}
-              {noStripe.map((page, index) => {
-                if (noStripe.length > 1 && noStripe.length === index + 1) {
-                  return (
-                    <span key={`stripe-${index}`}>
-                      {' '}
-                      and <a href={page.stripeSignup}>{page.name}</a>
-                    </span>
-                  );
-                } else if (
-                  noStripe.length > 2 &&
-                  noStripe.length !== index + 1
-                ) {
-                  return (
-                    <span key={`stripe-${index}`}>
-                      <a href={page.stripeSignup}>{page.name}</a>,{' '}
-                    </span>
-                  );
-                } else {
-                  return (
-                    <a key={`stripe-${index}`} href={page.stripeSignup}>
-                      {page.name}
-                    </a>
-                  );
-                }
-              })}{' '}
-              to help us approve your page faster.
-            </div>
-          </Sticky>
-        )}
-        {notApproved.length > 0 && (
-          <Sticky>
-            <div className="artistAlertHeader__container">
-              Congrats! Your page is now eligible for approval. When you’re
-              ready for us to take a look, request approval for{' '}
-              {notApproved.map((page, index) => {
-                if (
-                  notApproved.length > 1 &&
-                  notApproved.length === index + 1
-                ) {
-                  return (
-                    <span key={`request-${index}`}>
-                      {' '}
-                      and{' '}
-                      <button
-                        className="link link__banner"
-                        onClick={() => this.requestApproval(page.artistSlug)}
-                      >
-                        {page.name}
-                      </button>
-                    </span>
-                  );
-                } else if (
-                  notApproved.length > 2 &&
-                  notApproved.length !== index + 1
-                ) {
-                  return (
-                    <span key={`request-${index}`}>
-                      <button
-                        className="link link__banner"
-                        onClick={() => this.requestApproval(page.artistSlug)}
-                      >
-                        {page.name}
-                      </button>
-                      ,{' '}
-                    </span>
-                  );
-                } else {
-                  return (
-                    <button
-                      key={`request-${index}`}
-                      className="link link__banner"
-                      onClick={() => this.requestApproval(page.artistSlug)}
-                    >
-                      {page.name}
-                    </button>
-                  );
-                }
-              })}{' '}
-              to submit your page.
-            </div>
-          </Sticky>
-        )}
-      </>
-    );
-  };
-
-  renderContent = () => (
-    <div className="row content">
-      <UserInfo userData={this.props.userData} />
-      <div className="pages-container col-md-9">
-        {this.props.userData.ownedPages.length > 0 && (
-          <OwnedPages ownedPages={this.props.userData.ownedPages} />
-        )}
-        {this.props.userData.subscriptions.length > 0 ? (
-          <SupportedPages
-            supportedPages={this.props.userData.subscriptions}
-            openModal={this.openModal}
-          />
-        ) : (
-          <div>
-            <h1>Supported Artists</h1>
-            <div className="pages row justify-content-center justify-content-md-start">
-              <div className="center col-md-8">
-                You currently don&apos;t support any artists.
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
   render() {
     const { userData } = this.props;
     const theme = createMuiTheme({
@@ -358,14 +231,43 @@ class UserSettingsComponent extends React.Component<Props, any> {
 
     return (
       <ThemeProvider theme={theme}>
-        {userData && this.renderSetUpBanner()}
+        {userData && (
+          <SetUpBanner
+            userData={userData}
+            requestApproval={this.requestApproval}
+          />
+        )}
         <div className="container user-settings-container">
-          <Loading isLoading={this.props.loadingMe && !this.props.userData} />
-          {userData && this.renderContent()}
+          <Loading isLoading={this.props.loadingMe && !userData} />
+          {userData && (
+            <div className="row content">
+              <UserInfo userData={userData} />
+              <div className="pages-container col-md-9">
+                {userData.ownedPages.length > 0 && (
+                  <OwnedPages ownedPages={userData.ownedPages} />
+                )}
+                {userData.subscriptions.length > 0 ? (
+                  <SupportedPages
+                    supportedPages={userData.subscriptions}
+                    openModal={this.openModal}
+                  />
+                ) : (
+                  <div>
+                    <h1>Supported Artists</h1>
+                    <div className="pages row justify-content-center justify-content-md-start">
+                      <div className="center col-md-8">
+                        You currently don&apos;t support any artists.
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
           {this.state.showPasswordModal && (
             <Modal
               open={this.state.showPasswordModal}
-              onClose={() => this.setState({ showPasswordModal: false })}
+              onClose={() => this.closeModal('Password')}
             >
               <ResetPassword type="change" />
             </Modal>

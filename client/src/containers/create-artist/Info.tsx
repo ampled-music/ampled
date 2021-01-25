@@ -63,7 +63,7 @@ export const Info: React.FC<InfoProps> = ({
               onChange={(e) => handleChange(e)}
               fullWidth
               required
-              disabled={!!this.props.editMode}
+              disabled={!!editMode}
               InputProps={{
                 autoComplete: 'off',
                 inputProps: { autoCapitalize: 'off', autoCorrect: 'off' },

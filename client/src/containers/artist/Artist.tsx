@@ -30,6 +30,8 @@ import { ArtistComingSoon } from '../shared/no-artist/ArtistComingSoon';
 import { NoArtist } from '../shared/no-artist/NoArtist';
 import { routePaths } from '../route-paths';
 
+import { isAmpled } from '../shared/utils';
+
 const mapStateToProps = (state: Store) => {
   return {
     artists: state.artists,
@@ -80,6 +82,7 @@ class ArtistComponent extends React.Component<Props, any> {
     showConfirmationDialog: false,
     successfulSupport: false,
     requestedApproval: false,
+    isAmpled: false,
   };
   players: Set<any>;
 
@@ -99,6 +102,8 @@ class ArtistComponent extends React.Component<Props, any> {
       });
       this.props.history.replace(this.props.location.pathname);
     }
+    isAmpled(this.props.artists.artist.slug) &&
+      this.setState({ isAmpled: true });
   }
 
   componentDidUpdate(prevProps: Props, prevState) {
@@ -302,7 +307,7 @@ class ArtistComponent extends React.Component<Props, any> {
       me: { userData, loadingMe },
     } = this.props;
 
-    const { successfulSupport } = this.state;
+    const { successfulSupport, isAmpled } = this.state;
     const showConfetti =
       successfulSupport && artists && !artists.loading && !artists.error;
 
@@ -391,6 +396,7 @@ class ArtistComponent extends React.Component<Props, any> {
             openJoinModal={this.openJoinModal}
             loggedUserAccess={loggedUserAccess}
             isSupporter={isSupporter}
+            isAmpled={isAmpled}
             handleSupportClick={this.handleSupportClick}
           />
         ) : (
@@ -403,6 +409,7 @@ class ArtistComponent extends React.Component<Props, any> {
             openJoinModal={this.openJoinModal}
             loggedUserAccess={loggedUserAccess}
             isSupporter={isSupporter}
+            isAmpled={isAmpled}
             handleSupportClick={this.handleSupportClick}
           />
         )}

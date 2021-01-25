@@ -12,6 +12,7 @@ import Location from '../../../images/icons/Icon_Location.svg';
 interface Props {
   artist: any;
   isSupporter: boolean;
+  isAmpled: boolean;
   openWhyModal: any;
   openJoinModal: any;
   loggedUserAccess: { role: string; artistId: number };
@@ -19,10 +20,6 @@ interface Props {
 }
 
 export class ArtistInfo extends React.Component<Props, any> {
-  isAmpled = () => {
-    return this.props.artist.slug === 'community';
-  };
-
   canLoggedUserPost = () => {
     return (
       this.props.loggedUserAccess &&
@@ -138,7 +135,7 @@ export class ArtistInfo extends React.Component<Props, any> {
   renderSupportButton = () => {
     return (
       <>
-        {this.isAmpled() ? (
+        {this.props.isAmpled ? (
           <button onClick={this.props.openJoinModal} className="link link__why">
             Why join?
           </button>

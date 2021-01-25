@@ -17,6 +17,7 @@ import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
 import { Button, IconButton, CardActions, Collapse } from '@material-ui/core';
 import { Modal } from '../../../shared/modal/Modal';
 import { AudioPlayer } from '../../../shared/audio-player/AudioPlayer';
+import { isAmpled } from '../../../shared/utils';
 import YouTubePlayer from 'react-player/lib/players/YouTube';
 import VimeoPlayer from 'react-player/lib/players/Vimeo';
 import Linkify from 'react-linkify';
@@ -244,7 +245,7 @@ const PostMedia = ({
             isLapsed={deny_details_lapsed}
             me={me}
             handlePrivatePostClick={handlePrivatePostClick}
-            isAmpled={artistSlug === 'community'}
+            isAmpled={isAmpled(artistSlug)}
           />
         )}
       </div>
@@ -286,7 +287,7 @@ const PostMedia = ({
               isLapsed={deny_details_lapsed}
               me={me}
               handlePrivatePostClick={handlePrivatePostClick}
-              isAmpled={artistSlug === 'community'}
+              isAmpled={isAmpled(artistSlug)}
             />
           )}
         </div>
@@ -320,7 +321,7 @@ const PostMedia = ({
             isLapsed={deny_details_lapsed}
             me={me}
             handlePrivatePostClick={handlePrivatePostClick}
-            isAmpled={artistSlug === 'community'}
+            isAmpled={isAmpled(artistSlug)}
           />
         }
       </div>
@@ -405,10 +406,6 @@ class PostComponent extends React.Component<any, any> {
     showDeletePostModal: false,
     showEditPostModal: false,
     expanded: false,
-  };
-
-  isAmpled = () => {
-    return this.props.artist.slug === 'community';
   };
 
   handleExpandClick = () => {

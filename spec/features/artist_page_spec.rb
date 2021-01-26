@@ -1,6 +1,9 @@
 require "rails_helper"
+require "shared_context/cloudinary_stub"
 
 RSpec.describe ArtistPagesController, type: :request do
+  include_context "cloudinary_stub"
+
   let(:user) { create(:user, confirmed_at: Time.current) }
   let(:supporter) { create(:user, confirmed_at: Time.current) }
 

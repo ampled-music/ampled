@@ -59,14 +59,18 @@ export class Images extends React.Component<ImagesProps> {
                   <CardContent>
                     <UploadImage
                       imageUpload={imageSetter(index)}
-                      imageObject={image}
-                      imageIndex={index}
+                      imageObject={image[index]}
                       showToast={this.props.showToast}
                     />
                   </CardContent>
                 </Card>
               </div>
             ))}
+            <div className="col-md-4 col-sm-12">
+              <Card className="artist-image__card">
+                <CardContent></CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </div>

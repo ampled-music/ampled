@@ -2,6 +2,7 @@ class ArtistPagesController < ApplicationController
   before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy]
   before_action :check_approved, only: :show
   before_action :check_user, only: %i[create update]
+  before_action :check_cooldown, only: :create
   before_action :check_has_image, only: :create
   before_action :check_create_okay, only: :create
   before_action :check_update_okay, only: :update
@@ -196,14 +197,18 @@ class ArtistPagesController < ApplicationController
       return render json: { status: "error", message: "Please confirm your email address first." }
     end
 
-    # A single user can only create one artist page per 24 hours.
-    recent_page_creation = user&.last_created_page_date.present? && user.last_created_page_date > 1.day.ago
-    if recent_page_creation && !Rails.env.test?
-      return render json: { status: "error", message: "You can't create more than one page per day." }
-    end
-
     # Otherwise, we're good to go
     true
+  end
+
+  def check_cooldown
+    # A single user can only create one artist page per 24 hours.
+    recent_page_creation = current_user&.last_created_page_date.present? &&
+                           current_user.last_created_page_date > 1.day.ago
+
+    return unless recent_page_creation && !Rails.env.test?
+
+    render json: { status: "error", message: "You can't create more than one page per day." }
   end
 
   def missing_params_error

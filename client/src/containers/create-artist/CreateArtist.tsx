@@ -382,12 +382,14 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     } = this.state;
 
     // validate fields
+    // Make sure artist name is filled out
     if (!artistName) {
       return this.props.showToast({
         message: 'Please check that you have a valid artist name.',
         type: 'error',
       });
     }
+    // Make sure artist slug is filled out and has no special characters
     if (!artistSlug || !/^[a-z-0-9]*[a-z]+[a-z-0-9]*$/.test(artistSlug)) {
       return this.props.showToast({
         message:
@@ -734,7 +736,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             handleChange={this.handleChange}
             editMode={this.props.editMode}
           />
-          <Images images={this.state.images} showToast={this.props.showToast} />
+          <Images
+            images={this.state.images}
+            setImages={(images) => this.setState({ images })}
+            showToast={this.props.showToast}
+          />
           <Color
             randomColor={this.state.randomColor}
             artistColor={this.state.artistColor}

@@ -53,10 +53,7 @@ export const Info: React.FC<InfoProps> = ({
           <div className="col-md-4 col-sm-12">
             <div className="create-artist__subtitle">Your Custom Link</div>
             <h6>Required</h6>
-            <h6>
-              Letters and dashes only. Accent letters and special characters are
-              not allowed.
-            </h6>
+            <h6>Letters and dashes only.</h6>
           </div>
           <div className="col-md-8 col-sm-12">
             <TextField

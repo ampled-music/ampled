@@ -382,14 +382,18 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     } = this.state;
 
     // validate fields
-    if (
-      !artistName ||
-      !artistSlug ||
-      !artistColor ||
-      !/^[a-z-0-9]*[a-z]+[a-z-0-9]*$/.test(artistSlug)
-    ) {
+    // Make sure artist name is filled out
+    if (!artistName) {
       return this.props.showToast({
-        message: 'Please check required fields.',
+        message: 'Please check that you have a valid artist name.',
+        type: 'error',
+      });
+    }
+    // Make sure artist slug is filled out and has no special characters
+    if (!artistSlug || !/^[a-z-0-9]*[a-z]+[a-z-0-9]*$/.test(artistSlug)) {
+      return this.props.showToast({
+        message:
+          'Please check that you have a valid custom link. Special characters are not allowed.',
         type: 'error',
       });
     }
@@ -467,8 +471,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       .filter((image) => image !== null && typeof image !== 'undefined')
       .map(({ public_id, url }) => ({ public_id, url }));
 
-    const deletedImages = images
-      .filter((image) => image !== null && typeof image !== 'undefined' && image._destroy);
+    const deletedImages = images.filter(
+      (image) =>
+        image !== null && typeof image !== 'undefined' && image._destroy,
+    );
 
     // create page
     this.setState({
@@ -493,7 +499,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             external: artistExternal,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
-            images: newImages
+            images: newImages,
           },
           members,
         },
@@ -730,7 +736,11 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             handleChange={this.handleChange}
             editMode={this.props.editMode}
           />
-          <Images images={this.state.images} showToast={this.props.showToast} />
+          <Images
+            images={this.state.images}
+            setImages={(images) => this.setState({ images })}
+            showToast={this.props.showToast}
+          />
           <Color
             randomColor={this.state.randomColor}
             artistColor={this.state.artistColor}

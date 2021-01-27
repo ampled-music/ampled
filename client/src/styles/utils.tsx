@@ -94,4 +94,9 @@ const colorLuminance = (hex, lum) => {
   return rgb;
 };
 
-export { hexToRGB, rgbLinearShade, lightOrDark, colorLuminance };
+const randomColor = () => {
+  const bgColor = ['#e9c7c6', '#eddfbd', '#baddac', '#cae4e7'];
+  return bgColor[Math.floor(Math.random() * bgColor.length)];
+};
+
+export { hexToRGB, rgbLinearShade, lightOrDark, colorLuminance, randomColor };

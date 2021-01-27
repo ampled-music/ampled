@@ -381,7 +381,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       members,
     } = this.state;
 
-    console.log('onSubmit:', this.state);
+    console.log('images:', images);
+    console.log('imageUploads:', imageUploads);
 
     // validate fields
     // Make sure artist name is filled out
@@ -469,6 +470,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
+    console.log('images', images);
+
     // prepare artist images
     const newImages = imageUploads
       .filter((image) => image !== null && typeof image !== 'undefined')
@@ -481,6 +484,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         image !== null && typeof image !== 'undefined' && image._destroy,
     );
     console.log('deletedImages', deletedImages);
+    console.log('catImages', deletedImages.concat(newImages));
 
     // create page
     this.setState({
@@ -550,6 +554,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         },
       });
 
+      // let data;
       this.setState({
         loading: false,
       });

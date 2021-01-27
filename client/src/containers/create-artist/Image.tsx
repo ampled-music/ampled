@@ -15,6 +15,7 @@ interface UploadImageProps {
     public_id: string;
   };
   imageUpload: Function;
+  imageIndex?: number;
   showToast: Function;
 }
 
@@ -85,18 +86,19 @@ export class UploadImage extends React.Component<UploadImageProps> {
   };
 
   render() {
-    const { imageObject } = this.props;
+    const { imageObject, imageIndex } = this.props;
     const { loadingImage } = this.state;
-    let body: {};
 
-    if (imageObject) {
-      body = (
-        <>
+    console.log('Single Image State:', this.state);
+
+    return (
+      <>
+        {imageObject ? (
           <div className="image-upload__image_container">
             <Image
               className="image-upload__image_image"
               publicId={imageObject.public_id}
-              alt="poop"
+              alt={`image-upload-${imageIndex}`}
             >
               <Transformation
                 fetchFormat="auto"
@@ -107,62 +109,39 @@ export class UploadImage extends React.Component<UploadImageProps> {
                 responsive_placeholder="blank"
               />
             </Image>
+            <Button
+              className="btn btn-upload"
+              variant="outlined"
+              component="span"
+              onClick={this.removeImage}
+            >
+              Remove
+            </Button>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <label>
-              <Button
-                className="btn btn-upload"
-                variant="outlined"
-                component="span"
-                onClick={this.removeImage}
-              >
-                Remove
-              </Button>
-            </label>
-            <label htmlFor={`image-file-poop`}>
-              <Button
-                className="btn btn-upload"
-                variant="outlined"
-                component="span"
-              >
-                Replace
-              </Button>
-            </label>
-          </div>
-        </>
-      );
-    } else if (loadingImage) {
-      body = <CircularProgress className="loading-circle" />;
-    } else {
-      body = (
-        <>
+        ) : loadingImage ? (
+          <CircularProgress className="loading-circle" />
+        ) : (
           <div className="image-upload__image_container">
             <ReactSVG className="icon icon_black icon_100" src={PhotoIcon} />
+            <label
+              htmlFor={`image-file-${imageIndex}`}
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
+              <Button variant="outlined" component="span">
+                Upload "poop"
+              </Button>
+            </label>
           </div>
-          <label
-            htmlFor={`image-file-poop`}
-            style={{ display: 'flex', justifyContent: 'center' }}
-          >
-            <Button variant="outlined" component="span">
-              Upload "poop"
-            </Button>
-          </label>
-        </>
-      );
-    }
-
-    return (
-      <div>
+        )}
         <input
           style={{ display: 'none' }}
-          id={`image-file-poop`}
+          id={`image-file-${imageIndex}`}
           type="file"
           aria-label="Image file"
           accept="image/*"
           onChange={this.processImage}
         />
-        {body}
-      </div>
+      </>
     );
   }
 }

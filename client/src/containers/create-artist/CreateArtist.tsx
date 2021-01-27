@@ -381,6 +381,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       members,
     } = this.state;
 
+    console.log('onSubmit:', this.state);
+
     // validate fields
     // Make sure artist name is filled out
     if (!artistName) {
@@ -398,8 +400,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
+    // Make sure video url is Youtube or Vimeo
     const videoRegex = /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi;
-
     if (
       artistVideo &&
       artistVideo.length > 0 &&
@@ -412,6 +414,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
+    // Make sure there is at least one Image
     if (
       images.filter((image) => image !== null && typeof image !== 'undefined')
         .length === 0
@@ -469,12 +472,15 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     // prepare artist images
     const newImages = imageUploads
       .filter((image) => image !== null && typeof image !== 'undefined')
-      .map(({ public_id, url }) => ({ public_id, url }));
+      .map(({ public_id, url, order }) => ({ public_id, url, order }));
+
+    console.log('newImages', newImages);
 
     const deletedImages = images.filter(
       (image) =>
         image !== null && typeof image !== 'undefined' && image._destroy,
     );
+    console.log('deletedImages', deletedImages);
 
     // create page
     this.setState({
@@ -738,8 +744,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           />
           <Images
             images={this.state.images}
-            setImages={(images) => this.setState({ images })}
+            setImages={(images) => this.setState({ imageUploads: images })}
             showToast={this.props.showToast}
+            // addImage={this.addImage}
           />
           <Color
             randomColor={this.state.randomColor}

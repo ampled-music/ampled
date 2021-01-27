@@ -22,9 +22,10 @@ export const uploadFileToCloudinary = async (file: any) => {
   };
 
   try {
-    console.log("Trying to upload to: ", `https://api.cloudinary.com/v1_1/${config.cloudinary.cloud_name}/upload`)
-    console.log("Config: ", config)
-
+    console.log(
+      'Trying to upload to: ',
+      `https://api.cloudinary.com/v1_1/${config.cloudinary.cloud_name}/upload`,
+    );
     const { data } = await axios.post(
       `https://api.cloudinary.com/v1_1/${config.cloudinary.cloud_name}/upload`,
       formData,

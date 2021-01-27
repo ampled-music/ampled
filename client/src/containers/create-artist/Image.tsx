@@ -1,21 +1,20 @@
 import * as React from 'react';
 import { ReactSVG } from 'react-svg';
 
-import { deleteFileFromCloudinary } from '../../../api/cloudinary/delete-image';
-import { uploadFileToCloudinary } from '../../../api/cloudinary/upload-image';
+import { deleteFileFromCloudinary } from '../../api/cloudinary/delete-image';
+import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
 
 import { Image, Transformation } from 'cloudinary-react';
 import { Button, CircularProgress } from '@material-ui/core';
 
-import PhotoIcon from '../../../images/icons/Icon_Photo.svg';
+import PhotoIcon from '../../images/icons/Icon_Photo.svg';
 
 interface UploadImageProps {
-  altText: string;
   imageObject?: {
     url: string;
     public_id: string;
   };
-  setImage: Function;
+  imageUpload: Function;
   showToast: Function;
 }
 
@@ -58,7 +57,7 @@ export class UploadImage extends React.Component<UploadImageProps> {
         loadingImage: false,
         publicId: cloudinaryResponse.public_id,
       });
-      this.props.setImage({
+      this.props.imageUpload({
         url: cloudinaryResponse.secure_url,
         public_id: cloudinaryResponse.public_id,
       });
@@ -82,13 +81,14 @@ export class UploadImage extends React.Component<UploadImageProps> {
       deleteToken: undefined,
       publicId: null,
     });
-    this.props.setImage(null);
+    this.props.imageUpload(null);
   };
 
   render() {
-    const { altText, imageObject } = this.props;
+    const { imageObject } = this.props;
     const { loadingImage } = this.state;
     let body: {};
+
     if (imageObject) {
       body = (
         <>
@@ -96,7 +96,7 @@ export class UploadImage extends React.Component<UploadImageProps> {
             <Image
               className="image-upload__image_image"
               publicId={imageObject.public_id}
-              alt={altText}
+              alt="poop"
             >
               <Transformation
                 fetchFormat="auto"
@@ -119,7 +119,7 @@ export class UploadImage extends React.Component<UploadImageProps> {
                 Remove
               </Button>
             </label>
-            <label htmlFor={`image-file-${altText}`}>
+            <label htmlFor={`image-file-poop`}>
               <Button
                 className="btn btn-upload"
                 variant="outlined"
@@ -140,11 +140,11 @@ export class UploadImage extends React.Component<UploadImageProps> {
             <ReactSVG className="icon icon_black icon_100" src={PhotoIcon} />
           </div>
           <label
-            htmlFor={`image-file-${altText}`}
+            htmlFor={`image-file-poop`}
             style={{ display: 'flex', justifyContent: 'center' }}
           >
             <Button variant="outlined" component="span">
-              Upload {altText}
+              Upload "poop"
             </Button>
           </label>
         </>
@@ -152,14 +152,10 @@ export class UploadImage extends React.Component<UploadImageProps> {
     }
 
     return (
-      <div
-        className={`image-upload__image ${
-          altText === 'Primary' ? 'primary' : 'secondary'
-        }`}
-      >
+      <div>
         <input
           style={{ display: 'none' }}
-          id={`image-file-${altText}`}
+          id={`image-file-poop`}
           type="file"
           aria-label="Image file"
           accept="image/*"

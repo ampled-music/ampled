@@ -29,7 +29,6 @@ import { Loading } from '../shared/loading/Loading';
 import { UserInfo } from './UserInfo';
 import { OwnedPages } from './OwnedPages';
 import { SupportedPages } from './SupportedPages';
-import { ChangeSubscription } from './ChangeSubscription';
 import { CancelSubscription } from './CancelSubscription';
 import { SetUpBanner } from './SetUpBanner';
 
@@ -146,16 +145,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
       artistName: this.state.subscription.name,
     });
     this.closeModal('Cancel');
-  };
-
-  changeSubscription = () => {
-    this.props.cancelSubscription({
-      subscriptionId: this.state.subscription.subscriptionId,
-      artistPageId: this.state.subscription.artistPageId,
-      artistSlug: this.state.subscription.artistSlug,
-      artistName: this.state.subscription.name,
-    });
-    this.closeModal('Change');
   };
 
   requestApproval = async (artistSlug) => {
@@ -280,15 +269,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
               name={this.state.subscription?.name}
               closeModal={this.closeModal}
               cancelSubscription={this.cancelSubscription}
-            />
-          </Modal>
-          <Modal
-            open={this.state.showChangeModal}
-            onClose={() => this.closeModal('Change')}
-          >
-            <ChangeSubscription
-              subscription={this.state.subscription}
-              userData={userData}
             />
           </Modal>
         </div>

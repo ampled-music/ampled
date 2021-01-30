@@ -57,7 +57,8 @@ export class SupportedPages extends React.Component<Props, any> {
                       <div className="col-8">
                         <div className="details__info_title">Supporting At</div>
                         <div className="details__info_value details__info_value_large">
-                          ${subscription.amount / 100}/Month
+                          ${subscription.amount / 100}
+                          <span>/Month</span>
                         </div>
                         <div className="details__info_value details__info_value_small">
                           ${subscription.amountFees / 100} incl. fees

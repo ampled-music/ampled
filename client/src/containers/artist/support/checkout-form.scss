@@ -1,5 +1,5 @@
-@import "../../../theme/vars.scss";
-@import "../../../theme/mixins.scss";
+@import '../../../theme/vars.scss';
+@import '../../../theme/mixins.scss';
 
 .checkout-form-container {
   font-family: $font-family-base;
@@ -13,7 +13,7 @@
       margin-top: 1rem;
     }
     label {
-      font-size: .8rem;
+      font-size: 0.8rem;
       text-align: left;
     }
   }
@@ -29,9 +29,9 @@
       background-color: $white;
       border-color: $gray-light;
       font-family: $font-family-sans-serif;
-      font-size: .9rem;
+      font-size: 0.9rem;
       &__icon {
-        margin-right: .5rem;
+        margin-right: 0.5rem;
       }
     }
     h6 {
@@ -39,28 +39,19 @@
       color: $black;
     }
   }
-  .btn-edit-card {
-    margin: auto;
-    display: block;
+  .edit-card {
+    display: inline-block;
+    margin: 0 auto 1rem;
     color: $black;
     text-decoration: underline;
     font-family: $font-family-monospace;
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 
   .transparency {
     font-family: $font-family-monospace;
     text-align: center;
     margin: 0 auto;
-  }
-  
-  .actions {
-    margin: 1rem auto;
-    display: flex;
-    justify-content: space-around;
-    .btn:first-child {
-      margin-right: 1rem;
-    }
   }
 }
 

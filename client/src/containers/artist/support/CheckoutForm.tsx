@@ -9,7 +9,14 @@ import {
 } from 'react-stripe-elements';
 import { Link } from 'react-router-dom';
 import { SingleCardDisplay } from '../../user-details/UserDetails';
-import { Button } from '@material-ui/core';
+
+import {
+  Button,
+  Card,
+  CardContent,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 
 interface Props {
   artistPageId: number;
@@ -120,93 +127,87 @@ class CheckoutFormComponent extends React.Component<Props, any> {
               className="form-group support__level-form"
               onSubmit={this.submit}
             >
-              {!cardInfo && (
-                <>
-                  <h3>Enter your payment details</h3>
-                  <div className="form-row">
-                    <div className="col">
-                      <label>Credit Card Number</label>
-                      <CardNumberElement />
-                    </div>
-                  </div>
-                  <div className="form-row">
-                    <div className="col">
-                      <label>Expiration Date</label>
-                      <CardExpiryElement />
-                    </div>
-                    <div className="col">
-                      <label>CVC</label>
-                      <CardCVCElement />
-                    </div>
-                  </div>
-                </>
-              )}
-              {cardInfo && (
-                <>
-                  <h3>Use your existing card</h3>
-                  <div className="form-row">
-                    <div className="col">
-                      <div style={{ textAlign: 'left' }}>
-                        <SingleCardDisplay {...cardInfo} />
+              <Card>
+                <CardContent>
+                  {!cardInfo && (
+                    <>
+                      <Typography variant="h5" component="h5">
+                        Enter your payment details
+                      </Typography>
+                      <div className="form-row">
+                        <div className="col">
+                          <label>Credit Card Number</label>
+                          <CardNumberElement />
+                        </div>
                       </div>
-                      <br />
-                      {invalidCard && (
-                        <Link
-                          to="/user-details"
-                          className="btn btn-link btn-edit-card"
-                        >
-                          Replace your card with
-                          <br />a valid one to proceed
-                        </Link>
-                      )}
-                      {!invalidCard && (
-                        <Link
-                          to="/user-details"
-                          className="btn btn-link btn-edit-card"
-                        >
-                          Edit your card
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                </>
-              )}
+                      <div className="form-row">
+                        <div className="col">
+                          <label>Expiration Date</label>
+                          <CardExpiryElement />
+                        </div>
+                        <div className="col">
+                          <label>CVC</label>
+                          <CardCVCElement />
+                        </div>
+                      </div>
+                    </>
+                  )}
+                  {cardInfo && (
+                    <>
+                      <Typography variant="h5" component="h5">
+                        Use your existing card
+                      </Typography>
+                      <SingleCardDisplay {...cardInfo} />
+                      <Typography component="p" className="transparency">
+                        {invalidCard && (
+                          <Link className="edit-card" to="/user-details">
+                            Replace your card with
+                            <br />a valid one to proceed
+                          </Link>
+                        )}
+                        {!invalidCard && (
+                          <Link className="edit-card" to="/user-details">
+                            Edit your card
+                          </Link>
+                        )}
+                      </Typography>
+                    </>
+                  )}
 
-              {!invalidCard && (
-                <>
-                  <div className="form-row" style={{ display: 'inline-block' }}>
-                    <p className="transparency">
-                      Your total charge will be
-                      <br />
-                    </p>
-                    <h2 className="transparency">
-                      $
-                      {this.calculateSupportTotal(
-                        this.props.subscriptionLevelValue / 100,
-                      )}
-                    </h2>
-                  </div>
-                  <div className="action-buttons">
-                    <Button
-                      disabled={this.state.disableActions}
-                      className="cancel-button"
-                      type="button"
-                      style={{ width: '50%' }}
-                      onClick={this.props.declineStep}
-                    >
-                      Change amount
-                    </Button>
-                    <Button
-                      disabled={this.state.disableActions}
-                      className="publish-button"
-                      type="submit"
-                      style={{ width: '50%' }}
-                    >
-                      Support
-                    </Button>
-                  </div>
-                </>
-              )}
+                  {!invalidCard && (
+                    <>
+                      <Typography component="p" className="transparency">
+                        Your total charge will be
+                      </Typography>
+                      <Typography variant="h4" component="h4">
+                        $
+                        {this.calculateSupportTotal(
+                          this.props.subscriptionLevelValue / 100,
+                        )}
+                      </Typography>
+                      <div className="action-buttons">
+                        <Button
+                          disabled={this.state.disableActions}
+                          className="cancel-button"
+                          type="button"
+                          style={{ width: '50%' }}
+                          onClick={this.props.declineStep}
+                        >
+                          Change amount
+                        </Button>
+                        <Button
+                          disabled={this.state.disableActions}
+                          className="publish-button"
+                          type="submit"
+                          style={{ width: '50%' }}
+                        >
+                          Support
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </CardContent>
+              </Card>
             </form>
           </div>
         </div>

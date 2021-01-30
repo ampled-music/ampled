@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Moment from 'moment';
 import { Image, Transformation } from 'cloudinary-react';
 import { SocialImages } from './SocialImages';
+import { routePaths } from '../route-paths';
 import tear_black from '../../images/backgrounds/background_tear_black.png';
 
 interface Props {
@@ -63,15 +64,16 @@ export class SupportedPages extends React.Component<Props, any> {
                         </div>
                       </div>
                       <div className="col-4">
-                        <button
+                        <a
                           className="link details__info_value details__info_value_change"
-                          name="Change"
-                          onClick={(event) =>
-                            this.props.openModal(event, subscription)
-                          }
+                          rel="noopener noreferrer"
+                          href={routePaths.changeSupport.replace(
+                            ':slug',
+                            subscription.artistSlug,
+                          )}
                         >
                           Change Amount
-                        </button>
+                        </a>
                         <button
                           className="link details__info_value details__info_value_cancel"
                           name="Cancel"

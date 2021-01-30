@@ -290,7 +290,6 @@ const mapDispatchToProps = (dispatch) => ({
   openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
   closeAuthModal: bindActionCreators(closeAuthModalAction, dispatch),
   cancelSubscription: bindActionCreators(cancelSubscriptionAction, dispatch),
-  // editSubscription: bindActionCreators(editSubscriptionAction, dispatch),
   updateMe: bindActionCreators(updateMeAction, dispatch),
   showToast: bindActionCreators(showToastAction, dispatch),
 });

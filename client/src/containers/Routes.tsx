@@ -136,6 +136,11 @@ const Routes = () => {
       />
       <PublicRoute exact path={routePaths.promote} component={LazyPromote} />
       <PublicRoute exact path={routePaths.support} component={Support} />
+      <ProtectedRoute
+        exact
+        path={routePaths.changeSupport}
+        component={Support}
+      />
       <PublicRoute
         exact
         path={routePaths.createPost}

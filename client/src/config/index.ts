@@ -14,6 +14,8 @@ export const config = {
   },
   cloudinary: {
     cloud_name: process.env.REACT_APP_CLOUDINARY_CLOUD_NAME || 'ampled-web',
+    apiKey: process.env.REACT_APP_CLOUDINARY_API_KEY,
+    apiSecret: process.env.REACT_APP_CLOUDINARY_API_SECRET,
   },
   aws: {
     playableBaseUrl:

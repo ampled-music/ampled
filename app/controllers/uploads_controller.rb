@@ -21,7 +21,7 @@ class UploadsController < ApplicationController
   end
 
   def cloudinary_upload
-    res = Cloudinary::Uploader.upload(params[:file], :return_delete_token => true)
+    res = Cloudinary::Uploader.upload(params[:file], return_delete_token: true)
     render json: res
   end
 

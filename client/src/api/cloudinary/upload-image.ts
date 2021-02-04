@@ -1,4 +1,5 @@
 import axios from 'axios';
+import sha1 from 'sha1';
 import { config } from '../../config';
 
 export const uploadFileToCloudinary = async (file: any) => {

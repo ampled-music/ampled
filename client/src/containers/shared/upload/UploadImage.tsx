@@ -88,11 +88,11 @@ export class UploadImage extends React.Component<UploadImageProps> {
   render() {
     const { altText, imageObject } = this.props;
     const { loadingImage } = this.state;
-    let body: {};
-    if (imageObject) {
-      body = (
-        <>
-          <div className="image-upload__image_container">
+
+    return (
+      <>
+        {imageObject ? (
+          <>
             <Image
               className="image-upload__image_image"
               publicId={imageObject.public_id}
@@ -107,18 +107,7 @@ export class UploadImage extends React.Component<UploadImageProps> {
                 responsive_placeholder="blank"
               />
             </Image>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <label>
-              <Button
-                className="btn btn-upload"
-                variant="outlined"
-                component="span"
-                onClick={this.removeImage}
-              >
-                Remove
-              </Button>
-            </label>
+
             <label htmlFor={`image-file-${altText}`}>
               <Button
                 className="btn btn-upload"
@@ -128,35 +117,14 @@ export class UploadImage extends React.Component<UploadImageProps> {
                 Replace
               </Button>
             </label>
-          </div>
-        </>
-      );
-    } else if (loadingImage) {
-      body = <CircularProgress className="loading-circle" />;
-    } else {
-      body = (
-        <>
-          <div className="image-upload__image_container">
-            <ReactSVG className="icon icon_black icon_100" src={PhotoIcon} />
-          </div>
-          <label
-            htmlFor={`image-file-${altText}`}
-            style={{ display: 'flex', justifyContent: 'center' }}
-          >
-            <Button variant="outlined" component="span">
-              Upload {altText}
-            </Button>
-          </label>
-        </>
-      );
-    }
-
-    return (
-      <div
-        className={`image-upload__image ${
-          altText === 'Primary' ? 'primary' : 'secondary'
-        }`}
-      >
+          </>
+        ) : loadingImage ? (
+          <CircularProgress className="loading-circle" />
+        ) : (
+          <Button variant="outlined" component="span">
+            Upload Photo
+          </Button>
+        )}
         <input
           style={{ display: 'none' }}
           id={`image-file-${altText}`}
@@ -165,8 +133,7 @@ export class UploadImage extends React.Component<UploadImageProps> {
           accept="image/*"
           onChange={this.processImage}
         />
-        {body}
-      </div>
+      </>
     );
   }
 }

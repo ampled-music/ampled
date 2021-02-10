@@ -324,6 +324,14 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     });
   };
 
+  addImage = () => {
+    this.setState({
+      image: [
+        // ...this.state.image,
+      ],
+    });
+  };
+
   removeMemberConfirm = (index) => {
     this.setState({
       showConfirmRemoveMember: true,
@@ -477,12 +485,17 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       .filter((image) => image !== null && typeof image !== 'undefined')
       .map(({ public_id, url, order }) => ({ public_id, url, order }));
 
+    console.log('imageUploads', imageUploads);
     console.log('newImages', newImages);
 
     const deletedImages = images.filter(
       (image) =>
-        image !== null && typeof image !== 'undefined' && image._destroy,
+        image !== null &&
+        typeof image !== 'undefined' &&
+        image._destroy &&
+        console.log(image._destroy, 'deleted?'),
     );
+
     console.log('deletedImages', deletedImages);
     console.log('catImages', deletedImages.concat(newImages));
 
@@ -514,11 +527,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           members,
         },
       });
-
       this.setState({
         loading: false,
       });
-
       if (data.status && data.status === 'error') {
         this.props.showToast({
           message: data.message,
@@ -553,12 +564,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           members,
         },
       });
-
       // let data;
       this.setState({
         loading: false,
       });
-
       if (data.status && data.status === 'error') {
         this.props.showToast({
           message: data.message,
@@ -751,7 +760,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             images={this.state.images}
             setImages={(images) => this.setState({ imageUploads: images })}
             showToast={this.props.showToast}
-            // addImage={this.addImage}
+            addImage={this.addImage}
           />
           <Color
             randomColor={this.state.randomColor}

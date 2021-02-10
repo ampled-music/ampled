@@ -128,7 +128,7 @@ export class UploadImage extends React.Component<UploadImageProps> {
               style={{ display: 'flex', justifyContent: 'center' }}
             >
               <Button variant="outlined" component="span">
-                Upload "poop"
+                Upload Photo
               </Button>
             </label>
           </div>

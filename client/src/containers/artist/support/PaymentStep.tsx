@@ -114,9 +114,6 @@ export class PaymentStepComponent extends React.Component<Props, any> {
 
     const { artistPageId, subscriptionLevelValue } = subscriptions;
 
-    console.log('this.props:', this.props);
-    console.log('subscriptions:', subscriptions);
-
     switch (subscriptions.status) {
       case SubscriptionStep.SupportLevel:
         return [

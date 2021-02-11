@@ -10,7 +10,7 @@ class EditSupport extends React.Component<any> {
     this.props.getArtist(null, this.props.match.params.slug);
   }
 
-  render = () => <Support editMode={true} />;
+  render = () => <Support editMode={true} match={this.props.match} />;
 }
 
 const mapStateToProps = (state: Store) => {

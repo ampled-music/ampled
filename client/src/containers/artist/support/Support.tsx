@@ -29,7 +29,7 @@ import {
 import { PaymentStep } from './PaymentStep';
 
 interface SupportProps {
-  match?: {
+  match: {
     params: {
       id: string;
     };

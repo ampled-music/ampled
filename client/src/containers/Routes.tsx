@@ -19,6 +19,11 @@ const LazyEditArtist = React.lazy(() =>
     default: module.Edit,
   })),
 );
+const LazyEditSupport = React.lazy(() =>
+  import('./artist/support/EditSupport').then((module) => ({
+    default: module.Edit,
+  })),
+);
 const LazyPromote = React.lazy(() =>
   import('./artist/PromoteArtist').then((module) => ({
     default: module.Promote,
@@ -138,8 +143,8 @@ const Routes = () => {
       <PublicRoute exact path={routePaths.support} component={Support} />
       <ProtectedRoute
         exact
-        path={routePaths.changeSupport}
-        component={Support}
+        path={routePaths.editSupport}
+        component={LazyEditSupport}
       />
       <PublicRoute
         exact

@@ -10,13 +10,7 @@ import {
 import { Link } from 'react-router-dom';
 import { SingleCardDisplay } from '../../user-details/UserDetails';
 
-import {
-  Button,
-  Card,
-  CardContent,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Button, Card, CardContent, Typography } from '@material-ui/core';
 
 interface Props {
   artistPageId: number;

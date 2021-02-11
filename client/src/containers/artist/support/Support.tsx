@@ -28,8 +28,8 @@ import {
 
 import { PaymentStep } from './PaymentStep';
 
-interface ArtistProps {
-  match: {
+interface SupportProps {
+  match?: {
     params: {
       id: string;
     };
@@ -38,11 +38,12 @@ interface ArtistProps {
   me: typeof meInitialState;
   authentication: typeof authenticateInitialState;
   subscriptions: typeof subscriptionsInitialState;
-  history: any;
+  // history?: any;  // Not sure if this is needed?
+  editMode?: boolean;
 }
 
 type Dispatchers = ReturnType<typeof mapDispatchToProps>;
-type Props = Dispatchers & ArtistProps;
+type Props = Dispatchers & SupportProps;
 
 export class SupportComponent extends React.Component<Props, any> {
   state = {

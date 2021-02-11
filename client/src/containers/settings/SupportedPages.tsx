@@ -68,7 +68,7 @@ export class SupportedPages extends React.Component<Props, any> {
                         <a
                           className="link details__info_value details__info_value_change"
                           rel="noopener noreferrer"
-                          href={routePaths.changeSupport.replace(
+                          href={routePaths.editSupport.replace(
                             ':slug',
                             subscription.artistSlug,
                           )}

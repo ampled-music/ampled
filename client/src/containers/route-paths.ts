@@ -7,7 +7,7 @@ export const routePaths = {
   editArtist: '/artist/:slug/edit',
   capsSlugs: '/(artist|support)/([a-zA-Z0-9-]*[A-Z]+[a-zA-Z0-9-]*)',
   support: '/support/:id',
-  changeSupport: '/support/:slug/edit',
+  editSupport: '/support/:slug/edit',
   createPost: '/create_post/:id',
   connect: '/connect',
   home: '/home',

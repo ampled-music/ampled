@@ -94,7 +94,7 @@ RSpec.describe MeController, type: :request do
       expect(JSON.parse(response.body)["ownedPages"]).to eq(
         [
           {
-            "approved" => false,
+            "artistApproved" => false,
             "artistColor" => nil,
             "artistId" => artist_page.id,
             "artistSlug" => nil,

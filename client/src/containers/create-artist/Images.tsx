@@ -4,12 +4,13 @@ import { UploadImage } from '../shared/upload/UploadImage';
 
 interface ImagesProps {
   images: any;
+  setImages: (images: any) => void;
   showToast: Function;
 }
 
 export class Images extends React.Component<ImagesProps> {
   render() {
-    const { images } = this.props;
+    const { images, setImages } = this.props;
     const imageSetter = (index) => (cloudinary) => {
       if (cloudinary) {
         images[index] = {
@@ -20,7 +21,7 @@ export class Images extends React.Component<ImagesProps> {
       } else {
         images[index] = null;
       }
-      this.setState({ images });
+      setImages(images);
     };
 
     const imageTypes = ['Primary', 'Photo #2', 'Photo #3'];

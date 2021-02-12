@@ -1,6 +1,9 @@
 require "rails_helper"
+require "shared_context/cloudinary_stub"
 
 RSpec.describe Post, type: :model do
+  include_context "cloudinary_stub"
+
   describe "#images" do
     let(:image) { create(:image) }
     let!(:post) { create(:post, images: [image]) }

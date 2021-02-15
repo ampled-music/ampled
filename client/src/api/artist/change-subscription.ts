@@ -9,7 +9,7 @@ export const changeSubscription = async ({
 }) => {
   const { data } = await apiAxios({
     method: 'put',
-    url: `/subscriptions/${subscriptionId}?new_price=${subscriptionAmount}`,
+    url: `/subscriptions/${subscriptionId}?amount=${subscriptionAmount}`,
   });
 
   if (data && data.status && data.status === 'error') {

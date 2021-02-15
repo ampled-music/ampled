@@ -1,6 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :allow_destroy, only: %i[destroy]
+  before_action :allow_destroy, only: %i[destroy update]
 
   def index
     @subscriptions = current_user.subscriptions
@@ -24,27 +24,24 @@ class SubscriptionsController < ApplicationController
     render json: { status: "error", message: e.message }
   end
 
-  def account_restricted_error(error)
-    Raven.capture_exception(error)
-    ArtistPageUnsupportableEmailJob.perform_async(current_artist_page.id, subscription_params[:amount].to_i)
-    render json: {
-      status: "error",
-      message: "#{current_artist_page.name} needs to finalize some things before you can support them.\
-      We've sent them an email to let them know!"
-    }
-  end
-
-  def allow_destroy
-    return render_not_allowed unless current_subscription.user == current_user || current_user.admin?
-  end
-
   def destroy
     current_subscription.cancel!
     render json: :ok
   end
 
-  def render_not_allowed
-    render json: { status: "error", message: "Not allowed." }
+  def update
+    plan = stripe_plan
+    current_subscription.update!(plan: plan)
+
+    Stripe::Subscription.update(
+      current_subscription.stripe_id,
+      {
+        plan: plan.stripe_id,
+        proration_behavior: "none" # Don't prorate new price
+      }
+    )
+
+    render json: :ok
   end
 
   def update_platform_customer
@@ -79,6 +76,24 @@ class SubscriptionsController < ApplicationController
   end
 
   private
+
+  def account_restricted_error(error)
+    Raven.capture_exception(error)
+    ArtistPageUnsupportableEmailJob.perform_async(current_artist_page.id, subscription_params[:amount].to_i)
+    render json: {
+      status: "error",
+      message: "#{current_artist_page.name} needs to finalize some things before you can support them.\
+      We've sent them an email to let them know!"
+    }
+  end
+
+  def allow_destroy
+    return render_not_allowed unless current_subscription.user == current_user || current_user.admin?
+  end
+
+  def render_not_allowed
+    render json: { status: "error", message: "Not allowed." }
+  end
 
   def update_single_customer
     Stripe::Customer.update(current_user.stripe_customer_id, source: params["token"])

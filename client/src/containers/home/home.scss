@@ -685,54 +685,79 @@
     margin: 2rem auto;
   }
 
-  &__logo {
-    border: 1px solid $black;
-    height: 130px;
+  &__feature {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
     align-items: center;
-    transition: transform $speed;
-    max-width: 300px;
-    margin: 0 auto 30px;
-
-    &_image {
-      width: 60%;
+    &_logo {
+      border: 1px solid $black;
+      height: 130px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 300px;
+      margin: 0 auto 30px;
+      img {
+        width: 60%;
+        margin: auto;
+      }
     }
-    &_contain {
+    a {
+      transition: transform $speed;
       &:nth-child(1n) {
-        .home-garden__logo {
-          transform: rotate(3deg);
-        }
+        transform: rotate(3deg);
       }
       &:nth-child(2n) {
-        .home-garden__logo {
-          transform: rotate(-3deg);
-        }
+        transform: rotate(-3deg);
       }
       &:nth-child(3n) {
-        .home-garden__logo {
-          transform: rotate(2deg);
-        }
+        transform: rotate(2deg);
       }
       &:nth-child(4n) {
-        .home-garden__logo {
-          transform: rotate(-1deg);
-        }
+        transform: rotate(-1deg);
       }
       &:nth-child(5n) {
-        .home-garden__logo {
-          transform: rotate(2deg);
-        }
+        transform: rotate(2deg);
       }
       &:nth-child(6n) {
-        .home-garden__logo {
-          transform: rotate(-3deg);
-        }
+        transform: rotate(-3deg);
+      }
+      &:hover {
+        transform: rotate(0deg) !important;
       }
     }
-
-    &:hover {
-      transform: rotate(0deg) !important;
+  }
+  &__supported {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    &_logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 200px;
+      margin: 0.5rem auto;
+      img {
+        width: 100%;
+        margin: auto;
+      }
+    }
+    &_copy {
+      text-align: center;
+      margin: 1rem;
+      font-family: $font-family-monospace;
+      font-size: 1.2rem;
+      a {
+        font-weight: bold;
+      }
     }
   }
 }

@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 import mission from '../../images/home/home_for_mission.png';
-import owned_by from '../../images/home/home_for_owned_by.png';
+import owned_by from '../../images/home/home_for_owned_by_2.png';
 import transparent from '../../images/home/home_for_transparent.png';
+import fair from '../../images/home/home_for_fair.png';
 
 export const HomeFor = () => (
   <div className="home-for">
@@ -10,31 +11,30 @@ export const HomeFor = () => (
       <div className="row">
         <div className="col-md-12">
           <h1 className="home-for__title">Made for music</h1>
-          <p className="home-for__mission">
-            A platform designed to put artists first.
-          </p>
+          <p className="home-for__mission">How Ampled puts artists first</p>
           <hr className="hr__thick" />
         </div>
       </div>
 
       <div className="row justify-content-center">
-        <div className="col-md-4">
+        <div className="col-md-3">
           <img
             className="home-for__image"
             src={owned_by}
             alt="Artist Owned Co-op"
           />
-          <h3 className="home-for__sub-title">Artist Owned Co-op</h3>
+          <h3 className="home-for__sub-title">Artist Owned</h3>
           <p className="home-for__copy">
-            100% owned by artists and workers - not vulture capitalists.
+            Artists and workers own 100% of Ampled — not venture capitalists –
+            and determine how it grows.
           </p>
           <a href="https://docs.ampled.com/coop/">
             <button className="home-for__button btn btn-ampled">
-              Read More
+              Our Co-op
             </button>
           </a>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
           <img
             className="home-for__image"
             src={transparent}
@@ -46,20 +46,33 @@ export const HomeFor = () => (
           </p>
           <a href="/page/open-dashboard">
             <button className="home-for__button btn btn-ampled">
-              Learn More
+              Take a look
             </button>
           </a>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
           <img className="home-for__image" src={mission} alt="Mission-Driven" />
           <h3 className="home-for__sub-title">Mission-Driven</h3>
           <p className="home-for__copy">
-            We’re making music more equitable for artists in an ethical and
-            transparent way.
+            We’re a supportive community of musicians organizing together for a
+            more equitable future.
           </p>
           <a href="/page/who-we-are/">
             <button className="home-for__button btn btn-ampled">
               Our Vision
+            </button>
+          </a>
+        </div>
+        <div className="col-md-3">
+          <img className="home-for__image" src={fair} alt="Fair" />
+          <h3 className="home-for__sub-title">Fair</h3>
+          <p className="home-for__copy">
+            Artists choose what % of their support goes towards our operating
+            expenses.
+          </p>
+          <a href="/page/who-we-are/">
+            <button className="home-for__button btn btn-ampled">
+              Read More
             </button>
           </a>
         </div>

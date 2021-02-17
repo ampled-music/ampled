@@ -24,8 +24,8 @@ class HomeHeader extends React.Component<any, any> {
               Own your creative freedom
             </div>
             <div className="home-header__info">
-              For artists of any sound or size. Receive support via direct
-              payments from your community and sustainably make music.
+              Direct support for all musicians. Collectively owned, community
+              supported.
             </div>
             <a
               className="home-header__button btn btn-ampled"

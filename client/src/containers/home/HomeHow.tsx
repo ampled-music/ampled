@@ -104,33 +104,34 @@ class HomeHowComponent extends React.Component<any, any> {
               <div className="section section_1">
                 <div className={this.setActive(this.state.showSpeaker)}>
                   <div className="home-how__title">
-                    Artists post unique / unreleased content
+                    Create a page on ampled and post unique or unreleased
+                    content
                   </div>
                   <div className="home-how__copy">
-                    Demos, unreleased material, exclusive merch, announcements -
-                    and more.
+                    Free for artists to join. Fans subscribe directly to a
+                    particular artist, not the platform.
                   </div>
                 </div>
               </div>
               <div className="section section_2">
                 <div className={this.setActive(this.state.showCrowd)}>
                   <div className="home-how__title">
-                    Artists are directly supported by their community
+                    Artists are supported directly by their audience
                   </div>
                   <div className="home-how__copy">
-                    No tiers and one egalitarian price: $3 per month (or support
-                    what you want beyond that)
+                    May also choose to be a 2X or even 10x supporter. Minimum
+                    monthly support per fan is $3. An audience member
                   </div>
                 </div>
               </div>
               <div className="section section_3">
                 <div className={this.setActive(this.state.showMoney)}>
                   <div className="home-how__title">
-                    Artists receive predictable and recurring payments
+                    Artists collect monthly recurring revenue
                   </div>
                   <div className="home-how__copy">
-                    When an artist posts something new, their supporters receive
-                    a notification.
+                    Supporters get a notification when an artist they support
+                    posts something new.
                   </div>
                 </div>
               </div>

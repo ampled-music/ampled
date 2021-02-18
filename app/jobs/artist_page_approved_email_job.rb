@@ -20,6 +20,7 @@ class ArtistPageApprovedEmailJob
       {
         from: ENV["POSTMARK_FROM_EMAIL"],
         to: user.email,
+        bcc: "onboarding@ampled.com",
         template_alias: "artist-page-approved",
         template_model: {
           app_base_url: ENV["REACT_APP_API_URL"],

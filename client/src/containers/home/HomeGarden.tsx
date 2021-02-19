@@ -13,7 +13,6 @@ import cci from '../../images/logos/cci-logo.png';
 import creativecommons from '../../images/logos/creative-commons-logo.png';
 import mozilla from '../../images/logos/mozilla-logo.png';
 import gftw from '../../images/logos/gftw-logo.png';
-import ppp from '../../images/logos/ppp-logo.png';
 import cuny from '../../images/logos/cuny-logo.png';
 import usdac from '../../images/logos/usdac-logo.png';
 
@@ -80,51 +79,30 @@ export const HomeGarden = () => (
 
       <h3 className="home-garden__title">Supported By</h3>
       <div className="home-garden__supported">
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <div className="home-garden__supported_logo">
-            <img src={newinc} alt="New INC" />
-          </div>
-        </a>
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <div className="home-garden__supported_logo">
-            <img src={startcoop} alt="Start.coop" />
-          </div>
-        </a>
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <div className="home-garden__supported_logo">
-            <img src={cci} alt="Center for Cultural Innovation" />
-          </div>
-        </a>
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <div className="home-garden__supported_logo">
-            <img src={creativecommons} alt="Creative Commons" />
-          </div>
-        </a>
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <div className="home-garden__supported_logo">
-            <img src={mozilla} alt="Mozilla" />
-          </div>
-        </a>
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <div className="home-garden__supported_logo">
-            <img src={gftw} alt="Great for the Web" />
-          </div>
-        </a>
-        {/* <a href="" target="_blank" rel="noopener noreferrer">
-          <div className="home-garden__supported_logo">
-            <img src={ppp} alt="People's Partity Project" />
-          </div>
-        </a> */}
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <div className="home-garden__supported_logo">
-            <img src={cuny} alt="Cuny School of Law" />
-          </div>
-        </a>
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <div className="home-garden__supported_logo">
-            <img src={usdac} alt="US Department of Arts and Culture" />
-          </div>
-        </a>
+        <div className="home-garden__supported_logo">
+          <img src={newinc} alt="New INC" />
+        </div>
+        <div className="home-garden__supported_logo">
+          <img src={startcoop} alt="Start.coop" />
+        </div>
+        <div className="home-garden__supported_logo">
+          <img src={cci} alt="Center for Cultural Innovation" />
+        </div>
+        <div className="home-garden__supported_logo">
+          <img src={creativecommons} alt="Creative Commons" />
+        </div>
+        <div className="home-garden__supported_logo">
+          <img src={mozilla} alt="Mozilla" />
+        </div>
+        <div className="home-garden__supported_logo">
+          <img src={gftw} alt="Great for the Web" />
+        </div>
+        <div className="home-garden__supported_logo">
+          <img src={cuny} alt="Cuny School of Law" />
+        </div>
+        <div className="home-garden__supported_logo">
+          <img src={usdac} alt="US Department of Arts and Culture" />
+        </div>
       </div>
       <div className="home-garden__supported_copy">
         And 356 <a href="">Community Members</a>

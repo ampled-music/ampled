@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 import npr from '../../images/logos/npr-logo.png';
 import salon from '../../images/logos/salon-logo.png';
@@ -105,7 +106,7 @@ export const HomeGarden = () => (
         </div>
       </div>
       <div className="home-garden__supported_copy">
-        And 356 <a href="">Community Members</a>
+        And 356 <Link to={`/artist/community`}>Community Members</Link>
       </div>
     </div>
   </div>

@@ -110,11 +110,11 @@ export const HomeGarden = () => (
             <img src={gftw} alt="Great for the Web" />
           </div>
         </a>
-        <a href="" target="_blank" rel="noopener noreferrer">
+        {/* <a href="" target="_blank" rel="noopener noreferrer">
           <div className="home-garden__supported_logo">
             <img src={ppp} alt="People's Partity Project" />
           </div>
-        </a>
+        </a> */}
         <a href="" target="_blank" rel="noopener noreferrer">
           <div className="home-garden__supported_logo">
             <img src={cuny} alt="Cuny School of Law" />

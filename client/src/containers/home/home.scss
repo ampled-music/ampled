@@ -110,6 +110,10 @@
   padding-bottom: 2rem;
   background-color: $white;
 
+  .container {
+    max-width: 1250px;
+  }
+
   h1 {
     font-family: $font-family-sans-serif;
     text-align: center;
@@ -162,6 +166,27 @@
   &__button {
     display: block;
     margin: auto;
+    justify-self: flex-end;
+    margin-bottom: 0;
+  }
+  &__section {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    @include mq($tablet) {
+      flex-direction: row;
+    }
+
+    &_item {
+      width: 100%;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      @include mq($tablet) {
+        width: 20%;
+      }
+    }
   }
 }
 
@@ -169,7 +194,7 @@
   background-color: $black;
   color: $white;
   position: relative;
-  overflow: hidden;
+  // overflow: hidden;
   margin: 0 auto;
   padding: 0;
 
@@ -737,14 +762,14 @@
     margin: auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     &_logo {
       display: flex;
       justify-content: center;
       align-items: center;
       max-width: 200px;
-      margin: 0.5rem auto;
+      margin: 0.5rem;
       img {
         width: 100%;
         margin: auto;

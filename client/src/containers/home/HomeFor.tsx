@@ -71,7 +71,7 @@ export const HomeFor = () => (
           </p>
           <a
             className="home-for__button btn btn-ampled"
-            href="/page/who-we-are/"
+            href="/page/pay-whats-fair"
           >
             Read More
           </a>

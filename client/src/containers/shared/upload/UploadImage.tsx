@@ -108,6 +108,7 @@ export class UploadImage extends React.Component<UploadImageProps> {
               />
             </Image>
           </div>
+          {/* <span className="preview__name">{altText}</span> */}
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <label>
               <Button

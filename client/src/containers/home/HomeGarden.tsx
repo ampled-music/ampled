@@ -9,6 +9,7 @@ import pitchfork from '../../images/logos/pitchfork-logo.png';
 import fastcompany from '../../images/logos/fastcompany-logo.png';
 
 import newinc from '../../images/logos/newinc-logo.png';
+import newschool from '../../images/logos/new-school-logo.png';
 import startcoop from '../../images/logos/startcoop-logo.png';
 import cci from '../../images/logos/cci-logo.png';
 import creativecommons from '../../images/logos/creative-commons-logo.png';
@@ -103,6 +104,9 @@ export const HomeGarden = () => (
         </div>
         <div className="home-garden__supported_logo">
           <img src={usdac} alt="US Department of Arts and Culture" />
+        </div>
+        <div className="home-garden__supported_logo">
+          <img src={newschool} alt="New School" />
         </div>
       </div>
       {/* todo: Connect to community page to get current amount of supporters */}

@@ -17,6 +17,7 @@ import mozilla from '../../images/logos/mozilla-logo.png';
 import gftw from '../../images/logos/gftw-logo.png';
 import cuny from '../../images/logos/cuny-logo.png';
 import usdac from '../../images/logos/usdac-logo.png';
+import seedclub from '../../images/logos/seed-club-logo.png';
 
 export const HomeGarden = () => (
   <div className="home-garden">
@@ -88,6 +89,9 @@ export const HomeGarden = () => (
           <img src={startcoop} alt="Start.coop" />
         </div>
         <div className="home-garden__supported_logo">
+          <img src={newschool} alt="New School" />
+        </div>
+        <div className="home-garden__supported_logo">
           <img src={cci} alt="Center for Cultural Innovation" />
         </div>
         <div className="home-garden__supported_logo">
@@ -106,7 +110,7 @@ export const HomeGarden = () => (
           <img src={usdac} alt="US Department of Arts and Culture" />
         </div>
         <div className="home-garden__supported_logo">
-          <img src={newschool} alt="New School" />
+          <img src={seedclub} alt="Seed Club" />
         </div>
       </div>
       {/* todo: Connect to community page to get current amount of supporters */}

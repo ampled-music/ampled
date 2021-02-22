@@ -105,9 +105,10 @@ export const HomeGarden = () => (
           <img src={usdac} alt="US Department of Arts and Culture" />
         </div>
       </div>
-      <div className="home-garden__supported_copy">
+      {/* todo: Connect to community page to get current amount of supporters */}
+      {/* <div className="home-garden__supported_copy">
         And 356 <Link to={`/artist/community`}>Community Members</Link>
-      </div>
+      </div> */}
     </div>
   </div>
 );

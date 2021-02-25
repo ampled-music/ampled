@@ -181,10 +181,10 @@ class SubscriptionsController < ApplicationController
 
   def current_artist_page
     @current_artist_page ||= if params["artist_page_id"].present?
-      ArtistPage.find(params["artist_page_id"])
-    else
-      current_subscription.artist_page
-    end
+                               ArtistPage.find(params["artist_page_id"])
+                             else
+                               current_subscription.artist_page
+                             end
   end
 
   def subscription_params

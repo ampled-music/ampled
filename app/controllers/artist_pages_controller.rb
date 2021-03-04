@@ -170,7 +170,7 @@ class ArtistPagesController < ApplicationController
 
   # @returns [String]
   def generate_subscribers_csv_text
-    CSV.generate(headers: true) do |csv|
+    CSV.generate do |csv|
       csv << ["Name", "Last Name", "Email"]
       @artist_page.active_subscribers.each do |subscriber|
         csv << [subscriber.name, subscriber.last_name, subscriber.email]

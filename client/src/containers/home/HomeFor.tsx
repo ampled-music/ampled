@@ -8,7 +8,7 @@ import fair from '../../images/home/home_for_fair.png';
 export const HomeFor = () => (
   <div className="home-for">
     <div className="container">
-      <h1 className="home-for__title">Made for music</h1>
+      <h1 className="home-for__title">A Co-op For Musicians</h1>
       <p className="home-for__mission">How Ampled puts artists first</p>
       <hr className="hr__thick" />
 

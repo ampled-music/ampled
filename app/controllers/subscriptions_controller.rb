@@ -1,6 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :allow_destroy, only: %i[destroy update]
+  before_action :ensure_subscription_scoped_to_current_user, only: %i[destroy update]
 
   def index
     @subscriptions = current_user.subscriptions
@@ -31,15 +31,15 @@ class SubscriptionsController < ApplicationController
 
   def update
     plan = stripe_plan
-    current_subscription.update!(plan: plan)
-
     Stripe::Subscription.update(
       current_subscription.stripe_id,
       {
         plan: plan.stripe_id,
         proration_behavior: "none" # Don't prorate new price
-      }
+      }, stripe_account: current_artist_page.stripe_user_id
     )
+
+    current_subscription.update!(plan: plan)
 
     render json: :ok
   end
@@ -87,7 +87,7 @@ class SubscriptionsController < ApplicationController
     }
   end
 
-  def allow_destroy
+  def ensure_subscription_scoped_to_current_user
     return render_not_allowed unless current_subscription.user == current_user || current_user.admin?
   end
 
@@ -180,7 +180,11 @@ class SubscriptionsController < ApplicationController
   end
 
   def current_artist_page
-    @current_artist_page ||= ArtistPage.find(params["artist_page_id"])
+    @current_artist_page ||= if params["artist_page_id"].present?
+                               ArtistPage.find(params["artist_page_id"])
+                             else
+                               current_subscription.artist_page
+                             end
   end
 
   def subscription_params

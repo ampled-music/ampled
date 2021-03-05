@@ -172,6 +172,18 @@ RSpec.describe ArtistPagesController, type: :request do
       end
     end
 
+    context "when a supporter’s name includes a quotation mark" do
+      it "returns csv with the quotation mark" do
+        sign_in admin
+        supporter.update!(last_name: "O'Hare")
+
+        get url
+
+        parsed_csv = CSV.parse(response.body)
+        expect(parsed_csv).to include([supporter.name, supporter.last_name, supporter.email])
+      end
+    end
+
     context "when current user is admin" do
       before do
         sign_in admin

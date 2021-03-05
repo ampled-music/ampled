@@ -161,12 +161,22 @@ class ArtistPagesController < ApplicationController
     end
 
     set_artist_page
-    response.headers["Content-Type"] = "text/csv"
+
     response.headers["Content-Disposition"] = "attachment; filename=#{@artist_page.slug}-subscribers.csv"
-    render :subscribers_csv
+    render(plain: generate_subscribers_csv_text, content_type: "text/csv")
   end
 
   private
+
+  # @returns [String]
+  def generate_subscribers_csv_text
+    CSV.generate do |csv|
+      csv << ["Name", "Last Name", "Email"]
+      @artist_page.active_subscribers.each do |subscriber|
+        csv << [subscriber.name, subscriber.last_name, subscriber.email]
+      end
+    end
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_artist_page

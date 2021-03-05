@@ -102,8 +102,6 @@ class ArtistComponent extends React.Component<Props, any> {
       });
       this.props.history.replace(this.props.location.pathname);
     }
-    isAmpled(this.props.artists.artist.slug) &&
-      this.setState({ isAmpled: true });
   }
 
   componentDidUpdate(prevProps: Props, prevState) {
@@ -160,6 +158,8 @@ class ArtistComponent extends React.Component<Props, any> {
   getArtistInfo = () => {
     if (this.props.match.params.slug) {
       this.props.getArtist(null, this.props.match.params.slug);
+      isAmpled(this.props.match.params.slug) &&
+        this.setState({ isAmpled: true });
     } else {
       this.props.getArtist(this.props.match.params.id);
     }

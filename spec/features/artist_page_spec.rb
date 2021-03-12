@@ -31,6 +31,30 @@ RSpec.describe ArtistPagesController, type: :request do
     end
   end
 
+  describe "#all_artists" do
+    let(:url) { "/artists/all_artists.json" }
+
+    before do
+      create_list(:artist_page, 5, :with_image, approved: true)
+      create_list(:artist_page, 4, :with_image, approved: false)
+    end
+
+    it "returns 200" do
+      get url
+
+      expect(response.status).to eq 200
+    end
+
+    it "responds with a JSON array with the expected content" do
+      get url
+
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response["pages"]).to be_a(Array)
+      expect(parsed_response["count"]).to eq(ArtistPage.approved.count)
+      expect(parsed_response["under_construction_count"]).to eq(ArtistPage.unapproved.count)
+    end
+  end
+
   context "when loading browse artist pages with a random seed" do
     let!(:approved_page_one) { create(:artist_page, approved: true) }
     let!(:approved_page_two) { create(:artist_page, approved: true) }

@@ -15,8 +15,18 @@ RSpec.describe ArtistPagesController, type: :request do
     sign_in user
   end
 
-  context "when loading all artist_pages" do
+  describe "#index" do
     let(:url) { "/artist_pages.json" }
+
+    before do
+      create_list(
+        :artist_page,
+        ArtistPagesController::INDEX_ARTIST_COUNT * 2,
+        :with_image,
+        approved: true,
+        artist_owner: true
+      )
+    end
 
     it "returns 200" do
       get url
@@ -24,10 +34,14 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(response.status).to eq 200
     end
 
-    it "responds with a JSON array" do
+    it "responds with a JSON array with the expected content" do
       get url
 
-      expect(JSON.parse(response.body)["pages"]).to be_a(Array)
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response["pages"]).to be_a(Array)
+      expect(parsed_response["pages"].length).to eq(ArtistPagesController::INDEX_ARTIST_COUNT)
+      expect(parsed_response["count"]).to eq(ArtistPage.count)
+      expect(parsed_response).to_not have_key("under_construction_count")
     end
   end
 

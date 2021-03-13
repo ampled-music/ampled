@@ -160,7 +160,6 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
               />
             </Image>
           </div>
-          {/* <span className="preview__name">{altText}</span> */}
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <label>
               <Button
@@ -558,7 +557,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     hideMembers: false,
     members: [],
     images: [],
-    imageUploads: [],
     loading: true,
     showConfirmRemoveMember: false,
     confirmRemoveMemberIndex: 99,
@@ -1298,7 +1296,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       artistVideo,
       hideMembers,
       images,
-      imageUploads,
       members,
     } = this.state;
 
@@ -1384,18 +1381,20 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     }
 
     // prepare artist images
-    const newImages = imageUploads
+    const newImages = images
       .filter((image) => image !== null && typeof image !== 'undefined')
       .map(({ public_id, url }) => ({ public_id, url }));
 
-    const deletedImages = images
-      .filter((image) => image !== null && typeof image !== 'undefined' && image._destroy);
+    const deletedImages = images.filter(
+      (image) =>
+        image !== null && typeof image !== 'undefined' && image._destroy,
+    );
 
     // create page
     this.setState({
       loading: true,
     });
-    if (!this.props.editMode) { 
+    if (!this.props.editMode) {
       const { data } = await apiAxios({
         method: 'post',
         url: '/artist_pages.json',
@@ -1414,7 +1413,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             external: artistExternal,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
-            images: newImages
+            images: newImages,
           },
           members,
         },

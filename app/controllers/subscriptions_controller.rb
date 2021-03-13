@@ -1,6 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :allow_destroy, only: %i[destroy]
+  before_action :ensure_subscription_scoped_to_current_user, only: %i[destroy update]
 
   def index
     @subscriptions = current_user.subscriptions
@@ -17,23 +17,11 @@ class SubscriptionsController < ApplicationController
 
     Raven.capture_exception(e)
     render json: { status: "error", message: e.message }
+  rescue Stripe::CardError => e
+    render json: { status: "error", message: e.message }
   rescue StandardError => e
     Raven.capture_exception(e)
     render json: { status: "error", message: e.message }
-  end
-
-  def account_restricted_error(error)
-    Raven.capture_exception(error)
-    ArtistPageUnsupportableEmailJob.perform_async(current_artist_page.id, subscription_params[:amount].to_i)
-    render json: {
-      status: "error",
-      message: "#{current_artist_page.name} needs to finalize some things before you can support them.\
-      We've sent them an email to let them know!"
-    }
-  end
-
-  def allow_destroy
-    return render_not_allowed unless current_subscription.user == current_user || current_user.admin?
   end
 
   def destroy
@@ -41,8 +29,19 @@ class SubscriptionsController < ApplicationController
     render json: :ok
   end
 
-  def render_not_allowed
-    render json: { status: "error", message: "Not allowed." }
+  def update
+    plan = stripe_plan
+    Stripe::Subscription.update(
+      current_subscription.stripe_id,
+      {
+        plan: plan.stripe_id,
+        proration_behavior: "none" # Don't prorate new price
+      }, stripe_account: current_artist_page.stripe_user_id
+    )
+
+    current_subscription.update!(plan: plan)
+
+    render json: :ok
   end
 
   def update_platform_customer
@@ -50,7 +49,6 @@ class SubscriptionsController < ApplicationController
     begin
       customer = update_single_customer
     rescue Stripe::CardError => e
-      Raven.capture_exception(e)
       return render json: { status: "error", message: e.message }, status: :bad_request
     end
     card = customer.sources.data[0]
@@ -78,6 +76,24 @@ class SubscriptionsController < ApplicationController
   end
 
   private
+
+  def account_restricted_error(error)
+    Raven.capture_exception(error)
+    ArtistPageUnsupportableEmailJob.perform_async(current_artist_page.id, subscription_params[:amount].to_i)
+    render json: {
+      status: "error",
+      message: "#{current_artist_page.name} needs to finalize some things before you can support them.\
+      We've sent them an email to let them know!"
+    }
+  end
+
+  def ensure_subscription_scoped_to_current_user
+    return render_not_allowed unless current_subscription.user == current_user || current_user.admin?
+  end
+
+  def render_not_allowed
+    render json: { status: "error", message: "Not allowed." }
+  end
 
   def update_single_customer
     Stripe::Customer.update(current_user.stripe_customer_id, source: params["token"])
@@ -164,7 +180,11 @@ class SubscriptionsController < ApplicationController
   end
 
   def current_artist_page
-    @current_artist_page ||= ArtistPage.find(params["artist_page_id"])
+    @current_artist_page ||= if params["artist_page_id"].present?
+                               ArtistPage.find(params["artist_page_id"])
+                             else
+                               current_subscription.artist_page
+                             end
   end
 
   def subscription_params

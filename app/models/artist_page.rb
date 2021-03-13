@@ -51,7 +51,7 @@ class ArtistPage < ApplicationRecord
 
   has_many :plans, dependent: :destroy
 
-  accepts_nested_attributes_for :images
+  accepts_nested_attributes_for :images, allow_destroy: true
 
   validate :sluggy_slug
 
@@ -70,6 +70,8 @@ class ArtistPage < ApplicationRecord
   before_save :check_approved
 
   scope :approved, -> { where(approved: true) }
+  scope :unapproved, -> { where(approved: false) }
+  scope :with_images, -> { left_outer_joins(:images).where.not(images: { id: nil }) }
   scope :artist_owner, -> { where(artist_owner: true) }
   scope :exclude_community_page, -> { where.not(id: Rails.env.production? ? COMMUNITY_PAGE_ID : []) }
 

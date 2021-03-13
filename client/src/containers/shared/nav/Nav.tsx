@@ -14,6 +14,7 @@ import { routePaths } from '../../route-paths';
 import { MenuEx } from '../menu/Menu';
 import { UserRoles } from '../user-roles';
 import { UserImage } from '../../user-details/UserImage';
+import { isAmpled } from '../../shared/utils';
 
 interface NavComponentProps {
   match: {
@@ -43,10 +44,6 @@ class NavComponent extends React.Component<Props, any> {
       userData &&
       userData.artistPages.find((page) => page.artistId === +artist.id)
     );
-  };
-
-  isAmpled = () => {
-    return this.props.artist.slug === 'community';
   };
 
   showSupportButton = () => {
@@ -153,12 +150,16 @@ class NavComponent extends React.Component<Props, any> {
             className="btn btn-ampled btn-support btn-support-header"
             onClick={this.handleSupportClick}
           >
-            {this.isAmpled() ? 'Become a member' : 'Support this artist'}
+            {isAmpled(this.props.artist.slug)
+              ? 'Become a member'
+              : 'Support this artist'}
           </button>
         )}
         <div className="menus">
           <div className="supporter-message">
-            {this.isAmpled() ? 'You are a member' : 'You are a supporter'}
+            {isAmpled(this.props.artist.slug)
+              ? 'You are a member'
+              : 'You are a supporter'}
           </div>
           <div className="loginLink">{this.renderNavLink()}</div>
           <MenuEx renderLoginLink={this.renderLoginLink} />
@@ -169,7 +170,9 @@ class NavComponent extends React.Component<Props, any> {
               className="btn btn-ampled btn-support"
               onClick={this.handleSupportClick}
             >
-              {this.isAmpled() ? 'Become a member' : 'Support this artist'}
+              {isAmpled(this.props.artist.slug)
+                ? 'Become a member'
+                : 'Support this artist'}
             </button>
           </div>
         )}

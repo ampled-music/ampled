@@ -11,7 +11,7 @@ class ApprovalRequestMailer < PostmarkMailer
       user_email: requesting_user.email
     }
 
-    mail to: "hello@ampled.com,austin@ampled.com"
+    mail to: "onboarding@ampled.com"
   end
 
   def artist_page_approval_requested_for_artists(artist_page, requesting_user)

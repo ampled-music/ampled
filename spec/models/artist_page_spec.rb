@@ -1,6 +1,9 @@
 require "rails_helper"
+require "shared_context/cloudinary_stub"
 
 RSpec.describe ArtistPage, type: :model do
+  include_context "cloudinary_stub"
+
   describe ".approved scope" do
     let!(:approved_page) { create(:artist_page, approved: true) }
     let!(:unapproved_page) { create(:artist_page, approved: false) }
@@ -11,6 +14,32 @@ RSpec.describe ArtistPage, type: :model do
 
     it "does not return not approved artist pages" do
       expect(ArtistPage.approved).to_not include(unapproved_page)
+    end
+  end
+
+  describe ".unapproved scope" do
+    let!(:approved_page) { create(:artist_page, approved: true) }
+    let!(:unapproved_page) { create(:artist_page, approved: false) }
+
+    it "returns unapproved artist pages" do
+      expect(ArtistPage.unapproved).to include(unapproved_page)
+    end
+
+    it "does not return approved artist pages" do
+      expect(ArtistPage.unapproved).to_not include(approved_page)
+    end
+  end
+
+  describe ".with_images scope" do
+    let!(:page_with_images) { create(:artist_page, approved: true, images: [create(:image)]) }
+    let!(:sad_imageless_page) { create(:artist_page, approved: true) }
+
+    it "returns page with images" do
+      expect(ArtistPage.with_images).to include(page_with_images)
+    end
+
+    it "does not return artist pages with no images" do
+      expect(ArtistPage.with_images).to_not include(sad_imageless_page)
     end
   end
 

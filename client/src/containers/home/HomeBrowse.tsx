@@ -20,8 +20,7 @@ class HomeBrowse extends React.Component {
     width: window.innerWidth,
     loading: true,
     canLoadMore: true,
-    artistOwnersPage: 1,
-    artistsPage: 1,
+    page: 1,
     seed: Math.random(),
   };
 
@@ -31,7 +30,7 @@ class HomeBrowse extends React.Component {
   }
 
   componentDidMount() {
-    this.loadArtistOwners(this.state.artistOwnersPage);
+    this.loadArtistOwners(this.state.page);
     this.loadArtists();
     window.addEventListener('resize', this.updateDimensions);
   }
@@ -79,7 +78,7 @@ class HomeBrowse extends React.Component {
   };
 
   loadMoreArtistOwners = () => {
-    this.loadArtistOwners(+this.state.artistOwnersPage + 1);
+    this.loadArtistOwners(+this.state.page + 1);
   };
 
   getArtistSections = (artists) => {

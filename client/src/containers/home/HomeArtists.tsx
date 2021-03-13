@@ -63,37 +63,41 @@ class HomeArtistsComponent extends React.Component<Props> {
   }
 
   private getArtistsList(artistsPages: any) {
-    return artistsPages?.map((page) => {
-      return (
-        <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
-          <Link to={`/artist/${page.slug}`}>
-            <div className="home-artists__item_title">{page.name}</div>
-            <div
-              className="home-artists__item_image_hover"
-              style={{ backgroundColor: page.accent_color }}
-            >
-              <Image
-                className="home-artists__item_image"
-                publicId={page.cloudinaryImage.public_id}
-                key={page.cloudinaryImage.id}
+    return (
+      artistsPages &&
+      artistsPages.length &&
+      artistsPages.map((page) => {
+        return (
+          <div className="col-sm-6 col-md-3 home-artists__item" key={page.id}>
+            <Link to={`/artist/${page.slug}`}>
+              <div className="home-artists__item_title">{page.name}</div>
+              <div
+                className="home-artists__item_image_hover"
+                style={{ backgroundColor: page.accent_color }}
               >
-                <Transformation
-                  fetchFormat="auto"
-                  quality="auto"
-                  crop="fill"
-                  width={800}
-                  height={800}
-                  responsive_placeholder="blank"
-                />
-              </Image>
+                <Image
+                  className="home-artists__item_image"
+                  publicId={page.cloudinaryImage.public_id}
+                  key={page.cloudinaryImage.id}
+                >
+                  <Transformation
+                    fetchFormat="auto"
+                    quality="auto"
+                    crop="fill"
+                    width={800}
+                    height={800}
+                    responsive_placeholder="blank"
+                  />
+                </Image>
 
-              {/* <img src={page.image} alt={page.name} /> */}
-            </div>
-            <div className="home-artists__item_border"></div>
-          </Link>
-        </div>
-      );
-    });
+                {/* <img src={page.image} alt={page.name} /> */}
+              </div>
+              <div className="home-artists__item_border"></div>
+            </Link>
+          </div>
+        );
+      })
+    );
   }
 }
 

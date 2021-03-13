@@ -9,7 +9,6 @@ interface Props {
   artist: any;
   openWhyModal: any;
   isSupporter: boolean;
-  isAmpled: boolean;
   loggedUserAccess: { role: string; artistId: number };
   handleSupportClick: Function;
 }
@@ -22,6 +21,10 @@ export class Supporters extends React.Component<Props, any> {
         this.props.loggedUserAccess.role === UserRoles.Member ||
         this.props.loggedUserAccess.role === UserRoles.Owner)
     );
+  };
+
+  isAmpled = () => {
+    return this.props.artist.slug === 'community';
   };
 
   renderSupporterHover = ({ supporter }) => {
@@ -143,7 +146,7 @@ export class Supporters extends React.Component<Props, any> {
           <>
             <div className="artist-header__supporters_title">
               {artist.supporter_count}{' '}
-              {this.props.isAmpled
+              {this.isAmpled()
                 ? `Member${artist.supporters.length > 1 ? 's' : ''}`
                 : `Supporter${artist.supporters.length > 1 ? 's' : ''}`}
             </div>

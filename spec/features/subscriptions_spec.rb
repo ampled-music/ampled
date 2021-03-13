@@ -32,12 +32,6 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
     }
   end
 
-  let(:update_params) do
-    {
-      amount: 20_000
-    }
-  end
-
   let(:other_create_params) do
     {
       artist_page_id: other_artist_page.id,
@@ -148,26 +142,6 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
       expect(UpdateArtistOwnerStatusJob.jobs.last["args"]).to match_array([
         create_params[:artist_page_id]
       ])
-    end
-
-    context "and the user's card is declined" do
-      before(:each) do
-        allow(Stripe::Customer).to receive(:create).and_raise(Stripe::CardError.new("Card declined.", :card, {}))
-      end
-      it "returns an error" do
-        post url, params: create_params
-
-        body = JSON.parse(response.body)
-        expect(response.status).to eq 200
-        expect(body["status"]).to eq "error"
-        expect(body["message"]).to eq "Card declined."
-      end
-
-      it "doesn't call Raven.capture_exception" do
-        expect(Raven).not_to receive(:capture_exception)
-
-        post url, params: create_params
-      end
     end
   end
 
@@ -377,68 +351,6 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
 
       expect(ArtistPageUnsupportableEmailJob).to have_received(:perform_async).with(restricted_artist_page.id,
                                                                                     restricted_create_params[:amount])
-    end
-  end
-
-  context "when updating a subscription amount" do
-    before(:each) do
-      sign_in user
-      post "/subscriptions", params: create_params
-      @subscription = user.subscriptions.active.first
-    end
-
-    it "returns 200 when successful" do
-      put "/subscriptions/#{@subscription.id}", params: update_params
-
-      expect(response.status).to eq 200
-    end
-
-    it "returns 200 when amount is under $3.00" do
-      put "/subscriptions/#{@subscription.id}", params: update_params.merge(amount: 3_00)
-
-      expect(response.status).to eq 200
-    end
-
-    it "creates a new plan if no plan exists for that price" do
-      put "/subscriptions/#{@subscription.id}", params: update_params
-
-      plan = @subscription.reload.plan
-      expect(plan.artist_page).to eq artist_page
-      expect(plan.nominal_amount).to eq Money.new(20_000, "usd")
-    end
-
-    it "uses an existing plan if a plan exists for that price" do
-      plan = @subscription.artist_page.plan_for_nominal_amount(Money.new(20_000, "usd"))
-
-      put "/subscriptions/#{@subscription.id}", params: update_params
-
-      expect(@subscription.reload.plan).to eq plan
-    end
-
-    it "updates the plan on Stripe" do
-      @subscription.artist_page.plan_for_nominal_amount(Money.new(20_000, "usd"))
-
-      put "/subscriptions/#{@subscription.id}", params: update_params
-
-      expect(Stripe::Subscription.retrieve(@subscription.stripe_id, stripe_account: artist_page.stripe_user_id).plan.id)
-        .to eq @subscription.reload.plan.stripe_id
-    end
-
-    it "doesn't update for another user" do
-      sign_out user
-      sign_in other_user
-
-      put "/subscriptions/#{@subscription.id}", params: update_params
-
-      expect(JSON.parse(response.body)["message"]).to eq("Not allowed.")
-    end
-
-    it "doesn't update for an unauthenticated user" do
-      sign_out user
-
-      put "/subscriptions/#{@subscription.id}", params: update_params
-
-      expect(response.body).to eq("You need to sign in or sign up before continuing.")
     end
   end
 end

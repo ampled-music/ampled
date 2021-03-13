@@ -7,12 +7,9 @@ class ArtistPagesController < ApplicationController
   before_action :check_create_okay, only: :create
   before_action :check_update_okay, only: :update
 
-  # How many randomly-picked artists to return for the #index endpoint.
-  INDEX_ARTIST_COUNT = 8
-
   def index
     @artist_pages = ArtistPage.includes(:images).approved.artist_owner
-      .exclude_community_page.with_images.order(Arel.sql("RANDOM()")).take(INDEX_ARTIST_COUNT)
+      .exclude_community_page.where.not(images: nil).order(Arel.sql("RANDOM()")).take(8)
     @artist_page_count = ArtistPage.count
 
     respond_to do |format|
@@ -64,11 +61,11 @@ class ArtistPagesController < ApplicationController
       .includes(:images)
       .approved
       .exclude_community_page
-      .with_images
+      .where.not(images: nil)
       .order(Arel.sql("LOWER(name)"))
     @artist_pages = base_query
-    @artist_page_count = base_query.count
-    @artist_pages_under_construction_count = ArtistPage.unapproved.exclude_community_page.count
+    @artist_pages_under_construction_count = ArtistPage.exclude_community_page.count -
+                                             ArtistPage.approved.exclude_community_page.count
 
     render template: "artist_pages/index"
   end
@@ -114,9 +111,9 @@ class ArtistPagesController < ApplicationController
     render json: { status: "error", message: e.message }
   end
 
-  # If the update includes new images, we will insert new image records
-  # Existing images get updated, and removed images get deleted.
+  # If the update includes new sets of images, we will delete all the old images after the update is successful.
   def update
+    old_image_ids = @artist_page.images.map(&:id)
     if @artist_page.update(artist_page_params)
       if artist_page_params[:application_fee_percent].present?
         UpdateApplicationFeePercentJob.perform_async(
@@ -124,6 +121,7 @@ class ArtistPagesController < ApplicationController
           artist_page_params[:application_fee_percent]
         )
       end
+      Image.where(id: old_image_ids).delete_all unless has_no_images
       set_members unless has_no_members
       render json: { status: "ok", message: "Your page has been updated!" }
     else
@@ -164,22 +162,12 @@ class ArtistPagesController < ApplicationController
     end
 
     set_artist_page
-
+    response.headers["Content-Type"] = "text/csv"
     response.headers["Content-Disposition"] = "attachment; filename=#{@artist_page.slug}-subscribers.csv"
-    render(plain: generate_subscribers_csv_text, content_type: "text/csv")
+    render :subscribers_csv
   end
 
   private
-
-  # @returns [String]
-  def generate_subscribers_csv_text
-    CSV.generate do |csv|
-      csv << ["Name", "Last Name", "Email"]
-      @artist_page.active_subscribers.each do |subscriber|
-        csv << [subscriber.name, subscriber.last_name, subscriber.email]
-      end
-    end
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_artist_page

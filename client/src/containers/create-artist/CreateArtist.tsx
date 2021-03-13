@@ -160,6 +160,7 @@ class ImageUploader extends React.Component<ImageUploaderProps> {
               />
             </Image>
           </div>
+          {/* <span className="preview__name">{altText}</span> */}
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <label>
               <Button
@@ -862,10 +863,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Your Custom Link</div>
               <h6>Required</h6>
-              <h6>
-                Letters and dashes only. Accent letters and special characters
-                are not allowed.
-              </h6>
+              <h6>Letters and dashes only.</h6>
             </div>
             <div className="col-md-8 col-sm-12">
               <TextField
@@ -1303,16 +1301,14 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     } = this.state;
 
     // validate fields
-    if (!artistName) {
+    if (
+      !artistName ||
+      !artistSlug ||
+      !artistColor ||
+      !/^[a-z-0-9]*[a-z]+[a-z-0-9]*$/.test(artistSlug)
+    ) {
       return this.props.showToast({
-        message: 'Please check that you have a valid artist name.',
-        type: 'error',
-      });
-    }
-    if (!artistSlug || !/^[a-z-0-9]*[a-z]+[a-z-0-9]*$/.test(artistSlug)) {
-      return this.props.showToast({
-        message:
-          'Please check that you have a valid custom link. Special characters are not allowed.',
+        message: 'Please check required fields.',
         type: 'error',
       });
     }
@@ -1385,21 +1381,16 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
-    // prepare artist images
-    const newImages = images
+    // hotfix accidental image deletion while we find better solution
+    const fixImages = images
       .filter((image) => image !== null && typeof image !== 'undefined')
-      .map(({ public_id, url }) => ({ public_id, url }));
-
-    const deletedImages = images.filter(
-      (image) =>
-        image !== null && typeof image !== 'undefined' && image._destroy,
-    );
+      .map(({ public_id, url, order }) => ({ public_id, url, order }));
 
     // create page
     this.setState({
       loading: true,
     });
-    if (!this.props.editMode) {
+    if (!this.props.editMode) { 
       const { data } = await apiAxios({
         method: 'post',
         url: '/artist_pages.json',
@@ -1418,7 +1409,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             external: artistExternal,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
-            images: newImages,
+            images: fixImages,
           },
           members,
         },
@@ -1457,7 +1448,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             external: artistExternal,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
-            images: deletedImages.concat(newImages),
+            images: fixImages,
           },
           members,
         },
@@ -1560,7 +1551,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     if (this.state.isDeletedPage) {
       return <Redirect to="/" />;
     } else if (this.state.loading) {
-      return <Loading isLoading={true} />;
+      return <Loading artistLoading={true} />;
     } else if (userData && !userData.email_confirmed) {
       return (
         <div

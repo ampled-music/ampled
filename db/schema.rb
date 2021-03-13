@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 2020_12_21_161806) do
     t.string "imageable_type"
     t.bigint "imageable_id"
     t.string "coordinates"
+    t.string "delete_token"
     t.integer "order"
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end

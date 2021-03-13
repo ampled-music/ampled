@@ -11,8 +11,7 @@ class ArtistOwnerStatusMailer < PostmarkMailer
   end
 
   def artist_eligible_for_ownership(artist_page)
-    # The Postmark Rails gem doesn't allow empty template models.
-    self.template_model = { "_unused_key": "" }
+    self.template_model = {}
     mail to: artist_page.owners.pluck(:email)
   end
 end

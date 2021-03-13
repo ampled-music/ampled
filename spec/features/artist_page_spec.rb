@@ -1,9 +1,6 @@
 require "rails_helper"
-require "shared_context/cloudinary_stub"
 
 RSpec.describe ArtistPagesController, type: :request do
-  include_context "cloudinary_stub"
-
   let(:user) { create(:user, confirmed_at: Time.current) }
   let(:supporter) { create(:user, confirmed_at: Time.current) }
 
@@ -15,57 +12,19 @@ RSpec.describe ArtistPagesController, type: :request do
     sign_in user
   end
 
-  describe "#index" do
+  context "when loading all artist_pages" do
     let(:url) { "/artist_pages.json" }
 
-    before do
-      create_list(
-        :artist_page,
-        ArtistPagesController::INDEX_ARTIST_COUNT * 2,
-        :with_image,
-        approved: true,
-        artist_owner: true
-      )
-    end
-
     it "returns 200" do
       get url
 
       expect(response.status).to eq 200
     end
 
-    it "responds with a JSON array with the expected content" do
+    it "responds with a JSON array" do
       get url
 
-      parsed_response = JSON.parse(response.body)
-      expect(parsed_response["pages"]).to be_a(Array)
-      expect(parsed_response["pages"].length).to eq(ArtistPagesController::INDEX_ARTIST_COUNT)
-      expect(parsed_response["count"]).to eq(ArtistPage.count)
-      expect(parsed_response).to_not have_key("under_construction_count")
-    end
-  end
-
-  describe "#all_artists" do
-    let(:url) { "/artists/all_artists.json" }
-
-    before do
-      create_list(:artist_page, 5, :with_image, approved: true)
-      create_list(:artist_page, 4, :with_image, approved: false)
-    end
-
-    it "returns 200" do
-      get url
-
-      expect(response.status).to eq 200
-    end
-
-    it "responds with a JSON array with the expected content" do
-      get url
-
-      parsed_response = JSON.parse(response.body)
-      expect(parsed_response["pages"]).to be_a(Array)
-      expect(parsed_response["count"]).to eq(ArtistPage.approved.count)
-      expect(parsed_response["under_construction_count"]).to eq(ArtistPage.unapproved.count)
+      expect(JSON.parse(response.body)["pages"]).to be_a(Array)
     end
   end
 
@@ -207,18 +166,6 @@ RSpec.describe ArtistPagesController, type: :request do
       it "returns no subscriber data" do
         get url
         expect(response.body).to_not include(supporter.email)
-      end
-    end
-
-    context "when a supporter’s name includes a quotation mark" do
-      it "returns csv with the quotation mark" do
-        sign_in admin
-        supporter.update!(last_name: "O'Hare")
-
-        get url
-
-        parsed_csv = CSV.parse(response.body)
-        expect(parsed_csv).to include([supporter.name, supporter.last_name, supporter.email])
       end
     end
 

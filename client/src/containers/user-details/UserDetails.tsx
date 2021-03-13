@@ -171,6 +171,7 @@ class CardInfo extends React.Component<CardInfoProps> {
             this.setState({ showEditForm: false });
           }}
           createSubscription={() => null}
+          changeSubscription={() => null}
           updateCard={updateCard}
           errorCard={errorCard}
           showToast={this.props.showToast}

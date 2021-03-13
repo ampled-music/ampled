@@ -13,6 +13,10 @@ interface Props {
     subscriptionLevelValue: number;
     paymentToken: string;
   }) => void;
+  changeSubscription: (subscription: {
+    subscriptionId: number;
+    subscriptionAmount: number;
+  }) => void;
   declineStep: any;
   artistPageId: any;
   subscriptionLevelValue: any;
@@ -42,6 +46,7 @@ export class StripePaymentProvider extends React.Component<Props, any> {
   render() {
     const {
       createSubscription,
+      changeSubscription,
       declineStep,
       artistPageId,
       subscriptionLevelValue,

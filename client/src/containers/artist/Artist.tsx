@@ -376,13 +376,14 @@ class ArtistComponent extends React.Component<Props, any> {
         {artist &&
           !artist.approved &&
           !artist.isStripeSetup &&
-          loggedUserAccess &&
-          this.renderSticky(
-            <div className="artistAlertHeader__container">
-              The Ampled team does a quick spot check of all pages before they
-              become visible to the general public. Set up payouts in order to
-              request approval.
-            </div>,
+          loggedUserAccess && (
+            <Sticky>
+              <div className="artistAlertHeader__container">
+                The Ampled team does a quick spot check of all pages before they
+                become visible to the general public. Set up payouts in order to
+                request approval.
+              </div>
+            </Sticky>
           )}
         {artist.style_type === 'minimal' ? (
           <ArtistHeaderMinimal

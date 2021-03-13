@@ -3,4 +3,5 @@ export const actions = {
   declineStep: 'DECLINE_STEP',
   createSubscription: 'CREATE_SUBSCRIPTION',
   cancelSubscription: 'CANCEL_SUBSCRIPTION',
+  changeSubscription: 'CHANGE_SUBSCRIPTION',
 };

@@ -5,6 +5,7 @@ import { openAuthModalAction } from '../../../redux/authentication/authenticatio
 import { Store } from '../../../redux/configure-store';
 import { showToastAction } from '../../../redux/toast/toast-modal';
 import { createSubscriptionAction } from '../../../redux/subscriptions/create';
+import { changeSubscriptionAction } from '../../../redux/subscriptions/change';
 import { declineStepAction } from '../../../redux/subscriptions/decline-step';
 import { startSubscriptionAction } from '../../../redux/subscriptions/start-subscription';
 import { ArtistModel } from '../../../redux/artists/initial-state';
@@ -108,6 +109,7 @@ export class PaymentStepComponent extends React.Component<Props, any> {
       artist,
       subscriptions,
       createSubscription,
+      changeSubscription,
       declineStep,
       userData,
     } = this.props;
@@ -134,6 +136,7 @@ export class PaymentStepComponent extends React.Component<Props, any> {
             artistPageId={artistPageId}
             subscriptionLevelValue={subscriptionLevelValue}
             createSubscription={createSubscription}
+            changeSubscription={changeSubscription}
             declineStep={declineStep}
             formType="checkout"
             userData={userData}
@@ -158,6 +161,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     startSubscription: bindActionCreators(startSubscriptionAction, dispatch),
     createSubscription: bindActionCreators(createSubscriptionAction, dispatch),
+    changeSubscription: bindActionCreators(changeSubscriptionAction, dispatch),
     declineStep: bindActionCreators(declineStepAction, dispatch),
     openAuthModal: bindActionCreators(openAuthModalAction, dispatch),
     showToast: bindActionCreators(showToastAction, dispatch),

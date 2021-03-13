@@ -15,6 +15,8 @@ import * as store from 'store';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { routePaths } from '../route-paths';
 
+import tear from '../../images/backgrounds/background_tear.png';
+
 import { apiAxios } from '../../api/setup-axios';
 
 import { once } from 'ramda';
@@ -130,6 +132,7 @@ class LoginComponent extends React.Component<Props, any> {
 
     return (
       <div className="login__container">
+        <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
           <h4>LOGIN</h4>
           {customLoginMessage && <p>{customLoginMessage}</p>}

@@ -103,8 +103,6 @@ class ArtistComponent extends React.Component<Props, any> {
       });
       this.props.history.replace(this.props.location.pathname);
     }
-    isAmpled(this.props.artists.artist.slug) &&
-      this.setState({ isAmpled: true });
   }
 
   componentDidUpdate(prevProps: Props, prevState) {
@@ -161,6 +159,8 @@ class ArtistComponent extends React.Component<Props, any> {
   getArtistInfo = () => {
     if (this.props.match.params.slug) {
       this.props.getArtist(null, this.props.match.params.slug);
+      isAmpled(this.props.match.params.slug) &&
+        this.setState({ isAmpled: true });
     } else {
       this.props.getArtist(this.props.match.params.id);
     }
@@ -376,16 +376,13 @@ class ArtistComponent extends React.Component<Props, any> {
         {artist &&
           !artist.approved &&
           !artist.isStripeSetup &&
-          loggedUserAccess && (
-            <Sticky>
-              <div className="artistAlertHeader__container">
-                The Ampled team does a quick spot check of all pages before they
-                become visible to the general public.{' '}
-                <a href={loggedUserAccess.stripeSignup}>Set up payouts</a> to
-                help us approve your page faster.
-              </div>
-              ,
-            </Sticky>
+          loggedUserAccess &&
+          this.renderSticky(
+            <div className="artistAlertHeader__container">
+              The Ampled team does a quick spot check of all pages before they
+              become visible to the general public. Set up payouts in order to
+              request approval.
+            </div>,
           )}
         {artist.style_type === 'minimal' ? (
           <ArtistHeaderMinimal

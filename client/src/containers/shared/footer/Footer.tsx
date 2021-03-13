@@ -77,7 +77,7 @@ class Footer extends React.Component<Props, any> {
                         backgroundColor: document.body.style.backgroundColor,
                       }}
                     >
-                      Join the Ampled community!
+                      Become A Community Member!
                     </button>
                   </a>
                 </div>

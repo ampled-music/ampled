@@ -80,7 +80,7 @@ export const HomeGarden = () => (
         </a>
       </div>
 
-      <h3 className="home-garden__title">Supported By</h3>
+      <h3 className="home-garden__title">Supporters & Partners</h3>
       <div className="home-garden__supported">
         <div className="home-garden__supported_logo">
           <img src={newinc} alt="New INC" />

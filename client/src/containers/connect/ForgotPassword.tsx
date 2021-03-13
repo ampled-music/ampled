@@ -10,6 +10,8 @@ import {
 } from '../../redux/authentication/authentication-modal';
 import { showToastAction } from '../../redux/toast/toast-modal';
 
+import tear from '../../images/backgrounds/background_tear.png';
+
 import { apiAxios } from '../../api/setup-axios';
 
 class ForgotPasswordComponent extends React.Component<any> {
@@ -56,6 +58,7 @@ class ForgotPasswordComponent extends React.Component<any> {
 
     return (
       <div className="login__container">
+        <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
           {authModalOpen ? <h4>FORGOT PASSWORD</h4> : <h4>RESET PASSWORD</h4>}
           {!authModalOpen && (

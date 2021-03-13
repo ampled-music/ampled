@@ -12,6 +12,8 @@ import { logoutAction } from '../../redux/authentication/logout';
 import { showToastAction } from '../../redux/toast/toast-modal';
 import { routePaths } from './../route-paths';
 
+import tear from '../../images/backgrounds/background_tear.png';
+
 import { apiAxios } from '../../api/setup-axios';
 
 type PasswordPackage = {
@@ -141,6 +143,7 @@ class ResetPasswordComponent extends React.Component<any> {
 
     return (
       <div className="login__container">
+        <img className="tear tear__topper" src={tear} alt="" />
         <div className="login">
           <h4>{cta}</h4>
           <form

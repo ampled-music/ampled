@@ -71,7 +71,7 @@ class ArtistPage < ApplicationRecord
 
   scope :approved, -> { where(approved: true) }
   scope :unapproved, -> { where(approved: false) }
-  scope :with_images, -> { left_outer_joins(:images).where.not(images: { id: nil }) }
+  scope :with_images, -> { includes(:images).where.not(images: { id: nil }) }
   scope :artist_owner, -> { where(artist_owner: true) }
   scope :exclude_community_page, -> { where.not(id: Rails.env.production? ? COMMUNITY_PAGE_ID : []) }
 

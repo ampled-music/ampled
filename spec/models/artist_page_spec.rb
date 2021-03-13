@@ -31,10 +31,11 @@ RSpec.describe ArtistPage, type: :model do
   end
 
   describe ".with_images scope" do
-    let!(:page_with_images) { create(:artist_page, approved: true, images: [create(:image)]) }
+    let!(:page_with_images) { create(:artist_page, approved: true, images: create_list(:image, 3)) }
     let!(:sad_imageless_page) { create(:artist_page, approved: true) }
 
     it "returns page with images" do
+      expect(ArtistPage.with_images.count).to eq(1)
       expect(ArtistPage.with_images).to include(page_with_images)
     end
 

@@ -7,9 +7,12 @@ class ArtistPagesController < ApplicationController
   before_action :check_create_okay, only: :create
   before_action :check_update_okay, only: :update
 
+  # How many randomly-picked artists to return for the #index endpoint.
+  INDEX_ARTIST_COUNT = 8
+
   def index
     @artist_pages = ArtistPage.includes(:images).approved.artist_owner
-      .exclude_community_page.where.not(images: nil).order(Arel.sql("RANDOM()")).take(8)
+      .exclude_community_page.with_images.order(Arel.sql("RANDOM()")).take(INDEX_ARTIST_COUNT)
     @artist_page_count = ArtistPage.count
 
     respond_to do |format|
@@ -61,11 +64,11 @@ class ArtistPagesController < ApplicationController
       .includes(:images)
       .approved
       .exclude_community_page
-      .where.not(images: nil)
+      .with_images
       .order(Arel.sql("LOWER(name)"))
     @artist_pages = base_query
-    @artist_pages_under_construction_count = ArtistPage.exclude_community_page.count -
-                                             ArtistPage.approved.exclude_community_page.count
+    @artist_page_count = base_query.count
+    @artist_pages_under_construction_count = ArtistPage.unapproved.exclude_community_page.count
 
     render template: "artist_pages/index"
   end

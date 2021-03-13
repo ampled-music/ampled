@@ -202,6 +202,14 @@ class PostsContainerComponent extends React.Component<Props, any> {
                 >
                   Artist Handbook
                 </a>{' '}
+                or{' '}
+                <a
+                  href="https://discord.gg/eHa5hd72wz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Discord
+                </a>{' '}
                 can show you the way.
               </div>
             </div>

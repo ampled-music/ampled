@@ -381,9 +381,8 @@ class ArtistComponent extends React.Component<Props, any> {
           this.renderSticky(
             <div className="artistAlertHeader__container">
               The Ampled team does a quick spot check of all pages before they
-              become visible to the general public.{' '}
-              <a href={loggedUserAccess.stripeSignup}>Set up payouts</a> to help
-              us approve your page faster.
+              become visible to the general public. Set up payouts in order to
+              request approval.
             </div>,
           )}
         {artist.style_type === 'minimal' ? (

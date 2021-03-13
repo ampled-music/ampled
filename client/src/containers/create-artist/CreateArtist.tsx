@@ -862,7 +862,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             <div className="col-md-4 col-sm-12">
               <div className="create-artist__subtitle">Your Custom Link</div>
               <h6>Required</h6>
-              <h6>Letters and dashes only.</h6>
+              <h6>
+                Letters and dashes only. Accent letters and special characters
+                are not allowed.
+              </h6>
             </div>
             <div className="col-md-8 col-sm-12">
               <TextField
@@ -1300,14 +1303,16 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     } = this.state;
 
     // validate fields
-    if (
-      !artistName ||
-      !artistSlug ||
-      !artistColor ||
-      !/^[a-z-0-9]*[a-z]+[a-z-0-9]*$/.test(artistSlug)
-    ) {
+    if (!artistName) {
       return this.props.showToast({
-        message: 'Please check required fields.',
+        message: 'Please check that you have a valid artist name.',
+        type: 'error',
+      });
+    }
+    if (!artistSlug || !/^[a-z-0-9]*[a-z]+[a-z-0-9]*$/.test(artistSlug)) {
+      return this.props.showToast({
+        message:
+          'Please check that you have a valid custom link. Special characters are not allowed.',
         type: 'error',
       });
     }

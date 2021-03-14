@@ -26,10 +26,10 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
 - [Deploy to Acceptance/Production](#deploy-to-acceptanceproduction)
 - [Database migrations and rollbacks](#database-migrations-and-rollbacks)
 - [Server Environments](#server-environments)
-    - [Hosting](#hosting)
-    - [Environment Variables](#environment-variables)
-    - [Third Party Services](#third-party-services)
-    - [Using the Stripe CLI to test webhooks locally](#using-the-stripe-cli-to-test-webhooks-locally)
+  - [Hosting](#hosting)
+  - [Environment Variables](#environment-variables)
+  - [Third Party Services](#third-party-services)
+  - [Using the Stripe CLI to test webhooks locally](#using-the-stripe-cli-to-test-webhooks-locally)
 - [Internal Tools](#internal-tools)
   - [`application-fee-management`](#application-fee-management)
     - [Installation & setup](#installation--setup)
@@ -40,13 +40,14 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
 ### Access to shared tools
 
 If you plan to do work in this repo, you probably want to get access to, at least:
-* Ampled's Trello boards.
-  * Used to track our work, and communicate with each other about status and implementation plans.
-  * We like to talk about "card numbers", which don't show up in the Trello interface. You can see these with browser plugins,
+
+- Ampled's Trello boards.
+  - Used to track our work, and communicate with each other about status and implementation plans.
+  - We like to talk about "card numbers", which don't show up in the Trello interface. You can see these with browser plugins,
     such as [this one for Chrome](https://chrome.google.com/webstore/detail/trello-card-numbers/kadpkdielickimifpinkknemjdipghaf) or [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/trello-super-powers/).
-* Heroku environments.
-  * We run our servers on Heroku, where we have "production" and "acceptance" environments.
-  * The "acceptance" environment will be helpful for getting credentials for services needed to
+- Heroku environments.
+  - We run our servers on Heroku, where we have "production" and "acceptance" environments.
+  - The "acceptance" environment will be helpful for getting credentials for services needed to
     run a server locally, and to debug things during QA.
 
 Ask other devs in the Slack to get access to these services.
@@ -122,7 +123,6 @@ Then when starting your application server or console set the rails env to produ
 
     $ RAILS_ENV=production bundle exec rails console
     $ RAILS_ENV=production npm run start
-
 
 ## Conventions
 
@@ -235,7 +235,7 @@ Or, for example, to roll back the most recent migration:
 $ heroku run rake db:rollback --app ampled-web
 ```
 
-(replace the app name above with `ampled-web-production` if you need to run this against production)
+(replace the app name above with `ampled-web-prod` if you need to run this against production)
 
 # Server Environments
 

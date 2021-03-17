@@ -11,6 +11,8 @@ class MeController < ApplicationController
     @stripe_info = stripe_card_info
   end
 
+  private
+
   def stripe_card_info
     return unless current_user
     return if current_user&.stripe_customer_id.blank?

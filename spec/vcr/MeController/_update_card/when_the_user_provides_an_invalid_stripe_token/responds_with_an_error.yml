@@ -1,0 +1,227 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: description=Test+customer&source=tok_visa_debit
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/4.12.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - '30'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Mon, 22 Mar 2021 04:11:06 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1917'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_yoJPyHNkrur1H1
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '2'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "cus_J9z4VhlHpSnWQa",
+          "object": "customer",
+          "account_balance": 0,
+          "address": null,
+          "balance": 0,
+          "created": 1616386266,
+          "currency": null,
+          "default_source": "card_1IXf6cCNj1cfz4PUmUndPfdt",
+          "delinquent": false,
+          "description": "Test customer",
+          "discount": null,
+          "email": null,
+          "invoice_prefix": "C5FC22A9",
+          "invoice_settings": {
+            "custom_fields": null,
+            "default_payment_method": null,
+            "footer": null
+          },
+          "livemode": false,
+          "metadata": {
+          },
+          "name": null,
+          "next_invoice_sequence": 1,
+          "phone": null,
+          "preferred_locales": [
+
+          ],
+          "shipping": null,
+          "sources": {
+            "object": "list",
+            "data": [
+              {
+                "id": "card_1IXf6cCNj1cfz4PUmUndPfdt",
+                "object": "card",
+                "address_city": null,
+                "address_country": null,
+                "address_line1": null,
+                "address_line1_check": null,
+                "address_line2": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_zip_check": null,
+                "brand": "Visa",
+                "country": "US",
+                "customer": "cus_J9z4VhlHpSnWQa",
+                "cvc_check": null,
+                "dynamic_last4": null,
+                "exp_month": 3,
+                "exp_year": 2022,
+                "fingerprint": "xbttngdMsEUpSUHm",
+                "funding": "debit",
+                "last4": "5556",
+                "metadata": {
+                },
+                "name": null,
+                "tokenization_method": null
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/customers/cus_J9z4VhlHpSnWQa/sources"
+          },
+          "subscriptions": {
+            "object": "list",
+            "data": [
+
+            ],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_J9z4VhlHpSnWQa/subscriptions"
+          },
+          "tax_exempt": "none",
+          "tax_ids": {
+            "object": "list",
+            "data": [
+
+            ],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_J9z4VhlHpSnWQa/tax_ids"
+          },
+          "tax_info": null,
+          "tax_info_verification": null
+        }
+    http_version: 
+  recorded_at: Mon, 22 Mar 2021 04:11:06 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_J9z4VhlHpSnWQa
+    body:
+      encoding: UTF-8
+      string: source=tok_kittehcard
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/4.12.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - '30'
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Mon, 22 Mar 2021 04:11:07 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '233'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_1u49x8lMJsypXu
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '1'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "error": {
+            "code": "resource_missing",
+            "doc_url": "https://stripe.com/docs/error-codes/resource-missing",
+            "message": "No such token: 'tok_kittehcard'",
+            "param": "source",
+            "type": "invalid_request_error"
+          }
+        }
+    http_version: 
+  recorded_at: Mon, 22 Mar 2021 04:11:07 GMT
+recorded_with: VCR 4.0.0

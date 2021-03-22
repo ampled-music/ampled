@@ -205,7 +205,7 @@ RSpec.describe MeController, :vcr, type: :request do
   end
 
   describe "#update_card" do
-    let(:url) { "/me/updatecard.json" }
+    let(:url) { "/me/update_card.json" }
     let!(:user) { StripeIntegrationTestHelper.create_user_with_stripe_customer(stripe_token: "tok_visa_debit") }
 
     before do

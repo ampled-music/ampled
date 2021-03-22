@@ -33,7 +33,6 @@ Rails.application.routes.draw do
     resources :posts, only: %i[create index]
   end
 
-  put "me/updatecard", to: "me#update_card"
   devise_scope :user do
     put "me/changepassword", to: "registrations#update_password"
   end
@@ -50,7 +49,10 @@ Rails.application.routes.draw do
 
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"
-  get "/me", to: "me#index"
+
+  resources :me, only: [:index] do
+    put :update_card, on: :collection
+  end
 
   devise_scope :user do
     get "stripe_oauth_callback", to: "stripe#callback"

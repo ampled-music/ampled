@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     resources :posts, only: %i[create index]
   end
 
-  put "me/updatecard", to: "subscriptions#update_platform_customer"
+  put "me/updatecard", to: "me#update_card"
   devise_scope :user do
     put "me/changepassword", to: "registrations#update_password"
   end

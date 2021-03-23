@@ -3,7 +3,7 @@ import { apiAxios } from '../setup-axios';
 export const updateCard = async (token) => {
   const { data } = await apiAxios({
     method: 'put',
-    url: '/me/updatecard.json',
+    url: '/me/update_card.json',
     data: {
       token
     },

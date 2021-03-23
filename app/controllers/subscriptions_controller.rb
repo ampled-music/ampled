@@ -44,37 +44,6 @@ class SubscriptionsController < ApplicationController
     render json: :ok
   end
 
-  def update_platform_customer
-    # Update platform customer
-    begin
-      customer = update_single_customer
-    rescue Stripe::CardError => e
-      return render json: { status: "error", message: e.message }, status: :bad_request
-    end
-    card = customer.sources.data[0]
-    current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
-                        card_exp_year: card.exp_year, card_last4: card.last4,
-                        card_is_valid: true)
-
-    # Update artist customer(s)
-    @subscriptions = current_user&.subscriptions
-    @subscriptions.map do |sub|
-      customer_id = sub.stripe_customer_id
-      ap_stripe_id = sub.artist_page.stripe_user_id
-      token = Stripe::Token.create(
-        { customer: current_user.stripe_customer_id },
-        stripe_account: ap_stripe_id
-      )
-      Stripe::Customer.update(customer_id, { source: token.id }, stripe_account: ap_stripe_id)
-    rescue StandardError => e
-      Raven.capture_exception(e)
-      render json: { status: "error", message: e.message }, status: :bad_request
-    end
-
-    # Send back update
-    render json: current_user
-  end
-
   private
 
   def account_restricted_error(error)

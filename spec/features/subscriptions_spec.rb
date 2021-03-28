@@ -398,6 +398,14 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
         .to eq @subscription.reload.plan.stripe_id
     end
 
+    it "doesn't update the database if the call to Stripe fails" do
+      allow(Stripe::Subscription).to receive(:update).and_raise(Stripe::StripeError)
+
+      expect { put "/subscriptions/#{@subscription.id}", params: update_params }.not_to change {
+        @subscription.reload.plan.stripe_id
+      }
+    end
+
     it "doesn't update for another user" do
       sign_out user
       sign_in other_user

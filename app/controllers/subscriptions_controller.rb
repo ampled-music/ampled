@@ -31,17 +31,23 @@ class SubscriptionsController < ApplicationController
 
   def update
     plan = stripe_plan
-    Stripe::Subscription.update(
-      current_subscription.stripe_id,
-      {
-        plan: plan.stripe_id,
-        proration_behavior: "none" # Don't prorate new price
-      }, stripe_account: current_artist_page.stripe_user_id
-    )
 
-    current_subscription.update!(plan: plan)
+    ActiveRecord::Base.transaction do
+      current_subscription.update!(plan: plan)
+
+      Stripe::Subscription.update(
+        current_subscription.stripe_id,
+        {
+          plan: plan.stripe_id,
+          proration_behavior: "none" # Don't prorate new price
+        }, stripe_account: current_artist_page.stripe_user_id
+      )
+    end
 
     render json: :ok
+  rescue Stripe::StripeError => e
+    Raven.capture_exception(e)
+    render json: { status: "error", message: e.message }, status: :bad_request
   end
 
   private

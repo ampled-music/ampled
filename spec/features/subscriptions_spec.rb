@@ -65,32 +65,6 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
     end
   end
 
-  context "when updating card on file" do
-    before do
-      put "/me/updatecard.json", params: { token: "tok_visa" }
-    end
-
-    it "returns updated card info" do
-      expect(JSON.parse(response.body)["card_last4"]).not_to be_empty
-    end
-
-    it "returns updated card info in me.json" do
-      get "/me.json"
-      expect(JSON.parse(response.body)["userInfo"]["cardInfo"]["last4"]).not_to be_empty
-    end
-  end
-
-  context "when updating card on file with an existing subscription" do
-    before do
-      post "/subscriptions/", params: create_params
-      put "/me/updatecard.json", params: { token: "tok_visa" }
-    end
-
-    it "returns updated card info" do
-      expect(JSON.parse(response.body)["card_last4"]).not_to be_empty
-    end
-  end
-
   context "when creating a subscription" do
     let(:url) { "/subscriptions/" }
 
@@ -422,6 +396,14 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
 
       expect(Stripe::Subscription.retrieve(@subscription.stripe_id, stripe_account: artist_page.stripe_user_id).plan.id)
         .to eq @subscription.reload.plan.stripe_id
+    end
+
+    it "doesn't update the database if the call to Stripe fails" do
+      allow(Stripe::Subscription).to receive(:update).and_raise(Stripe::StripeError)
+
+      expect { put "/subscriptions/#{@subscription.id}", params: update_params }.not_to change {
+        @subscription.reload.plan.stripe_id
+      }
     end
 
     it "doesn't update for another user" do

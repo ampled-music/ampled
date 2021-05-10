@@ -1385,15 +1385,21 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
-    // prepare artist images
-    const newImages = images
+    // hotfix accidental image deletion while we find better solution
+    const fixImages = images
       .filter((image) => image !== null && typeof image !== 'undefined')
-      .map(({ public_id, url }) => ({ public_id, url }));
+      .map(({ public_id, url, order }) => ({ public_id, url, order }));
 
-    const deletedImages = images.filter(
-      (image) =>
-        image !== null && typeof image !== 'undefined' && image._destroy,
-    );
+    // prepare artist images
+    // Leaving this in for refactor
+    // const newImages = images
+    //   .filter((image) => image !== null && typeof image !== 'undefined')
+    //   .map(({ public_id, url }) => ({ public_id, url }));
+
+    // const deletedImages = images.filter(
+    //   (image) =>
+    //     image !== null && typeof image !== 'undefined' && image._destroy,
+    // );
 
     // create page
     this.setState({
@@ -1418,46 +1424,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             external: artistExternal,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
-            images: newImages,
-          },
-          members,
-        },
-      });
-
-      this.setState({
-        loading: false,
-      });
-
-      if (data.status && data.status === 'error') {
-        this.props.showToast({
-          message: data.message,
-          type: 'error',
-        });
-      } else if (data.status && data.status === 'ok') {
-        this.props.showToast({
-          message: data.message,
-          type: 'success',
-        });
-        window.location.href = `/artist/${artistSlug}`;
-      }
-    } else {
-      const { data } = await apiAxios({
-        method: 'put',
-        url: `/artist_pages/${this.props.artist?.id}.json`,
-        data: {
-          artist_page: {
-            bio: artistMessage,
-            location: artistLocation,
-            accent_color: artistColor,
-            video_url: artistVideo,
-            instagram_handle: artistInstagram,
-            twitter_handle: artistTwitter,
-            youtube_handle: artistYoutube,
-            bandcamp_handle: artistBandcamp,
-            external: artistExternal,
-            verb_plural: artistVerb !== 'is',
-            hide_members: hideMembers,
-            images: deletedImages.concat(newImages),
+            images: fixImages,
           },
           members,
         },

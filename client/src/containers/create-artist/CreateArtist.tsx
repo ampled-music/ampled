@@ -1302,6 +1302,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       members,
     } = this.state;
 
+    console.log('submit');
+
     // validate fields
     if (!artistName) {
       return this.props.showToast({
@@ -1401,11 +1403,14 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     //     image !== null && typeof image !== 'undefined' && image._destroy,
     // );
 
+    console.log('pre submit');
+
     // create page
     this.setState({
       loading: true,
     });
-    if (!this.props.editMode) {
+    
+    if (!this.props.editMode) { 
       const { data } = await apiAxios({
         method: 'post',
         url: '/artist_pages.json',
@@ -1416,6 +1421,45 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             location: artistLocation,
             accent_color: artistColor,
             slug: artistSlug.toLowerCase(),
+            video_url: artistVideo,
+            instagram_handle: artistInstagram,
+            twitter_handle: artistTwitter,
+            youtube_handle: artistYoutube,
+            bandcamp_handle: artistBandcamp,
+            external: artistExternal,
+            verb_plural: artistVerb !== 'is',
+            hide_members: hideMembers,
+            images: fixImages,
+          },
+          members,
+        },
+      });
+
+      this.setState({
+        loading: false,
+      });
+
+      if (data.status && data.status === 'error') {
+        this.props.showToast({
+          message: data.message,
+          type: 'error',
+        });
+      } else if (data.status && data.status === 'ok') {
+        this.props.showToast({
+          message: data.message,
+          type: 'success',
+        });
+        window.location.href = `/artist/${artistSlug}`;
+      }
+    } else {
+      const { data } = await apiAxios({
+        method: 'put',
+        url: `/artist_pages/${this.props.artist?.id}.json`,
+        data: {
+          artist_page: {
+            bio: artistMessage,
+            location: artistLocation,
+            accent_color: artistColor,
             video_url: artistVideo,
             instagram_handle: artistInstagram,
             twitter_handle: artistTwitter,

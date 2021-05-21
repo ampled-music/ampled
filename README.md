@@ -16,6 +16,7 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
     - [Git](#git)
     - [Code Style](#code-style)
     - [Handling Money](#handling-money)
+  - [Integration (end-to-end) testing](#integration-end-to-end-testing)
   - [Additional/Optional Development Details](#additionaloptional-development-details)
     - [Backup/Restore Database](#backuprestore-database)
     - [Code Coverage](#code-coverage)
@@ -26,10 +27,10 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
 - [Deploy to Acceptance/Production](#deploy-to-acceptanceproduction)
 - [Database migrations and rollbacks](#database-migrations-and-rollbacks)
 - [Server Environments](#server-environments)
-  - [Hosting](#hosting)
-  - [Environment Variables](#environment-variables)
-  - [Third Party Services](#third-party-services)
-  - [Using the Stripe CLI to test webhooks locally](#using-the-stripe-cli-to-test-webhooks-locally)
+    - [Hosting](#hosting)
+    - [Environment Variables](#environment-variables)
+    - [Third Party Services](#third-party-services)
+    - [Using the Stripe CLI to test webhooks locally](#using-the-stripe-cli-to-test-webhooks-locally)
 - [Internal Tools](#internal-tools)
   - [`application-fee-management`](#application-fee-management)
     - [Installation & setup](#installation--setup)
@@ -146,6 +147,25 @@ On the client-side, the default `react-scripts` eslint configuration is ran duri
 ### Handling Money
 
 When storing a money value in the database, an integer represents the number of subunits (eg. USD cents or GBP pence) and a string is used to store lowercased ISO 4217 currency code (which matches Stripe's formatting). In memory, money values are represented using the [Money gem](https://github.com/RubyMoney/money).
+
+## Integration (end-to-end) testing
+
+We use [Cypress](cypress.io) for integration testing. To run the tests:
+
+To start the backend, frontend, and run the integration tests:
+```
+$ yarn run integration-tests
+```
+
+If you already have your own servers running locally:
+```
+$ yarn run cypress:run
+```
+
+If you want to run the Cypress client and see the tests in a browser as they run:
+```
+$ yarn run cypress:open
+```
 
 ## Additional/Optional Development Details
 

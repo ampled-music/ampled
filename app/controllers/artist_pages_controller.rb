@@ -114,9 +114,9 @@ class ArtistPagesController < ApplicationController
     render json: { status: "error", message: e.message }
   end
 
-  # If the update includes new images, we will insert new image records
-  # Existing images get updated, and removed images get deleted.
+  # If the update includes new sets of images, we will delete all the old images after the update is successful.
   def update
+    old_image_ids = @artist_page.images.map(&:id)
     if @artist_page.update(artist_page_params)
       if artist_page_params[:application_fee_percent].present?
         UpdateApplicationFeePercentJob.perform_async(
@@ -124,6 +124,7 @@ class ArtistPagesController < ApplicationController
           artist_page_params[:application_fee_percent]
         )
       end
+      Image.where(id: old_image_ids).delete_all unless has_no_images
       set_members unless has_no_members
       render json: { status: "ok", message: "Your page has been updated!" }
     else

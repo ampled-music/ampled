@@ -916,7 +916,8 @@ GEM
     rack-canonical-host (0.2.3)
       addressable (> 0, < 3)
       rack (>= 1.0.0, < 3)
-    rack-cors (1.0.2)
+    rack-cors (1.0.5)
+      rack (>= 1.6.0)
     rack-protection (2.0.4)
       rack
     rack-test (1.1.0)

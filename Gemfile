@@ -34,7 +34,7 @@ gem "zencoder"
 
 # Front-endy
 gem "autoprefixer-rails"
-gem "bootstrap", "~> 4.3.1"
+gem "bootstrap", "~> 5.0.1"
 gem "coffee-rails"
 gem "jquery-rails"
 gem "sass-rails", require: false # Only needed for generator (e.g. rail g controller Users)

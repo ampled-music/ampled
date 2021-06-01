@@ -33,15 +33,8 @@ gem "wavefile"
 gem "zencoder"
 
 # Front-endy
-gem "autoprefixer-rails"
-gem "bootstrap", "~> 5.0.1"
-gem "coffee-rails"
-gem "jquery-rails"
-gem "sass-rails", require: false # Only needed for generator (e.g. rail g controller Users)
-gem "sassc-rails"
-gem "simple_form"
+# We still have .slim files. Unclear if they are still used, but requires more investigation.
 gem "slim-rails"
-gem "uglifier"
 
 # Tools
 gem "awesome_print"

@@ -1403,8 +1403,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     //     image !== null && typeof image !== 'undefined' && image._destroy,
     // );
 
-    console.log('pre submit');
-
     // create page
     this.setState({
       loading: true,

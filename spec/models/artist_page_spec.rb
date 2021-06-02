@@ -34,10 +34,10 @@ RSpec.describe ArtistPage, type: :model do
     let!(:page_with_images) { create(:artist_page, approved: true, images: create_list(:image, 3)) }
     let!(:sad_imageless_page) { create(:artist_page, approved: true) }
 
-    # it "returns page with images" do
-    #   expect(ArtistPage.with_images.count).to eq(1)
-    #   expect(ArtistPage.with_images).to include(page_with_images)
-    # end
+    xit "returns page with images" do
+      expect(ArtistPage.with_images.count).to eq(1)
+      expect(ArtistPage.with_images).to include(page_with_images)
+    end
 
     it "does not return artist pages with no images" do
       expect(ArtistPage.with_images).to_not include(sad_imageless_page)
@@ -152,11 +152,11 @@ RSpec.describe ArtistPage, type: :model do
     let(:image) { create(:image) }
     let!(:artist_page) { create(:artist_page, images: [image]) }
 
-    # it "get deleted when owning Artist Page is deleted" do
-    #   expect {
-    #     artist_page.destroy!
-    #   }.to change { Image.all.count }.by(-1)
-    # end
+    it "get deleted when owning Artist Page is deleted" do
+      expect {
+        artist_page.destroy!
+      }.to change { Image.all.count }.by(-1)
+    end
 
     it "can be set as nested attributes" do
       page_with_images = described_class.new(

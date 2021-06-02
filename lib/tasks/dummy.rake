@@ -82,7 +82,7 @@ namespace :dummy do
         Post.create!(
           user: author,
           artist_page: ap,
-          body: Faker::Books::Lovecraft.paragraphs([1, 2].sample).join("\n"),
+          body: Faker::Books::Lovecraft.paragraphs(number: [1, 2].sample).join("\n"),
           title: Faker::Movies::HitchhikersGuideToTheGalaxy.quote
         )
       end

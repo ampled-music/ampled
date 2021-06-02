@@ -1302,8 +1302,6 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       members,
     } = this.state;
 
-    console.log('submit');
-
     // validate fields
     if (!artistName) {
       return this.props.showToast({

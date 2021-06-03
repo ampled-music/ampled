@@ -62,8 +62,8 @@ GEM
       io-like (~> 0.3.0)
     arel (9.0.0)
     ast (2.4.1)
-    autoprefixer-rails (9.5.1)
-      execjs
+    autoprefixer-rails (10.2.5.1)
+      execjs (> 0)
     awesome_print (1.8.0)
     aws-eventstream (1.0.1)
     aws-partitions (1.122.0)

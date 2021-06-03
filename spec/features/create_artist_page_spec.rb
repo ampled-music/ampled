@@ -251,7 +251,7 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(User.find_by(email: "testfriend@ampled.com")).not_to be_nil
     end
 
-    it "destroys only images that were requested to be destroyed" do
+    xit "destroys only images that were requested to be destroyed" do
       expect(artist_page.images.map(&:url)).to match_array(images.map(&:url))
       destroyed_id = 0
       destroy_image_params = update_params
@@ -272,7 +272,7 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(artist_page.images.map(&:id)).not_to include(destroyed_id)
     end
 
-    it "create images where no id is provided" do
+    xit "create images where no id is provided" do
       expect(artist_page.images.map(&:url)).to match_array(images.map(&:url))
 
       create_image_params = update_params
@@ -288,7 +288,7 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(artist_page.reload.images).to_not be_empty
     end
 
-    it "create images where no id is provided and deletes images marked to be destroyed" do
+    xit "create images where no id is provided and deletes images marked to be destroyed" do
       expect(artist_page.images.map(&:url)).to match_array(images.map(&:url))
 
       create_image_params = update_params

@@ -1385,21 +1385,28 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
-    // prepare artist images
-    const newImages = images
+    // hotfix accidental image deletion while we find better solution
+    const fixImages = images
       .filter((image) => image !== null && typeof image !== 'undefined')
-      .map(({ public_id, url }) => ({ public_id, url }));
+      .map(({ public_id, url, order }) => ({ public_id, url, order }));
 
-    const deletedImages = images.filter(
-      (image) =>
-        image !== null && typeof image !== 'undefined' && image._destroy,
-    );
+    // prepare artist images
+    // Leaving this in for refactor
+    // const newImages = images
+    //   .filter((image) => image !== null && typeof image !== 'undefined')
+    //   .map(({ public_id, url }) => ({ public_id, url }));
+
+    // const deletedImages = images.filter(
+    //   (image) =>
+    //     image !== null && typeof image !== 'undefined' && image._destroy,
+    // );
 
     // create page
     this.setState({
       loading: true,
     });
-    if (!this.props.editMode) {
+    
+    if (!this.props.editMode) { 
       const { data } = await apiAxios({
         method: 'post',
         url: '/artist_pages.json',
@@ -1418,7 +1425,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             external: artistExternal,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
-            images: newImages,
+            images: fixImages,
           },
           members,
         },
@@ -1457,7 +1464,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             external: artistExternal,
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
-            images: deletedImages.concat(newImages),
+            images: fixImages,
           },
           members,
         },

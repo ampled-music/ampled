@@ -33,6 +33,9 @@ gem "wavefile"
 gem "zencoder"
 
 # Front-endy
+# Use uglifier for JavaScript compression.
+# This is only useful for things like the /admin/ engine, since this is an API-only server that serves no HTML/JS/CSS.
+gem "uglifier"
 # We still have .slim files. Unclear if they are still used, but requires more investigation.
 gem "slim-rails"
 
@@ -66,14 +69,10 @@ group :development do
   gem "spring"
   gem "spring-commands-rspec"
   gem "spring-watcher-listen"
-  # gem "guard"
-  # gem "guard-rspec", ">= 4.6.5" # Resolves to 1.x without a version constraint. :/
-  # gem "guard-livereload"
 end
 
 group :test do
   gem "capybara"
-  # gem "capybara-email"
   gem "chromedriver-helper"
   gem "selenium-webdriver"
   gem "simplecov"

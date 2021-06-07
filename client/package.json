@@ -37,7 +37,7 @@
     "react-helmet": "^5.2.1",
     "react-linkify": "^1.0.0-alpha",
     "react-player": "^2.9.0",
-    "react-redux": "^6.0.0",
+    "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.0",
     "react-stack-grid": "^0.7.1",

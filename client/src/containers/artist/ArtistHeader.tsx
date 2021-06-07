@@ -27,16 +27,13 @@ interface Props {
   artist: ArtistModel;
   loggedUserAccess: { role: string; artistId: number };
   isSupporter: boolean;
+  isAmpled: boolean;
   handleSupportClick: Function;
 }
 
 export class ArtistHeader extends React.Component<Props, any> {
   state = {
     showConfirmationDialog: false,
-  };
-
-  isAmpled = () => {
-    return this.props.artist.slug === 'community';
   };
 
   canLoggedUserPost = () => {
@@ -76,10 +73,10 @@ export class ArtistHeader extends React.Component<Props, any> {
           style={{ borderColor }}
           onClick={() => this.props.handleSupportClick()}
         >
-          {this.isAmpled() ? 'Become a Member' : 'Support This Artist'}
+          {this.props.isAmpled ? 'Become a Member' : 'Support This Artist'}
         </button>
 
-        {this.isAmpled() ? (
+        {this.props.isAmpled ? (
           <button onClick={this.props.openJoinModal} className="link link__why">
             Why join?
           </button>
@@ -124,6 +121,7 @@ export class ArtistHeader extends React.Component<Props, any> {
       artist,
       loggedUserAccess,
       isSupporter,
+      isAmpled,
       handleSupportClick,
       openVideoModal,
       openMessageModal,
@@ -160,6 +158,7 @@ export class ArtistHeader extends React.Component<Props, any> {
               openWhyModal={openWhyModal}
               loggedUserAccess={loggedUserAccess}
               isSupporter={isSupporter}
+              isAmpled={isAmpled}
               handleSupportClick={handleSupportClick}
             />
 
@@ -178,6 +177,7 @@ export class ArtistHeader extends React.Component<Props, any> {
             openJoinModal={openJoinModal}
             loggedUserAccess={loggedUserAccess}
             isSupporter={isSupporter}
+            isAmpled={isAmpled}
             handleSupportClick={handleSupportClick}
           />
         </div>

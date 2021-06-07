@@ -14,6 +14,8 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: postgres
           RAILS_ENV: test
+          # Needs to be set for production-like asset precompilation check
+          SECRET_KEY_BASE: super-seekret
       - image: circleci/postgres:10.4-alpine
         environment:
           POSTGRES_USER: postgres
@@ -46,15 +48,21 @@ jobs:
           name: Run Rails tests + Rubocop linting
           # Runs default rake tasks, as defined in Rakefile (includes spec, rubocop)
           command: bundle exec rake
+
+      - run:
+          name: Test production asset compilation
+          command: RAILS_ENV=production bundle exec rake assets:precompile
+
+      - run:
+          name: Cypress tests
+          command: yarn install && yarn run build-client && yarn run integration-tests
+
+      # Steps below this line will only run if JavaScript/Typescript files have changed.
       - check-changed-files-or-halt:
           pattern: \.(js|ts|tsx|js|json)$
       - run:
           name: Run React tests
           command: npm run test-ci
-      - run:
-          name: Build react client
-          # With process.env.CI = true, lint warnings will break the build.
-          command: npm run build-client
 
   deploy:
     machine:

@@ -2,13 +2,17 @@ class ArtistPagesController < ApplicationController
   before_action :set_artist_page, :set_page_ownership, only: %i[show edit update destroy]
   before_action :check_approved, only: :show
   before_action :check_user, only: %i[create update]
+  before_action :check_cooldown, only: :create
   before_action :check_has_image, only: :create
   before_action :check_create_okay, only: :create
   before_action :check_update_okay, only: :update
 
+  # How many randomly-picked artists to return for the #index endpoint.
+  INDEX_ARTIST_COUNT = 8
+
   def index
     @artist_pages = ArtistPage.includes(:images).approved.artist_owner
-      .exclude_community_page.where.not(images: nil).order(Arel.sql("RANDOM()")).take(8)
+      .exclude_community_page.with_images.order(Arel.sql("RANDOM()")).take(INDEX_ARTIST_COUNT)
     @artist_page_count = ArtistPage.count
 
     respond_to do |format|
@@ -60,11 +64,11 @@ class ArtistPagesController < ApplicationController
       .includes(:images)
       .approved
       .exclude_community_page
-      .where.not(images: nil)
+      .with_images
       .order(Arel.sql("LOWER(name)"))
     @artist_pages = base_query
-    @artist_pages_under_construction_count = ArtistPage.exclude_community_page.count -
-                                             ArtistPage.approved.exclude_community_page.count
+    @artist_page_count = base_query.count
+    @artist_pages_under_construction_count = ArtistPage.unapproved.exclude_community_page.count
 
     render template: "artist_pages/index"
   end
@@ -160,12 +164,22 @@ class ArtistPagesController < ApplicationController
     end
 
     set_artist_page
-    response.headers["Content-Type"] = "text/csv"
+
     response.headers["Content-Disposition"] = "attachment; filename=#{@artist_page.slug}-subscribers.csv"
-    render :subscribers_csv
+    render(plain: generate_subscribers_csv_text, content_type: "text/csv")
   end
 
   private
+
+  # @returns [String]
+  def generate_subscribers_csv_text
+    CSV.generate do |csv|
+      csv << ["Name", "Last Name", "Email"]
+      @artist_page.active_subscribers.each do |subscriber|
+        csv << [subscriber.name, subscriber.last_name, subscriber.email]
+      end
+    end
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_artist_page
@@ -196,14 +210,18 @@ class ArtistPagesController < ApplicationController
       return render json: { status: "error", message: "Please confirm your email address first." }
     end
 
-    # A single user can only create one artist page per 24 hours.
-    recent_page_creation = user&.last_created_page_date.present? && user.last_created_page_date > 1.day.ago
-    if recent_page_creation && !Rails.env.test?
-      return render json: { status: "error", message: "You can't create more than one page per day." }
-    end
-
     # Otherwise, we're good to go
     true
+  end
+
+  def check_cooldown
+    # A single user can only create one artist page per 24 hours.
+    recent_page_creation = current_user&.last_created_page_date.present? &&
+                           current_user.last_created_page_date > 1.day.ago
+
+    return unless recent_page_creation && !Rails.env.test?
+
+    render json: { status: "error", message: "You can't create more than one page per day." }
   end
 
   def missing_params_error

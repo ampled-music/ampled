@@ -22,5 +22,9 @@
 FactoryBot.define do
   factory :artist_page do
     name { Faker::Music::RockBand.name }
+
+    trait :with_image do
+      images { [build(:image)] }
+    end
   end
 end

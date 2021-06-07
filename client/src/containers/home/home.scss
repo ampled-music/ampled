@@ -110,6 +110,10 @@
   padding-bottom: 2rem;
   background-color: $white;
 
+  .container {
+    max-width: 1250px;
+  }
+
   h1 {
     font-family: $font-family-sans-serif;
     text-align: center;
@@ -127,7 +131,7 @@
     width: 100%;
     margin: 1rem auto;
 
-    @include mq($tablet) {
+    @include mq($layout-m) {
       margin: 2rem auto;
       width: 50%;
     }
@@ -154,14 +158,33 @@
   &__copy {
     font-family: $font-family-monospace;
     text-align: center;
-
-    @include mq($tablet) {
-      min-height: 80px;
-    }
+    flex-grow: 1;
   }
   &__button {
     display: block;
     margin: auto;
+    justify-self: flex-end;
+    margin-bottom: 0;
+  }
+  &__section {
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: repeat(1, 1fr);
+    grid-auto-rows: 1fr;
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+    @include mq($layout-s) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include mq($layout-m) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    &_item {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
 
@@ -169,11 +192,11 @@
   background-color: $black;
   color: $white;
   position: relative;
-  overflow: hidden;
+  // overflow: hidden;
   margin: 0 auto;
   padding: 0;
 
-  @include mq($tablet) {
+  @include mq($layout-m) {
     margin: 0;
     padding: 0;
   }
@@ -194,7 +217,7 @@
     flex-direction: row;
     flex-wrap: wrap;
 
-    @include mq($tablet) {
+    @include mq($layout-m) {
       padding: 3rem;
     }
   }
@@ -221,7 +244,7 @@
     width: 50%;
     order: 1;
 
-    @include mq($tablet) {
+    @include mq($layout-m) {
       width: 7%;
       flex-direction: column;
       margin-bottom: 0rem;
@@ -231,7 +254,7 @@
     .section {
       height: auto;
 
-      @include mq($tablet) {
+      @include mq($layout-m) {
         height: 160px;
       }
 
@@ -257,7 +280,7 @@
     transition: all $speed;
     font-size: 1rem;
 
-    @include mq($tablet) {
+    @include mq($layout-m) {
       height: 70px;
       width: 70px;
       font-size: 2rem;
@@ -287,7 +310,7 @@
     min-height: 160px;
     order: 3;
 
-    @include mq($tablet) {
+    @include mq($layout-m) {
       width: 54%;
       order: 2;
     }
@@ -297,7 +320,7 @@
       width: 85%;
       position: absolute;
 
-      @include mq($tablet) {
+      @include mq($layout-m) {
         height: 160px;
         width: 100%;
         position: relative;
@@ -313,7 +336,7 @@
     width: 50%;
     order: 2;
 
-    @include mq($tablet) {
+    @include mq($layout-m) {
       width: 29%;
       order: 3;
     }
@@ -340,7 +363,7 @@
       transform: translate(50px, -70px);
     }
 
-    @include mq($tablet) {
+    @include mq($layout-m) {
       &.speaker {
         width: 460px;
         transform: translate(0px, 0px);
@@ -367,7 +390,7 @@
     z-index: 5;
     opacity: 0;
 
-    @include mq($tablet) {
+    @include mq($layout-m) {
       opacity: 1;
     }
   }
@@ -379,7 +402,7 @@
     opacity: 0;
     font-family: $font-family-monospace;
 
-    @include mq($tablet) {
+    @include mq($layout-m) {
       opacity: 1;
     }
   }
@@ -616,7 +639,7 @@
           @include mq($phablet) {
             width: 50%;
           }
-          @include mq($tablet) {
+          @include mq($layout-m) {
             width: 25%;
           }
           &:hover {
@@ -685,54 +708,79 @@
     margin: 2rem auto;
   }
 
-  &__logo {
-    border: 1px solid $black;
-    height: 130px;
+  &__feature {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
     align-items: center;
-    transition: transform $speed;
-    max-width: 300px;
-    margin: 0 auto 30px;
-
-    &_image {
-      width: 60%;
+    &_logo {
+      border: 1px solid $black;
+      height: 130px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 300px;
+      margin: 0 auto 30px;
+      img {
+        width: 60%;
+        margin: auto;
+      }
     }
-    &_contain {
+    a {
+      transition: transform $speed;
       &:nth-child(1n) {
-        .home-garden__logo {
-          transform: rotate(3deg);
-        }
+        transform: rotate(3deg);
       }
       &:nth-child(2n) {
-        .home-garden__logo {
-          transform: rotate(-3deg);
-        }
+        transform: rotate(-3deg);
       }
       &:nth-child(3n) {
-        .home-garden__logo {
-          transform: rotate(2deg);
-        }
+        transform: rotate(2deg);
       }
       &:nth-child(4n) {
-        .home-garden__logo {
-          transform: rotate(-1deg);
-        }
+        transform: rotate(-1deg);
       }
       &:nth-child(5n) {
-        .home-garden__logo {
-          transform: rotate(2deg);
-        }
+        transform: rotate(2deg);
       }
       &:nth-child(6n) {
-        .home-garden__logo {
-          transform: rotate(-3deg);
-        }
+        transform: rotate(-3deg);
+      }
+      &:hover {
+        transform: rotate(0deg) !important;
       }
     }
-
-    &:hover {
-      transform: rotate(0deg) !important;
+  }
+  &__supported {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    &_logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 200px;
+      margin: 0.5rem;
+      img {
+        width: 100%;
+        margin: auto;
+      }
+    }
+    &_copy {
+      text-align: center;
+      margin: 1rem;
+      font-family: $font-family-monospace;
+      font-size: 1.2rem;
+      a {
+        font-weight: bold;
+      }
     }
   }
 }

@@ -18,14 +18,13 @@ gem "jbuilder"
 gem "jwt"
 gem "kaminari"
 gem "money"
-gem "paperclip", "~> 6.0.0"
 gem "pg"
 gem "postmark-rails", ">=0.19.0"
 gem "puma"
 gem "pundit"
 gem "rack-canonical-host"
 gem "rack-cors", require: "rack/cors"
-gem "rails", "~> 5.2.1"
+gem "rails", "~> 5.2"
 gem "sentry-raven"
 gem "sidekiq"
 gem "skylight"
@@ -34,15 +33,11 @@ gem "wavefile"
 gem "zencoder"
 
 # Front-endy
-gem "autoprefixer-rails"
-gem "bootstrap", "~> 4.1.3"
-gem "coffee-rails"
-gem "jquery-rails"
-gem "sass-rails", require: false # Only needed for generator (e.g. rail g controller Users)
-gem "sassc-rails"
-gem "simple_form"
-gem "slim-rails"
+# Use uglifier for JavaScript compression.
+# This is only useful for things like the /admin/ engine, since this is an API-only server that serves no HTML/JS/CSS.
 gem "uglifier"
+# We still have .slim files. Unclear if they are still used, but requires more investigation.
+gem "slim-rails"
 
 # Tools
 gem "awesome_print"
@@ -74,14 +69,10 @@ group :development do
   gem "spring"
   gem "spring-commands-rspec"
   gem "spring-watcher-listen"
-  # gem "guard"
-  # gem "guard-rspec", ">= 4.6.5" # Resolves to 1.x without a version constraint. :/
-  # gem "guard-livereload"
 end
 
 group :test do
   gem "capybara"
-  # gem "capybara-email"
   gem "chromedriver-helper"
   gem "selenium-webdriver"
   gem "simplecov"

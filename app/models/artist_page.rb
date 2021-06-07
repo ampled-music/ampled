@@ -15,14 +15,16 @@
 #  hide_members            :boolean          default(FALSE)
 #  id                      :bigint(8)        not null, primary key
 #  instagram_handle        :string
+#  is_soft_deleted         :boolean          default(FALSE)
 #  location                :string
 #  name                    :string
+#  permanently_delete_at   :datetime
 #  slug                    :string
 #  state_token             :string
 #  stripe_product_id       :string
 #  stripe_user_id          :string
 #  style_type              :string
-#  subscribe_to_newsletter :boolean
+#  subscribe_to_newsletter :boolean          default(FALSE), not null
 #  twitter_handle          :string
 #  updated_at              :datetime         not null
 #  verb_plural             :boolean          default(FALSE)
@@ -51,7 +53,7 @@ class ArtistPage < ApplicationRecord
 
   has_many :plans, dependent: :destroy
 
-  accepts_nested_attributes_for :images
+  accepts_nested_attributes_for :images, allow_destroy: true
 
   validate :sluggy_slug
 
@@ -70,6 +72,8 @@ class ArtistPage < ApplicationRecord
   before_save :check_approved
 
   scope :approved, -> { where(approved: true) }
+  scope :unapproved, -> { where(approved: false) }
+  scope :with_images, -> { includes(:images).where.not(images: { id: nil }) }
   scope :artist_owner, -> { where(artist_owner: true) }
   scope :exclude_community_page, -> { where.not(id: Rails.env.production? ? COMMUNITY_PAGE_ID : []) }
 

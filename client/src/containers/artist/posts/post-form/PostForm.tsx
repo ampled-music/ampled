@@ -985,7 +985,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
       : this.props.artist.isStripeSetup;
     const isSaveEnabled = this.isSaveEnabled();
 
-    if (savingPost) return <Loading artistLoading={true} />;
+    if (savingPost) return <Loading isLoading={true} />;
 
     return (
       <div className="post-form__container">

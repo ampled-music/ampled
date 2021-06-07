@@ -10,7 +10,7 @@ class PageOwnershipDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     user: Field::BelongsTo.with_options(
       searchable: true,
-      searchable_field: 'email',
+      seachable_field: 'email',
     ),
     artist_page: Field::BelongsTo,
     id: Field::Number,

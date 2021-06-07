@@ -1,6 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :allow_destroy, only: %i[destroy]
+  before_action :ensure_subscription_scoped_to_current_user, only: %i[destroy update]
 
   def index
     @subscriptions = current_user.subscriptions
@@ -24,6 +24,34 @@ class SubscriptionsController < ApplicationController
     render json: { status: "error", message: e.message }
   end
 
+  def destroy
+    current_subscription.cancel!
+    render json: :ok
+  end
+
+  def update
+    plan = stripe_plan
+
+    ActiveRecord::Base.transaction do
+      current_subscription.update!(plan: plan)
+
+      Stripe::Subscription.update(
+        current_subscription.stripe_id,
+        {
+          plan: plan.stripe_id,
+          proration_behavior: "none" # Don't prorate new price
+        }, stripe_account: current_artist_page.stripe_user_id
+      )
+    end
+
+    render json: :ok
+  rescue Stripe::StripeError => e
+    Raven.capture_exception(e)
+    render json: { status: "error", message: e.message }, status: :bad_request
+  end
+
+  private
+
   def account_restricted_error(error)
     Raven.capture_exception(error)
     ArtistPageUnsupportableEmailJob.perform_async(current_artist_page.id, subscription_params[:amount].to_i)
@@ -34,51 +62,13 @@ class SubscriptionsController < ApplicationController
     }
   end
 
-  def allow_destroy
+  def ensure_subscription_scoped_to_current_user
     return render_not_allowed unless current_subscription.user == current_user || current_user.admin?
-  end
-
-  def destroy
-    current_subscription.cancel!
-    render json: :ok
   end
 
   def render_not_allowed
     render json: { status: "error", message: "Not allowed." }
   end
-
-  def update_platform_customer
-    # Update platform customer
-    begin
-      customer = update_single_customer
-    rescue Stripe::CardError => e
-      return render json: { status: "error", message: e.message }, status: :bad_request
-    end
-    card = customer.sources.data[0]
-    current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
-                        card_exp_year: card.exp_year, card_last4: card.last4,
-                        card_is_valid: true)
-
-    # Update artist customer(s)
-    @subscriptions = current_user&.subscriptions
-    @subscriptions.map do |sub|
-      customer_id = sub.stripe_customer_id
-      ap_stripe_id = sub.artist_page.stripe_user_id
-      token = Stripe::Token.create(
-        { customer: current_user.stripe_customer_id },
-        stripe_account: ap_stripe_id
-      )
-      Stripe::Customer.update(customer_id, { source: token.id }, stripe_account: ap_stripe_id)
-    rescue StandardError => e
-      Raven.capture_exception(e)
-      render json: { status: "error", message: e.message }, status: :bad_request
-    end
-
-    # Send back update
-    render json: current_user
-  end
-
-  private
 
   def update_single_customer
     Stripe::Customer.update(current_user.stripe_customer_id, source: params["token"])
@@ -165,7 +155,11 @@ class SubscriptionsController < ApplicationController
   end
 
   def current_artist_page
-    @current_artist_page ||= ArtistPage.find(params["artist_page_id"])
+    @current_artist_page ||= if params["artist_page_id"].present?
+                               ArtistPage.find(params["artist_page_id"])
+                             else
+                               current_subscription.artist_page
+                             end
   end
 
   def subscription_params

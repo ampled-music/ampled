@@ -53,15 +53,16 @@ jobs:
           name: Test production asset compilation
           command: RAILS_ENV=production bundle exec rake assets:precompile
 
+      - run:
+          name: Cypress tests
+          command: yarn install && yarn run build-client && yarn run integration-tests
+
+      # Steps below this line will only run if JavaScript/Typescript files have changed.
       - check-changed-files-or-halt:
           pattern: \.(js|ts|tsx|js|json)$
       - run:
           name: Run React tests
           command: npm run test-ci
-      - run:
-          name: Build react client
-          # With process.env.CI = true, lint warnings will break the build.
-          command: npm run build-client
 
   deploy:
     machine:

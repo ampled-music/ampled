@@ -75,6 +75,6 @@ Rails.application.routes.draw do
   get "/feed", to: "react#index"
   get "/stats", to: "react#index"
 
-  get "/no_artist", to: "react#render_404"
-  get "/*path", to: "react#render_404"
+  get "/no_artist", to: "react#render404"
+  get "/*path", to: "react#render404"
 end

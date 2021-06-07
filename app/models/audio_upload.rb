@@ -29,7 +29,9 @@ class AudioUpload < ApplicationRecord
   after_find :ensure_waveform
 
   class HashGenerationError < StandardError; end
+
   class DurationNotFoundError < StandardError; end
+
   class WaveformEmptyError < StandardError; end
 
   def delete_audio

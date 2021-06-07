@@ -38,7 +38,7 @@
     "react-linkify": "^1.0.0-alpha",
     "react-player": "^2.9.0",
     "react-redux": "^6.0.0",
-    "react-router-dom": "^5.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.0",
     "react-stack-grid": "^0.7.1",
     "react-stripe-elements": "^3.0.0",

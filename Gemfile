@@ -51,8 +51,8 @@ end
 group :development, :test do
   gem "dotenv-rails", require: "dotenv/rails-now"
   gem "factory_bot_rails"
-  gem "rspec-rails"
   gem "rspec_junit_formatter"
+  gem "rspec-rails"
   gem "rubocop", require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false

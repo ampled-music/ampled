@@ -18,16 +18,13 @@ class StatsController < ApplicationController
   end
 
   def avg_subscription_amount_value
-    @avg_subscription_amount_value ||= begin
+    @avg_subscription_amount_value ||=
       active_subscription_count.zero? ? 0 : total_revenue_value / active_subscription_count
-    end
   end
 
   def total_revenue_value
-    @total_revenue_value ||= begin
-      Subscription.includes(:plan).active.reduce(Money.zero("usd")) do |sum, subscription|
-        sum + subscription.plan.nominal_amount
-      end
+    @total_revenue_value ||= Subscription.includes(:plan).active.reduce(Money.zero("usd")) do |sum, subscription|
+      sum + subscription.plan.nominal_amount
     end
   end
 end

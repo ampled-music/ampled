@@ -2,6 +2,7 @@ class ArtistPaidEmailJob
   include Sidekiq::Worker
 
   class ArtistNotFound < StandardError; end
+
   class ConnectAccountNotFound < StandardError; end
 
   def perform(connect_account_id, amount_in_cents, currency, arrival_epoch_time)

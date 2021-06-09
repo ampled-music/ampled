@@ -6,8 +6,7 @@ module SocialImages
       new(artist_page).build
     end
 
-    attr_accessor :artist_page
-    attr_accessor :clean_artist_name
+    attr_accessor :artist_page, :clean_artist_name
 
     def initialize(artist_page)
       @artist_page = artist_page
@@ -70,7 +69,7 @@ module SocialImages
     end
 
     def build_broken_name(artistname)
-      broken_name = artistname.split " "
+      broken_name = artistname.split
       name_string = ""
       name_array = []
 
@@ -102,10 +101,11 @@ module SocialImages
 
     def adjust_name_positioning(y_index, distance, broken_name)
       offset = 0
-      if y_index == -180
+      case y_index
+      when -180
         # Grid 2
         offset = (distance / 2).round
-      elsif y_index == -400
+      when -400
         # Story 2
         offset = 60
       end

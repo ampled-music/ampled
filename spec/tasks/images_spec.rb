@@ -73,21 +73,21 @@ RSpec.describe "images.rake" do
   describe "images:empty_soft_deleted" do
     let(:task) { "images:empty_soft_deleted" }
 
-    let(:cloudinary_result_1) do
+    let(:cloudinary_result1) do
       {
         "resources" => [{ "public_id" => "id1" }, { "public_id" => "id2" }],
         "next_cursor" => "some_cursor_thingie"
       }
     end
 
-    let(:cloudinary_result_2) do
+    let(:cloudinary_result2) do
       {
         "resources" => [{ "public_id" => "id3" }, { "public_id" => "id4" }]
       }
     end
 
     before :each do
-      allow(Cloudinary::Api).to receive(:resources).and_return(cloudinary_result_1, cloudinary_result_2)
+      allow(Cloudinary::Api).to receive(:resources).and_return(cloudinary_result1, cloudinary_result2)
       allow(Cloudinary::Uploader).to receive(:destroy)
     end
 

@@ -213,13 +213,14 @@ class ArtistPage < ApplicationRecord
   private
 
   def find_screenshot_url(video_url)
-    if video_url.match?(/vimeo/i)
+    case video_url
+    when /vimeo/i
       vimeo_id = video_url.match(%r{vimeo.com/([\d\w]+)}i)[1]
-      response = Faraday.get "https://vimeo.com/api/v2/video/" + vimeo_id + ".json"
+      response = Faraday.get "https://vimeo.com/api/v2/video/#{vimeo_id}.json"
       JSON.parse(response.body)[0]["thumbnail_large"]
-    elsif video_url.match?(/youtu/i)
+    when /youtu/i
       youtube_id = video_url.match(%r{(youtube\.com/watch\?v=|youtu.be/)(.+)}i)[2]
-      "https://img.youtube.com/vi/" + youtube_id + "/0.jpg"
+      "https://img.youtube.com/vi/#{youtube_id}/0.jpg"
     end
   end
 

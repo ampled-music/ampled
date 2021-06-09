@@ -10,6 +10,7 @@ module Services
       @mailchimp.open_timeout = 30
     end
 
+    # rubocop:disable Style/OptionalBooleanParameter
     def update_subscription(artist, user, subscribe = true)
       raise MailchimpFailed, "Couldn't initialize Mailchimp" unless @mailchimp
 
@@ -28,6 +29,7 @@ module Services
     rescue Gibbon::MailChimpError => e
       raise e
     end
+    # rubocop:enable Style/OptionalBooleanParameter
 
     private
 

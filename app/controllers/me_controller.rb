@@ -21,7 +21,9 @@ class MeController < ApplicationController
     stripe_customer = Stripe::Customer.update(current_user.stripe_customer_id, source: params["token"])
     sync_card_info_with_stripe(stripe_customer)
 
-    current_user.subscriptions.includes(:artist_page).each(&method(:update_token_for_subscription))
+    current_user.subscriptions.includes(:artist_page).each do |subscription|
+      update_token_for_subscription(subscription)
+    end
 
     render json: current_user
   rescue Stripe::StripeError => e

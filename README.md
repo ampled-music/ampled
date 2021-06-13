@@ -103,6 +103,8 @@ Then populate database with faker data.
     $ bundle exec rake dummy:artist_pages
     $ bundle exec rake dummy:posts
 
+Note that by default, all created artist pages will be in an unapproved state, and will need to be approved before they are visible through the client.
+
 The `dummy:admin` task will create an admin account with a well-known username and password, which can be used to give admin owers to other testing accounts via the admin dashboard. See the contents of [dummy.rake](lib/tasks/dummy.rake) for the username and password of this account.
 
 Once your database is set up and filled with data simply run the following command and give it a moment to spin up a local test environment.

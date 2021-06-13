@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import * as React from 'react';
 import { ReactSVG } from 'react-svg';
 
@@ -66,7 +66,7 @@ class Upload extends React.Component<UploadProps, UploadState> {
         fileName,
       });
 
-      const options = {
+      const options: AxiosRequestConfig = {
         url: putUrl,
         headers: {
           'Content-Type': file.type,

@@ -15,7 +15,7 @@ client/.env
 /db/local_database_volume
 latest.dump
 
-# Ignore database backups 
+# Ignore database backups
 /db/backups/
 
 # Ignore all logfiles and tempfiles.
@@ -39,3 +39,7 @@ tools/application-fee-management/.env
 
 # Ignore VSCode configs
 .vscode
+
+# Ignore Cypress screenshots and videos
+cypress/screenshots
+cypress/videos

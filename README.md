@@ -16,6 +16,7 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
     - [Git](#git)
     - [Code Style](#code-style)
     - [Handling Money](#handling-money)
+  - [Integration (end-to-end) testing](#integration-end-to-end-testing)
   - [Additional/Optional Development Details](#additionaloptional-development-details)
     - [Backup/Restore Database](#backuprestore-database)
     - [Code Coverage](#code-coverage)
@@ -40,13 +41,14 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
 ### Access to shared tools
 
 If you plan to do work in this repo, you probably want to get access to, at least:
-* Ampled's Trello boards.
-  * Used to track our work, and communicate with each other about status and implementation plans.
-  * We like to talk about "card numbers", which don't show up in the Trello interface. You can see these with browser plugins,
+
+- Ampled's Trello boards.
+  - Used to track our work, and communicate with each other about status and implementation plans.
+  - We like to talk about "card numbers", which don't show up in the Trello interface. You can see these with browser plugins,
     such as [this one for Chrome](https://chrome.google.com/webstore/detail/trello-card-numbers/kadpkdielickimifpinkknemjdipghaf) or [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/trello-super-powers/).
-* Heroku environments.
-  * We run our servers on Heroku, where we have "production" and "acceptance" environments.
-  * The "acceptance" environment will be helpful for getting credentials for services needed to
+- Heroku environments.
+  - We run our servers on Heroku, where we have "production" and "acceptance" environments.
+  - The "acceptance" environment will be helpful for getting credentials for services needed to
     run a server locally, and to debug things during QA.
 
 Ask other devs in the Slack to get access to these services.
@@ -55,7 +57,7 @@ Ask other devs in the Slack to get access to these services.
 
 To run the specs or fire up the server, be sure you have these installed (and running):
 
-- Ruby 2.5 (see [.ruby-version](.ruby-version)).
+- Ruby 2.7.2 (see [.ruby-version](.ruby-version)).
 - PostgreSQL 10.3+ (`brew install postgresql`).
 - Heroku CLI (`brew tap heroku/brew && brew install heroku`).
 - ffmpeg (`brew install ffmpeg`)
@@ -101,6 +103,8 @@ Then populate database with faker data.
     $ bundle exec rake dummy:artist_pages
     $ bundle exec rake dummy:posts
 
+Note that by default, all created artist pages will be in an unapproved state, and will need to be approved before they are visible through the client.
+
 The `dummy:admin` task will create an admin account with a well-known username and password, which can be used to give admin owers to other testing accounts via the admin dashboard. See the contents of [dummy.rake](lib/tasks/dummy.rake) for the username and password of this account.
 
 Once your database is set up and filled with data simply run the following command and give it a moment to spin up a local test environment.
@@ -122,7 +126,6 @@ Then when starting your application server or console set the rails env to produ
 
     $ RAILS_ENV=production bundle exec rails console
     $ RAILS_ENV=production npm run start
-
 
 ## Conventions
 
@@ -146,6 +149,25 @@ On the client-side, the default `react-scripts` eslint configuration is ran duri
 ### Handling Money
 
 When storing a money value in the database, an integer represents the number of subunits (eg. USD cents or GBP pence) and a string is used to store lowercased ISO 4217 currency code (which matches Stripe's formatting). In memory, money values are represented using the [Money gem](https://github.com/RubyMoney/money).
+
+## Integration (end-to-end) testing
+
+We use [Cypress](cypress.io) for integration testing. To run the tests:
+
+To start the backend, frontend, and run the integration tests:
+```
+$ yarn run integration-tests
+```
+
+If you already have your own servers running locally:
+```
+$ yarn run cypress:run
+```
+
+If you want to run the Cypress client and see the tests in a browser as they run:
+```
+$ yarn run cypress:open
+```
 
 ## Additional/Optional Development Details
 
@@ -235,7 +257,7 @@ Or, for example, to roll back the most recent migration:
 $ heroku run rake db:rollback --app ampled-web
 ```
 
-(replace the app name above with `ampled-web-production` if you need to run this against production)
+(replace the app name above with `ampled-web-prod` if you need to run this against production)
 
 # Server Environments
 

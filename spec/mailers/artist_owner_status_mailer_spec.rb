@@ -44,7 +44,7 @@ RSpec.describe ArtistOwnerStatusMailer, type: :mailer do
     let(:mail) { ArtistOwnerStatusMailer.artist_eligible_for_ownership(artist_page) }
 
     it "sets template correctly" do
-      expect(mail.message.template_model).to eq({})
+      expect(mail.message.template_model).to eq({ _unused_key: "" })
     end
 
     it "sets addresses correctly" do

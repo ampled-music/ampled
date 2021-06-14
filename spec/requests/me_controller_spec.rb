@@ -1,11 +1,11 @@
 require "rails_helper"
 
-RSpec.describe MeController, type: :request do
-  let(:url) { "/me.json" }
-  let(:image) { create(:image) }
-  let(:user) { create(:user, image: image) }
-
+RSpec.describe MeController, :vcr, type: :request do
   describe "#index" do
+    let(:image) { create(:image) }
+    let(:user) { create(:user, image: image) }
+    let(:url) { "/me.json" }
+
     before do
       sign_in user
     end
@@ -115,6 +115,153 @@ RSpec.describe MeController, type: :request do
           }
         ]
       )
+    end
+
+    context "when the user has credit card info" do
+      before(:each) do
+        user.update!(
+          card_brand: "Visa",
+          card_exp_month: "10",
+          card_exp_year: "21",
+          card_is_valid: true,
+          card_last4: "1234"
+        )
+      end
+
+      it "populates userInfo.cardInfo in the response" do
+        get url
+
+        expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to eq(
+          {
+            "brand" => "Visa",
+            "exp_month" => "10",
+            "exp_year" => "21",
+            "is_valid" => true,
+            "last4" => "1234"
+          }
+        )
+      end
+
+      it "does not try to pull card info from Stripe" do
+        expect(Stripe::Customer).not_to receive(:retrieve)
+
+        get url
+      end
+    end
+
+    context "when the user does not have credit card info" do
+      context "and the user does not have a stripe_customer_id" do
+        it "sets userInfo.creditInfo to nil in the response" do
+          get url
+
+          expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to be_nil
+        end
+
+        it "does not try to pull card info from Stripe" do
+          expect(Stripe::Customer).not_to receive(:retrieve)
+
+          get url
+        end
+      end
+
+      context "and the user has a credit card on Stripe" do
+        let(:user) { StripeIntegrationTestHelper.create_user_with_stripe_customer }
+
+        it "updates the user's credit card info" do
+          get url
+
+          expect(user.card_brand).to eq "Visa"
+          expect(user.card_exp_month).to eq "3"
+          expect(user.card_exp_year).to eq "2022"
+          expect(user.card_is_valid).to eq true
+          expect(user.card_last4).to eq "4242"
+        end
+
+        it "populates userInfo.creditInfo in the response" do
+          get url
+
+          expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to eq(
+            {
+              "brand" => "Visa",
+              "exp_month" => "3",
+              "exp_year" => "2022",
+              "is_valid" => true,
+              "last4" => "4242"
+            }
+          )
+        end
+      end
+
+      context "and the user does not have a credit card on Stripe" do
+        let(:user) { StripeIntegrationTestHelper.create_user_with_stripe_customer(stripe_token: nil) }
+
+        it "sets userInfo.creditInfo to nil in the response" do
+          get url
+
+          expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to be_nil
+        end
+      end
+    end
+  end
+
+  describe "#update_card" do
+    let(:url) { "/me/update_card.json" }
+    let!(:user) { StripeIntegrationTestHelper.create_user_with_stripe_customer(stripe_token: "tok_visa_debit") }
+
+    before do
+      sign_in user
+    end
+
+    context "when the user provides a valid stripe token" do
+      it "updates the user's credit card details" do
+        put url, params: { token: "tok_visa" }
+
+        expect(user.reload.card_brand).to eq "Visa"
+        expect(user.card_exp_month).to eq "3"
+        expect(user.card_exp_year).to eq "2022"
+        expect(user.card_is_valid).to eq true
+        expect(user.card_last4).to eq "4242"
+      end
+
+      it "updates the Stripe customer for all subscribed artist page's connect accounts" do
+        subscriptions = Array.new(2) do
+          StripeIntegrationTestHelper.create_subscription_with_stripe_subscription(
+            stripe_token: "tok_visa_debit",
+            user: user
+          )
+        end
+
+        put url, params: { token: "tok_visa" }
+
+        subscriptions.each do |subscription|
+          stripe_customer_card = Stripe::Customer.retrieve(
+            subscription.stripe_customer_id,
+            stripe_account: subscription.artist_page.stripe_user_id
+          ).sources.data[0]
+
+          expect(stripe_customer_card.brand).to eq "Visa"
+          expect(stripe_customer_card.exp_month).to eq 3
+          expect(stripe_customer_card.exp_year).to eq 2022
+          expect(stripe_customer_card.last4).to eq "4242"
+        end
+      end
+
+      it "responds with the serialized user" do
+        put url, params: { token: "tok_visa" }
+
+        expect(JSON.parse(response.body)["id"]).to eq user.id
+      end
+    end
+
+    context "when the user provides an invalid stripe token" do
+      it "responds with an error" do
+        put url, params: { token: "tok_kittehcard" }
+
+        parsed_response = JSON.parse(response.body)
+
+        expect(parsed_response["status"]).to eq "error"
+        expect(parsed_response["message"]).to eq "No such token: 'tok_kittehcard'"
+      end
     end
   end
 end

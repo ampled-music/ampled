@@ -1,4 +1,5 @@
 require "rails_helper"
+require "shared_context/cloudinary_stub"
 
 RSpec.describe "DELETE /posts", type: :request do
   context "when user is unauthenticated" do
@@ -122,6 +123,8 @@ RSpec.describe "DELETE /posts", type: :request do
 end
 
 RSpec.describe "PUT /posts", type: :request do
+  include_context "cloudinary_stub"
+
   context "when user is unauthenticated" do
     let(:post) { create(:post, title: "old title") }
     before { put "/posts/#{post.id}", params: { post: { title: "new title" } } }

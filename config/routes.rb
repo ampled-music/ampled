@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   }
 
   resources :comments, only: %i[create destroy]
-  resources :subscriptions, only: %i[create destroy]
+  resources :subscriptions, only: %i[create destroy update]
   resources :artist_pages
 
   resources :posts, only: %i[destroy update index]
@@ -33,7 +33,6 @@ Rails.application.routes.draw do
     resources :posts, only: %i[create index]
   end
 
-  put "me/updatecard", to: "subscriptions#update_platform_customer"
   devise_scope :user do
     put "me/changepassword", to: "registrations#update_password"
   end
@@ -50,7 +49,10 @@ Rails.application.routes.draw do
 
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"
-  get "/me", to: "me#index"
+
+  resources :me, only: [:index] do
+    put :update_card, on: :collection
+  end
 
   devise_scope :user do
     get "stripe_oauth_callback", to: "stripe#callback"
@@ -73,6 +75,6 @@ Rails.application.routes.draw do
   get "/feed", to: "react#index"
   get "/stats", to: "react#index"
 
-  get "/no_artist", to: "react#render_404"
-  get "/*path", to: "react#render_404"
+  get "/no_artist", to: "react#render404"
+  get "/*path", to: "react#render404"
 end

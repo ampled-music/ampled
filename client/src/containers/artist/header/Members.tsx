@@ -8,10 +8,6 @@ interface Props {
 }
 
 export class Members extends React.Component<Props, any> {
-  isAmpled = () => {
-    return this.props.artist.slug === 'community';
-  };
-
   renderOwnerHover = ({ owner }) => {
     return (
       <div className="supporter__hover-card">

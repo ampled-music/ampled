@@ -2,6 +2,7 @@ class CardChargedEmailJob
   include Sidekiq::Worker
   attr_accessor :subscription
 
+  # rubocop:disable Naming/VariableNumber
   def perform(subscription_id, invoice_total, invoice_currency)
     @subscription = Subscription.find(subscription_id)
 
@@ -19,4 +20,5 @@ class CardChargedEmailJob
       }]
     )
   end
+  # rubocop:enable Naming/VariableNumber
 end

@@ -1,0 +1,10 @@
+// Only used for Cypress integration tests.
+// See client/tsconfig.json for what the frontend uses.
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress"]
+  },
+  "include": ["cypress/**/*.ts"]
+}

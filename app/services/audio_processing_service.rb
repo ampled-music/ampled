@@ -1,5 +1,6 @@
 class AudioProcessingService
   class FfmpegError < StandardError; end
+
   class S3ObjectNotFound < StandardError; end
 
   def initialize(public_id)
@@ -61,9 +62,7 @@ class AudioProcessingService
     # peak normalization
     peak = waveform.max
     gain = 128 - peak
-    waveform = waveform.map { |sample| sample + gain }
-
-    waveform
+    waveform.map { |sample| sample + gain }
   end
 
   def dispose

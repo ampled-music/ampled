@@ -7,9 +7,12 @@ class ArtistPagesController < ApplicationController
   before_action :check_create_okay, only: :create
   before_action :check_update_okay, only: :update
 
+  # How many randomly-picked artists to return for the #index endpoint.
+  INDEX_ARTIST_COUNT = 8
+
   def index
     @artist_pages = ArtistPage.includes(:images).approved.artist_owner
-      .exclude_community_page.where.not(images: nil).order(Arel.sql("RANDOM()")).take(8)
+      .exclude_community_page.with_images.order(Arel.sql("RANDOM()")).take(INDEX_ARTIST_COUNT)
     @artist_page_count = ArtistPage.count
 
     respond_to do |format|
@@ -61,11 +64,11 @@ class ArtistPagesController < ApplicationController
       .includes(:images)
       .approved
       .exclude_community_page
-      .where.not(images: nil)
+      .with_images
       .order(Arel.sql("LOWER(name)"))
     @artist_pages = base_query
-    @artist_pages_under_construction_count = ArtistPage.exclude_community_page.count -
-                                             ArtistPage.approved.exclude_community_page.count
+    @artist_page_count = base_query.count
+    @artist_pages_under_construction_count = ArtistPage.unapproved.exclude_community_page.count
 
     render template: "artist_pages/index"
   end
@@ -129,6 +132,7 @@ class ArtistPagesController < ApplicationController
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def destroy
     unless @role == "admin" || current_user&.admin?
       return render json: { status: "error", message: "You don't have that permission." }
@@ -142,6 +146,7 @@ class ArtistPagesController < ApplicationController
 
     render json: { status: "ok", message: "Your page has been deleted!" } if @artist_page.destroy
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def request_approval
     set_artist_page
@@ -162,18 +167,28 @@ class ArtistPagesController < ApplicationController
     end
 
     set_artist_page
-    response.headers["Content-Type"] = "text/csv"
+
     response.headers["Content-Disposition"] = "attachment; filename=#{@artist_page.slug}-subscribers.csv"
-    render :subscribers_csv
+    render(plain: generate_subscribers_csv_text, content_type: "text/csv")
   end
 
   private
+
+  # @returns [String]
+  def generate_subscribers_csv_text
+    CSV.generate do |csv|
+      csv << ["Name", "Last Name", "Email"]
+      @artist_page.active_subscribers.each do |subscriber|
+        csv << [subscriber.name, subscriber.last_name, subscriber.email]
+      end
+    end
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_artist_page
     @artist_page = if params[:slug]
                      ArtistPage.includes(page_ownerships: [user: %i[image page_ownerships owned_pages]], \
-                               posts: [:audio_uploads, :images, user: [:image], comments: [:user]])
+                                         posts: [:audio_uploads, :images, { user: [:image], comments: [:user] }])
                        .find_by(slug: params[:slug])
                    else
                      ArtistPage.find(params[:id])
@@ -263,11 +278,13 @@ class ArtistPagesController < ApplicationController
     }
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def check_approved
     return if @artist_page&.approved? || current_user&.admin?
 
     return show_pending unless current_user&.owned_pages&.include?(@artist_page)
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   # Only allow a trusted parameter "white list" through.
   def artist_page_params

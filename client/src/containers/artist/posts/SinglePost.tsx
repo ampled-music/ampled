@@ -76,7 +76,7 @@ const SinglePostComponent = ({
   }, [slug, postId, updateCount]);
 
   if (loading) {
-    return <Loading artistLoading={true} />;
+    return <Loading isLoading={true} />;
   } else if (error) {
     return <div>{error}</div>;
   }

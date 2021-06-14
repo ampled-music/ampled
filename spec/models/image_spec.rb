@@ -1,6 +1,9 @@
 require "rails_helper"
+require "shared_context/cloudinary_stub"
 
 RSpec.describe Image, type: :model do
+  include_context "cloudinary_stub"
+
   subject { described_class.new }
 
   describe "#imageable" do
@@ -30,6 +33,16 @@ RSpec.describe Image, type: :model do
     it "renames the images attribute to images_attributes" do
       params = ActionController::Parameters.new(post: { images: %w[foo bar baz] })
       expect(Image.rename_params(params, :post)[:post][:images_attributes]).to eq(%w[foo bar baz])
+    end
+  end
+
+  describe "before_destroy" do
+    it "should call Cloudinary destroy" do
+      subject.destroy!
+
+      expect(Cloudinary::Uploader)
+        .to have_received(:destroy)
+        .with(subject.public_id)
     end
   end
 end

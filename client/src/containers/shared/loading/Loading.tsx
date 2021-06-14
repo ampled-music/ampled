@@ -4,13 +4,14 @@ import './loading.scss';
 import logo from '../../../images/ampled_logo.svg';
 
 interface Props {
-  isLoading: boolean;
+  artistLoading: boolean;
 }
+  
+class Loading extends React.Component<Props,any> {
 
-class Loading extends React.Component<Props, any> {
   render() {
     return (
-      <div className={cx('loading-cover ', { show: this.props.isLoading })}>
+      <div className={cx('loading-cover ', { show: this.props.artistLoading })}>
         <img src={logo} alt="Ampled Logo" className="ampled-logo" />
         <div className="eq-logo">
           <span className="eq-logo__bar"></span>

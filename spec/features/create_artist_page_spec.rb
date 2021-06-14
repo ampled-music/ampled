@@ -11,12 +11,6 @@ RSpec.describe ArtistPagesController, type: :request do
     ]
   end
 
-  before(:each) do
-    allow(Cloudinary::Uploader)
-      .to receive(:destroy)
-      .and_return({})
-  end
-
   let(:create_params) do
     {
       artist_page: {
@@ -281,11 +275,8 @@ RSpec.describe ArtistPagesController, type: :request do
       create_image_params[:artist_page][:images] << { public_id: "new2", url: "new-image2.com" }
 
       expect {
-        put "/artist_pages/#{artist_page.id}", params: create_image_params
-        artist_page.reload
-      }.to change { artist_page.images.length }.by(2)
-
-      expect(artist_page.reload.images).to_not be_empty
+        put "/artist_pages/#{artist_page.id}", params: update_params_without_images
+      }.to_not change(Image, :count)
     end
 
     xit "create images where no id is provided and deletes images marked to be destroyed" do

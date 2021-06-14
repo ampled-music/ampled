@@ -13,12 +13,6 @@ RSpec.describe "POST /users", type: :request do
     }
   end
 
-  before(:each) do
-    allow(Cloudinary::Uploader)
-      .to receive(:destroy)
-      .and_return({})
-  end
-
   context "when user is unauthenticated" do
     before { post url, params: params }
 

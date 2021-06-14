@@ -1,0 +1,5 @@
+<%- headers = ['Name', 'Last Name', 'Email'] -%>
+<%= CSV.generate_line headers %>
+<%- @artist_page.active_subscribers.each do |subscriber| -%>
+<%= CSV.generate_line([subscriber.name, subscriber.last_name, subscriber.email]) -%>
+<%- end -%>

@@ -32,12 +32,6 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
     }
   end
 
-  let(:update_params) do
-    {
-      amount: 20_000
-    }
-  end
-
   let(:other_create_params) do
     {
       artist_page_id: other_artist_page.id,
@@ -122,26 +116,6 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
       expect(UpdateArtistOwnerStatusJob.jobs.last["args"]).to match_array([
         create_params[:artist_page_id]
       ])
-    end
-
-    context "and the user's card is declined" do
-      before(:each) do
-        allow(Stripe::Customer).to receive(:create).and_raise(Stripe::CardError.new("Card declined.", :card, {}))
-      end
-      it "returns an error" do
-        post url, params: create_params
-
-        body = JSON.parse(response.body)
-        expect(response.status).to eq 200
-        expect(body["status"]).to eq "error"
-        expect(body["message"]).to eq "Card declined."
-      end
-
-      it "doesn't call Raven.capture_exception" do
-        expect(Raven).not_to receive(:capture_exception)
-
-        post url, params: create_params
-      end
     end
   end
 

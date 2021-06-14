@@ -48,7 +48,7 @@ class Page extends React.Component<PageProps, any> {
 
   render() {
     if (this.state.loading) {
-      return <Loading isLoading={true} />;
+      return <Loading artistLoading={true} />;
     }
     return (
       <div className="container page">

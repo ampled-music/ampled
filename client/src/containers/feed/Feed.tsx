@@ -77,7 +77,7 @@ class Feed extends React.Component<any> {
       me: { userData },
     } = this.props;
     if (this.state.loading) {
-      return <Loading isLoading={true} />;
+      return <Loading artistLoading={true} />;
     }
     return (
       <div

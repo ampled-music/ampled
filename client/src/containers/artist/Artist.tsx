@@ -30,8 +30,6 @@ import { ArtistComingSoon } from '../shared/no-artist/ArtistComingSoon';
 import { NoArtist } from '../shared/no-artist/NoArtist';
 import { routePaths } from '../route-paths';
 
-import { isAmpled } from '../shared/utils';
-
 const mapStateToProps = (state: Store) => {
   return {
     artists: state.artists,
@@ -82,7 +80,6 @@ class ArtistComponent extends React.Component<Props, any> {
     showConfirmationDialog: false,
     successfulSupport: false,
     requestedApproval: false,
-    isAmpled: false,
   };
   players: Set<any>;
 
@@ -158,8 +155,6 @@ class ArtistComponent extends React.Component<Props, any> {
   getArtistInfo = () => {
     if (this.props.match.params.slug) {
       this.props.getArtist(null, this.props.match.params.slug);
-      isAmpled(this.props.match.params.slug) &&
-        this.setState({ isAmpled: true });
     } else {
       this.props.getArtist(this.props.match.params.id);
     }
@@ -307,7 +302,7 @@ class ArtistComponent extends React.Component<Props, any> {
       me: { userData, loadingMe },
     } = this.props;
 
-    const { successfulSupport, isAmpled } = this.state;
+    const { successfulSupport } = this.state;
     const showConfetti =
       successfulSupport && artists && !artists.loading && !artists.error;
 
@@ -381,8 +376,9 @@ class ArtistComponent extends React.Component<Props, any> {
           this.renderSticky(
             <div className="artistAlertHeader__container">
               The Ampled team does a quick spot check of all pages before they
-              become visible to the general public. Set up payouts in order to
-              request approval.
+              become visible to the general public.{' '}
+              <a href={loggedUserAccess.stripeSignup}>Set up payouts</a> to help
+              us approve your page faster.
             </div>,
           )}
         {artist.style_type === 'minimal' ? (
@@ -395,7 +391,6 @@ class ArtistComponent extends React.Component<Props, any> {
             openJoinModal={this.openJoinModal}
             loggedUserAccess={loggedUserAccess}
             isSupporter={isSupporter}
-            isAmpled={isAmpled}
             handleSupportClick={this.handleSupportClick}
           />
         ) : (
@@ -408,7 +403,6 @@ class ArtistComponent extends React.Component<Props, any> {
             openJoinModal={this.openJoinModal}
             loggedUserAccess={loggedUserAccess}
             isSupporter={isSupporter}
-            isAmpled={isAmpled}
             handleSupportClick={this.handleSupportClick}
           />
         )}
@@ -470,7 +464,7 @@ class ArtistComponent extends React.Component<Props, any> {
         <div className="confetti-overlay">
           <Confetti active={showConfetti} config={this.getConfettiConfig()} />
         </div>
-        <Loading isLoading={artists.loading || loadingMe} />
+        <Loading artistLoading={artists.loading || loadingMe} />
       </div>
     );
   }

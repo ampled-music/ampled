@@ -981,7 +981,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
 
     const isSaveEnabled = this.isSaveEnabled();
 
-    if (savingPost) return <Loading isLoading={true} />;
+    if (savingPost) return <Loading artistLoading={true} />;
 
     return (
       <div className="post-form__container">

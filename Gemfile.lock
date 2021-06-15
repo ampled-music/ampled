@@ -872,7 +872,7 @@ GEM
     minitest (5.14.4)
     momentjs-rails (2.20.1)
       railties (>= 3.1)
-    money (6.13.8)
+    money (6.16.0)
       i18n (>= 0.6.4, <= 2)
     msgpack (1.4.2)
     multi_json (1.15.0)

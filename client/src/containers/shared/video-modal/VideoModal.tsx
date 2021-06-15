@@ -7,8 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Close from '../../../images/icons/Icon_Close-Cancel.svg';
 import { ReactSVG } from 'react-svg';
 
-import YouTubePlayer from 'react-player/lib/players/YouTube';
-import VimeoPlayer from 'react-player/lib/players/Vimeo';
+import YouTubePlayer from 'react-player/youtube';
+import VimeoPlayer from 'react-player/vimeo';
 
 import './video-modal.scss';
 import { theme } from './theme';

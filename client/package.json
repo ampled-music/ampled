@@ -31,7 +31,7 @@
     "react-awesome-slider": "^4.1.0",
     "react-device-detect": "^1.11.14",
     "react-dom": "^16.8.6",
-    "react-dom-confetti": "^0.1.1",
+    "react-dom-confetti": "^0.2.0",
     "react-easy-crop": "^3.1.0",
     "react-easy-swipe": "0.0.18",
     "react-helmet": "^5.2.1",

@@ -201,11 +201,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
           onPlay={this.handlePlay}
           onEnded={this.handleEnded}
           onProgress={this.handleProgress}
-          config={{
-            file: {
-              forceAudio: true,
-            },
-          }}
+          config={{forceAudio: true}}
         />
 
         <div className="audio-player__header">

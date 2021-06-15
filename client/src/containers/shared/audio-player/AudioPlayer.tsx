@@ -2,7 +2,7 @@ import './audio-player.scss';
 
 import * as React from 'react';
 
-import FilePlayer from 'react-player/lib';
+import FilePlayer from 'react-player/file';
 import { withStyles } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core/';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';

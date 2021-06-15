@@ -21,7 +21,7 @@
     "html-react-parser": "^0.10.3",
     "http-proxy-middleware": "^1.0.3",
     "lodash.debounce": "^4.0.8",
-    "moment": "^2.27.0",
+    "moment": "^2.29.1",
     "multi-download": "^3.0.0",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",

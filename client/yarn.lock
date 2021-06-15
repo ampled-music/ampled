@@ -907,10 +907,10 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
-  version "7.14.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.0.tgz#46794bc20b612c5f75e62dd071e24dfd95f1cbe6"
-  integrity sha512-JELkvo/DlpNdJ7dlyw/eY7E0suy5i5GQH+Vlxaq1nsNJ+H7f4Vtv3jMeCEgRhZZQFXTjldYfQgv2qmM6M1v5wA==
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
+  version "7.14.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.6.tgz#535203bc0892efc7dec60bdc27b2ecf6e409062d"
+  integrity sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -1450,12 +1450,14 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
-"@tanem/svg-injector@^8.0.53":
-  version "8.0.54"
-  resolved "https://registry.yarnpkg.com/@tanem/svg-injector/-/svg-injector-8.0.54.tgz#3d845d99d658676659298ccc9d8dba76a27a361b"
-  integrity sha512-65B/lWodHDReTgQ/bGpXn12DPjxrj/Oy3d8Gohg21kwHJdG+4hPb/D6j5ggZr3nkYNYfO8w+1TdcoZId2EbClw==
+"@tanem/svg-injector@^8.2.4":
+  version "8.2.5"
+  resolved "https://registry.yarnpkg.com/@tanem/svg-injector/-/svg-injector-8.2.5.tgz#49d957b6c51bdd5d505f82aaadb5cb72ff05f7ac"
+  integrity sha512-jQ6UPPY2oSu2d0YLngtvnOIoKheYsB/s2bNP/QdsLrsvlz+PzUUO4RUWBN3+8clZPi2SI5OMF/YoTiTKt5v2xw==
   dependencies:
-    "@babel/runtime" "^7.10.2"
+    "@babel/runtime" "^7.12.13"
+    content-type "^1.0.4"
+    tslib "^2.1.0"
 
 "@types/babel__core@^7.1.0":
   version "7.1.6"
@@ -3411,7 +3413,7 @@ content-disposition@0.5.3:
   dependencies:
     safe-buffer "5.1.2"
 
-content-type@~1.0.4:
+content-type@^1.0.4, content-type@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
   integrity sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==
@@ -10136,13 +10138,13 @@ react-stripe-elements@^3.0.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-svg@^11.0.26:
-  version "11.0.26"
-  resolved "https://registry.yarnpkg.com/react-svg/-/react-svg-11.0.26.tgz#3dbe22f8a07a7994c93ccf3f76a314793e82a356"
-  integrity sha512-4+MjsPoz7qhsTijFt6byqwcX+m7WstOx/t6pENis2QijlNP5vJqeKpr07c9sE1t0Km5fk1pKpTXoKkYWeMdmSg==
+react-svg@^11.2.5:
+  version "11.2.5"
+  resolved "https://registry.yarnpkg.com/react-svg/-/react-svg-11.2.5.tgz#41ddfd96818a54a3a69dfa3903ed40d4fb32a122"
+  integrity sha512-uUMhRVdU//5qktiTSO2W6nQeHRLwYA1FsWANQFB5O33UgT2uT0V5wVapu46+wz1mx6wt1j53+1aA8QuNn4lJ6A==
   dependencies:
-    "@babel/runtime" "^7.10.2"
-    "@tanem/svg-injector" "^8.0.53"
+    "@babel/runtime" "^7.12.13"
+    "@tanem/svg-injector" "^8.2.4"
     prop-types "^15.7.2"
 
 react-swipeable-views-core@^0.14.0:
@@ -11906,6 +11908,11 @@ tslib@^1.10.0, tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
+
+tslib@^2.1.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
+  integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
 
 tslint-config-prettier@^1.17.0:
   version "1.18.0"

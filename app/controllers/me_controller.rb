@@ -2,7 +2,7 @@ class MeController < ApplicationController
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def index
-    sync_card_info_with_stripe if current_user.card_last4.blank?
+    sync_card_info_with_stripe if current_user && current_user.card_last4.blank?
 
     @owned_pages = current_user&.page_ownerships&.map do |ownership|
       OpenStruct.new(page: ownership.artist_page, role: ownership.role, instrument: ownership.instrument)
@@ -70,7 +70,7 @@ class MeController < ApplicationController
   end
 
   def serialize_current_user_card
-    return if current_user.card_last4.blank?
+    return if current_user&.card_last4.blank?
 
     {
       brand: current_user.card_brand,

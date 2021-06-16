@@ -6,7 +6,7 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
     create(:user, stripe_customer_id: "cus_FfMNyx9ktbGwnx", confirmed_at: Time.current, email: "user@ampled.com")
   end
   let(:other_user) { create(:user, confirmed_at: Time.current, email: "test@ampled.com") }
-  let(:artist_page) { create(:artist_page, name: "Ampledband") }
+  let(:artist_page) { create(:artist_page, name: "Ampledband", application_fee_percent: 10.0) }
   let(:other_artist_page) { create(:artist_page, name: "Ampledband2") }
   let(:restricted_artist_page) { create(:artist_page, name: "Ampledband3") }
 
@@ -86,7 +86,9 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
       customer = Stripe::Customer.retrieve(subscription.stripe_customer_id, stripe_account: artist_page.stripe_user_id)
       actual_amount = ((create_params[:amount] + 30) / 0.971).round
 
-      expect(customer.subscriptions.first.plan.amount).to eq actual_amount
+      subscription = customer.subscriptions.first
+      expect(subscription.plan.amount).to eq actual_amount
+      expect(subscription.application_fee_percent).to eq 9.68
     end
 
     it "creates a local plan with the given nominal amount" do

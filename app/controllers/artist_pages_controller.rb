@@ -93,7 +93,7 @@ class ArtistPagesController < ApplicationController
   def create
     # if we used activerecord validations, we could just check ArtistPage.new(...).valid?
     # and if not valid, return @artist_page.errors to give more info about whats wrong
-    unless (@artist_page = ArtistPage.create(artist_page_params))
+    unless (@artist_page = ArtistPage.create(default_artist_page_params.merge(artist_page_params)))
       return render json: { status: "error", message: "Something went wrong." }
     end
 
@@ -340,5 +340,9 @@ class ArtistPagesController < ApplicationController
     member_user.skip_confirmation_notification!
     member_user.save!
     member_user
+  end
+
+  def default_artist_page_params
+    { application_fee_percent: ArtistPage::DEFAULT_APPLICATION_FEE_PERCENT }
   end
 end

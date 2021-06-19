@@ -40,6 +40,7 @@
 class ArtistPage < ApplicationRecord
   ARTIST_OWNER_THRESHOLD = 10
   COMMUNITY_PAGE_ID = 354
+  DEFAULT_APPLICATION_FEE_PERCENT = 7
 
   has_many :page_ownerships, dependent: :destroy
   has_many :owners, through: :page_ownerships, source: :user

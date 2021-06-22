@@ -5,7 +5,7 @@ class ReactController < ActionController::Base
 
   def artist_page
     artist_page = ArtistPage.find_by(slug: request[:artist_name])
-    return render_404 if artist_page.nil?
+    return render404 if artist_page.nil?
 
     response_html = render_to_string file: "public/index.html", layout: false
 
@@ -38,7 +38,7 @@ class ReactController < ActionController::Base
   def deeplink
     post = Post.find_by(id: request[:post_id])
     artist_page = post.artist_page
-    return render_404 if artist_page.nil?
+    return render404 if artist_page.nil?
 
     response_html = render_to_string file: "public/index.html", layout: false
 
@@ -68,7 +68,7 @@ class ReactController < ActionController::Base
     render html: response_html.html_safe, content_type: "text/html"
   end
 
-  def render_404
+  def render404
     render file: "public/index.html", layout: false, status: :not_found,
            content_type: "text/html"
   end

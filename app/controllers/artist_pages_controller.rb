@@ -132,6 +132,7 @@ class ArtistPagesController < ApplicationController
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def destroy
     unless @role == "admin" || current_user&.admin?
       return render json: { status: "error", message: "You don't have that permission." }
@@ -145,6 +146,7 @@ class ArtistPagesController < ApplicationController
 
     render json: { status: "ok", message: "Your page has been deleted!" } if @artist_page.destroy
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def request_approval
     set_artist_page
@@ -185,7 +187,7 @@ class ArtistPagesController < ApplicationController
   def set_artist_page
     @artist_page = if params[:slug]
                      ArtistPage.includes(page_ownerships: [user: %i[image page_ownerships owned_pages]], \
-                               posts: [:audio_uploads, :images, user: [:image], comments: [:user]])
+                                         posts: [:audio_uploads, :images, { user: [:image], comments: [:user] }])
                        .find_by(slug: params[:slug])
                    else
                      ArtistPage.find(params[:id])
@@ -275,11 +277,13 @@ class ArtistPagesController < ApplicationController
     }
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def check_approved
     return if @artist_page&.approved? || current_user&.admin?
 
     return show_pending unless current_user&.owned_pages&.include?(@artist_page)
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   # Only allow a trusted parameter "white list" through.
   def artist_page_params

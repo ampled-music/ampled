@@ -24,7 +24,7 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
     - [Using Mailcatcher](#using-mailcatcher)
     - [Using ChromeDriver](#using-chromedriver)
     - [Continuous Integration/Deployment with CircleCI and Heroku](#continuous-integrationdeployment-with-circleci-and-heroku)
-- [Deploy to Acceptance/Production](#deploy-to-acceptanceproduction)
+- [Deploying to production and acceptance (for QA)](#deploying-to-production-and-acceptance-for-qa)
 - [Database migrations and rollbacks](#database-migrations-and-rollbacks)
 - [Server Environments](#server-environments)
     - [Hosting](#hosting)
@@ -47,7 +47,9 @@ If you plan to do work in this repo, you probably want to get access to, at leas
   - We like to talk about "card numbers", which don't show up in the Trello interface. You can see these with browser plugins,
     such as [this one for Chrome](https://chrome.google.com/webstore/detail/trello-card-numbers/kadpkdielickimifpinkknemjdipghaf) or [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/trello-super-powers/).
 - Heroku environments.
-  - We run our servers on Heroku, where we have "production" and "acceptance" environments.
+  - We run our servers on Heroku, where we have "production" and "acceptance"
+  environments. Every merge to `main` will get automatically deployed to
+  `production`.
   - The "acceptance" environment will be helpful for getting credentials for services needed to
     run a server locally, and to debug things during QA.
 
@@ -102,6 +104,8 @@ Then populate database with faker data.
     $ bundle exec rake dummy:users
     $ bundle exec rake dummy:artist_pages
     $ bundle exec rake dummy:posts
+
+Note that by default, all created artist pages will be in an unapproved state, and will need to be approved before they are visible through the client.
 
 The `dummy:admin` task will create an admin account with a well-known username and password, which can be used to give admin owers to other testing accounts via the admin dashboard. See the contents of [dummy.rake](lib/tasks/dummy.rake) for the username and password of this account.
 
@@ -231,17 +235,22 @@ This project is configured for continuous integration with CircleCI, see [.circl
 On successful builds, Heroku will trigger a deployment via its
 [GitHub Integration](https://devcenter.heroku.com/articles/github-integration#automatic-deploys).
 
-# Deploy to Acceptance/Production
+# Deploying to production and acceptance (for QA)
 
-1. Pull Request into Acceptance/Production and run merge will trigger CI
+Merges into `main` will trigger an automatic deploy to `production`.
 
-The release process on Heroku will automatically run database migrations after the new
-app version is built, but before it is deployed to users. This is controlled via the `release`
-command in our app's [Procfile](Procfile).
+There is a `acceptance` environment that can be used for manual QA. You can deploy
+to this environment as needed, via Heroku, from any existing GitHub branch.
+Coordinate with other devs to make sure you're not stepping on their changes
+when you do this. (Sending a shout out in Slack should be enough.)
+
+The release process on Heroku will automatically run database migrations after
+the new app version is built, but before it is deployed to users. This is
+controlled via the `release` command in our app's [Procfile](Procfile).
 
 # Database migrations and rollbacks
 
-Database migrations run automagically ✨ in staging and production as part of the deploy process.
+Database migrations run automagically ✨ as part of the deploy process.
 If you ever need to run a migration or a migration rollback in a Heroku environment, you can
 do so using the `heroku run` command (part of the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)), like this:
 

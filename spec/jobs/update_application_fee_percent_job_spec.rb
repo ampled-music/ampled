@@ -1,7 +1,6 @@
 require "rails_helper"
 
 describe UpdateApplicationFeePercentJob, type: :job do
-  BIG_DECIMAL_PRECISION = 5
   describe "#perform" do
     let(:artist_page) { create(:artist_page, application_fee_percent: 14.1, stripe_user_id: "acct_kittehrock") }
     let(:application_fee_percent) { 8.2 }

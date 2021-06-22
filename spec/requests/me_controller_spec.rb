@@ -2,171 +2,177 @@ require "rails_helper"
 
 RSpec.describe MeController, :vcr, type: :request do
   describe "#index" do
-    let(:image) { create(:image) }
-    let(:user) { create(:user, image: image) }
     let(:url) { "/me.json" }
 
-    before do
-      sign_in user
-    end
+    context "when a user is not logged in" do
+      it "returns a JSON object with nil fields" do
+        get url
 
-    it "returns image object" do
-      get url
-
-      expect(JSON.parse(response.body)["userInfo"]["image"]).to eq(
-        {
-          "id" => image.id,
-          "url" => image.url,
-          "public_id" => image.public_id,
-          "coordinates" => image.coordinates
-        }
-      )
-    end
-
-    it "returns subscriptions" do
-      first_plan = create(:plan, nominal_amount: 1758, currency: "usd")
-      first_subscription = create(
-        :subscription,
-        user: user,
-        artist_page: first_plan.artist_page,
-        plan: first_plan,
-        created_at: Time.new(2020, 10, 29, 14, 30, 23, "+00:00")
-      )
-      second_plan = create(:plan, nominal_amount: 1200, currency: "usd")
-      second_subscription = create(
-        :subscription,
-        user: user,
-        artist_page: second_plan.artist_page,
-        plan: second_plan,
-        created_at: Time.new(2020, 10, 29, 14, 34, 21, "+00:00")
-      )
-
-      get url
-
-      expect(JSON.parse(response.body)["subscriptions"]).to eq([
-        {
-          "amount" => 1758,
-          "artistApproved" => false,
-          "artistColor" => nil,
-          "artistPageId" => first_subscription.artist_page_id,
-          "artistSlug" => nil,
-          "image" => nil,
-          "last_post_date" => nil,
-          "name" => first_subscription.artist_page.name,
-          "promoteSquareImages" => [nil, nil, nil, nil, nil, nil],
-          "promoteStoryImages" => [nil, nil, nil, nil, nil, nil, nil],
-          "subscriptionId" => first_subscription.id,
-          "support_date" => "2020-10-29T14:30:23.000Z",
-          "supporterImages" => [nil, nil]
-        },
-        {
-          "amount" => 1200,
-          "artistApproved" => false,
-          "artistColor" => nil,
-          "artistPageId" => second_subscription.artist_page_id,
-          "artistSlug" => nil,
-          "image" => nil,
-          "last_post_date" => nil,
-          "name" => second_subscription.artist_page.name,
-          "promoteSquareImages" => [nil, nil, nil, nil, nil, nil],
-          "promoteStoryImages" => [nil, nil, nil, nil, nil, nil, nil],
-          "subscriptionId" => second_subscription.id,
-          "support_date" => "2020-10-29T14:34:21.000Z",
-          "supporterImages" => [nil, nil]
-        }
-      ])
-    end
-
-    it "returns ownedPages" do
-      artist_page = create(:artist_page)
-      artist_page.owners << user
-
-      plan = create(:plan, artist_page: artist_page, nominal_amount: 1758, currency: "usd")
-      subscription = create(
-        :subscription,
-        artist_page: artist_page,
-        plan: plan,
-        created_at: Time.new(2020, 10, 29, 14, 30, 23, "+00:00")
-      )
-
-      get url
-
-      expect(JSON.parse(response.body)["ownedPages"]).to eq(
-        [
+        expect(JSON.parse(response.body)["userInfo"]).to eq(
           {
-            "approved" => false,
+            "admin" => nil,
+            "bio" => nil,
+            "cardInfo" => nil,
+            "city" => nil,
+            "country" => nil,
+            "created_at" => nil,
+            "email" => nil,
+            "email_confirmed" => false,
+            "id" => nil,
+            "image" => [],
+            "instagram" => nil,
+            "last_name" => nil,
+            "name" => nil,
+            "ship_address" => nil,
+            "ship_address2" => nil,
+            "ship_city" => nil,
+            "ship_country" => nil,
+            "ship_state" => nil,
+            "ship_zip" => nil,
+            "twitter" => nil
+          }
+        )
+      end
+    end
+
+    context "when a user is logged in" do
+      let(:image) { create(:image) }
+      let(:user) { create(:user, image: image) }
+
+      before do
+        sign_in user
+      end
+
+      it "returns image object" do
+        get url
+
+        expect(JSON.parse(response.body)["userInfo"]["image"]).to eq(
+          {
+            "id" => image.id,
+            "url" => image.url,
+            "public_id" => image.public_id,
+            "coordinates" => image.coordinates
+          }
+        )
+      end
+
+      it "returns subscriptions" do
+        first_plan = create(:plan, nominal_amount: 1758, currency: "usd")
+        first_subscription = create(
+          :subscription,
+          user: user,
+          artist_page: first_plan.artist_page,
+          plan: first_plan,
+          created_at: Time.new(2020, 10, 29, 14, 30, 23, "+00:00")
+        )
+        second_plan = create(:plan, nominal_amount: 1200, currency: "usd")
+        second_subscription = create(
+          :subscription,
+          user: user,
+          artist_page: second_plan.artist_page,
+          plan: second_plan,
+          created_at: Time.new(2020, 10, 29, 14, 34, 21, "+00:00")
+        )
+
+        get url
+
+        expect(JSON.parse(response.body)["subscriptions"]).to eq([
+          {
+            "amount" => 1758,
+            "artistApproved" => false,
             "artistColor" => nil,
-            "artistId" => artist_page.id,
+            "artistPageId" => first_subscription.artist_page_id,
             "artistSlug" => nil,
             "image" => nil,
-            "instrument" => nil,
-            "isStripeSetup" => false,
-            "lastPayout" => nil,
-            "lastPost" => nil,
-            "monthlyTotal" => 1758,
-            "name" => artist_page.name,
+            "last_post_date" => nil,
+            "name" => first_subscription.artist_page.name,
             "promoteSquareImages" => [nil, nil, nil, nil, nil, nil],
             "promoteStoryImages" => [nil, nil, nil, nil, nil, nil, nil],
-            "role" => "member",
-            "stripeDashboard" => nil,
-            "stripeSignup" => nil,
-            "supporterImages" => [nil, nil],
-            "supportersCount" => 1,
-            "subscriptions" => [
-              {
-                "id" => subscription.id,
-                "status" => "pending_active",
-                "name" => "#{subscription.user.name} #{subscription.user.last_name}",
-                "city" => nil,
-                "country" => nil,
-                "email" => subscription.user.email,
-                "supporter_since" => "2020-10-29T14:30:23.000Z",
-                "amount" => 1758
-              }
-            ]
-          }
-        ]
-      )
-    end
-
-    context "when the user has credit card info" do
-      before(:each) do
-        user.update!(
-          card_brand: "Visa",
-          card_exp_month: "10",
-          card_exp_year: "21",
-          card_is_valid: true,
-          card_last4: "1234"
-        )
-      end
-
-      it "populates userInfo.cardInfo in the response" do
-        get url
-
-        expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to eq(
+            "subscriptionId" => first_subscription.id,
+            "support_date" => "2020-10-29T14:30:23.000Z",
+            "supporterImages" => [nil, nil]
+          },
           {
-            "brand" => "Visa",
-            "exp_month" => "10",
-            "exp_year" => "21",
-            "is_valid" => true,
-            "last4" => "1234"
+            "amount" => 1200,
+            "artistApproved" => false,
+            "artistColor" => nil,
+            "artistPageId" => second_subscription.artist_page_id,
+            "artistSlug" => nil,
+            "image" => nil,
+            "last_post_date" => nil,
+            "name" => second_subscription.artist_page.name,
+            "promoteSquareImages" => [nil, nil, nil, nil, nil, nil],
+            "promoteStoryImages" => [nil, nil, nil, nil, nil, nil, nil],
+            "subscriptionId" => second_subscription.id,
+            "support_date" => "2020-10-29T14:34:21.000Z",
+            "supporterImages" => [nil, nil]
           }
+        ])
+      end
+
+      it "returns ownedPages" do
+        artist_page = create(:artist_page)
+        artist_page.owners << user
+
+        plan = create(:plan, artist_page: artist_page, nominal_amount: 1758, currency: "usd")
+        create(
+          :subscription,
+          artist_page: artist_page,
+          plan: plan,
+          created_at: Time.new(2020, 10, 29, 14, 30, 23, "+00:00")
+        )
+
+        get url
+
+        expect(JSON.parse(response.body)["ownedPages"]).to eq(
+          [
+            {
+              "approved" => false,
+              "artistColor" => nil,
+              "artistId" => artist_page.id,
+              "artistSlug" => nil,
+              "image" => nil,
+              "instrument" => nil,
+              "isStripeSetup" => false,
+              "lastPayout" => nil,
+              "lastPost" => nil,
+              "monthlyTotal" => 1758,
+              "name" => artist_page.name,
+              "promoteSquareImages" => [nil, nil, nil, nil, nil, nil],
+              "promoteStoryImages" => [nil, nil, nil, nil, nil, nil, nil],
+              "role" => "member",
+              "stripeDashboard" => nil,
+              "stripeSignup" => nil,
+              "supporterImages" => [nil, nil],
+              "supportersCount" => 1
+            }
+          ]
         )
       end
 
-      it "does not try to pull card info from Stripe" do
-        expect(Stripe::Customer).not_to receive(:retrieve)
+      context "when the user has credit card info" do
+        before(:each) do
+          user.update!(
+            card_brand: "Visa",
+            card_exp_month: "10",
+            card_exp_year: "21",
+            card_is_valid: true,
+            card_last4: "1234"
+          )
+        end
 
-        get url
-      end
-    end
-
-    context "when the user does not have credit card info" do
-      context "and the user does not have a stripe_customer_id" do
-        it "sets userInfo.creditInfo to nil in the response" do
+        it "populates userInfo.cardInfo in the response" do
           get url
 
-          expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to be_nil
+          expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to eq(
+            {
+              "brand" => "Visa",
+              "exp_month" => "10",
+              "exp_year" => "21",
+              "is_valid" => true,
+              "last4" => "1234"
+            }
+          )
         end
 
         it "does not try to pull card info from Stripe" do
@@ -176,41 +182,57 @@ RSpec.describe MeController, :vcr, type: :request do
         end
       end
 
-      context "and the user has a credit card on Stripe" do
-        let(:user) { StripeIntegrationTestHelper.create_user_with_stripe_customer }
+      context "when the user does not have credit card info" do
+        context "and the user does not have a stripe_customer_id" do
+          it "sets userInfo.creditInfo to nil in the response" do
+            get url
 
-        it "updates the user's credit card info" do
-          get url
+            expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to be_nil
+          end
 
-          expect(user.card_brand).to eq "Visa"
-          expect(user.card_exp_month).to eq "3"
-          expect(user.card_exp_year).to eq "2022"
-          expect(user.card_is_valid).to eq true
-          expect(user.card_last4).to eq "4242"
+          it "does not try to pull card info from Stripe" do
+            expect(Stripe::Customer).not_to receive(:retrieve)
+
+            get url
+          end
         end
 
-        it "populates userInfo.creditInfo in the response" do
-          get url
+        context "and the user has a credit card on Stripe" do
+          let(:user) { StripeIntegrationTestHelper.create_user_with_stripe_customer }
 
-          expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to eq(
-            {
-              "brand" => "Visa",
-              "exp_month" => "3",
-              "exp_year" => "2022",
-              "is_valid" => true,
-              "last4" => "4242"
-            }
-          )
+          it "updates the user's credit card info" do
+            get url
+
+            expect(user.card_brand).to eq "Visa"
+            expect(user.card_exp_month).to eq "6"
+            expect(user.card_exp_year).to eq "2022"
+            expect(user.card_is_valid).to eq true
+            expect(user.card_last4).to eq "4242"
+          end
+
+          it "populates userInfo.creditInfo in the response" do
+            get url
+
+            expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to eq(
+              {
+                "brand" => "Visa",
+                "exp_month" => "6",
+                "exp_year" => "2022",
+                "is_valid" => true,
+                "last4" => "4242"
+              }
+            )
+          end
         end
-      end
 
-      context "and the user does not have a credit card on Stripe" do
-        let(:user) { StripeIntegrationTestHelper.create_user_with_stripe_customer(stripe_token: nil) }
+        context "and the user does not have a credit card on Stripe" do
+          let(:user) { StripeIntegrationTestHelper.create_user_with_stripe_customer(stripe_token: nil) }
 
-        it "sets userInfo.creditInfo to nil in the response" do
-          get url
+          it "sets userInfo.creditInfo to nil in the response" do
+            get url
 
-          expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to be_nil
+            expect(JSON.parse(response.body)["userInfo"]["cardInfo"]).to be_nil
+          end
         end
       end
     end

@@ -1,6 +1,8 @@
 class MeController < ApplicationController
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def index
-    sync_card_info_with_stripe if current_user.card_last4.blank?
+    sync_card_info_with_stripe if current_user && current_user.card_last4.blank?
 
     @owned_pages = current_user&.page_ownerships&.map do |ownership|
       OpenStruct.new(page: ownership.artist_page, role: ownership.role, instrument: ownership.instrument,
@@ -13,12 +15,16 @@ class MeController < ApplicationController
     @subscriptions = current_user&.subscriptions&.active
     @stripe_info = serialize_current_user_card
   end
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def update_card
     stripe_customer = Stripe::Customer.update(current_user.stripe_customer_id, source: params["token"])
     sync_card_info_with_stripe(stripe_customer)
 
-    current_user.subscriptions.includes(:artist_page).each(&method(:update_token_for_subscription))
+    current_user.subscriptions.includes(:artist_page).each do |subscription|
+      update_token_for_subscription(subscription)
+    end
 
     render json: current_user
   rescue Stripe::StripeError => e
@@ -65,7 +71,7 @@ class MeController < ApplicationController
   end
 
   def serialize_current_user_card
-    return if current_user.card_last4.blank?
+    return if current_user&.card_last4.blank?
 
     {
       brand: current_user.card_brand,

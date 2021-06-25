@@ -44,14 +44,6 @@ RSpec.describe ArtistPage, type: :model do
     end
   end
 
-  describe "#application_fee_percent" do
-    let(:artist_page) { create(:artist_page) }
-
-    it "defaults to 13.24" do
-      expect(artist_page.application_fee_percent).to eq 13.24
-    end
-  end
-
   describe "#valid?" do
     context "with application_fee_percent less than 0" do
       it "is false" do
@@ -161,6 +153,7 @@ RSpec.describe ArtistPage, type: :model do
     it "can be set as nested attributes" do
       page_with_images = described_class.new(
         name: "Kitten Rock",
+        application_fee_percent: 10,
         images_attributes: [
           { url: "http://first.jpg", public_id: "first_public_id" },
           { url: "http://second.jpg", public_id: "second_public_id" }

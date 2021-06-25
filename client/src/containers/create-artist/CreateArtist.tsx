@@ -52,6 +52,7 @@ import { deleteFileFromCloudinary } from '../../api/cloudinary/delete-image';
 import { uploadFileToCloudinary } from '../../api/cloudinary/upload-image';
 import { Image, Transformation } from 'cloudinary-react';
 import { Modal } from '../shared/modal/Modal';
+import Dues from './Dues';
 
 interface CreateArtistProps {
   me: any;
@@ -563,6 +564,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     showDeleteModal: false,
     isDeletedPage: false,
     subscribeToNewsletter: true,
+    application_fee_percent: 10,
   };
 
   constructor(props) {
@@ -623,6 +625,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         owners,
         images,
       } = artist;
+      const application_fee_percent = artist.application_fee_percent
+        ? Number(artist.application_fee_percent)
+        : 10;
       this.setState({
         artistColor: accent_color,
         artistColorAlpha: accent_color + '33',
@@ -649,6 +654,15 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         })),
         images: images || [],
       });
+      if (
+        application_fee_percent === 7 ||
+        application_fee_percent === 10 ||
+        application_fee_percent === 13
+      ) {
+        this.setState({ application_fee_percent });
+      } else {
+        this.setState({ application_fee_percent: 10 });
+      }
     }
     if (userData && (artist || !editMode) && loading) {
       this.setState({
@@ -681,6 +695,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         images,
         hide_members,
       } = artist;
+      const application_fee_percent = artist.application_fee_percent
+        ? Number(artist.application_fee_percent)
+        : 10;
       this.setState({
         artistColor: accent_color,
         artistName: name,
@@ -705,6 +722,15 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
         })),
         images: images || [],
       });
+      if (
+        application_fee_percent === 7 ||
+        application_fee_percent === 10 ||
+        application_fee_percent === 13
+      ) {
+        this.setState({ application_fee_percent });
+      } else {
+        this.setState({ application_fee_percent: 10 });
+      }
     } else if (!editMode && userData) {
       // nothing commit
       this.setState({
@@ -775,6 +801,9 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       artistColorAlpha: color.hex + '33',
     });
   };
+
+  handlePercentChange = (application_fee_percent: number) =>
+    this.setState({ application_fee_percent });
 
   handleChange = (e) => {
     const { name, value } = e.target;
@@ -1300,6 +1329,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       hideMembers,
       images,
       members,
+      application_fee_percent,
     } = this.state;
 
     // validate fields
@@ -1405,8 +1435,8 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     this.setState({
       loading: true,
     });
-    
-    if (!this.props.editMode) { 
+
+    if (!this.props.editMode) {
       const { data } = await apiAxios({
         method: 'post',
         url: '/artist_pages.json',
@@ -1426,6 +1456,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
             images: fixImages,
+            application_fee_percent,
           },
           members,
         },
@@ -1465,6 +1496,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
             verb_plural: artistVerb !== 'is',
             hide_members: hideMembers,
             images: fixImages,
+            application_fee_percent,
           },
           members,
         },
@@ -1631,6 +1663,10 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
           {this.renderInfo()}
           {this.renderImages()}
           {this.renderColor()}
+          <Dues
+            setPercent={this.handlePercentChange}
+            percent={this.state.application_fee_percent}
+          />
           <Members
             bandName={this.state.artistName}
             members={this.state.members}

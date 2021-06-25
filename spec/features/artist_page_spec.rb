@@ -247,6 +247,50 @@ RSpec.describe ArtistPagesController, type: :request do
       end
     end
   end
+
+  describe "#create" do
+    let(:url) { "/artist_pages.json" }
+    let(:params) do
+      {
+        artist_page: {
+          name: "Kitteh' Rock",
+          slug: "kitteh",
+          bio: "A kitteh' who rocks",
+          location: "Litter box",
+          accent_color: "fuscia",
+          images_attributes: [{
+            "coordinates" => image.coordinates,
+            "url" => image.url,
+            "public_id" => image.public_id
+          }]
+        },
+        members: [{
+          email: "new@user.com",
+          firstName: "new",
+          lastName: "user"
+        }]
+      }
+    end
+
+    it "creates an artist page with expected params" do
+      post url, params: params
+
+      new_page = ArtistPage.find_by(**params[:artist_page].except(:images_attributes))
+
+      expect(response.status).to be 200
+      expect(new_page.application_fee_percent).to eq 7.0
+    end
+
+    it "creates an artist page with overriden application_fee_percent" do
+      artist_page_params = params[:artist_page].merge(application_fee_percent: 10)
+      post url, params: params.merge(artist_page: artist_page_params)
+
+      new_page = ArtistPage.find_by(**params[:artist_page].except(:images_attributes))
+
+      expect(response.status).to be 200
+      expect(new_page.application_fee_percent).to eq 10.0
+    end
+  end
 end
 
 RSpec.describe "PUT /artist_page", type: :request do

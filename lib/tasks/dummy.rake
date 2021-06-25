@@ -69,6 +69,7 @@ namespace :dummy do
         bio: Faker::Books::Dune.quote,
         accent_color: Faker::Color.hex_color,
         slug: Faker::Lorem.unique.word,
+        application_fee_percent: 10,
       )
       artist_page.owners << User.all.sample([1, 2].sample)
       3.times { new_testing_image(artist_page) }

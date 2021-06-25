@@ -3,7 +3,7 @@
 # Table name: artist_pages
 #
 #  accent_color            :string
-#  application_fee_percent :decimal(5, 2)    default(13.24), not null
+#  application_fee_percent :decimal(5, 2)    not null
 #  approved                :boolean          default(FALSE)
 #  artist_owner            :boolean          default(FALSE), not null
 #  bandcamp_handle         :string
@@ -40,6 +40,7 @@
 class ArtistPage < ApplicationRecord
   ARTIST_OWNER_THRESHOLD = 10
   COMMUNITY_PAGE_ID = 354
+  DEFAULT_APPLICATION_FEE_PERCENT = 7
 
   has_many :page_ownerships, dependent: :destroy
   has_many :owners, through: :page_ownerships, source: :user

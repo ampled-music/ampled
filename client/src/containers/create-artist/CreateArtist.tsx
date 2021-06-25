@@ -1371,6 +1371,17 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
       });
     }
 
+    if (
+      application_fee_percent !== 7 &&
+      application_fee_percent !== 10 &&
+      application_fee_percent !== 13
+    ) {
+      return this.props.showToast({
+        message: 'Please set your membership dues amount.',
+        type: 'error',
+      });
+    }
+
     // Make sure Bandcamp is just the username not the url
     if (artistBandcamp && !/^[0-9a-z-]+$/gi.test(artistBandcamp)) {
       return this.props.showToast({

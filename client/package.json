@@ -44,7 +44,7 @@
     "react-stripe-elements": "^3.0.0",
     "react-svg": "^11.2.5",
     "react-swipeable-views": "^0.14.0",
-    "react-text-truncate": "^0.15.0",
+    "react-text-truncate": "^0.16.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "redux-thunk-actions": "github:wgrisa/redux-thunk-actions",

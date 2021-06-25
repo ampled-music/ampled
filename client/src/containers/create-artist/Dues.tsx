@@ -30,7 +30,7 @@ export const Dues: FC<DuesProps> = ({ setPercent, percent }) => (
         <div className="col-md-3 col-sm-12" style={{ marginBottom: '8px' }}>
           <Card
             className={`artist-pwf__card dues-card${
-              percent == 7 ? '-selected' : ''
+              percent === 7 ? '-selected' : ''
             }`}
           >
             <CardContent>
@@ -52,7 +52,7 @@ export const Dues: FC<DuesProps> = ({ setPercent, percent }) => (
         <div className="col-md-3 col-sm-12" style={{ marginBottom: '8px' }}>
           <Card
             className={`artist-pwf__card dues-card${
-              percent == 10 ? '-selected' : ''
+              percent === 10 ? '-selected' : ''
             }`}
           >
             <CardContent>
@@ -74,7 +74,7 @@ export const Dues: FC<DuesProps> = ({ setPercent, percent }) => (
         <div className="col-md-3 col-sm-12" style={{ marginBottom: '8px' }}>
           <Card
             className={`artist-pwf__card dues-card${
-              percent == 13 ? ' dues-card-selected' : ''
+              percent === 13 ? ' dues-card-selected' : ''
             }`}
           >
             <CardContent>

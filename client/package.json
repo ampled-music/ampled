@@ -45,7 +45,7 @@
     "react-svg": "^11.2.5",
     "react-swipeable-views": "^0.14.0",
     "react-text-truncate": "^0.16.0",
-    "redux": "^4.0.1",
+    "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
     "redux-thunk-actions": "github:wgrisa/redux-thunk-actions",
     "sha1": "^1.1.1",

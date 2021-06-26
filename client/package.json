@@ -39,7 +39,7 @@
     "react-player": "^2.9.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.0",
+    "react-scripts": "3.4.4",
     "react-stack-grid": "^0.7.1",
     "react-stripe-elements": "^3.0.0",
     "react-svg": "^11.2.5",
@@ -93,7 +93,7 @@
     "tslint-config-prettier": "^1.17.0",
     "tslint-consistent-codestyle": "^1.14.1",
     "typescript": "^3.7.3",
-    "webpack": "4.41.5"
+    "webpack": "4.42.0"
   },
   "jest": {
     "collectCoverageFrom": [

@@ -204,7 +204,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
                 </a>{' '}
                 can you you the way — or join the conversation on our{' '}
                 <a
-                  href="https://discord.gg/eHa5hd72wz"
+                  href="https://discord.gg/mtKrD8McJA"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

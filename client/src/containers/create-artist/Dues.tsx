@@ -22,7 +22,8 @@ export const Dues: FC<DuesProps> = ({ setPercent, percent }) => (
             generally keeping the lights on. We are committed to making our
             membership dues fair for the artist and for the coop itself. Select
             the options that seems fair for your Ampled page. This can be
-            changed at any time. Read more about our Hardship policy.
+            changed at any time. To inquire about a hardship exemption, please
+            contact <a href="mailto:hello@ampled.com">hello@ampled.com</a>.
           </div>
         </div>
       </div>

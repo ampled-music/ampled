@@ -202,7 +202,7 @@ class PostsContainerComponent extends React.Component<Props, any> {
                 >
                   Artist Handbook
                 </a>{' '}
-                can you you the way — or join the conversation on our{' '}
+                can show you the way — or join the conversation on our{' '}
                 <a
                   href="https://discord.gg/mtKrD8McJA"
                   target="_blank"

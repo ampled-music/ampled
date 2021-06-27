@@ -12,4 +12,30 @@ describe('Ampled Home Page', () => {
     cy.get('.home-artists').parent().scrollIntoView()
     cy.get('.home-artists__title').contains('5 artists')
   })
+
+  it('can view an artist page', () => {
+    cy.visit('/browse')
+    cy.get('.home-artists__artists_all_group a').first().click()
+  })
+
+  it('can sign up as a supporter', () => {
+    cy.visit('/')
+    cy.get('button:contains("Login")').click()
+    cy.get('button:contains("Sign up")').click()
+    cy.get('input[name="name"]').type('Ampled')
+    cy.get('input[name="last_name"]').type('User')
+    cy.get('input[name="email"]').type('cypress@ampled.com')
+    cy.get('input[name="password"]').type('Pass1234')
+    cy.get('input[name="confirmPassword"]').type('Pass1234')
+    cy.get('input[name="terms"]').check()
+    cy.get('button[type="submit"]').click()
+  })
+
+  it('can log in using the previously created account', () => {
+    cy.visit('/')
+    cy.get('button:contains("Login")').click()
+    cy.get('input[name="email"]').type('cypress@ampled.com')
+    cy.get('input[name="password"]').type('Pass1234')
+    cy.get('button[type="submit"]').click()
+  })
 })

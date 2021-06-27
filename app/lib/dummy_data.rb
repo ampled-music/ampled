@@ -49,16 +49,18 @@ module DummyData
 
   def self.artist_pages
     (1..5).map do |_|
-      name = Faker::Music.band
+      name = Faker::Music.unique.band
       social = Faker::Twitter.screen_name
       artist_page = ArtistPage.create!(
         name: name,
+        slug: Faker::Lorem.unique.word,
         location: Faker::Address.city,
         twitter_handle: social,
         instagram_handle: social,
         video_url: "https://www.youtube.com/watch?v=4nsKDJlpUbA",
         bio: Faker::Books::Dune.quote,
-        accent_color: Faker::Color.hex_color
+        accent_color: Faker::Color.hex_color,
+        application_fee_percent: 7,
       )
       artist_page.owners << User.all.sample([1, 2].sample)
       3.times { new_testing_image(artist_page) }

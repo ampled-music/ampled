@@ -55,7 +55,7 @@ jobs:
 
       - run:
           name: Cypress tests
-          command: yarn install && yarn run build-client && yarn run integration-tests
+          command: yarn install && cd client && yarn install && cd .. && yarn run integration-tests
 
       # Steps below this line will only run if JavaScript/Typescript files have changed.
       - check-changed-files-or-halt:

@@ -7,6 +7,7 @@ describe('Ampled Home Page', () => {
   it('loads', () => {
     cy.visit('/')
     cy.contains('Ampled')
+    cy.get('.home-artists').parent().scrollIntoView()
     cy.get('.home-artists__title').contains('5 artists')
   })
 })

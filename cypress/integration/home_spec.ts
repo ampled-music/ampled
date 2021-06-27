@@ -1,4 +1,3 @@
-
 describe('Ampled Home Page', () => {
   before(() => {
    cy.resetdb()
@@ -30,6 +29,7 @@ describe('Ampled Home Page', () => {
     cy.get('input[name="terms"]').check()
     cy.get('button[type="submit"]').click()
     cy.get('#toast-container').should('contain.text', 'Signed up!')
+    cy.logout()
   })
 
   it('can log in using the previously created account', () => {
@@ -39,9 +39,10 @@ describe('Ampled Home Page', () => {
     cy.get('input[name="password"]').type('Pass1234')
     cy.get('button[type="submit"]').click()
     cy.get('#toast-container').should('contain.text', 'Welcome back!')
+    cy.logout()
   })
 
-  it('can view an artist page logged in', () => {
+  it('can view and support an artist page logged in', () => {
     cy.visit('/')
     cy.get('button:contains("Login")').click()
     cy.get('input[name="email"]').type('cypress@ampled.com')
@@ -50,5 +51,14 @@ describe('Ampled Home Page', () => {
     cy.get('#toast-container').should('contain.text', 'Welcome back!')
     cy.visit('/browse')
     cy.get('.home-artists__artists_all_group a').first().click()
+    cy.get('button:contains("Support")').first().click()
+    cy.get('input[name="supportLevelValue"]').type('3')
+    cy.get('.support__action button').click()
+    cy.getWithinIframe('iframe[title="Secure card number input frame"]','input[name="cardnumber"]').type('4111111111111111')
+    cy.getWithinIframe('iframe[title="Secure expiration date input frame"]','input[name="exp-date"]').type('1224')
+    cy.getWithinIframe('iframe[title="Secure CVC input frame"]','input[name="cvc"]').type('123')
+    cy.get('button:contains("Support")').first().click()
+    // TODO: need to make dummy artists supportable
+    cy.get('#toast-container').should('contain.text', 'Must authenticate')
   })
 })

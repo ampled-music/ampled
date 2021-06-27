@@ -33,4 +33,29 @@ module StripeUtil
       raise "Stripe fee unknown for currency #{stripe_currency(nominal_amount)}"
     end
   end
+
+  # Ampled comunicates application fees as a percentage of the nominal amount
+  # of a supscription, but Stripe thinks of them as a percentages of the charge amount.
+  #
+  # Example:
+  #   Nominal amount: $5.00
+  #   Ampled application fee: 5%
+  #   Application fee amount: 0.05 * $5.00 = $0.25
+  #   Charge amount: $5.46
+  #     Stripe fee: $0.46 (2.9% + $0.30)
+  #
+  #   Stripe application fee percentage: application fee amount / charge amount
+  #      = $0.25 / $5.46 = 4.58%
+  #
+  # Stripe accepts two digits of precision, we should always round down to avoid overcharging.
+  #
+  # @param nominal_amount [Plan] Plan the application fee percent applies to
+  # @param application_fee_percent [Float] The desired Ampled application fee, given base 100 (ie 43.45% == 43.45)
+  # @return [Float] The percent to give Stripe to charge the given application fee percent
+  def self.stripe_application_fee_percent(plan:, application_fee_percent:)
+    application_fee_amount = plan.nominal_amount * (application_fee_percent / 100.0)
+    percent_of_charge_amount = (application_fee_amount / plan.charge_amount) * 100.0
+
+    percent_of_charge_amount.floor(2)
+  end
 end

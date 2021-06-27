@@ -111,6 +111,8 @@ The `dummy:admin` task will create an admin account with a well-known username a
 
 Note that our database seeds are not idempotent, so if you want to re-run the seeds without errors, you'll need to reset the database: `bundle exec rails db:reset` will recreate the database a re-seed it for you.
 
+Note that by default, all created artist pages will be in an unapproved state, and will need to be approved before they are visible through the client.
+
 Once your database is set up and filled with data simply run the following command and give it a moment to spin up a local test environment.
 
     $ yarn run start

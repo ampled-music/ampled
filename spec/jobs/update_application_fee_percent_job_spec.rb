@@ -1,10 +1,9 @@
 require "rails_helper"
 
 describe UpdateApplicationFeePercentJob, type: :job do
-  BIG_DECIMAL_PRECISION = 5
   describe "#perform" do
     let(:artist_page) { create(:artist_page, application_fee_percent: 14.1, stripe_user_id: "acct_kittehrock") }
-    let(:application_fee_percent) { 8.2 }
+    let(:application_fee_percent) { 10.0 }
 
     it "updates the application_fee_percent of the ArtistPage" do
       expect { described_class.new.perform(artist_page.id, application_fee_percent) }
@@ -14,9 +13,11 @@ describe UpdateApplicationFeePercentJob, type: :job do
     end
 
     it "calls Stripe to update subscriptions with the correct parameters" do
+      plan = create(:plan, artist_page: artist_page,
+        charge_amount: 634, nominal_amount: 500, currency: "USD")
       subscriptions = [
-        create(:subscription, artist_page: artist_page, stripe_id: "sub_hugekittehfan"),
-        create(:subscription, artist_page: artist_page, stripe_id: "sub_mildkittehfan")
+        create(:subscription, artist_page: artist_page, stripe_id: "sub_hugekittehfan", plan: plan),
+        create(:subscription, artist_page: artist_page, stripe_id: "sub_mildkittehfan", plan: plan)
       ]
 
       subscriptions.each do |subscription|
@@ -24,7 +25,8 @@ describe UpdateApplicationFeePercentJob, type: :job do
           receive(:update).with(
             subscription.stripe_id,
             {
-              application_fee_percent: application_fee_percent
+              # The application fee amount is $0.50, 7.886% of $6.34, rounded down to 7.88%
+              application_fee_percent: 7.88
             },
             stripe_account: "acct_kittehrock"
           )
@@ -45,10 +47,8 @@ describe UpdateApplicationFeePercentJob, type: :job do
 
     context "when updating a remote subscription raises a Stripe::StripeError" do
       it "continues updating other subscriptions" do
-        subscriptions = [
-          create(:subscription, artist_page: artist_page, stripe_id: "sub_hugekittehfan"),
-          create(:subscription, artist_page: artist_page, stripe_id: "sub_mildkittehfan")
-        ]
+        create(:subscription, artist_page: artist_page, stripe_id: "sub_hugekittehfan")
+        create(:subscription, artist_page: artist_page, stripe_id: "sub_mildkittehfan")
 
         error = Stripe::InvalidRequestError.new("no access", :stripe_customer_id)
 
@@ -62,9 +62,6 @@ describe UpdateApplicationFeePercentJob, type: :job do
 
         expect(Raven).to(
           receive(:capture_exception).with(error)
-        )
-        expect_any_instance_of(ArtistPage).to(
-          receive(:subscriptions).and_return(double(active: subscriptions))
         )
 
         described_class.new.perform(artist_page.id, application_fee_percent)

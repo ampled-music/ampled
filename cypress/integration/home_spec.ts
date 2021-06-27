@@ -13,7 +13,7 @@ describe('Ampled Home Page', () => {
     cy.get('.home-artists__title').contains('5 artists')
   })
 
-  it('can view an artist page', () => {
+  it('can view an artist page logged out', () => {
     cy.visit('/browse')
     cy.get('.home-artists__artists_all_group a').first().click()
   })
@@ -29,6 +29,7 @@ describe('Ampled Home Page', () => {
     cy.get('input[name="confirmPassword"]').type('Pass1234')
     cy.get('input[name="terms"]').check()
     cy.get('button[type="submit"]').click()
+    cy.get('#toast-container').should('contain.text', 'Signed up!')
   })
 
   it('can log in using the previously created account', () => {
@@ -37,5 +38,17 @@ describe('Ampled Home Page', () => {
     cy.get('input[name="email"]').type('cypress@ampled.com')
     cy.get('input[name="password"]').type('Pass1234')
     cy.get('button[type="submit"]').click()
+    cy.get('#toast-container').should('contain.text', 'Welcome back!')
+  })
+
+  it('can view an artist page logged in', () => {
+    cy.visit('/')
+    cy.get('button:contains("Login")').click()
+    cy.get('input[name="email"]').type('cypress@ampled.com')
+    cy.get('input[name="password"]').type('Pass1234')
+    cy.get('button[type="submit"]').click()
+    cy.get('#toast-container').should('contain.text', 'Welcome back!')
+    cy.visit('/browse')
+    cy.get('.home-artists__artists_all_group a').first().click()
   })
 })

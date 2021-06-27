@@ -3,6 +3,7 @@ class ArtistPageApprovedEmailJob
   attr_accessor :artist, :users
 
   def perform(artist_id)
+    return if !artist_id
     @artist = ArtistPage.find(artist_id)
     return if artist.blank?
 

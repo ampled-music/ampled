@@ -23,3 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+/**
+ * Resets the server database and seeds it with well-known test data.
+ *
+ * @example cy.resetdb()
+ */
+Cypress.Commands.add('resetdb', () => {
+  // Hit the backend directly for a database reset.
+  cy.request('GET', `${Cypress.env('apiBase')}/test/reset_database`)
+})

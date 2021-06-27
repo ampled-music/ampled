@@ -4,6 +4,10 @@ describe('Ampled Home Page', () => {
    cy.resetdb()
   })
 
+  it('loads backend', () => {
+    cy.visit('http://localhost:3000/artist_pages.json')
+  })
+
   it('loads', () => {
     cy.intercept('GET', '/artist_pages.json').as('artist_pages')
     cy.visit('/')

@@ -31,5 +31,5 @@
  */
 Cypress.Commands.add('resetdb', () => {
   // Hit the backend directly for a database reset.
-  cy.request('GET', 'http://127.0.0.1:3000/test/reset_database')
+  cy.request('GET', 'http://localhost:3000/test/reset_database')
 })

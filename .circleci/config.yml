@@ -55,7 +55,7 @@ jobs:
 
       - run:
           name: Cypress tests
-          command: yarn install && cd client && yarn install && cd .. && REACT_APP_API_URL=http://localhost:3000 yarn run integration-tests
+          command: yarn install && cd client && yarn install && cd .. && yarn run integration-tests
 
       - store_artifacts:
           path: ~/circleci-demo-workflows/cypress/screenshots/

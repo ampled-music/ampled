@@ -1,3 +1,4 @@
+# rubocop:disable Performance/CollectionLiteralInLoop
 module DummyData
   FAKE_ADMIN_EMAIL = "fake.admin@ampled.com"
   FAKE_ADMIN_PASSWORD = "greatpower"
@@ -48,7 +49,6 @@ module DummyData
   end
 
   def self.artist_pages
-    one_two = %i[1 2]
     (1..5).map do |_|
       name = Faker::Music.unique.band
       social = Faker::Twitter.screen_name
@@ -63,13 +63,12 @@ module DummyData
         slug: Faker::Lorem.unique.word,
         application_fee_percent: 7
       )
-      artist_page.owners << User.all.sample(one_two.sample)
+      artist_page.owners << User.all.sample([1, 2].sample)
       3.times { new_testing_image(artist_page) }
     end
   end
 
   def self.posts
-    one_two = %i[1 2]
     ArtistPage.all.map do |ap|
       post_count = (0..4).to_a.sample
       (0..post_count).map do |_|
@@ -77,7 +76,7 @@ module DummyData
         Post.create!(
           user: author,
           artist_page: ap,
-          body: Faker::Books::Lovecraft.paragraphs(number: one_two.sample).join("\n"),
+          body: Faker::Books::Lovecraft.paragraphs(number: [1, 2].sample).join("\n"),
           title: Faker::Movies::HitchhikersGuideToTheGalaxy.quote
         )
       end
@@ -105,3 +104,4 @@ module DummyData
     Image.create!(imageable: imageable, url: image_url, public_id: public_id)
   end
 end
+# rubocop:enable Performance/CollectionLiteralInLoop

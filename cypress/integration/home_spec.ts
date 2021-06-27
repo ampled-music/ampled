@@ -5,7 +5,7 @@ describe('Ampled Home Page', () => {
   })
 
   it('loads backend', () => {
-    cy.visit('http://localhost:3000/artist_pages.json')
+    cy.visit('http://127.0.0.1:3000/artist_pages.json')
   })
 
   it('loads', () => {

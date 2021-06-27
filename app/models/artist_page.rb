@@ -68,7 +68,7 @@ class ArtistPage < ApplicationRecord
     less_than_or_equal_to: 100
   }
 
-  before_save :set_screenshot
+  before_save :set_screenshot, if: :will_save_change_to_video_url?
 
   before_save :check_approved
 

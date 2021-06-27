@@ -57,6 +57,9 @@ jobs:
           name: Cypress tests
           command: yarn install && cd client && yarn install && cd .. && yarn run integration-tests
 
+      - store_artifacts:
+          path: ~/circleci-demo-workflows/cypress/screenshots/
+
       # Steps below this line will only run if JavaScript/Typescript files have changed.
       - check-changed-files-or-halt:
           pattern: \.(js|ts|tsx|js|json)$

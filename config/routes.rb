@@ -49,6 +49,7 @@ Rails.application.routes.draw do
 
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"
+  post "uploads/cloudinary", to: "uploads#cloudinary_upload"
 
   resources :me, only: [:index] do
     put :update_card, on: :collection

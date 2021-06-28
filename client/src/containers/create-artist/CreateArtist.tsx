@@ -248,7 +248,7 @@ const Members = ({
         </div>
         <div className="row">
           <div className="col-md-6">
-            <div className="create-artist__copy">
+            <div className="create-artist__copy no-margin">
               Who else is a member of{' '}
               {bandName && bandName.length ? bandName : 'your band'}? Add them
               here. Admins have the ability to add / remove members and access /

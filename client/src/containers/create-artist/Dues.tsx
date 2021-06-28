@@ -16,7 +16,7 @@ export const Dues: FC<DuesProps> = ({ setPercent, percent }) => (
       </div>
       <div className="row">
         <div className="col-md-6">
-          <div className="create-artist__copy">
+          <div className="create-artist__copy no-margin">
             Membership dues is the percent of each support transaction that is
             paid as dues to the coop for paying contributors, growth, and
             generally keeping the lights on. We are committed to making our

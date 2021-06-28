@@ -66,6 +66,10 @@
     max-width: 460px;
     width: 100%;
     margin: 2rem 0 0;
+
+    &.no-margin {
+      margin: 0;
+    }
   }
 
   &__bottomcopy {
@@ -193,7 +197,7 @@
   }
 
   .artist-pwf {
-    margin: 2rem 0;
+    margin: 2rem 0 4rem;
     &__card {
       aspect-ratio: 1;
       @include mq(0, $tablet) {

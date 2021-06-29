@@ -2,7 +2,7 @@ import './audio-player.scss';
 
 import * as React from 'react';
 
-import FilePlayer from 'react-player/lib/players/FilePlayer';
+import FilePlayer from 'react-player/file';
 import { withStyles } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core/';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
@@ -201,11 +201,7 @@ class AudioPlayer extends React.Component<AudioPlayerProps, AudioPlayerState> {
           onPlay={this.handlePlay}
           onEnded={this.handleEnded}
           onProgress={this.handleProgress}
-          config={{
-            file: {
-              forceAudio: true,
-            },
-          }}
+          config={{forceAudio: true}}
         />
 
         <div className="audio-player__header">

@@ -14,6 +14,13 @@ Rails.application.routes.draw do
     root to: "users#index"
   end
 
+  # Routes to serve the needs of end-to-end Cypress tests
+  if Rails.env.test? || Rails.env.development?
+    namespace :test do
+      get "reset_database", to: "databases#reset"
+    end
+  end
+
   get "/users/password/edit", to: "react#index"
 
   devise_for :users, controllers: {
@@ -49,6 +56,7 @@ Rails.application.routes.draw do
 
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"
+  post "uploads/cloudinary", to: "uploads#cloudinary_upload"
 
   resources :me, only: [:index] do
     put :update_card, on: :collection

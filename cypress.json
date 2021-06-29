@@ -1,3 +1,8 @@
 {
-  "baseUrl": "http://localhost:5000"
+  "baseUrl": "http://localhost:5000",
+  "video": false,
+  "chromeWebSecurity": false,
+  "env": {
+    "apiBase": "http://localhost:3000"
+  }
 }

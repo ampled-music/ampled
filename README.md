@@ -17,6 +17,7 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
     - [Code Style](#code-style)
     - [Handling Money](#handling-money)
   - [Integration (end-to-end) testing](#integration-end-to-end-testing)
+    - [Setting up database state for Cypress tests](#setting-up-database-state-for-cypress-tests)
   - [Additional/Optional Development Details](#additionaloptional-development-details)
     - [Backup/Restore Database](#backuprestore-database)
     - [Code Coverage](#code-coverage)
@@ -24,7 +25,7 @@ Generated with [Raygun](https://github.com/carbonfive/raygun).
     - [Using Mailcatcher](#using-mailcatcher)
     - [Using ChromeDriver](#using-chromedriver)
     - [Continuous Integration/Deployment with CircleCI and Heroku](#continuous-integrationdeployment-with-circleci-and-heroku)
-- [Deploy to Acceptance/Production](#deploy-to-acceptanceproduction)
+- [Deploying to production and acceptance (for QA)](#deploying-to-production-and-acceptance-for-qa)
 - [Database migrations and rollbacks](#database-migrations-and-rollbacks)
 - [Server Environments](#server-environments)
     - [Hosting](#hosting)
@@ -47,7 +48,9 @@ If you plan to do work in this repo, you probably want to get access to, at leas
   - We like to talk about "card numbers", which don't show up in the Trello interface. You can see these with browser plugins,
     such as [this one for Chrome](https://chrome.google.com/webstore/detail/trello-card-numbers/kadpkdielickimifpinkknemjdipghaf) or [this one for Firefox](https://addons.mozilla.org/en-US/firefox/addon/trello-super-powers/).
 - Heroku environments.
-  - We run our servers on Heroku, where we have "production" and "acceptance" environments.
+  - We run our servers on Heroku, where we have "production" and "acceptance"
+  environments. Every merge to `main` will get automatically deployed to
+  `production`.
   - The "acceptance" environment will be helpful for getting credentials for services needed to
     run a server locally, and to debug things during QA.
 
@@ -94,20 +97,27 @@ First you need to install all npm dependencies in both root as well as client.
 
 Back in the root directory migrate the database
 
-    $ bundle exec rake db:migrate
+    $ bundle exec rails db:migrate
 
-Then populate database with faker data.
+Then populate database with fake data.
 
+    $ bundle exec rails db:seed
+
+If you ever need to, you can also create specific sets of fake data with the following rake tasks:
     $ bundle exec rake dummy:admin
     $ bundle exec rake dummy:users
     $ bundle exec rake dummy:artist_pages
     $ bundle exec rake dummy:posts
 
-The `dummy:admin` task will create an admin account with a well-known username and password, which can be used to give admin owers to other testing accounts via the admin dashboard. See the contents of [dummy.rake](lib/tasks/dummy.rake) for the username and password of this account.
+Note that by default, all created artist pages will be in an unapproved state, and will need to be approved before they are visible through the client.
+
+The `dummy:admin` task will create an admin account with a well-known username and password, which can be used to give admin powers to other testing accounts via the admin dashboard. See the contents of [DummyData](lib/dummy_data.rb) for the username and password of this account.
+
+Note that our database seeds are not idempotent, so if you want to re-run the seeds without errors, you'll need to reset the database: `bundle exec rails db:reset` will recreate the database a re-seed it for you.
 
 Once your database is set up and filled with data simply run the following command and give it a moment to spin up a local test environment.
 
-    $ npm run start
+    $ yarn run start
 
 This will also automatically compile any js or css changes live on the fly.
 
@@ -166,6 +176,13 @@ If you want to run the Cypress client and see the tests in a browser as they run
 ```
 $ yarn run cypress:open
 ```
+### Setting up database state for Cypress tests
+
+We have defined a custom Cypress commands to call into the backend's
+testing-specific routes to reset and seed the database.
+
+See [cypress/support/commands.ts](cypress/support/commands.ts) for command name
+and options.
 
 ## Additional/Optional Development Details
 
@@ -231,17 +248,22 @@ This project is configured for continuous integration with CircleCI, see [.circl
 On successful builds, Heroku will trigger a deployment via its
 [GitHub Integration](https://devcenter.heroku.com/articles/github-integration#automatic-deploys).
 
-# Deploy to Acceptance/Production
+# Deploying to production and acceptance (for QA)
 
-1. Pull Request into Acceptance/Production and run merge will trigger CI
+Merges into `main` will trigger an automatic deploy to `production`.
 
-The release process on Heroku will automatically run database migrations after the new
-app version is built, but before it is deployed to users. This is controlled via the `release`
-command in our app's [Procfile](Procfile).
+There is a `acceptance` environment that can be used for manual QA. You can deploy
+to this environment as needed, via Heroku, from any existing GitHub branch.
+Coordinate with other devs to make sure you're not stepping on their changes
+when you do this. (Sending a shout out in Slack should be enough.)
+
+The release process on Heroku will automatically run database migrations after
+the new app version is built, but before it is deployed to users. This is
+controlled via the `release` command in our app's [Procfile](Procfile).
 
 # Database migrations and rollbacks
 
-Database migrations run automagically ✨ in staging and production as part of the deploy process.
+Database migrations run automagically ✨ as part of the deploy process.
 If you ever need to run a migration or a migration rollback in a Heroku environment, you can
 do so using the `heroku run` command (part of the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)), like this:
 

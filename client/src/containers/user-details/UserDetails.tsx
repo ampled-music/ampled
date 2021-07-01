@@ -472,7 +472,7 @@ class UserDetailsComponent extends React.Component<Props, any> {
           });
         }
       },
-      { orientation: true },
+      { orientation: true, canvas: true },
     );
   };
 

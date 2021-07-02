@@ -10,8 +10,6 @@ class NewCommentEmailJob
     @post = comment.post
     @artist = post.artist_page
 
-    Rails.logger.info commenter.name
-
     SendBatchEmail.call(messages)
   end
 

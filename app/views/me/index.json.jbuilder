@@ -69,3 +69,4 @@ json.ownedPages @owned_pages do |page|
   json.promoteStoryImages page.page.promote_story_images
   json.supporterImages page.page.supporter_images
 end
+json.notifications @notifications

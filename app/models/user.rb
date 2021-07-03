@@ -56,6 +56,8 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
+  has_many :notifications, dependent: :destroy
+
   has_many :page_ownerships, dependent: :destroy
   has_many :owned_pages, through: :page_ownerships, source: :artist_page
 
@@ -70,6 +72,10 @@ class User < ApplicationRecord
 
   def supported_artists
     subscribed_artists.merge(Subscription.active)
+  end
+
+  def unread_notifications
+    notifications.where(is_unread: true).order("created_at DESC")
   end
 
   def subscribed?(artist_page)

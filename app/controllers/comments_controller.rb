@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
 
     if policy.create? && @comment.save
+      NewCommentEmailJob.perform_async(@comment.id)
       redirect_to @comment.post.artist_page, notice: "Comment added"
     else
       render_not_allowed

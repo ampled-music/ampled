@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_25_171139) do
+ActiveRecord::Schema.define(version: 2021_07_03_140937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,16 @@ ActiveRecord::Schema.define(version: 2021_06_25_171139) do
     t.string "coordinates"
     t.integer "order"
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "link"
+    t.text "text"
+    t.boolean "is_unread", default: true
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "page_ownerships", force: :cascade do |t|
@@ -196,6 +206,7 @@ ActiveRecord::Schema.define(version: 2021_06_25_171139) do
   add_foreign_key "comments", "users"
   add_foreign_key "contributor_time", "contributors"
   add_foreign_key "contributors", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "plans", "artist_pages"
   add_foreign_key "posts", "artist_pages"
   add_foreign_key "posts", "users"

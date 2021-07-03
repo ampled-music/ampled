@@ -13,4 +13,8 @@
 
 class Notification < ApplicationRecord
   belongs_to :user
+
+  def read!
+    update(is_unread: false)
+  end
 end

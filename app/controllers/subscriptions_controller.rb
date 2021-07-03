@@ -10,7 +10,7 @@ class SubscriptionsController < ApplicationController
     subscription = subscribe_stripe
     UpdateArtistOwnerStatusJob.perform_async(@current_artist_page.id)
     UserSupportedArtistEmailJob.perform_async(subscription.id)
-    NewSupporterEmailJob.perform_async(subscription.id)
+    NewSupporterNotificationJob.perform_async(subscription.id)
     render json: subscription
   rescue Stripe::InvalidRequestError => e
     return account_restricted_error(e) if /disabled_reason/.match?(e.message)

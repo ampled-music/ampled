@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe NewSupporterEmailJob, type: :job do
+describe NewSupporterNotificationJob, type: :job do
   it "sends emails to the owners of the artist page" do
     allow(SendBatchEmail).to receive(:call)
     owner = create(:user)

@@ -1,4 +1,4 @@
-class PostNotificationEmailJob
+class PostNotificationJob
   include Sidekiq::Worker
   attr_accessor :post, :artist, :users
 
@@ -8,6 +8,13 @@ class PostNotificationEmailJob
 
     @users = post.artist_page.active_subscribers
     @artist = post.artist_page
+
+    post_link = "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
+
+    users.map do |user|
+      Notification.create!(user: user, text: "#{artist.name} just posted \"#{post.title}\"",
+                           link: post_link)
+    end
 
     SendBatchEmail.call(messages)
   end

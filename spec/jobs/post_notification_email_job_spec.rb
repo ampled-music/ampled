@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe PostNotificationEmailJob, type: :job do
+describe PostNotificationJob, type: :job do
   it "sends emails to users subscribed to the artist page" do
     allow(SendBatchEmail).to receive(:call)
     users = create_list(:user, 2)

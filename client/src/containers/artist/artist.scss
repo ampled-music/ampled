@@ -4,7 +4,7 @@
 .new-post,
 .edit-page {
   position: fixed;
-  z-index: 10000;
+  z-index: 500;
   transition: opacity $speed;
 
   @include mq(0, $layout-m) {

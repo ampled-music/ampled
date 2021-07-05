@@ -32,7 +32,7 @@
     "react-device-detect": "^1.11.14",
     "react-dom": "^16.14.0",
     "react-dom-confetti": "^0.2.0",
-    "react-easy-crop": "^3.1.0",
+    "react-easy-crop": "^3.5.2",
     "react-easy-swipe": "0.0.18",
     "react-helmet": "^5.2.1",
     "react-linkify": "^1.0.0-alpha",

@@ -37,7 +37,7 @@ class ReactController < ActionController::Base
 
   def deeplink
     post = Post.find_by(id: request[:post_id])
-    artist_page = post.artist_page
+    artist_page = post&.artist_page
     return render404 if artist_page.nil?
 
     response_html = render_to_string file: "public/index.html", layout: false

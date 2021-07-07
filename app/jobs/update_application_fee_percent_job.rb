@@ -23,12 +23,16 @@ class UpdateApplicationFeePercentJob
   end
 
   def update_stripe_subscriptions
-    @artist_page.subscriptions.active.each do |subscription|
+    @artist_page.subscriptions.active.includes(:plan).each do |subscription|
       log_info("updating application_fee_percent for subscription id=#{subscription.id}")
+      stripe_application_fee_percent = StripeUtil.stripe_application_fee_percent(
+        plan: subscription.plan,
+        application_fee_percent: @application_fee_percent
+      )
       Stripe::Subscription.update(
         subscription.stripe_id,
         {
-          application_fee_percent: @application_fee_percent
+          application_fee_percent: stripe_application_fee_percent
         },
         stripe_account: @artist_page.stripe_user_id
       )

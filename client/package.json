@@ -86,7 +86,7 @@
     "prettier": "^1.15.3",
     "react-color": "^2.19.3",
     "redux-actions": "^2.6.4",
-    "redux-devtools-extension": "^2.13.7",
+    "redux-devtools-extension": "^2.13.9",
     "redux-mock-store": "^1.5.3",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.17.0",

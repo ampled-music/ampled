@@ -24,8 +24,8 @@
 class AudioUpload < ApplicationRecord
   DEFAULT_WAVEFORM_LENGTH = 1000
 
-  before_destroy :delete_audio
   before_create :process_audio
+  before_destroy :delete_audio
   after_find :ensure_waveform
 
   class HashGenerationError < StandardError; end

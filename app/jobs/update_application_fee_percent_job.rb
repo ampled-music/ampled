@@ -10,7 +10,7 @@ class UpdateApplicationFeePercentJob
     @application_fee_percent = application_fee_percent
 
     log_info("setting new application_fee_percent for artist page" \
-      " id=#{artist_page_id} application_fee_percent=#{application_fee_percent}")
+             " id=#{artist_page_id} application_fee_percent=#{application_fee_percent}")
 
     set_artist_page_application_fee
     update_stripe_subscriptions

@@ -39,6 +39,7 @@
     "react-easy-swipe": "0.0.18",
     "react-helmet": "^5.2.1",
     "react-linkify": "^1.0.0-alpha",
+    "react-moment": "^1.1.1",
     "react-player": "^2.9.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",

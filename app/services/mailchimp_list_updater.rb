@@ -15,7 +15,7 @@ module Services
       raise MailchimpFailed, "Couldn't initialize Mailchimp" unless @mailchimp
 
       status = (subscribe ? "subscribed" : "unsubscribed")
-      list(user).upsert(
+      list(user).upsert( # rubocop:disable Rails/SkipsModelValidations
         body: {
           email_address: user.email,
           status: status,

@@ -105,7 +105,7 @@ export class ArtistHeader extends React.Component<Props, any> {
   renderFloatingEditButton = () =>
     this.canLoggedUserAdmin() && (
       <div className="edit-page">
-        <Link to="/edit">
+        <Link to={`/artist/${this.props.artist.slug}/edit`}>
           <Button
             endIcon={<ReactSVG className="icon icon_white" src={Edit} />}
             size="small"

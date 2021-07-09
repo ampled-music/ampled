@@ -145,9 +145,9 @@ RSpec.describe MeController, :vcr, type: :request do
               "stripeSignup" => nil,
               "subscriptions" => [{
                 "id" => subscription.id,
-                "status" => "active",
-                "name" => nil,
-                "email" => nil,
+                "status" => "pending_active",
+                "name" => "#{subscription.user.name} #{subscription.user.last_name}",
+                "email" => subscription.user.email,
                 "city" => nil,
                 "country" => nil,
                 "supporter_since" => "2020-10-29T14:30:23.000Z",

@@ -6,7 +6,7 @@ class MeController < ApplicationController
 
     @owned_pages = current_user&.page_ownerships&.map do |ownership|
       OpenStruct.new(page: ownership.artist_page, role: ownership.role, instrument: ownership.instrument,
-      subscriptions: ownership.artist_page.subscriptions)
+                     subscriptions: ownership.artist_page.subscriptions)
     end
     @owned = current_user&.page_ownerships&.map do |ownership|
       OpenStruct.new(id: ownership.artist_page.id, role: ownership.role)

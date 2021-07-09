@@ -119,7 +119,6 @@ ActiveRecord::Schema.define(version: 2021_06_25_171139) do
     t.bigint "artist_page_id", null: false
     t.string "currency", default: "usd", null: false
     t.integer "charge_amount", null: false
-    t.integer "total_contributions", default: 0
     t.index ["artist_page_id"], name: "index_plans_on_artist_page_id"
   end
 

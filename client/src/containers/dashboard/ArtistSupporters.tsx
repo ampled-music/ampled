@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Button, Chip, Toolbar } from '@material-ui/core';
-import { RowsProp, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
 import { Check, Block } from '@material-ui/icons';
 import Moment from 'react-moment';
-import { XGrid } from '@material-ui/x-grid';
+import { XGrid, GridRowsProp, GridColDef, GridValueFormatterParams } from '@material-ui/x-grid';
 import { ReactSVG } from 'react-svg';
 import Download from '../../images/icons/Icon_Download.svg';
 
@@ -15,7 +14,7 @@ interface ArtistSupportersProps {
 export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersProps) => {
   const { subscriptions: supporters, artistSlug } = selectedArtist;
 
-  const rows: RowsProp = supporters?.map((supporter) => ({
+  const rows: GridRowsProp = supporters?.map((supporter) => ({
     id: supporter.id,
     name: supporter.name,
     email: supporter.email,
@@ -27,13 +26,13 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
     supporting_since: supporter.supporter_since,
   }));
 
-  const columns: ColDef[] = [
+  const columns: GridColDef[] = [
     { field: 'name', headerName: 'Name', width: 150 },
     {
       field: 'email',
       headerName: 'Email',
       width: 200,
-      renderCell: (params: ValueFormatterParams) => (
+      renderCell: (params: GridValueFormatterParams) => (
         <a href={`mailto:${params.value}`}>{params.value}</a>
       ),
     },
@@ -41,7 +40,7 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
       field: 'monthly',
       headerName: 'Monthly',
       width: 100,
-      valueFormatter: (params: ValueFormatterParams) =>
+      valueFormatter: (params: GridValueFormatterParams) =>
         params.value.toLocaleString('en-US', {
           style: 'currency',
           currency: 'USD',
@@ -51,7 +50,7 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
       field: 'status',
       headerName: 'Status',
       width: 110,
-      renderCell: (params: ValueFormatterParams) => (
+      renderCell: (params: GridValueFormatterParams) => (
         <Chip
           size="small"
           icon={params.value === 'active' ? <Check /> : <Block />}
@@ -68,7 +67,7 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
     //   field: 'all_time',
     //   headerName: 'All Time',
     //   width: 150,
-    //   valueFormatter: (params: ValueFormatterParams) =>
+    //   valueFormatter: (params: GridValueFormatterParams) =>
     //     params.value.toLocaleString('en-US', {
     //       style: 'currency',
     //       currency: 'USD',

@@ -9,8 +9,8 @@ type StyleOverrideProps = {
 
 const StyleOverride = ({
   accentColor,
-  isSupporter,
-  bgColor,
+  isSupporter = false,
+  bgColor = false,
 }: StyleOverrideProps) => (
   <style
     dangerouslySetInnerHTML={{

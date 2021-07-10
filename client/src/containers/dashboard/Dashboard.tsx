@@ -62,7 +62,7 @@ const TabPanel = ({ tabValue, index, children }) => (
 
 class DashboardComponent extends React.Component<Props, any> {
   state = {
-    selectedArtist: [],
+    selectedArtist: { artistColor: undefined, artistId: undefined, isStripeSetup: false },
     tabValue: 0,
     openPostModal: false,
     showConfirmationDialog: false,
@@ -122,15 +122,9 @@ class DashboardComponent extends React.Component<Props, any> {
     const { userData } = this.props;
     const { tabValue, selectedArtist } = this.state;
 
-    // const { artistColor, artistId, isStripeSetup } = selectedArtist;
+    const { artistColor, artistId, isStripeSetup } = selectedArtist;
 
-    console.log('selectedArtist', selectedArtist);
 
-    let artist;
-    artist = selectedArtist;
-    let artistColor = artist.artistColor;
-    let artistId = artist.artistId;
-    let isStripeSetup = artist.isStripeSetup;
 
     const theme = createMuiTheme({
       palette: {

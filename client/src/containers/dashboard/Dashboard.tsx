@@ -86,6 +86,7 @@ class DashboardComponent extends React.Component<Props, any> {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+
   handleChangeTab = (obj, value) => {
     this.setState({
       tabValue: value,
@@ -95,6 +96,7 @@ class DashboardComponent extends React.Component<Props, any> {
   openPostModal = () => {
     this.setState({ openPostModal: true });
   };
+
   closePostModal = () => {
     this.setState({ openPostModal: false });
   };
@@ -106,10 +108,12 @@ class DashboardComponent extends React.Component<Props, any> {
       this.discardChanges();
     }
   };
+
   closeConfirmationDialog = () => {
     this.setState({ showConfirmationDialog: false });
     this.closePostModal();
   };
+
   discardChanges = () => {
     this.closeConfirmationDialog();
   };

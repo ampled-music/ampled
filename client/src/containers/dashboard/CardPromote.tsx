@@ -28,9 +28,8 @@ export const CardPromote = ({ selectedArtist }: CardPromoteProps) => {
           </div>
           <div className="row dashboard__home_card_promote">
             {promoteSquareImages.map((promoImage) => (
-              <div className="col-4">
+              <div className="col-4" key={promoImage.name}>
                 <a
-                  key={promoImage.name}
                   href={promoImage.url}
                   download={promoImage.name}
                   target="_blank"
@@ -48,9 +47,8 @@ export const CardPromote = ({ selectedArtist }: CardPromoteProps) => {
           </div>
           <div className="row dashboard__home_card_promote">
             {promoteStoryImages.map((promoImage) => (
-              <div className="col-4">
+              <div className="col-4" key={promoImage.name}>
                 <a
-                  key={promoImage.name}
                   href={promoImage.url}
                   download={promoImage.name}
                   target="_blank"

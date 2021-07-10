@@ -16,12 +16,14 @@ import Edit from '../../images/icons/Icon_Edit.svg';
 interface ArtistPanelProps {
   ownedPages: any;
   selectedArtist: any;
+  openPostModal: () => void;
   // handleChange: any;
 }
 
 export const ArtistPanel = ({
   ownedPages,
   selectedArtist,
+  openPostModal = () => null,
 }: ArtistPanelProps) => {
   const { name, image, artistColor, artistSlug } = selectedArtist;
 
@@ -67,7 +69,7 @@ export const ArtistPanel = ({
         <div className="dashboard__panel_buttons">
           <Tooltip title="Add New Post">
             <IconButton
-              // onClick={this.props.openPostModal}
+              onClick={openPostModal}
               className="dashboard__panel_buttons_plus"
               style={{ backgroundColor: artistColor }}
             >

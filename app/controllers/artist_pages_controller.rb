@@ -285,7 +285,7 @@ class ArtistPagesController < ApplicationController
   end
   # rubocop:enable Metrics/CyclomaticComplexity
 
-  # Only allow a trusted parameter "white list" through.
+  # Only allow a trusted parameter allowlist through.
   def artist_page_params
     Image.rename_params(params, :artist_page)
     params.require(:artist_page).permit(:name, :bio, :twitter_handle, :instagram_handle, :bandcamp_handle,

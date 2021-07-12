@@ -79,7 +79,7 @@
     "@types/react-text-truncate": "^0.14.0",
     "@types/store": "^2.0.1",
     "axios-mock-adapter": "^1.19.0",
-    "coveralls": "^3.1.0",
+    "coveralls": "^3.1.1",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "jest-canvas-mock": "^2.3.1",

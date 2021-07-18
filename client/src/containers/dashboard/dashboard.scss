@@ -162,10 +162,6 @@
         color: $gray-light;
         padding-left: 2rem;
       }
-      &-toolbar {
-        padding: 0.5rem 2rem;
-        display: flex;
-      }
       &-footer {
         background-color: $white;
         border-top: 1px solid $black;
@@ -179,17 +175,15 @@
         background-color: $gray-lightest;
         padding-bottom: 2rem;
       }
-      &-viewport {
-        .rendering-zone {
-          margin-top: 1rem;
-          margin-left: 2rem;
-        }
+      &-renderingZone {
+        margin-top: 1rem;
+        margin-left: 2rem;
       }
       &-row {
         border: 1px solid $gray-light;
         border-radius: 2px;
         background-color: $white;
-        width: 100%;
+        width: calc(100% - 2rem);
         margin-bottom: 0.5rem;
         &.Mui-selected,
         &.Mui-selected:hover {

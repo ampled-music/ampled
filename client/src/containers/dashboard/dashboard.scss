@@ -68,10 +68,13 @@
 
   &__home {
     display: flex;
+    flex-direction: column;
     padding: 1rem;
-    flex-wrap: wrap;
+    
     &_card {
       align-items: flex-start;
+      width: 100%;
+      max-width: 700px;
       &_title {
         font-family: $font-family-sans-serif;
         color: $gray-light;
@@ -93,6 +96,12 @@
       &_flex-row {
         display: flex;
         flex-direction: row;
+      }
+      &_flex-col {
+        display: flex;
+        flex-direction: column;
+        margin: 2rem 0 0;
+        align-items: center;
       }
       &_numbers {
         width: 33%;
@@ -132,11 +141,24 @@
         }
       }
       &_roadmap {
+        &_content {
+          max-width: 500px;
+          margin: auto;
+        }
         p {
           font-family: $font-family-monospace;
         }
         img {
           width: 100%;
+        }
+        &_info {
+          display: flex;
+          padding: 1rem;
+          justify-content: center;
+          flex-direction: column;
+          border: 1px solid;
+          height: calc(100% - 1rem);
+          margin-top: .5rem;
         }
       }
     }

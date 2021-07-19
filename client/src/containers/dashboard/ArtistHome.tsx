@@ -19,12 +19,14 @@ export const ArtistHome = ({ userData, selectedArtist }: ArtistHomeProps) => {
     overrides: {
       MuiCard: {
         root: {
-          margin: '1rem',
+          margin: '1rem 0rem',
           padding: '1rem',
           boxShadow: 'none',
           border: '1px solid #969696',
-          maxWidth: '600px',
+          maxWidth: '900px',
           alignSelf: 'flex-start',
+          width: '100%',
+          borderRadius: '0',
         },
       },
       MuiCardContent: {
@@ -38,10 +40,12 @@ export const ArtistHome = ({ userData, selectedArtist }: ArtistHomeProps) => {
   return (
     <ThemeProvider theme={theme}>
       <div className="dashboard__home">
-        <CardOverview selectedArtist={selectedArtist} />
         <CardStripe selectedArtist={selectedArtist} />
-        <CardPromote selectedArtist={selectedArtist} />
+        <h2>My Account</h2>
+        <CardOverview selectedArtist={selectedArtist} />
+        <h2>Resources</h2>
         <CardRoadMap />
+        <CardPromote selectedArtist={selectedArtist} />
       </div>
     </ThemeProvider>
   );

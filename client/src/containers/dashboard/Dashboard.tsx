@@ -192,11 +192,11 @@ class DashboardComponent extends React.Component<Props, any> {
                     id="vertical-tab-1"
                     aria-controls="vertical-tabpanel-1"
                   />
-                  <Tab
+                  {/* <Tab
                     label="Income"
                     id="vertical-tab-2"
                     aria-controls="vertical-tabpanel-2"
-                  />
+                  /> */}
                 </Tabs>
               </div>
             </div>

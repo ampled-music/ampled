@@ -2,15 +2,13 @@ import * as React from 'react';
 import { Card, CardContent } from '@material-ui/core';
 
 import { CheckCircleOutline, ErrorOutline } from '@material-ui/icons';
-import { faStripe } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface CardStripeProps {
   selectedArtist: any;
 }
 
 export const CardStripe = ({ selectedArtist }: CardStripeProps) => {
-  const { isStripeSetup, stripeDashboard, stripeSignup } = selectedArtist;
+  const { isStripeSetup, stripeSignup } = selectedArtist;
 
   return (
     <Card>
@@ -22,17 +20,6 @@ export const CardStripe = ({ selectedArtist }: CardStripeProps) => {
                 <CheckCircleOutline fontSize="large" /> You’re payouts are all
                 set up!
               </div>
-              {stripeDashboard && (
-                <a
-                  href={stripeDashboard}
-                  className="dashboard__home_link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ marginLeft: '45px' }}
-                >
-                  Edit Payout Details
-                </a>
-              )}
             </div>
           ) : (
             <div className="dashboard__home_card_stripe">
@@ -53,17 +40,6 @@ export const CardStripe = ({ selectedArtist }: CardStripeProps) => {
               )}
             </div>
           )}
-          <div
-            className="dashboard__home_card_by"
-            style={{ marginLeft: '45px' }}
-          >
-            Powered by
-            <FontAwesomeIcon
-              className="dashboard__home_card_by_icon"
-              icon={faStripe}
-              size="3x"
-            />
-          </div>
         </div>
       </CardContent>
     </Card>

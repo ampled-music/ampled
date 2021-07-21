@@ -30,7 +30,6 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
   const rows: GridRowsProp = supporters?.map((supporter) => ({
     id: supporter.id,
     name: supporter.name,
-    email: supporter.email,
     monthly: supporter.amount / 100,
     status: supporter.status,
     // all_time: 556,
@@ -41,14 +40,6 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
 
   const columns: GridColDef[] = [
     { field: 'name', headerName: 'Name', flex: 1, },
-    {
-      field: 'email',
-      headerName: 'Email',
-      flex: 1,
-      renderCell: (params: GridValueFormatterParams) => (
-        <a href={`mailto:${params.value}`}>{params.value}</a>
-      ),
-    },
     {
       field: 'monthly',
       headerName: 'Monthly',

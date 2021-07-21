@@ -3,18 +3,27 @@
 
 .dashboard {
   display: flex;
-  min-height: 95vh;
   flex-grow: 1;
+  flex-direction: column;
+
+  @include mq($layout-m) {
+    flex-direction: row;
+    min-height: 95vh;
+  }
 
   &__panel {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px;
-    padding: 2rem 0rem;
-    box-shadow: 3px 0 5px -3px $black;
+    width: 100%;
+    padding: 1rem 0rem;
     position: relative;
     z-index: 1;
+    @include mq($layout-m) {
+      width: 300px;
+      padding: 2rem 0rem;
+      box-shadow: 3px 0 5px -3px $black;
+    }
     &_image {
       border: 3px solid $black;
       border-radius: 100%;
@@ -193,12 +202,32 @@
           margin-top: .5rem;
         }
       }
+      &_whatto {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        &_content {
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          margin-bottom: 1rem;
+          @include mq($layout-m) {
+            width: 50%;
+            margin-bottom: 2rem;
+          }   
+        }
+        &_icon {
+          width: 30px;
+          margin-right: 1rem;
+        }
+      }
     }
     &_link {
       font-family: $font-family-monospace;
       text-decoration: underline;
       text-transform: lowercase;
     }
+    
   }
 
   &__data {

@@ -5,6 +5,7 @@ import CardOverview from './CardOverview';
 import CardStripe from './CardStripe';
 import CardPromote from './CardPromote';
 import CardRoadMap from './CardRoadMap';
+import CardWhatTo from './CardWhatTo';
 
 interface ArtistHomeProps {
   userData: any;
@@ -46,6 +47,7 @@ export const ArtistHome = ({ userData, selectedArtist }: ArtistHomeProps) => {
         <span className="dashboard__home_title green">Resources</span>
         <CardRoadMap />
         <CardPromote selectedArtist={selectedArtist} />
+        <CardWhatTo />
       </div>
     </ThemeProvider>
   );

@@ -290,6 +290,18 @@ RSpec.describe ArtistPagesController, type: :request do
       expect(response.status).to be 200
       expect(new_page.application_fee_percent).to eq 10.0
     end
+
+    it "queues the SetPayoutScheduleToMonthlyJob with the correct parameters" do
+      expect {
+        post(url, params: params)
+      }.to change { SetPayoutScheduleToMonthlyJob.jobs.count }.by(1)
+
+      new_page = ArtistPage.find_by(**params[:artist_page].except(:images_attributes))
+
+      expect(SetPayoutScheduleToMonthlyJob.jobs.last["args"]).to match_array(
+        [new_page.id]
+      )
+    end
   end
 end
 

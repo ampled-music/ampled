@@ -1,0 +1,2844 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/accounts/acct_1JPZxQ2HalBiqJUi
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_0iKhRd82J6sJoz","request_duration_ms":578}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:36:34 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3435'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_hh4GY9XxwxHoCo
+      Stripe-Account:
+      - acct_1JPZxQ2HalBiqJUi
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '12'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPZxQ2HalBiqJUi",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "pending",
+            "platform_payments": "pending"
+          },
+          "charges_enabled": false,
+          "country": "US",
+          "created": 1629236190,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPZxQ2HalBiqJUimMvDMoaG",
+                "object": "bank_account",
+                "account": "acct_1JPZxQ2HalBiqJUi",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPZxQ2HalBiqJUi/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPZxQCNj1cfz4PU2CfMpvz5",
+              "document_back": null,
+              "status": "verified"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "daily"
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": false,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": "fields_needed",
+            "due_by": null,
+            "errors": [
+
+            ],
+            "fields_needed": [
+
+            ],
+            "pending_verification": [
+              "legal_entity.personal_id_number"
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:36:34 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/accounts/acct_1JPZyA2E0UWR1mRN
+    body:
+      encoding: UTF-8
+      string: settings[payouts][schedule][interval]=monthly&settings[payouts][schedule][monthly_anchor]=31
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_r1CyTuufyHdkYD","request_duration_ms":518}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:37:25 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3454'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_156Wq4h2oVwLrE
+      Stripe-Account:
+      - acct_1JPZyA2E0UWR1mRN
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '111'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPZyA2E0UWR1mRN",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "active",
+            "platform_payments": "active"
+          },
+          "charges_enabled": true,
+          "country": "US",
+          "created": 1629236236,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPZyB2E0UWR1mRNo588Uwhd",
+                "object": "bank_account",
+                "account": "acct_1JPZyA2E0UWR1mRN",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPZyA2E0UWR1mRN/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPZyBCNj1cfz4PU3QkULmAx",
+              "document_back": null,
+              "status": "verified"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "monthly",
+            "monthly_anchor": 31
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": true,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": null,
+            "due_by": 1631828244,
+            "errors": [
+
+            ],
+            "fields_needed": [
+
+            ],
+            "pending_verification": [
+              "legal_entity.personal_id_number"
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:37:25 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/accounts/acct_1JPZyA2E0UWR1mRN
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_156Wq4h2oVwLrE","request_duration_ms":6110}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:37:25 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3454'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_NPySRKo6oRfARP
+      Stripe-Account:
+      - acct_1JPZyA2E0UWR1mRN
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '13'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPZyA2E0UWR1mRN",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "active",
+            "platform_payments": "active"
+          },
+          "charges_enabled": true,
+          "country": "US",
+          "created": 1629236236,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPZyB2E0UWR1mRNo588Uwhd",
+                "object": "bank_account",
+                "account": "acct_1JPZyA2E0UWR1mRN",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPZyA2E0UWR1mRN/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPZyBCNj1cfz4PU3QkULmAx",
+              "document_back": null,
+              "status": "verified"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "monthly",
+            "monthly_anchor": 31
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": true,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": null,
+            "due_by": 1631828244,
+            "errors": [
+
+            ],
+            "fields_needed": [
+
+            ],
+            "pending_verification": [
+              "legal_entity.personal_id_number"
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:37:25 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/accounts/acct_1JPa092E1nW4UTgd
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_9HxJ1kiZFGNYeA","request_duration_ms":534}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:39:21 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3476'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_jFvkOaitDESBn1
+      Stripe-Account:
+      - acct_1JPa092E1nW4UTgd
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '12'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPa092E1nW4UTgd",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "pending",
+            "platform_payments": "pending"
+          },
+          "charges_enabled": false,
+          "country": "US",
+          "created": 1629236359,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPa092E1nW4UTgdvOkLvcsO",
+                "object": "bank_account",
+                "account": "acct_1JPa092E1nW4UTgd",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPa092E1nW4UTgd/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPa09CNj1cfz4PU7xgiMwNW",
+              "document_back": null,
+              "status": "pending"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "daily"
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": false,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": "fields_needed",
+            "due_by": null,
+            "errors": [
+
+            ],
+            "fields_needed": [
+              "legal_entity.personal_id_number"
+            ],
+            "pending_verification": [
+              "legal_entity.verification.document"
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:39:21 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/accounts/acct_1JPa092E1nW4UTgd
+    body:
+      encoding: UTF-8
+      string: settings[payouts][schedule][interval]=monthly&settings[payouts][schedule][monthly_anchor]=31
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_jFvkOaitDESBn1","request_duration_ms":612}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:40:56 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3409'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_Sv0ucrSbxJgD13
+      Stripe-Account:
+      - acct_1JPa092E1nW4UTgd
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '101'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPa092E1nW4UTgd",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "active",
+            "platform_payments": "active"
+          },
+          "charges_enabled": true,
+          "country": "US",
+          "created": 1629236359,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPa092E1nW4UTgdvOkLvcsO",
+                "object": "bank_account",
+                "account": "acct_1JPa092E1nW4UTgd",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPa092E1nW4UTgd/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPa09CNj1cfz4PU7xgiMwNW",
+              "document_back": null,
+              "status": "verified"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "monthly",
+            "monthly_anchor": 31
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": true,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": null,
+            "due_by": null,
+            "errors": [
+
+            ],
+            "fields_needed": [
+
+            ],
+            "pending_verification": [
+
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:40:55 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/accounts/acct_1JPa092E1nW4UTgd
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_Sv0ucrSbxJgD13","request_duration_ms":2264}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:40:56 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3409'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_Ar16ailMty30bb
+      Stripe-Account:
+      - acct_1JPa092E1nW4UTgd
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '11'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPa092E1nW4UTgd",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "active",
+            "platform_payments": "active"
+          },
+          "charges_enabled": true,
+          "country": "US",
+          "created": 1629236359,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPa092E1nW4UTgdvOkLvcsO",
+                "object": "bank_account",
+                "account": "acct_1JPa092E1nW4UTgd",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPa092E1nW4UTgd/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPa09CNj1cfz4PU7xgiMwNW",
+              "document_back": null,
+              "status": "verified"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "monthly",
+            "monthly_anchor": 31
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": true,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": null,
+            "due_by": null,
+            "errors": [
+
+            ],
+            "fields_needed": [
+
+            ],
+            "pending_verification": [
+
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:40:56 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/accounts/acct_1JPa1q2HLUSnmrAi
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_D4SF5cyZnmmqoy","request_duration_ms":611}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:41:07 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3476'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_YyEUTfpn5vSAlJ
+      Stripe-Account:
+      - acct_1JPa1q2HLUSnmrAi
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '12'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPa1q2HLUSnmrAi",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "pending",
+            "platform_payments": "pending"
+          },
+          "charges_enabled": false,
+          "country": "US",
+          "created": 1629236464,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPa1r2HLUSnmrAiXYlhEDnC",
+                "object": "bank_account",
+                "account": "acct_1JPa1q2HLUSnmrAi",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPa1q2HLUSnmrAi/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPa1qCNj1cfz4PULjevdxYr",
+              "document_back": null,
+              "status": "pending"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "daily"
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": false,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": "fields_needed",
+            "due_by": null,
+            "errors": [
+
+            ],
+            "fields_needed": [
+              "legal_entity.personal_id_number"
+            ],
+            "pending_verification": [
+              "legal_entity.verification.document"
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:41:07 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/accounts/acct_1JPa1q2HLUSnmrAi
+    body:
+      encoding: UTF-8
+      string: settings[payouts][schedule][interval]=monthly&settings[payouts][schedule][monthly_anchor]=31
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_YyEUTfpn5vSAlJ","request_duration_ms":599}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:41:11 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3454'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_z7zdxm73DFPscg
+      Stripe-Account:
+      - acct_1JPa1q2HLUSnmrAi
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '124'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPa1q2HLUSnmrAi",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "active",
+            "platform_payments": "active"
+          },
+          "charges_enabled": true,
+          "country": "US",
+          "created": 1629236464,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPa1r2HLUSnmrAiXYlhEDnC",
+                "object": "bank_account",
+                "account": "acct_1JPa1q2HLUSnmrAi",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPa1q2HLUSnmrAi/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPa1qCNj1cfz4PULjevdxYr",
+              "document_back": null,
+              "status": "verified"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "monthly",
+            "monthly_anchor": 31
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": true,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": null,
+            "due_by": 1631828470,
+            "errors": [
+
+            ],
+            "fields_needed": [
+
+            ],
+            "pending_verification": [
+              "legal_entity.personal_id_number"
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:41:11 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/accounts/acct_1JPa1q2HLUSnmrAi
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_z7zdxm73DFPscg","request_duration_ms":3641}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:41:11 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3454'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_gPFf2N6pXIDm7W
+      Stripe-Account:
+      - acct_1JPa1q2HLUSnmrAi
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '13'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPa1q2HLUSnmrAi",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "active",
+            "platform_payments": "active"
+          },
+          "charges_enabled": true,
+          "country": "US",
+          "created": 1629236464,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPa1r2HLUSnmrAiXYlhEDnC",
+                "object": "bank_account",
+                "account": "acct_1JPa1q2HLUSnmrAi",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPa1q2HLUSnmrAi/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPa1qCNj1cfz4PULjevdxYr",
+              "document_back": null,
+              "status": "verified"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "monthly",
+            "monthly_anchor": 31
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": true,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": null,
+            "due_by": 1631828470,
+            "errors": [
+
+            ],
+            "fields_needed": [
+
+            ],
+            "pending_verification": [
+              "legal_entity.personal_id_number"
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:41:11 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/accounts
+    body:
+      encoding: UTF-8
+      string: type=custom&country=US&email=hello%40kittehrock.com&capabilities[card_payments][requested]=true&capabilities[transfers][requested]=true&business_type=individual&business_profile[url]=https%3A%2F%2Fkittehrock.com&business_profile[mcc]=5045&tos_acceptance[date]=1547923073&tos_acceptance[ip]=1.1.1.1&external_account[object]=bank_account&external_account[country]=US&external_account[currency]=usd&external_account[routing_number]=110000000&external_account[account_number]=000123456789&individual[first_name]=Kitteh&individual[last_name]=Rock&individual[gender]=female&individual[email]=Kitteh.Rock%40ampled.com&individual[phone]=0000000000&individual[address][city]=Washington&individual[address][line1]=address_full_match&individual[address][postal_code]=20500&individual[address][state]=DC&individual[dob][year]=1900&individual[dob][month]=01&individual[dob][day]=01&individual[id_number]=000000000&individual[verification][document][front]=file_identity_document_success
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Stripe-Version:
+      - '2020-08-27'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:42:50 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4820'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_avRoryqW7SHms8
+      Stripe-Version:
+      - '2020-08-27'
+      X-Stripe-C-Cost:
+      - '405'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPa3X2HTrsuyGzV",
+          "object": "account",
+          "business_profile": {
+            "mcc": "5045",
+            "name": null,
+            "product_description": null,
+            "support_address": null,
+            "support_email": null,
+            "support_phone": null,
+            "support_url": null,
+            "url": "https://kittehrock.com"
+          },
+          "business_type": "individual",
+          "capabilities": {
+            "card_payments": "pending",
+            "transfers": "pending"
+          },
+          "charges_enabled": false,
+          "company": {
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "directors_provided": true,
+            "executives_provided": true,
+            "name": null,
+            "owners_provided": true,
+            "phone": "+10000000000",
+            "tax_id_provided": false,
+            "verification": {
+              "document": {
+                "back": null,
+                "details": null,
+                "details_code": null,
+                "front": null
+              }
+            }
+          },
+          "country": "US",
+          "created": 1629236568,
+          "default_currency": "usd",
+          "details_submitted": true,
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPa3X2HTrsuyGzVmq4qxDmT",
+                "object": "bank_account",
+                "account": "acct_1JPa3X2HTrsuyGzV",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPa3X2HTrsuyGzV/external_accounts"
+          },
+          "individual": {
+            "id": "person_4JPa3X00vkxC2pB9",
+            "object": "person",
+            "account": "acct_1JPa3X2HTrsuyGzV",
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "created": 1629236568,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "email": "Kitteh.Rock@ampled.com",
+            "first_name": "Kitteh",
+            "gender": "female",
+            "id_number_provided": true,
+            "last_name": "Rock",
+            "metadata": {
+            },
+            "phone": "+10000000000",
+            "relationship": {
+              "director": false,
+              "executive": false,
+              "owner": false,
+              "percent_ownership": null,
+              "representative": true,
+              "title": null
+            },
+            "requirements": {
+              "currently_due": [
+                "id_number"
+              ],
+              "errors": [
+
+              ],
+              "eventually_due": [
+                "id_number"
+              ],
+              "past_due": [
+
+              ],
+              "pending_verification": [
+                "verification.document"
+              ]
+            },
+            "ssn_last_4_provided": true,
+            "verification": {
+              "additional_document": {
+                "back": null,
+                "details": null,
+                "details_code": null,
+                "front": null
+              },
+              "details": null,
+              "details_code": null,
+              "document": {
+                "back": null,
+                "details": null,
+                "details_code": null,
+                "front": "file_1JPa3XCNj1cfz4PUPqVM7NBF"
+              },
+              "status": "pending"
+            }
+          },
+          "metadata": {
+          },
+          "payouts_enabled": false,
+          "requirements": {
+            "current_deadline": null,
+            "currently_due": [
+              "individual.id_number"
+            ],
+            "disabled_reason": "requirements.past_due",
+            "errors": [
+
+            ],
+            "eventually_due": [
+              "individual.id_number"
+            ],
+            "past_due": [
+
+            ],
+            "pending_verification": [
+              "individual.verification.document"
+            ]
+          },
+          "settings": {
+            "bacs_debit_payments": {
+            },
+            "branding": {
+              "icon": null,
+              "logo": null,
+              "primary_color": null,
+              "secondary_color": null
+            },
+            "card_issuing": {
+              "tos_acceptance": {
+                "date": null,
+                "ip": null
+              }
+            },
+            "card_payments": {
+              "decline_on": {
+                "avs_failure": false,
+                "cvc_failure": false
+              },
+              "statement_descriptor_prefix": null
+            },
+            "dashboard": {
+              "display_name": "Kittehrock",
+              "timezone": "Etc/UTC"
+            },
+            "payments": {
+              "statement_descriptor": "KITTEHROCK.COM",
+              "statement_descriptor_kana": null,
+              "statement_descriptor_kanji": null
+            },
+            "payouts": {
+              "debit_negative_balances": false,
+              "schedule": {
+                "delay_days": 2,
+                "interval": "daily"
+              },
+              "statement_descriptor": null
+            },
+            "sepa_debit_payments": {
+            }
+          },
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom"
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:42:50 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/products
+    body:
+      encoding: UTF-8
+      string: name=Ampled+Support&type=service&statement_descriptor=KittehR
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_avRoryqW7SHms8","request_duration_ms":3590}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Stripe-Account:
+      - acct_1JPa3X2HTrsuyGzV
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:42:50 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '428'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_nFNOnoGi481m8F
+      Stripe-Account:
+      - acct_1JPa3X2HTrsuyGzV
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '2'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "prod_K3hSxb3KKJM5lH",
+          "object": "product",
+          "active": true,
+          "attributes": [
+
+          ],
+          "created": 1629236570,
+          "description": null,
+          "images": [
+
+          ],
+          "livemode": false,
+          "metadata": {
+          },
+          "name": "Ampled Support",
+          "package_dimensions": null,
+          "shippable": null,
+          "statement_descriptor": "KittehR",
+          "tax_code": null,
+          "type": "service",
+          "unit_label": null,
+          "updated": 1629236570,
+          "url": null
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:42:50 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/accounts/acct_1JPa3X2HTrsuyGzV
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_nFNOnoGi481m8F","request_duration_ms":536}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:42:51 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3476'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_nZ5wBjNtW10oXW
+      Stripe-Account:
+      - acct_1JPa3X2HTrsuyGzV
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '12'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPa3X2HTrsuyGzV",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "pending",
+            "platform_payments": "pending"
+          },
+          "charges_enabled": false,
+          "country": "US",
+          "created": 1629236568,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPa3X2HTrsuyGzVmq4qxDmT",
+                "object": "bank_account",
+                "account": "acct_1JPa3X2HTrsuyGzV",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPa3X2HTrsuyGzV/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPa3XCNj1cfz4PUPqVM7NBF",
+              "document_back": null,
+              "status": "pending"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "daily"
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": false,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": "fields_needed",
+            "due_by": null,
+            "errors": [
+
+            ],
+            "fields_needed": [
+              "legal_entity.personal_id_number"
+            ],
+            "pending_verification": [
+              "legal_entity.verification.document"
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:42:51 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/accounts/acct_1JPa3X2HTrsuyGzV
+    body:
+      encoding: UTF-8
+      string: settings[payouts][schedule][interval]=monthly&settings[payouts][schedule][monthly_anchor]=31
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_nZ5wBjNtW10oXW","request_duration_ms":691}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:42:55 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3454'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_UFHfCT1wEthxD3
+      Stripe-Account:
+      - acct_1JPa3X2HTrsuyGzV
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '136'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPa3X2HTrsuyGzV",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "active",
+            "platform_payments": "active"
+          },
+          "charges_enabled": true,
+          "country": "US",
+          "created": 1629236568,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPa3X2HTrsuyGzVmq4qxDmT",
+                "object": "bank_account",
+                "account": "acct_1JPa3X2HTrsuyGzV",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPa3X2HTrsuyGzV/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPa3XCNj1cfz4PUPqVM7NBF",
+              "document_back": null,
+              "status": "verified"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "monthly",
+            "monthly_anchor": 31
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": true,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": null,
+            "due_by": 1631828575,
+            "errors": [
+
+            ],
+            "fields_needed": [
+
+            ],
+            "pending_verification": [
+              "legal_entity.personal_id_number"
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:42:55 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/accounts/acct_1JPa3X2HTrsuyGzV
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/5.35.0
+      Authorization:
+      - Bearer sk_test_3RnBGRLSL1zbZa2ryzt82tjI
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_UFHfCT1wEthxD3","request_duration_ms":4286}}'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
+        root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 17 Aug 2021 21:42:56 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3454'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_vNd3A9PGOxInxg
+      Stripe-Account:
+      - acct_1JPa3X2HTrsuyGzV
+      Stripe-Version:
+      - '2019-02-11'
+      X-Stripe-C-Cost:
+      - '13'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_1JPa3X2HTrsuyGzV",
+          "object": "account",
+          "business_logo": null,
+          "business_logo_large": null,
+          "business_name": null,
+          "business_primary_color": null,
+          "business_url": "https://kittehrock.com",
+          "capabilities": {
+            "card_payments": "active",
+            "platform_payments": "active"
+          },
+          "charges_enabled": true,
+          "country": "US",
+          "created": 1629236568,
+          "debit_negative_balances": false,
+          "decline_charge_on": {
+            "avs_failure": false,
+            "cvc_failure": false
+          },
+          "default_currency": "usd",
+          "details_submitted": true,
+          "display_name": "Kittehrock",
+          "email": "hello@kittehrock.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [
+              {
+                "id": "ba_1JPa3X2HTrsuyGzVmq4qxDmT",
+                "object": "bank_account",
+                "account": "acct_1JPa3X2HTrsuyGzV",
+                "account_holder_name": null,
+                "account_holder_type": null,
+                "account_type": null,
+                "available_payout_methods": [
+                  "standard"
+                ],
+                "bank_name": "STRIPE TEST BANK",
+                "country": "US",
+                "currency": "usd",
+                "default_for_currency": true,
+                "fingerprint": "YfeSB0bP0Ixe6zBJ",
+                "last4": "6789",
+                "metadata": {
+                },
+                "routing_number": "110000000",
+                "status": "new"
+              }
+            ],
+            "has_more": false,
+            "total_count": 1,
+            "url": "/v1/accounts/acct_1JPa3X2HTrsuyGzV/external_accounts"
+          },
+          "legal_entity": {
+            "additional_owners": [
+
+            ],
+            "address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "business_name": null,
+            "business_tax_id_provided": false,
+            "directors_provided": true,
+            "dob": {
+              "day": 1,
+              "month": 1,
+              "year": 1900
+            },
+            "executives_provided": true,
+            "first_name": "Kitteh",
+            "gender": "female",
+            "last_name": "Rock",
+            "owners_provided": true,
+            "personal_address": {
+              "city": "Washington",
+              "country": "US",
+              "line1": "address_full_match",
+              "line2": null,
+              "postal_code": "20500",
+              "state": "DC"
+            },
+            "personal_email": "Kitteh.Rock@ampled.com",
+            "personal_id_number_provided": true,
+            "personal_phone_number": "+10000000000",
+            "phone_number": "+10000000000",
+            "ssn_last_4_provided": true,
+            "type": "individual",
+            "verification": {
+              "additional_document": null,
+              "additional_document_back": null,
+              "details": null,
+              "details_code": null,
+              "document": "file_1JPa3XCNj1cfz4PUPqVM7NBF",
+              "document_back": null,
+              "status": "verified"
+            }
+          },
+          "mcc": "5045",
+          "metadata": {
+          },
+          "payout_schedule": {
+            "delay_days": 2,
+            "interval": "monthly",
+            "monthly_anchor": 31
+          },
+          "payout_statement_descriptor": null,
+          "payouts_enabled": true,
+          "product_description": null,
+          "statement_descriptor": "KITTEHROCK.COM",
+          "statement_descriptor_kana": null,
+          "statement_descriptor_kanji": null,
+          "support_address": null,
+          "support_email": null,
+          "support_phone": null,
+          "support_url": null,
+          "timezone": "Etc/UTC",
+          "tos_acceptance": {
+            "date": 1547923073,
+            "ip": "1.1.1.1",
+            "user_agent": null
+          },
+          "type": "custom",
+          "verification": {
+            "disabled_reason": null,
+            "due_by": 1631828575,
+            "errors": [
+
+            ],
+            "fields_needed": [
+
+            ],
+            "pending_verification": [
+              "legal_entity.personal_id_number"
+            ]
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 17 Aug 2021 21:42:56 GMT
+recorded_with: VCR 4.0.0

@@ -106,8 +106,6 @@ class ArtistPagesController < ApplicationController
       ::Mailchimp::MailchimpSubscriber.perform_async(@artist_page.id, current_user.id)
     end
 
-    SetPayoutScheduleToMonthlyJob.perform_async(@artist_page.id)
-
     render json: { status: "ok", message: "Your page has been created!" }
   rescue ActiveRecord::RecordNotUnique
     render json: { status: "error", message: "Someone's already using that custom link." }

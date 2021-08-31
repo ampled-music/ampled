@@ -16,6 +16,9 @@ class StripeController < ApplicationController
     # BA - Delete an artists state token after it's used?
     # SA - done 2020/04/13
     ap.update(stripe_user_id: stripe_account["stripe_user_id"], state_token: nil)
+
+    SetPayoutScheduleToMonthlyJob.perform_async(@artist_page.id)
+
     redirect_to "/settings?stripesuccess=true"
   end
 

@@ -2,9 +2,15 @@ require "rails_helper"
 
 describe SetPayoutScheduleToMonthlyJob, :vcr, type: :job do
   describe "#perform" do
-    let(:artist_page) { StripeIntegrationTestHelper.create_artist_page_with_stripe_account }
+    it "does nothing if the artist page does not have a stripe_user_id" do
+      artist_page = create(:artist_page, stripe_user_id: nil)
 
-    it "calls Stripe to update subscriptions with the correct parameters", focus: true do
+      expect(Stripe::Account).not_to receive(:update)
+      described_class.new.perform(artist_page.id)
+    end
+
+    it "calls Stripe to update subscriptions with the correct parameters" do
+      artist_page = StripeIntegrationTestHelper.create_artist_page_with_stripe_account
       expect {
         described_class.new.perform(artist_page.id)
       }.to change {

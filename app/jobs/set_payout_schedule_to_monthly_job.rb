@@ -6,6 +6,8 @@ class SetPayoutScheduleToMonthlyJob
   def perform(artist_page_id)
     artist_page = ArtistPage.find(artist_page_id)
 
+    return if artist_page.stripe_user_id.nil?
+
     Stripe::Account.update(
       artist_page.stripe_user_id,
       {

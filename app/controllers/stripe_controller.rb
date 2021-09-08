@@ -12,10 +12,10 @@ class StripeController < ApplicationController
 
     # to generate the stubs used in testing
     # File.open('other_stripe_account_stub.json','w'){ |f| f.write(stripe_account.to_json) }
-    ap = ArtistPage.find_by(state_token: params[:state])
+    @artist_page = ArtistPage.find_by(state_token: params[:state])
     # BA - Delete an artists state token after it's used?
     # SA - done 2020/04/13
-    ap.update(stripe_user_id: stripe_account["stripe_user_id"], state_token: nil)
+    @artist_page.update(stripe_user_id: stripe_account["stripe_user_id"], state_token: nil)
 
     SetPayoutScheduleToMonthlyJob.perform_async(@artist_page.id)
 

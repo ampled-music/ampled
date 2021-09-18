@@ -212,12 +212,12 @@ class DashboardComponent extends React.Component<Props, any> {
                 selectedArtist={selectedArtist}
               />
             </TabPanel>
-            <TabPanel tabValue={tabValue} index={2}>
-              {/* <ArtistIncome
+            {/* <TabPanel tabValue={tabValue} index={2}>
+              <ArtistIncome
               userData={userData}
               selectedArtist={selectedArtist}
-            /> */}
-            </TabPanel>
+            />
+            </TabPanel> */}
           </div>
         </div>
 

@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   get "artists/typeahead", to: "artist_pages#typeahead"
   get "artists/all_artists", to: "artist_pages#all_artists"
   get "stats/summary", to: "stats#summary"
+  get "notifications", to: "notifications#index"
   post "notifications/:id/read", to: "notifications#mark_as_read"
   post "notifications/:id/delete", to: "notifications#destroy"
 

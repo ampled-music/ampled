@@ -163,7 +163,7 @@ class NavComponent extends React.Component<Props, any> {
               : 'You are a supporter'}
           </div>
           <div className="loginLink">{this.renderNavLink()}</div>
-          {this.props.userData && <Notifications notifications={this.props.userData.notifications} />}
+          {this.props.userData && <Notifications />}
           <MenuEx renderLoginLink={this.renderLoginLink} />
         </div>
         {this.showSupportButton() && this.props.artist.approved && (

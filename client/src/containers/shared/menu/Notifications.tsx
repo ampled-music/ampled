@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef } from 'react';
+import React, { FC, useState, useRef, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
 import Menu from '@material-ui/core/Menu';
 import MenuList from '@material-ui/core/MenuList';
@@ -11,6 +11,28 @@ import { markNotificationRead } from '../../../api/notifications/mark-notificati
 import { getMeAction } from '../../../redux/me/get-me';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { getNotifications } from '../../../api/notifications/get-notifications';
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef(callback);
+
+  // Remember the latest callback if it changes.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    // Don't schedule if no delay is specified.
+    if (delay === null) {
+      return;
+    }
+
+    const id = setInterval(() => savedCallback.current(), delay);
+
+    return () => clearInterval(id);
+  }, [delay]);
+}
 
 type APINotification = {
   id: number;
@@ -19,12 +41,27 @@ type APINotification = {
   is_unread: boolean;
 };
 
-type Props = {
-  notifications: APINotification[];
-  getMe?: () => void;
-};
+export const Notifications: FC = () => {
+  const [notifications, setNotifications] = useState<APINotification[]>([]);
+  const fetchNotifications = async () => {
+    try {
+      const { data } = await getNotifications();
+      setNotifications(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-export const Notifications: FC<Props> = ({ notifications = [], getMe }) => {
+  // on initial mount
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  // every 15 seconds
+  useInterval(() => {
+    fetchNotifications();
+  }, 15000);
+
   const [isOpen, setIsOpen] = useState(false);
   const anchorEl = useRef(null);
   const hasUnread = notifications.length > 0;
@@ -69,7 +106,7 @@ export const Notifications: FC<Props> = ({ notifications = [], getMe }) => {
                       title="Mark as read"
                       onClick={async () => {
                         await markNotificationRead(id);
-                        getMe();
+                        fetchNotifications();
                       }}
                       style={{ cursor: 'pointer' }}
                     />
@@ -99,15 +136,4 @@ const ItemText = styled.div`
   color: black;
 `;
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getMe: bindActionCreators(getMeAction, dispatch),
-  };
-};
-
-const ConnectedNotifications = connect(
-  () => ({}),
-  mapDispatchToProps,
-)(Notifications);
-
-export default ConnectedNotifications;
+export default Notifications;

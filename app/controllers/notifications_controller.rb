@@ -1,6 +1,10 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: %i[destroy mark_as_read]
 
+  def index
+    @notifications = current_user&.unread_notifications
+  end
+
   def destroy
     if policy.modify? && @notification.destroy
       200

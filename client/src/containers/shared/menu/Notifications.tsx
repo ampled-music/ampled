@@ -8,9 +8,6 @@ import NotificationIcon from '../../../images/icons/Icon_Notification.svg';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import styled from 'styled-components';
 import { markNotificationRead } from '../../../api/notifications/mark-notification-read';
-import { getMeAction } from '../../../redux/me/get-me';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { getNotifications } from '../../../api/notifications/get-notifications';
 
 function useInterval(callback, delay) {

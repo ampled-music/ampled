@@ -55,4 +55,8 @@ class Post < ApplicationRecord
 
     false
   end
+
+  def url
+    "#{artist_page.url}/post/#{id}"
+  end
 end

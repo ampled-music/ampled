@@ -9,11 +9,9 @@ class PostNotificationJob
     @users = post.artist_page.active_subscribers
     @artist = post.artist_page
 
-    post_link = "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
-
     users.map do |user|
       Notification.create!(user: user, text: "#{artist.name} just posted \"#{post.title}\"",
-                           link: post_link)
+                           link: post.url)
     end
 
     SendBatchEmail.call(messages)
@@ -46,7 +44,7 @@ class PostNotificationJob
           post_body: post.body,
           post_btn_copy: btn_copy,
           post_id: post.id,
-          post_url: "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
+          post_url: post.url
         }
       }
     end

@@ -10,12 +10,11 @@ class NewCommentNotificationJob
     @post = comment.post
     @artist = post.artist_page
 
-    post_link = "#{ENV["REACT_APP_API_URL"]}/artist/#{artist.slug}/post/#{post.id}"
     comment_text = comment.text[0...20]
 
-    artist.owners.map do |owner|
+    artist.owners.each do |owner|
       Notification.create!(user: owner, text: "#{commenter.name} commented on \"#{post.title}\": \"#{comment_text}\"",
-                           link: post_link)
+                           link: post.url)
     end
 
     SendBatchEmail.call(messages)

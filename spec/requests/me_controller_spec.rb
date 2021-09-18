@@ -146,8 +146,7 @@ RSpec.describe MeController, :vcr, type: :request do
               "subscriptions" => [{
                 "id" => subscription.id,
                 "status" => "pending_active",
-                "name" => "#{subscription.user.name} #{subscription.user.last_name}",
-                "email" => subscription.user.email,
+                "name" => "#{subscription.user.name} #{subscription.user.last_name.first}.",
                 "city" => nil,
                 "country" => nil,
                 "supporter_since" => "2020-10-29T14:30:23.000Z",

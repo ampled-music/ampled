@@ -7,7 +7,10 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import NotificationIcon from '../../../images/icons/Icon_Notification.svg';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import styled from 'styled-components';
-import { markNotificationRead } from '../../../api/notifications/mark-notification-read';
+import {
+  markNotificationRead,
+  markAllNotificationsRead,
+} from '../../../api/notifications/mark-notification-read';
 import { getNotifications } from '../../../api/notifications/get-notifications';
 
 function useInterval(callback, delay) {
@@ -43,6 +46,9 @@ export const Notifications: FC = () => {
   const fetchNotifications = async () => {
     try {
       const { data } = await getNotifications();
+      if (data.length === 0) {
+        setIsOpen(false);
+      }
       setNotifications(data);
     } catch (e) {
       console.log(e);
@@ -109,6 +115,18 @@ export const Notifications: FC = () => {
                     />
                   </MenuItem>
                 ))}
+                <MenuItem
+                  style={{ margin: '0 auto', textDecoration: 'underline' }}
+                >
+                  <ItemText
+                    onClick={async () => {
+                      await markAllNotificationsRead();
+                      fetchNotifications();
+                    }}
+                  >
+                    Mark all as read
+                  </ItemText>
+                </MenuItem>
               </div>
             </MenuList>
           </ClickAwayListener>

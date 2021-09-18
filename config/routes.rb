@@ -56,6 +56,7 @@ Rails.application.routes.draw do
   get "notifications", to: "notifications#index"
   post "notifications/:id/read", to: "notifications#mark_as_read"
   post "notifications/:id/delete", to: "notifications#destroy"
+  post "notifications/read_all", to: "notifications#mark_all_as_read"
 
   get "uploads/sign", to: "uploads#sign_file"
   get "uploads/playable_url", to: "uploads#playable_url"

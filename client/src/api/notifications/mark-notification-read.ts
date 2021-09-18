@@ -5,3 +5,9 @@ export const markNotificationRead = async (id: string | number) =>
     method: 'post',
     url: `/notifications/${id}/read`,
   });
+
+export const markAllNotificationsRead = async () =>
+  await apiAxios({
+    method: 'post',
+    url: `/notifications/read_all`,
+  });

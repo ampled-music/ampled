@@ -16,6 +16,12 @@ class NotificationsController < ApplicationController
     head(:ok)
   end
 
+  def mark_all_as_read
+    notifications = current_user&.unread_notifications
+    notifications.each(&:read!)
+    head(:ok)
+  end
+
   private
 
   def policy

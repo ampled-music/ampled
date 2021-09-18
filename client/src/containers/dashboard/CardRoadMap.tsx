@@ -14,7 +14,7 @@ export const CardRoadMap = () => {
               <img src={ArtistHandbook} alt="Artist Handbook" />
             </a>
           </div>
-          <div className="col-12 col-sm-6">
+          {/* <div className="col-12 col-sm-6">
             <div className="dashboard__home_card_roadmap_info">
               <h5>Roadmap</h5>
               <p>See what Ampled contributors are working on.</p>
@@ -22,7 +22,7 @@ export const CardRoadMap = () => {
                 Powered by Notion
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </CardContent>
     </Card>

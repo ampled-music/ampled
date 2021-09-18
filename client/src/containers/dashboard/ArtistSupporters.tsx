@@ -98,9 +98,9 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
         columns={columns}
         rowHeight={40}
         rowsPerPageOptions={[25, 50, 100, 500, 1000]}
-        components={{
-          Toolbar: CustomToolbar,
-        }}
+        // components={{
+        //   Toolbar: CustomToolbar,
+        // }}
       />
     )
   );

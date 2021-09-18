@@ -40,6 +40,5 @@ export const getMeData = async () => {
     artistPages: data.artistPages,
     ownedPages: data.ownedPages,
     subscriptions: data.subscriptions,
-    notifications: data.notifications || []
   };
 };

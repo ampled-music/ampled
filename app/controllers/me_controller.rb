@@ -13,7 +13,6 @@ class MeController < ApplicationController
     @supported = current_user&.supported_artists&.map { |page| OpenStruct.new(id: page.id, role: "supporter") }
     @subscriptions = current_user&.subscriptions&.active
     @stripe_info = serialize_current_user_card
-    @notifications = current_user&.unread_notifications
   end
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity

@@ -154,10 +154,15 @@
         }
       }
       &_stripe {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
         &_message {
           display: flex;
           align-items: center;
-          margin-bottom: 1rem;
+          justify-content: center;
+          text-align: center;
           font-family: $font-family-monospace;
           &.warning {
             color: $brand-warning;

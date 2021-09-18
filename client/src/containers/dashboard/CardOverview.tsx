@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Card, CardActions, CardContent } from '@material-ui/core';
+import CardStripe from './CardStripe';
 import { faStripe } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -39,7 +40,7 @@ export const CardOverview = ({ selectedArtist }: CardOverviewProps) => {
           </div>
         </div>
         <div className="dashboard__home_card_flex-col">
-          {stripeDashboard && (
+          {stripeDashboard ? (
             <a
               href={stripeDashboard}
               className="dashboard__home_link"
@@ -48,7 +49,9 @@ export const CardOverview = ({ selectedArtist }: CardOverviewProps) => {
             >
               Edit Payout Details
             </a>
-          )}
+          ) : 
+          <CardStripe selectedArtist={selectedArtist} />
+          }
           <div
             className="dashboard__home_card_by"
           >

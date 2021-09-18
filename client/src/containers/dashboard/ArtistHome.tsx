@@ -41,7 +41,6 @@ export const ArtistHome = ({ userData, selectedArtist }: ArtistHomeProps) => {
   return (
     <ThemeProvider theme={theme}>
       <div className="dashboard__home">
-        <CardStripe selectedArtist={selectedArtist} />
         <span className="dashboard__home_title blue">My Account</span>
         <CardOverview selectedArtist={selectedArtist} />
         <span className="dashboard__home_title green">Resources</span>

@@ -14,8 +14,9 @@ module StripeReconciliation
 
       it "logs anomaly and Stripe details" do
         expected_log_message = "[StripeReconciliation::AnomalyNotifier] Anomaly detected " \
-          "{:stripe_object_type=>\"invoice\", :stripe_object_id=>\"in_1036Vr2eZvKYlo2CfjuUHA94\", " \
-          ":anomaly=>:unexpected_currency}"
+                               "{:stripe_object_type=>\"invoice\", " \
+                               ":stripe_object_id=>\"in_1036Vr2eZvKYlo2CfjuUHA94\", " \
+                               ":anomaly=>:unexpected_currency}"
 
         expect(Rails.logger).to receive(:info).with(expected_log_message)
 

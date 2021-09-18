@@ -1,8 +1,10 @@
 import React, { FC, useState, useRef } from 'react';
+import { ReactSVG } from 'react-svg';
 import Menu from '@material-ui/core/Menu';
 import MenuList from '@material-ui/core/MenuList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import NotificationIcon from '../../../images/icons/Icon_Notification.svg';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import styled from 'styled-components';
 import { markNotificationRead } from '../../../api/notifications/mark-notification-read';
@@ -35,11 +37,11 @@ export const Notifications: FC<Props> = ({ notifications = [], getMe }) => {
       }}
     >
       <div ref={anchorEl}>
-        <FontAwesomeIcon
-          icon={faBell}
+        <ReactSVG
+          src={NotificationIcon}
           title="Notifications"
+          style={{ cursor: 'pointer', width: '24px' }}
           onClick={() => setIsOpen(!isOpen)}
-          style={{ cursor: 'pointer' }}
         />
       </div>
       <Menu

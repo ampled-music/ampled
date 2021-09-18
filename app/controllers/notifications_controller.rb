@@ -32,6 +32,7 @@ class NotificationsController < ApplicationController
 
   def check_ownership
     return if can_modify_notification?
+
     render_not_allowed
   end
 

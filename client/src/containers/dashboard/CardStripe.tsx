@@ -11,8 +11,6 @@ export const CardStripe = ({ selectedArtist }: CardStripeProps) => {
   const { isStripeSetup, stripeSignup } = selectedArtist;
 
   return (
-    <Card>
-      <CardContent>
         <div className="dashboard__home_card_stripe">
           {isStripeSetup ? (
             <div className="dashboard__home_card_stripe">
@@ -41,8 +39,6 @@ export const CardStripe = ({ selectedArtist }: CardStripeProps) => {
             </div>
           )}
         </div>
-      </CardContent>
-    </Card>
   );
 };
 

@@ -173,6 +173,7 @@ class DashboardComponent extends React.Component<Props, any> {
                 ownedPages={userData?.ownedPages}
                 selectedArtist={selectedArtist}
                 openPostModal={this.openPostModal}
+                handleChange={this.handleChange}
               />
               <div className="dashboard__panel_links">
                 <Tabs

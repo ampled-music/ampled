@@ -17,13 +17,14 @@ interface ArtistPanelProps {
   ownedPages: any;
   selectedArtist: any;
   openPostModal: () => void;
-  // handleChange: any;
+  handleChange: any;
 }
 
 export const ArtistPanel = ({
   ownedPages,
   selectedArtist,
   openPostModal = () => null,
+  handleChange,
 }: ArtistPanelProps) => {
   const { name, image, artistColor, artistSlug } = selectedArtist;
 
@@ -52,7 +53,7 @@ export const ArtistPanel = ({
             id="artist-page-select"
             name="selectedArtist"
             value={selectedArtist}
-            // onChange={this.props.handleChange}
+            onChange={handleChange}
           >
             {ownedPages.map((page, index) => (
               <MenuItem value={page} key={`menu-key${index}`}>

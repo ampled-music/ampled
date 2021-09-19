@@ -24,10 +24,6 @@ class NotificationsController < ApplicationController
 
   private
 
-  def policy
-    NotificationPolicy.new(user: current_user, notification: @notification)
-  end
-
   def render_not_allowed
     render json: { status: "error", message: "Not allowed." }
   end

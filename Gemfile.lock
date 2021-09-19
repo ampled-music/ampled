@@ -1170,7 +1170,7 @@ GEM
     bootsnap (1.8.1)
       msgpack (~> 1.0)
     builder (3.2.4)
-    bullet (6.1.0)
+    bullet (6.1.5)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     capybara (3.35.3)
@@ -1465,7 +1465,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.7)
     unicode-display_width (2.1.0)
-    uniform_notifier (1.13.0)
+    uniform_notifier (1.14.2)
     vcr (4.0.0)
     warden (1.2.9)
       rack (>= 2.0.9)

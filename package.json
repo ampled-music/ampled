@@ -28,7 +28,7 @@
     "integration-tests-interactive": "start-server-and-test start 5000 cypress:open"
   },
   "devDependencies": {
-    "concurrently": "^6.2.0",
+    "concurrently": "^6.2.1",
     "cypress": "^7.7.0",
     "heroku": "^7.59.0",
     "husky": "6.0.0",

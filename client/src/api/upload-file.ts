@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 export const uploadFile = async (signinUrl, file, key) => {
-  const options = {
+  const options: AxiosRequestConfig = {
     url: signinUrl,
     headers: {
       'Content-Type': file.type,

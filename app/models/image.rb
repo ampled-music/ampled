@@ -25,7 +25,7 @@ class Image < ApplicationRecord
   # Image params that are allowed by default.
   # For use by imageables that set Images via nested attributes.
   # 'id' and '_destroy' are needed to support deletion via nested attributes.
-  PERMITTED_PARAMS = %i[id url public_id coordinates _destroy].freeze
+  PERMITTED_PARAMS = %i[id url public_id order coordinates _destroy].freeze
 
   #
   # After deleting record from DB, remove object from Cloudinary

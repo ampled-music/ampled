@@ -1,4 +1,4 @@
-class NewCommentEmailJob
+class NewCommentNotificationJob
   include Sidekiq::Worker
   attr_accessor :comment, :commenter, :post, :artist
 
@@ -9,6 +9,13 @@ class NewCommentEmailJob
     @commenter = comment.user
     @post = comment.post
     @artist = post.artist_page
+
+    comment_text = comment.text[0...20]
+
+    artist.owners.each do |owner|
+      Notification.create!(user: owner, text: "#{commenter.name} commented on \"#{post.title}\": \"#{comment_text}\"",
+                           link: post.url)
+    end
 
     SendBatchEmail.call(messages)
   end

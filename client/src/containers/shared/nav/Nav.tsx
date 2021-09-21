@@ -15,6 +15,7 @@ import { MenuEx } from '../menu/Menu';
 import { UserRoles } from '../user-roles';
 import { UserImage } from '../../user-details/UserImage';
 import { isAmpled } from '../../shared/utils';
+import Notifications from '../menu/Notifications';
 
 interface NavComponentProps {
   match: {
@@ -161,6 +162,7 @@ class NavComponent extends React.Component<Props, any> {
               ? 'You are a member'
               : 'You are a supporter'}
           </div>
+          {this.props.userData && <Notifications />}
           <div className="loginLink">{this.renderNavLink()}</div>
           <MenuEx renderLoginLink={this.renderLoginLink} />
         </div>

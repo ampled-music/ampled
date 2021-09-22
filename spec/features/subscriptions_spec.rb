@@ -109,12 +109,12 @@ RSpec.describe SubscriptionsController, :vcr, type: :request do
 
     it "calls email job for new supporter" do
       allow(UserSupportedArtistEmailJob).to receive(:perform_async)
-      allow(NewSupporterEmailJob).to receive(:perform_async)
+      allow(NewSupporterNotificationJob).to receive(:perform_async)
 
       post url, params: create_params
 
       subscription = user.subscriptions.active.first
-      expect(NewSupporterEmailJob).to have_received(:perform_async).with(subscription.id)
+      expect(NewSupporterNotificationJob).to have_received(:perform_async).with(subscription.id)
     end
 
     it "queues the UpdateArtistOwnerStatusJob" do

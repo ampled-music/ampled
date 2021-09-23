@@ -148,6 +148,7 @@ class DashboardComponent extends React.Component<Props, any> {
           root: {
             textTransform: 'capitalize',
             fontSize: '1rem',
+            fontFamily: 'LL Replica Light Web, sans-serif',
           },
         },
         MuiInput: {
@@ -177,26 +178,27 @@ class DashboardComponent extends React.Component<Props, any> {
               />
               <div className="dashboard__panel_links">
                 <Tabs
-                  orientation="vertical"
+                  orientation={window.screen.width <= 768 ? "horizontal" : "vertical"}
                   variant="scrollable"
                   name="tabValue"
                   value={tabValue}
                   onChange={this.handleChangeTab}
+                  aria-label="scrollable prevent tabs"
                 >
                   <Tab
                     label="Home"
-                    id="vertical-tab-0"
-                    aria-controls="vertical-tabpanel-0"
+                    id="tab-0"
+                    aria-controls="tabpanel-0"
                   />
                   <Tab
                     label="Supporters"
-                    id="vertical-tab-1"
-                    aria-controls="vertical-tabpanel-1"
+                    id="tab-1"
+                    aria-controls="tabpanel-1"
                   />
                   {/* <Tab
                     label="Income"
-                    id="vertical-tab-2"
-                    aria-controls="vertical-tabpanel-2"
+                    id="tab-2"
+                    aria-controls="tabpanel-2"
                   /> */}
                 </Tabs>
               </div>

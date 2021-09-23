@@ -23,7 +23,7 @@ export const CardPromote = ({ selectedArtist }: CardPromoteProps) => {
           </div>
           <div className="row">
             <div className="col-12">
-              <h5>Instagram Post </h5>
+              <h5>Instagram post</h5>
             </div>
           </div>
           <div className="row dashboard__home_card_promote">
@@ -42,7 +42,7 @@ export const CardPromote = ({ selectedArtist }: CardPromoteProps) => {
           </div>
           <div className="row">
             <div className="col-12">
-              <h5>Instagram Story </h5>
+              <h5>Instagram story</h5>
             </div>
           </div>
           <div className="row dashboard__home_card_promote">

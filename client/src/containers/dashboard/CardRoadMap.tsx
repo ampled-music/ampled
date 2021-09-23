@@ -14,15 +14,21 @@ export const CardRoadMap = () => {
               <img src={ArtistHandbook} alt="Artist Handbook" />
             </a>
           </div>
-          {/* <div className="col-12 col-sm-6">
-            <div className="dashboard__home_card_roadmap_info">
-              <h5>Roadmap</h5>
-              <p>See what Ampled contributors are working on.</p>
-              <div className="dashboard__home_card_by">
-                Powered by Notion
+          <div className="col-12 col-sm-6">
+              <div className="dashboard__home_card_roadmap_info">
+                <h5>
+                  <a 
+                    href="https://ampled.notion.site/424ae126d5ec40fb8f9beb3c65c52f34" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >Roadmap</a>
+                </h5>
+                <p>See what Ampled contributors are working on.</p>
+                <div className="dashboard__home_card_by">
+                  Powered by Notion
+                </div>
               </div>
-            </div>
-          </div> */}
+          </div>
         </div>
       </CardContent>
     </Card>

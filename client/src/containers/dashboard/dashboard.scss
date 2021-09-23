@@ -92,9 +92,12 @@
     &_title {
       text-align: left;
       font-family: $font-family-sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       align-self: flex-start;
       position: relative;
+      @include mq($layout-m) {
+        font-size: 1.5rem;
+      }  
       &:after {
         content: '';
         display: block;
@@ -144,7 +147,10 @@
       }
       &_flex-row {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        @include mq($layout-s) {
+          flex-direction: row;
+        }  
         justify-content: center;
       }
       &_flex-col {
@@ -154,7 +160,12 @@
         align-items: center;
       }
       &_numbers {
-        width: 33%;
+        width: 100%;
+        margin-bottom: .5rem;
+        @include mq($layout-s) {
+          width: 33%;
+          margin-bottom: 0;
+        }  
       }
       &_promote {
         img {

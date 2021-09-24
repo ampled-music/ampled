@@ -18,6 +18,7 @@ import { Tab, Tabs } from '@material-ui/core';
 
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
 import { Modal } from '../shared/modal/Modal';
+import { Loading } from '../shared/loading/Loading';
 import { PostForm } from '../artist/posts/post-form/PostForm';
 import StyleOverride from '../artist/StyleOverride';
 
@@ -167,6 +168,7 @@ class DashboardComponent extends React.Component<Props, any> {
     return (
       <ThemeProvider theme={theme}>
         <StyleOverride accentColor={artistColor} />
+        <Loading isLoading={this.props.loadingMe && !this.props.userData} />
         <div className="dashboard">
           {userData && (
             <div className="dashboard__panel">

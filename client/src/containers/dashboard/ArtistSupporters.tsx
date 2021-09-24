@@ -72,7 +72,7 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
     {
       field: 'supporting_since',
       headerName: 'Supporting Since',
-      width: 200,
+      width: 250,
       flex: 1,
       type: 'date',
       renderCell: (params: any) => (

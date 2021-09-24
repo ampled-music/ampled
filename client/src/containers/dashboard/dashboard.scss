@@ -16,7 +16,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 1rem 0rem;
+    padding: .5rem 0rem 0;
     position: relative;
     z-index: 1;
     @include mq($layout-m) {
@@ -40,6 +40,7 @@
     &_links {
       width: 100%;
       text-align: center;
+      margin-top: .5rem;
       @include mq($layout-m) {
         margin: 2rem auto;
         border-top: 1px solid $black;
@@ -277,7 +278,9 @@
         font-size: 0.8rem;
         text-transform: uppercase;
         color: $gray-light;
-        padding-left: 2rem;
+        @include mq($layout-m) {
+          padding-left: 2rem;
+        }
       }
       &-footer {
         background-color: $white;
@@ -294,15 +297,20 @@
       }
       &-renderingZone {
         max-height: 100% !important;
-        margin-top: 1rem;
-        margin-left: 2rem;
+        @include mq($layout-m) {
+          margin-top: 1rem;
+          margin-left: 2rem;
+        }
       }
       &-row {
-        border: 1px solid $gray-light;
-        border-radius: 2px;
         background-color: $white;
-        width: calc(100% - 2rem);
-        margin-bottom: 0.5rem;
+        border-bottom: 1px solid $gray-light;
+        @include mq($layout-m) {
+          width: calc(100% - 2rem);
+          margin-bottom: 0.5rem;
+          border: 1px solid $gray-light;
+          border-radius: 2px;
+        }
         &.Mui-selected,
         &.Mui-selected:hover {
           background-color: $gray-lighter;

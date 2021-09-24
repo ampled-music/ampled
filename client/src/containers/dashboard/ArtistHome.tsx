@@ -2,7 +2,6 @@ import * as React from 'react';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import CardOverview from './CardOverview';
-import CardStripe from './CardStripe';
 import CardPromote from './CardPromote';
 import CardRoadMap from './CardRoadMap';
 import CardWhatTo from './CardWhatTo';

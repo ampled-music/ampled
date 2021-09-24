@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, CardActions, CardContent } from '@material-ui/core';
+import { Card, CardContent } from '@material-ui/core';
 import CardStripe from './CardStripe';
 import { faStripe } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

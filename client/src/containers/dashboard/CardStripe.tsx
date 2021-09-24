@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { Card, CardContent } from '@material-ui/core';
-
-import { CheckCircleOutline, ErrorOutline } from '@material-ui/icons';
+import { ErrorOutline } from '@material-ui/icons';
 
 interface CardStripeProps {
   selectedArtist: any;

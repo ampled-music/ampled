@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Chip, Toolbar } from '@material-ui/core';
+import { Chip } from '@material-ui/core';
 import { Check, Block } from '@material-ui/icons';
 import Moment from 'react-moment';
 import { 
@@ -7,8 +7,6 @@ import {
   GridRowsProp,
   GridColDef,
   GridValueFormatterParams,
-  GridToolbarContainer,
-  GridToolbarExport
 } from '@material-ui/x-grid';
 
 interface ArtistSupportersProps {
@@ -16,16 +14,8 @@ interface ArtistSupportersProps {
   selectedArtist: any;
 }
 
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarExport />
-    </GridToolbarContainer>
-  );
-}
-
 export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersProps) => {
-  const { subscriptions: supporters, artistSlug } = selectedArtist;
+  const { subscriptions: supporters } = selectedArtist;
 
   const rows: GridRowsProp = supporters?.map((supporter) => ({
     id: supporter.id,
@@ -39,11 +29,11 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
   }));
 
   const columns: GridColDef[] = [
-    { field: 'name', headerName: 'Name', flex: 1, },
+    { field: 'name', headerName: 'Name', width: 170 },
     {
       field: 'monthly',
       headerName: 'Monthly',
-      width: 150,
+      width: 100,
       valueFormatter: (params: GridValueFormatterParams) =>
         params.value.toLocaleString('en-US', {
           style: 'currency',
@@ -53,7 +43,7 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
     {
       field: 'status',
       headerName: 'Status',
-      width: 150,
+      width: 120,
       renderCell: (params: GridValueFormatterParams) => (
         <Chip
           size="small"
@@ -77,11 +67,12 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
     //       currency: 'USD',
     //     }),
     // },
-    { field: 'city', headerName: 'City', flex: 0.5 },
-    { field: 'country', headerName: 'Country', flex: 0.5 },
+    { field: 'city', headerName: 'City', width: 140 },
+    { field: 'country', headerName: 'Country', width: 140},
     {
       field: 'supporting_since',
       headerName: 'Supporting Since',
+      width: 200,
       flex: 1,
       type: 'date',
       renderCell: (params: any) => (
@@ -93,15 +84,17 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
   return (
     userData &&
     rows && (
-      <XGrid
-        rows={rows}
-        columns={columns}
-        rowHeight={40}
-        rowsPerPageOptions={[25, 50, 100, 500, 1000]}
-        // components={{
-        //   Toolbar: CustomToolbar,
-        // }}
-      />
+      <div style={{ height: '100vh', width: '100%' }}>
+        <XGrid
+          rows={rows}
+          columns={columns}
+          rowHeight={40}
+          rowsPerPageOptions={[25, 50, 100, 500, 1000]}
+          // components={{
+          //   Toolbar: CustomToolbar,
+          // }}
+        />
+      </div>
     )
   );
 };

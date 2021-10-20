@@ -84,6 +84,8 @@ class UserImage extends React.Component<Props, any> {
               height={coordinates ? coordinates[3] : width}
               responsive_placeholder="blank"
             />
+            <Transformation width={width} crop="scale" />
+            <Transformation dpr="2.0" />
           </Image>
         ) : (
           <img

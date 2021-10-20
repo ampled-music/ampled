@@ -81,6 +81,11 @@
       .MuiInput-underline::before {
         border-bottom: 0;
       }
+      .MuiInput-root {
+        @include mq(0,$layout-m) {
+          margin-bottom: .5rem;
+        }  
+      }
     }
   }
 

@@ -33,7 +33,7 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
     {
       field: 'monthly',
       headerName: 'Monthly',
-      width: 100,
+      width: 140,
       valueFormatter: (params: GridValueFormatterParams) =>
         params.value.toLocaleString('en-US', {
           style: 'currency',
@@ -43,7 +43,7 @@ export const ArtistSupporters = ({ userData, selectedArtist }: ArtistSupportersP
     {
       field: 'status',
       headerName: 'Status',
-      width: 120,
+      width: 140,
       renderCell: (params: GridValueFormatterParams) => (
         <Chip
           size="small"

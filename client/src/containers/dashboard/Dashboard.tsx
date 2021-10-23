@@ -121,9 +121,17 @@ class DashboardComponent extends React.Component<Props, any> {
 
   setInitArtist = () => {
     if (this.props.userData?.ownedPages) {
-      this.setState({
-        selectedArtist: this.props.userData.ownedPages[0],
-      });
+      const hashArtistSlug = window.location.hash.substr(1);
+      if ( hashArtistSlug ) {
+        const hashArtist = this.props.userData.ownedPages.filter((artist) => artist.artistSlug === hashArtistSlug);
+        this.setState({
+          selectedArtist: hashArtist[0],
+        });
+      } else {
+        this.setState({
+          selectedArtist: this.props.userData.ownedPages[0],
+        });
+      }
     }
   };
 

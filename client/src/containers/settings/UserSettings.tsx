@@ -235,6 +235,17 @@ class UserSettingsComponent extends React.Component<Props, any> {
     <div className="artistAlertHeader active">{message}</div>
   );
 
+  renderDashboardLink = (artist) => {
+    return (
+      <Link 
+        to={`/dashboard#${artist.artistSlug}`} 
+        className="details__edit_link"
+      >
+        Artist Dashboard
+      </Link>
+    );
+  }
+
   renderSocialImages = (artist) => {
     if (!artist.image) {
       return;
@@ -509,7 +520,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
                   <div className="details__promote">
                     <div className="row no-gutters">
                       <div className="col-12">
-                        {this.renderSocialImages(ownedPage)}
+                        {this.renderDashboardLink(ownedPage)}
+                        {/* {this.renderSocialImages(ownedPage)} */}
                       </div>
                     </div>
                   </div>

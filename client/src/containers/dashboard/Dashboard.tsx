@@ -155,7 +155,7 @@ class DashboardComponent extends React.Component<Props, any> {
           scroller: {
             display: 'flex',
             justifyContent: 'center',
-          }
+          },
         },
         MuiTab: {
           root: {

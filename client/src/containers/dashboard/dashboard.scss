@@ -1,0 +1,356 @@
+@import '../../theme/vars.scss';
+@import '../../theme/mixins.scss';
+
+.dashboard {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+
+  @include mq($layout-m) {
+    flex-direction: row;
+    min-height: 95vh;
+  }
+
+  &__panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: .5rem 0rem 0;
+    position: relative;
+    z-index: 1;
+    @include mq($layout-m) {
+      width: 300px;
+      padding: 2rem 0rem;
+      box-shadow: 3px 0 5px -3px $black;
+    }
+    &_image {
+      border: 3px solid $black;
+      border-radius: 100%;
+      margin-bottom: 1rem;
+    }
+    &_buttons {
+      @include mq($layout-m) {
+        margin-top: 2rem;
+      }  
+      button {
+        margin: 0 0.5rem;
+      }
+    }
+    &_links {
+      width: 100%;
+      text-align: center;
+      margin-top: .5rem;
+      @include mq($layout-m) {
+        margin: 2rem auto;
+        border-top: 1px solid $black;
+        padding-top: 2rem;
+      }  
+      a {
+        font-family: $font-family-sans-serif-light;
+        font-size: $font-size-h4;
+        text-decoration: none;
+        &.active {
+          font-family: $font-family-sans-serif;
+          .flair {
+            display: block;
+            position: relative;
+            width: 100px;
+            background-color: $gray-light;
+            height: 1rem;
+            left: calc(50% - 50px);
+            top: -0.75rem;
+            z-index: -1;
+          }
+        }
+      }
+      .Mui-selected {
+        font-family: $font-family-sans-serif;
+      }
+    }
+    #artist-page-select {
+      font-family: $font-family-sans-serif;
+      font-size: 1.2rem;
+    }
+    .MuiFormControl-root {
+      width: 100%;
+      text-align: center;
+      .MuiSelect-select {
+        padding-left: 24px;
+      }
+      .MuiInput-underline::before {
+        border-bottom: 0;
+      }
+      .MuiInput-root {
+        @include mq(0,$layout-m) {
+          margin-bottom: .5rem;
+        }  
+      }
+    }
+    .MuiTabs-flexContainerVertical {
+      width: 100%;
+    }
+  }
+
+  &__home {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    position: relative;
+
+    &_title {
+      text-align: left;
+      font-family: $font-family-sans-serif;
+      font-size: 1.2rem;
+      align-self: flex-start;
+      position: relative;
+      @include mq($layout-m) {
+        font-size: 1.5rem;
+      }  
+      &:after {
+        content: '';
+        display: block;
+        width: 90%;
+        height: 1rem;
+        position: absolute;
+        z-index: -1;
+        bottom: 0px;
+        left: 5%;
+        background-color: $gray-light;
+      }
+      &.red:after {
+        background-color: $brand-red;
+      }
+      &.orange:after {
+        background-color: $brand-orange;
+      }
+      &.blue:after {
+        background-color: $brand-blue;
+      }
+      &.green:after {
+        background-color: $brand-green;
+      }
+    }
+    
+    &_card {
+      align-items: flex-start;
+      width: 100%;
+      max-width: 700px;
+      &_title {
+        font-family: $font-family-sans-serif;
+        color: $gray-light;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      &_total {
+        font-family: $font-family-sans-serif;
+        text-align: center;
+        font-size: 2rem;
+      }
+      &_description {
+        font-family: $font-family-monospace;
+        font-size: 0.8rem;
+        line-height: 0.8rem;
+        text-align: center;
+        text-transform: uppercase;
+      }
+      &_flex-row {
+        display: flex;
+        flex-direction: column;
+        @include mq($layout-s) {
+          flex-direction: row;
+        }  
+        justify-content: center;
+      }
+      &_flex-col {
+        display: flex;
+        flex-direction: column;
+        margin: 2rem 0 0;
+        align-items: center;
+      }
+      &_numbers {
+        width: 100%;
+        margin-bottom: .5rem;
+        @include mq($layout-s) {
+          width: 33%;
+          margin-bottom: 0;
+        }  
+      }
+      &_promote {
+        img {
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+      }
+      &_stripe {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        &_message {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-family: $font-family-monospace;
+          &.warning {
+            color: $brand-warning;
+          }
+          &.success {
+            color: $brand-success;
+          }
+          svg {
+            margin-right: 0.5rem;
+          }
+        }
+      }
+      &_by {
+        font-family: $font-family-sans-serif;
+        font-size: 0.8rem;
+        color: $gray-light;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        &_icon {
+          margin-left: 0.5rem;
+        }
+      }
+      &_roadmap {
+        &_content {
+          max-width: 700px;
+          margin: auto;
+        }
+        p {
+          font-family: $font-family-monospace;
+        }
+        img {
+          width: 100%;
+          max-width: 300px;
+          margin: auto;
+        }
+        a {
+          width: 100%;
+        }
+        &_info {
+          display: flex;
+          padding: 1rem;
+          justify-content: center;
+          flex-direction: column;
+          border: 1px solid;
+          height: calc(100% - 1rem);
+          margin-top: .5rem;
+        }
+      }
+      &_whatto {
+        &_content {
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          margin-bottom: 1rem;
+          ul {
+            margin: 0;
+            padding: 0;
+            li {
+              display: block;
+            }
+          }
+          @include mq($layout-m) {
+            width: 40%;
+            margin-bottom: 2rem;
+          }   
+        }
+        &_icon {
+          width: 30px;
+          margin-right: 1rem;
+        }
+      }
+    }
+    &_link {
+      font-family: $font-family-monospace;
+      text-decoration: underline;
+      text-transform: lowercase;
+    }
+    
+  }
+
+  &__data {
+    width: 100%;
+
+    // DataGrid styles
+    .MuiDataGrid {
+      &-columnsContainer {
+        background-color: $white;
+        border-top: 1px solid $black;
+        border-bottom: 1px solid $black;
+        font-family: $font-family-sans-serif;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: $gray-light;
+        @include mq($layout-m) {
+          padding-left: 2rem;
+        }
+      }
+      &-footer {
+        background-color: $white;
+        border-top: 1px solid $black;
+        font-family: $font-family-sans-serif;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: $gray-light;
+        padding-left: 2rem;
+      }
+      &-window {
+        background-color: $gray-lightest;
+        padding-bottom: 2rem;
+      }
+      &-renderingZone {
+        max-height: 100% !important;
+        @include mq($layout-m) {
+          margin-top: 1rem;
+          margin-left: 2rem;
+        }
+      }
+      &-row {
+        background-color: $white;
+        border-bottom: 1px solid $gray-light;
+        @include mq($layout-m) {
+          width: calc(100% - 2rem);
+          margin-bottom: 0.5rem;
+          border: 1px solid $gray-light;
+          border-radius: 2px;
+        }
+        &.Mui-selected,
+        &.Mui-selected:hover {
+          background-color: $gray-lighter;
+        }
+      }
+      &-cell {
+        border: 0;
+        font-family: $font-family-monospace;
+        &[data-field='name'] {
+          font-family: $font-family-sans-serif;
+        }
+        &[data-field='email'] {
+          font-size: 0.8rem;
+        }
+
+        &[data-field='monthly'],
+        &[data-field='all_time'] {
+          font-weight: bold;
+        }
+      }
+    }
+    .MuiToolbar-root,
+    .MuiTablePagination-caption,
+    .MuiTablePagination-input {
+      font-family: $font-family-sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: $gray-light;
+    }
+
+    div[role='tabpanel'] {
+      height: 100%;
+    }
+  }
+}

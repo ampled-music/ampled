@@ -62,6 +62,11 @@ const LazyCreateArtist = React.lazy(() =>
     default: module.CreateArtist,
   })),
 );
+const LazyDashboard = React.lazy(() =>
+  import('./dashboard/Dashboard').then((module) => ({
+    default: module.Dashboard,
+  })),
+);
 const LazyBrowse = React.lazy(() =>
   import('./home/HomeBrowse').then((module) => ({
     default: module.HomeBrowse,
@@ -170,6 +175,11 @@ const Routes = () => {
         exact
         path={routePaths.userDetails}
         component={LazyUserDetails}
+      />
+      <ProtectedRoute
+        exact
+        path={routePaths.dashboard}
+        component={LazyDashboard}
       />
       <PublicRoute exact path={routePaths.metrics} component={LazyMetrics} />
       <ProtectedRoute exact path={routePaths.feed} component={LazyFeed} />

@@ -15,14 +15,14 @@ updates:
         update-types: ["version-update:semver-major"]
 
   # Yarn dependencies in /client
-  - package-ecosystem: npm
-    directory: "/client"
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
+  # - package-ecosystem: npm
+  #   directory: "/client"
+  #   schedule:
+  #     interval: weekly
+  #   open-pull-requests-limit: 10
+  #   ignore:
+  #     - dependency-name: "*"
+  #       update-types: ["version-update:semver-major"]
 
   # Yarn dependencies in / (used for build, scripts, etc)
   - package-ecosystem: npm

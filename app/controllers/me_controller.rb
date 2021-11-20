@@ -1,4 +1,6 @@
 class MeController < ApplicationController
+  before_action :authenticate_user!
+
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def index

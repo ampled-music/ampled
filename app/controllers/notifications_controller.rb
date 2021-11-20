@@ -1,4 +1,5 @@
 class NotificationsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_notification, only: %i[destroy mark_as_read]
   before_action :check_ownership, only: %i[destroy mark_as_read]
 

@@ -91,11 +91,18 @@ class MenuListComposition extends React.Component<Props, State> {
   };
 
   renderUserMenu = () => {
+    const { userData } = this.props;
+    const showDashboard = !!userData?.ownedPages?.length;
     return (
       <div className="menu-items">
         <Link to={routePaths.settings}>
           <b>My Profile</b>
         </Link>
+        {showDashboard && (
+          <Link to={routePaths.dashboard}>
+            <b>My Dashboard</b>
+          </Link>
+        )}
         <button className="link" onClick={this.logout}>
           Logout
         </button>

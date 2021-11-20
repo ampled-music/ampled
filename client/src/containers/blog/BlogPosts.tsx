@@ -5,7 +5,7 @@ import * as React from 'react';
 import { apiAxios } from '../../api/setup-axios';
 import { Loading } from '../shared/loading/Loading';
 import { Link } from 'react-router-dom';
-import Moment from 'moment';
+import Moment from 'react-moment';
 import tear_1 from '../../images/home/home_tear_1.png';
 
 interface PostsProps {
@@ -109,7 +109,7 @@ class BlogPosts extends React.Component<PostsProps, any> {
                             </div>
                           )}
                           <div className="blog-posts__info_date">
-                            {Moment(post.date).format('MMMM Do, YYYY')}
+                            <Moment format="MMMM Do, YYYY">{post.date}</Moment>
                           </div>
                         </div>
                       </div>
@@ -161,7 +161,7 @@ class BlogPosts extends React.Component<PostsProps, any> {
                           </div>
                         )}
                         <div className="blog-posts__info_date">
-                          {Moment(post.date).format('MMMM Do, YYYY')}
+                          <Moment format="MMMM Do, YYYY">{post.date}</Moment>
                         </div>
                       </div>
                     </div>

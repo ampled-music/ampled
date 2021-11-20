@@ -231,19 +231,20 @@ class UserSettingsComponent extends React.Component<Props, any> {
     }
   };
 
-  handlePublicID = (image: string) => {
-    if (!image) {
-      return '';
-    }
-    const url = image.split('/');
-    const part_1 = url[url.length - 2];
-    const part_2 = url[url.length - 1];
-    return part_1 + '/' + part_2;
-  };
-
   renderSticky = (message: any) => (
     <div className="artistAlertHeader active">{message}</div>
   );
+
+  renderDashboardLink = (artist) => {
+    return (
+      <Link 
+        to={`/dashboard#${artist.artistSlug}`} 
+        className="details__edit_link"
+      >
+        Artist Dashboard
+      </Link>
+    );
+  }
 
   renderSocialImages = (artist) => {
     if (!artist.image) {
@@ -519,7 +520,8 @@ class UserSettingsComponent extends React.Component<Props, any> {
                   <div className="details__promote">
                     <div className="row no-gutters">
                       <div className="col-12">
-                        {this.renderSocialImages(ownedPage)}
+                        {this.renderDashboardLink(ownedPage)}
+                        {/* {this.renderSocialImages(ownedPage)} */}
                       </div>
                     </div>
                   </div>

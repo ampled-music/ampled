@@ -161,8 +161,7 @@ class ArtistPagesController < ApplicationController
   end
 
   def subscribers_csv
-    unless current_user&.admin?
-      # Only let admins access this feature, for now.
+    unless current_user&.admin? || current_user&.owned_pages&.include?(@artist_page)
       return render json: { status: 403, error: "Forbidden to non-admins." }, status: :forbidden
     end
 

@@ -115,7 +115,7 @@ RSpec.describe MeController, :vcr, type: :request do
         artist_page.owners << user
 
         plan = create(:plan, artist_page: artist_page, nominal_amount: 1758, currency: "usd")
-        create(
+        subscription = create(
           :subscription,
           artist_page: artist_page,
           plan: plan,
@@ -143,6 +143,15 @@ RSpec.describe MeController, :vcr, type: :request do
               "role" => "member",
               "stripeDashboard" => nil,
               "stripeSignup" => nil,
+              "subscriptions" => [{
+                "id" => subscription.id,
+                "status" => "pending_active",
+                "name" => "#{subscription.user.name} #{subscription.user.last_name.first}.",
+                "city" => nil,
+                "country" => nil,
+                "supporter_since" => "2020-10-29T14:30:23.000Z",
+                "amount" => 1758
+              }],
               "supporterImages" => [nil, nil],
               "supportersCount" => 1
             }

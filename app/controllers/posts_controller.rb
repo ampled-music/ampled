@@ -41,10 +41,12 @@ class PostsController < ApplicationController
       return render html: "", status: :not_found
     end
 
+    filename = @post.title.encode("ISO-8859-1", { invalid: :replace, undef: :replace, replace: "_" })
+
     @signer ||= Aws::S3::Presigner.new
     redirect_to @signer.presigned_url(:get_object, bucket: ENV["S3_BUCKET"],
                                       key: @post.audio_uploads.first.public_id,
-                                      response_content_disposition: "attachment; filename=\"#{@post.title}.mp3\"")
+                                      response_content_disposition: "attachment; filename=\"#{filename}.mp3\"")
   end
 
   def index

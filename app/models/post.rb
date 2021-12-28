@@ -6,6 +6,7 @@
 #  artist_page_id  :bigint(8)
 #  body            :text
 #  created_at      :datetime         not null
+#  embed_url       :string
 #  id              :bigint(8)        not null, primary key
 #  is_private      :boolean          default(FALSE)
 #  post_type       :string
@@ -52,6 +53,12 @@ class Post < ApplicationRecord
 
   def has_video_embed
     return true if video_embed_url.present?
+
+    false
+  end
+
+  def has_embed
+    return true if embed_url.present?
 
     false
   end

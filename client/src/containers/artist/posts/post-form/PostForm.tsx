@@ -38,7 +38,7 @@ import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
 import TextIcon from '../../../../images/icons/Icon_Text.svg';
 import AudioIcon from '../../../../images/icons/Icon_Audio.svg';
 // import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
-// import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
+import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
 import PhotoIcon from '../../../../images/icons/Icon_Photo.svg';
 import VideoIcon from '../../../../images/icons/Icon_Video.svg';
 import Speaker from '../../../../images/home/home_how_speaker.png';
@@ -272,7 +272,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
     showAudio: false,
     showVideo: false,
     showImage: false,
-    showLink: false,
+    showEmbed: false,
   };
 
   editor: any;
@@ -281,7 +281,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
     super(props);
     if (props.post) {
       const { post } = props;
-      let activePostType, showText, showAudio, showVideo, showImage;
+      let activePostType, showText, showAudio, showVideo, showImage, showEmbed;
       if (post.audio_file) {
         activePostType = 'Audio';
         showAudio = true;
@@ -292,6 +292,9 @@ export default class PostFormComponent extends React.Component<Props, any> {
       } else if (post.video_embed_url) {
         activePostType = 'Video';
         showVideo = true;
+      } else if (post.embed_url) {
+        activePostType = 'Embed';
+        showEmbed = true;
       } else {
         activePostType = 'Text';
         showText = true;
@@ -303,6 +306,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
         audioUploads: props.post.audio_uploads,
         images: props.post.images,
         videoEmbedUrl: props.post.video_embed_url,
+        embedUrl: props.post.embed_url,
         isPublic: !props.post.is_private,
         allowDownload: props.post.allow_download,
         activePostType,
@@ -310,6 +314,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
         showAudio,
         showVideo,
         showImage,
+        showEmbed,
       };
     } else {
       this.state = this.initialState;
@@ -354,6 +359,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
       audioUploads,
       images,
       videoEmbedUrl,
+      embedUrl,
       isPublic,
       allowDownload,
       isPinned,
@@ -368,6 +374,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
       audio_uploads: audioUploads,
       images: ['Audio', 'Photo'].includes(activePostType) ? images : [],
       video_embed_url: activePostType === 'Video' ? videoEmbedUrl : null,
+      embed_url: activePostType === 'Embed' ? embedUrl : null,
       is_private: !isPublic,
       is_pinned: isPinned,
       allow_download: activePostType === 'Audio' ? allowDownload : null,
@@ -536,7 +543,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
               showAudio: false,
               showVideo: false,
               showImage: false,
-              showLink: false,
+              showEmbed: false,
             })
           }
         >
@@ -553,7 +560,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
               showAudio: true,
               showVideo: false,
               showImage: true,
-              showLink: false,
+              showEmbed: false,
             })
           }
         >
@@ -570,7 +577,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
               showAudio: false,
               showVideo: true,
               showImage: false,
-              showLink: false,
+              showEmbed: false,
             })
           }
         >
@@ -587,30 +594,30 @@ export default class PostFormComponent extends React.Component<Props, any> {
               showAudio: false,
               showVideo: false,
               showImage: true,
-              showLink: false,
+              showEmbed: false,
             })
           }
         >
           <img src={PhotoIcon} className="btn__icon" alt="" />
           Photo
         </Button>
-        {/* <Button
+        <Button
           className={cx('btn', {
-            active: this.state.activePostType === 'Link',
+            active: this.state.activePostType === 'Embed',
           })}
           onClick={() =>
             this.setState({
-              activePostType: 'Link',
+              activePostType: 'Embed',
               showAudio: false,
               showVideo: false,
               showImage: false,
-              showLink: true,
+              showEmbed: true,
             })
           }
         >
           <img src={Link2Icon} className="btn__icon" alt=""/>
-          Link
-        </Button> */}
+          Embed
+        </Button>
       </div>
     );
   };
@@ -1011,7 +1018,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
                 {this.state.showImage && this.renderImageUpload()}
                 {this.renderTitle()}
                 {this.state.showVideo && this.renderVideoEmbedder()}
-                {this.state.showLink && this.renderLink()}
+                {this.state.showEmbed && this.renderLink()}
                 {this.renderDescription()}
                 <div className="post-form__public">
                   <FormControlLabel

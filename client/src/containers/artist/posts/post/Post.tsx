@@ -202,6 +202,8 @@ const PostMedia = ({
     has_audio,
     has_video_embed,
     video_embed_url,
+    has_embed,
+    embed_url,
     audio_uploads,
     deny_details_lapsed,
     allow_download,

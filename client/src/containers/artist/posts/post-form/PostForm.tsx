@@ -38,10 +38,11 @@ import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
 import TextIcon from '../../../../images/icons/Icon_Text.svg';
 import AudioIcon from '../../../../images/icons/Icon_Audio.svg';
 // import LinkIcon from '../../../../images/icons/Icon_Link_1.png';
-import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
+// import Link2Icon from '../../../../images/icons/Icon_Link_2.png';
 import PhotoIcon from '../../../../images/icons/Icon_Photo.svg';
 import VideoIcon from '../../../../images/icons/Icon_Video.svg';
 import Speaker from '../../../../images/home/home_how_speaker.png';
+import Bandcamp from '../../../../images/icons/Icon_Bandcamp.svg';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
@@ -175,7 +176,7 @@ class RichEditor extends React.Component<RichEditorProps> {
             onClick={this.focusEditor}
           >
             <Editor
-              placeholder="Body Text"
+              label="Body Text"
               textAlignment="left"
               ref={this.setEditor}
               editorState={this.state.editorState}
@@ -616,7 +617,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
             })
           }
         >
-          <img src={Link2Icon} className="btn__icon" alt=""/>
+          <img src={Bandcamp} className="btn__icon" alt=""/>
           Embed
         </Button>
       </div>
@@ -816,7 +817,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
       <div className="post-form__video">
         <TextField
           name="videoEmbedUrl"
-          placeholder="YouTube or Vimeo URL"
+          label="YouTube or Vimeo URL"
           type="text"
           fullWidth
           InputLabelProps={{
@@ -825,22 +826,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
           value={videoEmbedUrl ? videoEmbedUrl : ''}
           onChange={this.handleChange}
           required
-          InputProps={{
-            endAdornment: !(videoEmbedUrl && videoEmbedUrl.length > 0) ? (
-              <InputAdornment position="end">
-                <span
-                  style={{
-                    color: 'rgba(0, 0, 0, 0.42)',
-                    fontSize: '0.8rem',
-                  }}
-                >
-                  (required)
-                </span>
-              </InputAdornment>
-            ) : (
-              undefined
-            ),
-          }}
         />
         {videoEmbedUrl && this.renderVideoPreview()}
       </div>
@@ -888,7 +873,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
       <TextField
         autoFocus
         name="title"
-        placeholder="Post title"
+        label="Post title"
         type="text"
         fullWidth
         InputLabelProps={{
@@ -899,22 +884,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
         onChange={this.handleChange}
         className="post-form__title"
         required
-        InputProps={{
-          endAdornment: !(title && title.length > 0) ? (
-            <InputAdornment position="end">
-              <span
-                style={{
-                  color: 'rgba(0, 0, 0, 0.42)',
-                  fontSize: '0.8rem',
-                }}
-              >
-                (required)
-              </span>
-            </InputAdornment>
-          ) : (
-            undefined
-          ),
-        }}
       />
     );
   };
@@ -969,7 +938,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
     return (
       <TextField
         name="link"
-        placeholder="Type or Paste a URL"
+        label="Type or Paste a URL"
         type="text"
         fullWidth
         InputLabelProps={{
@@ -980,22 +949,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
         onChange={this.handleChange}
         className="post-form__link"
         required
-        InputProps={{
-          endAdornment: !(link && link.length > 0) ? (
-            <InputAdornment position="end">
-              <span
-                style={{
-                  color: 'rgba(0, 0, 0, 0.42)',
-                  fontSize: '0.8rem',
-                }}
-              >
-                (required)
-              </span>
-            </InputAdornment>
-          ) : (
-            undefined
-          ),
-        }}
       />
     );
   };

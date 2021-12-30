@@ -792,23 +792,16 @@ export default class PostFormComponent extends React.Component<Props, any> {
 
   renderEmbedPreview = () => {
     const { embedUrl } = this.state;
-    let isBandcamp, cleanURL;
-
-    if (embedUrl) {
-      const regex = /<iframe.*?src="(.*?)"[^>]+>/g;
-      cleanURL = regex.exec(embedUrl)[1];
-      isBandcamp =
+    let isBandcamp =
         embedUrl &&
         embedUrl.length > 0 &&
-        /(www\.)?(bandcamp\.com)\//i.test(cleanURL);
-    }
+        /(www\.)?(bandcamp\.com)\//i.test(embedUrl);
 
     if (isBandcamp) {
-      return (
-        <iframe
-          src={cleanURL}
-          width="100%"
-          height="100%"
+      return (  
+        <div
+          className="embed-container"
+          dangerouslySetInnerHTML={{ __html: embedUrl }}
         />
       );
     } else if (!isBandcamp) {

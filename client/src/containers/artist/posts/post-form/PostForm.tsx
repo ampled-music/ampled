@@ -257,6 +257,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
     audioUploads: [],
     imageName: '',
     videoEmbedUrl: null,
+    embedUrl: null,
     isPublic: false,
     allowDownload: false,
     isPinned: false,
@@ -789,6 +790,32 @@ export default class PostFormComponent extends React.Component<Props, any> {
     }
   };
 
+  renderEmbedPreview = () => {
+    const { embedUrl } = this.state;
+    let isBandcamp, cleanURL;
+
+    if (embedUrl) {
+      const regex = /<iframe.*?src="(.*?)"[^>]+>/g;
+      cleanURL = regex.exec(embedUrl)[1];
+      isBandcamp =
+        embedUrl &&
+        embedUrl.length > 0 &&
+        /(www\.)?(bandcamp\.com)\//i.test(cleanURL);
+    }
+
+    if (isBandcamp) {
+      return (
+        <iframe
+          src={cleanURL}
+          width="100%"
+          height="100%"
+        />
+      );
+    } else if (!isBandcamp) {
+      return <div className="helper-text">Sorry, at the moment we only accept Bandcamp embeds.</div>;
+    }
+  };
+
   renderVideoEmbedder = () => {
     const { videoEmbedUrl } = this.state;
 
@@ -823,6 +850,31 @@ export default class PostFormComponent extends React.Component<Props, any> {
           }}
         />
         {videoEmbedUrl && this.renderVideoPreview()}
+      </div>
+    );
+  };
+
+  renderEmbed = () => {
+    const { embedUrl } = this.state;
+
+    return (
+      <div className="post-form__embed">
+        <TextField
+          name="embedUrl"
+          label="Bandcamp iFrame"
+          variant="outlined"
+          type="text"
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={embedUrl ? embedUrl : ''}
+          onChange={this.handleChange}
+          multiline
+          rows="3"
+          required
+        />
+        {embedUrl && this.renderEmbedPreview()}
       </div>
     );
   };
@@ -1018,7 +1070,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
                 {this.state.showImage && this.renderImageUpload()}
                 {this.renderTitle()}
                 {this.state.showVideo && this.renderVideoEmbedder()}
-                {this.state.showEmbed && this.renderLink()}
+                {this.state.showEmbed && this.renderEmbed()}
                 {this.renderDescription()}
                 <div className="post-form__public">
                   <FormControlLabel

@@ -145,6 +145,15 @@
     }
   }
 
+  &__embed {
+    margin-bottom: 1rem;
+    input {
+      &[placeholder] {
+        color: $gray;
+      }
+    }
+  }
+
   &__link {
     margin-bottom: 1rem;
     input {

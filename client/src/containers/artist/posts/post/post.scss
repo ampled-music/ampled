@@ -80,6 +80,9 @@
     &.video {
       height: 250px;
     }
+    &.embed iframe {
+      width: 100% !important;
+    }
 
     .blur-image {
       -webkit-filter: blur(20px);

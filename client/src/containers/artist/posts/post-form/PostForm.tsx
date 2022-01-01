@@ -269,6 +269,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
     hasUnsavedChanges: false,
     loadingImage: false,
     savingPost: false,
+    isSaveEnabled: false,
     activePostType: '',
     showText: false,
     showAudio: false,
@@ -517,19 +518,17 @@ export default class PostFormComponent extends React.Component<Props, any> {
     this.setState({ allowDownload: event.target.checked });
   };
 
-  isSaveEnabled = () => {
-    const { title, body, images, videoEmbedUrl, audioUploads } = this.state;
-
-    return (
-      title &&
-      title.length > 0 &&
-      ((audioUploads &&
-        audioUploads.length > 0 &&
-        audioUploads[0].public_id.length > 0) ||
-        (images && images.length > 0) ||
-        (videoEmbedUrl && videoEmbedUrl.length > 0) ||
-        (body && body.length > 0))
-    );
+  validateURL = (url) => {
+    const { activePostType } = this.state;
+    if (activePostType === 'Video') {
+      console.log('Video', /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi.test(url));
+      return url && url.length > 0 && /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi.test(url);
+    }
+    if (activePostType === 'Embed') {
+      console.log('Embed', /(www\.)?(bandcamp\.com)\//i.test(url));
+      return url && url.length > 0 && /(www\.)?(bandcamp\.com)\//i.test(url);
+    }
+    return false;
   };
 
   renderButtons = () => {
@@ -752,9 +751,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
       videoEmbedUrl &&
       videoEmbedUrl.length > 0 &&
       /(www\.)?vimeo.com\/.+/i.test(videoEmbedUrl);
-    const isValidVideo = /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi.test(
-      videoEmbedUrl,
-    );
 
     let VideoComponent;
     if (isVimeo) {
@@ -763,7 +759,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
       VideoComponent = YouTubePlayer;
     }
 
-    if (isValidVideo) {
+    if (this.validateURL(videoEmbedUrl)) {
       return (
         <div className="uploader">
           <VideoComponent
@@ -786,26 +782,22 @@ export default class PostFormComponent extends React.Component<Props, any> {
           </IconButton>
         </div>
       );
-    } else if (!isValidVideo) {
+    } else {
       return <div className="helper-text">No supported video detected.</div>;
     }
   };
 
   renderEmbedPreview = () => {
     const { embedUrl } = this.state;
-    let isBandcamp =
-        embedUrl &&
-        embedUrl.length > 0 &&
-        /(www\.)?(bandcamp\.com)\//i.test(embedUrl);
 
-    if (isBandcamp) {
+    if (this.validateURL(embedUrl)) {
       return (  
         <div
           className="embed-container"
           dangerouslySetInnerHTML={{ __html: embedUrl }}
         />
       );
-    } else if (!isBandcamp) {
+    } else {
       return <div className="helper-text">Sorry, at the moment we only accept Bandcamp embeds.</div>;
     }
   };
@@ -833,7 +825,11 @@ export default class PostFormComponent extends React.Component<Props, any> {
   };
 
   renderEmbed = () => {
-    const { embedUrl } = this.state;
+    const { title, embedUrl } = this.state;
+
+    if (title && embedUrl && this.validateURL(embedUrl)) {
+      this.setState({isSaveEnabled: true});
+    }
 
     return (
       <div className="post-form__embed">
@@ -982,13 +978,12 @@ export default class PostFormComponent extends React.Component<Props, any> {
   };
 
   render() {
-    const { hasUnsavedChanges, savingPost } = this.state;
+    const { hasUnsavedChanges, savingPost, isSaveEnabled } = this.state;
     const { isEdit } = this.props;
 
     const isStripeSetup = this.props.isStripeSetup
       ? this.props.isStripeSetup
       : this.props.artist.isStripeSetup;
-    const isSaveEnabled = this.isSaveEnabled();
 
     if (savingPost) return <Loading isLoading={true} />;
 

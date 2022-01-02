@@ -929,26 +929,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
     );
   };
 
-  renderLink = () => {
-    const { link } = this.state;
-    return (
-      <TextField
-        name="link"
-        label="Type or Paste a URL"
-        type="text"
-        fullWidth
-        InputLabelProps={{
-          shrink: true,
-        }}
-        value={link}
-        onFocus={() => this.editor && this.editor.setHyperlinkHelp(false)}
-        onChange={this.handleChange}
-        className="post-form__link"
-        required
-      />
-    );
-  };
-
   renderEmptyType = () => {
     const { hasUnsavedChanges } = this.state;
     return (

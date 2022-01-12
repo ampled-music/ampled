@@ -8,30 +8,7 @@ RSpec.describe MeController, :vcr, type: :request do
       it "returns a JSON object with nil fields" do
         get url
 
-        expect(JSON.parse(response.body)["userInfo"]).to eq(
-          {
-            "admin" => nil,
-            "bio" => nil,
-            "cardInfo" => nil,
-            "city" => nil,
-            "country" => nil,
-            "created_at" => nil,
-            "email" => nil,
-            "email_confirmed" => false,
-            "id" => nil,
-            "image" => [],
-            "instagram" => nil,
-            "last_name" => nil,
-            "name" => nil,
-            "ship_address" => nil,
-            "ship_address2" => nil,
-            "ship_city" => nil,
-            "ship_country" => nil,
-            "ship_state" => nil,
-            "ship_zip" => nil,
-            "twitter" => nil
-          }
-        )
+        expect(response.status).to eq 401
       end
     end
 

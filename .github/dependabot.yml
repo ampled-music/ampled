@@ -6,6 +6,7 @@ version: 2
 updates:
   # Ruby dependencies from / Gemfile
   - package-ecosystem: bundler
+    target-branch: "main"
     directory: "/"
     schedule:
       interval: weekly
@@ -26,6 +27,7 @@ updates:
 
   # Yarn dependencies in / (used for build, scripts, etc)
   - package-ecosystem: npm
+    target-branch: "main"
     directory: "/"
     schedule:
       interval: weekly

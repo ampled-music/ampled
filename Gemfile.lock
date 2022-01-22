@@ -1385,7 +1385,7 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.4)
-    rspec_junit_formatter (0.4.1)
+    rspec_junit_formatter (0.5.1)
       rspec-core (>= 2, < 4, != 2.12.0)
     rubocop (1.22.3)
       parallel (~> 1.10)

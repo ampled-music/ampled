@@ -7,13 +7,17 @@ class MeController < ApplicationController
     sync_card_info_with_stripe if current_user && current_user.card_last4.blank?
 
     @owned_pages = current_user&.page_ownerships&.map do |ownership|
-      OpenStruct.new(page: ownership.artist_page, role: ownership.role, instrument: ownership.instrument,
-                     subscriptions: ownership.artist_page.subscriptions)
+      {
+        page: ownership.artist_page,
+        role: ownership.role,
+        instrument: ownership.instrument,
+        subscriptions: ownership.artist_page.subscriptions
+      }
     end
     @owned = current_user&.page_ownerships&.map do |ownership|
-      OpenStruct.new(id: ownership.artist_page.id, role: ownership.role)
+      { id: ownership.artist_page.id, role: ownership.role }
     end
-    @supported = current_user&.supported_artists&.map { |page| OpenStruct.new(id: page.id, role: "supporter") }
+    @supported = current_user&.supported_artists&.map { |page| { id: page.id, role: "supporter" } }
     @subscriptions = current_user&.subscriptions&.active
     @stripe_info = serialize_current_user_card
   end

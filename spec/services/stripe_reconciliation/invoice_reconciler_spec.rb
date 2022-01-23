@@ -5,7 +5,9 @@ module StripeReconciliation
     describe "#reconcile" do
       let(:subscription) { create(:subscription) }
       let!(:stripe_invoice) do
-        OpenStruct.new(
+        Stripe::Util.convert_to_stripe_object(
+          id: "in_1036Vr2eZvKYlo2CfjuUHA94",
+          object: "invoice",
           currency: subscription.plan.currency,
           total: subscription.plan.charge_amount.fractional,
           subscription: subscription.stripe_id

@@ -5,9 +5,9 @@ module StripeReconciliation
     describe "#notify" do
       let(:anomaly) { :unexpected_currency }
       let(:stripe_object) do
-        OpenStruct.new(
-          object: "invoice",
-          id: "in_1036Vr2eZvKYlo2CfjuUHA94"
+        Stripe::Util.convert_to_stripe_object(
+          id: "in_1036Vr2eZvKYlo2CfjuUHA94",
+          object: "invoice"
         )
       end
       let(:notifier) { described_class.new(anomaly: anomaly, stripe_object: stripe_object) }

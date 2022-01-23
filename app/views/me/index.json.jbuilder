@@ -31,8 +31,8 @@ json.userInfo do
   end
 end
 json.artistPages @owned&.concat(@supported) do |page|
-  json.artistId page.id
-  json.role page.role
+  json.artistId page[:id]
+  json.role page[:role]
 end
 json.subscriptions @subscriptions do |subscription|
   json.subscriptionId subscription.id
@@ -50,23 +50,23 @@ json.subscriptions @subscriptions do |subscription|
   json.supporterImages subscription.artist_page.supporter_images
 end
 json.ownedPages @owned_pages do |page|
-  json.role page.role
-  json.subscriptions page.subscriptions, partial: "subscriptions/subscriber", as: :subscriber
-  json.instrument page.instrument
-  json.approved page.page.approved
-  json.artistId page.page.id
-  json.artistSlug page.page.slug
-  json.artistColor page.page.accent_color
-  json.name page.page.name
-  json.image page.page.cover_public_id
-  json.supportersCount page.page.subscriber_count
-  json.monthlyTotal page.page.monthly_total.fractional
-  json.lastPost page.page.last_post_date
-  json.lastPayout page.page.last_payout
-  json.stripeSignup page.role == "admin" ? page.page.stripe_signup_url : json.null
-  json.stripeDashboard page.role == "admin" ? page.page.stripe_dashboard_url : json.null
-  json.isStripeSetup page.page.is_stripe_ready
-  json.promoteSquareImages page.page.promote_square_images
-  json.promoteStoryImages page.page.promote_story_images
-  json.supporterImages page.page.supporter_images
+  json.role page[:role]
+  json.subscriptions page[:subscriptions], partial: "subscriptions/subscriber", as: :subscriber
+  json.instrument page[:instrument]
+  json.approved page[:page].approved
+  json.artistId page[:page].id
+  json.artistSlug page[:page].slug
+  json.artistColor page[:page].accent_color
+  json.name page[:page].name
+  json.image page[:page].cover_public_id
+  json.supportersCount page[:page].subscriber_count
+  json.monthlyTotal page[:page].monthly_total.fractional
+  json.lastPost page[:page].last_post_date
+  json.lastPayout page[:page].last_payout
+  json.stripeSignup page[:role] == "admin" ? page[:page].stripe_signup_url : json.null
+  json.stripeDashboard page[:role] == "admin" ? page[:page].stripe_dashboard_url : json.null
+  json.isStripeSetup page[:page].is_stripe_ready
+  json.promoteSquareImages page[:page].promote_square_images
+  json.promoteStoryImages page[:page].promote_story_images
+  json.supporterImages page[:page].supporter_images
 end

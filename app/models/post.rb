@@ -58,6 +58,8 @@ class Post < ApplicationRecord
   end
 
   def has_embed
+    embed_url.present?
+  end
     return true if embed_url.present?
 
     false

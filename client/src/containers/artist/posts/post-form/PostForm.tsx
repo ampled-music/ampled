@@ -823,7 +823,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
           dangerouslySetInnerHTML={{ __html: embedUrl }}
         />
       );
-    } else if (!isBandcamp) {
+    } else {
       return <div className="helper-text">Sorry, at the moment we only accept Bandcamp embeds.</div>;
     }
   };

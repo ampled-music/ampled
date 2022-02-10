@@ -24,17 +24,6 @@ RSpec.describe StripeController, type: :request do
       expect(response.status).to eq 200
     end
 
-    it "queues StripeReconciliation::ReconcileStripeObjectJob" do
-      expect { post webhook_url, params: webhook_params }
-        .to change { StripeReconciliation::ReconcileStripeObjectJob.jobs.count }.by(1)
-
-      expect(StripeReconciliation::ReconcileStripeObjectJob.jobs.last["args"]).to match_array([
-        {
-          "id" => "abc"
-        }
-      ])
-    end
-
     context("given event type is invoice.payment_succeeded") do
       let(:event_type) { "invoice.payment_succeeded" }
       let(:subscription) { create(:subscription, stripe_id: "sub_1234") }

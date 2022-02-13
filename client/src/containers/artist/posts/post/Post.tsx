@@ -227,8 +227,9 @@ const PostMedia = ({
     {has_embed && allowDetails && (
       <div
         className="post__image-container embed"
-        dangerouslySetInnerHTML={{ __html: embed_url }}
-      />
+      >
+        <iframe src={embed_url} seamless />
+      </div>
     )}
     {images?.length > 0 && !has_audio && (
       <div className="post__image-container">

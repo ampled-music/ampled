@@ -13,7 +13,7 @@ module Mailchimp
     private
 
     def mailchimp
-      @mailchimp = Services::MailchimpListUpdater.new
+      @mailchimp = MailchimpListUpdater.new
     end
   end
 end

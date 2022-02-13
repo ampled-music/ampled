@@ -69,7 +69,7 @@ const renderDeleteButton = ({ setShowModal }) => (
   </IconButton>
 );
 
-const Comment = ({ comment, canDelete, deleteComment } = this.props) => {
+const Comment = ({ comment, canDelete, deleteComment }) => {
   const [showModal, setShowModal] = React.useState(false);
   return (
     <div

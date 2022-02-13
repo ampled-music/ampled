@@ -8,7 +8,7 @@ describe UpdateApplicationFeePercentJob, type: :job do
     it "updates the application_fee_percent of the ArtistPage" do
       expect { described_class.new.perform(artist_page.id, application_fee_percent) }
         .to change { artist_page.reload.application_fee_percent }
-        .from(BigDecimal(14.1, 5))
+        .from(BigDecimal("14.1", 5))
         .to(BigDecimal(application_fee_percent, 5))
     end
 

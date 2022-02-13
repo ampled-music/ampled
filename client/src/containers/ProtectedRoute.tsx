@@ -81,7 +81,7 @@ const ProtectedRoute = ({
     );
   };
 
-  return <Route {...rest} render={renderComponent} />;
+  return <Route {...rest} element={renderComponent} />;
 };
 
 const mapStateToProps = (state: Store) => ({

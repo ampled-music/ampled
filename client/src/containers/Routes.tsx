@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Switch, Redirect, Route } from 'react-router-dom';
+import { Routes, Navigate, Route } from 'react-router-dom';
 
 import { ProtectedRoute } from './ProtectedRoute';
 import { PublicRoute } from './PublicRoute';
@@ -103,20 +103,13 @@ const LazyPage = React.lazy(() =>
   })),
 );
 
-const Routes = () => {
+const AllRoutes = () => {
   return (
-    <Switch>
+    <Routes>
       {/* <PublicRoute exact path={routePaths.home} component={Home} /> */}
-      <Route
-        exact
-        sensitive
-        path={routePaths.capsSlugs}
-        render={(props: { location: { pathname: string } }) => {
-          return <Redirect to={`${props.location.pathname.toLowerCase()}`} />;
-        }}
-      />
-      <Redirect from={routePaths.community} to="/artist/community" />
-      <Redirect from="/artist/community/promote" to="/artist/community/share" />
+      <Route path={routePaths.capsSlugs} element={(props: { location: { pathname: string } }) => <Navigate to={`${props.location.pathname.toLowerCase()}`} replace />} />
+      <Route path={routePaths.community} element={<Navigate to="/artist/community" replace />} />
+      <Route path="/artist/community/promote" element={<Navigate to="/artist/community/share" replace />} />
       <PublicRoute
         exact
         path={routePaths.communityShare}
@@ -187,8 +180,8 @@ const Routes = () => {
       <PublicRoute exact path={routePaths.blog} component={LazyBlog} />
       <PublicRoute exact path={routePaths.blogPost} component={LazyBlogPost} />
       <PublicRoute path={'*'} component={LazyNoArtist} />
-    </Switch>
+    </Routes>
   );
 };
 
-export { Routes };
+export { AllRoutes };

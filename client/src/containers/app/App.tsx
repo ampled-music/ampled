@@ -18,7 +18,7 @@ import {
 } from '../../redux/toast/toast-modal';
 import { initialState as loginInitialState } from '../../redux/authentication/initial-state';
 import { initialState as meInitialState } from '../../redux/me/initial-state';
-import { Routes } from '../Routes';
+import { AllRoutes } from '../Routes';
 import { AuthModal } from '../connect/AuthModal';
 import { Modal } from '../shared/modal/Modal';
 import { Loading } from '../shared/loading/Loading';
@@ -122,7 +122,7 @@ class AppComponent extends React.Component<Props, any> {
           )}
         </Helmet>
         <React.Suspense fallback={<Loading isLoading={true} />}>
-          <Routes />
+          <AllRoutes />
           <Modal
             open={this.props.authModalOpen}
             onClose={() => {

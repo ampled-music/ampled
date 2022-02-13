@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -1608,7 +1608,7 @@ class CreateArtist extends React.Component<CreateArtistProps, any> {
     } = this.props;
 
     if (this.state.isDeletedPage) {
-      return <Redirect to="/" />;
+      return <Navigate to="/" replace />;
     } else if (this.state.loading) {
       return <Loading isLoading={true} />;
     } else if (userData && !userData.email_confirmed) {

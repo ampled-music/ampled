@@ -386,6 +386,14 @@ export default class PostFormComponent extends React.Component<Props, any> {
       id: this.state.id,
     };
 
+    // Get URL form iframe data
+    if (post.embed_url) {
+      const regex = /<iframe.*?src="(.*?)"[^>]+>/g;
+      const cleanURL = regex.exec(post.embed_url)[1];
+      console.log(cleanURL);
+      post.embed_url = cleanURL;
+    }
+
     this.setState({ savingPost: true });
     if (deletedImages && deletedImages.length > 0) {
       for (const deleteImage of deletedImages) {
@@ -870,7 +878,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
           rows="3"
           required
         />
-        {embedUrl && this.renderEmbedPreview()}
+        {/* {embedUrl && this.renderEmbedPreview()} */}
       </div>
     );
   };

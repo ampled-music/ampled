@@ -3,7 +3,7 @@ import './post.scss';
 import cx from 'classnames';
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { routePaths } from '../../../route-paths';
 import { UserRoles } from '../../../shared/user-roles';
 import { config } from '../../../../config';
@@ -757,6 +757,6 @@ class PostComponent extends React.Component<any, any> {
   };
 }
 
-const Post = withRouter(PostComponent);
+const Post = PostComponent;
 
 export { Post };

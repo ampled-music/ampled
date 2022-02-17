@@ -37,6 +37,8 @@ class Post < ApplicationRecord
   accepts_nested_attributes_for :audio_uploads, allow_destroy: true
   accepts_nested_attributes_for :images, allow_destroy: true
 
+  validate :embed_url_safe, on: :create
+
   def author
     user.name
   end
@@ -65,5 +67,34 @@ class Post < ApplicationRecord
 
   def url
     "#{artist_page.url}/post/#{id}"
+  end
+
+  private
+
+  ALLOWED_IFRAME_ATTRIBUTES = [
+    "src",
+    "style"
+  ]
+
+  def embed_url_safe
+    return unless embed_url_changed?
+
+    parsed_html = Nokogiri.Slop(embed_url)
+
+    return if (
+      parsed_html.children.count == 1 &&
+      (iframe = parsed_html.children.first).name == "iframe" &&
+      iframe.attributes.keys.all? { |attribute| ALLOWED_IFRAME_ATTRIBUTES.include?(attribute) } &&
+      iframe.attributes["src"]&.value&.match?(/^https\:\/\/bandcamp.com\/.*/) &&
+      !iframe.attributes.values.map(&:value).any? { |value| value.include?("javascript") } &&
+      iframe.children.count == 1 &&
+      (anchor = iframe.children.first).name == "a" &&
+      anchor.attributes.keys == ["href"] &&
+      anchor.attributes["href"].value.match?(/^https\:\/\/[^.]*\.bandcamp.com\/.*/) &&
+      anchor.children.count == 1 &&
+      anchor.children.first.text?
+    )
+
+    errors.add(:embed_url, :not_valid, message: "does not match expected format")
   end
 end

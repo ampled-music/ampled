@@ -37,7 +37,7 @@ class Post < ApplicationRecord
   accepts_nested_attributes_for :audio_uploads, allow_destroy: true
   accepts_nested_attributes_for :images, allow_destroy: true
 
-  validate :embed_url_safe, on: :create
+  validate :embed_url_safe
 
   def author
     user.name
@@ -80,7 +80,7 @@ class Post < ApplicationRecord
   def embed_url_safe
     return unless embed_url_changed?
 
-    parsed_html = Nokogiri.Slop(embed_url)
+    parsed_html = Nokogiri.Slop("<doc>#{embed_url}</doc>").children.first
 
     return if
       parsed_html.children.count == 1 &&

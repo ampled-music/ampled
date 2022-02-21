@@ -317,20 +317,20 @@ RSpec.describe "POST /posts", type: :request do
   context "when post has bandcamp iframe" do
     let(:embed_url) do
       '<iframe style="border: 0; width: 100%; height: 120px;" ' \
-      'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
-      'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
-      '<a href="https://heladonegro.bandcamp.com/album/far-in">Far In by Helado Negro</a></iframe>'
+        'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
+        'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
+        '<a href="https://heladonegro.bandcamp.com/album/far-in">Far In by Helado Negro</a></iframe>'
     end
-    let(:post_params) {
-      post_params = {
+    let(:post_params) do
+      {
         post: {
           artist_page_id: artist_page.id,
           title: "test",
           body: "test test",
           embed_url: embed_url
-       }
+        }
       }
-    }
+    end
     before do
       owner_user.owned_pages << artist_page
       sign_in owner_user
@@ -349,10 +349,10 @@ RSpec.describe "POST /posts", type: :request do
     context "and javascript is added to the end" do
       let(:embed_url) do
         '<iframe style="border: 0; width: 100%; height: 120px;" ' \
-        'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
-        'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
-        '<a href="https://heladonegro.bandcamp.com/album/far-in">Far In by Helado Negro</a></iframe>' \
-        '<script> alert(1); </script>'
+          'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
+          'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
+          '<a href="https://heladonegro.bandcamp.com/album/far-in">Far In by Helado Negro</a></iframe>' \
+          "<script> alert(1); </script>"
       end
 
       it "returns 400" do
@@ -363,9 +363,9 @@ RSpec.describe "POST /posts", type: :request do
     context "and iframe contains javascript" do
       let(:embed_url) do
         '<iframe style="border: 0; width: 100%; height: 120px;" ' \
-        'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
-        'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
-        '<script>alert(1);</script></iframe>'
+          'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
+          'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
+          "<script>alert(1);</script></iframe>"
       end
 
       it "returns 400" do
@@ -376,9 +376,9 @@ RSpec.describe "POST /posts", type: :request do
     context "and iframe attribute javascript" do
       let(:embed_url) do
         '<iframe style="javascript:alert(1);" ' \
-        'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
-        'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
-        '<a href="https://heladonegro.bandcamp.com/album/far-in">Far In by Helado Negro</a></iframe>'
+          'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
+          'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
+          '<a href="https://heladonegro.bandcamp.com/album/far-in">Far In by Helado Negro</a></iframe>'
       end
 
       it "returns 400" do
@@ -389,9 +389,9 @@ RSpec.describe "POST /posts", type: :request do
     context "and iframe contains unexpected attribute" do
       let(:embed_url) do
         '<iframe style="border: 0; width: 100%; height: 120px;" onClick="foo" ' \
-        'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
-        'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
-        '<a href="https://heladonegro.bandcamp.com/album/far-in">Far In by Helado Negro</a></iframe>'
+          'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
+          'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
+          '<a href="https://heladonegro.bandcamp.com/album/far-in">Far In by Helado Negro</a></iframe>'
       end
 
       it "returns 400" do
@@ -402,9 +402,9 @@ RSpec.describe "POST /posts", type: :request do
     context "and iframe points to something other than bandcamp" do
       let(:embed_url) do
         '<iframe style="border: 0; width: 100%; height: 120px;" ' \
-        'src="https://spotify.com/EmbeddedPlayer/album=2397410510/size=large/' \
-        'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
-        '<a href="https://heladonegro.bandcamp.com/album/far-in">Far In by Helado Negro</a></iframe>'
+          'src="https://spotify.com/EmbeddedPlayer/album=2397410510/size=large/' \
+          'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
+          '<a href="https://heladonegro.bandcamp.com/album/far-in">Far In by Helado Negro</a></iframe>'
       end
 
       it "returns 400" do
@@ -415,9 +415,9 @@ RSpec.describe "POST /posts", type: :request do
     context "and a href contains javascript" do
       let(:embed_url) do
         '<iframe style="border: 0; width: 100%; height: 120px;" ' \
-        'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
-        'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
-        '<a href="javascript:alert(1);">Far In by Helado Negro</a></iframe>'
+          'src="https://bandcamp.com/EmbeddedPlayer/album=2397410510/size=large/' \
+          'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
+          '<a href="javascript:alert(1);">Far In by Helado Negro</a></iframe>'
       end
 
       it "returns 400" do
@@ -428,9 +428,9 @@ RSpec.describe "POST /posts", type: :request do
     context "and a contains unexpected attributes" do
       let(:embed_url) do
         '<iframe style="border: 0; width: 100%; height: 120px;" ' \
-        'src="https://band.com/EmbeddedPlayer/album=2397410510/size=large/' \
-        'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
-        '<a href="https://heladonegro.bandcamp.com/album/far-in" style="fsada">Far In by Helado Negro</a></iframe>'
+          'src="https://band.com/EmbeddedPlayer/album=2397410510/size=large/' \
+          'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
+          '<a href="https://heladonegro.bandcamp.com/album/far-in" style="fsada">Far In by Helado Negro</a></iframe>'
       end
 
       it "returns 400" do
@@ -441,9 +441,9 @@ RSpec.describe "POST /posts", type: :request do
     context "and a href points to something other than bandcamp " do
       let(:embed_url) do
         '<iframe style="border: 0; width: 100%; height: 120px;" ' \
-        'src="https://band.com/EmbeddedPlayer/album=2397410510/size=large/' \
-        'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
-        '<a href="https://heladonegro.spotify.com/album/far-in" style="fsada">Far In by Helado Negro</a></iframe>'
+          'src="https://band.com/EmbeddedPlayer/album=2397410510/size=large/' \
+          'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
+          '<a href="https://heladonegro.spotify.com/album/far-in" style="fsada">Far In by Helado Negro</a></iframe>'
       end
 
       it "returns 400" do
@@ -454,9 +454,9 @@ RSpec.describe "POST /posts", type: :request do
     context "and javascript is includ in a" do
       let(:embed_url) do
         '<iframe style="border: 0; width: 100%; height: 120px;" ' \
-        'src="https://band.com/EmbeddedPlayer/album=2397410510/size=large/' \
-        'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
-        '<a href="https://heladonegro.spotify.com/album/far-in" style="fsada"><script>fdaf</script></a></iframe>'
+          'src="https://band.com/EmbeddedPlayer/album=2397410510/size=large/' \
+          'bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/" seamless>' \
+          '<a href="https://heladonegro.spotify.com/album/far-in" style="fsada"><script>fdaf</script></a></iframe>'
       end
 
       it "returns 400" do

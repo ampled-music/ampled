@@ -36,6 +36,7 @@ gem "zencoder"
 # Front-endy
 # Use uglifier for JavaScript compression.
 # This is only useful for things like the /admin/ engine, since this is an API-only server that serves no HTML/JS/CSS.
+gem "simple_form"
 gem "uglifier"
 # We still have .slim files. Unclear if they are still used, but requires more investigation.
 gem "slim-rails"

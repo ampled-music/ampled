@@ -1607,6 +1607,9 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    simple_form (5.1.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -1711,6 +1714,7 @@ DEPENDENCIES
   selenium-webdriver
   sentry-raven
   sidekiq
+  simple_form
   simplecov
   slim-rails
   stripe

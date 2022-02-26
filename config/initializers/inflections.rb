@@ -16,5 +16,6 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.uncountable 'contributor_time'
+  inflect.uncountable("contributor_time")
+  inflect.acronym("FFMPEG")
 end

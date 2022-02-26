@@ -105,8 +105,8 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
   create_table "notifications", force: :cascade do |t|
     t.string "link"
     t.text "text"
-    t.boolean "is_unread", default: true
-    t.bigint "user_id"
+    t.boolean "is_unread", default: true, null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_notifications_on_user_id"
@@ -142,7 +142,6 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
     t.boolean "is_private", default: false
     t.boolean "allow_download", default: false
     t.string "video_embed_url"
-    t.string "type"
     t.string "post_type"
     t.string "embed_url"
     t.index ["artist_page_id"], name: "index_posts_on_artist_page_id"

@@ -1645,7 +1645,7 @@ GEM
     unf_ext (0.0.8)
     unicode-display_width (2.1.0)
     uniform_notifier (1.14.2)
-    uri (0.10.0)
+    uri (0.11.0)
     vcr (6.0.0)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -1719,7 +1719,7 @@ DEPENDENCIES
   slim-rails
   stripe
   uglifier
-  uri (= 0.10.0)
+  uri (= 0.11.0)
   vcr
   wavefile
   webmock

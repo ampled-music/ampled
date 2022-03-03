@@ -18,6 +18,7 @@ describe('post form', () => {
       audio_uploads: [], 
       images: [], 
       video_embed_url: '', 
+      embed_url: '', 
       is_private: false, 
       allow_download: false, 
       artist_page_id: 'artist'

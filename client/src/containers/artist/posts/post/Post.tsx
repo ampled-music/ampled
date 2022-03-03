@@ -202,6 +202,8 @@ const PostMedia = ({
     has_audio,
     has_video_embed,
     video_embed_url,
+    has_embed,
+    embed_url,
     audio_uploads,
     deny_details_lapsed,
     allow_download,
@@ -221,6 +223,12 @@ const PostMedia = ({
       <div className="post__image-container video">
         <PostVideo videoUrl={video_embed_url} doReflow={doReflow} />
       </div>
+    )}
+    {has_embed && allowDetails && (
+      <div
+        className="post__image-container embed"
+        dangerouslySetInnerHTML={{ __html: embed_url }}
+      />
     )}
     {images?.length > 0 && !has_audio && (
       <div className="post__image-container">

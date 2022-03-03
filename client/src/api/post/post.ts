@@ -20,6 +20,7 @@ export interface Post {
   // Although the backend API supports multiple images per Post, for now all code can
   // assume zero or at most 1 image per in this Array.
   images: Image[];
+  embed_url: string;
   video_embed_url: string;
   artist_page_id: string;
   is_private: boolean;

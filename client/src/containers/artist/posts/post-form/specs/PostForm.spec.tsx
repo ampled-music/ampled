@@ -16,6 +16,7 @@ describe('post form', () => {
       title: 'Title', 
       body: 'This is the body.', 
       video_embed_url: '', 
+      embed_url: '', 
       is_private: false, 
       allow_download: false, 
       artist_page_id: 'artist',

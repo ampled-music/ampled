@@ -38,12 +38,14 @@ class ResponsiveDialog extends React.Component<Props, any> {
           </DialogContent>
           <DialogActions className="action-buttons">
             <Button
+              style={{ width: '50%' }}
               className="cancel-button"
               onClick={this.props.discardChanges}
             >
               Discard changes
             </Button>
             <Button
+              style={{ width: '50%' }}
               className="publish-button"
               onClick={this.props.closeConfirmationDialog}
               autoFocus

@@ -17,7 +17,7 @@ interface Props {
 
 export class FeaturedImages extends React.Component<Props, any> {
   onSwipeLeft = () => {
-    this.cycleBanners('forewords');
+    this.cycleBanners('forwards');
   };
 
   onSwipeRight = () => {

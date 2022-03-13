@@ -177,6 +177,8 @@ const PostVideo = ({ videoUrl, doReflow }) => {
     VideoComponent = VimeoPlayer;
   } else if (isYouTube) {
     VideoComponent = YouTubePlayer;
+  } else {
+    return <></>;
   }
   return (
     <VideoComponent

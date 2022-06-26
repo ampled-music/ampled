@@ -2,11 +2,11 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
     t.string "banner_image_url"
     t.string "twitter_handle"
     t.string "instagram_handle"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "video_url"
     t.string "video_screenshot_url"
     t.string "state_token"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
     t.string "style_type"
     t.boolean "artist_owner", default: false, null: false
     t.boolean "is_soft_deleted", default: false
-    t.datetime "permanently_delete_at"
+    t.datetime "permanently_delete_at", precision: 6
     t.decimal "application_fee_percent", precision: 5, scale: 2, null: false
     t.boolean "subscribe_to_newsletter", default: false, null: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
     t.string "name"
     t.integer "duration"
     t.integer "waveform", default: [], null: false, array: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_audio_uploads_on_post_id"
   end
 
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
     t.bigint "post_id"
     t.bigint "user_id"
     t.text "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
     t.date "ended_on"
     t.float "hours"
     t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["contributor_id"], name: "index_contributor_time_on_contributor_id"
   end
 
@@ -85,15 +85,15 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
     t.date "joined_on"
     t.date "worker_owner_on"
     t.date "inactive_on"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_contributors_on_user_id"
   end
 
   create_table "images", force: :cascade do |t|
     t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "public_id"
     t.string "imageable_type"
     t.bigint "imageable_id"
@@ -107,16 +107,16 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
     t.text "text"
     t.boolean "is_unread", default: true, null: false
     t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "page_ownerships", force: :cascade do |t|
     t.integer "user_id"
     t.integer "artist_page_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "role", default: "member"
     t.string "instrument"
     t.index ["artist_page_id", "user_id"], name: "index_page_ownerships_on_artist_page_id_and_user_id"
@@ -135,8 +135,8 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
   create_table "posts", force: :cascade do |t|
     t.bigint "artist_page_id"
     t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "title"
     t.text "body"
     t.boolean "is_private", default: false
@@ -153,8 +153,8 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
     t.bigint "user_id"
     t.string "stripe_customer_id"
     t.bigint "plan_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.integer "status", default: 0
     t.string "stripe_id"
     t.index ["artist_page_id"], name: "index_subscriptions_on_artist_page_id"
@@ -166,15 +166,15 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "reset_password_sent_at", precision: 6
+    t.datetime "remember_created_at", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "name", null: false
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.datetime "locked_at"
+    t.datetime "confirmed_at", precision: 6
+    t.datetime "confirmation_sent_at", precision: 6
+    t.datetime "locked_at", precision: 6
     t.string "jti", null: false
     t.string "stripe_customer_id"
     t.string "last_name"

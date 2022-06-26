@@ -17,7 +17,7 @@
 #  created_at             :datetime         not null
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
-#  id                     :bigint(8)        not null, primary key
+#  id                     :integer          not null, primary key
 #  instagram              :string
 #  jti                    :string           not null
 #  last_name              :string

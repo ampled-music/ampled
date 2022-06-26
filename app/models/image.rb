@@ -4,8 +4,8 @@
 #
 #  coordinates    :string
 #  created_at     :datetime         not null
-#  id             :bigint(8)        not null, primary key
-#  imageable_id   :bigint(8)
+#  id             :integer          not null, primary key
+#  imageable_id   :integer
 #  imageable_type :string
 #  order          :integer
 #  public_id      :string

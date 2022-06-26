@@ -2,28 +2,23 @@
 #
 # Table name: posts
 #
-#  allow_download  :boolean          default(FALSE)
-#  artist_page_id  :bigint(8)
+#  allow_download  :boolean          default("false")
+#  artist_page_id  :integer
 #  body            :text
 #  created_at      :datetime         not null
 #  embed_url       :string
-#  id              :bigint(8)        not null, primary key
-#  is_private      :boolean          default(FALSE)
+#  id              :integer          not null, primary key
+#  is_private      :boolean          default("false")
 #  post_type       :string
 #  title           :string
 #  updated_at      :datetime         not null
-#  user_id         :bigint(8)
+#  user_id         :integer
 #  video_embed_url :string
 #
 # Indexes
 #
 #  index_posts_on_artist_page_id  (artist_page_id)
 #  index_posts_on_user_id         (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (artist_page_id => artist_pages.id)
-#  fk_rails_...  (user_id => users.id)
 #
 
 class Post < ApplicationRecord

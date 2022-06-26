@@ -4,18 +4,18 @@
 #
 #  accent_color            :string
 #  application_fee_percent :decimal(5, 2)    not null
-#  approved                :boolean          default(FALSE)
-#  artist_owner            :boolean          default(FALSE), not null
+#  approved                :boolean          default("false")
+#  artist_owner            :boolean          default("false"), not null
 #  bandcamp_handle         :string
 #  banner_image_url        :string
 #  bio                     :string
 #  created_at              :datetime         not null
 #  external                :string
-#  featured                :boolean          default(FALSE)
-#  hide_members            :boolean          default(FALSE)
-#  id                      :bigint(8)        not null, primary key
+#  featured                :boolean          default("false")
+#  hide_members            :boolean          default("false")
+#  id                      :integer          not null, primary key
 #  instagram_handle        :string
-#  is_soft_deleted         :boolean          default(FALSE)
+#  is_soft_deleted         :boolean          default("false")
 #  location                :string
 #  name                    :string
 #  permanently_delete_at   :datetime
@@ -24,10 +24,10 @@
 #  stripe_product_id       :string
 #  stripe_user_id          :string
 #  style_type              :string
-#  subscribe_to_newsletter :boolean          default(FALSE), not null
+#  subscribe_to_newsletter :boolean          default("false"), not null
 #  twitter_handle          :string
 #  updated_at              :datetime         not null
-#  verb_plural             :boolean          default(FALSE)
+#  verb_plural             :boolean          default("false")
 #  video_screenshot_url    :string
 #  video_url               :string
 #  youtube_handle          :string

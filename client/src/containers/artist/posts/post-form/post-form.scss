@@ -26,6 +26,28 @@
     background: $white;
     padding: 1rem;
   }
+  
+  .helper-text {
+    font-style: italic;
+    float: right;
+    color: $gray-light;
+    font-size: 0.8rem;
+    margin: 1.5rem 0;
+    font-family: $font-family-monospace;
+    position: relative;
+
+    .additional {
+      position: absolute;
+      background: white;
+      border: 1px solid $gray-light;
+      z-index: 999;
+      line-height: 20px;
+      padding: 8px;
+      width: 250px;
+      right: 0px;
+      top: -100px;
+    }
+  }
 
   &__controls {
     display: flex;
@@ -101,7 +123,7 @@
           border: 1px solid $black;
         }
         &.focused {
-          border: 1px solid $black;
+          border: 2px solid $black;
           font-family: $font-family-sans-serif-light;
         }
         &.large {
@@ -142,6 +164,22 @@
     }
     .public-DraftEditorPlaceholder-root {
       color: $gray-lighter;
+    }
+  }
+
+  &__embed {
+    margin-bottom: 1rem;
+    input {
+      &[placeholder] {
+        color: $gray;
+      }
+    }
+    .embed-container {
+      line-height: 0;
+      margin-top: 1rem;
+    }
+    .helper-text {
+      float: none;
     }
   }
 
@@ -304,28 +342,6 @@
     label {
       align-self: center;
       margin: 0;
-    }
-  }
-
-  .helper-text {
-    font-style: italic;
-    float: right;
-    color: $gray-light;
-    font-size: 0.8rem;
-    margin: 1.5rem 0;
-    font-family: $font-family-monospace;
-    position: relative;
-
-    .additional {
-      position: absolute;
-      background: white;
-      border: 1px solid $gray-light;
-      z-index: 999;
-      line-height: 20px;
-      padding: 8px;
-      width: 250px;
-      right: 0px;
-      top: -100px;
     }
   }
 

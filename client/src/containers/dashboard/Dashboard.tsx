@@ -13,7 +13,7 @@ import { showToastAction } from '../../redux/toast/toast-modal';
 import { config } from '../../config';
 
 import { LicenseInfo } from '@material-ui/x-grid';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import { Tab, Tabs } from '@material-ui/core';
 
 import { ConfirmationDialog } from '../shared/confirmation-dialog/ConfirmationDialog';
@@ -141,7 +141,7 @@ class DashboardComponent extends React.Component<Props, any> {
 
     const { artistColor, artistId, isStripeSetup } = selectedArtist;
 
-    const theme = createMuiTheme({
+    const theme = createTheme({
       palette: {
         primary: { main: '#1E1E1E' },
         secondary: { main: artistColor || '#1E1E1E' },

@@ -47,7 +47,7 @@ class CommentForm extends React.Component<Props, any> {
             maxLength: 2200,
           }}
           multiline
-          rowsMax={5}
+          maxRows={5}
           fullWidth
           placeholder="Write a comment"
           required

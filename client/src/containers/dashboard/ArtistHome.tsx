@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 
 import CardOverview from './CardOverview';
 import CardPromote from './CardPromote';
@@ -12,7 +12,7 @@ interface ArtistHomeProps {
 }
 
 export const ArtistHome = ({ userData, selectedArtist }: ArtistHomeProps) => {
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: {
       primary: { main: '#1E1E1E' },
     },

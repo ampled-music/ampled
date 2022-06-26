@@ -18,22 +18,26 @@ gem "jbuilder"
 gem "jwt"
 gem "kaminari"
 gem "money"
+gem "net-http"
+gem "nokogiri"
 gem "pg"
 gem "postmark-rails", ">=0.19.0"
 gem "puma"
 gem "pundit"
 gem "rack-canonical-host"
 gem "rack-cors", require: "rack/cors"
-gem "rails", "~> 5.2"
+gem "rails", "~> 7.0"
 gem "sentry-raven"
 gem "sidekiq"
 gem "stripe"
+gem "uri", "0.10.0"
 gem "wavefile"
 gem "zencoder"
 
 # Front-endy
 # Use uglifier for JavaScript compression.
 # This is only useful for things like the /admin/ engine, since this is an API-only server that serves no HTML/JS/CSS.
+gem "simple_form"
 gem "uglifier"
 # We still have .slim files. Unclear if they are still used, but requires more investigation.
 gem "slim-rails"
@@ -65,9 +69,6 @@ group :development do
   gem "bullet"
   gem "launchy"
   gem "listen"
-  gem "spring"
-  gem "spring-commands-rspec"
-  gem "spring-watcher-listen"
 end
 
 group :test do

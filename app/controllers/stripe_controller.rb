@@ -54,7 +54,6 @@ class StripeController < ApplicationController
   # @param object [Stripe::StripeObject] Stripe object contained in the Stripe Event
   # @param connect_account_id [String, nil] The Stripe Connect Account ID associated with the Stripe Event, if any
   def process_webhook(event_type, object, connect_account_id)
-    StripeReconciliation::ReconcileStripeObjectJob.perform_async(object.to_h)
     case event_type
     when "invoice.payment_failed"
       return invoice_payment_failed(object)

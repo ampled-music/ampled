@@ -42,6 +42,7 @@ import AudioIcon from '../../../../images/icons/Icon_Audio.svg';
 import PhotoIcon from '../../../../images/icons/Icon_Photo.svg';
 import VideoIcon from '../../../../images/icons/Icon_Video.svg';
 import Speaker from '../../../../images/home/home_how_speaker.png';
+import Bandcamp from '../../../../images/icons/Icon_Bandcamp.svg';
 
 import { initialState as artistsInitialState } from '../../../../redux/artists/initial-state';
 import { initialState as postsInitialState } from '../../../../redux/posts/initial-state';
@@ -175,7 +176,7 @@ class RichEditor extends React.Component<RichEditorProps> {
             onClick={this.focusEditor}
           >
             <Editor
-              placeholder="Body Text"
+              label="Body Text"
               textAlignment="left"
               ref={this.setEditor}
               editorState={this.state.editorState}
@@ -257,6 +258,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
     audioUploads: [],
     imageName: '',
     videoEmbedUrl: null,
+    embedUrl: null,
     isPublic: false,
     allowDownload: false,
     isPinned: false,
@@ -272,7 +274,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
     showAudio: false,
     showVideo: false,
     showImage: false,
-    showLink: false,
+    showEmbed: false,
   };
 
   editor: any;
@@ -281,7 +283,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
     super(props);
     if (props.post) {
       const { post } = props;
-      let activePostType, showText, showAudio, showVideo, showImage;
+      let activePostType, showText, showAudio, showVideo, showImage, showEmbed;
       if (post.audio_file) {
         activePostType = 'Audio';
         showAudio = true;
@@ -292,6 +294,9 @@ export default class PostFormComponent extends React.Component<Props, any> {
       } else if (post.video_embed_url) {
         activePostType = 'Video';
         showVideo = true;
+      } else if (post.embed_url) {
+        activePostType = 'Embed';
+        showEmbed = true;
       } else {
         activePostType = 'Text';
         showText = true;
@@ -303,6 +308,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
         audioUploads: props.post.audio_uploads,
         images: props.post.images,
         videoEmbedUrl: props.post.video_embed_url,
+        embedUrl: props.post.embed_url,
         isPublic: !props.post.is_private,
         allowDownload: props.post.allow_download,
         activePostType,
@@ -310,6 +316,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
         showAudio,
         showVideo,
         showImage,
+        showEmbed,
       };
     } else {
       this.state = this.initialState;
@@ -354,6 +361,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
       audioUploads,
       images,
       videoEmbedUrl,
+      embedUrl,
       isPublic,
       allowDownload,
       isPinned,
@@ -368,6 +376,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
       audio_uploads: audioUploads,
       images: ['Audio', 'Photo'].includes(activePostType) ? images : [],
       video_embed_url: activePostType === 'Video' ? videoEmbedUrl : null,
+      embed_url: activePostType === 'Embed' ? embedUrl : null,
       is_private: !isPublic,
       is_pinned: isPinned,
       allow_download: activePostType === 'Audio' ? allowDownload : null,
@@ -508,19 +517,37 @@ export default class PostFormComponent extends React.Component<Props, any> {
     this.setState({ allowDownload: event.target.checked });
   };
 
-  isSaveEnabled = () => {
-    const { title, body, images, videoEmbedUrl, audioUploads } = this.state;
+  validateURL = (url) => {
+    const { activePostType } = this.state;
+    if (activePostType === 'Video') {
+      console.log('Video', /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi.test(url));
+      return url && url.length > 0 && /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi.test(url);
+    }
+    if (activePostType === 'Embed') {
+      console.log('Embed', /(www\.)?(bandcamp\.com)\//i.test(url));
+      return url && url.length > 0 && /(www\.)?(bandcamp\.com)\//i.test(url);
+    }
+    return false;
+  };
 
-    return (
-      title &&
-      title.length > 0 &&
-      ((audioUploads &&
-        audioUploads.length > 0 &&
-        audioUploads[0].public_id.length > 0) ||
-        (images && images.length > 0) ||
-        (videoEmbedUrl && videoEmbedUrl.length > 0) ||
-        (body && body.length > 0))
-    );
+  isSaveEnabled = () => {
+    const { title, activePostType, images, videoEmbedUrl, embedUrl, audioUploads } = this.state;
+    if ( activePostType === 'Text' ) {
+      return title?.length > 0;
+    }
+    if ( activePostType === 'Audio' ) {
+      return title?.length > 0 && audioUploads?.length > 0 && audioUploads[0].public_id.length > 0;
+    }
+    if ( activePostType === 'Photo' ) {
+      return title?.length > 0 && images?.length > 0;
+    }
+    if ( activePostType === 'Video' ) {
+      return title?.length > 0 && videoEmbedUrl?.length > 0 && this.validateURL(videoEmbedUrl);
+    }
+    if ( activePostType === 'Embed' ) {
+      return title?.length > 0 && embedUrl?.length > 0 && this.validateURL(embedUrl);
+    }
+    return false;
   };
 
   renderButtons = () => {
@@ -536,7 +563,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
               showAudio: false,
               showVideo: false,
               showImage: false,
-              showLink: false,
+              showEmbed: false,
             })
           }
         >
@@ -553,7 +580,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
               showAudio: true,
               showVideo: false,
               showImage: true,
-              showLink: false,
+              showEmbed: false,
             })
           }
         >
@@ -570,7 +597,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
               showAudio: false,
               showVideo: true,
               showImage: false,
-              showLink: false,
+              showEmbed: false,
             })
           }
         >
@@ -587,30 +614,30 @@ export default class PostFormComponent extends React.Component<Props, any> {
               showAudio: false,
               showVideo: false,
               showImage: true,
-              showLink: false,
+              showEmbed: false,
             })
           }
         >
           <img src={PhotoIcon} className="btn__icon" alt="" />
           Photo
         </Button>
-        {/* <Button
+        <Button
           className={cx('btn', {
-            active: this.state.activePostType === 'Link',
+            active: this.state.activePostType === 'Embed',
           })}
           onClick={() =>
             this.setState({
-              activePostType: 'Link',
+              activePostType: 'Embed',
               showAudio: false,
               showVideo: false,
               showImage: false,
-              showLink: true,
+              showEmbed: true,
             })
           }
         >
-          <img src={Link2Icon} className="btn__icon" alt=""/>
-          Link
-        </Button> */}
+          <img src={Bandcamp} className="btn__icon" alt=""/>
+          Embed
+        </Button>
       </div>
     );
   };
@@ -782,6 +809,25 @@ export default class PostFormComponent extends React.Component<Props, any> {
     }
   };
 
+  renderEmbedPreview = () => {
+    const { embedUrl } = this.state;
+    let isBandcamp =
+        embedUrl &&
+        embedUrl.length > 0 &&
+        /(www\.)?(bandcamp\.com)\//i.test(embedUrl);
+
+    if (isBandcamp) {
+      return (  
+        <div
+          className="embed-container"
+          dangerouslySetInnerHTML={{ __html: embedUrl }}
+        />
+      );
+    } else {
+      return <div className="helper-text">Sorry, at the moment we only accept Bandcamp embeds.</div>;
+    }
+  };
+
   renderVideoEmbedder = () => {
     const { videoEmbedUrl } = this.state;
 
@@ -789,7 +835,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
       <div className="post-form__video">
         <TextField
           name="videoEmbedUrl"
-          placeholder="YouTube or Vimeo URL"
+          label="YouTube or Vimeo URL"
           type="text"
           fullWidth
           InputLabelProps={{
@@ -798,24 +844,33 @@ export default class PostFormComponent extends React.Component<Props, any> {
           value={videoEmbedUrl ? videoEmbedUrl : ''}
           onChange={this.handleChange}
           required
-          InputProps={{
-            endAdornment: !(videoEmbedUrl && videoEmbedUrl.length > 0) ? (
-              <InputAdornment position="end">
-                <span
-                  style={{
-                    color: 'rgba(0, 0, 0, 0.42)',
-                    fontSize: '0.8rem',
-                  }}
-                >
-                  (required)
-                </span>
-              </InputAdornment>
-            ) : (
-              undefined
-            ),
-          }}
         />
         {videoEmbedUrl && this.renderVideoPreview()}
+      </div>
+    );
+  };
+
+  renderEmbed = () => {
+    const { embedUrl } = this.state;
+
+    return (
+      <div className="post-form__embed">
+        <TextField
+          name="embedUrl"
+          label="Bandcamp iFrame"
+          variant="outlined"
+          type="text"
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={embedUrl ? embedUrl : ''}
+          onChange={this.handleChange}
+          multiline
+          rows="3"
+          required
+        />
+        {embedUrl && this.renderEmbedPreview()}
       </div>
     );
   };
@@ -836,7 +891,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
       <TextField
         autoFocus
         name="title"
-        placeholder="Post title"
+        label="Post title"
         type="text"
         fullWidth
         InputLabelProps={{
@@ -847,22 +902,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
         onChange={this.handleChange}
         className="post-form__title"
         required
-        InputProps={{
-          endAdornment: !(title && title.length > 0) ? (
-            <InputAdornment position="end">
-              <span
-                style={{
-                  color: 'rgba(0, 0, 0, 0.42)',
-                  fontSize: '0.8rem',
-                }}
-              >
-                (required)
-              </span>
-            </InputAdornment>
-          ) : (
-            undefined
-          ),
-        }}
       />
     );
   };
@@ -909,42 +948,6 @@ export default class PostFormComponent extends React.Component<Props, any> {
           </div>
         )}
       </div>
-    );
-  };
-
-  renderLink = () => {
-    const { link } = this.state;
-    return (
-      <TextField
-        name="link"
-        placeholder="Type or Paste a URL"
-        type="text"
-        fullWidth
-        InputLabelProps={{
-          shrink: true,
-        }}
-        value={link}
-        onFocus={() => this.editor && this.editor.setHyperlinkHelp(false)}
-        onChange={this.handleChange}
-        className="post-form__link"
-        required
-        InputProps={{
-          endAdornment: !(link && link.length > 0) ? (
-            <InputAdornment position="end">
-              <span
-                style={{
-                  color: 'rgba(0, 0, 0, 0.42)',
-                  fontSize: '0.8rem',
-                }}
-              >
-                (required)
-              </span>
-            </InputAdornment>
-          ) : (
-            undefined
-          ),
-        }}
-      />
     );
   };
 
@@ -1011,7 +1014,7 @@ export default class PostFormComponent extends React.Component<Props, any> {
                 {this.state.showImage && this.renderImageUpload()}
                 {this.renderTitle()}
                 {this.state.showVideo && this.renderVideoEmbedder()}
-                {this.state.showLink && this.renderLink()}
+                {this.state.showEmbed && this.renderEmbed()}
                 {this.renderDescription()}
                 <div className="post-form__public">
                   <FormControlLabel

@@ -31,6 +31,7 @@
 
   &__content {
     background-color: $white;
+    max-width: 700px;
   }
 
   &__image {
@@ -79,6 +80,10 @@
 
     &.video {
       height: 250px;
+    }
+    &.embed iframe {
+      width: 100% !important;
+      border: 0;
     }
 
     .blur-image {

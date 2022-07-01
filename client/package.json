@@ -56,7 +56,7 @@
     "styled-components": "^5.3.0"
   },
   "scripts": {
-    "start": "PORT=5000 react-scripts --openssl-legacy-provider start",
+    "start": "PORT=5000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test-ci": "react-scripts test --env=jsdom --watchAll=false",

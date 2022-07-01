@@ -16,7 +16,7 @@ jobs:
           RAILS_ENV: test
           # Needs to be set for production-like asset precompilation check
           SECRET_KEY_BASE: super-seekret
-      - image: cimg/postgres:10.4-alpine
+      - image: cimg/postgres:10.20
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: ampled_web_test

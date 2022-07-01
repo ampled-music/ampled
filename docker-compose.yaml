@@ -2,7 +2,7 @@ version: '3'
 
 services:
   site:
-    image: node:16
+    image: node:12
     command: npm start
     working_dir: /usr/src/app
     volumes:

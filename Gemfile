@@ -30,7 +30,6 @@ gem "rails", "~> 7.0"
 gem "sentry-raven"
 gem "sidekiq"
 gem "stripe"
-gem "uri", "0.11.0"
 gem "wavefile"
 gem "zencoder"
 

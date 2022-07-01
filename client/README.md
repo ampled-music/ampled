@@ -328,7 +328,7 @@ Add the following line to `scripts` section:
 ```diff
   "scripts": {
 +   "precommit": "lint-staged",
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
 ```
 
@@ -568,7 +568,7 @@ Then in `package.json`, add the following lines to `scripts`:
    "scripts": {
 +    "build-css": "node-sass-chokidar src/ -o src/",
 +    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-     "start": "react-scripts start",
+     "start": "react-scripts --openssl-legacy-provider start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
 ```
@@ -1569,7 +1569,7 @@ By default, the `package.json` of the generated project looks like this:
 
 ```js
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom"
 ```
@@ -1578,7 +1578,7 @@ If you know that none of your tests depend on [jsdom](https://github.com/tmpvar/
 
 ```diff
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
 -   "test": "react-scripts test --env=jsdom"
 +   "test": "react-scripts test"
@@ -1731,7 +1731,7 @@ Then, add these scripts to your `package.json`:
    "scripts": {
 +    "styleguide": "styleguidist server",
 +    "styleguide:build": "styleguidist build",
-     "start": "react-scripts start",
+     "start": "react-scripts --openssl-legacy-provider start",
 ```
 
 Then, run the following command inside your app’s directory:
@@ -1877,7 +1877,7 @@ Then in `package.json`, add the following line to `scripts`:
 ```diff
    "scripts": {
 +    "analyze": "source-map-explorer build/static/js/main.*",
-     "start": "react-scripts start",
+     "start": "react-scripts --openssl-legacy-provider start",
      "build": "react-scripts build",
      "test": "react-scripts test --env=jsdom",
 ```
@@ -2133,7 +2133,7 @@ Add the following scripts in your `package.json`:
   "scripts": {
 +   "predeploy": "npm run build",
 +   "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
 ```
 

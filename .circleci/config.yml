@@ -26,11 +26,9 @@ jobs:
     working_directory: ~/circleci-demo-workflows
     steps:
       - checkout
-      # Upgrade node to 16.15.1
-      - node/install:
-          install-yarn: true
-          install-npm: false
-          node-version: "16.15.1"
+      - run: |
+          ruby --version
+          node --version
 
       # Restore bundle cache, with fallbacks to increase the likeliness of a cache hit
       - restore_cache:

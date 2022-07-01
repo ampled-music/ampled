@@ -9,23 +9,28 @@ commands:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7.2-node-browsers
+      - image: cimg/ruby:2.7.2-browsers
         environment:
           PGHOST: 127.0.0.1
           PGUSER: postgres
           RAILS_ENV: test
           # Needs to be set for production-like asset precompilation check
           SECRET_KEY_BASE: super-seekret
-      - image: circleci/postgres:10.4-alpine
+      - image: cimg/postgres:10.4-alpine
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: ampled_web_test
           POSTGRES_PASSWORD: ''
-      - image: circleci/redis
+      - image: cimg/redis
     resource_class: large
     working_directory: ~/circleci-demo-workflows
     steps:
       - checkout
+      # Upgrade node to 16.15.1
+      - node/install:
+          install-yarn: true
+          install-npm: false
+          node-version: "16.15.1"
 
       # Restore bundle cache, with fallbacks to increase the likeliness of a cache hit
       - restore_cache:

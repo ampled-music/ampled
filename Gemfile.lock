@@ -1643,7 +1643,7 @@ GEM
     unicode-display_width (2.1.0)
     uniform_notifier (1.14.2)
     uri (0.10.0)
-    vcr (6.0.0)
+    vcr (6.1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     warden-jwt_auth (0.6.0)

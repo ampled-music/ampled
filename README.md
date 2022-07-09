@@ -60,7 +60,7 @@ Ask other devs in the Slack to get access to these services.
 
 To run the specs or fire up the server, be sure you have these installed (and running):
 
-- Ruby 2.7.2 (see [.ruby-version](.ruby-version)).
+- Ruby 2.7.6 (see [.ruby-version](.ruby-version)).
 - PostgreSQL 10.3+ (`brew install postgresql`).
 - Heroku CLI (`brew tap heroku/brew && brew install heroku`).
 - ffmpeg (`brew install ffmpeg`)

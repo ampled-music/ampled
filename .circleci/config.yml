@@ -23,7 +23,7 @@ jobs:
           POSTGRES_PASSWORD: ''
       - image: cimg/redis:6.2.7
     resource_class: large
-    working_directory: /var/opt/circleci/workdir
+    working_directory: ~/circleci-demo-workflows
     steps:
       - checkout
 

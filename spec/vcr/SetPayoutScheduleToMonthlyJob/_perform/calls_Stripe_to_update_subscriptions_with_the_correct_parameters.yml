@@ -16,7 +16,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_0iKhRd82J6sJoz","request_duration_ms":578}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -221,7 +221,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_r1CyTuufyHdkYD","request_duration_ms":518}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -427,7 +427,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_156Wq4h2oVwLrE","request_duration_ms":6110}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -633,7 +633,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_9HxJ1kiZFGNYeA","request_duration_ms":534}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -838,7 +838,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_jFvkOaitDESBn1","request_duration_ms":612}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -1044,7 +1044,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_Sv0ucrSbxJgD13","request_duration_ms":2264}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -1250,7 +1250,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_D4SF5cyZnmmqoy","request_duration_ms":611}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -1455,7 +1455,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_YyEUTfpn5vSAlJ","request_duration_ms":599}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -1661,7 +1661,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_z7zdxm73DFPscg","request_duration_ms":3641}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -1865,7 +1865,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Stripe-Version:
@@ -2148,7 +2148,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_avRoryqW7SHms8","request_duration_ms":3590}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Stripe-Account:
@@ -2240,7 +2240,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_nFNOnoGi481m8F","request_duration_ms":536}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -2445,7 +2445,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_nZ5wBjNtW10oXW","request_duration_ms":691}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -2651,7 +2651,7 @@ http_interactions:
       X-Stripe-Client-Telemetry:
       - '{"last_request_metrics":{"request_id":"req_UFHfCT1wEthxD3","request_duration_ms":4286}}'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"5.35.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:

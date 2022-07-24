@@ -37,12 +37,12 @@ $MQs: true;
         @content;
       }
     }
-    @elseif $bp-2 == "max" {
+    @else if $bp-2 == "max" {
       @media (max-width:$bp-1 - 1) {
         @content;
       }
     }
-    @elseif $bp-2 == null {
+    @else if $bp-2 == null {
       @media (min-width:$bp-1) {
         @content;
       }

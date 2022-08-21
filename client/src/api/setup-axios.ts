@@ -2,7 +2,6 @@ import axios from 'axios';
 import * as store from 'store';
 
 import { config } from '../config';
-import { routePaths } from '../containers/route-paths';
 
 export const setupAxios = () => {
   axios.defaults.baseURL = config.apiUrl;
@@ -32,9 +31,9 @@ const getApiAxios = () => {
       return response;
     },
     (error) => {
+      console.log(error.response);
       if (error.response.status === 401) {
         store.clearAll();
-        window.location.href = routePaths.root;
       }
 
       return Promise.reject(error);

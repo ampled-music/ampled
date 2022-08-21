@@ -53,7 +53,6 @@ class LoginComponent extends React.Component<Props, any> {
             Please use the link in the login form.
           </>
         );
-        console.log('fired');
         this.setState({
           showConfirmationResend: true,
         });
@@ -94,7 +93,6 @@ class LoginComponent extends React.Component<Props, any> {
     const { email, password } = this.state;
 
     await this.props.login(email, password);
-    console.log(this.props);
   };
 
   handleChange = (e) => {

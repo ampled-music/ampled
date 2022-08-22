@@ -182,11 +182,11 @@ class LoginComponent extends React.Component<Props, any> {
           {this.state.showConfirmationResend && (
             <label style={{ textAlign: 'center' }}>
               <button className="link" onClick={this.resendConfirmation}>
-                <u>
+                <u><strong>
                   Re-send confirmation to
                   <br />
                   {this.state.email}
-                </u>
+                </strong></u>
               </button>
             </label>
           )}

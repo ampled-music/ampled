@@ -6,11 +6,7 @@ export const uploadFileToCloudinary = async (file: any) => {
   formData.append('file', file);
 
   try {
-    console.log('Trying to upload to /uploads/cloudinary');
-    console.log('Config: ', config);
-
     const { data } = await axios.post(`/uploads/cloudinary`, formData);
-
     return data;
   } catch (err) {
     return undefined;

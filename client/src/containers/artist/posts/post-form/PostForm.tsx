@@ -31,7 +31,9 @@ import {
 import YouTubePlayer from 'react-player/lib/players/YouTube';
 import VimeoPlayer from 'react-player/lib/players/Vimeo';
 import { Editor, EditorState, RichUtils } from 'draft-js';
+// import Editor from "draft-js-plugins-editor";
 import { convertFromHTML, convertToHTML } from 'draft-convert';
+import LinkPlugin from './plugin/LinkPlugin';
 import DOMPurify from 'dompurify';
 
 import Close from '../../../../images/icons/Icon_Close-Cancel.svg';
@@ -90,8 +92,8 @@ class RichEditor extends React.Component<RichEditorProps> {
     focused: false,
     showHyperlinkHelp: false,
   };
-
   editor: any;
+  plugins: any;
 
   constructor(props) {
     super(props);
@@ -103,6 +105,7 @@ class RichEditor extends React.Component<RichEditorProps> {
         ),
       };
     }
+    this.plugins = [LinkPlugin];
   }
 
   handleKeyCommand = (command, editorState) => {
@@ -155,6 +158,28 @@ class RichEditor extends React.Component<RichEditorProps> {
     );
   };
 
+  onAddLink = () => {
+    const editorState = this.state.editorState;
+    const selection = editorState.getSelection();
+    const link = window.prompt("Paste the link -");
+    if (!link) {
+      this.onChange(RichUtils.toggleLink(editorState, selection, null));
+      return "handled";
+    }
+    const content = editorState.getCurrentContent();
+    const contentWithEntity = content.createEntity("LINK", "MUTABLE", {
+      url: link
+    });
+    const newEditorState = EditorState.push(
+      editorState,
+      contentWithEntity,
+      "create-entity"
+    );
+    const entityKey = contentWithEntity.getLastCreatedEntityKey();
+    this.onChange(RichUtils.toggleLink(newEditorState, selection, entityKey));
+    return "handled";
+  };
+
   hasInlineStyle = (style) =>
     this.state.editorState.getCurrentInlineStyle().has(style);
 
@@ -188,6 +213,7 @@ class RichEditor extends React.Component<RichEditorProps> {
               onBlur={() => {
                 this.setState({ focused: false });
               }}
+              plugins={this.plugins}
             />
           </div>
           <div className="rich-controls">
@@ -220,6 +246,13 @@ class RichEditor extends React.Component<RichEditorProps> {
               }
             >
               &#x2022;
+            </span>
+            <span 
+              title="Bullets"
+              role="button"
+              onMouseDown={this.onAddLink}
+              className={this.hasInlineStyle('ITALIC') ? 'active' : 'inactive'}>
+              X
             </span>
           </div>
         </div>

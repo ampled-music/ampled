@@ -31,7 +31,6 @@ const getApiAxios = () => {
       return response;
     },
     (error) => {
-      console.log(error.response);
       if (error.response.status === 401) {
         store.clearAll();
       }

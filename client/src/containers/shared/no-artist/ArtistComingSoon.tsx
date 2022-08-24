@@ -17,7 +17,6 @@ class ArtistComingSoon extends React.Component<Props, any> {
 
   render() {
     const artist = this.props.artist;
-    // console.log(artist);
 
     return (
       <div className="no-artist">

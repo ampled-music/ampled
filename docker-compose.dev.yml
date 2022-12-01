@@ -1,0 +1,44 @@
+version: '3.5'
+
+services:
+  app:
+    image: ampled/ruby-2.7.7
+    build: .
+    container_name: ampled-app
+    # command: yarn start
+    working_dir: /usr/src
+    # restart: always
+    volumes:
+      - ./:/usr/src
+      # - /usr/src/client/
+    depends_on:
+      - mailcatcher
+      - db
+    environment:
+      MAILCATCHER_HOST: 'mailcatcher'
+      BINDING: 0.0.0.0
+    ports:
+      - 127.0.0.1:3000:3000
+      - 5000:5000
+
+  mailcatcher:
+    image: zolweb/docker-mailcatcher:latest
+    ports:
+      - 1025:1025
+      - 1080:1080
+
+  db:
+    image: postgres:10.4-alpine
+    env_file:
+      - .env
+    volumes:
+      - ./data/pgsql:/var/lib/postgresql/data
+    container_name: ampled-db
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=ampled
+      - POSTGRES_DB=ampled_web_development
+    expose:
+      - '5432'
+    ports:
+      - '127.0.0.1:${PG_HOST_PORT}:5432'

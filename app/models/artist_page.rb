@@ -15,10 +15,8 @@
 #  hide_members            :boolean          default("false")
 #  id                      :integer          not null, primary key
 #  instagram_handle        :string
-#  is_soft_deleted         :boolean          default("false")
 #  location                :string
 #  name                    :string
-#  permanently_delete_at   :datetime
 #  slug                    :string
 #  state_token             :string
 #  stripe_product_id       :string

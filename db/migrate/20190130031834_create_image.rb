@@ -9,4 +9,3 @@ class CreateImage < ActiveRecord::Migration[5.2]
     end
   end
 end
-q

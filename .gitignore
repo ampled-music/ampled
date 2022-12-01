@@ -17,6 +17,7 @@ latest.dump
 
 # Ignore database backups
 /db/backups/
+/data/pgsql
 
 # Ignore all logfiles and tempfiles.
 /log/*.log

@@ -20,7 +20,7 @@ jobs:
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: ampled_web_test
-          POSTGRES_PASSWORD: ''
+          POSTGRES_PASSWORD: ""
       - image: circleci/redis
     resource_class: large
     working_directory: ~/circleci-demo-workflows
@@ -56,7 +56,7 @@ jobs:
 
       - run:
           name: Cypress tests
-          command: yarn install && cd client && yarn install && cd .. && HOSTNAME=localhost yarn run integration-tests
+          command: yarn install && cd client && yarn install && cd .. && RAILS_HOSTNAME=localhost yarn run integration-tests
 
       - store_artifacts:
           path: ~/circleci-demo-workflows/cypress/screenshots/

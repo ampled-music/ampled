@@ -71,7 +71,7 @@ Rails.application.configure do
 
   # Set the host so that we can generate full URLs outside the context of a request
   # (e.g. sending email).
-  config.action_mailer.default_url_options = { host: ENV.fetch("HOSTNAME", "ampled.com") }
+  config.action_mailer.default_url_options = { host: ENV.fetch("RAILS_HOSTNAME", "ampled.com") }
   config.action_mailer.delivery_method = :postmark
   config.action_mailer.postmark_settings = { api_token: ENV["POSTMARK_API_KEY"] }
 

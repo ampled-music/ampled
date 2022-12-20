@@ -139,13 +139,9 @@ Then when starting your application server or console set the rails env to produ
 
 ### Git
 
-- Branch `development` is auto-deployed to acceptance.
-- Branch `main` is auto-deployed to production.
-- Create feature branches off of `development` using the naming convention
-  `(features|chores|bugs)/a-brief-description-######`, where ###### is the tracker id.
-- Rebase your feature branch before merging into `development` to produce clean/compact merge bubbles.
-- Always retain merge commits when merging into `development` (e.g. `git merge --no-ff branchname`).
-- Use `git merge development` (fast-forward, no merge commit) from `main`.
+- Create feature branches off of `main` using the naming convention
+  `(features|chores|bugs)/a-brief-description`
+- Rebase your feature branch before merging into `main` to produce clean/compact merge bubbles.
 - Craft atomic commits that make sense on their own and can be easily cherry-picked or reverted if necessary.
 
 ### Code Style

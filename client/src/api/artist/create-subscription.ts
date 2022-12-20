@@ -14,7 +14,7 @@ export const createSubscription = async (subscription: {
       amount: subscription.subscriptionLevelValue,
     },
   });
-
+  console.log(data);
   if (data && data.status && data.status === 'error') {
     throw data.message;
   }

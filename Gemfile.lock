@@ -1724,7 +1724,7 @@ DEPENDENCIES
   zencoder
 
 RUBY VERSION
-   ruby 2.7.6p219
+   ruby 2.7.2p137
 
 BUNDLED WITH
    2.3.5

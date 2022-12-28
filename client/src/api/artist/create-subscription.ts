@@ -8,14 +8,13 @@ export const createSubscription = async (subscription: {
   const { data } = await apiAxios({
     method: 'post',
     url: `/subscriptions`,
-    data: { 
+    data: {
       artist_page_id: subscription.artistPageId,
       token: subscription.paymentToken,
       amount: subscription.subscriptionLevelValue,
     },
   });
-  console.log(data);
-  if (data && data.status && data.status === 'error') {
+  if (data?.status === 'error') {
     throw data.message;
   }
 

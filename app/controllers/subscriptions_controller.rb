@@ -101,7 +101,6 @@ class SubscriptionsController < ApplicationController
       {
         customer: artist_customer_id,
         plan: plan.stripe_id,
-        payment_behavior: "allow_incomplete",
         expand: ["latest_invoice.payment_intent"],
         application_fee_percent: stripe_application_fee_percent
       }, stripe_account: current_artist_page.stripe_user_id
@@ -129,6 +128,17 @@ class SubscriptionsController < ApplicationController
     artist_customer = create_artist_customer(token)
 
     begin
+      payment_intent = Stripe::PaymentIntent.create(
+        {
+          customer: artist_customer.id,
+          setup_future_usage: 'off_session',
+          amount: subscription_params[:amount].to_i,
+          currency: 'usd',
+          automatic_payment_methods: {
+            enabled: true,
+          },
+        }
+      )
       stripe_subscription = create_stripe_subscription(plan, artist_customer.id)
     rescue StandardError => e
       Raven.capture_exception(e)

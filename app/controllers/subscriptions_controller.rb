@@ -101,7 +101,7 @@ class SubscriptionsController < ApplicationController
       {
         customer: artist_customer_id,
         plan: plan.stripe_id,
-        payment_behavior: "allow_incomplete",
+        # payment_behavior: "allow_incomplete",
         expand: ["latest_invoice.payment_intent"],
         application_fee_percent: stripe_application_fee_percent
       }, stripe_account: current_artist_page.stripe_user_id

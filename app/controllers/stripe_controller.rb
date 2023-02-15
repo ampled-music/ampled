@@ -76,7 +76,7 @@ class StripeController < ApplicationController
     # lowercase currency e.g. usd
     invoice_currency = object[:currency]
 
-    user = subscription.user
+    user = usersub.user
     user.update!(card_is_valid: true)
 
     logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"

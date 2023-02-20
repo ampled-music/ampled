@@ -76,6 +76,9 @@ class StripeController < ApplicationController
     # lowercase currency e.g. usd
     invoice_currency = object[:currency]
 
+    user = usersub.user
+    user.update!(card_is_valid: true)
+
     logger.info "Stripe: sending CardChargedEmail to #{usersub.user.email} for #{invoice_total}"
     CardChargedEmailJob.perform_async(usersub.id, invoice_total, invoice_currency)
     render json: {}

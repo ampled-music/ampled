@@ -1,4 +1,4 @@
-class CardDeclineEmailJob
+class CardActionRequiredEmailJob
   include Sidekiq::Worker
   attr_accessor :subscription
 
@@ -9,7 +9,7 @@ class CardDeclineEmailJob
       [{
         from: ENV["POSTMARK_FROM_EMAIL"],
         to: subscription.user.email,
-        template_alias: "credit_card_decline",
+        template_alias: "credit_card_action_required",
         template_model: {
           artist: subscription.artist_page.name
         }

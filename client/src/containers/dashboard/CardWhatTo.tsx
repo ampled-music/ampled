@@ -53,6 +53,7 @@ export const CardWhatTo = () => {
 
           <div className="col-12 col-sm-5 dashboard__home_card_whatto_content">
             <div className="dashboard__home_card_whatto_icon">
+              {/* eslint-disable-next-line */}
               <img src={PhotoIcon} className="" alt="Image Icon" />
             </div>
             <div className="dashboard__home_card_whatto_info">

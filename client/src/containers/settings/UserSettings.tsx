@@ -732,8 +732,6 @@ class UserSettingsComponent extends React.Component<Props, any> {
               Congrats! Your page is now eligible for approval. When you’re
               ready for us to take a look, request approval for{' '}
               {notApproved.map((page, index) => {
-                console.log(notApproved.length);
-                console.log(index);
                 if (
                   notApproved.length > 1 &&
                   notApproved.length === index + 1

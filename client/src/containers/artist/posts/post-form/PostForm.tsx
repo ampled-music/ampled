@@ -520,11 +520,9 @@ export default class PostFormComponent extends React.Component<Props, any> {
   validateURL = (url) => {
     const { activePostType } = this.state;
     if (activePostType === 'Video') {
-      console.log('Video', /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi.test(url));
       return url && url.length > 0 && /(youtube.com\/watch\?|youtu.be\/|vimeo.com\/\d+)/gi.test(url);
     }
     if (activePostType === 'Embed') {
-      console.log('Embed', /(www\.)?(bandcamp\.com)\//i.test(url));
       return url && url.length > 0 && /(www\.)?(bandcamp\.com)\//i.test(url);
     }
     return false;

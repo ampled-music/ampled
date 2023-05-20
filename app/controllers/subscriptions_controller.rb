@@ -7,11 +7,11 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    subscription = subscribe_stripe
+    subscription, stripe_subscription = subscribe_stripe
     UpdateArtistOwnerStatusJob.perform_async(@current_artist_page.id)
     UserSupportedArtistEmailJob.perform_async(subscription.id)
     NewSupporterNotificationJob.perform_async(subscription.id)
-    render json: subscription
+    render json: JSON.parse(subscription.to_json).merge("stripe_status" => stripe_subscription.status)
   rescue Stripe::InvalidRequestError => e
     return account_restricted_error(e) if /disabled_reason/.match?(e.message)
 
@@ -102,7 +102,8 @@ class SubscriptionsController < ApplicationController
         customer: artist_customer_id,
         plan: plan.stripe_id,
         expand: ["latest_invoice.payment_intent"],
-        application_fee_percent: stripe_application_fee_percent
+        application_fee_percent: stripe_application_fee_percent,
+        payment_behavior: "allow_incomplete"
       }, stripe_account: current_artist_page.stripe_user_id
     )
   end
@@ -147,7 +148,7 @@ class SubscriptionsController < ApplicationController
     current_user.update(card_brand: card.brand, card_exp_month: card.exp_month,
                         card_exp_year: card.exp_year, card_last4: card.last4,
                         card_is_valid: true)
-    subscription
+    [subscription, stripe_subscription]
   end
 
   def create_platform_customer

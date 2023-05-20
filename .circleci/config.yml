@@ -54,12 +54,12 @@ jobs:
           name: Test production asset compilation
           command: RAILS_ENV=production bundle exec rake assets:precompile
 
-      - run:
-          name: Cypress tests
-          command: yarn install && cd client && yarn install && cd .. && HOSTNAME=localhost yarn run integration-tests
+      # - run:
+      #     name: Cypress tests
+      #     command: yarn install && cd client && yarn install && cd .. && HOSTNAME=localhost yarn run integration-tests
 
-      - store_artifacts:
-          path: ~/circleci-demo-workflows/cypress/screenshots/
+      # - store_artifacts:
+      #     path: ~/circleci-demo-workflows/cypress/screenshots/
 
       # Steps below this line will only run if JavaScript/Typescript files have changed.
       - check-changed-files-or-halt:

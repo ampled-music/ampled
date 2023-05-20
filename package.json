@@ -39,7 +39,7 @@
   },
   "engines": {
     "node": "16.14.2",
-    "yarn": ">=1.12.1"
+    "yarn": "1.22.19"
   },
   "cacheDirectories": [
     "node_modules",

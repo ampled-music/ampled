@@ -2,7 +2,6 @@
   "name": "ampled",
   "version": "1.0.0",
   "private": true,
-  "production": false,
   "scripts": {
     "start": "concurrently -k 'yarn run start:client' 'yarn run start:server' || true",
     "start:client": "cd client && npm-run-all start",

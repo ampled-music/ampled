@@ -40,8 +40,6 @@ ActiveRecord::Schema.define(version: 2021_12_28_171024) do
     t.string "external"
     t.string "style_type"
     t.boolean "artist_owner", default: false, null: false
-    t.boolean "is_soft_deleted", default: false
-    t.datetime "permanently_delete_at", precision: 6
     t.decimal "application_fee_percent", precision: 5, scale: 2, null: false
     t.boolean "subscribe_to_newsletter", default: false, null: false
     t.index ["slug"], name: "index_artist_pages_on_slug", unique: true

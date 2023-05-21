@@ -99,14 +99,6 @@
     "typescript": "^3.9.10",
     "webpack": "4.42.0"
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}",
-      "!<rootDir>/node_modules/",
-      "!<rootDir>/src/index.tsx",
-      "!<rootDir>/src/registerServiceWorker.ts"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -117,6 +109,14 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/src/index.tsx",
+      "!<rootDir>/src/registerServiceWorker.ts"
     ]
   }
 }

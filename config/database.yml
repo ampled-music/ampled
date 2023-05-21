@@ -8,13 +8,10 @@ default: &default
   pool: <%= ENV["DB_POOL"].presence || ENV["RAILS_MAX_THREADS"].presence || 5 %>
   timeout: 5000
   host: localhost
-  # user: user
-  # password: password
 
 development:
   <<: *default
   database: <%= ENV["DATABASE_URL"] || 'ampled_web_development' %>
-  # database: api-db
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

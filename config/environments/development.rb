@@ -34,7 +34,7 @@ Rails.application.configure do
   #   - Other configuration here follows standard Rails conventions.
   begin
     mailcatcher_port = 1025
-    sock = TCPSocket.new("localhost", mailcatcher_port)
+    sock = TCPSocket.new(ENV["MAILCATCHER_HOST"] || 'mailcatcher', mailcatcher_port)
     sock.close
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = { address: "localhost", port: mailcatcher_port }

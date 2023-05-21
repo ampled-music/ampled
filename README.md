@@ -135,6 +135,19 @@ Then when starting your application server or console set the rails env to produ
     $ RAILS_ENV=production bundle exec rails console
     $ RAILS_ENV=production npm run start
 
+### Using Docker to run the application.
+
+Start the application like this:
+
+```
+docker-compose -f docker-compose.dev.yml up
+```
+
+This will set up an environment, install all the necessary things, and then run the `yarn start` command in [`package.json`](./package.json).
+
+It'll also migrate new migrations automatically. You'll have to still seed things yourself though if you want them.
+
+
 ## Conventions
 
 ### Git
@@ -294,7 +307,7 @@ If you need some of these credentials for local development, you can get the key
 
 **Optional**
 
-- `HOSTNAME` - Canonical hostname for this application. Other incoming requests will be redirected to this hostname.
+- `RAILS_HOSTNAME` - Canonical hostname for this application. Other incoming requests will be redirected to this hostname.
 - `FORCE_SSL` - Require all requests to come over a secure connection (default: false).
 - `BASIC_AUTH_PASSWORD` - Enable basic auth with this password.
 - `BASIC_AUTH_USER` - Set a basic auth username (not required, password enables basic auth).

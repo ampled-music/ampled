@@ -5,6 +5,6 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb and config/production.rb.
 
   config.action_mailer.default_url_options = {
-    host: ENV["HOSTNAME"].presence || "ampled-web-acceptance.herokuapp.com"
+    host: ENV["RAILS_HOSTNAME"].presence || "ampled-web-acceptance.herokuapp.com"
   }
 end

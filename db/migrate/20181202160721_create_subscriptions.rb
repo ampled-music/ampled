@@ -4,7 +4,7 @@ class CreateSubscriptions < ActiveRecord::Migration[5.2]
       t.references :artist_page, foreign_key: true, index: true
       t.references :user, foreign_key: true, index: true
 
-      t.timestamp
+      # t.timestamp :
     end
   end
 end

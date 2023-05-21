@@ -9,7 +9,7 @@ commands:
 jobs:
   build:
     docker:
-      - image: cimg/ruby:2.7.6-browsers
+      - image: cimg/ruby:2.7.7-browsers
         environment:
           PGHOST: 127.0.0.1
           PGUSER: postgres

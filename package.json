@@ -6,8 +6,8 @@
     "start": "concurrently -k 'yarn run start:client' 'yarn run start:server' || true",
     "start:client": "cd client && npm-run-all start",
     "start:server": "bundle exec rails s",
-    "build-client": "cd client && yarn install --production=false && npm run build",
-    "test-ci": "cd client && yarn install --production=false && npm run test-ci",
+    "build-client": "cd client && yarn install --dev && npm run build",
+    "test-ci": "cd client && yarn install --dev && npm run test-ci",
     "deploy": "cp -a client/build/. public/",
     "heroku-postbuild": "npm run build-client && npm run deploy",
     "compose-up": "docker-compose up",
@@ -30,16 +30,16 @@
   "devDependencies": {
     "concurrently": "^6.2.1",
     "cypress": "^7.7.0",
-    "heroku": "^7.67.1",
+    "heroku": "^7.69.1",
     "husky": "6.0.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.8.1",
-    "start-server-and-test": "^1.14.0",
-    "typescript": "^4.8.3"
+    "prettier": "^2.8.8",
+    "start-server-and-test": "^1.15.4",
+    "typescript": "^4.9.5"
   },
   "engines": {
-    "node": "14.16.0",
-    "yarn": ">=1.12.1"
+    "node": "16.14.2",
+    "yarn": "1.22.19"
   },
   "cacheDirectories": [
     "node_modules",

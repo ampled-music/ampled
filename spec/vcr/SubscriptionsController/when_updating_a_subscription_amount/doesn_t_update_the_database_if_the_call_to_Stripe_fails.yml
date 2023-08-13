@@ -14,7 +14,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Stripe-Account:
@@ -107,7 +107,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Stripe-Account:
@@ -200,7 +200,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Stripe-Account:
@@ -292,7 +292,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Stripe-Account:
@@ -396,7 +396,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Stripe-Account:
@@ -550,7 +550,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Stripe-Account:
@@ -620,7 +620,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Accept-Encoding:
@@ -770,7 +770,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Stripe-Account:
@@ -863,7 +863,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.2 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
+      - '{"bindings_version":"4.12.0","lang":"ruby","lang_version":"2.7.6 p137 (2020-10-01)","platform":"arm64-darwin20","engine":"ruby","publisher":"stripe","uname":"Darwin
         Ryans-Air 20.3.0 Darwin Kernel Version 20.3.0: Thu Jan 21 00:06:51 PST 2021;
         root:xnu-7195.81.3~1/RELEASE_ARM64_T8101 arm64","hostname":"Ryans-Air"}'
       Stripe-Account:

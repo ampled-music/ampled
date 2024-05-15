@@ -122,8 +122,10 @@ class DashboardComponent extends React.Component<Props, any> {
   setInitArtist = () => {
     if (this.props.userData?.ownedPages) {
       const hashArtistSlug = window.location.hash.substr(1);
-      if ( hashArtistSlug ) {
-        const hashArtist = this.props.userData.ownedPages.filter((artist) => artist.artistSlug === hashArtistSlug);
+      if (hashArtistSlug) {
+        const hashArtist = this.props.userData.ownedPages.filter(
+          (artist) => artist.artistSlug === hashArtistSlug,
+        );
         this.setState({
           selectedArtist: hashArtist[0],
         });
@@ -192,18 +194,16 @@ class DashboardComponent extends React.Component<Props, any> {
               />
               <div className="dashboard__panel_links">
                 <Tabs
-                  orientation={window.screen.width <= 768 ? "horizontal" : "vertical"}
+                  orientation={
+                    window.screen.width <= 768 ? 'horizontal' : 'vertical'
+                  }
                   variant="scrollable"
                   name="tabValue"
                   value={tabValue}
                   onChange={this.handleChangeTab}
                   aria-label="scrollable prevent tabs"
                 >
-                  <Tab
-                    label="Home"
-                    id="tab-0"
-                    aria-controls="tabpanel-0"
-                  />
+                  <Tab label="Home" id="tab-0" aria-controls="tabpanel-0" />
                   <Tab
                     label="Supporters"
                     id="tab-1"
@@ -247,7 +247,6 @@ class DashboardComponent extends React.Component<Props, any> {
           open={this.state.openPostModal}
           onClose={this.closePostModal}
           className="post-modal"
-          disableBackdropClick={true}
         >
           <PostForm
             close={this.getUserConfirmation}

@@ -4,7 +4,6 @@ class NewSupporterNotificationJob
 
   def perform(subscription_id)
     @subscription = Subscription.find(subscription_id)
-    return if subscription.blank?
 
     @artist = subscription.artist_page
 

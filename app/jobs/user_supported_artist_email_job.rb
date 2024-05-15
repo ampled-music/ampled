@@ -4,7 +4,6 @@ class UserSupportedArtistEmailJob
 
   def perform(subscription_id)
     @subscription = Subscription.find(subscription_id)
-    return if subscription.blank?
 
     @artist_page = subscription.artist_page
     @user = subscription.user

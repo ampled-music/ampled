@@ -4,7 +4,6 @@ class UserCancelledSubscriptionEmailJob
 
   def perform(subscription_id)
     @subscription = Subscription.find(subscription_id)
-    return if subscription.blank?
     return unless subscription.cancelled?
 
     @artist_page = subscription.artist_page

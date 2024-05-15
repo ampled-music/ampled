@@ -4,7 +4,6 @@ class CardDeclineEmailJob
 
   def perform(subscription_id)
     @subscription = Subscription.find(subscription_id)
-    return if subscription.blank?
 
     SendBatchEmail.call(
       [{

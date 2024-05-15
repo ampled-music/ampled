@@ -55,6 +55,8 @@ class StripeController < ApplicationController
   # @param connect_account_id [String, nil] The Stripe Connect Account ID associated with the Stripe Event, if any
   def process_webhook(event_type, object, connect_account_id)
     case event_type
+    when "invoice.payment_action_required"
+      return invoice_payment_action_required(object)
     when "invoice.payment_failed"
       return invoice_payment_failed(object)
     when "invoice.payment_succeeded"
@@ -101,6 +103,17 @@ class StripeController < ApplicationController
     logger.info "Stripe: sending CardDeclineEmail to #{user.email}"
     CardDeclineEmailJob.perform_async(usersub.id)
     # TODO: update subscription to mark as failed?
+    render json: {}
+  end
+
+  # @param object [Stripe::Invoice]
+  def invoice_payment_action_required(object)
+    usersub = Subscription.find_by(stripe_id: object[:subscription])
+    user = User.find(usersub.user_id)
+
+    # send notification to user.email that their payment requires authentication
+    logger.info "Stripe: sending CardActionRequiredEmail to #{user.email}"
+    CardActionRequiredEmailJob.perform_async(usersub.id)
     render json: {}
   end
 

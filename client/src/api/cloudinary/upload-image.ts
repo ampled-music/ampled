@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { config } from '../../config';
 
 export const uploadFileToCloudinary = async (file: any) => {
   const formData = new FormData();

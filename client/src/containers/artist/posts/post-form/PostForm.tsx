@@ -22,7 +22,7 @@ import { Image, Transformation } from 'cloudinary-react';
 import {
   Button,
   TextField,
-  InputAdornment,
+  // InputAdornment,
   IconButton,
   CircularProgress,
   FormControlLabel,
